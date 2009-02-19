@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="Aneis.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a60882203000078707704000000027372002a6f72672e6f70656e6964652e6c6f61646572732e436f6e6e656374696f6e537570706f72742450616972055f8af6f04a3bd80200024c00047479706574002b4c6f72672f6f70656e6964652f636f6f6b6965732f436f6e6e656374696f6e436f6f6b696524547970653b4c000576616c75657400124c6a6176612f6c616e672f4f626a6563743b78707372002e6f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661436f6e6e656374696f6e732454797065a83dd01001306d7402000149000666696c746572787000000050737200436f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661446174614f626a6563742450657273697374656e74436f6e6e656374696f6e48616e646c65ba16f1d2dd4c1cb60200014c000e646174614e6f646548616e646c6574001f4c6f72672f6f70656e6964652f6e6f6465732f4e6f64652448616e646c653b7870737200296f72672e6f70656e6964652e6c6f61646572732e446174614e6f6465244f626a65637448616e646c655bd0f82e01811d2e0200025a0005636c6f6e654c00036f626a7400244c6f72672f6f70656e6964652f66696c6573797374656d732f46696c654f626a6563743b787000737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000f7870740018677261666f2f706f6c61722f4e6f506f6c61722e6a617661740058473a2f43656c6d6172202d204d65757320646f63756d656e746f732f556e6963616d702f696d706c656d656e7461636f65732f477261666f20506f6c61722f677261666f2d696d706c656d656e746163616f20617475616c7371007e00027371007e0006000000507371007e00087371007e000b007371007e000e74001b677261666f2f706f6c61722f477261666f506f6c61722e6a61766171007e001278"/>
+    </fileobject>
+    <fileobject name="ArestaPolar.java">
+        <attr name="class_dependency_grafo.Aresta" stringvalue="ArestaPolar"/>
+    </fileobject>
+    <fileobject name="Barra.java">
+        <attr name="class_dependency_java.awt.event.ComponentListener" stringvalue="Barra"/>
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="Barra"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="Barra"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="Barra"/>
+    </fileobject>
+    <fileobject name="GrafoPolar.java">
+        <attr name="class_dependency_grafo.Grafo" stringvalue="GrafoPolar"/>
+        <attr name="class_dependency_grafo.polar.Aneis" stringvalue="GrafoPolar"/>
+    </fileobject>
+    <fileobject name="GrafoPolarDisplay.java">
+        <attr name="class_dependency_grafo.GrafoDisplay" stringvalue="GrafoPolarDisplay"/>
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="GrafoPolarDisplay"/>
+        <attr name="class_dependency_java.awt.event.ComponentListener" stringvalue="GrafoPolarDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="GrafoPolarDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="GrafoPolarDisplay"/>
+        <attr name="class_dependency_java.util.Observer" stringvalue="GrafoPolarDisplay"/>
+    </fileobject>
+    <fileobject name="GrafoPolarPanel.java">
+        <attr name="class_dependency_grafo.GrafoPanel" stringvalue="GrafoPolarPanel"/>
+        <attr name="class_dependency_java.util.Observer" stringvalue="GrafoPolarPanel"/>
+    </fileobject>
+    <fileobject name="GrafoPolarPanel_2.java">
+        <attr name="class_dependency_java.util.Observer" stringvalue="GrafoPolarPanel2"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="GrafoPolarPanel2"/>
+    </fileobject>
+    <fileobject name="NoPolar.java">
+        <attr name="class_dependency_grafo.No" stringvalue="NoPolar"/>
+        <attr name="class_dependency_grafo.polar.Aneis" stringvalue="NoPolar"/>
+    </fileobject>
+    <fileobject name="ObservableAngle.java">
+        <attr name="class_dependency_java.util.Observable" stringvalue="ObservableAngle"/>
+    </fileobject>
+    <fileobject name="ObservableBoolean.java">
+        <attr name="class_dependency_java.util.Observable" stringvalue="ObservableBoolean"/>
+    </fileobject>
+    <fileobject name="ObservableBooleanXY.java">
+        <attr name="class_dependency_java.util.Observable" stringvalue="ObservableBooleanXY"/>
+    </fileobject>
+    <fileobject name="ObservableInt.java">
+        <attr name="class_dependency_java.util.Observable" stringvalue="ObservableInt"/>
+    </fileobject>
+    <fileobject name="SeletorDuploDeAngulos.java">
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="SeletorDuploDeAngulos"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="SeletorDuploDeAngulos"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="SeletorDuploDeAngulos"/>
+    </fileobject>
+</attributes>

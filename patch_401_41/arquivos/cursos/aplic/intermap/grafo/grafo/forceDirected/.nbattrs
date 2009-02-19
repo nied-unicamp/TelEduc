@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="AlgoritmoMDS.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a60882203000078707704000000017372002a6f72672e6f70656e6964652e6c6f61646572732e436f6e6e656374696f6e537570706f72742450616972055f8af6f04a3bd80200024c00047479706574002b4c6f72672f6f70656e6964652f636f6f6b6965732f436f6e6e656374696f6e436f6f6b696524547970653b4c000576616c75657400124c6a6176612f6c616e672f4f626a6563743b78707372002e6f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661436f6e6e656374696f6e732454797065a83dd01001306d7402000149000666696c746572787000000050737200436f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661446174614f626a6563742450657273697374656e74436f6e6e656374696f6e48616e646c65ba16f1d2dd4c1cb60200014c000e646174614e6f646548616e646c6574001f4c6f72672f6f70656e6964652f6e6f6465732f4e6f64652448616e646c653b7870737200296f72672e6f70656e6964652e6c6f61646572732e446174614e6f6465244f626a65637448616e646c655bd0f82e01811d2e0200025a0005636c6f6e654c00036f626a7400244c6f72672f6f70656e6964652f66696c6573797374656d732f46696c654f626a6563743b787000737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000f787074002d677261666f2f666f72636544697265637465642f416c676f7269746d6f4d44534368616c6d6572732e6a617661740058473a2f43656c6d6172202d204d65757320646f63756d656e746f732f556e6963616d702f696d706c656d656e7461636f65732f477261666f20506f6c61722f677261666f2d696d706c656d656e746163616f20617475616c78"/>
+    </fileobject>
+    <fileobject name="AlgoritmoMDSAdaptado.java">
+        <attr name="class_dependency_grafo.forceDirected.AlgoritmoMDS" stringvalue="AlgoritmoMDSAdaptado"/>
+    </fileobject>
+    <fileobject name="AlgoritmoMDSChalmers.java">
+        <attr name="class_dependency_grafo.forceDirected.AlgoritmoMDS" stringvalue="AlgoritmoMDSChalmers"/>
+    </fileobject>
+    <fileobject name="ArestaForceDirected.java">
+        <attr name="class_dependency_grafo.simples.ArestaSimples" stringvalue="ArestaForceDirected"/>
+    </fileobject>
+    <fileobject name="GrafoDisplay_desnecessario.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="GrafoDisplay"/>
+        <attr name="class_dependency_java.awt.event.ComponentListener" stringvalue="GrafoDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="GrafoDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="GrafoDisplay"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="GrafoDisplay"/>
+    </fileobject>
+    <fileobject name="GrafoForceDirected.java">
+        <attr name="class_dependency_grafo.simples.GrafoSimples" stringvalue="GrafoForceDirected"/>
+    </fileobject>
+    <fileobject name="GrafoForceDirectedDisplay.java">
+        <attr name="class_dependency_grafo.simples.GrafoSimplesDisplay" stringvalue="GrafoForceDirectedDisplay"/>
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="GrafoForceDirectedDisplay"/>
+        <attr name="class_dependency_java.awt.event.ComponentListener" stringvalue="GrafoForceDirectedDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="GrafoForceDirectedDisplay"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="GrafoForceDirectedDisplay"/>
+        <attr name="class_dependency_java.util.Observer" stringvalue="GrafoForceDirectedDisplay"/>
+    </fileobject>
+    <fileobject name="GrafoForceDirectedPanel.java">
+        <attr name="class_dependency_grafo.simples.GrafoSimplesPanel" stringvalue="GrafoForceDirectedPanel"/>
+    </fileobject>
+</attributes>

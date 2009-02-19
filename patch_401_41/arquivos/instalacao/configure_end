@@ -1,0 +1,45 @@
+echo
+echo  Ajustando autoriza��o de diretorios
+echo
+
+chmod 755 ../cursos
+chmod 755 ../..
+
+chmod 644 ../.auth
+chmod 644 ../administracao/.auth
+chmod 644 ../administracao/base_curso/.auth
+chmod 644 ../ajuda/.auth
+chmod 644 ../avaliarcurso/.auth
+chmod 644 ../cursos/.auth
+chmod 644 ../cursos/aplic/.auth
+chmod 644 ../cursos/aplic/acessos/.auth
+chmod 644 ../cursos/aplic/administracao/.auth
+chmod 644 ../cursos/aplic/agenda/.auth
+chmod 644 ../cursos/aplic/ajuda/.auth
+chmod 644 ../cursos/aplic/bibliotecas/.auth
+chmod 644 ../cursos/aplic/bibliotecas/rte/.auth
+chmod 644 ../cursos/aplic/bibliotecas/htmlarea/.auth
+chmod 644 ../cursos/aplic/busca/.auth
+chmod 644 ../cursos/aplic/configurar/.auth
+chmod 644 ../cursos/aplic/correio/.auth
+chmod 644 ../cursos/aplic/diario/.auth
+chmod 644 ../cursos/aplic/dinamica/.auth
+chmod 644 ../cursos/aplic/enquete/.auth
+chmod 644 ../cursos/aplic/extracao/.auth
+chmod 644 ../cursos/aplic/estrutura/.auth
+chmod 644 ../cursos/aplic/forum/.auth
+chmod 644 ../cursos/aplic/grupos/.auth
+chmod 644 ../cursos/aplic/imgs/.auth
+chmod 644 ../cursos/aplic/js-css/.auth
+chmod 644 ../cursos/aplic/material/.auth
+chmod 644 ../cursos/aplic/mural/.auth
+chmod 644 ../cursos/aplic/perfil/.auth
+chmod 644 ../cursos/aplic/portfolio/.auth
+chmod 644 ../cursos/aplic/xajax_0.2.4/.auth
+chmod 644 ../estatistica/.auth
+chmod 644 ../extracao/.auth
+chmod 644 ../imgs/.auth
+chmod 644 ../infocurso/.auth
+chmod 644 ../pagina_inicial/.auth
+chmod 644 ../xajax_0.2.4/.auth
+chmod 744 ../instalacao/

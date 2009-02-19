@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="GrafoApplet.java">
+        <attr name="NetBeansAttrDataObjectCompilerManager" serialvalue="aced00057372001e6f72672e6f70656e6964652e53657276696365547970652448616e646c6564612acc871b81080300024c0009636c6173734e616d657400124c6a6176612f6c616e672f537472696e673b4c00046e616d6571007e0001787074001445787465726e616c20436f6d70696c6174696f6e7400326f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a61766145787465726e616c436f6d70696c65725479706578"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="GrafoApplet"/>
+        <attr name="class_dependency_javax.swing.event.ChangeListener" stringvalue="GrafoApplet"/>
+    </fileobject>
+    <fileobject name="PreparandoApplet.java">
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="PreparandoApplet"/>
+    </fileobject>
+</attributes>
