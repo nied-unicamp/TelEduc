@@ -104,14 +104,17 @@
   echo("      function VerificaCheck(){\n");
   echo("        var i;\n");
   echo("        var j=0;\n");
-  echo("        var codFerr=document.getElementsByName('cod_ferr[]');\n");
+  echo("        var codferr=document.getElementsByName('chkferr');\n");
   echo("        var Cabecalho = document.getElementById('cod_ferr_all');\n");
-  echo("        for (i=0; i<codFerr.length; i++){\n");
-  echo("          if (codFerr[i].checked){\n");
+  echo("		array_ferr = new Array();\n");
+  echo("        for (i=0; i<codferr.length; i++){\n");
+  echo("          if (codferr[i].checked){\n");
+  echo("		  	var ferr = codferr[i].id.split('_');\n");
+  echo("			array_ferr[j] = ferr[1];\n");
   echo("            j++;\n");
   echo("          }\n");
   echo("        }\n");
-  echo("        if (j == codFerr.length) Cabecalho.checked=true;\n");
+  echo("        if (j == codferr.length) Cabecalho.checked=true;\n");
   echo("        else Cabecalho.checked=false;\n");
   echo("	  }\n");  
   
@@ -122,27 +125,20 @@
   */
   echo("      function CheckAll()\n");
   echo("      {\n");
-  echo("        var elem=document.dadosbusca.elements;\n");
-  echo("        var nome_var='cod_ferr';\n");
-  echo("        var nome_var_all='cod_ferr_all';\n");
-  echo("        var changed=false;\n");
-  echo("        var i=0;\n");
-
-  echo("        while (i < elem.length)\n");
-  echo("        {\n");
-  echo("          if (elem[i].name==nome_var_all)\n");
-  echo("            changed=elem[i].checked;\n");
-  echo("          else if (elem[i].name.substr(0,8)==nome_var)\n");
-  echo("            elem[i].checked=changed;\n");
-  echo("          i++;\n");
-  echo("        }\n");
+  echo("        var i;\n");
+  echo("        var j=0;\n");
+  echo("        var codferr=document.getElementsByName('chkferr');\n");
+  echo("        var Cabecalho = document.getElementById('cod_ferr_all');\n");
+  echo("        for (i=0; i<codferr.length; i++){\n");
+  echo("			if(Cabecalho.checked == true)	codferr[i].checked=true;\n");
+  echo("			else codferr[i].checked=false;\n");
+  echo("		}\n");
   echo("      }\n");
 
   
   
   echo("      function Iniciar()\n");
   echo("      {\n");
-  echo("        CheckAll();");
   echo("        startList();\n");
   echo("      }\n\n");
 
@@ -211,7 +207,7 @@
             echo("                      <td width=\"5%\" align=\"center\"><input type=\"checkbox\" checked name=\"cod_ferr\" value=\"".$cod."\" onclick=\"VerificaCheck();\" /></td><td class=\"alLeft\" width=\"20%\" >".$nome."</td>\n");
             $num_ferr++;
           }else{
-            echo("                      <td width=\"5%\" align=\"center\"><input type=\"checkbox\" name=\"cod_ferr[]\" value=\"".$cod."\" onclick=\"VerificaCheck();\" /></td><td class=\"alLeft\" width=\"20%\" >".$nome."</td>\n");
+            echo("                      <td width=\"5%\" align=\"center\"><input type=\"checkbox\" id=\"chkferr_".$cod."\" name=\"chkferr\" value=\"".$cod."\" onclick=\"VerificaCheck();\" /></td><td class=\"alLeft\" width=\"20%\" >".$nome."</td>\n");
           }
           if (($cont%4)==0)
             echo("                    </tr>\n");
