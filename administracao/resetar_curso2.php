@@ -262,16 +262,25 @@
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   $cod_coordenador = $linha['cod_coordenador'];
+ 
 
-  $query  = "SELECT data_inscricao FROM Usuario WHERE cod_usuario = ".$linha['cod_coordenador'];
+  /* Obtem o cod_usuario_global do coordenador*/
+  $query  = "SELECT cod_usuario_global FROM Usuario_curso WHERE cod_curso = ".$cod_curso." AND cod_usuario= ".$cod_coordenador;
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  $cod_coordenador_global = $linha['cod_usuario_global'];
+  
+  $query  = "SELECT data_inscricao FROM Usuario WHERE cod_usuario = ".$cod_coordenador_global."";
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   $data_inscricao = $linha['data_inscricao'];
-
-  $query = "INSERT INTO Usuario_curso (cod_usuario_global, cod_usuario, cod_curso, tipo_usuario, portfolio, data_inscricao) VALUES (".$cod_coordenador.", 1, ".$novo_cod_curso.", 'F', 'ativado', ".$data_inscricao.");";
+  
+  $query = "INSERT INTO Usuario_curso (cod_usuario_global, cod_usuario, cod_curso, tipo_usuario, portfolio, data_inscricao) VALUES (".$cod_coordenador_global.", 1, ".$novo_cod_curso.", 'F', 'ativado', ".$data_inscricao."),(-1, -1, ".$novo_cod_curso.", 'F', 'ativado', ".$data_inscricao.");";
   Enviar($sock,$query);
-
-
+  
+  $query = "INSERT INTO Usuario_config (cod_usuario, cod_curso, notificar_email, notificar_data) VALUES (1, ".$novo_cod_curso.", 0, 0);";
+  Enviar($sock,$query);
+  
   echo("Ok!<p>\n");
 
   MudarDB($sock, $novo_cod_curso);
@@ -478,7 +487,7 @@
 
   $query = "DELETE from Portfolio_itens_avaliacao";
   $res=Enviar($sock,$query);
-
+/*
   $query = "UPDATE Exercicios_modelo set aplicado='N'";
   $res=Enviar($sock,$query);
 
@@ -513,7 +522,7 @@
   $query = "DELETE FROM Usuario_config WHERE ";
   $query .= " cod_usuario != -1 AND cod_usuario != ".$cod_coordenador;
   $res=Enviar($sock,$query);
-
+*/
 
   $query = "show tables like \"%_sequencia\"";
   $res =  Enviar($sock, $query);
@@ -530,8 +539,11 @@
       $query = "select MAX(cod_avaliacao) from Avaliacao";
     elseif($tabela=="Avaliacao_notas_sequencia")
       $query = "select MAX(cod_nota) from Avaliacao_notas";
+    elseif($tabela=="Dinamica_sequencia")
+      $query = "select MAX(cod) from Dinamica_sequencia";  
     elseif($tabela=="Grupos_sequencia")
       $query = "select MAX(cod_grupo) from Grupos";
+/*
     elseif($tabela=="Exercicios_alternativa_sequencia")
     {
           $query = "select MAX(cod_alternativa) from Exercicios_alternativa_objetiva";
@@ -572,7 +584,8 @@
       $query = "select MAX(cod_topico) from Exercicios_topico";
     elseif($tabela=="Exercicios_alternativa_objetiva_sequencia")
       $query = "select MAX(cod_alternativa) from Exercicios_alternativa_objetiva";
-    else
+   */
+	 else
     {
     $tabela1=explode("_",$tabela_seq[0]);
     $total=count($tabela1);
@@ -619,13 +632,15 @@
   // Obtem dados do coordenador
   $dados_coordenador = DadosCursoParaEmail($sock,$cod_curso);
   $nome_curso = NomeCurso($sock, $novo_cod_curso);
-  Desconectar($sock);  
+  Desconectar($sock); 
 
   $destino = $dados_coordenador['email'];
   $nome_aluno = $dados_coordenador['nome_coordenador'];
   $login = $dados_coordenador['login'];
 
-  $endereco=RetornaConfig('host').RetornaDiretorio('raiz_www');
+  $raiz_www=RetornaDiretorio('raiz_www');
+  $host=RetornaConfig('host');
+  $endereco=$host.$raiz_www;
 
   // 251 - Informa��es para acesso ao curso reutilizado no TelEduc 
   $assunto = RetornaFraseDaLista($lista_frases,251);
@@ -641,14 +656,18 @@
   // 104 - O acesso deve ser feito a partir do endereco:
   // 105 - Atenciosamente, Administra��o do Ambiente TelEduc
 
-  $mensagem =$nome_aluno.",\n\n";
-  $mensagem.=RetornaFraseDaLista($lista_frases,252)." ".$nome_curso." ".RetornaFraseDaLista($lista_frases,101)."\n\n";
-  $mensagem.=RetornaFraseDaLista($lista_frases,253)."\n\n";
-  $mensagem.=RetornaFraseDaLista($lista_frases,102)." ".$login." ".RetornaFraseDaLista($lista_frases,103)." ".$senha_gerada."\n\n";
-  $mensagem.=RetornaFraseDaLista($lista_frases,104)."\nhttp://".$endereco."/cursos/aplic/index.php?cod_curso=".$novo_cod_curso."\n\n";
-  $mensagem.=RetornaFraseDaLista($lista_frases,105)."\n";
+  $mensagem =$nome_aluno.",<br><br>";
+  $mensagem.=RetornaFraseDaLista($lista_frases,252)." ".$nome_curso." ".RetornaFraseDaLista($lista_frases,101)."<br><br>";
+  $mensagem.=RetornaFraseDaLista($lista_frases,253)."<br><br>";
+  //$mensagem.=RetornaFraseDaLista($lista_frases,102)."<big><em><strong> ".$login."</strong></em></big> ".RetornaFraseDaLista($lista_frases,103)."<big><em><strong> ".$senha_gerada."</strong></em></big><br><br>";
+  $mensagem.=RetornaFraseDaLista($lista_frases,104)."\nhttp://".$endereco."/cursos/aplic/index.php?cod_curso=".$novo_cod_curso."<br><br><p style=\"text-align:right;\">";
+  $mensagem.=RetornaFraseDaLista($lista_frases,105).".<br>";
 
-  MandaMsg($remetente,$destino,$assunto,$mensagem);
+  
+  $mensagem_envio =MontaMsg($host, $raiz_www, $novo_cod_curso, $mensagem, $assunto, $cod_usuario_remetente='', $destinatarios='');
+ 
+  
+  MandaMsg($remetente,$destino,$assunto,$mensagem_envio);
 
   echo("</td></tr></table>\n");
   echo("</td></tr></table>\n");
