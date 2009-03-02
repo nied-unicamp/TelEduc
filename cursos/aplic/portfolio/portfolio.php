@@ -244,7 +244,12 @@
     echo ("         return true;\n");
     echo ("     }\n\n");
 
-
+	echo ("      function WindowOpenAvalia(id)\n");
+	echo ("      {\n");
+	echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+	echo ("        return(false);\n");
+	echo ("      }\n");
+    
     echo("      function AlterarNomePasta(){\n");
     echo("        id = 'nome_topico_atual';\n");
     echo("        id_aux = id;");
@@ -956,7 +961,7 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
           echo("</td>");
 
           // 35 - Sim
-          $Sim = RetornaFraseDaLista($lista_frases_geral, 35);
+		  $Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaFraseDaLista($lista_frases_geral, 35) . "</span>";
           if ($ferramenta_avaliacao)
           {
             echo("<td width=\"110\" align=\"center\"><span>");
