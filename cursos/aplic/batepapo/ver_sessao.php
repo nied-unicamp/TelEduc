@@ -118,7 +118,7 @@
 
   echo("  function OpenWindowLink(funcao)\n");
   echo("  {\n");
-  echo("    window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("    window.open(\"../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("    return(false);\n");
   echo("  }\n");
 
@@ -216,20 +216,23 @@
 
   $lista=RetornaListaApelidos($sock,$cod_sessao);
 
-  echo("        <tr class=\"head\">\n");
-  /* 44 - Participantes */
-  echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,44)."</td>\n");
-  echo("        </tr>\n");
 
-  if (count($lista)>0)
-    foreach ($lista as $cod => $linha)
+
+  if (count($lista)>0){
+
+  	echo("        <tr class=\"head\">\n");
+    /* 44 - Participantes */
+    echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,44)."</td>\n");
+    echo("        </tr>\n");
+  
+  	foreach ($lista as $cod => $linha)
     {
       echo("        <tr>\n");
       echo("          <td colspan=3 align=left>\n");
       if ($cod>0)
       {
-        echo($linha." ('<a href=# onclick=OpenWindowLink(".$cod.");>\n");
-        echo(NomeUsuario($sock,$cod)."</a>')\n");
+        echo($linha);
+        echo(" (<a href=# onclick=OpenWindowLink(".$cod.");>".NomeUsuario($sock,$cod,$cod_curso)."</a>)\n");
       }
       else
       {
@@ -238,17 +241,19 @@
       echo("          </td>\n");
       echo("        </tr>\n");
     }
-
+  }
   $lista_conversas=RetornaConversaSessao($sock,$cod_sessao);
 
-  echo("        <tr class=\"head\">\n");
-  /* X - Mensagens */
-  echo("          <td colspan=3>Mensagens</td>\n");
-  echo("        </tr>\n");
 
   if (count($lista_conversas)>0)
   {
-    foreach ($lista_conversas as $cod => $linha)
+
+ 	echo("        <tr class=\"head\">\n");
+  	/* X - Mensagens */
+  	echo("          <td colspan=3>Mensagens</td>\n");
+  	echo("        </tr>\n");
+  	
+  	foreach ($lista_conversas as $cod => $linha)
     {
       echo("        <tr>\n");
       echo("          <td colspan=3 align=left>\n");
