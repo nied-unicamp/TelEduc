@@ -154,13 +154,13 @@
 
   echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 
+  echo("        <tr class=\"head\">\n");
+  /* 71 - Pessoas na sala de bate-papo */
+  echo("          <td>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
+  echo("        </tr>\n");
+  
   if (count($lista_online)>0)
   {
-
-  	echo("        <tr class=\"head\">\n");
-  	/* 71 - Pessoas na sala de bate-papo */
-    echo("          <td>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
-    echo("        </tr>\n");
 
     $i=1;
     foreach ($lista_online as $cod => $linha)
