@@ -103,7 +103,7 @@
 
   echo("  function OpenWindowLink(funcao)\n");
   echo("  {\n");
-  echo("    window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("    window.open(\"../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("    return(false);\n");
   echo("  }\n");
 
@@ -153,12 +153,15 @@
   $lista_online=RetornaListaApelidosOnline($sock,$cod_sessao);
 
   echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-  echo("        <tr class=\"head\">\n");
-  /* 71 - Pessoas na sala de bate-papo */
-  echo("          <td>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
-  echo("        </tr>\n");
+
   if (count($lista_online)>0)
   {
+
+  	echo("        <tr class=\"head\">\n");
+  	/* 71 - Pessoas na sala de bate-papo */
+    echo("          <td>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
+    echo("        </tr>\n");
+
     $i=1;
     foreach ($lista_online as $cod => $linha)
     {
@@ -170,10 +173,10 @@
       if ($cod>0)
       {
         echo("          <td>".stripslashes($linha)." - <i><a href=# onclick=OpenWindowLink(".$cod.");>\n");
-        echo(NomeUsuario($sock,$cod)."</a></i></td></tr>\n");
+        echo(NomeUsuario($sock,$cod,$cod_curso)."</a></i></td></tr>\n");
       }
       else
-        echo("          <td>".stripslashes($linha)." <i>".NomeUsuario($sock,$cod)."</i></td></tr>\n");
+        echo("          <td>".stripslashes($linha)." <i>".NomeUsuario($sock,$cod,$cod_curso)."</i></td></tr>\n");
     }
   }
   else
