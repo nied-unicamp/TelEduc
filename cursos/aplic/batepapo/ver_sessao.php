@@ -273,9 +273,11 @@
       $apelido  = LimpaConteudo($linha['Apelido']);
       $mensagem = LimpaConteudo($linha['Mensagem']);
       $apelidoR = LimpaConteudo($linha['ApelidoR']);
-      echo("<b>".$apelido."</b> ".RetornaFraseDaLista($lista_frases, $linha['cod_texto_fala'])." ");
-      if ($linha['cod_texto_fala'] > 8)
-        echo("<b>".$apelidoR."</b>: ".$mensagem."\n");
+      echo("<b><a href=# onclick=OpenWindowLink(".$linha['cod_usuario'].");>".$apelido."</a></b> ".RetornaFraseDaLista($lista_frases, $linha['cod_texto_fala'])." ");
+      if ($linha['cod_texto_fala'] > 8 && $linha['ApelidoR'] != "Todos")
+        echo("<b><a href=# onclick=OpenWindowLink(".$linha['cod_usuario_r'].");>".$apelidoR."</a></b>: ".$mensagem."\n");
+	  else if($linha['cod_texto_fala'] > 8) echo("<b>".$apelidoR."</b>: ".$mensagem."\n");
+	  
       echo("</font>\n");
 
       echo("          </td>\n");
