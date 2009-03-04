@@ -442,7 +442,6 @@
   $valor = FormataNota($dados_avaliacao['Valor']);
   if($usr_formador)
     $valor="<span id=\"valor_".$dados_avaliacao['Cod_atividade']."\" class=\"linkTexto\" onclick=\"AlteraCampo('valor','".$dados_avaliacao['Cod_atividade']."');\">".$valor."</span>";
-  $icone="<img src=../figuras/avaliacao.gif border=0> ";
   $obj = "<span id=\"text_obj\">".AjustaParagrafo($objetivos)."</span>";
   $crt = "<span id=\"text_crt\">".AjustaParagrafo($criterios)."</span>";
   $data_inicio = UnixTime2Data($dados_avaliacao['Data_inicio']);
@@ -463,7 +462,7 @@
   echo("                    <td width=15% align=\"center\">".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
   echo("                  </tr>\n");
   echo("                  <tr id='tr_".$dados_avaliacao['Cod_atividade']."'>\n");
-  echo("                    <td align=left rowspan=\"3\">".$icone.$titulo."</td>\n");
+  echo("                    <td align=left rowspan=\"3\">".$titulo."</td>\n");
   if($usr_formador)
   {
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
