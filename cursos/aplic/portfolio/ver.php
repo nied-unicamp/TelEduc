@@ -109,6 +109,12 @@ echo ("      function WindowOpenVer(id)\n");
 echo ("      {\n");
 echo ("         window.open(\"" . $dir_item_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
 echo ("      }\n\n");
+
+echo ("      function WindowOpenAvalia(id)\n");
+echo ("      {\n");
+echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+echo ("        return(false);\n");
+echo ("      }\n");
 echo ("</script>");
 
 echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
@@ -154,7 +160,7 @@ echo ("      var cod_usuario_portfolio='" . $cod_usuario_portfolio . "';\n");
 echo ("      var cod_grupo_portfolio='" . $cod_grupo_portfolio . "';\n");
 
 echo ("/*\n");
-echo (" * Se o usuário apertar associar:\n");
+echo (" * Se o usuï¿½rio apertar associar:\n");
 echo (" * Varre todos os radioboxes e muda a visibilidade do radio que tiver marcado pra invisivel e o resto visivel. \n");
 echo (" * Guarda o numero do elemento que foi habilitado, afim de fazer o mesmo com os spans de \n");
 echo (" * associado (deixa o selecionado visivel e o resto invisivel)\n");
@@ -577,7 +583,7 @@ if ($dono_portfolio) {
 
 echo ("                    <td align=\"center\">" . $compartilhamentospan . "</td>\n");
 
-$Sim = "<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 35) . "</span>";
+$Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaFraseDaLista($lista_frases_geral, 35) . "</span>";
 
 if ($ferramenta_avaliacao) {
 	echo ("                    <td align=\"center\">");
