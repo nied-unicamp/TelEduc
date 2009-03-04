@@ -491,12 +491,11 @@ $cor_link2[$tela_avaliacao] = "</font>";
 
 			}
 
-                $icone="<img src=../figuras/avaliacao.gif border=0> ";
 		$a1 = "<a href=# onClick=\"Ver(".$linha['Cod_avaliacao'].");\">";
 		$a2 = "</a>";
 
 		echo("                  <tr> \n");
-		echo("                    <td align=left>" .$icone. $a1 . $linha['Titulo'] . $a2 . "</td>\n");
+		echo("                    <td align=left>" .$a1 . $linha['Titulo'] . $a2 . "</td>\n");
 		
 		// coluna do tipo de avaliacao: "Atividade Individual" ou "Atividade Em Grupo" ou "Sessao de Batepapo" ou "Forum"
 		echo("		          <td align=center>" . $ferramenta . "</td>\n");
