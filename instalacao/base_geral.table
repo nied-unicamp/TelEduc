@@ -216,7 +216,7 @@ CREATE TABLE `Cursos_pastas` (
   `cod_pasta` int(11) NOT NULL auto_increment,
   `pasta` char(127) character set latin1 collate latin1_bin NOT NULL default '',
   PRIMARY KEY  (`cod_pasta`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Cursos_pastas`
@@ -13549,7 +13549,7 @@ CREATE TABLE `Usuario` (
   `data_inscricao` int(11) default NULL,
   `cod_lingua` int(11) default NULL,
   PRIMARY KEY  (`cod_usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Usuario`
@@ -13617,7 +13617,7 @@ CREATE TABLE `Usuario_sequencia` (
   `cod_usuario` int(11) NOT NULL,
   `data` int(11) default NULL,
   PRIMARY KEY  (`cod`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Usuario_sequencia`
