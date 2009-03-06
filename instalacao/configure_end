@@ -25,7 +25,6 @@ chmod 644 ../cursos/aplic/correio/.auth
 chmod 644 ../cursos/aplic/diario/.auth
 chmod 644 ../cursos/aplic/dinamica/.auth
 chmod 644 ../cursos/aplic/enquete/.auth
-chmod 644 ../cursos/aplic/extracao/.auth
 chmod 644 ../cursos/aplic/estrutura/.auth
 chmod 644 ../cursos/aplic/forum/.auth
 chmod 644 ../cursos/aplic/grupos/.auth
