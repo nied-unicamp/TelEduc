@@ -580,18 +580,19 @@ function EnviaPerfil($sock,$cod_usuario,$tempo,$perfil)
                   []['tipo_usuario'] - tipo do usuario
    Obs:  ordenado por nome
 *****************************************************************************************/
-function ListaConvidados ($sock)
+function ListaConvidados ($sock, $cod_curso)
 {
+
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
   $query = "select UC.cod_usuario, U.nome, UC.tipo_usuario
             from ".$dbnamebase.".Usuario_curso UC
             inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-            where binary UC.tipo_usuario='Z'
-            and UC.cod_curso='".$_SESSION['cod_curso_s']."'
-            or binary UC.tipo_usuario='z'
+            where UC.cod_curso='".$cod_curso."' and 
+            (binary UC.tipo_usuario='Z' or binary UC.tipo_usuario='z')
             order by nome";
+  //var_dump($query);
   $res   = Enviar ($sock, $query);
   $lista = RetornaArrayLinhas ($res);
   return $lista;
