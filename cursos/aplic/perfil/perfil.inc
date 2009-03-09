@@ -592,7 +592,6 @@ function ListaConvidados ($sock, $cod_curso)
             where UC.cod_curso='".$cod_curso."' and 
             (binary UC.tipo_usuario='Z' or binary UC.tipo_usuario='z')
             order by nome";
-  //var_dump($query);
   $res   = Enviar ($sock, $query);
   $lista = RetornaArrayLinhas ($res);
   return $lista;
