@@ -186,8 +186,8 @@
   /* ********************************************************************************************
   Funcao Seek_Checked
 	Para cada tipo de usuario verifica se existe pelo menos uma checkbox marcada.
-	Se houver, habilita o botão para mostrar o(s) perfil(s) selecionados.
-	Caso contrario desabilita o botão.
+	Se houver, habilita o botï¿½o para mostrar o(s) perfil(s) selecionados.
+	Caso contrario desabilita o botï¿½o.
     Entrada: nenhuma
     Saida:   nenhuma.
   */
@@ -372,7 +372,7 @@
   Tabela dos Convidados
   =====================
   */
-  $lista_convidados = ListaConvidados ($sock);
+  $lista_convidados = ListaConvidados ($sock, $cod_curso);
 
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
