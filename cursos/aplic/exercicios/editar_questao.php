@@ -67,7 +67,7 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
-  $cod_questao = 4;
+  $cod_questao = 1;
   $cod_usuario = 1;
   $cod_ferramenta=24;
 
@@ -707,8 +707,8 @@
   echo("    function DeletarLinhaAlternativa(cod){\n");
   echo("      var trAlt;\n");
   echo("      trAlt = document.getElementById('trAlt_'+cod);\n");
-  //echo("      trAlt.style.display = 'none';\n");
-  echo("      trAlt.parentNode.removeChild(trAlt);\n");
+  echo("      trAlt.style.display = 'none';\n");
+  //echo("      trAlt.parentNode.removeChild(trAlt);\n");
   echo("    }\n\n");
 
   echo("    function DeletarLinhaGabarito(cod){\n");
