@@ -121,17 +121,13 @@
   echo("      function confereSenha()\n");
   echo("      {\n");
   echo("        if(ValidaSenhas())\n");
-  echo("          xajax_AtualizaSenhaUsuarioDinamic(xajax.getFormValues('form_senhas'));\n");
+  echo("          xajax_AtualizaSenhaUsuarioDinamic(xajax.getFormValues('form_senhas'),'".RetornaFraseDaLista($lista_frases_configurar,10)."','".RetornaFraseDaLista($lista_frases_configurar,17)."');\n");
   echo("        return false;\n");
   echo("      }\n\n");
 
   echo("      function trataEnvio(flag)\n");
   echo("      {\n");
   echo("        if(flag == ''){\n");
-  /* 17 - Ocorreu um erro ao registrar as altera��es efetuadas. Muito provavelmente voc�
-          digitou sua senha antiga incorretamente (verifique se o bot�o Caps Lock de seu
-          micro n�o est� ativo acidentalmente). Volte e tente novamente. */
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,17)."');\n");
   echo("          document.getElementById('senha_antiga').value='';\n");
   echo("          document.getElementById('nova_senha').value='';\n");
   echo("          document.getElementById('nova_senha2').value='';\n");
@@ -139,8 +135,6 @@
   echo("        }\n");
   echo("        else\n");
   echo("        {\n");
-  /* 10 - Senha alterada com sucesso. */
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,10)."');\n");
   echo("          document.getElementById('senha_antiga').value='';\n");
   echo("          document.getElementById('nova_senha').value='';\n");
   echo("          document.getElementById('nova_senha2').value='';\n");
