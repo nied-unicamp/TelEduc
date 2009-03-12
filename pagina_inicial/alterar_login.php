@@ -104,22 +104,22 @@
   echo("      function confereLogin()\n");
   echo("      {\n");
   echo("        if(ValidaLogins())\n");
-  echo("          xajax_AtualizaLoginUsuarioDinamic(xajax.getFormValues('form_logins'));\n");
+  ////60 - Seu login foi alterado com sucesso! * 61 - O login escolhido ja existe.Por favor, escolha um novo login.
+  echo("          xajax_AtualizaLoginUsuarioDinamic(xajax.getFormValues('form_logins'),'".RetornaFraseDaLista($lista_frases_configurar,60)."','".RetornaFraseDaLista($lista_frases_configurar,62)."');\n");
   echo("        return false;\n");
   echo("      }\n\n");
 
   echo("      function trataEnvio(flag,novoLogin)\n");
   echo("      {\n");
-  echo("        if(flag == '')\n");
-  // 62 - O login escolhido ja existe.Por favor, escolha um novo login.
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,62)."');\n");
-  echo("        else\n");
+  echo("        if(flag == ''){\n");
+  echo("          document.getElementById('novo_login').value='';\n");
+  echo("          document.getElementById('novo_login').focus();\n");
+  echo("        }else\n");
   echo("        {\n");
   echo("          tdElement = document.getElementById('td_login');\n");
   echo("          tdElement.innerHTML = '<b>'+novoLogin+'<\/b>';\n");
   echo("          document.getElementById('novo_login').value='';\n");
   echo("          document.getElementById('novo_login').focus();\n");
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,60)."');\n");
   echo("        }\n");
   echo("      }\n\n");
 
