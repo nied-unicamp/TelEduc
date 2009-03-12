@@ -92,6 +92,7 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   echo("    case '1':\n");
   /* 527 - Já existe uma categoria com este nome.*/
   echo("      alert(\"".RetornaFraseDaLista($lista_frases_adm, 527)."\");\n");
+  echo("	  document.criar.nova_categ.focus();\n");
   echo("      break;\n");
   echo("    case '0':\n");
   /* 528 - Categoria criada com sucesso! */
@@ -215,7 +216,17 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   echo("          document.criar.nova_categ.value = '';\n");
   echo("        }\n");
   echo("      }\n");
-
+  
+  
+  echo("function escondetr(valor){\n");
+  echo(" if(valor == 1) {\n");
+  echo("    document.getElementById('semcategoria').style.display='none';\n");
+  echo(" }\n");
+  echo(" if(valor == 0){\n");
+  echo("    document.getElementById('semcategoria').style.display=\"\";\n");
+  echo(" }\n");
+  echo("}\n");
+  
   echo("      function Iniciar() {\n");
   echo("	startList();\n");
   echo("        document.criar.nova_categ.focus();");
@@ -231,6 +242,7 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   $lista_frases=RetornaListaDeFrases($sock,-5);
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
+  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 125 - Editar Categorias */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,125)."</h4>\n");
@@ -267,12 +279,12 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   echo("                        <input class=\"input\" type=\"text\" name=\"nova_categ\" size=\"33\" style=\"maxlenght: 100\"/>\n");
   /* 8 - Criar */
   echo("                        <input id=\"cria_categ\" class=\"input\" onClick='TestaCriar();' type=\"button\"  value=\"".RetornaFraseDaLista($lista_frases_geral,8)."\"/>\n");
+  
   echo("                      </form>\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
-  
-  $categ=RetornaCategorias();
 
+  $categ=RetornaCategorias();
 
     echo("                  <tr id=\"tr_master\" class=\"head\">\n"); 
     /* 130 - Categorias existentes: */
@@ -280,7 +292,12 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
     /* 70 - Opções */
     echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
     echo("                  </tr>\n");
-    foreach($categ as $cod_pasta => $pasta)
+    if(!$categ){
+    	echo("                  <tr id=\"semcategoria\">\n"); 
+		echo("                      <td colspan=2>nao existem categorias</td>");
+		echo("					</tr>\n");
+    }
+	foreach($categ as $cod_pasta => $pasta)
     {
       echo("                  <tr id=\"tr_".$cod_pasta."\">\n");
       echo("                    <td>\n");
