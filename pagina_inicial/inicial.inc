@@ -735,7 +735,7 @@ function RetornaEmailUsuario($sock, $cod_usuario)
   Saida:    resposta XML
 ********************************************************************/
 
-function AtualizaLoginUsuarioDinamic($dadosForm)
+function AtualizaLoginUsuarioDinamic($dadosForm,$texto,$erro)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -746,11 +746,15 @@ function AtualizaLoginUsuarioDinamic($dadosForm)
   $res=ModificaLogin($sock,$cod_usuario,$novo_login);
   Desconectar($sock);
 
-  if ($res == true) $_SESSION['login_usuario_s'] = $novo_login;
+  if ($res == true)	$_SESSION['login_usuario_s'] = $novo_login;
 
   $objResponse->addScript("trataEnvio('".$res."','".$novo_login."');");
+  //Seu login foi alterado com sucesso!
+  if($res) $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  //O login escolhido ja existe.Por favor, escolha um novo login.
+  else $objResponse->addScriptCall("mostraFeedback", $erro, 'false');
 
-  return $objResponse->getXML();
+  	return $objResponse->getXML();
 }
 
 /********************************************************************
@@ -759,7 +763,7 @@ function AtualizaLoginUsuarioDinamic($dadosForm)
   Saida:    resposta XML
 ********************************************************************/
 
-function AtualizaSenhaUsuarioDinamic($dadosForm)
+function AtualizaSenhaUsuarioDinamic($dadosForm,$texto,$erro)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -802,7 +806,15 @@ function AtualizaSenhaUsuarioDinamic($dadosForm)
   MandaMsg($remetente,$destino,$assunto,$mensagem_envio);
   }
   $objResponse->addScript("trataEnvio('".$res."');");
-
+  if($res){
+    /* 10 - Senha alterada com sucesso. */
+  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  }else{
+  	/* 17 - Ocorreu um erro ao registrar as alterações efetuadas. 
+	verifique se sua senha antiga esta correta.*/
+  	$objResponse->addScriptCall("mostraFeedback", $erro, 'false');
+  	
+  }  
   return $objResponse->getXML();
 }
 
