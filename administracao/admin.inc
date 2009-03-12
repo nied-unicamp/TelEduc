@@ -1025,6 +1025,7 @@ function InserirCategoriaDinamic($nome_pasta)
     /* 0 - Sucesso 1 - Fracasso */
     $objResponse->addScript("RespostaUsuario('0');");
     $objResponse->addScript("HTMLNovaCategoria('$nome_pasta', '$cod_pasta', '$frase', '$frase2');");
+	$objResponse->addScript("escondetr(1)");
   } else {
     $objResponse->addScript("RespostaUsuario('1');");
 
@@ -1166,6 +1167,14 @@ function ApagarDinamic($cod_pasta)
     
   ApagarCategoria($cod_pasta);
   $objResponse->addScript("document.getElementById('tr_master').parentNode.removeChild(document.getElementById('tr_".$cod_pasta."'))");
+  $sock=Conectar("");
+  $query="select * from Cursos_pastas";
+  $res = Enviar($sock,$query);
+  $res = RetornaLinha($res);
+  if(!$res){
+  	$objResponse->addScript("escondetr(0);");
+  }
+  Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
 }
