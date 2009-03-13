@@ -294,7 +294,7 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
     echo("                  </tr>\n");
     if(!$categ){
     	echo("                  <tr id=\"semcategoria\">\n"); 
-		echo("                      <td colspan=2>nao existem categorias</td>");
+		echo("                      <td colspan=2>".RetornaFraseDaLista($lista_frases,132)."</td>");
 		echo("					</tr>\n");
     }
 	foreach($categ as $cod_pasta => $pasta)
