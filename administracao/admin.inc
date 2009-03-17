@@ -988,7 +988,7 @@ function RetornaCategorias()
    Entrada: $nome_pasta - nome da pasta
    Saida: resposta XML
 */
-function InserirCategoriaDinamic($nome_pasta)
+function InserirCategoriaDinamic($nome_pasta,$texto,$textoErro)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -1023,12 +1023,11 @@ function InserirCategoriaDinamic($nome_pasta)
     Enviar($sock,$query);
 
     /* 0 - Sucesso 1 - Fracasso */
-    $objResponse->addScript("RespostaUsuario('0');");
     $objResponse->addScript("HTMLNovaCategoria('$nome_pasta', '$cod_pasta', '$frase', '$frase2');");
 	$objResponse->addScript("escondetr(1)");
+    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
   } else {
-    $objResponse->addScript("RespostaUsuario('1');");
-
+    $objResponse->addScriptCall("mostraFeedback", $textoErro, 'false');
   }
 
   return $objResponse->getXML();
@@ -1073,13 +1072,12 @@ function InserirCategoria($nome_pasta)
    Entrada: $cod_curso, $cod_pasta
    Saida: nenhuma
 */
-function TrocaCategoriaDinamic($cod_curso,$cod_pasta)
+function TrocaCategoriaDinamic($cod_curso,$cod_pasta,$texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   AtualizaPastaCursos($cod_curso,$cod_pasta);
-  $objResponse->addScript("RespostaUsuario()");
-
+  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
 
   return $objResponse->getXML();
 }
