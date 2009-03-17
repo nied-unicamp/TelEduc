@@ -78,10 +78,10 @@
   /* Inicio do JavaScript */
   echo("    <script type=\"text/javascript\">\n");
   // FraseAColocar
-  echo("function RespostaUsuario(){\n");
+//  echo("function RespostaUsuario(){\n");
   /* 148 - Categoria alterada com sucesso! */
-  echo("      alert(\"".RetornaFraseDaLista($lista_frases_adm, 529)."\");\n");
-  echo("}\n");
+//  echo("      alert(\"".RetornaFraseDaLista($lista_frases_adm, 529)."\");\n");
+//  echo("}\n");
 
   echo("      var pag_atual = ".$pag_corrente.";\n\n");
   echo("      var total_pag = ".$total_pag.";\n\n");
@@ -279,7 +279,7 @@
         echo("                      <span id=\"span_".$cod_curso."\" >".$linha['nome_curso']."</span>\n");
         echo("                    </td>\n");
         echo("                    <td>\n");
-        echo("                      <select name=\"codigo_pasta[".$cod_curso."]\" class=\"input\" onchange=\"xajax_TrocaCategoriaDinamic(".$cod_curso.",this.value);\">\n");
+        echo("                      <select name=\"codigo_pasta[".$cod_curso."]\" class=\"input\" onchange=\"xajax_TrocaCategoriaDinamic(".$cod_curso.",this.value,'".RetornaFraseDaLista($lista_frases_adm, 529)."');\">\n");
         echo("                        <option value=NULL>".RetornaFraseDaLista($lista_frases_pag_inicial,115)."</option>\n");
         foreach ($categ as $cod_pasta => $pasta)
         {
