@@ -86,25 +86,6 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
 }
   
 <?
-  // FraseAColocar
-  echo("function RespostaUsuario(evento){\n");
-  echo("  switch (evento){\n");
-  echo("    case '1':\n");
-  /* 527 - Já existe uma categoria com este nome.*/
-  echo("      alert(\"".RetornaFraseDaLista($lista_frases_adm, 527)."\");\n");
-  echo("	  document.criar.nova_categ.focus();\n");
-  echo("      break;\n");
-  echo("    case '0':\n");
-  /* 528 - Categoria criada com sucesso! */
-  echo("      alert(\"".RetornaFraseDaLista($lista_frases_adm, 528)."\");\n");
-  echo("      break;\n");
-  echo("    default:\n");
-  echo("      break;\n");
-  echo("  }\n");
-  echo("}\n");
-
-
-
   echo("      var conteudo;\n\n");
 
   /* Funcao Edicao Titulo */
@@ -212,7 +193,9 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   echo("          document.criar.nova_categ.focus();\n");
   echo("          return false;\n");
   echo("        } else {\n");
-  echo("          xajax_InserirCategoriaDinamic(document.criar.nova_categ.value);\n");
+  // 528 - Categoria criada com sucesso! 
+  // 527 - Já existe uma categoria com este nome.
+  echo("          xajax_InserirCategoriaDinamic(document.criar.nova_categ.value,'".RetornaFraseDaLista($lista_frases_adm, 528)."','".RetornaFraseDaLista($lista_frases_adm, 527)."');\n");
   echo("          document.criar.nova_categ.value = '';\n");
   echo("        }\n");
   echo("      }\n");
