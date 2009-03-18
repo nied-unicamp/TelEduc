@@ -98,7 +98,7 @@
 
   $pastas=RetornaPastas($sock);
 
-  if (is_array($pastas))
+  if (is_array($pastas) && sizeof($pastas))
   {
     echo("<tr class=\"head\">\n");
     // 169 - Categoria
