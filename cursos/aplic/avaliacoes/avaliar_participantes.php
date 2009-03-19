@@ -1810,7 +1810,7 @@
                 else if($avaliacao_participante)
                   {
                     echo("                    <td align=\"center\">");
-                    echo("<span class=\"link\" onClick=return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));>");
+                    echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(\"".$cod."\",\"".trim($nome)."\",\"tr_users_".$cod."\")\");>");
                   // 66 - Reavaliar
                   echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
                   }
