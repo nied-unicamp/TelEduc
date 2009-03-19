@@ -116,10 +116,7 @@
   echo("          if (((nome>0) && (email>0) && (login>0)) && ((nome==email) && (email==login)))  {\n");
   echo("            if (verifica_logins())\n");
   echo("            {\n");
-  echo("              document.formul.method='post';\n");
-  echo("              document.formul.action='acoes.php';\n");
   echo("              return true;\n");
-  //echo("              document.formul.submit();\n");
   echo("            }\n");
   echo("            else {\n");
   // 225 - Existem logins repetidos. Especifique logins diferentes para cada usu�rio.
@@ -206,7 +203,7 @@
 
   include("../menu_principal.php");
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  echo("    <form name=\"formul\" action=\"#\" method=\"post\" onsubmit=\"return(verificar());\">\n");
+  echo("    <form name=\"formul\" action=\"acoes.php\" method=\"post\" onsubmit=\"return(verificar());\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
   echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
   echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=".$tipo_usuario.">\n");
