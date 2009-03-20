@@ -91,6 +91,7 @@ chmod 755 ../cursos/aplic/mural
 chmod 755 ../cursos/aplic/perfil
 chmod 755 ../cursos/aplic/portfolio
 chmod 755 ../cursos/aplic/xajax_0.2.4
+chmod 777 ../cursos/diretorio
 chmod 755 ../estatistica
 chmod 755 ../extracao
 chmod 755 ../imgs
