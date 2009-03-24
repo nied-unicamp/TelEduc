@@ -1861,7 +1861,7 @@
               }
               else if($avaliacao_participante)
               {
-                  echo("                    <td align=center><span class=\"link\" onClick=return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));>");
+                  echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
                   // 65 - Avaliar
                   echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
               }
