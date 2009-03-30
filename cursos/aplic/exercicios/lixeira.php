@@ -50,6 +50,8 @@
   $objAjax = new xajax();
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->registerFunction("ExcluirExerDinamic");
+  $objAjax->registerFunction("RecuperarExerDinamic");
+  
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
@@ -98,9 +100,13 @@
   echo("        if(j > 0){\n");
   echo("          document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
   echo("          document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(); };\n");
+  echo("          document.getElementById('mRecup_Selec').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mRecup_Selec').onclick=function(){ RecuperarSelecionados(); };\n");
   echo("        }else{\n");
   echo("          document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
   echo("          document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+  echo("          document.getElementById('mRecup_Selec').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mRecup_Selec').onclick=function(){  };\n");
   echo("        }\n");
   echo("      }\n\n");
 
@@ -122,6 +128,13 @@
   echo("        if (confirm('Tem certeza que deseja apagar definitvamente as questoes selecionadas?'))\n");
   echo("		{\n");
   echo("          xajax_ExcluirExerDinamic('".$cod_curso."', array_itens);\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
+  echo("      function RecuperarSelecionados(){\n");
+  /* 80 - Tem certeza que deseja recuperar os exercicios selecionadas? */
+  echo("        if (confirm('Tem certeza que deseja recuperar os exercicios selecionadas?')){\n");
+  echo("          xajax_RecuperarExerDinamic('".$cod_curso."', array_itens);\n");
   echo("        }\n");
   echo("      }\n\n");
   
@@ -230,6 +243,7 @@
 	echo("                <ul>\n");
     /* ? - Apagar selecionadas */
     echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar Selecionadas</span></li>\n");
+    echo(" 					<li id=\"mRecup_Selec\" class=\"menuUp\"><span id=\"recuperarSelec\">Recuperar Selecionadas</span></li>\n");
     echo("                </ul>\n");
 	
 	echo("              </td>\n");
