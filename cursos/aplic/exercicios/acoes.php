@@ -115,8 +115,34 @@
     }
 
     //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
+    Desconectar($sock);
+    header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
+  }
+  
+  /* ação = Descompactar Arquivo - origem = ver.php */
+  else if ($acao=="descompactar")
+  {
+
+    $dir_tmp=$dir_item_temp['diretorio'];
+    $caminho="";
+
+    $tmp=explode("/",$arq);
+    for ($c=0;$c<count($tmp)-1;$c++)
+      $caminho=$tmp[$c]."/";
+
+    $res=DescompactarArquivoZip($dir_tmp.$arq,$dir_tmp.$caminho);
+    $atualizacao="true";
+    if(!$res){ 
+      $atualizacao="false";
+    }else{
+      RemoveArquivo($dir_tmp.$arq);
+    }
+    
+    //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
+    Desconectar($sock);
+    //header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
-  Desconectar($sock);
+  //Desconectar($sock);
   exit;
 ?>

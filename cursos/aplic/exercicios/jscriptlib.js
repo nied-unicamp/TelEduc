@@ -147,21 +147,6 @@ function ApagarEndereco(cod_curso, cod_endereco){
   }
 }
 
-function Descompactar(){
-  checks = document.getElementsByName('chkArq');
-  for (i=0; i<checks.length; i++){
-    if(checks[i].checked){
-      getNumber=checks[i].id.split("_");
-      arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');
-      if (confirm(lista_frases.msg33+'\n'+lista_frases.msg34+'\n'+lista_frases.msg35)){
-        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
-        window.location='acoes.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio+'&acao=descompactar&arq='+arqZip;
-      }
-    } 
-  }
-
-}
-
 function VerificaChkBoxArq(alpha){
   CancelaTodos();
   checks = document.getElementsByName('chkArq');
@@ -192,44 +177,34 @@ function VerificaChkBoxArq(alpha){
   if (pasta==1){
     document.getElementById('mArq_apagar').className="menuUp02";
     document.getElementById('mArq_ocultar').className="menuUp";
-    document.getElementById('mArq_descomp').className="menuUp";
 
     document.getElementById('mArq_apagar').onclick= function(){ ApagarArq(); };
     document.getElementById('mArq_ocultar').onclick= function(){  };
-    document.getElementById('mArq_descomp').onclick= function(){  };
 
   }else if((arqComum==1)||(arqZip>1)){
     document.getElementById('mArq_apagar').className="menuUp02";
     document.getElementById('mArq_ocultar').className="menuUp02";
-    document.getElementById('mArq_descomp').className="menuUp";
 
     document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };
     document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };
-    document.getElementById('sArq_descomp').onclick= function(){  };
   }else if(arqComum>1){
     document.getElementById('mArq_apagar').className="menuUp02";
     document.getElementById('mArq_ocultar').className="menuUp02";
-    document.getElementById('mArq_descomp').className="menuUp";
 
     document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };
     document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };
-    document.getElementById('sArq_descomp').onclick= function(){  };
   }else if(arqZip==1){
     document.getElementById('mArq_apagar').className="menuUp02";
     document.getElementById('mArq_ocultar').className="menuUp02";
-    document.getElementById('mArq_descomp').className="menuUp02"
 
     document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };
     document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };
-    document.getElementById('sArq_descomp').onclick= function(){ Descompactar() };
   }else{
     document.getElementById('mArq_apagar').className="menuUp";
     document.getElementById('mArq_ocultar').className="menuUp";
-    document.getElementById('mArq_descomp').className="menuUp";
 
     document.getElementById('sArq_apagar').onclick= function(){  };
     document.getElementById('sArq_ocultar').onclick= function(){  };
-    document.getElementById('sArq_descomp').onclick= function(){  };
   }
 
   //todos arquivos selecionados sao ocultos
@@ -240,8 +215,8 @@ function VerificaChkBoxArq(alpha){
 
   //Nao foi chamado pela funcao CheckTodos
   if (alpha){
-    if (j==checks.length){ document.getElementById('checkMenu').checked=true; }
-    else document.getElementById('checkMenu').checked=false;
+    if (j==checks.length){ document.getElementById('checkMenuArq').checked=true; }
+    else document.getElementById('checkMenuArq').checked=false;
   }
 
 }
@@ -315,8 +290,8 @@ function LimpaBarraArq(){
 
   }
 
-  document.getElementById('checkMenu').checked=false;
-  CheckTodos();
+  document.getElementById('checkMenuArq').checked=false;
+  CheckTodos(1);
 }
 
 function AssociarAvaliacao(){

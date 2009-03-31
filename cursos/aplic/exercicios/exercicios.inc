@@ -56,7 +56,7 @@
   - 'X' - Excluido(a)
   - 'L' - Lixeira
 
-- Status no historico de um Exercicios:
+- Status no historico de um Exercicio:
 
   - 'C' - Criado
 
@@ -206,7 +206,7 @@ function RetornaQuestao($sock,$cod_questao)
 */
 function RetornaAlternativas($sock,$cod_questao)
 {
-  $query="select cod_alternativa,cod_questao,texto from Exercicios_questao_alternativa where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $query="select cod_alternativa,cod_questao,texto from Exercicios_questao_alternativa where cod_questao=".VerificaNumeroQuery($cod_questao)." order by posicao_item";
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
   return $lista;
@@ -266,7 +266,7 @@ function RetornaTopicos($sock)
           $lista[<num>]['Arquivo'] - Nome do arquivo
           $lista[<num>]['Status'] - Condição especial (true ou false);
           $lista[<num>]['Tamanho'] - tamanho do arquivo
-          $lista[<num>]['Data'] - data da ltima modifição
+          $lista[<num>]['Data'] - data da ultima modifição
 */
 function RetornaArquivosQuestao($cod_curso, $dirlink)
 {
@@ -435,9 +435,12 @@ function RetornaFraseGeralDinamic($variavel){
 }
 
 /* *********************************************************************
-   EditarAlternativaObjDinamic - Salva no banco as alterações feitas na alterntiva objetiva
+   EditarAlternativaObjDinamic - Salva no banco as alterações feitas na alternativa de uma questao objetiva
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
+			$cod_alternativa - codifo da alternativa
+			$textoAlt - texto da alternativa
+			$gabarito - gabarito da questao
    Saida: XML da função Ajax
 */
 function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa, $textoAlt, $gabarito)
@@ -458,7 +461,7 @@ function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa,
 }
 
 /* *********************************************************************
-   EditarAlternativaDissDinamic - Salva no banco as alterações feitas na alterntiva
+   EditarAlternativaDissDinamic - Salva no banco as alterações feitas na alterntiva de uma questao dissertativa
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
    Saida: XML da função Ajax
@@ -492,7 +495,13 @@ function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_que
 
   $sock=Conectar($cod_curso);
 
-  $consulta="insert into Exercicios_questao_alternativa (cod_questao) values (".VerificaNumeroQuery($cod_questao).")";
+  $consulta="select max(posicao_item) from Exercicios_questao_alternativa where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
+  $linha=RetornaLinha($res);
+
+  $posicao = $linha[0]+1;
+  
+  $consulta="insert into Exercicios_questao_alternativa (cod_questao,posicao_item) values (".VerificaNumeroQuery($cod_questao).",".$posicao.")";
   $res=Enviar($sock, $consulta);
 
   $cod_alternativa = mysql_insert_id();
@@ -534,7 +543,7 @@ function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_que
             $tp_questao - tipo da questao
    Saida: XML da função Ajax
 */
-function ApagarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $cod_alternativa, $gabarito, $tp_questao)
+function ApagarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $cod_alternativa, $tp_questao)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -543,12 +552,7 @@ function ApagarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $cod_a
   $consulta="delete from Exercicios_questao_alternativa where cod_alternativa=".VerificaNumeroQuery($cod_alternativa);
   $res=Enviar($sock, $consulta);
 
-  if($tp_questao == 'O')
-  {
-    $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
-    $res=Enviar($sock, $consulta);
-  }
-  else if($tp_questao == 'D')
+  if($tp_questao == 'D')
   {
     $consulta="delete from Exercicios_questao_diss where cod_questao=".VerificaNumeroQuery($cod_questao)." and cod_alternativa=".VerificaNumeroQuery($cod_alternativa);
     $res=Enviar($sock, $consulta);
@@ -564,9 +568,10 @@ function ApagarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $cod_a
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
             $nivel - novo nivel da questao
+			$textoFeedback - feedback para o usuario
    Saida: XML da função Ajax
 */
-function AtualizarNivelDinamic($cod_curso, $cod_questao, $nivel)
+function AtualizarNivelDinamic($cod_curso, $cod_questao, $nivel, $textoFeedback)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -576,6 +581,8 @@ function AtualizarNivelDinamic($cod_curso, $cod_questao, $nivel)
   $res=Enviar($sock, $consulta);
 
   Desconectar($sock);
+  
+  $objResponse->addScriptCall("mostraFeedback", $textoFeedback, 'true');
 
   return $objResponse->getXML();
 }
@@ -585,9 +592,10 @@ function AtualizarNivelDinamic($cod_curso, $cod_questao, $nivel)
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
             $cod_topico - codigo do novo topico da questao
+			$textoFeedback - feedback para o usuario
    Saida: XML da função Ajax
 */
-function AtualizarTopicoDinamic($cod_curso, $cod_questao, $cod_topico)
+function AtualizarTopicoDinamic($cod_curso, $cod_questao, $cod_topico, $textoFeedback)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -597,6 +605,8 @@ function AtualizarTopicoDinamic($cod_curso, $cod_questao, $cod_topico)
   $res=Enviar($sock, $consulta);
 
   Desconectar($sock);
+  
+  $objResponse->addScriptCall("mostraFeedback", $textoFeedback, 'true');
 
   return $objResponse->getXML();
 }
@@ -606,9 +616,10 @@ function AtualizarTopicoDinamic($cod_curso, $cod_questao, $cod_topico)
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
             $novo_topico - nome do topico
+			$textoFeedback - feedback para o usuario
    Saida: XML da função Ajax
 */
-function CriaNovoTopicoDinamic($cod_curso, $cod_questao, $novo_topico)
+function CriaNovoTopicoDinamic($cod_curso, $cod_questao, $novo_topico, $textoFeedback)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -622,6 +633,7 @@ function CriaNovoTopicoDinamic($cod_curso, $cod_questao, $novo_topico)
   Desconectar($sock);
 
   $objResponse->addScript("AdicionaNovoTopico(".$cod_topico.",'".$novo_topico."');");
+  $objResponse->addScriptCall("mostraFeedback", $textoFeedback, 'true');
 
   return $objResponse->getXML();
 }
@@ -694,7 +706,8 @@ function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuar
 }
 
 /* *********************************************************************
-   EditarGabaritoDinamic - Edita o gabarito de uma alternativa
+   EditarGabaritoQuestaoDissDinamic - Salva no banco as alteracoes feitas no gabarito de uma de uma questao 
+                                      dissertativa
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_questao - codigo da questao
             $cod_alternativa - codigo da alternativa
@@ -703,7 +716,7 @@ function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuar
             $texto - mensagem de feedback
    Saida: XML da função Ajax
 */
-function EditarGabaritoDinamic($cod_curso, $cod_questao, $cod_alternativa, $novo_nome, $cod_usuario, $texto)
+function EditarGabaritoQuestaoDissDinamic($cod_curso, $cod_questao, $cod_alternativa, $novo_nome, $cod_usuario, $texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -722,37 +735,40 @@ function EditarGabaritoDinamic($cod_curso, $cod_questao, $cod_alternativa, $novo
   // Imprime no div valores do formulário
   $objResponse->addAssign("text_".$cod_questao.$cod_alternativa, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
 
-
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
 }
 
 /* *********************************************************************
-   AnexarArquivosDinamic - Anexa arquivos a questao
-   Entrada: $dados_form - dados do formulario para anexar arquivos
-            $nome_arquivo - nome do arquivo
+   EditarGabaritoQuestaoObjDinamic - Salva no banco as alteracoes feitas no gabarito de uma de uma questao 
+                                      objetiva
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+			$gabarito - gabarito da questao
    Saida: XML da função Ajax
 */
-function AnexarArquivosDinamic($nome_arquivo)
+function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
 {
-    $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse('ISO-8859-1');
 
-    $objResponse->addAlert("formData: " . print_r($dados_form, true));
-    $objResponse->addAlert("_FILES: " . print_r($_FILES, true));
+  $sock=Conectar($cod_curso);
 
-    //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
+  $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
 
-    // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-    return $objResponse->getXML();
+  Desconectar($sock);
+
+  return $objResponse->getXML();
 }
 
 /* *********************************************************************
-   ExcluirArquivo - Exclui o arquivo, dinamicamente
+   ExcluiArquivoDinamic - Exclui o arquivo, dinamicamente
    Entrada: $numero - numero do arquivo, no item
             $arq - endereco do arquivo no servidor
             $cod_curso - codigo do curso
             $cod_item - codigo do item
             $cod_usuario - codigo do usuario
+			$texto - texto de feedback
    Saida: XML da função Ajax
 */
 function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $texto){
@@ -760,7 +776,7 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $arq=htmlspecialchars_decode($arq);
-
+  
   RemoveDiretorio($arq);
 
   $objResponse->addRemove('arq_'.$numero);
@@ -771,3 +787,94 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
 
   return $objResponse->getXML();
 }
+
+/* *********************************************************************
+   ExibeArquivoAnexadoDinamic - Insere  na pagina os dados do arquivo anexado
+   Entrada: $cod_curso - codigo do curso
+            $cod_questao - codigo da questao
+			$cod_usuario - codigo do usuario
+            $arqNum - numero do arquivo
+			$textoFeedback - texto de feedback
+   Saida: XML da função Ajax
+*/
+function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arqNum, $nomeArq, $textoFeedback){
+
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $caminho = "../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario."/".$nomeArq;
+  $tamanho = round((filesize($caminho) / 1024), 2);
+  
+  if($tamanho > 0)
+  {
+  	$objResponse->addScript("InsereLinhaArq('".$nomeArq."',".$tamanho.",".$arqNum.",'".$caminho."');");
+  }
+  else
+  {
+    $objResponse->addRemove('arq_'.$arqNum);
+    $objResponse->addScript("LimpaBarraArq();");
+  	$objResponse->addScriptCall("mostraFeedback", "Erro ao anexar arquivo.", 'false');
+  }
+  
+  return $objResponse->getXML();
+}
+
+/**********************************************************************
+   VerificaExistenciaArquivoDinamic - Verifica se ja existe um arquivo com o nome passado como parametro
+   Entrada: $cod_curso - codigo do curso
+            $cod_questao - codigo da questao
+			$cod_usuario - codigo do usuario
+			$nomeArq - nome do arquivo
+   Saida: XML da função Ajax
+*/
+function VerificaExistenciaArquivoDinamic($cod_curso, $cod_questao, $cod_usuario, $nomeArq){
+
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario."/");
+  
+  $flag = 0;
+  if ( ($total = count($dir)) > 0 && $dir != NULL){
+    foreach($dir as $cod => $linha){
+      if ($linha['Arquivo'] == $nomeArq){
+        $flag = 1;
+        break;
+      }
+    }
+  }
+  
+  $objResponse->addScript("VerificaUpload('".$nomeArq."',$flag);");
+
+  return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AtualizaPosicoesDasAlternativasDinamic - Atualiza posicoes das alternativas
+  Entrada: $cod_curso - codigo do curso
+           $cod_usuario - codigo do usuario
+           $lista_ids - lista dos ids
+		   $tp_questao - tipo da questao
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AtualizaPosicoesDasAlternativasDinamic($cod_curso, $cod_usuario, $lista_ids, $tp_questao){
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $sock=Conectar($cod_curso);
+  PegaSemaforo($sock, "Exercicios");
+
+  $string = "";
+  foreach($lista_ids as $cod => $linha){
+    $vetor = split('_', $linha);
+    $query = "update Exercicios_questao_alternativa set posicao_item = ".($cod+1)." where cod_alternativa=".$vetor[1];
+    Enviar($sock, $query);
+    if($tp_questao == 'O')
+    	$string = $string.$vetor[1].",";
+  }
+  
+  if($tp_questao == 'O')
+    $objResponse->addScript("AtualizarMudancaPosicoes(\"".$string."\");");
+
+  LiberaSemaforo($sock, "Exercicios");
+  Desconectar($sock);
+  return $objResponse->getXML();
+}
+

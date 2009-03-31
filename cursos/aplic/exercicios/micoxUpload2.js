@@ -1,4 +1,4 @@
-function micoxUpload2(form,timeout,loading,callback){
+function micoxUpload2(form,timeout,loading,callback,arqNum,nomeArq,cod_curso,cod_questao,cod_usuario){
 /**
 * micoxUpload2 - Submete um form para um iframe oculto e pega o resultado. Consequentemente pode
 *               ser usado pra fazer upload de arquivos de forma assincrona.
@@ -13,6 +13,8 @@ function micoxUpload2(form,timeout,loading,callback){
 	var new_form, loading_msg, loadpos=0; //the new form that will replace old form AND loading msg
 	var z, old_action, concat, timeload, timecounter=0, iframe, name;
 	var loads = ['&nbsp;&nbsp;&nbsp;','.&nbsp;&nbsp;','..&nbsp;','...']; //loading animation
+	//Gustavo
+	var td;
 	
 	/*** small functions */
 	$gE = function(quem){ return document.getElementById(quem) }
@@ -37,7 +39,7 @@ function micoxUpload2(form,timeout,loading,callback){
 			abortFrame(name);
 			loaded('timeout');
 		}
-		loading_msg.innerHTML = loading + ' ' + loadAnim();
+		loading_msg.innerHTML = loading + nomeArq + ' ' + loadAnim() + '<br/>';
 	}
 	abortFrame = function(o_frame){ //stop iframe
 		var o_frame = typeof(o_frame)=="string" ? $gE(o_frame):o_frame;
@@ -123,9 +125,12 @@ function micoxUpload2(form,timeout,loading,callback){
 		//first, removing the event of iframe
 		removeEvent(iframe,'load',loaded)
 		//removind loading msg
-		loading_msg.parentNode.removeChild(loading_msg);
+		//loading_msg.parentNode.removeChild(loading_msg);
+		
+		xajax_ExibeArquivoAnexadoDinamic(cod_curso,cod_questao,cod_usuario,arqNum,nomeArq);
+		
 		//removing old form
-		//form.parentNode.removeChild(form);	
+		form.parentNode.removeChild(form);	
 		
 		//calling callback with the return
 		if(arguments[0]!='timeout'){
@@ -157,15 +162,36 @@ function micoxUpload2(form,timeout,loading,callback){
 	form.submit();
 	
 	//make loading
-	//loading_msg = document.createElement('div');
-	//loading_msg.innerHTML = loading;
-	//form.parentNode.insertBefore(loading_msg,form);
+	loading_msg = document.createElement('span');
+	loading_msg.setAttribute("id","arq_"+arqNum);
+	loading_msg.innerHTML = loading+nomeArq+'<br/>';
+    //form.parentNode.insertBefore(loading_msg,form);
+	
+	//Gustavo
+	//finding td where to input loading_msg
+	td = document.getElementById('listFiles');
+	
+	if(td == null) //create a new row to input loading_msg 
+	{
+		tr = document.createElement('tr');
+		td = document.createElement('td');
+		td.setAttribute("class","itens");
+		td.setAttribute("id","listFiles");
+		td.setAttribute("colspan","4");
+		tr.appendChild(td);
+		trOpt = document.getElementById('optArq');
+		trOpt.parentNode.insertBefore(tr,trOpt);
+	} 
+	
+	td.appendChild(loading_msg);
+	
+	
 
 	//making new form and hidden old form
 	input_file.value='';
 	form.reset();
 	new_form = form.cloneNode(true);
-	cloneEvents(form,new_form,true);
+	//cloneEvents(form,new_form,true);
 	new_form.reset();
 	new_form.action = old_action;
 	form.style.display = 'none';

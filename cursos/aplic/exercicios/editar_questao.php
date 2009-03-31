@@ -61,13 +61,16 @@
   $objAjax->registerFunction("CriaNovoTopicoDinamic");
   $objAjax->registerFunction("EditarTituloQuestaoDinamic");
   $objAjax->registerFunction("EditarEnunciadoDinamic");
-  $objAjax->registerFunction("EditarGabaritoDinamic");
-  $objAjax->registerFunction("AnexarArquivosDinamic");
+  $objAjax->registerFunction("EditarGabaritoQuestaoDissDinamic");
+  $objAjax->registerFunction("EditarGabaritoQuestaoObjDinamic");
   $objAjax->registerFunction("ExcluiArquivoDinamic");
+  $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
+  $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
+  $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
-  $cod_questao = 1;
+  $cod_questao = 2;
   $cod_usuario = 1;
   $cod_ferramenta=24;
 
@@ -78,25 +81,41 @@
   Desconectar($sock);
 
   include("../topo_tela.php");
+  
+  // instanciar o objeto, passa a lista de frases por parametro
+  $feedbackObject = new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+  $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
 
   $questao = RetornaQuestao($sock,$cod_questao);
   $alternativas = RetornaAlternativas($sock,$cod_questao);
   $topicos = RetornaTopicos($sock);
   $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp);
   $tp_questao = $questao['tp_questao'];
+  $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
+  $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
 
   if($tp_questao == 'O')
+  {
     $gabaritoObj = RetornaGabaritoQuestaoObj($sock, $cod_questao);
+    $existeGabaritoDiss = 0;
+  }
   else
+  {
     $gabaritoObj = null;
+    $existeGabaritoDiss = 1;
+  }
+    
+    
 
   /*********************************************************/
   /* in�io - JavaScript */
-  echo("    <script  type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"micoxUpload2.js\"></script>\n");
-  echo("    <script type=\"text/javascript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
   echo("    <!--\n");
   //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
   echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
@@ -105,11 +124,20 @@
 
   echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
-  echo("    var posiAlt = new Array();\n");
+  if($tp_questao == 'O')
+  {
+  	echo("    var posiAlt = new Array();\n");
+  	echo("    var gabarito = new Array();\n\n");
+  }
+  
   echo("    var editaTexto = 0;\n");
   echo("    var editaTitulo = 0;\n");
   echo("    var input = 0;\n");
   echo("    var cancelarElemento = null;\n");
+  echo("    var contaArq = ".count($lista_arq).";\n");
+  echo("    var gabaritosVisiveis = 0;\n");
+  echo("    var tBody;\n");
+  echo("    var tableDnD;\n");
   echo("    var cancelarTodos = 0;\n\n");
 
   if ($tp_questao == 'O' && (count($alternativas)>0) && ($alternativas != null))
@@ -131,7 +159,6 @@
 
   if ($gabaritoObj != null)
   {
-    echo("    var gabarito = new Array();\n\n");
     $aux = bindec($gabaritoObj);
     while($aux > 0 || $qtdAlternativas > 0)
     {
@@ -145,13 +172,17 @@
   echo("    function Iniciar()\n");
   echo("    {\n");
   echo("      lay_novo_topico = getLayer('layer_novo_topico');\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("      tableDnD = new TableDnD();\n");
+  echo("      tBody = document.getElementById('tBody');\n");
+  echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
   echo("    }\n\n");
 
-  echo ("      function WindowOpenVer(id)\n");
-  echo ("      {\n");
-  echo ("         window.open(\"" . $dir_questao_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
-  echo ("      }\n\n");
+  echo("    function WindowOpenVer(id)\n");
+  echo("    {\n");
+  echo("      window.open(\"" . $dir_questao_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
+  echo("    }\n\n");
 
   echo("    function EscondeLayers()\n");
   echo("    {\n");
@@ -284,13 +315,13 @@
   echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",'',".$cod_usuario.", \"\");\n");
   echo("        else{\n");
   echo("          cod = RetornaCodAlternativa(id);");
-  echo("          xajax_EditarGabaritoDinamic(".$cod_curso.",".$cod_questao.",cod,'',".$cod_usuario.", \"\");\n");
+  echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",cod,'',".$cod_usuario.", \"\");\n");
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
 
   echo("    function AlteraTexto(id){\n");
-  echo("      if (editaTexto==0){\n");
+  echo("      if (editaTexto==-1 || editaTexto != id){\n");
   echo("        CancelaTodos();\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
@@ -298,28 +329,28 @@
   echo("        startList();\n");
   echo("        document.getElementById('text_'+id+'_text').focus();\n");
   echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
-  echo("        editaTexto++;\n");
+  echo("        editaTexto = id;\n");
   echo("      }\n");
   echo("    }\n\n");
 
   echo("    function RetornaCodAlternativa(codigo)\n");
   echo("    {\n");
-  echo("      var cod_questao;\n");
-  echo("      cod_questao = ".$cod_questao.";\n");
-  echo("      cod_questao = cod_questao.toString();");
-  echo("      codigo = codigo.toString();");
-  echo("      return codigo.split(cod_questao)[1];");
+  echo("	  var cod_questao,cod;\n");
+  echo("	  cod_questao = \"".$cod_questao."\";\n");
+  echo("      codigo = codigo.toString();\n");
+  echo("	  cod = codigo.substring(cod_questao.length);");
+  echo("      return cod;\n");
   echo("    }\n\n");
 
   echo("    function EdicaoTexto(codigo, id, valor){\n");
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
-  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML\n");
+  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
   echo("        if(codigo == ".$cod_questao.")\n");
   echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",conteudo,".$cod_usuario.", \"\");\n");
   echo("        else{\n");
   echo("          cod = RetornaCodAlternativa(codigo);");
-  echo("          xajax_EditarGabaritoDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,".$cod_usuario.", \"\");\n");
+  echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,".$cod_usuario.", \"\");\n");
   echo("        }\n");
   echo("      }\n");
   echo("      else{\n");
@@ -328,8 +359,9 @@
   //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
   echo("      }\n");
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
-  echo("      editaTexto=0;\n");
+  echo("      editaTexto=-1;\n");
   echo("      cancelarElemento=null;\n");
+  echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function VerificaNovoTopico(textbox, aspas) {\n");
@@ -348,7 +380,8 @@
   echo("        textbox.focus();\n");
   echo("      }\n");
   echo("      else{\n");
-  echo("        xajax_CriaNovoTopicoDinamic(".$cod_curso.",".$cod_questao.",texto);\n");
+  //?
+  echo("        xajax_CriaNovoTopicoDinamic(".$cod_curso.",".$cod_questao.",texto,'Topico criado com sucesso');\n");
   echo("        EscondeLayer(lay_novo_topico);\n");
   echo("      }\n");
   echo("    }\n\n");
@@ -364,7 +397,6 @@
   echo("    }\n");
 
   echo("    function VerificaChkBoxAlt(alpha){\n");
-  echo("      CancelaTodos();\n");
   echo("      checks = document.getElementsByName('chkAlt');\n");
   echo("      var i, j=0;\n");
   echo("      for (i=0; i<checks.length; i++){\n");
@@ -470,7 +502,8 @@
   echo("      opt1.innerHTML = 'Errada';\n");
   echo("      opt2 = document.createElement(\"option\");\n");
   echo("      opt2.setAttribute(\"value\",\"1\");\n");
-  echo("      if(RetornaValidadeQuestao(cod) != 0)\n");
+  echo("      opt2.innerHTML = 'Certa';\n");
+  echo("      if(RetornaValidadeQuestao(cod) == 1)\n");
   echo("      {\n");
   echo("        opt2.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
@@ -478,7 +511,6 @@
   echo("      {\n");
   echo("        opt1.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
-  echo("      opt2.innerHTML = 'Certa';\n");
   echo("      select.appendChild(opt1);\n");
   echo("      select.appendChild(opt2);\n");
   echo("      return select;\n");
@@ -525,7 +557,7 @@
   echo("    }\n\n");
 
   echo("    function CriaInputAlt(conteudo,cod)\n");
-  echo("    {\n");	
+  echo("    {\n");
   echo("      var inputAlternativa = document.createElement(\"input\");\n");
   echo("      inputAlternativa.setAttribute(\"type\", \"text\");\n");
   echo("      inputAlternativa.setAttribute(\"value\",conteudo);\n");
@@ -556,7 +588,7 @@
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n"); 
   echo("      span.innerHTML = 'Editar gabarito';\n");
-  echo("      span.onclick= function(){ AlteraTexto(cod); };\n");
+  echo("      span.onclick= function(){ AlteraTexto(cod);DesabilitarMudancaPosicaoAlt(); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
 
@@ -569,7 +601,7 @@
   echo("    }\n\n");
 
   echo("    function CriaSpanEsconder(cod)\n");
-  echo("    {\n");	
+  echo("    {\n");
   echo("      var span = document.createElement(\"span\");\n"); 
   echo("      span.innerHTML = 'Esconder';\n");
   echo("      span.onclick= function(){ EsconderGabarito(cod); };\n");
@@ -599,7 +631,7 @@
 
   echo("    function AdicionarAlternativa(cod)\n");
   echo("    {\n");	
-  echo("      var tr,td,ultimaTr,trGab,tdText,tdOp,codigo;\n");
+  echo("      var tr,td,trGab,tdText,tdOp,codigo;\n");
   if($tp_questao == 'D')
   {
     echo("      codigo = cod;\n");
@@ -614,8 +646,7 @@
   echo("      td.appendChild(CriaSpanEspAlt(5));\n");
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
   echo("      tr.appendChild(td);\n");
-  echo("      ultimaTr = document.getElementById(\"trAddAlt\");\n");
-  echo("      ultimaTr.parentNode.insertBefore(tr,ultimaTr);\n");
+  echo("      tBody.appendChild(tr);\n");
   if($tp_questao == 'O')
     echo("      AdicionaLinhaArrayGabEPosi(cod);\n");
   else if($tp_questao == 'D')
@@ -633,10 +664,12 @@
     echo("      tdOp.appendChild(CriaOpcoes(codigo));\n");
     echo("      trGab.appendChild(tdText);\n");
     echo("      trGab.appendChild(tdOp);\n");
-    echo("      ultimaTr.parentNode.insertBefore(trGab,ultimaTr);\n");
+    echo("      tbody.appendChild(trGab);\n");
   }
   echo("      CriaCamposEdicao('',cod);\n");
-  echo("      IntercalaCorLinhaAlt();\n");
+  echo("      DesabilitarMudancaPosicaoAlt();\n");
+  //echo("      IntercalaCorLinhaAlt();\n");
+  echo("      cancelarElemento=document.getElementById('spanCanc_'+cod);\n");
   echo("      qtdAlternativas++;\n");
   echo("    }\n\n");
   
@@ -644,8 +677,12 @@
   echo("    function NovaAlternativa()\n");
   echo("    {\n");
   echo("      if(qtdAlternativas < 10)\n");
+  echo("      {");
+  echo("        CancelaTodos();\n");
   echo("        xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",'".$tp_questao."');\n");
+  echo("	  }");
   echo("      else\n");
+  //?
   echo("        alert('Uma questao pode conter no maximo 10 alternativas.');\n");
   echo("    }\n\n");
 
@@ -664,32 +701,32 @@
   echo("    }\n\n");
 
   echo("    function ApagarAlternativa(){\n");
-  echo("      var trAlt,checks,i,tab,stringGabarito;\n");
+  echo("      var checks,i,j,deleteArray;\n");
+  echo("	  j = 0;\n");
   echo("      checks = document.getElementsByName('chkAlt');\n");
+  echo("	  deleteArray = new Array();\n");
   echo("      if (confirm('Voce realmente deseja apagar o(s) item(s) selecionado(s)?')){\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
-  echo("            alert(i);");
   echo("            getNumber=checks[i].id.split('_');\n");
-  echo("            DeletarLinhaAlternativa(getNumber[1]);\n");
-  if($tp_questao == 'D')
-    echo("            DeletarLinhaGabarito(getNumber[1]);\n");
-  else if($tp_questao == 'O')
-  {
+  echo("            deleteArray[j++] = getNumber[1];\n");
+  if($tp_questao == 'O')
     echo("            AtualizaArrayGabEPosi(getNumber[1]);\n");
-    echo("            stringGabarito = FormaGabarito();\n");
-  }
-  echo("             xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",getNumber[1],stringGabarito,'".$tp_questao."');\n");
+  echo("            xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",getNumber[1],'".$tp_questao."');\n");
   echo("            qtdAlternativas--;\n");
   echo("          }\n");
   echo("        }\n");
-  echo("        IntercalaCorLinhaAlt();\n");
+  echo("		DeletarLinhasAlternativa(deleteArray,j);\n");
+  echo("        xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",FormaGabarito());\n");
+  //echo("        IntercalaCorLinhaAlt();\n");
   echo("        VerificaChkBoxAlt(0);\n");
   echo("      }\n");
   echo("    }\n\n");
 
   echo("    function EditarAlternativa(){\n");
   echo("      var spanAlt,checks,conteudo;\n");
+  echo("	  CancelaTodos();\n");
+  echo("	  DesabilitarMudancaPosicaoAlt();\n");
   echo("      checks = document.getElementsByName('chkAlt');\n");
   echo("      for (i=0; i<checks.length; i++){\n");
   echo("        if(checks[i].checked){\n");
@@ -699,22 +736,27 @@
   echo("            conteudo = spanAlt.innerHTML;\n");
   echo("            spanAlt.innerHTML = '';\n");
   echo("            CriaCamposEdicao(conteudo,getNumber[1]);\n");
+  echo("            cancelarElemento=document.getElementById('spanCanc_'+getNumber[1]);\n");
   echo("          }\n");
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
-
-  echo("    function DeletarLinhaAlternativa(cod){\n");
-  echo("      var trAlt;\n");
-  echo("      trAlt = document.getElementById('trAlt_'+cod);\n");
-  echo("      trAlt.style.display = 'none';\n");
-  //echo("      trAlt.parentNode.removeChild(trAlt);\n");
-  echo("    }\n\n");
-
+  
   echo("    function DeletarLinhaGabarito(cod){\n");
   echo("      var trAltGab;\n");
   echo("      trAltGab = document.getElementById('trAltGab_'+cod);\n");
   echo("      trAltGab.parentNode.removeChild(trAltGab);\n");
+  echo("    }\n\n");
+
+  echo("    function DeletarLinhasAlternativa(deleteArray,j){\n");
+  echo("      var i;\n");
+  echo("	  for(i=0;i<j;i++)\n");
+  echo("      {\n");
+  echo("        trAlt = document.getElementById('trAlt_'+deleteArray[i]);\n");
+  echo("        trAlt.parentNode.removeChild(trAlt);\n");
+  if($tp_questao == 'D')
+  	echo("          DeletarLinhaGabarito(deleteArray[i]);\n");
+  echo("	  }\n");
   echo("    }\n\n");
 
   echo("    function RetornaPosiAlternativa(cod){\n");
@@ -724,6 +766,16 @@
   echo("          return i;\n");
   echo("      }\n");
   echo("    }\n\n");
+  
+  echo("	function RetornaNovaPosiAlternativa(posiAltNova,cod)\n");
+  echo("	{");
+  echo("      var i;\n");
+  echo("      for(i=0;i<qtdAlternativas;i++)\n");
+  echo("      {\n");
+  echo("        if(posiAltNova[i] == cod)\n");
+  echo("		  return i;\n");
+  echo("      }\n");
+  echo("	}\n\n");
 
   echo("    function AdicionaLinhaArrayGabEPosi(cod){\n");
   echo("      var i;\n");
@@ -739,6 +791,33 @@
   echo("        gabarito[i] = gabarito[i+1];\n");
   echo("      }\n");
   echo("    }\n\n");
+    
+  echo("	function AtualizaPosicoesGabEPosi(string)\n");
+  echo("	{");
+  echo("      var i,j,posiAltNova,gabaritoTemp;\n");
+  echo("	  posiAltNova = string.split(\",\");\n");
+  echo("      gabaritoTemp = new Array(qtdAlternativas);\n");
+  echo("      for(i=0;i<qtdAlternativas;i++)\n");
+  echo("	  {\n");
+  echo("	    j = RetornaNovaPosiAlternativa(posiAltNova,posiAlt[i]);\n");
+  echo("	    gabaritoTemp[j] = gabarito[i];\n");
+  echo("	  }\n");
+  echo("      for(i=0;i<qtdAlternativas;i++)\n");
+  echo("	  {\n");
+  echo("	    gabarito[i] = gabaritoTemp[i];\n");
+  echo("	  }\n");
+  echo("      for(i=0;i<qtdAlternativas;i++)\n");
+  echo("	  {\n");
+  echo("	    posiAlt[i] = posiAltNova[i];\n");
+  echo("	  }\n");
+  echo("	}\n\n");
+  
+  echo("    function AtualizarMudancaPosicoes(string){\n");
+  echo("      var stringGabarito;\n");
+  echo("	  AtualizaPosicoesGabEPosi(string);\n");
+  echo("      stringGabarito = FormaGabarito();\n");
+  echo("      xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",stringGabarito);\n");
+  echo("    }\n\n");
 
   echo("    function DeletaCamposEdicao(elemento){\n");
   echo("      while (elemento.firstChild) {\n");
@@ -751,6 +830,7 @@
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      DeletaCamposEdicao(span);\n");
   echo("      span.innerHTML = conteudo;\n");
+  echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function FormaGabarito(){\n");
@@ -774,6 +854,8 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
+    echo("		HabilitarMudancaPosicaoAlt();\n");
+    echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
   else
@@ -785,17 +867,21 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaDissDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo);\n");
+    echo("		HabilitarMudancaPosicaoAlt();\n");
+    echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
 
   echo("    function AtualizaNivel(nivel)\n");
   echo("    {\n");
-  echo("      xajax_AtualizarNivelDinamic(".$cod_curso.",".$cod_questao.",nivel);\n");
+  //?
+  echo("      xajax_AtualizarNivelDinamic(".$cod_curso.",".$cod_questao.",nivel,'Dificuldade atualizada com sucesso.');\n");
   echo("    }\n\n");
 
   echo("    function AtualizaTopico(cod)\n");
   echo("    {\n");
-  echo("      xajax_AtualizarTopicoDinamic(".$cod_curso.",".$cod_questao.",cod);\n");
+  //?
+  echo("      xajax_AtualizarTopicoDinamic(".$cod_curso.",".$cod_questao.",cod,'Topico atualizado com sucesso.');\n");
   echo("    }\n\n");
 
   echo("    function NovoTopico(cod)\n");
@@ -809,14 +895,26 @@
   echo("    {\n");
   echo("      var tr;\n");
   echo("      tr = document.getElementById('trAltGab_'+cod);\n");
-  echo("      tr.style.display = 'none';\n");
+  echo("	  if(tr.style.display == '')\n");
+  echo("	  {\n");
+  echo("        tr.style.display = 'none';\n");
+  echo("	    gabaritosVisiveis--;");
+  echo("        if(gabaritosVisiveis == 0)\n");
+  echo("		  HabilitarMudancaPosicaoAlt();");
+  echo("	  }");
   echo("    }\n\n");
 
   echo("    function MostrarGabarito(cod)\n");
   echo("    {\n");
   echo("      var tr;\n");
   echo("      tr = document.getElementById('trAltGab_'+cod);\n");
-  echo("      tr.style.display = '';\n");
+  echo("	  if(tr.style.display != '')\n");
+  echo("	  {\n");
+  echo("      	tr.style.display = '';\n");
+  echo("		gabaritosVisiveis++;\n");
+  echo("		if(gabaritosVisiveis == 1)\n");
+  echo("		  DesabilitarMudancaPosicaoAlt();");
+  echo("	  }\n");
   echo("    }\n\n");
 
   echo("    function ExibirGabarito(){\n");
@@ -842,6 +940,7 @@
 
   echo("    function getfilename(path)\n");
   echo("    {\n");
+  echo("      var pieces,n,file;");
   echo("      pieces=path.split('\'');\n");
   echo("      n=pieces.length;\n");
   echo("      file=pieces[n-1];\n");
@@ -865,11 +964,10 @@
   echo("    }\n\n");
 
   echo("    function EdicaoArq(i, msg){\n");
-  echo("      var nomeArq;\n");
+  echo("      var nomeArq,td;\n");
   echo("      nomeArq = getfilename(document.getElementById('input_files').value);\n");
   echo("      if ((i==1)&&(ArquivoValido(nomeArq))){\n"); //OK
-  //echo("        document.formFiles.submit();\n");
-  echo("        micoxUpload2('formFiles',20,'Anexando',function(data){alert(data)});\n");
+  echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",nomeArq);\n");
   echo("      }\n");
   echo("      else {\n");
   echo("        document.getElementById('input_files').style.visibility='hidden';\n");
@@ -899,8 +997,138 @@
   echo("        LimpaBarraArq();\n");
   echo("        VerificaChkBoxArq(0);\n");
   echo("      }\n");
-  echo("    }\n");
-
+  echo("    }\n\n");
+  
+  echo("    function RetornaSrcImg(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var array,formato,n;\n");
+  echo("      array = nomeArq.split('.');\n");
+  echo("	  n = array.length;\n");
+  echo("	  formato = array[n-1];\n");
+  echo("      if(formato == 'zip'){\n");
+  echo("        return '../imgs/arqzip.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'jpg' || formato == 'jpeg' || formato == 'png' || formato == 'gif'){\n");
+  echo("        return '../imgs/arqimg.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'doc'){\n");
+  echo("        return '../imgs/arqdoc.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'pdf'){\n");
+  echo("        return '../imgs/arqpdf.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'html'){\n");
+  echo("        return '../imgs/arqhtml.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'mp3' || formato == 'midi'){\n");
+  echo("        return '../imgs/arqsnd.gif';\n");
+  echo("	  }\n");
+  echo("      return '../imgs/arqp.gif';\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaTipoArq(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var array,formato,n;\n");
+  echo("      array = nomeArq.split('.');\n");
+  echo("	  n = array.length;\n");
+  echo("	  formato = array[n-1];\n");
+  echo("      if(formato == 'zip'){\n");
+  echo("        return 'zip';\n");
+  echo("	  }\n");
+  echo("      else{\n");
+  echo("        return 'comum';\n");
+  echo("	  }\n");
+  echo("    }\n\n");
+  
+  echo("    function CriaCheckBoxArq(cod)\n");
+  echo("    {\n");	
+  echo("      var check = document.createElement(\"input\");\n");
+  echo("      check.setAttribute(\"type\", \"checkbox\");\n");
+  echo("      check.setAttribute(\"id\",'chkArq_'+cod);\n");
+  echo("      check.setAttribute(\"name\", \"chkArq\");\n");
+  echo("      check.setAttribute(\"value\", cod);\n");
+  echo("      check.onclick = function(){ VerificaChkBoxArq(1); };\n");
+  echo("      return check;\n");
+  echo("    }\n\n");
+    
+  echo("    function CriaImgArq(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var img = document.createElement(\"img\");\n");
+  echo("      img.setAttribute(\"border\", \"0\");\n");
+  echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
+  echo("      return img;\n");
+  echo("    }\n\n");
+  
+  echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
+  echo("    {\n");	
+  echo("      var span = document.createElement(\"span\");\n");
+  echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
+  echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
+  echo("      span.setAttribute(\"nomeArq\",caminho);\n");
+  echo("	  if(RetornaTipoArq(nomeArq) == 'zip')\n");
+  echo("	    span.setAttribute(\"arqZip\",nomeArq);\n");
+  echo("      span.setAttribute(\"arqOculto\",\"nao\");\n");
+  echo("      span.onclick = function(){ WindowOpenVer(caminho); }\n");
+  echo("      span.innerHTML = nomeArq;\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho){\n");
+  echo("	  span = document.getElementById('arq_'+numArq);\n");
+  echo("	  span.innerHTML = '';\n");
+  echo("	  span.appendChild(CriaCheckBoxArq(numArq));\n");
+  echo("	  span.appendChild(CriaSpanEspAlt(5));\n");
+  echo("	  span.appendChild(CriaImgArq(nomeArq));\n");
+  echo("	  span.appendChild(CriaSpanVisualizarArq(nomeArq,numArq,caminho));\n");
+  echo("	  span.appendChild(document.createTextNode(' - ('+tamanho+'Kb)'));\n");
+  echo("	  span.appendChild(document.createElement(\"br\"));\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function EncontraArquivoEApaga(nomeArq)\n");
+  echo("    {\n");
+  echo("	  var i,span;\n");
+  echo("      for(i = 0; i <= contaArq; i++)\n");
+  echo("      {\n");
+  echo("        span = document.getElementById(\"nomeArq_\"+i);\n");
+  echo("        if(span != null)\n");
+  echo("        {\n");
+  echo("          if(span.innerHTML == nomeArq)\n");
+  echo("          {\n"); 
+  echo("            xajax_ExcluiArquivoDinamic(i,'".$dir_questao_temp['link']."'+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function VerificaUpload(nomeArq,flag)\n");
+  echo("    {\n");
+  echo("	  if((flag == 0))");
+  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
+  echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))");
+  echo("      {");
+  echo("		EncontraArquivoEApaga(nomeArq);");
+  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
+  echo("      }");
+  echo("    }\n\n");
+    
+  echo("	function HabilitarMudancaPosicaoAlt()\n");
+  echo("	{\n");
+  echo("      if(tBody) tableDnD.init(null,tBody,".$existeGabaritoDiss.");\n");
+  echo("	}\n\n");
+  
+  echo("	function DesabilitarMudancaPosicaoAlt()\n");
+  echo("	{");
+  echo("      if(tableDnD) tableDnD.term();\n");
+  echo("	}\n\n");
+  
+  echo("	function SoltaMouse(ids)\n");
+  echo("	{");
+  //echo("      IntercalaCorLinhaAlt();\n");
+  echo("      xajax_AtualizaPosicoesDasAlternativasDinamic(".$cod_curso.", ".$cod_usuario.", ids, \"".$tp_questao."\");\n");
+  echo("	}\n\n");
+    
   echo("    function Voltar()\n");
   echo("    {\n");
   echo("      window.location='enquete.php?cod_curso=".$cod_curso."';\n");
@@ -994,8 +1222,11 @@
         echo("                      </td>\n");
         echo("                      <td>\n");
         if($questao['nivel'] == 'D') $dificil = "checked='true'";
+        else $dificil = "";
         if($questao['nivel'] == 'M') $medio = "checked='true'";
+        else $medio = "";
         if($questao['nivel'] == 'F') $facil = "checked='true'";
+        else $facil = "";
 
         echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('D');\" ".$dificil." /> Dificil<br />\n");
         echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('M');\" ".$medio." /> Medio<br />\n");
@@ -1027,17 +1258,7 @@
 	/* ? - Alternativas */
 	echo("                    <td class=\"center\" colspan=\"4\">Alternativas</td>\n");
 	echo("                  </tr>\n");
-        echo("                  <tr>\n");
-	echo("                    <td align=\"left\" colspan=\"4\">\n");
-	echo("                      <ul>\n");
-	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">Apagar</span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">Editar</span></li>\n");
-        if($tp_questao == 'D')
-          echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); 
-	echo("                      </ul>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
+	echo("					<tBody id=\"tBody\">");
 
         if ((count($alternativas)>0)&&($alternativas != null))
         {
@@ -1046,7 +1267,7 @@
             $texto = $linha_item['texto'];
             $cod_alternativa = $linha_item['cod_alternativa'];
 
-            echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\" class=\"altColor".($cod%2)."\">\n");
+            echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
             echo("                    <td class=\"itens\" colspan=\"4\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
             echo("                  </tr>\n");
 
@@ -1058,30 +1279,39 @@
               echo("                  <tr id=\"trAltGab_".$cod_alternativa."\" style=\"display:none;\">\n");
               echo("                    <td class=\"itens\" valign=\"top\" colspan=\"3\"><span id=\"text_".$cod_questao.$cod_alternativa."\">".$gabarito."</span></td>\n");
               echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-	      echo("                      <ul>\n");
-	      echo("                        <li><span onclick=\"AlteraTexto(".$cod_questao.$cod_alternativa.");\">Editar gabarito</span></li>\n");
-	      echo("                        <li><span onclick=\"LimparTexto(".$cod_questao.$cod_alternativa.");\">Limpar gabarito</span></li>\n");
-	      echo("                        <li><span onclick=\"EsconderGabarito(".$cod_alternativa.");\">Esconder</span></li>\n");
-	      echo("                      </ul>\n");
-	      echo("                    </td>\n");
+	      	  echo("                      <ul>\n");
+	          echo("                        <li><span onclick=\"AlteraTexto(".$cod_questao.$cod_alternativa.");DesabilitarMudancaPosicaoAlt();\">Editar gabarito</span></li>\n");
+	          echo("                        <li><span onclick=\"LimparTexto(".$cod_questao.$cod_alternativa.");\">Limpar gabarito</span></li>\n");
+	          echo("                        <li><span onclick=\"EsconderGabarito(".$cod_alternativa.");\">Esconder</span></li>\n");
+	          echo("                      </ul>\n");
+	          echo("                    </td>\n");
               echo("                  </tr>\n");
             }
           }
         }
-
-        echo("                  <tr id=\"trAddAlt\">\n");
+        
+    echo("					</tBody>");    
+    echo("                  <tr id=\"optAlt\">\n");
+	echo("                    <td align=\"left\" colspan=\"4\">\n");
+	echo("                      <ul>\n");
+	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
+	echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">Apagar</span></li>\n");
+	echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">Editar</span></li>\n");
+    if($tp_questao == 'D')
+      echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); 
+	echo("                      </ul>\n");
+	echo("                    </td>\n");
+	echo("                  </tr>\n");
+    echo("                  <tr id=\"trAddAlt\">\n");
 	echo("                    <td align=\"left\" colspan=\"4\">\n");
         /* ? - Adicionar Alternativa */
 	echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) Adicionar Alternativa</span></div>\n");
-        echo("                    </td>\n");
+    echo("                    </td>\n");
 	echo("                  </tr>\n");
-        echo("                  <tr class=\"head\">\n");
+    echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
 	echo("                    <td colspan=\"4\">Arquivos</td>\n");
 	echo("                  </tr>\n");
-
-        $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
-        $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
 
 	if (count($lista_arq) > 0 || $lista_arq != null) {
 
@@ -1093,7 +1323,7 @@
 		$ha_visiveis = false;
 
 		while ((list ($cod, $linha) = each($lista_arq)) && !$ha_visiveis) {
-			if ($linha[Arquivo] != "")
+			if ($linha['Arquivo'] != "")
 				$ha_visiveis = !($linha['Status']);
 		}
 
@@ -1166,7 +1396,7 @@
 
 							echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
 
-							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha[Tamanho] / 1024), 2) . "Kb)");
+							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
 
 							echo ("<span id=\"local_oculto_" . $conta_arq . "\">");
 							if ($linha['Status'])
@@ -1215,13 +1445,12 @@
 		echo ("                  </tr>\n");
 	}
 
-        echo("                  <tr>\n");
+    echo("                  <tr id=\"optArq\">\n");
 	echo("                    <td align=\"left\" colspan=\"4\">\n");
 	echo("                      <ul>\n");
-	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></span></li>\n");
+	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
 	echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
-        echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">Descompactar</span></li>\n");
+    echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
 	echo("                      </ul>\n");
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
