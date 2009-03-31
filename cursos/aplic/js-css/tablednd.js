@@ -5,10 +5,14 @@
 function TableDnD() {
     /** Keep hold of the current drag object if any */
     this.dragObject = null;
+    /** Keep hold of the current drag object's brother if any */
+    this.dragObjectBrother = null;
     /** The current mouse offset */
     this.mouseOffset = null;
     /** The current table */
     this.table = null;
+    /** The current tbody */
+    this.tbody = null;
     /** Remember the old value of Y so that we don't do too much processing */
     this.oldY = 0;
 
@@ -18,12 +22,27 @@ function TableDnD() {
     this.linhas_string;
 
     /** Initialise the drag and drop by capturing mouse move events */
-    this.init = function(table) {
-        this.table = table;
-        var rows = table.tBodies[0].rows; //getElementsByTagName("tr")
-        for (var i=0; i<rows.length; i++) {
-            this.makeDraggable(rows[i]);
+    this.init = function(table,tbody,hasBrother) {
+    	var rows;
+    	
+    	if(table != null){
+        	this.table = table;
+         	rows = table.tBodies[0].rows; //getElementsByTagName("tr")
+    	}
+    	else{
+    		this.tbody = tbody;
+    		rows = tbody.rows;
+    	}
+    	
+        for (var i=0; i<rows.length; i++){
+        	if(hasBrother){
+        		if(i%2 == 0)
+        			this.makeDraggable(rows[i],hasBrother);
+        	}
+        	else
+            	this.makeDraggable(rows[i],hasBrother);
         }
+        
         this.linhas = rows;
 
         var self = this;
@@ -45,7 +64,6 @@ function TableDnD() {
                     var currentRow = self.findDropTargetRow(y);
                     if (currentRow) {
                         if (movingDown && self.dragObject != currentRow) {
-
 //                              self.linhas_string = self.linhas_string.replace(self.dragObject.id, '*');
 //                              self.linhas_string = self.linhas_string.replace(currentRow.id, self.dragObject.id);
 //                              self.linhas_string = self.linhas_string.replace('*', currentRow.id);
@@ -57,6 +75,8 @@ function TableDnD() {
 //                              self.linhas_string = self.linhas_string.replace('*', currentRow.id);
                         }
                         self.alteracao = 1;
+                        if(hasBrother)
+                        	self.dragObject.parentNode.insertBefore(self.dragObjectBrother, self.dragObject.nextSibling);           	
                     }
                 }
 
@@ -71,21 +91,43 @@ function TableDnD() {
                 // If we have a dragObject, then we need to release it,
                 // The row will already have been moved to the right place so we just reset stuff
                 droppedRow.style.backgroundColor = 'transparent';
-                self.dragObject   = null;
+                self.dragObject = null;
                 // And then call the onDrop method in case anyone wants to do any post processing
                 self.onDrop(self.table, droppedRow);
                 if(self.alteracao==1){
                   var ids = new Array();
+                  var j = 0;
                   for (i=0; i<self.linhas.length; i++){
-                    ids[i] = self.linhas[i].id;
+                  	if(hasBrother){
+                  		if(i%2 == 0)
+                  			ids[j] = self.linhas[i].id;
+                  			j++;
+                  	}
+                  	else
+                    	ids[i] = self.linhas[i].id;
                   } 
                   self.alteracao=0;
-
+                  
                   SoltaMouse(ids);
                 }
 //                 xajax_AtualizaPosicoes(cod_curso, cod_usuario, cod_topico);
             }
         };
+    }
+    
+    /** Terminate the drag and drop by capturing mouse move events */
+    this.term = function() {
+    	document.onmousemove = null;
+    	document.onmouseup = null;
+    	
+    	if(this.table != null)
+         	rows = this.table.tBodies[0].rows; //getElementsByTagName("tr")
+    	else
+    		rows = this.tbody.rows;
+    	
+    	for (var i=0; i<rows.length; i++) {
+            this.unmakeDraggable(rows[i]);
+        }
     }
 
     /** This function is called when you drop a row, so redefine it in your code
@@ -143,20 +185,35 @@ function TableDnD() {
     }
 
 	/** Take an item and add an onmousedown method so that we can make it draggable */
-    this.makeDraggable = function(item){
+    this.makeDraggable = function(item,hasBrother){
         if(!item) return;
         var self = this; // Keep the context of the TableDnd inside the function
         item.onmousedown = function(ev){
-            self.dragObject  = this;
+            self.dragObject = this;
+            if(hasBrother){
+            	self.dragObjectBrother = document.getElementById("trAltGab_"+self.dragObject.id.split("_")[1]);
+            }
             self.mouseOffset = self.getMouseOffset(this, ev);
             return false;
         }
         item.style.cursor = "move";
     }
+    
+    /** Take an item and make it undraggable */
+    this.unmakeDraggable = function(item){
+        if(!item) return;
+        item.onmousedown = null;
+        item.style.cursor = "default";
+    }
 
     /** We're only worried about the y position really, because we can only move rows up and down */
     this.findDropTargetRow = function(y) {
-        var rows = this.table.tBodies[0].rows;
+    	var rows;
+        if(this.table != null)
+        	rows = this.table.tBodies[0].rows;
+        else
+        	rows = this.tbody.rows;
+        
         for (var i=0; i<rows.length; i++) {
             var row = rows[i];
             var rowY    = this.getPosition(row).y;
