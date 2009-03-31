@@ -1115,28 +1115,14 @@ function ListaArquivos($caminho, $padrao, $tipo = 'T', $nivel)
    Saida: true se tudo ok
 */
 
-function DescompactarArquivoZip ($zip,$destino)
+function DescompactarArquivoZip($zip,$destino)
 {
-	$zipFile = new ZipArchive;
-	if ($zipFile->open($zip) === TRUE) {
-		$count=0;
-		while($entrada = $zipFile->getNameIndex($count)){
-			if(preg_match("/.*((\.php(\.|$))|(\.php3(\.|$))|(\.phtml(\.|$))).*/", $entrada)){ return false;}
-			$count++;				
-		}
-		
-		$zipFile->extractTo($destino);
-		
-		$zipFile->close();
-		
-		if(!SetaPermissoes($destino)){
-			return false;
-		}
-	}else{
-		return false;
-	}
-		
-	return true;
+  $comando="unzip -q -o \"".$zip."\" -d \"".$destino."\"";
+  system($comando,$situacao);
+  if ((!RenomeiaPHPDoDiretorio($destino)) || (!SetaPermissoes($destino)))
+    return (false);
+
+  return(!$situacao);
 }
 
 
