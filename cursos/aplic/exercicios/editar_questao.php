@@ -69,9 +69,8 @@
   $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
-
-  $cod_questao = 2;
-  $cod_usuario = 1;
+  
+  
   $cod_ferramenta=24;
 
   // Descobre os diretorios de arquivo, para os portfolios com anexo
@@ -687,7 +686,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
 
   echo("    function IntercalaCorLinhaAlt(){\n");
-  echo("      var checks,i,corLinha;\n");
+  echo("      var checks,i,corLinha,trAlt;\n");
   echo("      checks = document.getElementsByName('chkAlt');\n");
   echo("      corLinha = 0;\n");
   echo("      for (i=0; i<checks.length; i++){\n");
@@ -749,7 +748,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
 
   echo("    function DeletarLinhasAlternativa(deleteArray,j){\n");
-  echo("      var i;\n");
+  echo("      var i,trAlt;\n");
   echo("	  for(i=0;i<j;i++)\n");
   echo("      {\n");
   echo("        trAlt = document.getElementById('trAlt_'+deleteArray[i]);\n");
@@ -1131,7 +1130,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     
   echo("    function Voltar()\n");
   echo("    {\n");
-  echo("      window.location='enquete.php?cod_curso=".$cod_curso."';\n");
+  echo("      window.location='questoes.php?cod_curso=".$cod_curso."';\n");
   echo("    }\n\n");
 
   echo("    </script>\n\n");

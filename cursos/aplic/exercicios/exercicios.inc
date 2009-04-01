@@ -371,7 +371,26 @@ function VerificaTexto($texto){
   }
 
   return "";
-}	
+}
+
+/* *********************************************************************
+   RetornaQuestoesLixeira - Retorna array com as questoes que estao na lixeira (L), ou seja, que não são válidas (V)
+							e que não foram excluídas (X).
+   Entrada: $sock - BASE DO CURSO
+   Saida: array com []['cod_questao'] - chave primaria ou codigo da questao
+                    []['cod_usuario'] - codigo do usuario que criou a questao 
+                    []['cod_topico'] - codigo do topico ao qual a questao pertence
+                    []['titulo'] - titulo da questao
+                    []['tp_questao'] - campo que indica qual o tipo da questao (Dissertativa ou Objetiva)
+                    []['data'] - data em que a questao foi criada
+*/
+function RetornaQuestoesLixeira($sock)
+{
+  $consulta="select cod_questao, cod_usuario, cod_topico, titulo, tp_questao, data from Exercicios_questao where status='L'";
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista);
+}
 
 /* *********************************************************************
    RetornaFraseDinamic - Retorna lista de frases para uma variavel JavaScript, dinamicamente
@@ -876,5 +895,26 @@ function AtualizaPosicoesDasAlternativasDinamic($cod_curso, $cod_usuario, $lista
   LiberaSemaforo($sock, "Exercicios");
   Desconectar($sock);
   return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AlteraStatusQuestaoDinamic - Altera o status da questao
+  Entrada: $cod_curso - codigo do curso
+           $cod_questao - codigo da questao
+		   $status - status da questao (V - valida; L - lixeira;X - excluida definitivamente)	
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+ 
+    $query = "update Exercicios_questao set status = '".$status."' where cod_questao = ".$cod_questao;
+    Enviar($sock,$query);
+ 
+    Desconectar($sock);
+ 
+    return $objResponse->getXML();
 }
 

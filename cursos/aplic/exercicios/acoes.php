@@ -62,7 +62,7 @@
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
-  $dir_name = "agenda";
+  $dir_name = "exercicios";
   $dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
   /* ação = Criar Nova Questao - origem = questoes.php */
@@ -119,7 +119,7 @@
     header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
   }
   
-  /* ação = Descompactar Arquivo - origem = ver.php */
+  /* ação = Descompactar Arquivo - origem = editar_questao.php */
   else if ($acao=="descompactar")
   {
 
@@ -138,11 +138,8 @@
       RemoveArquivo($dir_tmp.$arq);
     }
     
-    //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
     Desconectar($sock);
-    //header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
-  //Desconectar($sock);
   exit;
 ?>
