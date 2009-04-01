@@ -62,9 +62,9 @@
 
 - Status no historico de uma Questao:
 
-  - 'C' - Criada
   - 'A' - Alternativa criada
   - 'B' - Alternativa apagada
+  - 'C' - Questao criada
 
 
 

@@ -1130,7 +1130,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     
   echo("    function Voltar()\n");
   echo("    {\n");
-  echo("      window.location='questoes.php?cod_curso=".$cod_curso."';\n");
+  echo("      window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q';\n");
   echo("    }\n\n");
 
   echo("    </script>\n\n");
@@ -1145,16 +1145,16 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 
   if ($tela_formador)
   {
-        $titulo="<span id=\"tit_".$questao['cod_questao']."\">".$questao['titulo']."</span>";
-        // ? - Renomear
-        $renomear="<span onclick=\"AlteraTitulo('".$questao['cod_questao']."');\" id=\"renomear_".$questao['cod_questao']."\">Renomear</span>";
+    $titulo="<span id=\"tit_".$questao['cod_questao']."\">".$questao['titulo']."</span>";
+    // ? - Renomear
+    $renomear="<span onclick=\"AlteraTitulo('".$questao['cod_questao']."');\" id=\"renomear_".$questao['cod_questao']."\">Renomear</span>";
 	$enunciado="<span id=\"text_".$questao['cod_questao']."\">".$questao['enunciado']."</span>";
-        // ? - Editar enunciado
-        $editar="<span onclick=\"AlteraTexto(".$questao['cod_questao'].");\">Editar enunciado</span>";
-        // ? - Novo topico
-        $novo_topico="<span onclick=\"NovoTopico(".$questao['cod_questao'].");\">Novo topico</span>";
-        // ? - Limpar enunciado
-        $limpar="<span onclick=\"LimparTexto(".$questao['cod_questao'].");\">Limpar enunciado</span>";	
+    // ? - Editar enunciado
+    $editar="<span onclick=\"AlteraTexto(".$questao['cod_questao'].");\">Editar enunciado</span>";
+    // ? - Novo topico
+    $novo_topico="<span onclick=\"NovoTopico(".$questao['cod_questao'].");\">Novo topico</span>";
+    // ? - Limpar enunciado
+    $limpar="<span onclick=\"LimparTexto(".$questao['cod_questao'].");\">Limpar enunciado</span>";	
 
 	/* ? - Exercicios */
 	/* ? - Editar Questao */
@@ -1180,7 +1180,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   	echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
     	/* ? - Historico */
-    	echo("              	<li><span onclick=\"window.open('historico_questoes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_questao=".$cod_questao."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
+    	echo("              	<li><span onclick=\"window.open('historico_questao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_questao=".$cod_questao."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
 
   	echo("                </ul>\n");
   	echo("              </td>\n");
