@@ -637,7 +637,7 @@ function AtualizaDadosUsuarioDinamic($dadosForm)
   $cod_escolaridade=$dadosForm['cod_escolaridade'];
   $rg=$dadosForm['rg'];
   $data_nascimento=$dadosForm['data_nascimento'];
-  $texto_feedback = $dadosForm['texto_feedback'];
+//  $texto_feedback = $dadosForm['texto_feedback'];
 
   $data=Data2UnixTime($data_nascimento);
 
@@ -645,8 +645,6 @@ function AtualizaDadosUsuarioDinamic($dadosForm)
   AtualizaFichaUsuario($sock,$cod_usuario,$nome_usuario,$endereco,$cidade,$estado,$pais,$telefone,$email,$data,$sexo,$local,$profissao,$informacoes,$cod_escolaridade,$rg);
   Desconectar($sock);
 
-  /* Feedbackzinho de leve */
-  $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
   $objResponse->addScript("trataEnvio();");
 
   return $objResponse->getXML();
@@ -913,7 +911,7 @@ function EmailRepetido($sock, $email)
   Entradas:  $dadosForm - dados do formulario de cadastro
   Saida:    reposta XML
 ********************************************************************/
-function CadastraDadosUsuarioDinamic($dadosForm)
+function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -944,13 +942,16 @@ function CadastraDadosUsuarioDinamic($dadosForm)
     $hash = true;
   }
 
-  if(LoginRepetido($sock,$login))
+  if(LoginRepetido($sock,$login)){
     $flag=1;
-  else if(EmailRepetido($sock,$email))
+  	$objResponse->addScriptCall("mostraFeedback", $erro1, 'false');
+  }else if(EmailRepetido($sock,$email)){
     $flag=2;
-  else if($hash)
+  	$objResponse->addScriptCall("mostraFeedback", $erro2, 'false');
+  }else if($hash){
     $flag=3;
-  else
+  	$objResponse->addScriptCall("mostraFeedback", $erro3, 'false');
+  }else
   {
     $cod_usuario=RetornaProximoCodigo($sock,"Usuario");
 
@@ -985,9 +986,11 @@ function CadastraDadosUsuarioDinamic($dadosForm)
     MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
 
     /* Fim da Notificacao */
+    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
   }
 
   Desconectar($sock);
+
 
   $objResponse->addScript("trataEnvio('".$flag."');");
 
