@@ -234,6 +234,15 @@
   echo("	  tr.appendChild(td);\n");
   echo("	  table.appendChild(tr);\n");
   echo("    }\n\n");
+  
+  echo("    function RetornaTexto(op){\n");
+  echo("        if(op == 'X')\n");
+  echo("          return 'Questao(oes) excluida(s) da lixeira.';\n");
+  echo("        else if(op == 'V')\n");
+  echo("          return 'Questao(oes) recuperada(s).';\n");
+  echo("        else if(op == 'L')\n");
+  echo("          return 'Questao(oes) enviada(s) para lixeira.';\n");
+  echo("    }\n\n");
     
   echo("    function TratarSelecionados(op){\n");
   echo("	  var checks,deleteArray,j;\n");
@@ -256,6 +265,7 @@
   echo("		else\n");
   echo("          InsereLinhaVazia();\n");
   echo("        VerificaCheck();\n");
+  echo("		mostraFeedback(RetornaTexto(op),true);\n");
   echo("      }\n");
   echo("    }\n\n");
   
