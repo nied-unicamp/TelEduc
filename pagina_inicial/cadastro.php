@@ -107,13 +107,13 @@
   echo("      if (nome_usuario == '')\n");
   echo("      {\n");
   /* 50 - O campo */ /* 32 - Nome */ /* 51 - n�o pode ser vazio */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." ".RetornaFraseDaLista($lista_frases_configurar,32)." ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." ".RetornaFraseDaLista($lista_frases_configurar,32)." ".RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
   echo("        document.formulario.nome_usuario.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
   echo("      if (!RGValido(rg) || rg == ''){\n");
   /* 50 - O campo *//* 33 - RG parece estar errado */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." ".RetornaFraseDaLista($lista_frases_configurar,33).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." ".RetornaFraseDaLista($lista_frases_configurar,33).".', false);\n");
   echo("        document.formulario.rg.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
@@ -134,11 +134,11 @@
   echo("      }\n");
   // 71 = Data Invalida
   echo("      if (ErroData == 1){\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,71).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,71).".', false);\n");
   echo("        document.formulario.data.focus();\n");
   echo("        return false;\n");
   echo("      } else if (ErroData == 2){\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,71).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,71).".', false);\n");
   echo("        document.formulario.data.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
@@ -146,35 +146,35 @@
   echo("      var EmailValido = /^[\w-]+(\.[\w-]+)*@(([A-Za-z\d][A-Za-z\d-]{0,61}[A-Za-z\d]\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;\n");
   echo("      if (!EmailValido.test(email)){\n");
   /* 52 - O e-mail parece estar errado */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,52).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,52).".', false);\n");
   echo("        document.formulario.email.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
   echo("      if (endereco == '')\n");
   echo("      {\n");
   /* 50 - O campo */ /* 40 - Endere�o */ /* 51 - n�o pode ser vazio */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,40)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,40)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
   echo("        document.formulario.endereco.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
   echo("      if (cidade == '')\n");
   echo("      {\n");
   /* 50 - O campo */ /* 41 - Cidade */ /* 51 - n�o pode ser vazio */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,41)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,41)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
   echo("        document.formulario.cidade.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
   echo("      if (estado == '')\n");
   echo("      {\n");
   /* 50 - O campo */ /* 42 - Estado */ /* 51 - n�o pode ser vazio */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,42)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,42)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
   echo("        document.formulario.estado.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
   echo("      if (pais == '')\n");
   echo("      {\n");
   /* 50 - O campo */ /* 43 - Pa�s */ /* 51 - n�o pode ser vazio */
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,43)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,50)." \" ".RetornaFraseDaLista($lista_frases_configurar,43)."\" ".RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
   echo("        document.formulario.pais.focus();\n");
   echo("        return false;\n");
   echo("      }\n");
@@ -187,7 +187,7 @@
   echo("        if ((js_novo_login==''))\n");
   echo("        {\n");
   // 59 - O campo de login n�o podem ser vazio. Por favor digite novamente o login desejado.
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar, 59)."');\n");
+  echo("          mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar, 59)."', false);\n");
   echo("          document.formulario.login.focus();\n");
   echo("          return false;\n");
   echo("        }\n");
@@ -201,21 +201,21 @@
   echo("        if (senha=='')\n");
   echo("        {\n");
   // 4 - A nova senha n�o pode ser vazia. Por favor digite a nova senha. ARRUMAR
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,4)."');\n");
+  echo("          mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,4)."', false);\n");
   echo("          document.formulario.senha.focus();\n");
   echo("          return(false);\n");
   echo("        }\n");
   echo("        if (senha2=='')\n");
   echo("        {\n");
   // 4 - A nova senha n�o pode ser vazia. Por favor digite a nova senha.
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,4)."');\n");
+  echo("          mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,4)."', false);\n");
   echo("          document.formulario.senha2.focus();\n");
   echo("          return(false);\n");
   echo("        }\n");
   echo("        if (senha!=senha2) \n");
   echo("        {\n");
   // 5 - As novas senhas digitadas diferem entre si. Por favor redigite-as. 
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,5)."');\n");
+  echo("          mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,5)."', false);\n");
   echo("          document.formulario.senha.value='';\n");
   echo("          document.formulario.senha2.value='';\n");
   echo("          document.formulario.senha.focus();\n");
@@ -228,7 +228,7 @@
   echo("    function confereDados()\n");
   echo("    {\n");
   echo("      if(ValidaLogins() && ValidaSenhas() && verificar())\n");
-  echo("        xajax_CadastraDadosUsuarioDinamic(xajax.getFormValues('formulario'));\n");
+  echo("        xajax_CadastraDadosUsuarioDinamic(xajax.getFormValues('formulario'),'".RetornaFraseDaLista($lista_frases_configurar,74)."','".RetornaFraseDaLista($lista_frases_configurar,75)."','".RetornaFraseDaLista($lista_frases_configurar,76)."','".RetornaFraseDaLista($lista_frases,184)."');\n");
   echo("      return false;");
   echo("    }\n\n");
 
@@ -237,21 +237,21 @@
   echo("        if (flag == '1')\n");
   echo("        {\n");
   /*74 - Login digitado ja existe. Digite outro e tente novamente.*/
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
+//  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
   echo("          document.formulario.login.value='';\n");
   echo("          document.formulario.login.focus();\n");
   echo("        }\n");
   echo("        else if(flag == '2')\n");
   echo("        {\n");
   /*75 - E-mail digitado ja existe. Digite outro e tente novamente.*/
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
+//  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
   echo("          document.formulario.email.value='';\n");
   echo("          document.formulario.email.focus();\n");
   echo("        }\n");
   echo("        else if(flag == '3')\n");
   echo("        {\n");
   /*76 - Carecteres digitados nao conferem com os da imagem.Tente novamente.*/
-  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
+//  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
   echo("          var imagem = document.getElementById('imagem');\n");
 //   echo("          var src = imagem.src;\n");
 //   echo("          imagem.src = '';\n");
@@ -263,7 +263,7 @@
   echo("        else\n");
   echo("        {\n");
   /* 184 - Cadastro efetuado com sucesso.*/
-  echo("          alert('".RetornaFraseDaLista($lista_frases,184)."');\n");
+//  echo("          alert('".RetornaFraseDaLista($lista_frases,184)."');\n");
   echo("          window.location='autenticacao.php';\n");
   echo("        }\n");
   echo("      }\n\n");
