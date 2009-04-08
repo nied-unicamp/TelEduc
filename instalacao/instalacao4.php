@@ -127,6 +127,7 @@ Enviar($sock, $query4);
        Enviar($sock, $query4);
     }
     
+    /* TODO - Se for usuários diferentes, deve-se dar permissão ao tmp para o banco geral e dos cursos. */
     if($tmpteleduc_login_s!=$teleduc_login_s) /*temos q inserir na tabela usuário tb.*/
     {
       $query8 = "INSERT INTO user (Host, User, Password) VALUES ('localhost', '$tmpteleduc_login_s', PASSWORD('$tmpteleduc_senha_s'))";
