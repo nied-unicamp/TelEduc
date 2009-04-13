@@ -367,10 +367,10 @@
   echo("                 <li><span onclick=\"window.open('ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."&operacao=".$operacao."', 'Salva/Imprime' ,'width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases, 209)."</span></li>\n");
   echo("    </form>\n");
   
-   if ($dados_avaliacao['Ferramenta'] == 'P')
+  if ($dados_avaliacao['Ferramenta'] == 'P')
   {
     // 14 - Atividade no Portf�lio
-    echo("                  <li><span onclick=\"window.location='../material/material.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=15'\">".RetornaFraseDaLista($lista_frases, 227)."</span></li>\n");
+    echo("                  <li><span onclick=\"window.location='../material/material.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=3'\">".RetornaFraseDaLista($lista_frases, 227)."</span></li>\n");
   }
   else if ($dados_avaliacao['Ferramenta'] == 'E')
   {
@@ -383,7 +383,7 @@
     // 145 - F�rum de Discuss�o
     echo("                  <li><span onclick=\"window.location='../forum/forum.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=9'\">".RetornaFraseDaLista($lista_frases, 225)."</span></li>\n");
   }
-  elseif ($dados_avaliacao['Ferramenta'] == 'B')
+  else if ($dados_avaliacao['Ferramenta'] == 'B')
   {
   	// 146 - Sess�o de Bate-Papo
   	if ($tela_avaliacao == 'F')
