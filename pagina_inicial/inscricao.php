@@ -45,8 +45,6 @@
   include("inicial.inc");
 
   $pag_atual = "inscricao.php";
-  include("../topo_tela_inicial.php");
-
   /* Caso o usuário naum esteja logado, direciona para páigna de login */
   if (empty($_SESSION['login_usuario_s']))
   {
@@ -65,7 +63,7 @@
   }
 
   $dados_curso=RetornaDadosMostraCurso($sock,$cod_curso);
-
+  include("../topo_tela_inicial.php");
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      function Iniciar()\n");
