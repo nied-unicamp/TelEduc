@@ -49,7 +49,7 @@
   if (empty($_SESSION['login_usuario_s']))
   {
     /* Obt� a raiz_www */
-    //$sock = Conectar("");
+    $sock = Conectar("");
     $query = "select diretorio from Diretorio where item = 'raiz_www'";
     $res = Enviar($sock,$query);
     $linha = RetornaLinha($res);
