@@ -78,17 +78,70 @@
                        não estão na lixeira (L)
    Entrada: $sock - BASE DO CURSO
    Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
-                    []['cod_usuario'] - codigo do usuario que criou o exercicio
+					[]['cod_usuario'] - codigo do usuario que criou o exercicio
                     []['titulo'] - titulo do exercicio
-                    []['aplicado'] - flag a qual indica se o exercicio foi aplicado (S) ou não (N)
+                    []['situacao'] - flag a qual indica a situacao do exercicio
+				    []['tipo_compartilhamento'] - tipo de compartilhamento
                     []['data'] - data em que o exercicio foi criado
 */
 function RetornaExercicios ($sock)
 {
-  $consulta="select cod_exercicio, cod_usuario, titulo, aplicado, data from Exercicios_modelo where status='V'";
+  $consulta="select cod_exercicio, cod_usuario, titulo, situacao, tipo_compartilhamento, data from Exercicios_modelo where status='V'";
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
+}
+
+/* *********************************************************************
+   RetornaDadosExercicioAplicado - Retorna array com os dados do exercicio aplicado
+   Entrada: $sock - BASE DO CURSO
+				  - cod_exercicio - codigo do exercicio
+   Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
+                    []['dt_disponibilizacao'] - data em que o exercicio foi disponibilizado
+                    []['dt_limite_submissao'] - data limite em que o exercicio pode ser submetido
+                    []['tp_aplicacao'] - tipo de aplicacao
+					[]['tp_correcao'] - tipo da correcao
+					[]['tp_gabarito'] - tipo do gabarito
+					[]['disp_gabarito'] - indica se havera gabarito disponivel
+					[]['avaliacao'] - indica se o exercicio sera avaliado
+*/
+function RetornaDadosExercicioAplicado($sock,$cod_exercicio)
+{
+  $consulta="select * from Exercicios_aplicado where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista);
+}
+
+/* *********************************************************************
+   RetornaExerciciosLixeira - Retorna array com os exercicios da lixeira (L)
+   Entrada: $sock - BASE DO CURSO
+   Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
+                    []['titulo'] - titulo do exercicio
+                    []['data'] - data em que o exercicio foi criado
+*/
+function RetornaExerciciosLixeira($sock)
+{
+  $consulta="select cod_exercicio, titulo, data from Exercicios_modelo where status='L'";
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista);
+}
+
+/* *********************************************************************
+   RetornaExerciciosLixeira - Retorna array com os exercicios da lixeira (L)
+   Entrada: $sock - BASE DO CURSO
+   Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
+                    []['titulo'] - titulo do exercicio
+                    []['data'] - data em que o exercicio foi criado
+*/
+function RetornaSituacaoExercicio($situacao)
+{
+  switch($situacao)
+  {
+  	case 'A': return "Disponibilizado";
+  	case 'C': return "Em cricao";
+  }
 }
 
 /* *********************************************************************
@@ -104,7 +157,7 @@ function RetornaExercicios ($sock)
 */
 function RetornaQuestoes($sock)
 {
-  $consulta="select cod_questao, cod_usuario, cod_topico, titulo, tp_questao, data from Exercicios_questao where status='V'";
+  $consulta="select cod_questao, cod_usuario, cod_topico, titulo, tp_questao, data, tipo_compartilhamento from Exercicios_questao where status='V'";
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
@@ -119,7 +172,7 @@ function RetornaQuestoes($sock)
 */
 function RetornaNomeTopico($sock,$cod_topico)
 {
-  $consulta="select topico from Exercicios_topico where cod_topico=".$cod_topico;
+  $consulta="select topico from Exercicios_topico where cod_topico=".VerificaNumeroQuery($cod_topico);
   $res=Enviar($sock, $consulta);
   $linha=RetornaLinha($res);
   return($linha['topico']);
@@ -136,12 +189,37 @@ function RetornaNomeTopico($sock,$cod_topico)
 */
 function CriarQuestao($sock, $cod_usuario, $cod_curso, $titulo, $tp_questao)
 {
-  $consulta="insert into Exercicios_questao (cod_usuario, titulo, tp_questao, data, status, inicio_edicao) values (".VerificaNumeroQuery($cod_usuario).", '".VerificaStringQuery(htmlentities($titulo))."', '".VerificaStringQuery(htmlentities($tp_questao))."', ".time().", 'V', ".time().")";
+  $data = time();
+
+  $consulta="insert into Exercicios_questao (cod_usuario, titulo, tp_questao, data, status, inicio_edicao) values (".VerificaNumeroQuery($cod_usuario).", '".VerificaStringQuery(htmlentities($titulo))."', '".VerificaStringQuery(htmlentities($tp_questao))."', ".$data.", 'V', ".$data.")";
   $res=Enviar($sock, $consulta);
 
   $cod_questao = mysql_insert_id();
 
-  $consulta="insert into Exercicios_questao_historico values (".VerificaNumeroQuery($cod_questao).", ".VerificaNumeroQuery($cod_usuario).", ".time().", 'C')";
+  $consulta="insert into Exercicios_questao_historico values (".VerificaNumeroQuery($cod_questao).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'C')";
+  $res=Enviar($sock, $consulta);
+
+  return($cod_questao);
+}
+
+/* *********************************************************************
+   CriarExercicio - Cria um novo exercicio 
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - usuario que criou o exercicio
+            $cod_curso - codigo do curso ao qual pertence o exercicio
+            $titulo - titulo do exercicio a ser criado
+   Saida: codigo do exercicio criado
+*/
+function CriarExercicio($sock, $cod_usuario, $cod_curso, $titulo)
+{
+  $data = time();
+
+  $consulta="insert into Exercicios_modelo (cod_usuario, titulo, data, status, situacao, inicio_edicao) values (".VerificaNumeroQuery($cod_usuario).", '".VerificaStringQuery(htmlentities($titulo))."', ".$data.", 'V', 'C', ".$data.")";
+  $res=Enviar($sock, $consulta);
+
+  $cod_exercicio = mysql_insert_id();
+
+  $consulta="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'C')";
   $res=Enviar($sock, $consulta);
 
   return($cod_questao);
@@ -190,7 +268,7 @@ function RetornaResHistoricoDaQuestao ($sock, $cod_questao)
 */
 function RetornaQuestao($sock,$cod_questao)
 {
-  $query="select cod_questao,cod_usuario,cod_topico,titulo,enunciado,nivel,tp_questao from Exercicios_questao where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $query="select cod_questao,cod_usuario,cod_topico,titulo,enunciado,nivel,tp_questao,tipo_compartilhamento from Exercicios_questao where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   return $linha;
@@ -916,5 +994,77 @@ function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
     Desconectar($sock);
  
     return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AlteraStatusExercicioDinamic - Altera o status de um exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AlteraStatusExercicioDinamic($cod_curso, $cod_exercicio, $status)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+ 
+    $query = "update Exercicios_modelo set status = '".$status."' where cod_exercicio = ".$cod_exercicio;
+    Enviar($sock,$query);
+ 
+    Desconectar($sock);
+ 
+    return $objResponse->getXML();
+}
+
+
+/* *********************************************************************
+   MudarCompartilhamentoDinamic - Muda o compartilhamento do item dado
+   Entrada: $sock - BASE DO CURSO
+            $dadosForm - dados do formulario para mudar compartilhamento
+            $novo_comp - novo tipo de compartilhamento
+			$op - indica se a mudanca e para uma questao ou para um exercicio
+   Saida: nenhuma
+*/
+function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $tipo_comp=$dadosForm['tipo_comp'];
+  $cod_item=$dadosForm['cod_item'];
+  $cod_curso=$dadosForm['cod_curso'];
+  $cod_usuario=$dadosForm['cod_usuario'];
+  $texto = $dadosForm['texto'];
+
+   $sock=Conectar($cod_curso);
+  if ($op == 'E')
+  {
+    $consulta="update Exercicios_modelo set tipo_compartilhamento='".$tipo_comp."', data=".time()." where cod_exercicio=".$cod_item;
+    $res=Enviar($sock, $consulta);
+  }
+  else if($op == 'Q')
+  {
+    $consulta="update Exercicios_questao set tipo_compartilhamento='".$tipo_comp."', data=".time()." where cod_questao=".$cod_item;
+    $res=Enviar($sock, $consulta);
+  }
+
+  Desconectar($sock);
+
+  // Imprime no div valores do formul?io
+  if ($op == 'E')
+    $objResponse->addAssign("trExercicio_".$cod_item, "className", "novoitem");
+  else if($op == 'Q')
+  	$objResponse->addAssign("trQuestao_".$cod_item, "className", "novoitem");
+  $objResponse->addAssign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
+  //addEvent não suporta o parametro 'event'
+  $objResponse->addScript("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
+  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2Data(time()));
+  
+  //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+
+  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+
+  // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
+  return $objResponse->getXML();
 }
 
