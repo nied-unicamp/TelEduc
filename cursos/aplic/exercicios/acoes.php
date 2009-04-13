@@ -140,6 +140,13 @@
     
     Desconectar($sock);
   }
+  else if($acao == "apagar")
+  {
+  	$status = "X";
+  	ApagarExerc($cod_curso, $cod_questao, $status);
+  	Desconectar($sock);
+    header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=Q");
+  }
 
   exit;
 ?>

@@ -1132,7 +1132,13 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    {\n");
   echo("      window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q';\n");
   echo("    }\n\n");
-
+  
+  echo("	function ApagarQuestao()\n");
+  echo("	{\n");
+  echo("	  confirm('Tem certeza que deseja excluir definitivamente a questoes?');\n");
+  echo("	  document.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=apagar';\n");
+  echo("	}\n\n");
+  
   echo("    </script>\n\n");
   $objAjax->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\" src='jscriptlib.js'></script>\n");
@@ -1238,7 +1244,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                          <li>".$editar."</li>\n");
         echo("                          <li>".$novo_topico."</li>\n");
 	// G 1 - Apagar
-	echo("                          <li><span onclick=\"\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+	echo("                          <li><span onclick=\"ApagarQuestao();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
 	echo("                        </ul>\n");
 	echo("                      </td>\n");
 	echo("                    </tr>\n");
