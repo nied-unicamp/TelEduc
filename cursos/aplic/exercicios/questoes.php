@@ -50,6 +50,7 @@
   $objAjax = new xajax();
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->registerFunction("AlteraStatusQuestaoDinamic");
+  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
@@ -69,6 +70,8 @@
   echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
   
+  echo("    var js_cod_item;\n");
+  echo("    var js_comp = new Array();\n");
   echo("    var numQuestoes = ".count($lista_questoes).";\n\n");
   
 
@@ -83,7 +86,10 @@
   echo("    function Iniciar()\n");
   echo("    {\n");
   if($visualizar == "Q")
+  {
   	echo("      lay_nova_questao = getLayer('layer_nova_questao');\n");
+  	echo("      cod_comp = getLayer(\"comp\");\n");
+  }
   echo("      startList();\n");
   echo("    }\n\n");
 
@@ -112,6 +118,7 @@
   	echo("    function EscondeLayers()\n");
   	echo("    {\n");
   	echo("      hideLayer(lay_nova_questao);\n");
+  	echo("      hideLayer(cod_comp);\n");
   	echo("    }\n");
 
     echo("    function MostraLayer(cod_layer, ajuste)\n");
@@ -132,6 +139,27 @@
     echo("      document.form_nova_questao.novo_titulo.value = '';\n");
     echo("      document.getElementById(\"nome\").focus();\n");
     echo("    }\n");
+    
+    echo("      function AtualizaComp(js_tipo_comp)\n");
+    echo("      {\n");
+    echo("        if ((isNav) && (!isMinNS6)) {\n");
+    echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+    echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+    echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+    echo("        } else {\n");
+    echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+    echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+    echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+    echo("        }\n");
+    echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+    echo("        if (js_tipo_comp=='F') {\n");
+    echo("          tipo_comp[0].innerHTML=imagem;\n");
+    echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+    echo("        } else{\n");
+    echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+    echo("          tipo_comp[1].innerHTML=imagem;\n");
+    echo("        }\n");
+    echo("      }\n\n");
     
     echo("    function VerificaCheck(){\n");
     echo("      var i;\n");
@@ -177,7 +205,7 @@
   	echo("      }else{\n");
   	echo("        document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
   	echo("        document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
-  	echo("        document.getElementById('mRecup_Selec').className=\"menuUp02\";\n");
+  	echo("        document.getElementById('mRecup_Selec').className=\"menuUp\";\n");
   	echo("        document.getElementById('mRecup_Selec').onclick=function(){  };\n");
   	echo("      }\n");
   	echo("    }\n\n");
@@ -230,6 +258,7 @@
   echo("	  tr = document.createElement(\"tr\");\n");
   echo("	  td = document.createElement(\"td\");\n");
   echo("	  td.colSpan = \"6\";\n");
+  //?
   echo("	  td.appendChild(document.createTextNode('Nao ha nenhuma questao'));\n");
   echo("	  tr.appendChild(td);\n");
   echo("	  table.appendChild(tr);\n");
@@ -283,7 +312,11 @@
   {
 	/* ? - Exercicios*/
         /* ? - Banco de questoes*/
-	echo("          <h4>Exercicios - Banco de questoes</h4>\n");
+  	$frase = "Exercicios - Banco de Questoes";
+  	if($visualizar == "L")
+  		$frase = $frase." - Lixeira";
+  
+	echo("          <h4>".$frase."</h4>\n");
 	
   	/*Voltar*/
   	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
@@ -301,7 +334,7 @@
   	echo("                <ul class=\"btAuxTabs\">\n");
 
     /* ? - Exercicios */
-    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."'>Exercicios</a></li>\n");
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Exercicios</a></li>\n");
 
   	echo("                </ul>\n");
   	echo("              </td>\n");
@@ -331,34 +364,49 @@
         echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
 	/* ? - T�ulo */
 	echo("                    <td class=\"alLeft\">Titulo</td>\n");
-        /* ? - Autor */
-	echo("                    <td width=\"15%\">Autor</td>\n");
-        /* ? - Topico */
-	echo("                    <td width=\"15%\">Topico</td>\n");
-        /* ? - Tipo*/
-	echo("                    <td width=\"12%\">Tipo</td>\n");
-        /* ? - Data */
+	/* ? - Data */
 	echo("                    <td width=\"10%\">Data</td>\n");
+	if($visualizar == "Q")
+    {
+      /* ? - Topico */
+	  echo("                    <td width=\"15%\">Topico</td>\n");
+      /* ? - Tipo*/
+	  echo("                    <td width=\"12%\">Tipo</td>\n");
+	  /* ? - Compartilhamento */
+	  echo("                    <td width=\"15%\">Compartilhamento</td>\n");
+    }
 	echo("                  </tr>\n");
 
    	if ((count($lista_questoes)>0)&&($lista_questoes != null))
     {
       foreach ($lista_questoes as $cod => $linha_item)
       {
-        $data = UnixTime2Data($linha_item['data']);
-        $autor = "<span class=\"link\" onclick=\"OpenWindowPerfil(".$cod_curso.",".$linha_item['cod_usuario'].");\">".NomeUsuario($sock, $linha_item['cod_usuario'], $cod_curso)."</span>";
+        $data = "<span id=\"data_".$linha_item['cod_questao']."\">".UnixTime2Data($linha_item['data'])."</span>";
         $tipo = $linha_item['tp_questao'];
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+        
+        /* ?? - Compartilhado com Formadores */
+        if($linha_item['tipo_compartilhamento'] == "F")
+          $compartilhamento = "Compartilhado com Formadores";
+        /* ?? - Nao compartilhado */
+        else
+          $compartilhamento = "Nao compartilhado";
+        
+        if($cod_usuario == $linha_item['cod_usuario'])
+          $compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 
         echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
         echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkQuestao\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
         echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."\">".$titulo."</a></td>\n");
-        echo("                    <td>".$autor."</td>\n");
-        echo("                    <td>".$topico."</td>\n");
-        echo("                    <td>".$tipo."</td>\n");
         echo("                    <td>".$data."</td>\n");
+        if($visualizar == "Q")
+        {
+          echo("                    <td>".$topico."</td>\n");
+          echo("                    <td>".$tipo."</td>\n");
+          echo("                    <td>".$compartilhamento."</td>\n");
+        }
         echo("                  </tr>\n");
       }
     }
@@ -448,6 +496,34 @@
   	echo("        </form>\n");
   	echo("      </div>\n");
   	echo("    </div>\n\n");
+  	
+    /* Mudar Compartilhamento */
+  	echo("    <div class=popup id=\"comp\">\n");
+  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("      <div class=int_popup>\n");
+  	echo("        <script type=\"text/javaScript\">\n");
+  	echo("        </script>\n");
+  	echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  	echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  	echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  	echo("          <input type=hidden name=cod_item value=\"\" />\n");
+  	echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
+  	echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
+  	echo("          <ul class=ulPopup>\n");
+  	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores','Q'); EscondeLayers();\">\n");
+  	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  	/* ?? - Compartilhado com formadores */
+  	echo("              <span>Compartilhado com formadores</span>\n");
+  	echo("            </li>\n");
+  	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'Q'); EscondeLayers();\">\n");
+  	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  	/* ?? - Nao Compartilhado */
+  	echo("              <span>Nao Compartilhado</span>\n");
+  	echo("            </li>\n");
+ 	echo("          </ul>\n");    
+  	echo("        </form>\n");
+  	echo("      </div>\n");
+  	echo("    </div>\n");
   }
 
   echo("  </body>\n");
