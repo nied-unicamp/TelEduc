@@ -129,8 +129,8 @@ function ListaMensagens($sock, $ordem, $cod_curso){
   }else
     $sequencia = "desc";
 
-  $query="select M.cod_mural,M.cod_usuario,M.titulo,M.data,M.status, M.texto, U.nome, U.cod_usuario from ".$dbnamebase.".Usuario U, Mural M left join ".$dbnamebase.".Usuario_curso UC on M.cod_usuario = UC.cod_usuario where UC.cod_curso = ".$cod_curso." and U.cod_usuario = UC.cod_usuario_global and M.status='A' order by ".$ordem." ".$sequencia;
-  $res=Enviar($sock, $query);
+  $query="select M.cod_mural,M.cod_usuario,M.titulo,M.data,M.status, M.texto, U.nome, M.cod_usuario from ".$dbnamebase.".Usuario U, Mural M left join ".$dbnamebase.".Usuario_curso UC on M.cod_usuario = UC.cod_usuario where UC.cod_curso = ".$cod_curso." and U.cod_usuario = UC.cod_usuario_global and M.status='A' order by ".$ordem." ".$sequencia;
+    $res=Enviar($sock, $query);
 
   $tuplas=RetornaArrayLinhas($res);
   return($tuplas);
