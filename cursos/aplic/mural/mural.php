@@ -840,10 +840,9 @@
   
   
     $num_pagina = 1;
-// /*var_dump*/($lista_mensagens);
+
     foreach($lista_mensagens as $cod_msg => $dados){
       $cod_mural = $dados['cod_mural'];
-
       if($num_msg_pag == $msg_por_pag){
         $num_pagina++;
         $num_msg_pag =0;
@@ -861,7 +860,7 @@
       if ($status == "A"){
       /* Lembrar de por Perfil */
       /* Retorna o nome do usuario correspodente ao cod_usuario */
-        $nome_usuario = NomeDoUsuario($sock, $dados['cod_usuario']);
+        $nome_usuario = $dados['nome'];
         
         if ($dados['cod_usuario']>0)
           $nome_usuario="<span id=\"emissor_".$cod_mural."\" class=\"link\" onclick='OpenWindowPerfil(".$dados['cod_usuario'].");'>". $nome_usuario."</span>";
