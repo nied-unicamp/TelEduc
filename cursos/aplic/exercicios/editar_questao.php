@@ -67,6 +67,7 @@
   $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
   $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
   $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
+  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -138,6 +139,7 @@
   echo("    var tBody;\n");
   echo("    var tableDnD;\n");
   echo("    var cancelarTodos = 0;\n\n");
+  echo("    var js_comp = new Array();\n");
 
   if ($tp_questao == 'O' && (count($alternativas)>0) && ($alternativas != null))
   {
@@ -640,7 +642,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      tr.setAttribute(\"id\",'trAlt_'+cod);\n");
   echo("      td = document.createElement(\"td\");\n");
   echo("      td.className = 'itens';\n");
-  echo("      td.setAttribute(\"colspan\",\"4\");\n");
+  echo("      td.setAttribute(\"colspan\",\"6\");\n");
   echo("      td.appendChild(CriaCheckBoxAlt(cod));\n");
   echo("      td.appendChild(CriaSpanEspAlt(5));\n");
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
@@ -654,7 +656,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     echo("      trGab.setAttribute(\"id\",'trAltGab_'+cod);\n");
     echo("      tdText = document.createElement(\"td\");\n");
     echo("      tdText.className = 'itens';\n");
-    echo("      tdText.setAttribute(\"colspan\",\"3\");\n");
+    echo("      tdText.setAttribute(\"colspan\",\"6\");\n");
     echo("      tdText.appendChild(CriaSpanGabarito(codigo));\n");
     echo("      tdOp = document.createElement(\"td\");\n");
     echo("      tdOp.setAttribute(\"valign\",\"top\");\n");
@@ -1139,6 +1141,27 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("	  document.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=apagar';\n");
   echo("	}\n\n");
   
+  echo("      function AtualizaComp(js_tipo_comp)\n");
+  echo("      {\n");
+  echo("        if ((isNav) && (!isMinNS6)) {\n");
+  echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+  echo("        } else {\n");
+  echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+  echo("        }\n");
+  echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+  echo("        if (js_tipo_comp=='F') {\n");
+  echo("          tipo_comp[0].innerHTML=imagem;\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("        } else{\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=imagem;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
   echo("    </script>\n\n");
   $objAjax->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\" src='jscriptlib.js'></script>\n");
@@ -1202,7 +1225,9 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
         /* ? - Dificuldade */
 	echo("                      <td width=\"15%\">Dificuldade</td>\n");
         /* 70 - Opcoes (ger)*/
-	echo("                      <td width=\"16%\">" . RetornaFraseDaLista($lista_frases_geral, 70) . "</td>\n");
+	echo("                      <td width=\"15%\">" . RetornaFraseDaLista($lista_frases_geral, 70) . "</td>\n");
+		/* ? - Compartilhamento */
+	echo("                      <td width=\"15%\">Compartilhamento</td>\n");
 	echo("                    </tr>\n");
 	echo("                    <tr id='tr_".$questao['cod_questao']."'>\n");
 	echo("                      <td class=\"itens\">".$titulo."</td>\n");
@@ -1247,13 +1272,26 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                          <li><span onclick=\"ApagarQuestao();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
 	echo("                        </ul>\n");
 	echo("                      </td>\n");
-	echo("                    </tr>\n");
+
+	/* ?? - Compartilhado com Formadores */
+    if($linha_item['tipo_compartilhamento'] == "F")
+      $compartilhamento = "Compartilhado com Formadores";
+    /* ?? - Nao compartilhado */
+    else
+      $compartilhamento = "Nao compartilhado";
+      
+    $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$tipo_compartilhamento."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+      
+    echo("					    <td>".$compartilhamento."</td>");      
+      
+    echo("                    </tr>\n");
+	
 	echo("                    <tr class=\"head\">\n");
 	/* ? - Enunciado */
-	echo("                      <td class=\"center\" colspan=\"4\">Enunciado</td>\n");
+	echo("                      <td class=\"center\" colspan=\"6\">Enunciado</td>\n");
 	echo("                    </tr>\n");
 	echo("                    <tr>\n");
-	echo("                      <td class=\"itens\" colspan=\"4\">\n");
+	echo("                      <td class=\"itens\" colspan=\"6\">\n");
 	echo("                        <div class=\"divRichText\">\n");
 	echo ("                        ".$enunciado."\n");
 	echo("                        </div>\n");
@@ -1261,7 +1299,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                    </tr>\n");
         echo("                  <tr class=\"head\">\n");
 	/* ? - Alternativas */
-	echo("                    <td class=\"center\" colspan=\"4\">Alternativas</td>\n");
+	echo("                    <td class=\"center\" colspan=\"6\">Alternativas</td>\n");
 	echo("                  </tr>\n");
 	echo("					<tBody id=\"tBody\">");
 
@@ -1273,7 +1311,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
             $cod_alternativa = $linha_item['cod_alternativa'];
 
             echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
-            echo("                    <td class=\"itens\" colspan=\"4\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
+            echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
             echo("                  </tr>\n");
 
             if($tp_questao == 'D')
@@ -1282,7 +1320,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
               $gabarito = RetornaGabaritoQuestaoDiss($sock,$cod_questao,$cod_alternativa);
 
               echo("                  <tr id=\"trAltGab_".$cod_alternativa."\" style=\"display:none;\">\n");
-              echo("                    <td class=\"itens\" valign=\"top\" colspan=\"3\"><span id=\"text_".$cod_questao.$cod_alternativa."\">".$gabarito."</span></td>\n");
+              echo("                    <td class=\"itens\" valign=\"top\" colspan=\"6\"><span id=\"text_".$cod_questao.$cod_alternativa."\">".$gabarito."</span></td>\n");
               echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
 	      	  echo("                      <ul>\n");
 	          echo("                        <li><span onclick=\"AlteraTexto(".$cod_questao.$cod_alternativa.");DesabilitarMudancaPosicaoAlt();\">Editar gabarito</span></li>\n");
@@ -1297,7 +1335,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
         
     echo("					</tBody>");    
     echo("                  <tr id=\"optAlt\">\n");
-	echo("                    <td align=\"left\" colspan=\"4\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
 	echo("                      <ul>\n");
 	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
 	echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">Apagar</span></li>\n");
@@ -1308,14 +1346,14 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
     echo("                  <tr id=\"trAddAlt\">\n");
-	echo("                    <td align=\"left\" colspan=\"4\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
         /* ? - Adicionar Alternativa */
 	echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) Adicionar Alternativa</span></div>\n");
     echo("                    </td>\n");
 	echo("                  </tr>\n");
     echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
-	echo("                    <td colspan=\"4\">Arquivos</td>\n");
+	echo("                    <td colspan=\"6\">Arquivos</td>\n");
 	echo("                  </tr>\n");
 
 	if (count($lista_arq) > 0 || $lista_arq != null) {
@@ -1323,7 +1361,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 		$conta_arq = 0;
 
 		echo ("                  <tr>\n");
-		echo ("                    <td class=\"itens\" colspan=\"4\" id=\"listFiles\">\n");
+		echo ("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
 		// Procuramos na lista de arquivos se existe algum visivel
 		$ha_visiveis = false;
 
@@ -1451,7 +1489,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	}
 
     echo("                  <tr id=\"optArq\">\n");
-	echo("                    <td align=\"left\" colspan=\"4\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
 	echo("                      <ul>\n");
 	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
 	echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
@@ -1460,7 +1498,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
-	echo("                    <td align=\"left\" colspan=\"4\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
 	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
 	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
 	echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_questao."\" />\n");
@@ -1527,6 +1565,35 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        </div>\n");
   echo("      </div>\n");
   echo("    </div>\n\n");
+  
+  /* Mudar Compartilhamento */
+  echo("    <div class=popup id=\"comp\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <script type=\"text/javaScript\">\n");
+  echo("        </script>\n");
+  echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("          <input type=hidden name=cod_item value=\"\" />\n");
+  echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
+  echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
+  echo("          <ul class=ulPopup>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores','Q'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  /* ?? - Compartilhado com formadores */
+  echo("              <span>Compartilhado com formadores</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'Q'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  /* ?? - Nao Compartilhado */
+  echo("              <span>Nao Compartilhado</span>\n");
+  echo("            </li>\n");
+  echo("          </ul>\n");    
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
+  
   echo("  </body>\n");
   echo("</html>\n");
 
