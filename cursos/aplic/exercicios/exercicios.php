@@ -76,6 +76,7 @@
   
   echo("    var js_cod_item;\n");
   echo("    var js_comp = new Array();\n");
+  echo("    var cod_comp;");
   echo("    var numExercicios = ".count($lista_exercicios).";\n\n");
   
   /* Iniciliza os layers. */

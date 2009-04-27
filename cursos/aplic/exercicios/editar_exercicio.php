@@ -1,0 +1,892 @@
+<?
+/*
+<!--
+-------------------------------------------------------------------------------
+
+    Arquivo : cursos/aplic/exercicios/editar_exercicio.php
+
+    TelEduc - Ambiente de Ensino-Aprendizagem a Dist�cia
+    Copyright (C) 2001  NIED - Unicamp
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2 as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    You could contact us through the following addresses:
+
+    Nied - Ncleo de Inform�ica Aplicada �Educa�o
+    Unicamp - Universidade Estadual de Campinas
+    Cidade Universit�ia "Zeferino Vaz"
+    Bloco V da Reitoria - 2o. Piso
+    CEP:13083-970 Campinas - SP - Brasil
+
+    http://www.nied.unicamp.br
+    nied@unicamp.br
+
+------------------------------------------------------------------------------
+-->
+*/
+
+/*==========================================================
+  ARQUIVO : cursos/aplic/exercicios/editar_exericio.php
+  ========================================================== */
+
+  $bibliotecas="../bibliotecas/";
+  include($bibliotecas."geral.inc");
+  include("exercicios.inc");
+
+  require_once("../xajax_0.2.4/xajax.inc.php");
+
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->registerFunction("DecodificaString");
+  $objAjax->registerFunction("RetornaFraseDinamic");
+  $objAjax->registerFunction("RetornaFraseGeralDinamic");
+  $objAjax->registerFunction("EditarTituloExercicioDinamic");
+  $objAjax->registerFunction("EditarTextoExercicioDinamic");
+  $objAjax->registerFunction("ExcluiArquivoDinamic");
+  $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
+  $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
+  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
+  //Manda o xajax executar os pedidos acima.
+  $objAjax->processRequests();
+  
+  $cod_ferramenta=24;
+
+  // Descobre os diretorios de arquivo, para os portfolios com anexo
+  $sock = Conectar("");
+  $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
+  $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+  Desconectar($sock);
+
+  include("../topo_tela.php");
+  
+  $exercicio = RetornaExercicio($sock,$cod_exercicio);
+  $lista_questoes = RetornaQuestoesExercicio($sock,$cod_exercicio);
+  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp);
+  $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
+  $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
+
+  /*********************************************************/
+  /* in�io - JavaScript */
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <!--\n");
+  //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
+  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
+  echo("    //-->\n");
+  echo("    </script>\n");
+
+  echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
+
+  echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
+  echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
+  echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  echo("    var Xpos, Ypos;\n");
+  echo("    var js_cod_item;\n");
+  echo("    var js_comp = new Array();\n");
+  echo("    var cod_comp;");
+  echo("    var editaTexto = 0;\n");
+  echo("    var editaTitulo = 0;\n");
+  echo("    var input = 0;\n");
+  echo("    var cancelarElemento = null;\n");
+  echo("    var contaArq = ".count($lista_arq).";\n");
+  echo("    var cancelarTodos = 0;\n\n");
+  
+  echo("    if (isNav)\n");
+  echo("    {\n");
+  echo("      document.captureEvents(Event.MOUSEMOVE);\n");
+  echo("    }\n\n");
+  
+  echo("    document.onmousemove = TrataMouse;\n\n");
+
+  echo("    function TrataMouse(e)\n");
+  echo("    {\n");
+  echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+  echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+  echo("    }\n\n");
+
+  echo("    function getPageScrollY()\n");
+  echo("    {\n");
+  echo("      if (isNav)\n");
+  echo("        return(window.pageYOffset);\n");
+  echo("      if (isIE)\n");
+  echo("        return(document.body.scrollTop);\n");
+  echo("    }\n\n");
+
+  echo("    function AjustePosMenuIE()\n");
+  echo("    {\n");
+  echo("      if (isIE)\n");
+  echo("        return(getPageScrollY());\n");
+  echo("      else\n");
+  echo("        return(0);\n");
+  echo("    }\n\n");
+
+  /* Iniciliza os layers. */
+  echo("    function Iniciar()\n");
+  echo("    {\n");
+  echo("      cod_comp = getLayer(\"comp\");\n");
+  echo("      startList();\n");
+  echo("    }\n\n");
+
+  echo("    function WindowOpenVer(id)\n");
+  echo("    {\n");
+  echo("      window.open(\"" . $dir_questao_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
+  echo("    }\n\n");
+
+  echo("    function EscondeLayers()\n");
+  echo("    {\n");
+  echo("      hideLayer(cod_comp);\n");
+  echo("    }\n\n");
+
+  echo("    function MostraLayer(cod_layer, ajuste)\n");
+  echo("    {\n\n");
+  echo("      EscondeLayers();\n");
+  echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
+  echo("      showLayer(cod_layer);\n");
+  echo("    }\n\n");
+
+  echo("    function EscondeLayer(cod_layer)\n");
+  echo("    {\n");
+  echo("      hideLayer(cod_layer);\n");
+  echo("    }\n\n");
+
+  echo("    function CancelaTodos(){\n");
+  echo("      EscondeLayers();\n");
+  echo("      cancelarTodos=1;\n");
+  echo("      if(cancelarElemento) {\n"); 
+  echo("        cancelarElemento.onclick();\n"); 
+  //echo("        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+  echo("      }\n");
+  echo("      cancelarTodos=0;\n");
+  echo("    }\n");
+
+  echo("    function EdicaoTitulo(codigo, id, valor){\n");
+  echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value!='')){\n");
+  echo("        conteudo = document.getElementById(id+'_text').value;\n");
+  echo("        xajax_EditarTituloExercicioDinamic(".$cod_curso.", codigo, conteudo, ".$cod_usuario.", \"opa\");\n");
+  echo("      }else{\n");
+  /* ? - O titulo nao pode ser vazio. */
+  echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value==''))\n");
+  echo("        alert('O titulo nao pode ser vazio.');\n");
+  echo("      document.getElementById(id).innerHTML=conteudo;\n");
+  echo("      if(navigator.appName.match(\"Opera\")){\n");
+  echo("        document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
+  echo("      }else{\n");
+  echo("        document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };\n");
+  echo("      }\n");
+  //Cancela Edição
+  //echo("      if (!cancelarTodos)\n");
+  //echo("        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+  echo("      }\n");
+  echo("      editaTitulo=0;\n");
+  echo("      cancelarElemento=null;\n");
+  echo("    }\n\n");
+
+  echo("    function EditaTituloEnter(campo, evento, id)\n");
+  echo("    {\n");
+  echo("      var tecla;\n");
+  echo("      CheckTAB=true;\n");
+  echo("      if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
+  echo("      {\n");
+  echo("        tecla = evento.which;\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
+  echo("        tecla = evento.keyCode;\n");
+  echo("      }\n");
+  echo("      if ( tecla == 13 )\n");
+  echo("      {\n");
+  echo("        EdicaoTitulo(id,'tit_'+id,'ok');\n");
+  echo("      }\n");
+  echo("      return true;\n");
+  echo("    }\n\n");
+
+  echo("    function AlteraTitulo(id){\n");
+  echo("    if (editaTitulo==0){\n");
+  echo("      CancelaTodos();\n");
+  echo("      id_aux = id;\n");
+  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("      conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+  echo("      document.getElementById('tit_'+id).className='';\n");
+  echo("      document.getElementById('tr_'+id).className='';\n");
+  echo("      createInput = document.createElement('input');\n");
+  echo("      document.getElementById('tit_'+id).innerHTML='';\n");
+  echo("      document.getElementById('tit_'+id).onclick=function(){ };\n");
+  echo("      createInput.setAttribute('type', 'text');\n");
+  echo("      createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+  echo("      createInput.setAttribute('id', 'tit_'+id+'_text');\n");
+  //echo("      createInput.onkeypress = function(event) {EditaTituloEnter(this, event, id_aux);}\n");
+  echo("      if (createInput.addEventListener){; \n");
+  echo("      createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
+  echo("      } else if (createInput.attachEvent){;\n"); 
+  echo("      createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
+  echo("      };\n");
+  echo("      document.getElementById('tit_'+id).appendChild(createInput);\n");
+  echo("      xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n");
+  //cria o elemento 'espaco' e adiciona na pagina
+  echo("      espaco = document.createElement('span');\n");
+  echo("      espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("      document.getElementById('tit_'+id).appendChild(espaco);\n");
+  echo("      createSpan = document.createElement('span');\n");
+  echo("      createSpan.className='link';\n");
+  echo("      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
+  echo("      createSpan.setAttribute('id', 'OkEdita');\n");
+  echo("      createSpan.innerHTML='OK';\n");
+  echo("      document.getElementById('tit_'+id).appendChild(createSpan);\n");
+  //cria o elemento 'espaco' e adiciona na pagina
+  echo("      espaco = document.createElement('span');\n");
+  echo("      espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("      document.getElementById('tit_'+id).appendChild(espaco);\n");
+  echo("      createSpan = document.createElement('span');\n");
+  echo("      createSpan.className='link';\n");
+  echo("      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
+  echo("      createSpan.setAttribute('id', 'CancelaEdita');\n");
+  echo("      createSpan.innerHTML='Cancelar';\n");
+  echo("      document.getElementById('tit_'+id).appendChild(createSpan);\n");
+  //cria o elemento 'espaco' e adiciona na pagina
+  echo("      espaco = document.createElement('span');\n");
+  echo("      espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("      document.getElementById('tit_'+id).appendChild(espaco);\n");
+  echo("      startList();\n");
+  echo("      cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("      document.getElementById('tit_'+id+'_text').select();\n");
+  echo("      editaTitulo++;\n");
+  echo("    }\n");
+  echo("    }\n\n");
+
+  echo("    function LimparTexto(id)\n");
+  echo("    {\n");
+  echo("      if(confirm(\"confirm\"))\n");
+  echo("      {\n");
+  //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("        document.getElementById('text_'+id).innerHTML='';\n");
+  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",'',".$cod_usuario.", \"\");\n");
+  echo("      }\n");
+  echo("    }\n\n");
+
+  echo("    function AlteraTexto(id){\n");
+  echo("      if (editaTexto==-1 || editaTexto != id){\n");
+  echo("        CancelaTodos();\n");
+  //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
+  echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
+  echo("        startList();\n");
+  echo("        document.getElementById('text_'+id+'_text').focus();\n");
+  echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("        editaTexto = id;\n");
+  echo("      }\n");
+  echo("    }\n\n");
+
+  echo("    function EdicaoTexto(codigo, id, valor){\n");
+  echo("      var cod;\n");
+  echo("      if (valor=='ok'){\n");
+  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",conteudo,".$cod_usuario.", \"\");\n");
+  echo("      }\n");
+  echo("      else{\n");
+  // Cancela Edi�o
+  //echo("        if (!cancelarTodos)\n");
+  //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+  echo("      }\n");
+  echo("      document.getElementById(id).innerHTML=conteudo;\n");
+  echo("      editaTexto=-1;\n");
+  echo("      cancelarElemento=null;\n");
+  echo("    }\n\n");
+
+  echo("    function AcrescentarBarraFile(apaga){\n");
+  echo("      if (input==1) return;\n");
+  echo("      CancelaTodos();\n");
+  echo("      document.getElementById('input_files').style.visibility='visible';\n");
+  echo("      document.getElementById('divArquivoEdit').className='';\n");
+  echo("      document.getElementById('divArquivo').className='divHidden';\n");
+  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
+  echo("      cancelarElemento=document.getElementById('cancFile');\n");
+  echo("    }\n\n");
+  
+  echo("      function AtualizaComp(js_tipo_comp)\n");
+  echo("      {\n");
+  echo("        if ((isNav) && (!isMinNS6)) {\n");
+  echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+  echo("        } else {\n");
+  echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+  echo("        }\n");
+  echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+  echo("        if (js_tipo_comp=='F') {\n");
+  echo("          tipo_comp[0].innerHTML=imagem;\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("        } else{\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=imagem;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+  echo("    function getfilename(path)\n");
+  echo("    {\n");
+  echo("      var pieces,n,file;");
+  echo("      pieces=path.split('\'');\n");
+  echo("      n=pieces.length;\n");
+  echo("      file=pieces[n-1];\n");
+  echo("      pieces=file.split('/');\n");
+  echo("      n=pieces.length;\n");
+  echo("      file=pieces[n-1];\n");
+  echo("      return(file);\n");
+  echo("    }\n\n");
+
+  echo("    function ArquivoValido(file)\n");
+  echo("    {\n");
+  echo("      var n=file.length;\n");
+  echo("      if (n==0)\n");
+  echo("        return (false);\n");
+  echo("      for(i=0; i<=n; i++) {\n");
+  echo("        if ((file.charAt(i)==\"'\")||(file.charAt(i)==\"#\")||(file.charAt(i)==\"%\")||(file.charAt(i)==\"?\")|| (file.charAt(i)==\"/\")) {\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("      return(true);\n");
+  echo("    }\n\n");
+
+  echo("    function EdicaoArq(i, msg){\n");
+  echo("      var nomeArq,td;\n");
+  echo("      nomeArq = getfilename(document.getElementById('input_files').value);\n");
+  echo("      if ((i==1)&&(ArquivoValido(nomeArq))){\n"); //OK
+  //echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",nomeArq);\n");
+  echo("      }\n");
+  echo("      else {\n");
+  echo("        document.getElementById('input_files').style.visibility='hidden';\n");
+  echo("        document.getElementById('input_files').value='';\n");
+  echo("        document.getElementById('divArquivo').className='';\n");
+  echo("        document.getElementById('divArquivoEdit').className='divHidden';\n");
+  //Cancela Edição
+  echo("        if (!cancelarTodos)\n");
+  //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+  echo("        input=0;\n");
+  echo("        cancelarElemento=null;\n");
+  echo("      }\n");
+  echo("    }\n\n");
+
+  echo("    function ApagarArq(){\n");
+  echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      if (confirm('Confirmacao')){\n");
+  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
+  echo("        for (i=0; i<checks.length; i++){\n");
+  echo("          if(checks[i].checked){\n");
+  echo("            getNumber=checks[i].id.split(\"_\");\n");
+  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
+  //echo("            xajax_ExcluiArquivoDinamic(getNumber[1], nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
+  echo("            js_conta_arq--;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        LimpaBarraArq();\n");
+  echo("        VerificaChkBoxArq(0);\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaSrcImg(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var array,formato,n;\n");
+  echo("      array = nomeArq.split('.');\n");
+  echo("	  n = array.length;\n");
+  echo("	  formato = array[n-1];\n");
+  echo("      if(formato == 'zip'){\n");
+  echo("        return '../imgs/arqzip.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'jpg' || formato == 'jpeg' || formato == 'png' || formato == 'gif'){\n");
+  echo("        return '../imgs/arqimg.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'doc'){\n");
+  echo("        return '../imgs/arqdoc.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'pdf'){\n");
+  echo("        return '../imgs/arqpdf.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'html'){\n");
+  echo("        return '../imgs/arqhtml.gif';\n");
+  echo("	  }\n");
+  echo("      if(formato == 'mp3' || formato == 'midi'){\n");
+  echo("        return '../imgs/arqsnd.gif';\n");
+  echo("	  }\n");
+  echo("      return '../imgs/arqp.gif';\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaTipoArq(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var array,formato,n;\n");
+  echo("      array = nomeArq.split('.');\n");
+  echo("	  n = array.length;\n");
+  echo("	  formato = array[n-1];\n");
+  echo("      if(formato == 'zip'){\n");
+  echo("        return 'zip';\n");
+  echo("	  }\n");
+  echo("      else{\n");
+  echo("        return 'comum';\n");
+  echo("	  }\n");
+  echo("    }\n\n");
+  
+  echo("    function CriaCheckBoxArq(cod)\n");
+  echo("    {\n");	
+  echo("      var check = document.createElement(\"input\");\n");
+  echo("      check.setAttribute(\"type\", \"checkbox\");\n");
+  echo("      check.setAttribute(\"id\",'chkArq_'+cod);\n");
+  echo("      check.setAttribute(\"name\", \"chkArq\");\n");
+  echo("      check.setAttribute(\"value\", cod);\n");
+  echo("      check.onclick = function(){ VerificaChkBoxArq(1); };\n");
+  echo("      return check;\n");
+  echo("    }\n\n");
+    
+  echo("    function CriaImgArq(nomeArq)\n");
+  echo("    {\n");	
+  echo("      var img = document.createElement(\"img\");\n");
+  echo("      img.setAttribute(\"border\", \"0\");\n");
+  echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
+  echo("      return img;\n");
+  echo("    }\n\n");
+  
+  echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
+  echo("    {\n");	
+  echo("      var span = document.createElement(\"span\");\n");
+  echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
+  echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
+  echo("      span.setAttribute(\"nomeArq\",caminho);\n");
+  echo("	  if(RetornaTipoArq(nomeArq) == 'zip')\n");
+  echo("	    span.setAttribute(\"arqZip\",nomeArq);\n");
+  echo("      span.setAttribute(\"arqOculto\",\"nao\");\n");
+  echo("      span.onclick = function(){ WindowOpenVer(caminho); }\n");
+  echo("      span.innerHTML = nomeArq;\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho){\n");
+  echo("	  span = document.getElementById('arq_'+numArq);\n");
+  echo("	  span.innerHTML = '';\n");
+  echo("	  span.appendChild(CriaCheckBoxArq(numArq));\n");
+  echo("	  span.appendChild(CriaSpanEspAlt(5));\n");
+  echo("	  span.appendChild(CriaImgArq(nomeArq));\n");
+  echo("	  span.appendChild(CriaSpanVisualizarArq(nomeArq,numArq,caminho));\n");
+  echo("	  span.appendChild(document.createTextNode(' - ('+tamanho+'Kb)'));\n");
+  echo("	  span.appendChild(document.createElement(\"br\"));\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function EncontraArquivoEApaga(nomeArq)\n");
+  echo("    {\n");
+  echo("	  var i,span;\n");
+  echo("      for(i = 0; i <= contaArq; i++)\n");
+  echo("      {\n");
+  echo("        span = document.getElementById(\"nomeArq_\"+i);\n");
+  echo("        if(span != null)\n");
+  echo("        {\n");
+  echo("          if(span.innerHTML == nomeArq)\n");
+  echo("          {\n"); 
+  //echo("            xajax_ExcluiArquivoDinamic(i,'".$dir_questao_temp['link']."'+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  /*echo("    function VerificaUpload(nomeArq,flag)\n");
+  echo("    {\n");
+  echo("	  if((flag == 0))\n");
+  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
+  echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n");
+  echo("      {\n");
+  echo("		EncontraArquivoEApaga(nomeArq);\n");
+  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
+  echo("      }\n");
+  echo("    }\n\n");*/
+  
+  echo("    function Voltar()\n");
+  echo("    {\n");
+  echo("      window.location='exercicios.php?cod_curso=".$cod_curso."&visualizar=E';\n");
+  echo("    }\n\n");
+
+  echo("    </script>\n\n");
+  
+  $objAjax->printJavascript("../xajax_0.2.4/");
+  
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  if($tela_formador)
+  {
+    $titulo="<span id=\"tit_".$exercicio['cod_exercicio']."\">".$exercicio['titulo']."</span>";
+    // ? - Renomear
+    $renomear="<span onclick=\"AlteraTitulo('".$exercicio['cod_exercicio']."');\" id=\"renomear_".$exercicio['cod_exercicio']."\">Renomear</span>";
+	$texto="<span id=\"text_".$exercicio['cod_exercicio']."\">".$exercicio['texto']."</span>";
+    // ? - Editar texto
+    $editar="<span onclick=\"AlteraTexto(".$exercicio['cod_exercicio'].");\">Editar texto</span>";
+    // ? - Limpar texto
+    $limpar="<span onclick=\"LimparTexto(".$exercicio['cod_exercicio'].");\">Limpar enunciado</span>";
+
+    /* ?? - Compartilhado com Formadores */
+    if($exercicio['tipo_compartilhamento'] == "F")
+      $compartilhamento = "Compartilhado com Formadores";
+    /* ?? - Nao compartilhado */
+    else
+      $compartilhamento = "Nao compartilhado";
+        
+    if($cod_usuario == $exercicio['cod_usuario'])
+      $compartilhamento = "<span id=\"comp_".$exercicio['cod_exercicio']."\" class=\"link\" onclick=\"js_cod_item='".$exercicio['cod_exercicio']."';AtualizaComp('".$exercicio['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+
+	/* ? - Exercicios */
+	/* ? - Editar Exercicio */
+	echo("          <h4>Exercicios - Editar Exericio</h4>\n");
+	
+  	/*Voltar*/
+  	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+
+  	echo("          <div id=\"mudarFonte\">\n");
+  	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  	echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  	echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  	echo("          </div>\n");
+	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+	echo("            <tr>\n");
+	echo("              <td valign=\"top\">\n");
+  	echo("                <ul class=\"btAuxTabs\">\n");
+  	/* 23 - Voltar  (gen) */
+  	echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+    	/* ? - Historico */
+    	echo("              	<li><span onclick=\"window.open('historico_exercicio.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_exercicio=".$cod_exercicio."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
+  	echo("                </ul>\n");
+  	echo("              </td>\n");
+  	echo("            </tr>\n");
+  	echo("            <tr>\n");
+  	echo("              <td valign=\"top\">\n");
+	echo("                  <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
+	echo("                    <tr class=\"head\">\n");
+	/* ? - Titulo */
+	echo("                      <td class=\"alLeft\" colspan=\"3\">Titulo</td>\n");
+    /* 70 - Opcoes (ger)*/
+	echo("                      <td width=\"20%\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
+	/* ? - Compartilhamento*/
+	echo("                      <td width=\"20%\" colspan=\"2\">Compartilhamento</td>\n");
+	echo("                    </tr>\n");
+	echo("                    <tr id='tr_".$exercicio['cod_exercicio']."'>\n");
+	echo("                      <td class=\"itens\" colspan=\"3\">".$titulo."</td>\n");
+	echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+	echo("                        <ul>\n");
+	echo("                          <li>".$renomear."</li>\n");
+	echo("                          <li>".$limpar."</li>\n");
+	echo("                          <li>".$editar."</li>\n");
+	// G 1 - Apagar
+	echo("                          <li><span onclick=\"ApagarExercicio();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+	echo("                        </ul>\n");
+	echo("                      </td>\n");
+	echo("                      <td colspan=\"2\">".$compartilhamento."</td>\n");
+    echo("                    </tr>\n");
+	echo("                    <tr class=\"head\">\n");
+	/* ? - Texto */
+	echo("                      <td class=\"center\" colspan=\"6\">Texto</td>\n");
+	echo("                    </tr>\n");
+	echo("                    <tr>\n");
+	echo("                      <td class=\"itens\" colspan=\"6\">\n");
+	echo("                        <div class=\"divRichText\">\n");
+	echo ("                        ".$texto."\n");
+	echo("                        </div>\n");
+	echo("                      </td>\n");
+	echo("                    </tr>\n");
+    echo("                  <tr class=\"head\">\n");
+	/* ? - Questoes */
+	echo("                    <td class=\"center\" colspan=\"6\">Questoes</td>\n");
+	echo("                  </tr>\n");
+	echo("                  <tr class=\"head01\">\n");
+    echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
+    /* ? - T�ulo*/
+	echo("                    <td class=\"alLeft\">Titulo</td>\n");
+	/* ? - Tipo*/
+	echo("                    <td width=\"10%\">Tipo</td>\n");
+    /* ? - Topico*/
+	echo("                    <td width=\"20%\">Topico</td>\n");
+    /* ? - Dificuldade*/
+	echo("                    <td width=\"10%\">Dificuldade</td>\n");
+	/* ? - Valor*/
+	echo("                    <td width=\"10%\">Valor</td>\n");
+	echo("                  </tr>\n");
+	
+	
+    if ((count($lista_questoes)>0)&&($lista_questoes != null))
+    {
+      foreach ($lista_questoes as $cod => $linha_item)
+      {
+        $tipo = $linha_item['tp_questao'];
+        $titulo = $linha_item['titulo'];
+        $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
+        $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+        $dificuldade = $linha_item['nivel'];
+        $valor = $linha_item['valor'];
+        
+        echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
+        echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkQuestao\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
+        echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."\">".$titulo."</a></td>\n");
+        echo("                    <td>".$tipo."</td>\n");
+        echo("                    <td>".$topico."</td>\n");
+        echo("                    <td>".$dificuldade."</td>\n");
+        echo("                    <td>".$valor."</td>\n");
+        echo("                  </tr>\n");
+      }
+    }
+    else
+    {
+      echo("                  <tr>\n");
+      /* ? - Não há nenhuma questao */
+      echo("                    <td colspan=\"6\">Nao ha nenhuma questao</td>\n");
+      echo("                  </tr>\n");
+    }
+	
+	echo("                  <tr id=\"optQuestoes\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
+	echo("                      <ul>\n");
+	echo("                        <li class=\"menuUp\" id=\"mQuestao_apagar\"><span id=\"sQuestao_apagar\">Apagar selecionadas</span></li>\n");
+    echo("                        <li class=\"menuUp\" id=\"mQuestao_valor\"><span id=\"sQuestao_valor\">Atribuir valor as selecionadas</span></li>\n");
+	echo("                      </ul>\n");
+	echo("                    </td>\n");
+	echo("                  </tr>\n");
+    echo("                  <tr class=\"head\">\n");
+	/* ? - Arquivos */
+	echo("                    <td colspan=\"6\">Arquivos</td>\n");
+	echo("                  </tr>\n");
+
+	if (count($lista_arq) > 0 || $lista_arq != null) {
+
+		$conta_arq = 0;
+
+		echo ("                  <tr>\n");
+		echo ("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
+		// Procuramos na lista de arquivos se existe algum visivel
+		$ha_visiveis = false;
+
+		while ((list ($cod, $linha) = each($lista_arq)) && !$ha_visiveis) {
+			if ($linha['Arquivo'] != "")
+				$ha_visiveis = !($linha['Status']);
+		}
+
+		if ($ha_visiveis) {
+			$nivel_anterior = 0;
+			$nivel = -1;
+
+			foreach ($lista_arq as $cod => $linha) {
+				$linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
+				if (!($linha['Arquivo'] == "" && $linha['Diretorio'] == ""))
+					if (!$linha['Status']) {
+						$nivel_anterior = $nivel;
+						$espacos = "";
+						$espacos2 = "";
+						$temp = explode("/", $linha['Diretorio']);
+						$nivel = count($temp) - 1;
+						for ($c = 0; $c <= $nivel; $c++) {
+							$espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+							$espacos2 .= "  ";
+						}
+
+						$caminho_arquivo = $dir_questao_temp['link'] . ConverteUrl2Html($linha['Diretorio'] . "/" . $linha['Arquivo']);
+						//converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
+						//ISO-8859-1 para ser exibido corretamente na página.
+						$caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
+						$linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
+						if ($linha['Arquivo'] != "") {
+
+							if ($linha['Diretorio'] != "") {
+								$espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+								$espacos2 .= "  ";
+							}
+
+							if ($linha['Status'])
+								$arqOculto = "arqOculto='sim'";
+							else
+								$arqOculto = "arqOculto='nao'";
+
+							if (eregi(".zip$", $linha['Arquivo'])) {
+								// arquivo zip
+								$imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
+								$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\" " . $arqOculto . ">";
+							} else {
+								// arquivo comum
+                                                                // imagem
+								if((eregi(".jpg$",$linha['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
+                                                                //doc
+                                                                }else if(eregi(".doc$",$linha['Arquivo'])){
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqdoc.gif\" \"border=\"0\" />";
+                                                                //pdf
+                                                                }else if(eregi(".pdf$",$linha['Arquivo'])){
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqpdf.gif\" border=\"0\" />";
+                                                                //html
+                                                                }else if((eregi(".html$",$linha['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
+                                                                }else if((eregi(".mp3$",$linha['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
+                                                                }else{
+                                                                  $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
+                                                                }
+
+								$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" " . $arqOculto . ">";
+
+							}
+
+							$tag_fecha = "</span>";
+
+							echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+
+							echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
+
+							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
+
+							echo ("<span id=\"local_oculto_" . $conta_arq . "\">");
+							if ($linha['Status'])
+								// ? - Oculto
+								echo ("<span id=\"arq_oculto_" . $conta_arq . "\"> - <span style=\"color:red;\">Oculto</span></span>");
+							echo ("</span>\n");
+							echo ("                          " . $espacos2 . "<br />\n");
+							echo ("                        " . $espacos2 . "</span>\n");
+						} else {
+							if ($nivel_anterior >= $nivel) {
+								$i = $nivel_anterior - $nivel;
+								$j = $i;
+								$espacos3 = "";
+								do {
+									$espacos3 .= "  ";
+									$j--;
+								} while ($j >= 0);
+								do {
+									echo ("                      " . $espacos3 . "</span>\n");
+									$i--;
+								} while ($i >= 0);
+							}
+							// pasta
+							$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
+							echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+							echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
+							echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
+							echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
+							echo ("                        " . $espacos2 . "<br />\n");
+						}
+					}
+				$conta_arq++;
+			}
+			do {
+				$j = $nivel;
+				$espacos3 = "";
+				do {
+					$espacos3 .= "  ";
+					$j--;
+				} while ($j >= 0);
+				$nivel--;
+			}
+			while ($nivel >= 0);
+		}
+		echo ("                    </td>\n");
+		echo ("                  </tr>\n");
+	}
+
+    echo("                  <tr id=\"optArq\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
+	echo("                      <ul>\n");
+	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
+	echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
+    echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
+	echo("                      </ul>\n");
+	echo("                    </td>\n");
+	echo("                  </tr>\n");
+	echo("                  <tr>\n");
+	echo("                    <td align=\"left\" colspan=\"6\">\n");
+	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
+	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+	echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_exercicio."\" />\n");
+        echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
+	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
+	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
+	echo("                          <span> - Bla bla bla</span>\n");
+	echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
+	echo("                          &nbsp;&nbsp;\n");
+	echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
+	echo("                          &nbsp;&nbsp;\n");
+	echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
+	echo("                        </div>\n");
+	/* 26 - Anexar arquivos (ger) */
+	echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
+	echo("                      </form>\n");
+	echo("                    </td>\n");
+	echo("                  </tr>\n");
+	echo("                </table>\n");
+	echo("              </td>\n");
+  	echo("            </tr>\n");
+  	echo("          </table>\n");
+        echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+  //*NAO �FORMADOR*/
+  }
+  else
+  {
+	/* ? - Exercicios */
+  	/* ? - Area restrita ao formador. */
+  	echo("          <h4>Exercicios - Area restrita ao formador.</h4>\n");
+	
+        /*Voltar*/
+        echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+
+        echo("          <div id=\"mudarFonte\">\n");
+        echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+        echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+        echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+        echo("          </div>\n");
+
+    	/* 23 - Voltar (gen) */
+    	echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+  }
+
+  echo("        </td>\n");
+  echo("      </tr>\n"); 
+
+  include("../tela2.php");
+  
+  /* Mudar Compartilhamento */
+  echo("    <div class=popup id=\"comp\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <script type=\"text/javaScript\">\n");
+  echo("        </script>\n");
+  echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("          <input type=hidden name=cod_item value=\"\" />\n");
+  echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
+  echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
+  echo("          <ul class=ulPopup>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'E'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  /* ?? - Compartilhado com formadores */
+  echo("              <span>Compartilhado com formadores</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'E'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  /* ?? - Nao Compartilhado */
+  echo("              <span>Nao Compartilhado</span>\n");
+  echo("            </li>\n");
+  echo("          </ul>\n");    
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
+
+  Desconectar($sock);
+?>

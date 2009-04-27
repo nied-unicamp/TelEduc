@@ -255,6 +255,42 @@ function RetornaResHistoricoDaQuestao ($sock, $cod_questao)
   return($res);
 }
 
+/**********************************************************************
+   RetornaQuestoesExercicio - Retorna as questoes de um exercicio
+   Entrada: $sock - BASE Interna
+            $cod_exercicio - codigo do exercicio
+   Saida: array com []['cod_questao'] - chave primaria ou codigo da questao
+                    []['valor'] - valor da questao 
+                    []['titulo'] - titulo da questao
+                    []['tp_questao'] - tipo da questao
+					[]['nivel'] - dificuldade da questao
+					[]['cod_topico'] - codigo do topico da questao
+*/
+function RetornaQuestoesExercicio($sock,$cod_exercicio)
+{
+  $query="select MQ.cod_questao,MQ.valor,Q.titulo,Q.tp_questao,Q.nivel,Q.cod_topico from Exercicios_modelo_questao MQ, Exercicios_questao Q where MQ.cod_exercicio=".VerificaNumeroQuery($cod_exercicio)." and MQ.cod_questao = Q.cod_questao";
+  $res=Enviar($sock,$query);
+  return $linha;
+}
+
+/* *********************************************************************
+   RetornaExercicio - Retorna um exercicio
+   Entrada: $sock - BASE Interna
+            $cod_exercicio - codigo do exercicio
+   Saida: array ['cod_exercicio'] - codigo do exercicio
+                ['cod_usuario'] - codigo do usuario
+                ['titulo'] - titulo do exercicio
+                ['texto'] - texto do exercicio
+                ['tipo_compartilhamento'] - compartilhamento da questao
+*/
+function RetornaExercicio($sock,$cod_exercicio)
+{
+  $query="select cod_exercicio,cod_usuario,titulo,texto,tipo_compartilhamento from Exercicios_modelo where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return $linha;
+}
+
 /* *********************************************************************
    RetornaQuestao - Retorna a questao dada
    Entrada: $sock - BASE Interna
@@ -770,6 +806,40 @@ function EditarTituloQuestaoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_u
 }
 
 /* *********************************************************************
+   EditarTituloExercicioDinamic - Edita o título do exercicio
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
+            $cod_exercicio - codigo do exercicio
+            $novo_nome - novo título do exercicio
+            $cod_usuario - código do usuário que está utilizando
+            $texto - mensagem de feedback
+   Saida: XML da função Ajax
+*/
+function EditarTituloExercicioDinamic($cod_curso, $cod_exercicio, $novo_nome, $cod_usuario, $texto)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
+  $data = time();
+
+  $sock=Conectar($cod_curso);
+  $consulta="update Exercicios_modelo set titulo='".VerificaStringQuery(htmlentities($novo_nome))."' where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock, $consulta);
+
+  Desconectar($sock);
+
+  // Imprime no div valores do formul?io
+  $objResponse->addAssign("tit_".$cod_exercicio, "innerHTML", htmlentities($novo_nome));
+  $objResponse->addEvent("renomear_".$cod_exercicio, "onclick", "AlteraTitulo('".$cod_exercicio."');");
+
+  //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+
+  //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+
+  // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
+  return $objResponse->getXML();
+}
+
+/* *********************************************************************
    EditarEnunciadoDinamic - Edita o enunciado da questao
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_questao - codigo da questao
@@ -796,6 +866,39 @@ function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuar
 
   // Imprime no div valores do formulário
   $objResponse->addAssign("text_".$cod_questao, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
+
+
+  // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
+  return $objResponse->getXML();
+}
+
+/* *********************************************************************
+   EditarTextoExercicioDinamic - Edita o texto do exercicio
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
+            $cod_exercicio - codigo da questao
+            $novo_texto - novo texto do exercicio
+            $cod_usuario - código do usuário que está utilizando
+            $feedback - mensagem de feedback
+   Saida: XML da função Ajax
+*/
+function EditarTextoExercicioDinamic($cod_curso, $cod_exercicio, $novo_texto, $cod_usuario, $feedback)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $novo_texto=ConverteAspas2BarraAspas($novo_texto);
+  $sock=Conectar($cod_curso);
+
+  $consulta="update Exercicios_modelo set texto='".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."' where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock, $consulta);
+
+  Desconectar($sock);
+
+  //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+
+  $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
+
+  // Imprime no div valores do formulário
+  $objResponse->addAssign("text_".$cod_exercicio, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_texto))), true));
 
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse

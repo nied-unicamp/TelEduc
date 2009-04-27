@@ -63,7 +63,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
   $dir_name = "exercicios";
-  $dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
+  //$dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
   /* ação = Criar Nova Questao - origem = questoes.php */
   if ($acao=="criarQuestao")
@@ -81,6 +81,24 @@
 
     Desconectar($sock);
     header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&atualizacao=".$atualizacao);
+  }
+  
+  /* ação = Criar Novo Exercicio - origem = exercicos.php */
+  if ($acao=="criarExercicio")
+  {
+    $atualizacao = "true";
+
+    $cod_exercicio = CriarExercicio($sock, $cod_curso, $cod_usuario, $novo_titulo);
+    if($cod_exercicio == -1) //erro na criacao! algum parametro da func. esta vazio
+    {
+      $atualizacao="false";
+      Desconectar($sock);
+      header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao);
+      exit();
+    } 
+
+    Desconectar($sock);
+    header("Location:exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
   }
   
   /* ação = Anexar Arquivo - origem = ver.php */

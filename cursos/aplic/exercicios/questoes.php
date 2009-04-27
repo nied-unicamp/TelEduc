@@ -424,7 +424,8 @@
 	{
 	  echo("                <ul>\n");
       /* ? - Apagar selecionadas */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar Selecionadas</span></li>\n");
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar selecionadas</span></li>\n");
+      echo("                  <li id=\"mIncluir_Selec\" class=\"menuUp\"><span id=\"eincluirSelec\">Incluir selecionadas em um exercicio</span></li>\n");
       echo("                </ul>\n");
 	}
 	else if($visualizar == "L")
