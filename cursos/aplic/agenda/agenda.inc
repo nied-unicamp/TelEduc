@@ -143,7 +143,7 @@ function RetornaItensHistorico($sock)
             $titulo - titulo do item a ser criado
    Saida: codigo do item criado
 */
-function IniciaCriacao ($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titulo)
+function IniciaCriacao ($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titulo, $texto)
 {
   if(trim($diretorio_temp) == "" || $cod_curso == "" )
     return -1; //tah certo isso?!
@@ -151,7 +151,7 @@ function IniciaCriacao ($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titul
 
   $cod_item=RetornaProximoCodigo($sock, "Agenda_itens");
   
-  $consulta="insert into Agenda_itens (cod_item, cod_usuario, titulo, situacao, data, status, inicio_edicao) values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", '".VerificaStringQuery(htmlentities($titulo))."', 'N', ".time().", 'L', ".time().")";
+  $consulta="insert into Agenda_itens (cod_item, cod_usuario, titulo, texto, situacao, data, status, inicio_edicao) values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", '".VerificaStringQuery(htmlentities($titulo))."','".VerificaStringQuery(htmlentities($texto))."', 'N', ".time().", 'L', ".time().")";
   
   $res=Enviar($sock, $consulta);
   $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".time().", 'C')";
@@ -514,7 +514,7 @@ function RetornaAgendaCurso($sock)
    Saida: booleano - true caso a importacao tenha sido um sucesso
    		     false caso tenha ocorrido algum erro
 */
-function ImportarAgenda($cod_usuario, $cod_curso_destino, $opt, $cod_itens, $cod_curso_origem, $diretorio_origem, $diretorio_destino, $diretorio_temp)
+function ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens, $cod_curso_origem, $diretorio_origem, $diretorio_destino, $diretorio_temp)
 { 
   if(trim($diretorio_origem) == "" || trim($diretorio_destino) == "" || trim($diretorio_temp) == "" ||
       $cod_curso_origem == "" || $cod_itens == "" || $cod_curso_destino == "" )
@@ -524,7 +524,7 @@ function ImportarAgenda($cod_usuario, $cod_curso_destino, $opt, $cod_itens, $cod
   {
     $ret = true;
     /*pega item a ser importado!*/
-    $sock = Conectar($cod_curso_origem, $opt);
+    $sock = Conectar($cod_curso_origem);
     $query = "select * from Agenda_itens where cod_item =".VerificaNumeroQuery($cod_item);
     $id = Enviar($sock, $query);
     $item_import = RetornaLinha($id);
@@ -533,15 +533,14 @@ function ImportarAgenda($cod_usuario, $cod_curso_destino, $opt, $cod_itens, $cod
     /*insere item na base de dados do curso destino*/
     $sock = Conectar($cod_curso_destino);
     /*cria um item vazio na agenda do curso destino!*/
-    $cod_item_dest = IniciaCriacao($sock, $cod_usuario, $cod_curso_destino, $diretorio_temp,$item_import['titulo']);
-
+    $cod_item_dest = IniciaCriacao($sock, $cod_usuario, $cod_curso_destino, $diretorio_temp, $item_import['titulo'], $item_import['texto']);
     MudarDB($sock,$cod_curso_origem,$opt);
     
     /*Copia arquivo do diretorio de origem para o temp do curso destino!*/
     /* Checa se existem arquivos no diret�rio */
     /*� necessario futuramente fazer uma verificao melhor dos erros, com a utilizacao de codigos de erro. usando 
       o modelo atual � impossivel determinar qual foi o erro no t�rmino da funcao*/
-    $array_dest=RetornaArrayDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item."/");
+    $array_dest=RetornaArrayDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item);
     if ($ret && count($array_dest)!=0)
     {
       $ret = CriaDiretorio($diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");

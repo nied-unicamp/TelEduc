@@ -44,6 +44,7 @@
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
+  include($bibliotecas."importar.inc");
   include("agenda.inc");
 
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
@@ -71,7 +72,7 @@
   {
     $atualizacao = "true";
 
-    $cod_item = IniciaCriacao($sock, $cod_usuario, $cod_curso, $diretorio_temp, $novo_titulo);
+    $cod_item = IniciaCriacao($sock, $cod_usuario, $cod_curso, $diretorio_temp, $novo_titulo, $novo_texto);
     if($cod_item == -1) //erro na criacao! algum parametro da func. esta vazio
     {
       $atualizacao="false";
@@ -185,6 +186,57 @@
     Desconectar($sock);
     header("Location:ver_linha.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
   }
+   else if ($acao == "validarImportacao"){
+ 	$sock = MudarDB($sock, "");
+ 	
+  	$tipo_curso_origem = $cod_curso_todos[0]; // B = Base, E = Extra�do
+  	$cod_curso_origem = $cod_curso_todos[2];
+  	
+  	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
+  	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
+  	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
+  	
+  	$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+  	
+  	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+  		$_SESSION['flag_curso_compartilhado'] = TRUE;
+  		header("Location:importar_agenda.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+  	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
+  		$_SESSION['flag_curso_compartilhado'] = FALSE;
+  		header("Location:importar_agenda.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+  	} else {
+  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+  	}
+  	
+  } else if ($acao == "importarItem"){
+  	
+  	$cod_curso_destino = $cod_curso;
+  	$cod_topico_destino = $_SESSION['cod_topico_destino'];
+  	$cod_usuario;
+  	$cod_curso_origem = $_SESSION['cod_curso_origem'];
+  	$flag_curso_extraido = $_SESSION['flag_curso_extraido'];
+  	$flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
+  	$array_topicos_origem = $cod_assunto;
+  	$array_itens_origem = $cod_pergunta;
+  	$dirname = "perguntas";
+  	$nome_tabela = "Pergunta";
+  	
+  	$sock=Conectar("");
+  	if ($curso_extraido)
+		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Montagem');
+	else
+		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Arquivos');
+
+	// Raiz do diret�rio de arquivos do curso PARA O QUAL ser�o importados
+	// os itens.
+	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
+	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+
+  	ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens_import, $cod_curso_origem, $diretorio_arquivos_origem, $diretorio_arquivos_destino, $diretorio_temp);
+    
+  	header("Location:ver_editar.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_topico_destino."&acao=".$acao."&atualizacao=true");
+  }
+  
 
   Desconectar($sock);
   exit;

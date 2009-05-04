@@ -4,7 +4,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/material/importar_curso.php
+    Arquivo : cursos/aplic/agenda/importar_curso.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -55,6 +55,7 @@ $objMaterial->registerFunction("AlterarPeriodoDinamic");
 // Manda o xajax executar os pedidos acima.
 $objMaterial->processRequests();
 
+
 // **************** VARI�VEIS DE ENTRADA ****************
 //    c�digo do curso
 if (isset ($_GET['cod_curso']))
@@ -88,12 +89,7 @@ if ($tipo_curso == 'E') {
 
 // ******************************************************
 
-// Destrói a chave de login do usuário
-unset ($login_import_s);
-unset ($_SESSION["login_import_s"]);
-// Destrói o contador de tentativas de login do usuário.
-unset ($login_import_count_s);
-unset ($_SESSION["login_import_count_s"]);
+
 
 $sock = Conectar("");
 $lista_frases_biblioteca = RetornaListaDeFrases($sock, -2);
@@ -159,7 +155,6 @@ if ($tipo_curso == 'E') {
 echo ("      function Iniciar()\n");
 echo ("      {\n");
 echo ("        startList();\n");
-echo ("        DesabilitaLoginSenha();\n");
 echo ("      }\n\n");
 
 echo ("        function desmarcaSelect(selectObj)\n");
@@ -174,7 +169,7 @@ if ($tipo_curso == 'E')
 echo ("          return(selecionouCurso());\n");
 echo ("        }\n");
 
-echo ("        function selecionouCurso()\n");
+/*echo ("        function selecionouCurso()\n");
 echo ("        {\n");
 echo ("          if ((document.getElementById('cod_curso_compart').selectedIndex != -1) ||
                   (document.getElementById('cod_curso_todos').selectedIndex != -1))\n");
@@ -209,17 +204,7 @@ echo ("          else\n");
 // 33 - Selecione um curso em uma das listas.
 echo ("          alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 33) . "');\n");
 echo ("          return(false);\n");
-echo ("        }\n\n");
-
-echo ("        function DesabilitaLoginSenha()\n");
-echo ("        {\n");
-echo ("          document.getElementById('tr_senha').style.display = \"none\";\n");
-echo ("        }\n\n");
-
-echo ("        function HabilitaLoginSenha()\n");
-echo ("        {\n");
-echo ("          document.getElementById('tr_senha').style.display = \"\";\n");
-echo ("        }\n\n");
+echo ("        }\n\n");*/
 
 echo ("        function extracheck(obj)\n");
 echo ("        {\n");
@@ -419,9 +404,14 @@ if ('E' == $tipo_curso) {
 }
 
 echo ("                      <td>\n");
-echo ("                <form name=\"frmImpMaterial\" method=\"post\" action=\"importar_curso2.php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferramenta . "\" onsubmit=\"return(EnviaReq());\">\n");
+echo ("                <form name=\"frmImpMaterial\" method=\"get\" action=\"acoes_linha.php\">\n");
+
+
+echo ("                  <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
+echo ("                  <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
+echo ("                  <input type=\"hidden\" id=getme name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
 echo ("                  <input type=hidden name=tipo_curso value='" . $tipo_curso . "' />\n");
-echo ("                  <input type=hidden name=cod_categoria value='" . $cod_categoria . "' />\n");
+echo ("                  <input type=hidden name=cod_ferramenta value='" . $cod_ferramenta . "' />\n");
 
 if ('E' == $tipo_curso) {
 	echo ("                        <input type=hidden name=data_inicio value='' />\n");
@@ -446,20 +436,16 @@ if (count($categorias) > 0) {
 // 45(biblioteca) - Cursos Gerais
 echo ("                          <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected" : "") . ">" . RetornaFraseDaLista($lista_frases_biblioteca, 45) . "</option> \n");
 echo ("                        </select>\n");
-//   echo("                      </form>\n");
 echo ("                      </td>\n");
-echo ("                      <td align=center>\n");
+echo ("                      <td align=\"center\">\n");
 // Monta select com os cursos com material compatilhado
-echo ("                        <select class=\"input\" name=\"cod_curso_compart\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onFocus='DesabilitaLoginSenha();desmarcaSelect(\"cod_curso_todos\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();}'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_compart\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_todos\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "}'>\n");
 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
 		// 46(biblioteca) - (extraído)
 		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . RetornaFraseDaLista($lista_frases_biblioteca, 46)) : "") . "</option>\n");
 	}
-} else {
-	// 81 Nenhum Curso Disponível
-	echo "<option value='0'>" . RetornaFraseDaLista($lista_frases_gerais, 81) . "</option>";
 }
 echo ("                        </select>\n");
 echo ("                      </td>\n");
@@ -468,49 +454,28 @@ $todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $periodo_
 //  $cursos_menos_compart =  Diferenca_Entre_Vetores ($Todos_Cursos, $Todos_Cursos_Compart);
 Desconectar($sock);
 // Monta select com os demais cursos (todos - compartilhados)
-echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='if(this.value!=0)HabilitaLoginSenha(); desmarcaSelect(\"cod_curso_compart\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();}' onClick='if(this.value!=0){document.getElementById(\"login_import\").focus();}'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_compart\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "}'>\n");
 
 if (count($todos_cursos) > 0) {
 	foreach ($todos_cursos as $idx => $dados) {
 		// 46(biblioteca) - (extra�do)
 		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . RetornaFraseDaLista($lista_frases_biblioteca, 46)) : "") . "</option>\n");
 	}
-} else {
-	echo "<option value='0'>" . RetornaFraseDaLista($lista_frases_gerais, 81) . "</option>";
 }
 echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td>\n");
-/* 61 - Importar agendas */
-echo ("                        <input type=\"submit\" class=\"input\" value=\"" . RetornaFraseDaLista($lista_frases, 61) . "\" />\n");
-echo ("                      </td>\n");
-echo ("                    </tr>\n");
-echo ("                    <tr id=\"tr_senha\" style=\"display:none;\">\n");
-echo ("                      <td colspan=2>&nbsp;</td>\n");
-echo ("                      <td colspan=2>\n");
-echo ("                        <table>\n");
-echo ("                          <tr>\n");
-// 27(biblioteca) - Login:
-echo ("                            <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 27) . "</td>\n");
-echo ("                            <td style=\"border:0pt;\"><input type=\"text\" class=\"input\" onKeyDown=\"return extracheck(this);\" name=\"login_import\" id=\"login_import\" value=\"\" /></td>\n");
-echo ("                            <td style=\"border:0pt;\" rowspan=\"2\" valign=\"bottom\">\n");
-
-echo ("                            </td>\n");
-echo ("                          </tr>\n");
-echo ("                          <tr>\n");
-// 48(biblioteca) - Senha:
-echo ("                            <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 48) . "</td>\n");
-echo ("                            <td style=\"border:0pt;\"><input type=\"password\" class=\"input\" onKeyDown=\"return extracheck(this);\" name=\"senha_import\" id=\"senha_import\" value=\"\" /></td>\n");
-echo ("                          </tr>\n");
-echo ("                        </table>\n");
+/* 75(ger) - Importar */
+echo ("                        <input class=\"input\" type=\"submit\"  value=\"" . RetornaFraseDaLista($lista_frases_geral, 75) . "\" />\n");
 echo ("                      </td>\n");
 echo ("                    </tr>\n");
 
-echo ("                  </table>\n");
-echo ("                </form>\n");
+echo ("                </table>\n");
 echo ("              </td>\n");
 echo ("            </tr>\n");
 echo ("          </table>\n");
+echo ("        </td>\n");
+echo ("      </tr>\n");
 include ("../tela2.php");
 echo ("  </body>\n");
 echo ("</html>\n");

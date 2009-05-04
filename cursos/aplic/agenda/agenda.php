@@ -63,7 +63,6 @@
 
 Desconectar($sock);
 $sock = Conectar($cod_curso);
-
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 

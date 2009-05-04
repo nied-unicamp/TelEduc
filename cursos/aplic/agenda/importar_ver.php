@@ -72,18 +72,6 @@
   $cod_topico_raiz_import = $_POST['cod_topico_raiz_import'];
 
   // ******************************************************
-
-  session_register("login_import_s");
-  if (isset($login_import))
-    $login_import_s = $login_import;
-  else
-    $login_import = $_SESSION['login_import_s'];
-
-  if ($curso_extraido)
-    $opt = TMPDB;
-  else
-    $opt = "";
-
   $sock=Conectar("");
   $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
   if ($curso_extraido)
@@ -173,50 +161,15 @@
 
   /*Voltar*/			
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
-  if ((!$curso_compartilhado) &&
-      (false === ($cod_usuario_import = UsuarioEstaAutenticadoImportacao($cod_curso, $cod_usuario, $cod_curso_import, $opt))))
-  {
-    // Testar se � identicamente falso,
-    // pois 0 pode ser um valor v�lido para cod_usuario
-    echo("          <script type=\"text/javascript\" defer>\n\n");
-    echo("            function ReLogar()\n");
-    echo("            {\n");
-    // 52(biblioteca) - Login ou senha inv�lidos
-    echo("              alert(\"".RetornaFraseDaLista($lista_frases_biblioteca, 52)."\");\n");
-    echo("              document.frmRedir.submit();\n");
-    echo("            }\n\n");
-
-    echo("          </script>\n\n");
-
-    echo("          <form method=\"post\" name=\"frmRedir\" action=\"importar_curso.php\">\n");
-    echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
-    echo("            <input type=\"hidden\" name=\"cod_categoria\" value=\"".$cod_categoria."\">\n");
-    echo("            <input type=\"hidden\" name=\"cod_topico_raiz\" value=\"".$cod_topico_raiz."\">\n");
-    echo("            <input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\">\n");
-    echo("          </form>\n"); 
-    
-    echo("          <script type=\"text/javascript\">\n\n");
-    echo("            ReLogar();\n");
-    echo("          </script>\n\n");
-    
-    echo("        </td>\n");
-    echo("      </tr>\n");
-    echo("    </table>\n");
-    echo("  </body>\n");
-    echo("</html>\n");
-    exit();
-  }
-
   
-  $sock = Conectar($cod_curso_import, $opt);
+  $sock = Conectar($cod_curso_import);
 
   $nome_curso_import = NomeCurso($sock, $cod_curso_import);
 
   if (!$curso_compartilhado)
   {
-    VerificaAcessoAoCurso($sock, $cod_curso_import, $cod_usuario_import);
-    VerificaAcessoAFerramenta($sock,$cod_curso_import, $cod_usuario_import, $cod_ferramenta);
+    VerificaAcessoAoCurso($sock, $cod_curso_import, $cod_usuario);
+    VerificaAcessoAFerramenta($sock,$cod_curso_import, $cod_usuario, $cod_ferramenta);
   }
 
   // Verifica��o se o item est� em Edi��o
