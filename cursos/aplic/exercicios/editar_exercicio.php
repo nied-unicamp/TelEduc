@@ -58,6 +58,9 @@
   $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
   $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
+  $objAjax->registerFunction("AtualizaValorTotalExercicioDinamic");
+  $objAjax->registerFunction("AtribuiValorAQuestaoDinamic");
+  $objAjax->registerFunction("ExluirQuestaoDoExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -73,7 +76,8 @@
   
   $exercicio = RetornaExercicio($sock,$cod_exercicio);
   $lista_questoes = RetornaQuestoesExercicio($sock,$cod_exercicio);
-  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp);
+  $totalValorQuestoes = RetornaSomaValorQuestoes($sock,$cod_exercicio);
+  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_exercicio, $diretorio_arquivos, $diretorio_temp, "exercicio");
   $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
 
@@ -104,6 +108,7 @@
   echo("    var input = 0;\n");
   echo("    var cancelarElemento = null;\n");
   echo("    var contaArq = ".count($lista_arq).";\n");
+  echo("    var numQuestoes = ".count($lista_questoes).";\n");
   echo("    var cancelarTodos = 0;\n\n");
   
   echo("    if (isNav)\n");
@@ -139,6 +144,7 @@
   echo("    function Iniciar()\n");
   echo("    {\n");
   echo("      cod_comp = getLayer(\"comp\");\n");
+  echo("      lay_atribuir = getLayer(\"layer_atribuir\");\n");
   echo("      startList();\n");
   echo("    }\n\n");
 
@@ -150,6 +156,7 @@
   echo("    function EscondeLayers()\n");
   echo("    {\n");
   echo("      hideLayer(cod_comp);\n");
+  echo("      hideLayer(lay_atribuir);\n");
   echo("    }\n\n");
 
   echo("    function MostraLayer(cod_layer, ajuste)\n");
@@ -337,6 +344,136 @@
   echo("          tipo_comp[1].innerHTML=imagem;\n");
   echo("        }\n");
   echo("      }\n\n");
+  
+  echo("    function VerificaCheck(){\n");
+  echo("      var i;\n");
+  echo("      var j=0;\n");
+  echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  echo("      var Cabecalho = document.getElementById('checkMenu');\n");
+  echo("      EscondeLayers();\n");
+  echo("      for (i=0; i < cod_itens.length; i++){\n");
+  echo("        if (cod_itens[i].checked){\n");
+  echo("          j++;\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("      if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
+  echo("      else Cabecalho.checked=false;\n");
+  echo("      if(j > 0){\n");
+  echo("        document.getElementById('mQuestao_apagar').className=\"menuUp02\";\n");
+  echo("        document.getElementById('mQuestao_apagar').onclick=function(){ ApagarSelecionadas(); };\n");
+  echo("        document.getElementById('mQuestao_valor').className=\"menuUp02\";\n");
+  echo("        document.getElementById('mQuestao_valor').onclick=function(){ MostraLayer(lay_atribuir,140); };\n");
+  echo("      }else{\n");
+  echo("        document.getElementById('mQuestao_apagar').className=\"menuUp\";\n");
+  echo("        document.getElementById('mQuestao_apagar').onclick=function(){  };\n");
+  echo("        document.getElementById('mQuestao_valor').className=\"menuUp\";\n");
+  echo("        document.getElementById('mQuestao_valor').onclick=function(){ };\n");
+  echo("      }\n");
+  echo("    }\n\n");
+   
+  echo("    function CheckTodos(){\n");
+  echo("      var e;\n");
+  echo("      var i;\n");
+  echo("      var CabMarcado = document.getElementById('checkMenu').checked;\n");
+  echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  echo("      for(i = 0; i < cod_itens.length; i++){\n");
+  echo("        e = cod_itens[i];\n");
+  echo("        e.checked = CabMarcado;\n");
+  echo("      }\n");
+  echo("      VerificaCheck();\n");
+  echo("    }\n\n");
+  
+  echo("    function InsereLinhaVazia(){\n");
+  echo("	  var trTotal,tr,td;");
+  echo("	  trTotal = document.getElementById(\"trTotal\");\n");
+  echo("	  tr = document.createElement(\"tr\");\n");
+  echo("	  td = document.createElement(\"td\");\n");
+  echo("	  td.colSpan = \"6\";\n");
+  //?
+  echo("	  td.appendChild(document.createTextNode('Nao ha nenhuma questao'));\n");
+  echo("	  tr.appendChild(td);\n");
+  echo("	  trTotal.parentNode.insertBefore(tr,trTotal);\n");
+  echo("    }\n\n");
+  
+  echo("    function DeletaLinhaQuestoes(arrayIdQuestoes,n){\n");
+  echo("      var i,tr;\n");
+  echo("      for (i=0; i < n; i++){\n");
+  echo("        tr = document.getElementById('trQuestao_'+arrayIdQuestoes[i]);\n");
+  echo("        tr.parentNode.removeChild(tr);\n");
+  echo("        numQuestoes--;\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function ApagarSelecionadas(){\n");
+  echo("      var i,j,questoes,getNumber,arrayIdQuestoes;\n");
+  echo("      j=0;\n");
+  echo("      arrayIdQuestoes = new Array();\n");
+  echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  echo("      for (i=0; i < questoes.length; i++){\n");
+  echo("        if (questoes[i].checked){\n");
+  echo("          getNumber = questoes[i].id.split(\"_\");\n");
+  echo("          xajax_ExluirQuestaoDoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",getNumber[1]);\n");
+  echo("          arrayIdQuestoes[j++] = getNumber[1];\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("      DeletaLinhaQuestoes(arrayIdQuestoes,j)\n");
+  echo("      if(numQuestoes == 0)\n");
+  echo("      {\n");
+  echo("        document.getElementById(\"trTotal\").style.display = \"none\";\n");
+  echo("        InsereLinhaVazia();\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
+  echo("        xajax_AtualizaValorTotalExercicioDinamic(".$cod_curso.",".$cod_exercicio.");\n");
+  echo("      }\n");
+  //?
+  echo("      mostraFeedback(\"Questoes apagadas.\",true);\n");
+  echo("      VerificaCheck();\n");
+  echo("    }\n\n");
+  
+  echo("    function AtribuiValor(valor){\n");
+  echo("      var i,questoes,getNumber;\n");
+  echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  echo("      for (i=0; i < questoes.length; i++){\n");
+  echo("        if (questoes[i].checked){\n");
+  echo("          getNumber = questoes[i].id.split(\"_\");\n");
+  echo("          xajax_AtribuiValorAQuestaoDinamic(".$cod_curso.",".$cod_exercicio.",getNumber[1],valor);\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("      xajax_AtualizaValorTotalExercicioDinamic(".$cod_curso.",".$cod_exercicio.");\n");
+  //?
+  echo("      mostraFeedback(\"Valores atribuidos.\",true);\n");
+  echo("    }\n\n");
+  
+  echo("    function isNumber(string)\n");
+  echo("    {\n");
+  echo("      var validChars,isNumber,c;\n");
+  echo("      validChars = \"0123456789.\";\n");
+  echo("      isNumber = true;\n");
+  echo("      for (i = 0; i < string.length && isNumber == true; i++)\n");
+  echo("      {\n"); 
+  echo("        c = string.charAt(i);\n");
+  echo("        if (validChars.indexOf(c) == -1)\n");
+  echo("        {\n");
+  echo("          isNumber = false;\n");
+  echo("        }\n");
+  echo("      }\n"); 
+  echo("      return isNumber;\n");
+  echo("    }\n\n");
+
+  echo("    function VerificaValor(valor){\n");
+  echo("      if(isNumber(valor))\n");
+  echo("      {\n");
+  echo("        AtribuiValor(valor);\n");
+  echo("        EscondeLayer(lay_atribuir);\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
+  echo("        alert(\"O valor deve ser numerico!\");\n");
+  echo("        document.getElementById(\"valor\").value = \"\";");
+  echo("        document.getElementById(\"valor\").focus();\n");
+  echo("      }\n");
+  echo("    }\n\n");
 
   echo("    function getfilename(path)\n");
   echo("    {\n");
@@ -367,7 +504,7 @@
   echo("      var nomeArq,td;\n");
   echo("      nomeArq = getfilename(document.getElementById('input_files').value);\n");
   echo("      if ((i==1)&&(ArquivoValido(nomeArq))){\n"); //OK
-  //echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",nomeArq);\n");
+  echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",nomeArq);\n");
   echo("      }\n");
   echo("      else {\n");
   echo("        document.getElementById('input_files').style.visibility='hidden';\n");
@@ -496,22 +633,22 @@
   echo("        {\n");
   echo("          if(span.innerHTML == nomeArq)\n");
   echo("          {\n"); 
-  //echo("            xajax_ExcluiArquivoDinamic(i,'".$dir_questao_temp['link']."'+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
+  echo("            xajax_ExcluiArquivoDinamic(i,'".$dir_questao_temp['link']."'+nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.", \"texto\");\n");
   echo("          }\n");
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
   
-  /*echo("    function VerificaUpload(nomeArq,flag)\n");
+  echo("    function VerificaUpload(nomeArq,flag)\n");
   echo("    {\n");
   echo("	  if((flag == 0))\n");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
   echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n");
   echo("      {\n");
   echo("		EncontraArquivoEApaga(nomeArq);\n");
-  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
+  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
   echo("      }\n");
-  echo("    }\n\n");*/
+  echo("    }\n\n");
   
   echo("    function Voltar()\n");
   echo("    {\n");
@@ -633,9 +770,9 @@
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
         $dificuldade = $linha_item['nivel'];
-        $valor = $linha_item['valor'];
+        $valor = "<span id=\"valorQuestao_".$linha_item['cod_questao']."\">".$linha_item['valor']."</span>";
         
-        echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
+        echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
         echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkQuestao\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
         echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."\">".$titulo."</a></td>\n");
         echo("                    <td>".$tipo."</td>\n");
@@ -644,12 +781,21 @@
         echo("                    <td>".$valor."</td>\n");
         echo("                  </tr>\n");
       }
+      
+      echo("                  <tr id=\"trTotal\">\n");
+      echo("                    <td colspan=\"5\" align=\"right\"><b>Total:</b></td>\n");
+      echo("                    <td id=\"totalValorQuestoes\"><b>".$totalValorQuestoes."</b></td>\n");
+      echo("                  </tr>\n");
     }
     else
     {
       echo("                  <tr>\n");
       /* ? - Não há nenhuma questao */
       echo("                    <td colspan=\"6\">Nao ha nenhuma questao</td>\n");
+      echo("                  </tr>\n");
+      echo("                  <tr style=\"display:none;\">\n");
+      echo("                    <td colspan=\"5\" align=\"right\">Total:</td>\n");
+      echo("                    <td id=\"totalValorQuestoes\"></td>\n");
       echo("                  </tr>\n");
     }
 	
@@ -660,6 +806,9 @@
     echo("                        <li class=\"menuUp\" id=\"mQuestao_valor\"><span id=\"sQuestao_valor\">Atribuir valor as selecionadas</span></li>\n");
 	echo("                      </ul>\n");
 	echo("                    </td>\n");
+	echo("                  </tr>\n");
+    echo("                  <tr id=\"optQuestoes\">\n");
+	echo("                    <td align=\"left\" colspan=\"6\"><span id=\"adicionarQuestao\" class=\"link\" onclick=\"window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q&cod_exercicio=".$cod_exercicio."';\">(+) Adicionar questoes</span></td>\n");
 	echo("                  </tr>\n");
     echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
@@ -811,8 +960,9 @@
 	echo("                    <td align=\"left\" colspan=\"6\">\n");
 	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
 	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-	echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_exercicio."\" />\n");
-        echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+	echo("                        <input type=\"hidden\" name=\"cod_exercicio\" value=\"".$cod_exercicio."\" />\n");
+    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+    echo("                        <input type=\"hidden\" name=\"pasta\" value=\"exercicio\" />\n");
 	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
@@ -859,6 +1009,22 @@
   echo("      </tr>\n"); 
 
   include("../tela2.php");
+  
+  /* Atribuir valor */
+  echo("    <div id=\"layer_atribuir\" class=popup>\n");
+  echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_atribuir);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <div class=ulPopup>\n");    
+  /* ? - Valor: */
+  echo("            Valor: ");
+  echo("            <input class=\"input\" type=\"text\" id=\"valor\" size=\"8\" value=\"\" maxlength=\"10\" /><br /><br />\n");
+  /* 18 - Ok (gen) */
+  echo("            <input type=\"button\" class=\"input\" onClick=\"VerificaValor(document.getElementById('valor').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  /* 2 - Cancelar (gen) */
+  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_atribuir);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("        </div>\n");
+  echo("      </div>\n");
+  echo("    </div>\n\n");
   
   /* Mudar Compartilhamento */
   echo("    <div class=popup id=\"comp\">\n");
