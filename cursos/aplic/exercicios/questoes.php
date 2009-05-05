@@ -74,7 +74,7 @@
     $totalQuestoes = 0;
         
   /* Nmero de questoes exibidas por p�ina.             */
-  if (!isset($questoesPorPag)) $questoesPorPag = 2;
+  if (!isset($questoesPorPag)) $questoesPorPag = 10;
   
   /* Se o nmero total de questoes for superior que o nmero de questoes por  */
   /* p�ina ent� calcula o total de p�inas. Do contr�io, define o nmero de     */
