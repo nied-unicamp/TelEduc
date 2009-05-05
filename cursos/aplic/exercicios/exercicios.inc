@@ -268,9 +268,39 @@ function RetornaResHistoricoDaQuestao ($sock, $cod_questao)
 */
 function RetornaQuestoesExercicio($sock,$cod_exercicio)
 {
-  $query="select MQ.cod_questao,MQ.valor,Q.titulo,Q.tp_questao,Q.nivel,Q.cod_topico from Exercicios_modelo_questao MQ, Exercicios_questao Q where MQ.cod_exercicio=".VerificaNumeroQuery($cod_exercicio)." and MQ.cod_questao = Q.cod_questao";
+  $query="select MQ.cod_questao,MQ.valor,Q.titulo,Q.tp_questao,Q.nivel,Q.cod_topico from Exercicios_modelo_questao as MQ cross join Exercicios_questao as Q on MQ.cod_questao = Q.cod_questao where MQ.cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res=Enviar($sock,$query);
-  return $linha;
+  $lista=RetornaArrayLinhas($res);
+  return $lista;
+}
+
+/**********************************************************************
+   RetornaSomaValorQuestoes - Retorna a soma do valor de cada questoes
+   Entrada: $sock - BASE Interna
+            $cod_exercicio - codigo do exercicio
+   Saida: soma do valor de cada questao
+*/
+function RetornaSomaValorQuestoes($sock,$cod_exercicio)
+{
+  $query="select SUM(valor) as soma from Exercicios_modelo_questao where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return $linha['soma'];
+}
+
+/**********************************************************************
+   RetornaValorQuestao - Retorna o valor da questao
+   Entrada: $sock - BASE Interna
+            $cod_exercicio - codigo do exercicio
+		    $cod_questao - codigo da questao
+   Saida: soma do valor de cada questao
+*/
+function RetornaValorQuestao($sock,$cod_exercicio,$cod_questao)
+{
+  $query="select valor from Exercicios_modelo_questao where cod_exercicio=".VerificaNumeroQuery($cod_exercicio)." and cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return $linha['valor'];
 }
 
 /* *********************************************************************
@@ -406,31 +436,36 @@ function RetornaDiretorio($sock,$item)
    Entrada: $sock - BASE DO CURSO
             $cod_curso - codigo do curso
             $cod_usuario - codigo do usuario
-            $cod_questao - código da questao
+            $cod_item - chave primária da questao ou do exercicio
             $diretorio_arquivos - diretorio dos arquivos do TelEduc
             $diretorio_temp - diretorio dos arquivos do TelEduc
+            $pasta - pasta para qual sera criada o link (exercicio ou questao)
    Saida: caminho relativo
 */
-function CriaLinkVisualizar($sock,$cod_curso,$cod_usuario,$cod_questao,$diretorio_arquivos,$diretorio_temp)
+function CriaLinkVisualizar($sock,$cod_curso,$cod_usuario,$cod_item,$diretorio_arquivos,$diretorio_temp,$pasta)
 {
   /* Busca Arquivo a ser mostrado */
   $caminho = "";
   unset ($caminho);
-  $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/";
-
+  
+  if($pasta == "questao")
+    $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_item."/";
+  else if($pasta == "exercicio")
+    $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_item."/";
+    
   /* Cria link simb?ico (apaga antigo, se houver)*/
   if ($cod_usuario<0)
     $cod_usuario=0;
-  $dirlink=$diretorio_temp."/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario;
-  $dirlinkpath="../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario;
+  $dirlink=$diretorio_temp."/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
+  $dirlinkpath="../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
 
   if (ExisteArquivo($dirlink))
   {
     RemoveArquivo($dirlink);
   }
-
+  
   CriaLinkSimbolico($dir,$dirlink);
-
+  
   $retorno['diretorio']=$dirlink."/";
   $retorno['link']=$dirlinkpath."/";
 
@@ -1022,15 +1057,15 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
    VerificaExistenciaArquivoDinamic - Verifica se ja existe um arquivo com o nome passado como parametro
    Entrada: $cod_curso - codigo do curso
             $cod_questao - codigo da questao
-			$cod_usuario - codigo do usuario
+			$cod_item - chave primária da questao ou do exercicio
 			$nomeArq - nome do arquivo
    Saida: XML da função Ajax
 */
-function VerificaExistenciaArquivoDinamic($cod_curso, $cod_questao, $cod_usuario, $nomeArq){
+function VerificaExistenciaArquivoDinamic($cod_curso, $cod_item, $cod_usuario, $nomeArq, $pasta){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario."/");
+  $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
   
   $flag = 0;
   if ( ($total = count($dir)) > 0 && $dir != NULL){
@@ -1169,5 +1204,85 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AdicionaQuestaoAoExercicioDinamic - Adiciona uma questao a um exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+		   $cod_questao - codigo da questao
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AdicionaQuestaoAoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questao)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+    $query = "insert ignore into Exercicios_modelo_questao (cod_exercicio,cod_questao,valor,status) values (".VerificaNumeroQuery($cod_exercicio).",".VerificaNumeroQuery($cod_questao).",0,'V')";
+    Enviar($sock,$query);
+    Desconectar($sock);
+ 
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AtribuiValorAQuestaoDinamic - Atualiza o valor de uma questao
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+		   $cod_questao - codigo da questao
+		   $valor - valor da questao
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AtribuiValorAQuestaoDinamic($cod_curso, $cod_exercicio, $cod_questao, $valor)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+    $query = "update Exercicios_modelo_questao set valor = ".$valor." where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio)." and cod_questao = ".VerificaNumeroQuery($cod_questao);
+    Enviar($sock,$query);
+    $valor = RetornaValorQuestao($sock,$cod_exercicio,$cod_questao);
+    Desconectar($sock);
+    
+    $objResponse->addAssign("valorQuestao_".$cod_questao, "innerHTML", $valor);
+    
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AtualizaValorTotalExercicioDinamic - Atualiza o total da soma do valor de cada questao
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AtualizaValorTotalExercicioDinamic($cod_curso, $cod_exercicio)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+    $valorTotal = RetornaSomaValorQuestoes($sock,$cod_exercicio);
+    Desconectar($sock);
+    
+    $objResponse->addAssign("totalValorQuestoes", "innerHTML", $valorTotal);
+ 
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  ExluirQuestaoDoExercicioDinamic - Exclui a questao do exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+           $cod_questao - codigo da questao
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function ExluirQuestaoDoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questao)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+    $query = "delete from Exercicios_modelo_questao where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio)." and cod_questao = ".VerificaNumeroQuery($cod_questao);
+    Enviar($sock,$query);
+    Desconectar($sock);
+    
+    return $objResponse->getXML();
 }
 
