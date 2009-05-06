@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/perguntas/perguntas.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
+    Nied - Núcleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitï¿½ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -668,7 +668,7 @@
   {
     //if ($cod_assunto_pai != 1)
     //echo("    <td align=center class=menu width=1%><input type=checkbox name=\"todas\" onClick=\"MarcaOuDesmarcaTodos();\"></td>\n");
-    /* Se NAO estiver na lixeira possibilita a inserï¿½ï¿½o de assunto. */
+    /* Se NAO estiver na lixeira possibilita a inserção de assunto. */
     if ($cod_assunto_pai != 2)
     {
 	  if($cod_assunto_pai != 1)
@@ -680,10 +680,10 @@
  	  /* 25 - Editar Assunto */
       if ($cod_assunto_pai != 1){
         echo("      <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
-        /* 63 - Importar Perguntas Freqï¿½entes*/
+        /* 63 - Importar Perguntas Frequentes*/
        echo("    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,63)."</a></li>\n");
       }
-      /* Se NAO estiver na pasta raiz nem na lixeira possibilita a inserï¿½ï¿½o de */
+      /* Se NAO estiver na pasta raiz nem na lixeira possibilita a inserção de */
       /* perguntas.                                                            */
       if ($cod_assunto_pai != 1)
       {
@@ -693,7 +693,7 @@
     }
   }
 
-  /* Se NAO estiver na lixeira exibe a opï¿½ao de Exibir Todas as perguntas */
+  /* Se NAO estiver na lixeira exibe a opção de Exibir Todas as perguntas */
   /* deste assunto e de seus sub-assuntos.                                */
   if ($cod_assunto_pai != 2)
   {
@@ -706,8 +706,8 @@
   echo("    <input type=hidden name=origem value=perguntas>\n");
     if ($cod_assunto_pai == 2)
     {
-      /* ? - Voltara exibiï¿½ï¿½o normal */
-      /* 56 - Voltar para perguntas freqï¿½entes*/
+      /* ? - Voltara exibição normal */
+      /* 56 - Voltar para perguntas frequentes*/
       echo("      <li><span onClick=\"history.go(-1);\">".RetornaFraseDaLista($lista_frases, 56)."</span></li>\n");
     }
     else
@@ -722,7 +722,7 @@
 
      
   
-  /* Se estiver na Lixeira o formulario submete as informaï¿½oes para */
+  /* Se estiver na Lixeira o formulario submete as informaçoes para */
   /* ver_pergunta_lixeira.php, do contrario, para ver_pergunta.php  */
   echo("  <form method=post name=frm_pergunta action=");
   if ($cod_assunto_pai == 2)
@@ -747,18 +747,18 @@
 
   if ($cod_assunto_pai == 2)
     /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
-    /* assunto anterior a visualizaï¿½ao da lixeira.                  */
+    /* assunto anterior a visualizaçao da lixeira.                  */
     echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
   else
     echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
 
   /* Especifica o documento da pagina principal, o qual chamou o    */
   /* perguntas.php, mas com o cod_assunto_pai = 2 (lixeira). Isto   */
-  /* eh necessario para voltar ao modo de visualizaï¿½ao anterior.    */
+  /* eh necessario para voltar ao modo de visualizaçao anterior.    */
   if (isset($pagprinc))
   /* Se jah estiver setada entao usa o valor default. Isto eh     */
   /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
-  /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
+  /* eh preciso voltar ao modo de visualizaçao anterior.          */
     echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
   else
     echo("    <input type=hidden name=pag_anterior value=perguntas>\n");
@@ -814,7 +814,7 @@
         echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() \">");
         echo("        </td>\n");
         
-		  /* Se for Formador oferece exibiï¿½ao de opï¿½oes. */
+		  /* Se for Formador oferece exibiçao de opçoes. */
 	      /* Insere o nome do assunto truncado para acima de 40 caracteres e */
 	      /* cria um link para o menu.                                       */
 	      echo("        <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=text href=# onClick='");
@@ -866,7 +866,7 @@
         $questao_pergunta = $teste_pergunta['pergunta'];
         $resposta_pergunta = $teste_pergunta['resposta'];
 		echo("      <tr>\n");
-        /* Coloca uma caixa de seleï¿½ao para exibiï¿½ao multipla de perguntas */
+        /* Coloca uma caixa de seleçao para exibiçao multipla de perguntas */
         echo("        <td width=1%>\n");
         echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() \">");
         echo("        </td>\n");
@@ -908,7 +908,7 @@
       echo("      <tr >\n");
 
       echo("        <td  colspan=3>\n");
-      /* 17 - Nï¿½o hï¿½ perguntas neste assunto. */
+      /* 17 - Não há perguntas neste assunto. */
       echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
       echo("        </td>\n");
       echo("      </tr>\n");
@@ -926,7 +926,7 @@
     if ($usr_formador){ 
       
       
-      /* Se nÃ£o estÃ¡ na lixeira, exibe o botÃ£o de Mover */
+      /* Se não está na lixeira, exibe o botão de Mover */
       if ($cod_assunto_pai != 2){
       	echo("    <li id=\"mApagar_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
       	echo("    <li id=\"mMover_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,71)."</span></li>\n");
@@ -946,7 +946,7 @@
   echo("  </tr>");
   echo("</table>");
 
-  /* 67 - Nï¿½o hï¿½ nenhuma pergunta freqï¿½ente. */
+  /* 67 - Não há nenhuma pergunta frequente. */
 //  if( (count($lista_assuntos) == 0) && (count($lista_perguntas) > 0) )
  //       echo("  <tr class=text> <td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
 
@@ -974,7 +974,7 @@
 
     if ($cod_assunto_pai == 2)
       /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
-      /* assunto anterior a visualizaï¿½ao da lixeira.                  */
+      /* assunto anterior a visualizaçao da lixeira.                  */
       echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
     else
       echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
@@ -986,7 +986,7 @@
     if (isset($pagprinc))
     /* Se jah estiver setada entao usa o valor default. Isto eh     */
     /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
-    /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
+    /* eh preciso voltar ao modo de visualizaçao anterior.          */
       echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
     else
       echo("    <input type=hidden name=pag_anterior value=\"perguntas\">\n");
@@ -1008,11 +1008,11 @@
     /* Passa o 'cod_assunto_pai', necessario para atualizar a pagina  */
     /* principal.                                                     */
     echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-    /* Passa o 'cod_pergunta' para execuï¿½ao das aï¿½oes.                */
+    /* Passa o 'cod_pergunta' para execução das açoes.                */
     echo("    <input type=hidden name=cod_pergunta value=-1>\n");
     /* Especifica o documento de origem para 'exibir_todas'. Isto eh  */
     /* necessario, pois tanto 'exibir_todas.php', 'perguntas.php' e   */
-    /* 'ver_pergunta.php' chamam a funï¿½oes apagar, mover, editar,     */
+    /* 'ver_pergunta.php' chamam a funçoes apagar, mover, editar,     */
     /* recuperar e excluir.   */
     echo("    <input type=hidden name=origem value=perguntas>\n");
 
@@ -1022,14 +1022,14 @@
     if (isset($pagprinc))
       /* Se jah estiver setada entao usa o valor default. Isto eh     */
       /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
-      /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
+      /* eh preciso voltar ao modo de visualizaçao anterior.          */
       echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
     else
       echo("    <input type=hidden name=pag_anterior value=perguntas>\n");
 
     if ($cod_assunto_pai == 2)
       /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
-      /* assunto anterior a visualizaï¿½ao da lixeira.                  */
+      /* assunto anterior a visualizaçao da lixeira.                  */
       echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
     else
       echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
