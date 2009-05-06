@@ -76,7 +76,7 @@
     Paragrafo("");  //<br>
     Paragrafo("<font color=\"#2a6686\">Leia atentamente as instruções contidas em cada passo da instalação</font>");
     Paragrafo("Nas próximas páginas, serão pedidas informações necessárias para a instalação do TelEduc.");
-    Paragrafo("Os campos já preenchidos indicam quais seriam os valores necessários ao exemplo (conforme o arquivo <a href=# onClick='window.open(\"LeiaMe.txt\", \"LeiaMe\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>LeiaMe.txt</a>).");
+    Paragrafo("Os campos já preenchidos indicam quais seriam os valores necessários ao exemplo (conforme o arquivo <a href=# onClick='window.open(\"Guia_de_Instalacao.pdf\", \"Guia_de_Instalacao\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>Guia_de_Instalacao.pdf</a>).");
     Paragrafo("Siga as instruções para a correta instalação do ambiente.");
     echo("</td></tr></table>\n");
     echo("</td></tr></table>\n");
