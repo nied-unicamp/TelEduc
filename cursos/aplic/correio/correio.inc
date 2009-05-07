@@ -1605,7 +1605,7 @@ function RetornaCodigoConvidadosDoCurso ($sock, $cod_curso){
 
   $query="select U.nome, UC.cod_usuario
           from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='Z' order by U.nome asc";
+          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='z' order by U.nome asc";
   
   //  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
   $res   = Enviar ($sock, $query);
