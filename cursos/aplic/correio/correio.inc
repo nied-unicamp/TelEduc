@@ -778,7 +778,11 @@ function RetornaCodigoFormadoresDoCurso($sock, $cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." AND binary tipo_usuario='F' order by cod_usuario asc";
+  $query="select U.nome, UC.cod_usuario
+          from ".$dbnamebase.".Usuario U
+          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='F' order by U.nome asc"; /*UC.cod_usuario = '".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso='".VerificaStringQuery($cod_curso)."')"*/
+  
+  //$query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." AND binary tipo_usuario='F' order by cod_usuario asc";
   $res=Enviar($sock,$query);
   $linha=RetornaArrayLinhas($res);
   return $linha;
@@ -886,7 +890,11 @@ function RetornaCodigoAlunosDoCurso($sock, $cod_curso){
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='A' order by cod_usuario asc";
+  $query="select U.nome, UC.cod_usuario
+          from ".$dbnamebase.".Usuario U
+          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='A' order by U.nome asc";
+  
+  //  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='A' order by cod_usuario asc";
   $res=Enviar($sock,$query);
   $linha=RetornaArrayLinhas($res);
   return $linha;
@@ -1595,7 +1603,11 @@ function RetornaCodigoConvidadosDoCurso ($sock, $cod_curso){
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
+  $query="select U.nome, UC.cod_usuario
+          from ".$dbnamebase.".Usuario U
+          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='Z' order by U.nome asc";
+  
+  //  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
   $res   = Enviar ($sock, $query);
   $lista = RetornaArrayLinhas ($res);
   return $lista;
