@@ -480,7 +480,7 @@
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   
-  /* Se for Aluno, j� corta */
+  /* Se for Aluno, j� corta */
   if ($tela_formador != 1) {
 	echo ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
 	/* 73 - Acao exclusiva a formadores. */
@@ -616,7 +616,7 @@
   /* Assunto */
   echo("                    <td width=\"\" class=\"itens\">".RetornaFraseDaLista($lista_frases,55)."</td>\n");
   /* 70 - Opções */
-  echo("                    <td width=\"14%\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
+  echo("                    <td width=\"17%\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
   /* 13 - Data */
   echo("                    <td width=\"14%\" align=\"center\">".RetornaFraseDaLista($lista_frases,74)."</td>\n");
   echo("					</tr>");
