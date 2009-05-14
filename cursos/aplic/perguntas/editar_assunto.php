@@ -34,6 +34,7 @@
 
 ------------------------------------------------------------------------------
 -->
+@todo ApagaAssuntoDinamic
 */
 
 /*==========================================================
@@ -53,7 +54,6 @@
   // Estancia o objeto XAJAX
   $objPerguntas = new xajax();
   $objPerguntas->registerFunction("AlteraDadosAssuntoDinamic");
-  $objPerguntas->registerFunction("ApagaAssuntoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objPerguntas->processRequests(); 
   
