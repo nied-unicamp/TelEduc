@@ -988,6 +988,17 @@ function RemoverFormador ($sock,$cod_curso,$cod_usuario)
   $res   = Enviar ($sock, $query);
 }
 
+function RemoverAluno ($sock,$cod_curso,$cod_usuario)
+{
+   // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $tipo_usuario='a';
+
+  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".$tipo_usuario."' where cod_usuario='".$cod_usuario."' and cod_curso='".$cod_curso."'";
+  $res   = Enviar ($sock, $query);
+}
+
 /* *********************************************************************
    RetornaCodigoCoordenador - retorna cod_usuario do coordenador do curso
    entrada:  $sock - sock de conexao
