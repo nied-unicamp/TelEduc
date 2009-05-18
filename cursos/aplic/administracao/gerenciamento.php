@@ -67,6 +67,10 @@
     case 'G':
       $cod_pagina_ajuda = 10;
       break;
+    case 'AG':
+      $cod_pagina_ajuda = 10;
+      break;
+      
   }
 
   $cod_ferramenta = 0;
@@ -186,13 +190,15 @@
       {
         echo("          document.getElementById('mFormador_Selec').className=\"menuUp02\";\n");
         echo("          document.getElementById('mFormador_Selec').onclick=function(){ Alerta('formador','transformar'); };\n");
+        echo("          document.getElementById('mDesligar_Selec').className=\"menuUp02\";\n");
+        echo("          document.getElementById('mDesligar_Selec').onclick=function(){ Alerta('remover_aluno',''); };\n");
       }
       if($acao == 'F')
       {
         echo("          document.getElementById('mAluno_Selec').className=\"menuUp02\";\n");
         echo("          document.getElementById('mAluno_Selec').onclick=function(){ Alerta('aluno','transformar'); };\n");
         echo("          document.getElementById('mDesligar_Selec').className=\"menuUp02\";\n");
-        echo("          document.getElementById('mDesligar_Selec').onclick=function(){ Alerta('remover',''); };\n");
+        echo("          document.getElementById('mDesligar_Selec').onclick=function(){ Alerta('remover_form',''); };\n");
         echo("          document.getElementById('mCoordenador_Selec').className=\"menuUp02\";\n");
         echo("          document.getElementById('mCoordenador_Selec').onclick=function(){ Alerta('','trocar_coordenador'); };\n");
       }
@@ -202,6 +208,12 @@
         echo("          document.getElementById('Religar').className=\"menuUp02\";\n");
         echo("          document.getElementById('Religar').onclick=function(){ Alerta('religar_form',''); };\n");
       }
+    else if($acao == 'AG')
+      {
+        echo("          document.getElementById('Religar').className=\"menuUp02\";\n");
+        echo("          document.getElementById('Religar').onclick=function(){ Alerta('religar_aluno',''); };\n");
+      }
+      
   }
   echo("          }\n");
   echo("        }if(j <= 0){\n");
@@ -244,6 +256,8 @@
       {
         echo("          document.getElementById('mFormador_Selec').className=\"menuUp\";\n");
         echo("          document.getElementById('mFormador_Selec').onclick=function(){ };\n");
+        echo("          document.getElementById('mDesligar_Selec').className=\"menuUp\";\n");
+        echo("          document.getElementById('mDesligar_Selec').onclick=function(){ };\n");
       }
       if($acao == 'F')
       {
@@ -256,6 +270,11 @@
       }
     }
     else if($acao == 'G')
+      {
+        echo("          document.getElementById('Religar').className=\"menuUp\";\n");
+        echo("          document.getElementById('Religar').onclick=function(){ };\n");
+      }
+    else if($acao == 'AG')
       {
         echo("          document.getElementById('Religar').className=\"menuUp\";\n");
         echo("          document.getElementById('Religar').onclick=function(){ };\n");
@@ -393,6 +412,17 @@
     $frase_qtde=RetornaFraseDaLista($lista_frases,259);
     $cod_pagina=10;
   }
+  else if ($acao=="AG")
+  {
+    /* 283 - Gerenciamento de Alunos desligados */
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283);
+  	
+    $tipo_usuario="a";
+    /* 284 - N� de Alunos desligados: */
+    $frase_qtde=RetornaFraseDaLista($lista_frases, 284);
+    $cod_pagina=10;
+  }
+  
   else if ($acao == 'z')
   {
     // 165 - Gerenciamento de Convidados
@@ -601,7 +631,11 @@
     if ($acao == 'A' || $acao == 'F')
       // 176 - Transformar em convidado
       echo("                  <li id=\"mConvidado_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,176)."</span></li>\n");
-        
+
+    if ($acao == 'A')
+      // 288 - Desligar Aluno
+      echo("                  <li id=\"mDesligar_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,288)."</span></li>\n");
+
     if ($acao == 'T')
       // 107 - Transformar em Aluno
       echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,107)."</span></li>\n");
@@ -616,6 +650,10 @@
    if ($acao == 'G')
       // 260 - Religar Formador
       echo("                  <li id=\"Religar\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,260)."</span></li>\n");
+   if ($acao == 'AG')
+      // 285 - Religar Aluno
+      echo("                  <li id=\"Religar\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,285)."</span></li>\n");
+         
   }
   echo("                </ul>\n");
   echo("              </td>\n");
