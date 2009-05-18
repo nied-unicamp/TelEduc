@@ -134,6 +134,13 @@
     $tipo_usuario="F";
     $cod_pagina=10;
   }
+  else if ($acao=="AG")
+  {
+    /* 283 - Gerenciamento de Alunos desligados */
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283)."</h4>\n";
+  	$tipo_usuario="A";
+    $cod_pagina=10;
+  }
   else if ($acao == 'z')
   {
     // 165 - Gerenciamento de Convidados
@@ -233,7 +240,7 @@
     echo("              <tr>\n");
     echo("                <td>\n");
 
-    if ($opcao=="aceitar" || $opcao=="rejeitar" || $opcao == "aceitar_vis" || $opcao == "remover" || $opcao == "encerrarConvite" || $opcao == "rejeitarVisitantes"|| $opcao == "religar_form")
+    if ($opcao=="aceitar" || $opcao=="rejeitar" || $opcao == "aceitar_vis" || $opcao == "remover_aluno" || $opcao == "remover_form" || $opcao == "encerrarConvite" || $opcao == "rejeitarVisitantes"|| $opcao == "religar_form" || $opcao == "religar_aluno")
     {
       echo("                  <form action=\"gerenciamento3.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."\" name=\"gerenc\" method=\"post\" onsubmit=\"return(updateRTE('mensagem'));\">\n");
       echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -309,7 +316,7 @@
         $mensagem.="</font>";
       }
 
-      else if($opcao == "remover")
+      else if($opcao == "remover_form")
       {
         // 199 - Desligar Formador
         $titulo=RetornaFraseDaLista($lista_frases,199);
@@ -352,7 +359,50 @@
         $mensagem.="</font>";
 
       }
+      else if($opcao == "religar_aluno")
+      {
+        // 285 - Religar Aluno
+        $titulo=RetornaFraseDaLista($lista_frases,285);
 
+        // 286 - Religamento de Aluno
+        $assunto=RetornaFraseDaLista($lista_frases, 286);
+
+        // 287 -Voce foi religado como Aluno do curso
+        // 265 - Seu login e senha não foram alterados
+        // 266 - Acesse o curso:
+        // 66 - Atenciosamente, Coordena��o do curso
+
+ 
+        
+        $mensagem ="<font size=\"2\">";
+        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 287);
+        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
+        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+        $mensagem.="</font>";
+
+      }
+      else if($opcao == "remover_aluno")
+      {
+        // 288 - Desligar Aluno
+        $titulo=RetornaFraseDaLista($lista_frases,288);
+
+        // 289 - Desligamento de Aluno
+        $assunto=RetornaFraseDaLista($lista_frases, 289);
+
+        // 290 - Infelizmente voc� foi desligado como Aluno do curso
+        // 98 - Agradecemos sinceramente o seu interesse e recomendamos a visita peri�dica do ambiente para a verifica��o de novos cursos agendados.
+        // 66 - Atenciosamente, Coordena��o do curso
+        $mensagem ="<font size=\"2\">";
+        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 290);
+        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 98)."</p><br />";
+        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+        $mensagem.="</font>";
+      }
+      
       else if($opcao == "encerrarConvite")
       {
         /* 91 - Rejeitar Inscri��es */
@@ -431,7 +481,7 @@
         // 186 - Ao enviar a mensagem, estar� confirmando o cancelamento dos seguintes visitantes:
         echo("                      ".RetornaFraseDaLista($lista_frases,186)."\n");
       }
-      else if($opcao == "remover")
+      else if($opcao == "remover_form")
       {
         // 245 - Ao enviar a mensagem, estar� confirmando o desligamento dos seguintes formadores:
         echo("                      ".RetornaFraseDaLista($lista_frases,245)."\n");
@@ -440,6 +490,17 @@
       {
         // 263 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes formadores:
         echo("                      ".RetornaFraseDaLista($lista_frases,263)."\n");
+      }
+      else if($opcao == "religar_aluno")
+      {
+        // 291 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes alunos:
+        echo("                      ".RetornaFraseDaLista($lista_frases,291)."\n");
+      }
+      
+      else if($opcao == "remover_aluno")
+      {
+        // 292 - Ao enviar a mensagem, estar� confirmando o desligamento dos seguintes alunos:
+        echo("                      ".RetornaFraseDaLista($lista_frases,292)."\n");
       }
       echo("                      <td colspan=\"3\" width=\"50%\" style=\"border:none;text-align:left;\">\n");
       foreach($cod_usu as $cod => $linha)
