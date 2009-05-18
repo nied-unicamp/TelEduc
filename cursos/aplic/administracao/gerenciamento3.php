@@ -104,6 +104,13 @@
     $tipo_usuario="F";
     $cod_pagina=10;
   }
+  else if ($acao=="AG")
+  {
+    /* 283 - Gerenciamento de Alunos desligados */
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283)."</h4>";
+    $tipo_usuario="A";
+    $cod_pagina=10;
+  }
   else if ($acao == 'z')
   {
     // 165 - Gerenciamento de Convidados
@@ -135,7 +142,7 @@
   /*Voltar*/			
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
 
-  if ($opcao == "aceitar" || $opcao == "rejeitar" || $opcao == "aceitar_vis" || $opcao == "remover" || $opcao == "encerrarConvite" || $opcao == "rejeitarVisitantes" || $opcao=="religar_form")
+  if ($opcao == "aceitar" || $opcao == "rejeitar" || $opcao == "aceitar_vis" || $opcao == "remover_aluno" || $opcao == "remover_form" || $opcao == "encerrarConvite" || $opcao == "rejeitarVisitantes" || $opcao=="religar_form" || $opcao == "religar_aluno")
   {
     $mensagem=ConverteBarraAspas2Aspas($mensagem);
     if ($opcao=="aceitar")
@@ -183,7 +190,7 @@
 
       $tipo_usuario="V";
     }
-    else if ($opcao == "remover")
+    else if ($opcao == "remover_form")
     {
       // 199 - Desligar Formador
       $titulo=RetornaFraseDaLista($lista_frases,199);
@@ -213,6 +220,37 @@
       $aviso= RetornaFraseDaLista($lista_frases,281);
 
       $tipo_usuario="F";  
+    }
+    else if ($opcao == "religar_aluno")
+    {
+      // 285 - Religar Aluno
+      $titulo=RetornaFraseDaLista($lista_frases,285);
+
+      /* 293 - Aluno(s) religado(s) com sucesso. */
+      $confirmacao= RetornaFraseDaLista($lista_frases,293);
+
+      /* 296 - Mensagem de confirmacao*/
+      $aviso= RetornaFraseDaLista($lista_frases,296);
+
+      $tipo_usuario="A";  
+    }
+    else if ($opcao == "remover_aluno")
+    {
+      // 288 - Desligar Aluno
+      $titulo=RetornaFraseDaLista($lista_frases,288);
+
+      /* 294 - Aluno(s) desligado(s) com sucesso. */
+      $confirmacao= RetornaFraseDaLista($lista_frases,294);
+
+      /* 295 - Mensagem de cancelamento*/
+      $aviso= RetornaFraseDaLista($lista_frases,295);
+
+      foreach($cod_usu as $cod => $cod_usuario)
+      {
+        RemoverAluno($sock,$cod_curso, $cod_usuario);
+      }
+  
+      $tipo_usuario="a";  
     }
     else if ($opcao == "encerrarConvite")
     {
