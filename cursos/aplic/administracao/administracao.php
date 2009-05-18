@@ -190,10 +190,12 @@
     echo(" / ".RetornaFraseDaLista($lista_frases,107));
   echo("</a><br />\n");
 
-  if ($ecoordenador)
+  if ($ecoordenador){
    // 258 - Gerenciamento de Formadores desligados
     echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=G\">".RetornaFraseDaLista($lista_frases, 258)."</a><br />\n");
-
+   // 283 - Gerenciamento de Alunos desligados
+    echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=AG\">".RetornaFraseDaLista($lista_frases, 283)."</a><br />\n");
+  }
   // 165 - Gerenciamento de convidados
   echo("                      <a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 165)."</a><br />\n");
   
