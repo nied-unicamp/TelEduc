@@ -44,12 +44,13 @@
   include($bibliotecas."geral.inc");
   include("inicial.inc");
 
+  $sock = Conectar("");
+  
   $pag_atual = "inscricao.php";
   /* Caso o usuário naum esteja logado, direciona para páigna de login */
   if (empty($_SESSION['login_usuario_s']))
   {
     /* Obt� a raiz_www */
-    $sock = Conectar("");
     $query = "select diretorio from Diretorio where item = 'raiz_www'";
     $res = Enviar($sock,$query);
     $linha = RetornaLinha($res);
@@ -58,11 +59,12 @@
     $caminho = $raiz_www."/pagina_inicial";
 
     header("Location: {$caminho}/autenticacao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&destino=inscricao");
-    Desconectar($sock);
     exit;
   }
 
   $dados_curso=RetornaDadosMostraCurso($sock,$cod_curso);
+  Desconectar($sock);
+      
   include("../topo_tela_inicial.php");
   echo("    <script type=\"text/javascript\">\n\n");
 
