@@ -88,7 +88,7 @@
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
 
 
-  $curso=RetornaDadosCurso($sock,$cod_curso);
+  $curso=RetornaDadosCursoReq($sock,$cod_curso);
 
   $cod_curso_antigo=$cod_curso;
   $cod_curso=RetornaNovoCodCurso($sock);
