@@ -162,7 +162,7 @@ function PreparaCabecalhoAvaliar($lista_frases)
             $cod_curso - C�digo do curso do qual se quer as informa��es
    Saida: $curso = Array com dados do curso a ser avaliado
 */
-function RetornaDadosCurso($sock,$cod_curso)
+function RetornaDadosCursoReq($sock,$cod_curso)
 {
   $query="select * from Cursos_requisicao where cod_curso=".$cod_curso;
   $res=Enviar($sock,$query);
