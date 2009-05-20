@@ -114,8 +114,7 @@
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=A\">".RetornaFraseDaLista($lista_frases,171)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=I\">".RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=F\">".RetornaFraseDaLista($lista_frases,173)."</a></li>\n");
-  if(!empty($_SESSION['login_usuario_s']) && $_SESSION['cod_usuario_global_s'] != -1)
-    echo("            <li><a href=\"".$link."criar_curso.php\">".RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
+  echo("            <li><a href=\"".$link."criar_curso.php\">".RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
   echo("          </ul>\n");
   echo("        </td>\n");
   echo("      </tr>\n");
