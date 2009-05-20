@@ -94,7 +94,7 @@
 
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
 
-  $curso=RetornaDadosCurso($sock,$cod_curso);
+  $curso=RetornaDadosCursoReq($sock,$cod_curso);
 
   /* 229 - Dados do curso solicitado: */
   $dados = RetornaFraseDaLista($lista_frases, 229)."<br /><br />";
