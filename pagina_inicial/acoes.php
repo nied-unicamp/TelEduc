@@ -98,13 +98,13 @@
     if($_SESSION["cod_usuario_global_s"] == -1)
     {
       Desconectar($sock);
-      header("Location:{$caminho}/../administracao/index.php");
+      header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
     	exit;
     }
     else 
     {
     	Desconectar($sock);
-      header("Location:{$caminho}/exibe_cursos.php");
+      header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
     	exit;
     }
   }
