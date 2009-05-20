@@ -137,7 +137,7 @@
   }
 
   $cod_curso=$cursos[$cod]['cod_curso'];
-  $curso=RetornaDadosCurso($sock,$cod_curso);
+  $curso=RetornaDadosCursoReq($sock,$cod_curso);
 
 
   if ($curso['avaliado'] == 'N')
