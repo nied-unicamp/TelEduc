@@ -48,7 +48,8 @@
   VerificaAutenticacaoAdministracao();
 
   include("../topo_tela_inicial.php");
-
+  
+  
   /* Inicio do JavaScript */
   echo("<script type=text/javascript>\n\n");
 
@@ -83,7 +84,7 @@
   include("../menu_principal_tela_inicial.php");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-
+  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 244 - Avaliar requisi��es para abertura de cursos */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,244)."</h4>\n");
@@ -122,7 +123,8 @@
 
   if (isset($rej))
     $cursos=RetornaTodosCursos($sock);
-  else /* $todos!=1 ou !isset($todos) */
+    // $todos!=1 ou !isset($todos) 
+  else
     $cursos=RetornaCursosRequisicao($sock);
 
   if (count($cursos)>0)
