@@ -48,11 +48,17 @@
 
   include("../topo_tela_inicial.php");
 
+  // instanciar o objeto, passa a lista de frases por parametro
+  $feedbackObject =  new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro 
+  $feedbackObject->addAction("logar", 198, 0);
+  
   /* Inicio do JavaScript */
   echo("    <script language=\"javascript\"  type=\"text/javascript\">\n");
 
   echo("      function Iniciar() {\n");
-  echo("	 startList();\n");
+    				$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("	 		startList();\n");
   echo("      }\n");
 
   echo("    </script>\n");
@@ -70,6 +76,7 @@
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
 
+  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 1 - Administração */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");
