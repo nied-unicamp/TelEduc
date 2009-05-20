@@ -55,7 +55,17 @@
     $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
     MudancaDeLingua($sock,$cod_lin);
   }
-
+	
+  $cod_ferramenta = -3;//Cursos
+  $lista_frases = RetornaListaDeFrases($sock,$cod_ferramenta);
+  
+  // instanciar o objeto, passa a lista de frases por parametro
+  $feedbackObject =  new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro 
+  $feedbackObject->addAction("logar", 197, 0);
+  
+  
+  
   $lista_frases=RetornaListaDeFrases($sock,-3);
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
@@ -133,6 +143,7 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");
+  				$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      }\n\n");
 
   echo("      function TestaNome(form){\n");
