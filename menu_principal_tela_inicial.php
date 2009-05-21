@@ -106,7 +106,7 @@
   {
     echo("            <li class=\"menu1\" style=\"margin-top:20px; background: none\">".RetornaFraseDaLista($lista_frases,187)."</li>\n");
     if(PreencheuDadosPessoais($sock))
-      echo("            <li><a href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,5)."</a></li>\n");
+      echo("            <li><a href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,132)."</a></li>\n");
     echo("            <li><a href=\"".$link."dados.php\">".RetornaFraseDaLista($lista_frases_configurar,1)."</a></li>\n");
   }
   echo("            <li class=\"menu1\" style=\"margin-top:20px;  background: none\">".RetornaFraseDaLista($lista_frases,5)."</li>\n");
