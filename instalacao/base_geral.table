@@ -13431,6 +13431,8 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 (86, 1, 6, 'Digite o novo título da pergunta:'),
 (87, 1, 6, 'Itens selecionados importados com sucesso.'),
 (88, 1, 6, 'Acesso negado, o usuário não possui acesso ao curso.'),
+(197, 1, -3, 'Usuário logado com sucesso'),
+(198, 1, -3, 'Administrador logado com sucesso'),
 (282, 1, 0, 'Não foi possível realizar o cadastro. Um ou mais Email(s) já existente(s).'),
 (281, 1, 0, 'Não foi possível realizar o cadastro. Um ou mais Login(s) já existente(s).');
 /*!40000 ALTER TABLE `Lingua_textos` ENABLE KEYS */;
