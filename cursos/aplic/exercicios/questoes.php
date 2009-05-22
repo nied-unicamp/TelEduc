@@ -113,6 +113,7 @@
   echo("    var tp_questao = 'T';\n");
   echo("    var dificuldade = 'T';\n");
   echo("    var window_handle;\n");
+  echo("    var t;\n");
   echo("    this.name = 'principal';\n\n");
   
 
@@ -235,10 +236,11 @@
   echo("      }\n\n");
   
   echo("      function ExibeMsgOrdenadas(){\n");
+  echo("        var t;");
   echo("        AplicaFiltro();\n"); 
   echo("        AtualizaEstadoPaginacao(pagAtual);\n");
   //?
-    echo("      mostraFeedback(\"Questoes ordenadas.\",true);\n");
+  echo("        mostraFeedback(\"Questoes ordenadas.\",true);\n");
   echo("      }\n\n");
     
   echo("      function MarcaOuDesmarcaTodos(pagAtual){\n");
@@ -478,7 +480,7 @@
   echo("        trQuestao.parentNode.removeChild(trQuestao);\n");
   echo("	  }\n");
   echo("    }\n\n");
-  
+  amp;
   echo("    function IntercalaCorLinha(){\n");
   echo("      var checks,i,trQuestao;\n");
   echo("      checks = document.getElementsByName('chk[]');\n");
@@ -560,8 +562,8 @@
   if ($tela_formador)
   {
 	/* ? - Exercicios*/
-        /* ? - Banco de questoes*/
-  	$frase = "Exercicios - Banco de Questoes";
+        /* ? - Biblioteca de Questoes*/
+  	$frase = "Exercicios - Biblioteca de Questoes";
   	if($visualizar == "L")
   		$frase = $frase." - Lixeira";
   
@@ -582,12 +584,17 @@
 
   	echo("                <ul class=\"btAuxTabs\">\n");
   	
-  	if($cod_exercicio != null)
-      /* ? - Exercicios */
-      echo("                  <li><a href='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."'>Voltar a edicao do exercicio</a></li>\n");
+    /* ? - Exercicios Individuais */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I'>Exercicios Individuais</a></li>\n");
+    
+    /* ? - Exercicios em Grupo */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G'>Exercicios em Grupo</a></li>\n");
 
-    /* ? - Exercicios */
-    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Exercicios</a></li>\n");
+    /* ? - Biblioteca de Exercicios */
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
+    
+    /* ? - Biblioteca de Questoes */
+    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
     
   	echo("                </ul>\n");
   	echo("              </td>\n");
@@ -597,17 +604,16 @@
     echo("                <ul class=\"btAuxTabs03\">\n");
     if($visualizar == "Q")
     {
+    
+      if($cod_exercicio != null)
+        /* ? - Exercicios */
+        echo("                  <li><span onclick=\"document.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."';\">Voltar a edicao do exercicio</span></li>\n");
       // ? - Nova questao
       echo("                  <li><span onclick=\"NovaQuestao();\">Nova questao</span></li>\n");
       // ? - Filtrar
       echo("                  <li><span onclick=\"MostraLayer(lay_filtro,0);\">Filtrar</span></li>\n");
       // ? - Lixeira
       echo("                  <li><span onclick=\"document.location='questoes.php?cod_curso=".$cod_curso."&visualizar=L';\">Lixeira</span></li>\n");
-    }
-    else if($visualizar == "L")
-    {
-      /* ? - Banco de questoes */
-      echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Banco de questoes</a></li>\n");
     }
     echo("                </ul>\n");
     echo("              </td>\n");

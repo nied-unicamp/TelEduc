@@ -101,7 +101,7 @@
     header("Location:exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
   }
   
-  /* ação = Anexar Arquivo - origem = ver.php */
+  /* ação = Anexar Arquivo*/
   if ($acao=='anexar'){
 
     $atualizacao="true";
@@ -113,14 +113,30 @@
     if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/")) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/");
     }
-    if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/questao/")) {
-      CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/questao/");
+    if($pasta == 'questao')
+    {
+      if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/questao/")) {
+        CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/questao/");
+      }
+      if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/")) {
+        CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/");
+      }
     }
-    if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/")) {
-      CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/");
+    else if($pasta == 'exercicio')
+    {
+      if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/")) {
+        CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/");
+      }
+      if (!file_exists($diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_exercicio."/")) {
+        CriaDiretorio($diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_exercicio."/");
+      }
     }
 
-    $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/";
+    if($pasta == 'questao')
+      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/";
+    else if($pasta == 'exercicio')
+      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_exercicio."/";
+    
 
     $nome_arquivo = $_FILES['input_files']['name'];
     //converte o nome para UTF-8, pois o linux insere com essa codificação o arquivo 

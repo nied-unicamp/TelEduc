@@ -129,7 +129,136 @@ function RetornaExerciciosLixeira($sock)
 }
 
 /* *********************************************************************
-   RetornaExerciciosLixeira - Retorna array com os exercicios da lixeira (L)
+   RetornaExerciciosUsuario - Retorna array com os exercicios do usuario
+   Entrada: $sock - BASE DO CURSO
+			$cod_usuario - codigo do usuario logado
+			$cod_curso - codigo do curso
+            $eformador - true se o usuario logado for formador
+            $cod_usuario_exercicio - codigo do usuario dono do exercicio
+   Saida: array com []['cod_resolucao'] - chave primaria ou codigo da resolucao
+                    []['titulo'] - titulo do exercicio
+                    []['dt_submissao'] - data limite para submissao
+                    []['submetida'] - indica se a resolucao foi submetida
+                    []['corrigida'] - indica se a resolucao foi corrigida
+                    []['compartilhada'] - indica o compartilhamento da resolucao
+*/
+function RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio)
+{
+  if ($cod_usuario==$cod_usuario_exercicio)
+    $regra="";
+  else if ($eformador)
+    $regra="and (ER.compartilhada='T' or ER.compartilhada='F')";
+  else
+    $regra="and ER.compartilhada='T'";
+    
+  if (EFormadorComVisaoDeAluno($sock, $cod_curso, $cod_usuario))
+    $regra="and ER.compartilhada='T'";
+    
+  $consulta="select ER.cod_resolucao as cod_resolucao,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
+             from Exercicios_resolucao ER 
+             inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
+             where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio)." ".$regra;
+  $res=Enviar($sock,$consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista);
+}
+
+/* *********************************************************************
+   RetornaExerciciosGrupo - Retorna array com os exercicios do grupo
+   Entrada: $sock - BASE DO CURSO
+            $cod_grupo - codigo do grupo
+   Saida: array com []['cod_resolucao'] - chave primaria ou codigo da resolucao
+                    []['dt_submissao'] - data limite para submissao
+                    []['submetida'] - indica se a resolucao foi submetida
+                    []['corrigida'] - indica se a resolucao foi corrigida
+                    []['compartilhada'] - indica o compartilhamento da resolucao
+*/
+function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio)
+{
+  if (PertenceAoGrupo($sock,$cod_usuario, $cod_grupo_exercicio))
+    $regra="";
+  else if ($eformador)
+    $regra="and (ER.compartilhada='T' or ER.compartilhada='F')";
+  else
+    $regra="and ER.compartilhada='T'";
+  
+  if (EFormadorComVisaoDeAluno($sock, $cod_curso, $cod_usuario))
+    $regra="and ER.compartilhada='T'";
+
+  $consulta="select ER.cod_resolucao as cod_resolucao,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
+             from Exercicios_resolucao ER 
+             inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
+             where ER.cod_grupo=".VerificaNumeroQuery($cod_grupo_exercicio)." ".$regra." ";
+  $res=Enviar($sock,$consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista);
+}
+
+/**********************************************************************
+   RetornaNumComentariosExercicio - Retorna o numero de comentarios e a maior data dentro de um exercicio
+   Entrada: $sock - Conexao com a base interna
+            $cod_usuario - codigo do usuario logado
+            $cod_resolucao - codigo da resolucao a ser checada
+   Saida: array com ['num_comentarios']
+                    ['num_comentarios_alunos'] - numero de coment?ios feitos por alunos que n? o usuario
+                    ['num_comentarios_formadores'] - numero de coment?ios feitos por formadores que n? o usuario
+                    ['num_comentarios_usuario'] - numero de coment?ios feitos pelo usuario
+                    ['data_comentarios'] - Maior data de um coment?io
+*/
+function RetornaNumComentariosExercicio($sock, $cod_usuario, $cod_resolucao)
+{
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query="select Erc.cod_comentarista 'cod', count(*) 'ct', max(Erc.data) 'dt' from Exercicios_resolucao_comentarios Erc where Erc.cod_resolucao=".$cod_resolucao." and Erc.status='A' group by Erc.cod_comentarista order by Erc.cod_comentarista";
+  $res=Enviar($sock,$query);
+
+  $num_f=0;
+  $num_a=0;
+  $num_u=0;
+  $data=0;
+
+  while ($linha=RetornaLinha($res))
+  {
+    $query2="select tipo_usuario 'tu' from ".$dbnamebase.".Usuario_curso where cod_usuario='".$cod_usuario."' and cod_curso='".$_SESSION['cod_curso']."'";
+    $res2=Enviar($sock,$query2);
+    $linha2=RetornaLinha($res);
+    $linha['tu'] = $linha2['tu'];
+
+    if ($linha['cod']==$cod_usuario)
+      $num_u+=$linha['ct'];
+    else if ($linha['tu']=="F")
+      $num_f+=$linha['ct'];
+    else
+      $num_a+=$linha['ct'];
+    if ($data<$linha['dt'])
+      $data=$linha['dt'];
+  }
+  $saida['num_comentarios']=$num_f+$num_a+$num_u;
+  $saida['num_comentarios_formadores']=$num_f;
+  $saida['num_comentarios_alunos']=$num_a;
+  $saida['num_comentarios_usuario']=$num_u;
+  $saida['data_comentarios']=$data;
+  return $saida;
+}
+
+/**********************************************************************
+   NomeGrupo - Retorna o nome do grupo
+   Entrada: $sock - BASE DO CURSO
+            $cod_grupo - grupo
+   Saida: nome do grupo
+*/
+function NomeGrupo($sock, $cod_grupo)
+{
+  $consulta="select nome from Grupos where cod_grupo=".$cod_grupo;
+  $res=Enviar($sock, $consulta);
+  $num=RetornaNumLinhas($res);
+  $linha=RetornaLinha($res);
+  return $linha['nome'];
+}
+
+/* *********************************************************************
+   RetornaSituacaoExercicio - Retorna array com os exercicios da lixeira (L)
    Entrada: $sock - BASE DO CURSO
    Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
                     []['titulo'] - titulo do exercicio
@@ -395,6 +524,139 @@ function RetornaGabaritoQuestaoDiss($sock, $cod_questao, $cod_alternativa)
 function RetornaTopicos($sock)
 {
   $consulta="select * from Exercicios_topico";
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return $lista;
+}
+
+/* *********************************************************************
+   RetornaListaNomesOuTitulos - Retorna os nomes dos usuarios/grupos ou titulos dos exercicios visiveis pelo usuario
+   Entrada: $sock - BASE DO CURSO
+            $cod_curso - codigo do curso
+            $cod_usuario - codigo do usuario
+            $tela_formador - indica se o usuario é formador ou não
+            $agrupamento - opcao do agrupamento (aluno,grupo ou exercicio)
+            $visualizar - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod'] - codigo do usuario/grupo/exercicio
+                ['titulo'] - nome do usuario/grupo ou titulo do exercicio
+                
+*/
+function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
+{
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+  
+  if($agrupamento == "A")
+  {
+    if($tela_formador)
+      //Pega todos os usuarios menos o atual
+      $consulta = "SELECT U.nome as titulo, UC.cod_usuario as cod
+                   FROM ".$dbnamebase.".Usuario U
+                   INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') WHERE UC.cod_usuario <> -1 AND UC.cod_usuario <> ".$cod_usuario." ORDER BY UC.cod_usuario";
+    else
+      //Pega apenas os usuarios com exercicios compartilhados
+      $consulta = "SELECT U.nome as titulo,ER.cod_usuario as cod 
+                   FROM ".$dbnamebase.".Usuario U
+                   INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."')
+                   INNER JOIN Exercicios_resolucao ER ON (UC.cod_usuario=ER.cod_usuario)
+                   WHERE ER.compartilhada='T' GROUP BY ER.cod_usuario ORDER BY NULL";
+  }
+  else if($agrupamento == "G")
+  {
+    if($tela_formador)
+	  $consulta = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g";
+    else
+      $consulta = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE gu.cod_usuario = ".$cod_usuario." or (er.compartilhada='T' and g.cod_grupo = er.cod_grupo) GROUP BY g.cod_grupo ORDER BY NULL";
+  }
+  else if($agrupamento == "T")
+  {
+    if($visualizar == "I")
+      $consulta = "SELECT em.cod_exercicio as cod, em.titulo as titulo from Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio WHERE ea.tp_aplicacao='I' ORDER BY em.cod_exercicio";
+    else if($visualizar == "G")
+      $consulta = "SELECT em.cod_exercicio as cod, em.titulo as titulo from Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio WHERE ea.tp_aplicacao='G' ORDER BY em.cod_exercicio";
+  }
+  
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+
+  return $lista;
+}
+
+/* *********************************************************************
+   RetornaNumExerciciosNaoEntregues - Retorna o numero de exercicios nao entregues
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - codigo do usuario
+            $tela_formador - indica se o usuario é formador ou não
+            $agrupamento - opcao do agrupamento (aluno,grupo ou exercicio)
+            $visualizar - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod'] - codigo do usuario/grupo/exercicio
+                ['num'] - numero de exercicios nao entregues
+                
+*/
+function RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
+{
+  if($agrupamento == "A")
+  {
+    if($tela_formador)
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='N' and er.cod_grupo IS NULL) OR (er.cod_grupo IS NULL and er.status = 'R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+    else
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='N' and er.cod_grupo IS NULL and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") ) OR ( er.cod_grupo IS NULL and (er.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+  }
+  else if($agrupamento == "G")
+  {
+    if($tela_formador)
+      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.submetida = 'N') or (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.status = 'R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
+    else //pega apenas o dono e os compartilhados
+      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.submetida='N') or (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
+  }
+  else if($agrupamento == "T")
+  {
+    if($visualizar == "I")
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='N' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+    else if($visualizar == "G")
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='N' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+  }
+    
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return $lista;
+}
+
+/* *********************************************************************
+   RetornaNumExerciciosNaoCorrigidos - Retorna o numero de exercicios nao corrigidos
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - codigo do usuario
+            $tela_formador - indica se o usuario é formador ou não
+            $agrupamento - opcao do agrupamento (aluno/grupo ou exercicio)
+            $visualizar - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod'] - codigo do usuario/grupo/exercicio
+                ['num'] - numero de exercicios nao corrigidos
+                
+*/
+function RetornaNumExerciciosNaoCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
+{
+  if($agrupamento == "A")
+  {
+    if($tela_formador)
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+    else
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL  and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+  }
+  else if($agrupamento == "G")
+  {
+    if($tela_formador)
+      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
+    else
+      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.corrigida='N' and er.submetida='S' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
+  }
+  else if($agrupamento == "T")
+  {
+    if($visualizar == "I")
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='N' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+    else if($visualizar == "G")
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='N' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+  }
+  
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return $lista;

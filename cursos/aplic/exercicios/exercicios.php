@@ -307,8 +307,8 @@
 
   if ($tela_formador)
   {
-	/* ? - Exercicios*/
-  	$frase = "Exercicios";
+	/* ? - Exercicios - Biblioteca de Exercicios*/
+  	$frase = "Exercicios - Biblioteca de Exercicios";
     if($visualizar == "L")
   		$frase = $frase." - Lixeira";
   	
@@ -328,9 +328,18 @@
 	echo("              <td valign=\"top\">\n");
 
   	echo("                <ul class=\"btAuxTabs\">\n");
+  	
+  	/* ? - Exercicios Individuais */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>Exercicios Individuais</a></li>\n");
+    
+    /* ? - Exercicios em Grupo */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=Gagrupar=G'>Exercicios em Grupo</a></li>\n");
 
-    /* ? - Banco de Questoes */
-    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Banco de Questoes</a></li>\n");
+  	/* ? - Biblioteca de Exercicios */
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
+  	
+    /* ? - Biblioteca de Questoes */
+    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
 
   	echo("                </ul>\n");
   	echo("              </td>\n");
