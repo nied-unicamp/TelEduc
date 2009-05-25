@@ -1297,60 +1297,65 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                        </div>\n");
 	echo("                      </td>\n");
 	echo("                    </tr>\n");
-        echo("                  <tr class=\"head\">\n");
-	/* ? - Alternativas */
-	echo("                    <td class=\"center\" colspan=\"6\">Alternativas</td>\n");
-	echo("                  </tr>\n");
-	echo("					<tBody id=\"tBody\">");
 
-        if ((count($alternativas)>0)&&($alternativas != null))
+	if($tp_questao == "O")
+	{
+	  echo("                  <tr class=\"head\">\n");
+	  /* ? - Alternativas */
+	  echo("                    <td class=\"center\" colspan=\"6\">Alternativas</td>\n");
+	  echo("                  </tr>\n");
+	  echo("					<tBody id=\"tBody\">");
+
+      if ((count($alternativas)>0)&&($alternativas != null))
+      {
+        foreach ($alternativas as $cod => $linha_item)
         {
-          foreach ($alternativas as $cod => $linha_item)
+          $texto = $linha_item['texto'];
+          $cod_alternativa = $linha_item['cod_alternativa'];
+
+          echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
+          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
+          echo("                  </tr>\n");
+
+          if($tp_questao == 'D')
           {
-            $texto = $linha_item['texto'];
-            $cod_alternativa = $linha_item['cod_alternativa'];
-
-            echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
-            echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
-            echo("                  </tr>\n");
-
-            if($tp_questao == 'D')
-            {
   
-              $gabarito = RetornaGabaritoQuestaoDiss($sock,$cod_questao,$cod_alternativa);
+            $gabarito = RetornaGabaritoQuestaoDiss($sock,$cod_questao,$cod_alternativa);
 
-              echo("                  <tr id=\"trAltGab_".$cod_alternativa."\" style=\"display:none;\">\n");
-              echo("                    <td class=\"itens\" valign=\"top\" colspan=\"6\"><span id=\"text_".$cod_questao.$cod_alternativa."\">".$gabarito."</span></td>\n");
-              echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-	      	  echo("                      <ul>\n");
-	          echo("                        <li><span onclick=\"AlteraTexto(".$cod_questao.$cod_alternativa.");DesabilitarMudancaPosicaoAlt();\">Editar gabarito</span></li>\n");
-	          echo("                        <li><span onclick=\"LimparTexto(".$cod_questao.$cod_alternativa.");\">Limpar gabarito</span></li>\n");
-	          echo("                        <li><span onclick=\"EsconderGabarito(".$cod_alternativa.");\">Esconder</span></li>\n");
-	          echo("                      </ul>\n");
-	          echo("                    </td>\n");
-              echo("                  </tr>\n");
-            }
+            echo("                  <tr id=\"trAltGab_".$cod_alternativa."\" style=\"display:none;\">\n");
+            echo("                    <td class=\"itens\" valign=\"top\" colspan=\"6\"><span id=\"text_".$cod_questao.$cod_alternativa."\">".$gabarito."</span></td>\n");
+            echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+	      	echo("                      <ul>\n");
+	        echo("                        <li><span onclick=\"AlteraTexto(".$cod_questao.$cod_alternativa.");DesabilitarMudancaPosicaoAlt();\">Editar gabarito</span></li>\n");
+	        echo("                        <li><span onclick=\"LimparTexto(".$cod_questao.$cod_alternativa.");\">Limpar gabarito</span></li>\n");
+	        echo("                        <li><span onclick=\"EsconderGabarito(".$cod_alternativa.");\">Esconder</span></li>\n");
+	        echo("                      </ul>\n");
+	        echo("                    </td>\n");
+            echo("                  </tr>\n");
           }
         }
+      }
         
-    echo("					</tBody>");    
-    echo("                  <tr id=\"optAlt\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <ul>\n");
-	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">Apagar</span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">Editar</span></li>\n");
-    if($tp_questao == 'D')
-      echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); 
-	echo("                      </ul>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
-    echo("                  <tr id=\"trAddAlt\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
+      echo("					</tBody>");
+      
+      echo("                  <tr id=\"optAlt\">\n");
+	  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	  echo("                      <ul>\n");
+	  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
+	  echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">Apagar</span></li>\n");
+	  echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">Editar</span></li>\n");
+      /*if($tp_questao == 'D')
+        echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); */
+	  echo("                      </ul>\n");
+	  echo("                    </td>\n");
+	  echo("                  </tr>\n");
+      echo("                  <tr id=\"trAddAlt\">\n");
+  	  echo("                    <td align=\"left\" colspan=\"6\">\n");
         /* ? - Adicionar Alternativa */
-	echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) Adicionar Alternativa</span></div>\n");
-    echo("                    </td>\n");
-	echo("                  </tr>\n");
+	  echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) Adicionar Alternativa</span></div>\n");
+      echo("                    </td>\n");
+	  echo("                  </tr>\n");
+	}
     echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
 	echo("                    <td colspan=\"6\">Arquivos</td>\n");
