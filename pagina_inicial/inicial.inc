@@ -176,15 +176,16 @@ function RetornaListaDeCursosUsuario($email, $login)
    RetornaListaDeCursos - Retorna a lista de cursos dado o tipo
    Entrada: $sock - sock da base externa
             $tipo_curso - tipo do curso
+						  'N' - Não iniciado
                           'A' - Em andamento
-                          'I' - com inscriï¿½ï¿½es aberta
+                          'I' - com inscrições aberta
                           'E' - Encerrados
             $cod_pasta - codigo da pasta a qual pertence os cursos a serem retornados
    Saida: array []['cod_curso']
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
+                []['acesso_visitante'] - 'A' se aceita, 'N' se não
 */
 function RetornaListaDeCursos($sock,$tipo_curso,$cod_pasta)
 {
