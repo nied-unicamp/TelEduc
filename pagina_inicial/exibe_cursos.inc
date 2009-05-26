@@ -109,6 +109,38 @@ function RetornaCursosNaoIniciados($sock,$cod_usuario)
   return array ($tuplas, $nCursos);
 }
 
+/* **********************************************************************
+   RetornaCursosNaoIniciadosSemUsuario - Retorna a lista de cursos não iniciados
+   Entrada: $sock - sock da base externa
+   Saida: array []['cod_curso']
+                []['nome_curso']
+                []['inscricao_inicio']
+                []['inscricao_fim']
+                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+*/
+
+function RetornaCursosNaoIniciadosSemUsuario($sock)
+{
+  $hoje=time();
+  $ontem=$hoje - 86400;
+  $where="(curso_inicio > ".time()." or curso_inicio is NULL)";
+  $query="select cod_curso,nome_curso,inscricao_inicio,inscricao_fim,acesso_visitante from Cursos where ".$where." order by nome_curso";
+
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+
+  if (count($lista)>0 && $lista != "")
+  {
+    $c=0;
+    foreach($lista as $cod => $linha)
+      $lista_saida[$c++]=$linha;
+  }
+  else
+    $lista_saida=$lista;
+
+  return ($lista_saida);	
+}
+
 /********************************************************************
   Funï¿½ao ApagaMensagem - Atribue a flag de X (Deletado) ao campo
     status da mensagem.
@@ -149,6 +181,36 @@ function RetornaCursosEmAndamento($sock,$cod_usuario)
   return array ($tuplas, $nCursos);
 }
 
+/* **********************************************************************
+   RetornaCursosEmAndamentoSemUsuario - Retorna a lista de cursos em andamento
+   Entrada: $sock - sock da base externa
+   Saida: array []['cod_curso']
+                []['nome_curso']
+                []['inscricao_inicio']
+                []['inscricao_fim']
+                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+*/
+function RetornaCursosEmAndamentoSemUsuario($sock)
+{
+  $hoje=time();
+  $ontem=$hoje - 86400;
+  $where="curso_inicio<=".$hoje." and curso_fim>=".$ontem;
+  $query="select cod_curso,nome_curso,inscricao_inicio,inscricao_fim,acesso_visitante from Cursos where ".$where." order by nome_curso";
+
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+
+  if (count($lista)>0 && $lista != "")
+  {
+    $c=0;
+    foreach($lista as $cod => $linha)
+      $lista_saida[$c++]=$linha;
+  }
+  else
+    $lista_saida=$lista;
+
+  return ($lista_saida);	
+}
 /********************************************************************
   Funï¿½ao ApagaMensagem - Atribue a flag de X (Deletado) ao campo
     status da mensagem.
@@ -189,6 +251,69 @@ function RetornaCursosPassados($sock,$cod_usuario)
   $nCursos = is_array($tuplas) ? count($tuplas) : 0;
 
   return array ($tuplas, $nCursos);
+}
+
+
+/* **********************************************************************
+   RetornaCursosPassadosSemUsuario - Retorna a lista de cursos encerrados
+   Entrada: $sock - sock da base externa
+   Saida: array []['cod_curso']
+                []['nome_curso']
+                []['inscricao_inicio']
+                []['inscricao_fim']
+                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+*/
+function RetornaCursosPassadosSemUsuario($sock,$cod_usuario)
+{
+  $hoje=time();
+  $ontem=$hoje - 86400;
+  $where="curso_fim<".$ontem;
+  $query="select cod_curso,nome_curso,inscricao_inicio,inscricao_fim,acesso_visitante from Cursos where ".$where." order by nome_curso";
+
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+
+  if (count($lista)>0 && $lista != "")
+  {
+    $c=0;
+    foreach($lista as $cod => $linha)
+      $lista_saida[$c++]=$linha;
+  }
+  else
+    $lista_saida=$lista;
+
+  return ($lista_saida);	
+}
+
+/* **********************************************************************
+   RetornaCursosInscricaoSemUsuario - Retorna a lista de cursos com inscrição aberta
+   Entrada: $sock - sock da base externa
+   Saida: array []['cod_curso']
+                []['nome_curso']
+                []['inscricao_inicio']
+                []['inscricao_fim']
+                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+*/
+function RetornaCursosInscricaoSemUsuario($sock,$cod_usuario)
+{
+  $hoje=time();
+  $ontem=$hoje - 86400;
+  $where="inscricao_inicio<=".$hoje." and inscricao_fim>=".$ontem;
+  $query="select cod_curso,nome_curso,inscricao_inicio,inscricao_fim,acesso_visitante from Cursos where ".$where." order by nome_curso";
+
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+
+  if (count($lista)>0 && $lista != "")
+  {
+    $c=0;
+    foreach($lista as $cod => $linha)
+      $lista_saida[$c++]=$linha;
+  }
+  else
+    $lista_saida=$lista;
+
+  return ($lista_saida);	
 }
 
 /********************************************************************
