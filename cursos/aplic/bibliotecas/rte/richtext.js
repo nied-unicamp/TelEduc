@@ -817,8 +817,8 @@ function lowerButton(e) {
            formTmp+=(' <tr>');
            formTmp+=('  <td>');
            formTmp+=('      <ul class="rteBtConfirm">');
-           formTmp+=('        <li><span onClick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" id="OkEdita">OK</span></li>');
            formTmp+=('        <li><span onClick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" id="CancelaEdita" name="cancelar">Cancelar</span></li>');
+           formTmp+=('        <li><span onClick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" id="OkEdita">OK</span></li>');
            formTmp+=('      </ul>');
            formTmp+=('	</td>');
            formTmp+=(' </tr>');
