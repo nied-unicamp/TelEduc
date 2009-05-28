@@ -642,7 +642,7 @@
 
     if(($cod_ferramenta==3)&&($AcessoAvaliacao)){
       /* 90 - Avaliacao */
-      echo("                      <td width=\"8%\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
+      echo("                      <td width=\"10%\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
     }
 
   }
@@ -776,11 +776,11 @@
               {
                 $cod_avaliacao=RetornaCodAvaliacao($sock,$linha['cod_item']);
                 /* 35 - Sim (ger)*/
-                echo("                      <td width=\"8%\" align=\"center\"><span class='link' onclick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</span>");
+                echo("                      <td width=\"10%\" align=\"center\"><span class='link' onclick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</span>");
               }
               else
               /* 36 -  Nao (ger)*/
-                echo("                      <td width=\"8%\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,36)."</td>\n");
+                echo("                      <td width=\"10%\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,36)."</td>\n");
             }
             echo("                    </tr>\n");
           }else if (($linha['status']!="E") && ($linha['tipo_compartilhamento']=="T")) {
