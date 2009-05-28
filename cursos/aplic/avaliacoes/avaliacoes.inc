@@ -128,7 +128,7 @@ function RetornaAvaliacoes($sock,$usr_formador)
       elseif (!strcmp($linha['ferramenta'],'B'))
         $consulta="select assunto from Batepapo_assuntos where cod_assunto=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'E'))
-        $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+        $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'N'))        
         $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];
       else
@@ -182,7 +182,7 @@ function RetornaAvaliacoesAtuais($sock,$usr_formador)
       elseif (!strcmp($linha['ferramenta'],'B'))
         $consulta="select assunto from Batepapo_assuntos where cod_assunto=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'E'))
-        $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+        $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif(!strcmp($linha['ferramenta'],'N'))
          $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade']; 
       else
@@ -234,7 +234,7 @@ function RetornaAvaliacoesFuturas($sock,$usr_formador)
       elseif (!strcmp($linha['ferramenta'],'B'))
         $consulta="select assunto from Batepapo_assuntos where cod_assunto=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'E'))
-        $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+        $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif(!strcmp($linha['ferramenta'],'N'))
         $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];               
       else
@@ -286,7 +286,7 @@ function RetornaAvaliacoesAnteriores($sock,$usr_formador)
       elseif (!strcmp($linha['ferramenta'],'B'))
         $consulta="select assunto from Batepapo_assuntos where cod_assunto=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'E'))
-        $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+        $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif(!strcmp($linha['ferramenta'],'N'))
         $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];  
       else
@@ -340,7 +340,7 @@ function RetornaAvaliacoesApagadas($sock,$usr_formador)
       elseif (!strcmp($linha['ferramenta'],'B'))
         $consulta="select assunto from Batepapo_assuntos where cod_assunto=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'E'))
-        $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+        $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       else
       {
         $consulta="select titulo from Atividade_itens where cod_item=".$linha['cod_atividade'];
@@ -944,7 +944,7 @@ elseif(!strcmp($ferramenta,'F'))
 }
 elseif(!strcmp($ferramenta,'E'))
 {
- $query="select titulo from Exercicios_modelo where cod_modelo=".$cod_atividade;
+ $query="select titulo from Exercicios_modelo where cod_exercicio=".$cod_atividade;
 }
 elseif(!strcmp($ferramenta,'N'))
 {
@@ -2680,7 +2680,7 @@ Saida:    nome do frum,
 */
 function RetornaExercicio($sock, $cod_exercicio)
 {
-$query = "select titulo from Exercicios_modelo where cod_modelo = ".$cod_exercicio;
+$query = "select titulo from Exercicios_modelo where cod_exercicio = ".$cod_exercicio;
 $res = Enviar($sock, $query);
 $tupla = RetornaLinha($res);
 return $tupla['titulo'];
@@ -2703,7 +2703,7 @@ $query = "select cod_atividade, ferramenta from Avaliacao where cod_avaliacao=".
 $res = Enviar($sock, $query);
 $tupla = RetornaLinha($res);
 
-if(strcmp($tupla['ferramenta'],"E"))
+if(strcmp($tupla['ferramenta'],"E")||true)
  return(true);
 else
 {
@@ -3618,7 +3618,7 @@ function RetornaAvaliacoesExercicios($sock,$usr_formador)
   {
     foreach ($lista as $cod => $linha)
     { 
-      $consulta="select titulo from Exercicios_modelo where cod_modelo=".$linha['cod_atividade'];
+      $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
 
       $res=Enviar($sock, $consulta);
       $titulo=RetornaLinha($res);
