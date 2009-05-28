@@ -1151,7 +1151,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   echo($titulo);
 
   if($eformador) {
-    echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+    echo("                    <td align=\"left\" width=\"19%\" valign=\"top\" class=\"botao2\">\n");
     echo("                      <ul>\n");
     /* 146 - Renomear */
     echo("                        <li><span onclick=\"AlteraTitulo(".$linha_item['cod_item'].")\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span></li>\n");
