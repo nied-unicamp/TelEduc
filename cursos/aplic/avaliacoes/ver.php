@@ -79,6 +79,7 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("criarAvaliacao", 212, 0);
+  $feedbackObject->addAction("aplicar", 'Exercicio aplicado com sucesso.',0);
 
  
   echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
