@@ -710,7 +710,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 								echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
 							}
 
-							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha[Tamanho] / 1024), 2) . "Kb)");
+							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha["Tamanho"] / 1024), 2) . "Kb) - ".RetornaFraseDaLista($lista_frases,215)." ".UnixTime2Hora($linha["Data"])." ".UnixTime2DataMesAbreviado($linha["Data"])."");
 
 							echo ("<span id=\"local_oculto_" . $conta_arq . "\">");
 							if ($linha['Status'])
