@@ -1179,7 +1179,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   if (($eformador) || ($linha_item['texto']!=""))
   {
     echo("                  <tr class=\"head\">\n");
-    /* 31 - Comentário  */
+    /* 31 - Texto  */
     echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,31)."</td>\n");    
     echo("                  </tr>\n");
     echo("                  <tr>\n");
