@@ -357,7 +357,7 @@
 
   echo("                  <tr class=\"head\">\n");
   /* 94 - Conteudo  */
-  echo("                    <td colspan=\"4\" align=\"left\">".RetornaFraseDaLista($lista_frases,94)."</td>\n");
+  echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,94)."</td>\n");
   echo("                  </tr>\n");
   echo("                  <tr>\n");
   echo("                    <td class=\"itens\" colspan=\"4\">\n");
