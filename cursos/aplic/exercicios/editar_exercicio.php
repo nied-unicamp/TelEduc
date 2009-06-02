@@ -61,6 +61,8 @@
   $objAjax->registerFunction("AtualizaValorTotalExercicioDinamic");
   $objAjax->registerFunction("AtribuiValorAQuestaoDinamic");
   $objAjax->registerFunction("ExluirQuestaoDoExercicioDinamic");
+  $objAjax->registerFunction("AplicaExercicioDinamic");
+  $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -74,12 +76,24 @@
 
   include("../topo_tela.php");
   
+  // instanciar o objeto, passa a lista de frases por parametro
+  $feedbackObject =  new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+  $feedbackObject->addAction("cancelar", 'Aplicacao cancelada com sucesso.', 0);
+  $feedbackObject->addAction("aplicar", 'Exercicio aplicado com sucesso.', 0);
+  $feedbackObject->addAction("reaplicar", 'Exercicio reaplicado com sucesso.', 0);
+  
+  
   $exercicio = RetornaExercicio($sock,$cod_exercicio);
   $lista_questoes = RetornaQuestoesExercicio($sock,$cod_exercicio);
   $totalValorQuestoes = RetornaSomaValorQuestoes($sock,$cod_exercicio);
   $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_exercicio, $diretorio_arquivos, $diretorio_temp, "exercicio");
   $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
+  $data = time();
+  
+  GeraJSComparacaoDatas();
+  GeraJSVerificacaoData();
 
   /*********************************************************/
   /* in�io - JavaScript */
@@ -145,6 +159,8 @@
   echo("    {\n");
   echo("      cod_comp = getLayer(\"comp\");\n");
   echo("      lay_atribuir = getLayer(\"layer_atribuir\");\n");
+  echo("      lay_aplicar = getLayer(\"layer_aplicar\");\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      startList();\n");
   echo("    }\n\n");
 
@@ -157,6 +173,7 @@
   echo("    {\n");
   echo("      hideLayer(cod_comp);\n");
   echo("      hideLayer(lay_atribuir);\n");
+  echo("      hideLayer(lay_aplicar);\n");
   echo("    }\n\n");
 
   echo("    function MostraLayer(cod_layer, ajuste)\n");
@@ -175,7 +192,7 @@
   echo("      EscondeLayers();\n");
   echo("      cancelarTodos=1;\n");
   echo("      if(cancelarElemento) {\n"); 
-  echo("        cancelarElemento.onclick();\n"); 
+  echo("        cancelarElemento.onclick();\n");
   //echo("        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
   echo("      }\n");
   echo("      cancelarTodos=0;\n");
@@ -184,7 +201,7 @@
   echo("    function EdicaoTitulo(codigo, id, valor){\n");
   echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value!='')){\n");
   echo("        conteudo = document.getElementById(id+'_text').value;\n");
-  echo("        xajax_EditarTituloExercicioDinamic(".$cod_curso.", codigo, conteudo, ".$cod_usuario.", \"opa\");\n");
+  echo("        xajax_EditarTituloExercicioDinamic(".$cod_curso.", codigo, conteudo, ".$cod_usuario.", \"Texto\");\n");
   echo("      }else{\n");
   /* ? - O titulo nao pode ser vazio. */
   echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value==''))\n");
@@ -228,7 +245,7 @@
   echo("      id_aux = id;\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("      conteudo = document.getElementById('tit_'+id).innerHTML;\n");
-  echo("      document.getElementById('tit_'+id).className='';\n");
+  echo("      document.getElementById('tit_'+id).className='$cod_questao - codigo da questao';\n");
   echo("      document.getElementById('tr_'+id).className='';\n");
   echo("      createInput = document.createElement('input');\n");
   echo("      document.getElementById('tit_'+id).innerHTML='';\n");
@@ -650,9 +667,116 @@
   echo("      }\n");
   echo("    }\n\n");
   
+  echo("    function AplicarExercicio(cod)\n");
+  echo("    {\n");
+  echo("       MostraLayer(lay_aplicar,140,event);\n");
+  echo("    }\n\n");
+  
+  echo("    function  ExibirAgendamento(value)\n");
+  echo("    {\n");
+  echo("       if(value == \"I\")\n");
+  echo("         document.getElementById(\"div_disp\").style.display = \"none\";\n");
+  echo("       if(value == \"A\")\n");
+  echo("         document.getElementById(\"div_disp\").style.display = \"\";\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaDataAtual()\n");
+  echo("    {\n");
+  echo("       var input;\n");
+  echo("       input = document.createElement(\"input\");\n");
+  echo("       input.setAttribute(\"value\",\"".UnixTime2Data($data)."\")\n");
+  echo("       return input;\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaHoraAtual()\n");
+  echo("    {\n");
+  echo("       var input;\n");
+  echo("       input = document.createElement(\"input\");\n");
+  echo("       input.setAttribute(\"value\",\"".UnixTime2Hora($data)."\")\n");
+  echo("       return input;\n");
+  echo("    }\n\n");
+  
+  echo("      function verifica_intervalos()\n");
+  echo("      {\n");
+  echo("	    var dt_disponibilizacao,limite_entrega,hora_disponibilizacao,hora_limite_entrega,data_atual,hora_atual;\n");
+  echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
+  echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
+  echo("        data_atual = RetornaDataAtual();\n");
+  echo("        hora_disponibilizacao = document.getElementById(\"hora_disponibilizacao\");\n");
+  echo("        hora_limite_entrega = document.getElementById(\"hora_limite_entrega\");\n");
+  echo("        hora_atual = RetornaHoraAtual();\n");
+  echo("        if (!DataValidaAux(dt_disponibilizacao) || !DataValidaAux(limite_entrega))\n");
+  echo("          return (false);\n");
+  echo("        if (!hora_valida(hora_disponibilizacao))\n");
+  echo("        {\n");
+  /* ? - Hora de disponibilizacao invalida. Por favor volte e corrija. */
+  echo("          alert('Hora de disponibilizacao invalida. Por favor volte e corrija.');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (!hora_valida(hora_limite_entrega))\n");
+  echo("        {\n");
+ /* ? - Hora de limite de entrega invalida. Por favor volte e corrija. */
+  echo("          alert('Hora de limite de entrega invalida. Por favor volte e corrija.');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (ComparaDataHora(data_atual,hora_atual,dt_disponibilizacao,hora_disponibilizacao) > 0 )\n");
+  echo("        {\n");
+  /* ? - A disponibilizacao do exercicio deve ser posterior a data atual. */
+  echo("          alert('A disponibilizacao do exercicio deve ser posterior a data atual.');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (ComparaDataHora(dt_disponibilizacao,hora_disponibilizacao,limite_entrega,hora_limite_entrega) > 0 )\n");
+  echo("        {\n");
+  /* ? - O limite de entrega deve ser posterior a disponibilizacao do exercicio. */
+  echo("          alert('O limite de entrega deve ser posterior a disponibilizacao do exercicio.');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        return(true);\n");
+  echo("      }\n");
+  
+  echo("    function AplicarExercicio()\n");
+  echo("    {\n");
+  echo("      var dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao;\n");
+  echo("      if(verifica_intervalos())\n");
+  echo("      {\n");
+  echo("        if(document.getElementById(\"disponibilizacao\").value == \"A\")\n");
+  echo("        {\n");
+  echo("          dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
+  echo("          hr_disp = document.getElementById(\"hora_disponibilizacao\").value+':00';\n");
+  echo("        }\n");
+  echo("        else\n");
+  echo("        {\n");
+  echo("          dt_disp = \"".UnixTime2Data($data)."\";\n");
+  echo("          hr_disp = \"".UnixTime2Hora($data)."\";\n");
+  echo("        }\n");
+  echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
+  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value+':00';\n");
+  echo("        tp_aplicacao = document.getElementById(\"tp_aplicacao\").value;\n");
+  echo("        disp_gabarito = document.getElementById(\"disp_gabarito\").value;\n");
+  echo("        avaliacao = document.getElementById(\"avaliacao\").value;\n");
+  if($exercicio['situacao'] != "C")
+    echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",0);\n");
+  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
+  echo("      }\n\n");
+  echo("    }\n\n");
+  
+  echo("    function ExercicioAplicado(avaliacao,cod_avaliacao)\n");
+  echo("    {\n");
+  echo("      if(avaliacao == 'N')\n");
+  echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=aplicar&atualizacao=true';\n");
+  echo("      else\n");
+  echo("        window.location='../avaliacoes/ver.php?cod_curso=".$cod_curso."&cod_avaliacao='+cod_avaliacao+'&origem=exercicios&operacao=null&acao=aplicar&atualizacao=true';\n");
+  echo("    }\n\n");
+  
   echo("    function Voltar()\n");
   echo("    {\n");
   echo("      window.location='exercicios.php?cod_curso=".$cod_curso."&visualizar=E';\n");
+  echo("    }\n\n");
+  
+  echo("    function AplicacaoCancelada(flag)\n");
+  echo("    {\n");
+  echo("      if(flag)");
+  echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=cancelar&atualizacao=true';\n");
   echo("    }\n\n");
 
   echo("    </script>\n\n");
@@ -672,7 +796,12 @@
     // ? - Editar texto
     $editar="<span onclick=\"AlteraTexto(".$exercicio['cod_exercicio'].");\">Editar texto</span>";
     // ? - Limpar texto
-    $limpar="<span onclick=\"LimparTexto(".$exercicio['cod_exercicio'].");\">Limpar enunciado</span>";
+    $limpar="<span onclick=\"LimparTexto(".$exercicio['cod_exercicio'].");\">Limpar texto</span>";
+    $aplicar="<span onclick=\"MostraLayer(lay_aplicar,140,event);\">Aplicar</span>";
+    $apagar="<span onclick=\"ApagarExercicio();\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span>";
+    
+    $reaplicar="<span onclick=\"MostraLayer(lay_aplicar,140,event);\">Reaplicar</span>";
+    $cancelar="<span onclick=\"xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",1);\">Cancelar aplicacao</span>";
 
     /* ?? - Compartilhado com Formadores */
     if($exercicio['tipo_compartilhamento'] == "F")
@@ -681,7 +810,7 @@
     else
       $compartilhamento = "Nao compartilhado";
         
-    if($cod_usuario == $exercicio['cod_usuario'])
+    if($cod_usuario == $exercicio['cod_usuario'] && $exercicio['situacao'] == 'C')
       $compartilhamento = "<span id=\"comp_".$exercicio['cod_exercicio']."\" class=\"link\" onclick=\"js_cod_item='".$exercicio['cod_exercicio']."';AtualizaComp('".$exercicio['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 
 	/* ? - Exercicios */
@@ -712,21 +841,36 @@
 	echo("                  <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
 	echo("                    <tr class=\"head\">\n");
 	/* ? - Titulo */
-	echo("                      <td class=\"alLeft\" colspan=\"3\">Titulo</td>\n");
+	if($exercicio['situacao'] == 'C')
+	  echo("                      <td class=\"alLeft\" colspan=\"3\">Titulo</td>\n");
+	else
+	  echo("                      <td class=\"alLeft\" colspan=\"2\">Titulo</td>\n");
     /* 70 - Opcoes (ger)*/
 	echo("                      <td width=\"20%\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
 	/* ? - Compartilhamento*/
 	echo("                      <td width=\"20%\" colspan=\"2\">Compartilhamento</td>\n");
 	echo("                    </tr>\n");
 	echo("                    <tr id='tr_".$exercicio['cod_exercicio']."'>\n");
-	echo("                      <td class=\"itens\" colspan=\"3\">".$titulo."</td>\n");
+	if($exercicio['situacao'] == 'C')
+	  echo("                      <td class=\"itens\" colspan=\"3\">".$titulo."</td>\n");
+	else
+	  echo("                      <td class=\"itens\" colspan=\"2\">".$titulo."</td>\n");
 	echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
 	echo("                        <ul>\n");
-	echo("                          <li>".$renomear."</li>\n");
-	echo("                          <li>".$limpar."</li>\n");
-	echo("                          <li>".$editar."</li>\n");
+	if($exercicio['situacao'] == 'C')
+	{
+	  echo("                          <li>".$renomear."</li>\n");
+	  echo("                          <li>".$limpar."</li>\n");
+	  echo("                          <li>".$editar."</li>\n");
+	  echo("                          <li>".$aplicar."</li>\n");
+	}
+	else
+	{
+      echo("                          <li>".$reaplicar."</li>\n");
+	  echo("                          <li>".$cancelar."</li>\n");
+	}
 	// G 1 - Apagar
-	echo("                          <li><span onclick=\"ApagarExercicio();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+	echo("                          <li>".$apagar."</li>\n");
 	echo("                        </ul>\n");
 	echo("                      </td>\n");
 	echo("                      <td colspan=\"2\">".$compartilhamento."</td>\n");
@@ -747,7 +891,8 @@
 	echo("                    <td class=\"center\" colspan=\"6\">Questoes</td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr class=\"head01\">\n");
-    echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
+	if($exercicio['situacao'] == 'C')
+      echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
     /* ? - T�ulo*/
 	echo("                    <td class=\"alLeft\">Titulo</td>\n");
 	/* ? - Tipo*/
@@ -773,7 +918,8 @@
         $valor = "<span id=\"valorQuestao_".$linha_item['cod_questao']."\">".$linha_item['valor']."</span>";
         
         echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-        echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkQuestao\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
+        if($exercicio['situacao'] == 'C')
+          echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkQuestao\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
         echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."\">".$titulo."</a></td>\n");
         echo("                    <td>".$tipo."</td>\n");
         echo("                    <td>".$topico."</td>\n");
@@ -783,7 +929,10 @@
       }
       
       echo("                  <tr id=\"trTotal\">\n");
-      echo("                    <td colspan=\"5\" align=\"right\"><b>Total:</b></td>\n");
+      if($exercicio['situacao'] == 'C')
+        echo("                    <td colspan=\"5\" align=\"right\"><b>Total:</b></td>\n");
+      else
+        echo("                    <td colspan=\"4\" align=\"right\"><b>Total:</b></td>\n");
       echo("                    <td id=\"totalValorQuestoes\"><b>".$totalValorQuestoes."</b></td>\n");
       echo("                  </tr>\n");
     }
@@ -798,18 +947,22 @@
       echo("                    <td id=\"totalValorQuestoes\"></td>\n");
       echo("                  </tr>\n");
     }
+    
+    if($exercicio['situacao'] == C)
+	{
+	  echo("                  <tr id=\"optQuestoes\">\n");
+	  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	  echo("                      <ul>\n");
+	  echo("                        <li class=\"menuUp\" id=\"mQuestao_apagar\"><span id=\"sQuestao_apagar\">Apagar selecionadas</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mQuestao_valor\"><span id=\"sQuestao_valor\">Atribuir valor as selecionadas</span></li>\n");
+	  echo("                      </ul>\n");
+	  echo("                    </td>\n");
+	  echo("                  </tr>\n");
+      echo("                  <tr id=\"optQuestoes\">\n");
+	  echo("                    <td align=\"left\" colspan=\"6\"><span id=\"adicionarQuestao\" class=\"link\" onclick=\"window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q&cod_exercicio=".$cod_exercicio."';\">(+) Adicionar questoes</span></td>\n");
+	  echo("                  </tr>\n");
+	}
 	
-	echo("                  <tr id=\"optQuestoes\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <ul>\n");
-	echo("                        <li class=\"menuUp\" id=\"mQuestao_apagar\"><span id=\"sQuestao_apagar\">Apagar selecionadas</span></li>\n");
-    echo("                        <li class=\"menuUp\" id=\"mQuestao_valor\"><span id=\"sQuestao_valor\">Atribuir valor as selecionadas</span></li>\n");
-	echo("                      </ul>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
-    echo("                  <tr id=\"optQuestoes\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\"><span id=\"adicionarQuestao\" class=\"link\" onclick=\"window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q&cod_exercicio=".$cod_exercicio."';\">(+) Adicionar questoes</span></td>\n");
-	echo("                  </tr>\n");
     echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
 	echo("                    <td colspan=\"6\">Arquivos</td>\n");
@@ -895,10 +1048,11 @@
 							$tag_fecha = "</span>";
 
 							echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+							
+                            if($exercicio['situacao'] == 'C')
+							  echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n". $espacos);
 
-							echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
-
-							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
+							echo ("                          " . $espacos2 . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
 
 							echo ("<span id=\"local_oculto_" . $conta_arq . "\">");
 							if ($linha['Status'])
@@ -925,7 +1079,8 @@
 							$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
 							echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
 							echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
-							echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
+							if($exercicio['situacao'] == 'C')
+							  echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
 							echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
 							echo ("                        " . $espacos2 . "<br />\n");
 						}
@@ -947,38 +1102,42 @@
 		echo ("                  </tr>\n");
 	}
 
-    echo("                  <tr id=\"optArq\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <ul>\n");
-	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
-	echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
-    echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
-	echo("                      </ul>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr>\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
-	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-	echo("                        <input type=\"hidden\" name=\"cod_exercicio\" value=\"".$cod_exercicio."\" />\n");
-    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
-    echo("                        <input type=\"hidden\" name=\"pasta\" value=\"exercicio\" />\n");
-	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
-	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
-	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
-	echo("                          <span> - Bla bla bla</span>\n");
-	echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
-	echo("                          &nbsp;&nbsp;\n");
-	echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
-	echo("                          &nbsp;&nbsp;\n");
-	echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
-	echo("                        </div>\n");
-	/* 26 - Anexar arquivos (ger) */
-	echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
-	echo("                      </form>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
+	if($exercicio['situacao'] == 'C')
+	{
+      echo("                  <tr id=\"optArq\">\n");
+	  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	  echo("                      <ul>\n");
+	  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
+	  echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
+	  echo("                      </ul>\n");
+	  echo("                    </td>\n");
+	  echo("                  </tr>\n");
+	  echo("                  <tr>\n");
+	  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	  echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
+	  echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+	  echo("                        <input type=\"hidden\" name=\"cod_exercicio\" value=\"".$cod_exercicio."\" />\n");
+      echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+      echo("                        <input type=\"hidden\" name=\"pasta\" value=\"exercicio\" />\n");
+	  echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
+	  echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
+	  echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
+	  // ?? - 
+	  echo("                          <span> - Bla bla bla</span>\n");
+	  echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
+	  echo("                          &nbsp;&nbsp;\n");
+	  echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
+	  echo("                          &nbsp;&nbsp;\n");
+	  echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
+	  echo("                        </div>\n");
+	  /* 26 - Anexar arquivos (ger) */
+	  echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
+	  echo("                      </form>\n");
+	  echo("                    </td>\n");
+	  echo("                  </tr>\n");
+	}
 	echo("                </table>\n");
 	echo("              </td>\n");
   	echo("            </tr>\n");
@@ -1022,6 +1181,55 @@
   echo("            <input type=\"button\" class=\"input\" onClick=\"VerificaValor(document.getElementById('valor').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   /* 2 - Cancelar (gen) */
   echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_atribuir);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("        </div>\n");
+  echo("      </div>\n");
+  echo("    </div>\n\n");
+  
+  /* Aplicar */
+  echo("    <div id=\"layer_aplicar\" class=popup>\n");
+  echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_aplicar);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <div class=ulPopup>\n");    
+  /* ? - Associar a avaliação: */
+  echo("          Associar a avaliacao: <br />");
+  echo("          <select class=\"input\" id=\"avaliacao\">\n");
+  echo("		    <option value=\"N\">Nao</option>\n");
+  echo("		    <option value=\"S\">Sim</option>\n");
+  echo("		  </select><br /><br />\n");
+  /* ? - Disponibilizar gabarito com a correcao: */
+  echo("          Disponibilizar gabarito com a correcao: <br />");
+  echo("          <select class=\"input\" id=\"disp_gabarito\">\n");
+  echo("		    <option value=\"N\">Nao</option>\n");
+  echo("		    <option value=\"S\">Sim</option>\n");
+  echo("		  </select><br /><br />\n");
+  /* ? - Tipo de aplicacao: */
+  echo("          Tipo de aplicacao: <br />");
+  echo("          <select class=\"input\" id=\"tp_aplicacao\">\n");
+  echo("		    <option value=\"I\">Exercicio individual</option>\n");
+  echo("		    <option value=\"G\">Exercicio em grupo</option>\n");
+  echo("		  </select><br /><br />\n");
+  /* ? - Disponibilizacao: */
+  echo("          Disponibilizacao: <br />");
+  echo("          <select class=\"input\" id=\"disponibilizacao\" onchange=\"ExibirAgendamento(this.value);\">\n");
+  echo("		    <option value=\"I\">Imediata</option>\n");
+  echo("		    <option value=\"A\">Agendar</option>\n");
+  echo("		  </select><br /><br />\n");
+  echo("          <div id=\"div_disp\" style=\"display:none;\">\n");
+  echo("            Data: <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"dt_disponibilizacao\" name=\"dt_disponibilizacao\" />\n");
+  echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('dt_disponibilizacao'),'dd/mm/yyyy',this);\" />\n");
+  echo("            <br /><br />Hora: <input class=\"input\" type=\"text\" size=\"7\" maxlength=\"5\" value=\"".UnixTime2Hora($data)."\" id=\"hora_disponibilizacao\" name=\"hora_disponibilizacao\" />\n");
+  echo("          </div><br />\n");
+  /* ? - Limite de entrega: */
+  echo("          Limite de entrega: <br /><br />");
+  echo("          <div>\n");
+  echo("            Data: <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"limite_entrega\" name=\"limite_entrega\" />\n");
+  echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('limite_entrega'),'dd/mm/yyyy',this);\" />\n");
+  echo("            <br /><br />Hora: <input class=\"input\" type=\"text\" size=\"7\" maxlength=\"5\" id=\"hora_limite_entrega\" name=\"hora_limite_entrega\" />\n");
+  echo("          </div><br /><br />\n");
+  /* 18 - Ok (gen) */
+  echo("            <input type=\"button\" class=\"input\" onClick=\"AplicarExercicio();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  /* 2 - Cancelar (gen) */
+  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_aplicar);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   echo("        </div>\n");
   echo("      </div>\n");
   echo("    </div>\n\n");

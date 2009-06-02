@@ -51,11 +51,13 @@
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->registerFunction("AlteraStatusExercicioDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
+  $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
   $cod_ferramenta=24;
   $visualizar = $_GET['visualizar'];
+  $data_atual = time();
 
   include("../topo_tela.php");
   
@@ -137,14 +139,46 @@
     echo("      document.getElementById(\"nome\").focus();\n");
     echo("    }\n");
     
-    echo("    function VerificaCheck(){\n");
+    echo("    function AtualizaCampos(id,data,dt_disp,dt_entrega,situacao)\n");
+    echo("    {\n");
+    echo("      document.getElementById('data_'+id).innerHTML = data;\n");
+    echo("      document.getElementById('disp_'+id).innerHTML = dt_disp;\n");
+    echo("      document.getElementById('entrega_'+id).innerHTML = dt_entrega;\n");
+    echo("      document.getElementById('situacao_'+id+'_A').innerHTML = situacao;\n");
+    echo("      document.getElementById('situacao_'+id+'_A').id = 'situacao_'+id+'_C';\n");
+    echo("    }\n");
+    
+    echo("    function CancelarAplicacao()\n");
+    echo("    {\n");
     echo("      var i;\n");
-    echo("      var j=0;\n");
+    echo("      var getNumber;\n");
     echo("      var cod_itens=document.getElementsByName('chkExercicio');\n");
     echo("      var Cabecalho = document.getElementById('checkMenu');\n");
     echo("      for (i=0; i < cod_itens.length; i++){\n");
     echo("        if (cod_itens[i].checked){\n");
+    echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
+    echo("          xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",getNumber[1]);\n");
+    echo("          AtualizaCampos(getNumber[1],'".UnixTime2Data(time())."','-','-','Em criacao');\n");
+    echo("        }\n");
+    echo("      }\n");
+    // ?? - Em criacao
+    echo("      mostraFeedback('Aplicacao cancelada.',true);\n");
+    echo("    }\n");
+    
+    echo("    function VerificaCheck(){\n");
+    echo("      var i;\n");
+    echo("      var j = 0;\n");
+    echo("      var getNumber;");
+    echo("      var cod_itens=document.getElementsByName('chkExercicio');\n");
+    echo("      var Cabecalho = document.getElementById('checkMenu');\n");
+    echo("      var flag = 1;\n");
+    echo("      for (i=0; i < cod_itens.length; i++){\n");
+    echo("        if (cod_itens[i].checked){\n");
     echo("          j++;\n");
+    echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
+    echo("          if(document.getElementById('situacao_'+getNumber[1]+'_C')){\n");
+    echo("            flag = 0;\n");
+    echo("          }\n");
     echo("        }\n");
     echo("      }\n");
     echo("      if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
@@ -152,9 +186,21 @@
     echo("      if(j > 0){\n");
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
     echo("        document.getElementById('mExcluir_Selec').onclick=function(){ TratarSelecionados('L'); };\n");
+    echo("        if(flag)\n");
+    echo("        {\n");
+    echo("          document.getElementById('mCancelarAplic_Selec').className=\"menuUp02\";\n");
+    echo("          document.getElementById('mCancelarAplic_Selec').onclick=function(){ CancelarAplicacao(); };\n");
+    echo("        }\n");
+    echo("        else\n");
+    echo("        {\n");
+    echo("          document.getElementById('mCancelarAplic_Selec').className=\"menuUp\";\n");
+    echo("          document.getElementById('mCancelarAplic_Selec').onclick=function(){ };\n");
+    echo("        }\n");
     echo("      }else{\n");
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
     echo("        document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+    echo("        document.getElementById('mCancelarAplic_Selec').className=\"menuUp\";\n");
+    echo("        document.getElementById('mCancelarAplic_Selec').onclick=function(){ };\n");
     echo("      }\n");
     echo("    }\n\n");
   }
@@ -394,14 +440,14 @@
       	if($linha_item['situacao'] == 'A')
         {
         	$dados_aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
-        	$disponibilizacao = $dados_aplicado['dt_disponibilizacao'];
-        	$entrega = $dados_aplicado['dt_limite_submissao'];
+        	$disponibilizacao = UnixTime2DataHora($dados_aplicado['dt_disponibilizacao']);
+        	$entrega = UnixTime2DataHora($dados_aplicado['dt_limite_submissao']);
         }
         
       	$data = "<span id=\"data_".$linha_item['cod_exercicio']."\">".UnixTime2Data($linha_item['data'])."</span>";
         $titulo = $linha_item['titulo'];
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-        $situacao = RetornaSituacaoExercicio($linha_item['situacao']);
+        $situacao = RetornaSituacaoExercicio($linha_item['situacao'],$data_atual,$dados_aplicado['dt_disponibilizacao']);
         
         /* ?? - Compartilhado com Formadores */
         if($linha_item['tipo_compartilhamento'] == "F")
@@ -413,16 +459,16 @@
         if($cod_usuario == $linha_item['cod_usuario'])
           $compartilhamento = "<span id=\"comp_".$linha_item['cod_exercicio']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_exercicio']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 
-        echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
+        echo("                  <tr id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
         echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkExercicio\" id=\"itm_".$linha_item['cod_exercicio']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_exercicio']."\" /></td>\n");
-        echo("                    <td align=left>".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
-        echo("                    <td>".$data."</td>\n");
+        echo("                    <td align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
+        echo("                    <td id=\"data_".$linha_item['cod_exercicio']."\">".$data."</td>\n");
         if($visualizar == "E")
         {
-          echo("                    <td>".$disponibilizacao."</td>\n");
-          echo("                    <td>".$entrega."</td>\n");
+          echo("                    <td id=\"disp_".$linha_item['cod_exercicio']."\">".$disponibilizacao."</td>\n");
+          echo("                    <td id=\"entrega_".$linha_item['cod_exercicio']."\">".$entrega."</td>\n");
           echo("                    <td>".$compartilhamento."</td>\n");
-          echo("                    <td>".$situacao."</td>\n");
+          echo("                    <td id=\"situacao_".$linha_item['cod_exercicio']."_".$linha_item['situacao']."\">".$situacao."</td>\n");
         }
         echo("                  </tr>\n");
       }
@@ -440,17 +486,18 @@
 	if($visualizar == "E")
 	{
 	  echo("                <ul>\n");
-      /* ? - Apagar selecionadas */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar Selecionadas</span></li>\n");
+      /* ? - Apagar selecionados */
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar selecionados</span></li>\n");
+      echo("                  <li id=\"mCancelarAplic_Selec\" class=\"menuUp\"><span id=\"cancelarAplicSelec\">Cancelar aplicacao dos selecionados</span></li>\n");
       echo("                </ul>\n");
 	}
 	else if($visualizar == "L")
 	{
 	  echo("                <ul>\n");
-      /* ? - Apagar selecionadas */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar Selecionadas</span></li>\n");
-      /* ? - Recuperar selecionadas */
-      echo(" 					<li id=\"mRecup_Selec\" class=\"menuUp\"><span id=\"recuperarSelec\">Recuperar Selecionadas</span></li>\n");
+      /* ? - Apagar selecionados */
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar selecionados</span></li>\n");
+      /* ? - Recuperar selecionados */
+      echo(" 			      <li id=\"mRecup_Selec\" class=\"menuUp\"><span id=\"recuperarSelec\">Recuperar selecionados</span></li>\n");
       echo("                </ul>\n");
 	}
 	

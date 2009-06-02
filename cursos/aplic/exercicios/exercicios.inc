@@ -66,6 +66,10 @@
   - 'B' - Alternativa apagada
   - 'C' - Questao criada
 
+- Situacao de um Exercicio:
+
+- C - em criação
+- A - aplicado
 
 
 ************************************************************************/
@@ -100,8 +104,6 @@ function RetornaExercicios ($sock)
                     []['dt_disponibilizacao'] - data em que o exercicio foi disponibilizado
                     []['dt_limite_submissao'] - data limite em que o exercicio pode ser submetido
                     []['tp_aplicacao'] - tipo de aplicacao
-					[]['tp_correcao'] - tipo da correcao
-					[]['tp_gabarito'] - tipo do gabarito
 					[]['disp_gabarito'] - indica se havera gabarito disponivel
 					[]['avaliacao'] - indica se o exercicio sera avaliado
 */
@@ -109,7 +111,7 @@ function RetornaDadosExercicioAplicado($sock,$cod_exercicio)
 {
   $consulta="select * from Exercicios_aplicado where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res=Enviar($sock, $consulta);
-  $lista=RetornaArrayLinhas($res);
+  $lista=RetornaLinha($res);
   return($lista);
 }
 
@@ -154,7 +156,7 @@ function RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_
   if (EFormadorComVisaoDeAluno($sock, $cod_curso, $cod_usuario))
     $regra="and ER.compartilhada='T'";
     
-  $consulta="select ER.cod_resolucao as cod_resolucao,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
+  $consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
              from Exercicios_resolucao ER 
              inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
              where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio)." ".$regra;
@@ -185,7 +187,7 @@ function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_gr
   if (EFormadorComVisaoDeAluno($sock, $cod_curso, $cod_usuario))
     $regra="and ER.compartilhada='T'";
 
-  $consulta="select ER.cod_resolucao as cod_resolucao,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
+  $consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
              from Exercicios_resolucao ER 
              inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
              where ER.cod_grupo=".VerificaNumeroQuery($cod_grupo_exercicio)." ".$regra." ";
@@ -258,17 +260,21 @@ function NomeGrupo($sock, $cod_grupo)
 }
 
 /* *********************************************************************
-   RetornaSituacaoExercicio - Retorna array com os exercicios da lixeira (L)
-   Entrada: $sock - BASE DO CURSO
-   Saida: array com []['cod_exercicio'] - chave primaria ou codigo do exercicio
-                    []['titulo'] - titulo do exercicio
-                    []['data'] - data em que o exercicio foi criado
+   RetornaSituacaoExercicio - Retorna string dizendo a situacao do exercicio
+   Entrada: $situacao - situacao do exercicio
+            $data - data atual
+            $data_disp - data em que foi/sera disponibilizado
+   Saida: string dizendo a situacao do exercicio
 */
-function RetornaSituacaoExercicio($situacao)
+function RetornaSituacaoExercicio($situacao,$data,$data_disp)
 {
   switch($situacao)
   {
-  	case 'A': return "Disponibilizado";
+  	case 'A': if($data >= $data_disp)
+  	            return "Disponibilizado";
+  	          else 
+  	            return "Agendado";
+  	          break;
   	case 'C': return "Em cricao";
   }
 }
@@ -441,10 +447,11 @@ function RetornaValorQuestao($sock,$cod_exercicio,$cod_questao)
                 ['titulo'] - titulo do exercicio
                 ['texto'] - texto do exercicio
                 ['tipo_compartilhamento'] - compartilhamento da questao
+                ['situacao'] - situacao do exercicio
 */
 function RetornaExercicio($sock,$cod_exercicio)
 {
-  $query="select cod_exercicio,cod_usuario,titulo,texto,tipo_compartilhamento from Exercicios_modelo where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $query="select cod_exercicio,cod_usuario,titulo,texto,tipo_compartilhamento,situacao from Exercicios_modelo where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   return $linha;
@@ -512,6 +519,20 @@ function RetornaGabaritoQuestaoDiss($sock, $cod_questao, $cod_alternativa)
   $res=Enviar($sock, $consulta);
   $linha=RetornaLinha($res);
   return($linha['gabarito']);
+}
+
+/* *********************************************************************
+   RetornaCodAvaliacao - Retorna o codigo da avaliacao do exercicio aplicado
+   Entrada: $sock - BASE DO CURSO
+            $cod_exercicio - codigo do exercicio
+   Saida: gabarito da alternativa
+*/
+function RetornaCodAvaliacao($sock, $cod_exercicio)
+{
+  $consulta="select avaliacao from Exercicios_aplicado where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock, $consulta);
+  $linha=RetornaLinha($res);
+  return($linha['avaliacao']);
 }
 
 /* *********************************************************************
@@ -660,6 +681,160 @@ function RetornaNumExerciciosNaoCorrigidos($sock,$cod_usuario,$tela_formador,$ag
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return $lista;
+}
+
+/***********************************************************************
+   RetornaCodGrupoUsuario - Retorna o codigo do grupo o qual o usuario pertence
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - código do usuário
+   Saida: código do grupo o qual pertence o usuário         
+*/
+function RetornaCodGrupoUsuario($sock,$cod_usuario)
+{
+  $data = time();
+  $consulta="select cod_grupo from Grupos_usuario where cod_usuario = ".$cod_usuario;
+  $res=Enviar($sock, $consulta);
+  $linha=RetornaLinha($res);
+  return $linha['cod_grupo'];
+}
+
+/***********************************************************************
+   RetornaExerciciosDisponiveis - Retorna os exercicios que foram disponibilizados
+   Entrada: $sock - BASE DO CURSO
+   Saida: Saida: array ['cod_topico'] - codigo do topico
+                       ['topico'] - nome do topico            
+*/
+function RetornaExerciciosDisponiveis($sock)
+{
+  $data = time();
+  $consulta="select cod_exercicio,tp_aplicacao from Exercicios_aplicado where dt_disponibilizacao <= ".$data." and dt_limite_submissao > ".$data;
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return $lista;
+}
+
+/***********************************************************************
+   InsereTuplaResolucao - Insere uma nova tupla na tabela Exercicios_resolucao 
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - código do usuario
+            $cod_exercicio - código do exercicio
+            $tp_aplicacao - 'I' ou 'G', indicando se individual ou em grupo
+   Saida:           
+*/
+function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
+{
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
+
+    /*Aplicacao Individual*/
+    if ($tp_aplicacao == 'I')
+    {
+      $consulta = "insert into Exercicios_resolucao (cod_exercicio,cod_usuario,nota,submetida,corrigida,compartilhada,status) values ";
+      $consulta .= "(".$cod_exercicio.",".$cod_usuario.",0,'N','N','F','A')";
+      $res=Enviar($sock, $consulta);
+      
+      $cod_resolucao = mysql_insert_id();
+        
+      if($cod_avaliacao > 0)
+      {
+        $cod_nota = RetornaProximoCodigo($sock, 'Avaliacao_notas');
+        $consulta =
+                    "insert into Avaliacao_notas ("
+                    ."cod_nota, cod_aluno, cod_grupo, cod_avaliacao, cod_formador, "
+                    ."comentario, nota, status, data, tipo_compartilhamento, "
+                    ."data_alteracao)"
+                    ." values "
+                    ."(".$cod_nota.", ".$cod_usuario.",'',"
+                    ."".$cod_avaliacao.",-2,"
+                    ."'', '0', 'A', ".time().",'F',".time().")"; 
+        $res = Enviar($sock, $consulta);
+      }
+    }
+    else /*Aplicacao em grupo*/
+    {
+      $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
+      
+      if($cod_grupo != null)
+      {
+        $consulta = "insert into Exercicios_resolucao (cod_resolucao,cod_modelo,cod_grupo,nota,submetida,corrigida,compartilhada,status) values ";
+        $consulta .= "(".$cod_exercicio.",".$cod_grupo.",0,'N','N','F','A')";
+        $res = Enviar($sock, $consulta);
+      
+        $cod_resolucao = mysql_insert_id();
+
+        if($cod_avaliacao > 0)
+        {
+          $consulta = "select cod_usuario from Grupos_usuario where cod_grupo = ".$cod_grupo;
+          $res = Enviar($sock, $consulta);
+          $usuarios_grupo = RetornaArrayLinhas($res);
+          foreach($usuarios_grupo as $cod => $usuario_grupo)
+          {
+            $cod_nota = RetornaProximoCodigo($sock, 'Avaliacao_notas');
+            $consulta =
+                        "insert into Avaliacao_notas (cod_nota, cod_aluno, cod_grupo, cod_avaliacao,"
+                        ."cod_formador, comentario, nota, status, data,"
+                        ." tipo_compartilhamento,data_alteracao)"
+                        ." values "
+                        ."(".$cod_nota.",".$usuario_grupo['cod_usuario'].",".$cod_grupo.","
+                        ."".$cod_avaliacao.",-2,'','0'"
+                        .", 'A', ".time().",'F',".time().")";
+            $res = Enviar($sock, $consulta);
+          }
+        }
+      }
+    }
+
+    if (!$res)
+      return false;
+    else
+      return $cod_resolucao;
+}
+
+/***********************************************************************
+   FoiAplicado - Verifica se o exercicio ja possui uma resolucao, ou seja, foi aplicado ao usuario (grupo) 
+   Entrada: $sock - BASE DO CURSO
+            $cod_usuario - código do usuario
+            $cod_exercicio - código do exercicio
+            $tp_aplicacao - 'I' ou 'G', indicando se individual ou em grupo
+   Saida: true caso o exercicio tenha sido aplicado, false caso contrario           
+*/
+function FoiAplicado($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
+{
+  if($tp_aplicacao == "I")
+  {
+    $consulta = "select * from Exercicios_resolucao where cod_exercicio = ".$cod_exercicio." and cod_usuario = ".$cod_usuario;
+    $res = Enviar($sock, $consulta);
+  }
+  else
+  {
+    $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
+    $consulta = "select * from Exercicios_resolucao where cod_exercicio = ".$cod_exercicio." and cod_grupo = ".$cod_grupo;
+    $res = Enviar($sock, $consulta);
+  }
+  
+  $linha = RetornaArrayLinhas($res);
+  
+  if($linha != null && count($linha) > 0)
+  	return true;
+  else
+    return false;
+}
+
+/***********************************************************************
+   AplicaExerciciosAoUsuario - 
+   Entrada: $sock - BASE DO CURSO
+   Saida: Saida: array ['cod_topico'] - codigo do topico
+                       ['topico'] - nome do topico            
+*/
+function AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario)
+{
+  $aplicados = RetornaExerciciosDisponiveis($sock);
+  
+  foreach($aplicados as $cod => $linha) 
+  {
+    if(!FoiAplicado($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao']))
+      /*Cria uma tupla na tabela Exercicios_resolucao*/
+      InsereTuplaResolucao($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao']);
+  }
 }
 
 /* *********************************************************************
@@ -1130,7 +1305,7 @@ function EditarTituloExercicioDinamic($cod_curso, $cod_exercicio, $novo_nome, $c
 
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
@@ -1417,7 +1592,6 @@ function AlteraStatusExercicioDinamic($cod_curso, $cod_exercicio, $status)
     return $objResponse->getXML();
 }
 
-
 /* *********************************************************************
    MudarCompartilhamentoDinamic - Muda o compartilhamento do item dado
    Entrada: $sock - BASE DO CURSO
@@ -1436,7 +1610,7 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
   $cod_usuario=$dadosForm['cod_usuario'];
   $texto = $dadosForm['texto'];
 
-   $sock=Conectar($cod_curso);
+  $sock=Conectar($cod_curso);
   if ($op == 'E')
   {
     $consulta="update Exercicios_modelo set tipo_compartilhamento='".$tipo_comp."', data=".time()." where cod_exercicio=".$cod_item;
@@ -1447,6 +1621,11 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
     $consulta="update Exercicios_questao set tipo_compartilhamento='".$tipo_comp."', data=".time()." where cod_questao=".$cod_item;
     $res=Enviar($sock, $consulta);
   }
+  else if($op == 'R')
+  {
+    $consulta="update Exercicios_resolucao set compartilhada='".$tipo_comp."' where cod_resolucao=".$cod_item;
+    $res=Enviar($sock, $consulta);
+  }
 
   Desconectar($sock);
 
@@ -1455,10 +1634,13 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
     $objResponse->addAssign("trExercicio_".$cod_item, "className", "novoitem");
   else if($op == 'Q')
   	$objResponse->addAssign("trQuestao_".$cod_item, "className", "novoitem");
+  else if($op == 'R')
+  	$objResponse->addAssign("trResolucao_".$cod_item, "className", "novoitem");
   $objResponse->addAssign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
   //addEvent não suporta o parametro 'event'
   $objResponse->addScript("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
-  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2Data(time()));
+  if($op != 'R')
+    $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2Data(time()));
   
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
@@ -1545,6 +1727,87 @@ function ExluirQuestaoDoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questa
     Enviar($sock,$query);
     Desconectar($sock);
     
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AplicaExercicioDinamic - Aplica o exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+		   $cod_usuario - codigo do usuario que aplicou o exercicio
+           $dt_disp - data da dispobilizacao do exercicio
+		   $hr_disp - hora a ser disponibilizado o exercicio
+           $dt_entrega - data limite para entrega
+           $hr_entrega - hora limite para entrega
+           $tp_aplicacao - tipo de aplicacao (individual ou em grupo)
+           $disp_gabarito - indica se o gabarito deve ser disponibilizado com a correcao
+           $avaliacao - indica se o exercicio sera associado a uma avaliacao
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,$hr_disp,$dt_entrega,$hr_entrega,$tp_aplicacao,$disp_gabarito,$avaliacao)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+    
+    $unixTimeDisp = DataHora2UnixTime($dt_disp." ".$hr_disp);
+    $unixTimeEntrega = DataHora2UnixTime($dt_entrega." ".$hr_entrega);
+    $cod_avaliacao = 0;
+    
+    $sock=Conectar($cod_curso);
+    
+    if($avaliacao == "S")
+    {
+      $data = time();
+      $valor = RetornaSomaValorQuestoes($sock,$cod_exercicio);
+      $cod_avaliacao = RetornaProximoCodigo($sock,'Avaliacao');
+      $query="insert into Avaliacao (cod_avaliacao, cod_atividade, cod_usuario, ferramenta, tipo, valor, status, data, data_inicio, data_termino, inicio_edicao) values (".$cod_avaliacao.", ".$cod_exercicio.", ".$cod_usuario.", 'E', '".$tp_aplicacao."', ".$valor.", 'F', ".$data.", '".$unixTimeDisp."', '".$unixTimeEntrega."', '0')";
+      $res=Enviar($sock, $query);
+    }
+ 
+    $query = "insert into Exercicios_aplicado (cod_exercicio,dt_disponibilizacao,dt_limite_submissao,tp_aplicacao,disp_gabarito,avaliacao)";
+    $query.= "values(".VerificaNumeroQuery($cod_exercicio).",".$unixTimeDisp.",".$unixTimeEntrega.",'".$tp_aplicacao."','".$disp_gabarito."','".$cod_avaliacao."')";
+    Enviar($sock,$query);
+    
+    $query = "update Exercicios_modelo set situacao = 'A' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
+    Enviar($sock,$query);
+    
+    Desconectar($sock);
+    
+    $objResponse->addScript("ExercicioAplicado('".$avaliacao."',".$cod_avaliacao.");");
+    
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  CancelaAplicacaoExercicioDinamic - Cancela aplicacao do exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+           $flag - indica se é um cancelamento definitivo ou apenas uma reaplicacao do exercicio
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function CancelaAplicacaoExercicioDinamic($cod_curso,$cod_exercicio,$flag)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+
+    $sock=Conectar($cod_curso);
+    
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
+    
+    $query = "delete from Exercicios_aplicado where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio);
+    Enviar($sock,$query);
+    
+    if($cod_avaliacao != 0)
+    {
+      $query = "delete from Avaliacao where cod_avaliacao = ".$cod_avaliacao;
+      Enviar($sock,$query);
+    }
+    
+    $query = "update Exercicios_modelo set situacao = 'C' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
+    Enviar($sock,$query);
+    
+    Desconectar($sock);
+    
+    $objResponse->addScript("AplicacaoCancelada(".$flag.");");
+
     return $objResponse->getXML();
 }
 

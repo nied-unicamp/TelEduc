@@ -43,6 +43,15 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
+  
+  require_once("../xajax_0.2.4/xajax.inc.php");
+
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
+  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
+  //Manda o xajax executar os pedidos acima.
+  $objAjax->processRequests();
 
   $cod_ferramenta=24;
   $visualizar = $_GET['visualizar'];
@@ -68,25 +77,27 @@
   $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
   // verificamos se a ferramenta de Avaliacoes está disponivel
   $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 22);
-  
+
   /*********************************************************/
   /* in�io - JavaScript */
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
   
-  echo("    var lay_agrupar;");
+  echo("    var js_cod_item;\n");
+  echo("    var js_comp = new Array();\n");
+  echo("    var cod_comp;");
   
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
-  echo("      lay_agrupar = getLayer('layer_agrupar');\n");
+  echo("      cod_comp = getLayer(\"comp\");\n");
   echo("      startList();\n");
   echo("    }\n\n");
   
   echo("    function EscondeLayers()\n");
   echo("    {\n");
-  echo("      hideLayer(lay_agrupar);\n");
+  echo("      hideLayer(cod_comp);\n");
   echo("    }\n");
 
   echo("    function MostraLayer(cod_layer, ajuste)\n");
@@ -113,9 +124,38 @@
   echo("        return(false);\n");
   echo("      }\n");
   
+  echo("      function AtualizaComp(js_tipo_comp)\n");
+  echo("      {\n");
+  echo("        if ((isNav) && (!isMinNS6)) {\n");
+  echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'),document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+  echo("        } else {\n");
+  echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'),document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+  echo("        }\n");
+  echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+  echo("        if (js_tipo_comp=='T') {\n");
+  echo("          tipo_comp[0].innerHTML=imagem;\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        }else if (js_tipo_comp=='F'){\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=imagem;\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        }else{\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=imagem;\n");
+  echo("        }\n"); 
+  echo("      }\n\n");
+  
   echo("  </script>\n\n");
   /* fim - JavaScript */
   /*********************************************************/
+  
+  $objAjax->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
   
@@ -203,8 +243,6 @@
 	echo("                    <td width=\"10%\">Situacao</td>\n");
 	echo("                  </tr>\n");
 	
-	
-    
     if(count($exercicios) > 0 && $exercicios != null)
     {
       foreach ($exercicios as $cod => $linha_item)
@@ -214,6 +252,8 @@
         else $varTmp="T";
       
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+        
+        $aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
         
         /* ?? - Compartilhado com Formadores */
         if($linha_item['compartilhada'] == "F")
@@ -225,16 +265,12 @@
         else
           $compartilhamento = "Nao compartilhado";
           
-        // se a ferramenta Avaliacoes estiver ativa, descobrimos quais avaliacoes estao presas a cada item
-        if ($ferramenta_avaliacao) $lista = RetornaAssociacaoItemAvaliacao($sock,$linha['cod_item']);
-        // senao, passamos uma variavel fake para enganar o codigo abaixo
-        else $lista = NULL;
-        
-        $foiavaliado=ItemFoiAvaliado($sock,$lista['cod_avaliacao'],$linha_item['cod_resolucao']);
- 
+        if($cod_usuario == $linha_item['cod_usuario'] || RetornaCodGrupoUsuario($sock,$cod_usuario) == $linha_item['cod_grupo'])
+          $compartilhamento = "<span id=\"comp_".$linha_item['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$linha_item['cod_resolucao'].";AtualizaComp('".$linha_item['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+          
         $num_comentarios=RetornaNumComentariosExercicio($sock,$cod_usuario,$linha_item['cod_resolucao']);
         
-         $comentarios = "";
+        $comentarios = "";
         if ($num_comentarios['num_comentarios_alunos']>0)
           $comentarios .= "<span class=\"cAluno\">(c)</span>";
         if ($num_comentarios['num_comentarios_formadores']>0)
@@ -243,10 +279,21 @@
           $comentarios .= "<span class=\"cMim\">(c)</span>";
         if ($num_comentarios['data_comentarios']>$data_acesso)
           $comentarios .= "<span class=\"cNovo\">*</span>";
-        
-        echo("                  <tr id=\"tr_".$linha_item['cod_resolucao']."\">\n");
+          
+        if($aplicado['avaliacao'] > 0)
+          $avaliacao = "Sim";
+        else
+          $avaliacao = "Nao";  
+          
+        $situacao = "";
+        if($linha_item['submetida'] == 'S')
+          $situacao .= "<span class=\"\">(e)</span>";
+        if($linha_item['corrigida'] == 'S')
+          $situacao .= "<span class=\"avaliada\">(a)</span>";
+          
+        echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
         echo("                    <td align=\"left\">".$icone."<a href=\"\">".$linha_item['titulo']."</a></td>\n");
-        echo("                    <td>".UnixTime2Data($linha_item['dt_submissao'])."</td>\n");
+        echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
         echo("                    <td>".$compartilhamento."</td>\n");
         echo("                    <td>".$comentarios."</td>\n");
         echo("                    <td>".$avaliacao."</td>\n");
@@ -267,16 +314,17 @@
 	/* ?? - Comentario de Aluno */
     /* ?? - Comentario de Formador */
     /* ?? - Comentario postados por mim */
-    /* ?? - Item Avaliado */
     echo("                <span class=\"cAluno\">(c)</span> Comentario de Aluno - \n");
     echo("                <span class=\"cForm\">(c)</span> Comentario de Formador - \n");
 
     if(!EVisitante($sock,$cod_curso,$cod_usuario))
       echo("                <span class=\"cMim\">(c)</span> Comentario postados por mim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 
-    if ($ferramenta_avaliacao)
-      echo("                <span class=\"avaliado\">(a)</span> Item Avaliado\n");
-	
+    /* ?? - Corrigido */
+    echo("                <span class=\"avaliado\">(a)</span> Corrigido - \n");
+    /* ?? - Entregue */
+    echo("                <span class=\"entregue\">(e)</span> Entregue\n");
+    
     echo("              </td>\n");
   	echo("            </tr>\n");
   	echo("          </table>\n");
@@ -309,7 +357,38 @@
   
   if($tela_formador)
   {
-  
+    /* Mudar Compartilhamento */
+  	echo("    <div class=popup id=\"comp\">\n");
+  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("      <div class=int_popup>\n");
+  	echo("        <script type=\"text/javaScript\">\n");
+  	echo("        </script>\n");
+  	echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  	echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  	echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  	echo("          <input type=hidden name=cod_item value=\"\" />\n");
+  	echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
+  	echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
+  	echo("          <ul class=ulPopup>\n");
+  	echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
+  	echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
+  	/* ?? - Compartilhado com formadores */
+  	echo("              <span>Totalmente compartilhado</span>\n");
+  	echo("            </li>\n");
+  	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
+  	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  	/* ?? - Compartilhado com formadores */
+  	echo("              <span>Compartilhado com formadores</span>\n");
+  	echo("            </li>\n");
+  	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
+  	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  	/* ?? - Nao Compartilhado */
+  	echo("              <span>Nao Compartilhado</span>\n");
+  	echo("            </li>\n");
+ 	echo("          </ul>\n");    
+  	echo("        </form>\n");
+  	echo("      </div>\n");
+  	echo("    </div>\n");
   }
 
   echo("  </body>\n");

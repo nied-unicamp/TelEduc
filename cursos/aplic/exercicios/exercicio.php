@@ -69,6 +69,8 @@
 
   include("../topo_tela.php");
   
+  // aplica ao usuario exercicios aplicados pelos formadores e que ainda nao constam para o mesmo.
+  AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
   
   $titulos = RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
   $nsubmetidas = RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
