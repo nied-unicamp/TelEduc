@@ -156,7 +156,7 @@ $sock = Conectar($cod_curso);
       }
       if ($arquivo_entrada!="")
       {
-        $conteudo = "<iframe id=\"text_".$linha_item['cod_item']."\" name=\"iframe_ArqEntrada\" src=\"".$arquivo_entrada."\" frameBorder=\"0\" width=\"100%\" height=\"400\" scrolling=\"Auto\"></iframe>";
+        $conteudo = "<iframe id=\"text_".$linha_item['cod_item']."\" name=\"iframe_ArqEntrada\" src=\"".$arquivo_entrada."\" frameBorder=\"0\" scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" vspace=\"0\" hspace=\"0\" style=\"overflow:visible; width:100%; display:none\"></iframe>";
       }
       else
       {
@@ -175,7 +175,11 @@ $sock = Conectar($cod_curso);
       echo("                  </tr>\n");
       echo("                  <tr>\n");
       echo("                    <td align=left>\n");
+      if ($arquivo_entrada!=""){
+      		echo($conteudo);
+      } else {
       echo("                      <div class=\"divRichText\">".$conteudo."</div>\n");
+      }
       echo("                    </td>\n");
       echo("                  </tr>\n");
     }
