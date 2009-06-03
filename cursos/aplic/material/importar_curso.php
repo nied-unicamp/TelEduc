@@ -98,14 +98,6 @@ if ($tipo_curso == 'E') {
 }
 
 // ******************************************************
-
-// Destrói a chave de login do usuário
-unset ($login_import_s);
-session_unregister("login_import_s");
-// Destrói o contador de tentativas de login do usuário.
-unset ($login_import_count_s);
-session_unregister("login_import_count_s");
-
 Desconectar($sock);
 
 $sock = Conectar("");
@@ -202,47 +194,6 @@ echo ("        }\n");
 echo ("        return(false);\n");
 echo ("      }\n");
 
-echo ("      function selecionouCurso(){\n");
-echo ("        if ((document.getElementById('cod_curso_compart').selectedIndex != -1) ||
-                (document.getElementById('cod_curso_todos').selectedIndex != -1)){\n");
-echo ("          if (document.getElementById('cod_curso_todos').selectedIndex != -1){\n");
-echo ("            login_imp = document.getElementById('login_import').value;\n");
-echo ("            while (login_imp.search(\" \") != -1)\n");
-echo ("              login_imp = login_imp.replace(/ /, \"\");\n\n");
-
-echo ("            senha_imp = document.getElementById('senha_import').value;\n");
-echo ("            while (senha_imp.search(\" \") != -1)\n");
-echo ("              senha_imp = senha_imp.replace(/ /, \"\");\n\n");
-
-echo ("            if ((login_imp == \"\") || (senha_imp == \"\")){\n");
-// 52(biblioteca) - Login ou senha inv�lidos
-echo ("              alert(\"" . RetornaFraseDaLista($lista_frases_biblioteca, 52) . "\");\n");
-echo ("              if (login_imp == \"\")\n");
-echo ("                document.getElementById('login_import').focus();\n");
-echo ("              else if (senha_imp == \"\")\n");
-echo ("                document.getElementById('senha_import').focus();\n");
-echo ("              return(false);\n");
-echo ("            }\n");
-echo ("            document.getElementById('senha_import').value =");
-echo (" Javacrypt.displayPassword(senha_imp, 'AA');\n");
-echo ("          }\n");
-
-echo ("        return(true);}\n");
-echo ("        else\n");
-// 33 - Selecione um curso em uma das listas.
-echo ("          alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 33) . "');return(false);\n");
-echo ("      }\n\n");
-
-echo ("      function DesabilitaLoginSenha()\n");
-echo ("      {\n");
-echo ("        document.getElementById('tr_senha').style.display = \"none\";\n");
-echo ("      }\n\n");
-
-echo ("      function HabilitaLoginSenha()\n");
-echo ("      {\n");
-echo ("        document.getElementById('tr_senha').style.display = \"\";\n");
-echo ("      }\n\n");
-
 echo ("      function extracheck(obj)\n");
 echo ("      {\n");
 echo ("        return !obj.disabled;\n");
@@ -280,7 +231,6 @@ echo ("      function Iniciar()\n");
 echo ("      {\n");
 echo ("        startList();\n");
 echo ("      }\n\n");
-
 echo ("    </script>\n");
 
 include ("../menu_principal.php");
@@ -435,14 +385,13 @@ if ('E' == $tipo_curso) {
 	echo ("                    </form>");
 }
 
-echo ("                    <form name=frmImpMaterial method=get action=\"importar_curso2.php\" onsubmit=\"return(EnviaReq())\">\n");
+echo ("                    <form name=frmImpMaterial method=get action=\"acoes.php\">\n");
 echo ("                      <td align=\"center\">\n");
 
 echo ("                        <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
-echo ("                        <input type=\"hidden\" name=\"cod_usuario\" value='" . $cod_usuario . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
-
+echo ("                        <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
 echo ("                        <input type=\"hidden\" name=\"tipo_curso\" value='" . $tipo_curso . "' />\n");
 
 if ('E' == $tipo_curso) {
@@ -470,7 +419,7 @@ echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td align=\"center\">\n");
 // Monta select com os cursos com material compatilhado
-echo ("                        <select class=\"input\" name=\"cod_curso_compart\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onfocus='DesabilitaLoginSenha();desmarcaSelect(\"cod_curso_todos\");' ondblclick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_import\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onfocus='desmarcaSelect(\"cod_curso_todos\");' ondblclick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
@@ -485,7 +434,7 @@ $todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $periodo_
 //  $cursos_menos_compart =  Diferenca_Entre_Vetores ($Todos_Cursos, $Todos_Cursos_Compart);
 Desconectar($sock);
 // Monta select com os demais cursos (todos - compartilhados)
-echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='HabilitaLoginSenha();desmarcaSelect(\"cod_curso_compart\");' onDblClick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_import\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_compart\");' onDblClick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
 
 if (count($todos_cursos) > 0) {
 	foreach ($todos_cursos as $idx => $dados) {
@@ -500,26 +449,7 @@ echo ("                      <td>\n");
 echo ("                        <input class=\"input\" type=\"submit\"  value=\"" . RetornaFraseDaLista($lista_frases_geral, 75) . "\" />\n");
 echo ("                      </td>\n");
 echo ("                    </tr>\n");
-echo ("                    <tr id=\"tr_senha\" style=\"display:none;\">\n");
-echo ("                      <td colspan=\"2\">&nbsp;</td>\n");
-echo ("                      <td colspan=\"2\">\n");
-echo ("                        <table>\n");
-echo ("                          <tr>\n");
-// 27(biblioteca) - Login:
-echo ("                            <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 27) . "</td>\n");
-echo ("                            <td style=\"border:0pt;\"><input class=\"input\" type=\"text\" onKeyDown=\"return extracheck(this);\" name=\"login_import\" id=\"login_import\" value=\"\" /></td>\n");
-echo ("                            <td style=\"border:0pt;\" rowspan=\"2\" valign=\"bottom\">\n");
-echo ("                            </td>\n");
-echo ("                          </tr>\n");
-echo ("                          <tr>\n");
-// 48(biblioteca) - Senha:
-echo ("                            <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 48) . "</td>\n");
-echo ("                            <td style=\"border:0pt;\"><input class=\"input\" type=\"password\" onkeydown=\"return extracheck(this);\" name=\"senha_import\" id=\"senha_import\" value=\"\" /></td>\n");
-echo ("                          </tr>\n");
-echo ("                        </table>\n");
-echo ("                      </td>\n");
-echo ("                    </form>\n");
-echo ("                  </tr>\n");
+
 echo ("                </table>\n");
 echo ("              </td>\n");
 echo ("            </tr>\n");
