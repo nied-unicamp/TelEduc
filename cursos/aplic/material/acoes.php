@@ -4,7 +4,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/portfolio/acoes.php
+    Arquivo : cursos/aplic/material/acoes.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
@@ -44,7 +44,7 @@
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
-
+ include($bibliotecas."importar.inc");
   include("material.inc");
   
   $cod_ferramenta = $cod_ferramenta_m; //cod_ferramenta_m é uma variável de sessão que guarda a ferramenta atualmente utilizada
@@ -218,6 +218,9 @@
 
     $cod_item=IniciaCriacao($sock, $tabela, $cod_topico_raiz, $cod_usuario, $cod_curso, $dirname, $diretorio_temp, $novo_nome);
 	$atualizacao = 'true';
+	  Desconectar($sock);
+  header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=".$atualizacao);
+  exit;
   }else if ($acao=="descompactar"){
 
     $dir_tmp=$dir_item_temp['diretorio'];
@@ -239,8 +242,54 @@
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
 
   }
+  else if ($acao == "validarImportacao"){
+ 	$sock = MudarDB($sock, "");
+ 	
+  	$tipo_curso_origem = $cod_curso_import[0]; // B = Base, E = Extra�do
+  	$cod_curso_origem = $cod_curso_import[2];
 
-  Desconectar($sock);
-  header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=".$atualizacao);
-  exit;
+  	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
+  	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
+  	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
+  	
+  	$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+  	
+  	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+  		$_SESSION['flag_curso_compartilhado'] = TRUE;
+  		header("Location:importar_perguntas.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_assunto_pai=1");
+  	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
+  		$_SESSION['flag_curso_compartilhado'] = FALSE;
+  		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem);
+  	} else {
+  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+  	}
+  	
+  }else if ($acao == "importarItem"){
+  	
+  	$cod_curso_destino = $cod_curso;
+  	$cod_topico_destino = $_SESSION['cod_topico_destino'];
+  	$cod_usuario;
+  	$cod_curso_origem = $_SESSION['cod_curso_origem'];
+  	$flag_curso_extraido = $_SESSION['flag_curso_extraido'];
+  	$flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
+  	$array_topicos_origem = $cod_topicos_import;
+  	$array_itens_origem = $cod_itens_import;
+  	$dirname = $dir;
+  	$nome_tabela = $tabela;
+  	$sock=Conectar("");
+  	if ($curso_extraido)
+		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Montagem');
+	else
+		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Arquivos');
+  	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
+	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+
+	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
+                      $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
+                      $array_topicos_origem, $array_itens_origem, $nome_tabela,
+                      $dirname, $diretorio_arquivos_destino, $diretorio_arquivos_origem);
+                      
+    header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_topico_destino."&acao=".$acao."&atualizacao=true");
+  }
+
 ?>
