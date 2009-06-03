@@ -42,58 +42,9 @@
   ========================================================== */
 $bibliotecas = "../bibliotecas/";
 include ($bibliotecas . "geral.inc");
-include ($bibliotecas . "importar.inc");
 include ("material.inc");
+
 include ("../topo_tela.php");
-
-// **************** VARI�VEIS DE ENTRADA ****************
-// Recebe de 'importar_curso2.php'
-//    c�digo do curso
-$cod_curso = $_GET['cod_curso'];
-//    c�digo da categoria que estava sendo listada.
-$cod_categoria = $_GET['cod_categoria'];
-//    c�digo do curso do qual itens ser�o importados
-$cod_curso_import = $_GET['cod_curso_import'];
-//    c�digo da ferramenta cujos itens ser�o importados
-$cod_ferramenta = $_GET['cod_ferramenta'];
-//    tipo do curso: A(ndamento), I(nscri��es abertas), L(atentes),
-//  E(ncerrados)
-$tipo_curso = $_GET['tipo_curso'];
-if ('E' == $tipo_curso) {
-	//  per�odo especificado para listar os cursos
-	//  encerrados.
-	$data_inicio = $_GET['data_inicio'];
-	$data_fim = $_GET['data_fim'];
-}
-//    booleano, se o curso, cujos itens ser�o importados, foi
-//  escolhido na lista de cursos compartilhados.
-$curso_compartilhado = $_GET['curso_compartilhado'];
-//    booleando, se o curso, cujos itens ser�o importados, � um
-//  curso extra�do.
-$curso_extraido = $_GET['curso_extraido'];
-
-if (!isset ($_GET['cod_topico_raiz']))
-	$cod_topico_raiz = 1;
-else
-	$cod_topico_raiz = $_GET['cod_topico_raiz'];
-
-if (!isset ($_GET['cod_topico_raiz_import']))
-	$cod_topico_raiz_import = 1;
-else
-	$cod_topico_raiz_import = $_GET['cod_topico_raiz_import'];
-// ******************************************************
-
-session_register("login_import_s");
-if (isset ($login_import))
-	$login_import_s = $login_import;
-else
-	$login_import = $_SESSION['login_import_s'];
-
-Desconectar($sock);
-$sock = Conectar("");
-
-$lista_frases_biblioteca = RetornaListaDeFrases($sock, -2);
-
 Desconectar($sock);
 
 $sock = Conectar($cod_curso);
@@ -120,6 +71,8 @@ switch ($cod_ferramenta) {
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 1;
 
+ $sock = MudarDB($sock, $cod_curso_origem);
+    
 echo ("    <script type=\"text/javascript\" language=\"JavaScript\" defer>\n\n");
 
 echo ("      function Iniciar(){\n");
@@ -129,7 +82,7 @@ echo ("      }\n\n");
 echo ("      function ExibirItem(cod_item)\n");
 echo ("       {\n");
 echo ("         document.frmImportar.cod_item.value = cod_item;\n");
-echo ("         document.frmImportar.action = \"importar_ver.php\";");
+echo ("         document.frmImportar.action = \"importarItem.php\";");
 echo ("         document.frmImportar.submit();\n");
 echo ("       }\n\n");
 
@@ -163,7 +116,8 @@ echo ("       function Importar()\n");
 echo ("       {\n");
 echo ("         if(Validacheck())\n");
 echo ("         {\n");
-echo ("           document.frmImportar.action = \"importar_material2.php?cod_curso=" . $cod_curso . "&cod_ferramenta=" . $cod_ferramenta . "&cod_usuario=" . $cod_usuario . "\";\n");
+echo ("           document.frmImportar.action = 'acoes.php';\n");
+    echo("  	  document.frmImportar.acao.value = \"importarItem\";\n");
 echo ("           document.frmImportar.submit();\n");
 echo ("         }\n");
 echo ("       }\n\n");
@@ -208,16 +162,13 @@ echo ("       }\n");
 echo ("     </script>\n\n");
 
 include ("../menu_principal.php");
-
+$sock = MudarDB($sock, $cod_curso_origem);
 echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-
-if ($tela_formador != 1) {
-	echo ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
-	/* 73 - Acao exclusiva a formadores. */
-	echo ("    - " . RetornaFraseDaLista($lista_frases, 45) . "</h4>");
-
-	/*Voltar*/
-	echo ("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+// 1 - "Material"
+	$cabecalho = ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
+	/*107 - Importando "Material" */
+	$cabecalho .= (" - " . RetornaFraseDaLista($lista_frases, 107) . "</h4>\n");
+	echo ($cabecalho);
 
 	echo ("          <div id=\"mudarFonte\">\n");
 	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -225,177 +176,16 @@ if ($tela_formador != 1) {
 	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
 	echo ("          </div>\n");
 
-	echo ("        </td>\n");
-	echo ("      </tr>\n");
-	echo ("    </table>\n");
-	echo ("  </body>\n");
-	echo ("</html>\n");
-	Desconectar($sock);
-	exit;
-}
-
-// P�gina Principal
-// 1 - "Material"
-$cabecalho = ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
-/*107 - Importando "Material" */
-$cabecalho .= (" - " . RetornaFraseDaLista($lista_frases, 107) . "</h4>\n");
-echo ($cabecalho);
-
-if (!isset ($cod_curso_import)) {
-	echo ("          <br />\n");
-	echo ("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-	echo ("            <tr>\n");
-	echo ("              <td>\n");
-	// 23 - Voltar (geral)
-	echo ("                <ul class=\"btAuxTabs\">\n");
-	echo ("                  <li><a href='importar_curso.php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferramenta . "';\">" . RetornaFraseDaLista($lista_frases_geral, 23) . "</a></li>\n");
-	echo ("                </ul>\n");
-	echo ("              </td>\n");
-	echo ("            </tr>\n");
-	echo ("            <tr>\n");
-	echo ("              <td>\n");
-	echo ("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-	echo ("                  <tr>\n");
-	echo ("                    <td>\n");
-	/* 51(biblioteca): Erro ! Nenhum c�digo de curso para importa��o foi recebido ! */
-	echo ("                      " . RetornaFraseDaLista($lista_frases_biblioteca, 51) . "\n");
-	echo ("                    </td>\n");
-	echo ("                  </tr>\n");
-	echo ("                </table>\n");
-	echo ("              </td>\n");
-	echo ("            </tr>\n");
-	echo ("          </table>\n");
-	echo ("        </td>\n");
-	echo ("      </tr>\n");
-	include ("../tela2.php");
-	echo ("  </body>\n");
-	echo ("</html>\n");
-	exit ();
-}
-
-if ($curso_extraido)
-	$opt = TMPDB;
-else
-	$opt = "";
-
-// Autentica no curso PARA O QUAL ser�o importados os itens.
-$cod_usuario_global = VerificaAutenticacao($cod_curso);
-
-$sock = Conectar("");
-$cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
-
-if ((!$curso_compartilhado) && (false === ($cod_usuario_import = UsuarioEstaAutenticadoImportacao($cod_curso, $cod_usuario, $cod_curso_import, $opt)))) {
-
-	// Testar se � identicamente falso,
-	// pois 0 pode ser um valor v�lido para cod_usuario
-	echo ("          <script type=\"text/javascript\" language=\"JavaScript\" defer>\n\n");
-	echo ("            function ReLogar(){\n");
-	// 52(biblioteca) - Login ou senha inválidos
-	echo ("              alert(\"" . RetornaFraseDaLista($lista_frases_biblioteca, 52) . "\");\n");
-	echo ("              document.frmRedir.submit();\n");
-	echo ("            }\n\n");
-
-	echo ("          </script>\n\n");
-
-	echo ("          <form method=\"post\" name=\"frmRedir\" action=\"importar_curso.php\">\n");
-	echo ("            <input type=\"hidden\" name=\"cod_curso\" value=\"" . $cod_curso . "\" />\n");
-	echo ("            <input type=\"hidden\" name=\"cod_categoria\" value= \"" . $cod_categoria . "\" />\n");
-	echo ("            <input type=\"hidden\" name=\"cod_topico_raiz_import\" value= \"" . $cod_topico_raiz_import . "\" />\n");
-	echo ("            <input type=\"hidden\" name=\"cod_topico_raiz\" value= \"" . $cod_topico_raiz . "\" />\n");
-	echo ("            <input type=\"hidden\" name=\"cod_ferramenta\" value=\"" . $cod_ferramenta . "\" />\n");
-	echo ("          </form>\n");
-	echo ("          <script type=\"text/javascript\" language=\"JavaScript\">\n\n");
-	echo ("            ReLogar();\n");
-	echo ("          </script>\n\n");
-	echo ("        </td>\n");
-	echo ("      </tr>\n");
-	include ("../tela2.php");
-	echo ("  </body>\n");
-	echo ("</html>\n");
-	exit ();
-}
-
-$sock = Conectar("");
-
-// Marca data de �ltimo acesso ao curso tempor�rio. Esse recurso � importante
-// para elimina��o das bases tempor�rias, mediante compara��o dessa data adicionado
-// um per�odo de folga com a data em que o script para elimina��o estiver rodando.
-MarcarAcessoCursoExtraidoTemporario($sock, $cod_curso_import);
-
-if ($curso_extraido) {
-	$diretorio_arquivos = RetornaDiretorio($sock, 'Montagem');
-} else {
-	$diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
-}
-
-$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
-
-Desconectar($sock);
-
-// Alterna para a base de dados do curso
-$sock = Conectar($cod_curso);
-
-$data_acesso = PenultimoAcesso($sock, $cod_usuario, "");
-
-Desconectar($sock);
-
-$sock = Conectar($cod_curso_import, $opt);
-
-$nome_curso_import = NomeCurso($sock, $cod_curso_import);
-
-if (!$curso_compartilhado) {
-	VerificaAcessoAoCurso($sock, $cod_curso_import, $cod_usuario_import);
-	VerificaAcessoAFerramenta($sock, $cod_curso_import, $cod_usuario_import, $cod_ferramenta);
-}
-
-// Apaga link simbolico que por acaso tenha sobrado daquele usuario
-$link_arquivo = $diretorio_temp . "/" . $dir . "_" . $cod_curso_import . "_" . $cod_usuario_import;
-if (ExisteArquivo($link_arquivo)) {
-	RemoveArquivo($link_arquivo);
-}
-
-echo ("\n");
-
-/*Voltar*/
-echo ("          <span class=\"btsNav\" onClick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
-
-$lista_topicos_ancestrais = RetornaTopicosAncestrais($sock, $tabela, $cod_topico_raiz);
-unset ($path);
-
-foreach ($lista_topicos_ancestrais as $cod => $linha) {
-	if ($cod_topico_raiz != $linha['cod_topico']) {
-		$path = "<span class=\"link\" onclick='MudarTopico(" . $linha['cod_topico'] . ")'>" . $linha['topico'] . "</span> &gt;&gt; " . $path;
-	} else {
-		$path = "<b>" . $linha['topico'] . "</b><br />\n";
-	}
-}
-
-echo ($path);
-
-echo ("          <form method=\"get\" name=\"frmImportar\" action=\"\">\n");
-echo ("            <input type=\"hidden\" name=\"cod_categoria\" value=\"" . $cod_categoria . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_curso_import\" value=\"" . $cod_curso_import . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_topico_raiz_import\" value=\"" . $cod_topico_raiz_import . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_item\" value=\"\" />\n");
-echo ("            <input type=\"hidden\" name=\"curso_compartilhado\" value=\"" . $curso_compartilhado . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"curso_extraido\" value=\"" . $curso_extraido . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"tipo_curso\" value=\"" . $tipo_curso . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_ferramenta\" value=\"" . $cod_ferramenta . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_curso\" value=\"" . $cod_curso . "\" />\n");
-echo ("            <input type=\"hidden\" name=\"cod_topico_raiz\" value= \"" . $cod_topico_raiz . "\" />\n");
-
-
-if ('E' == $tipo_curso) {
-	echo ("            <input type=\"hidden\" name=\"data_inicio\" value=\"" . $data_inicio . "\" />\n");
-	echo ("            <input type=\"hidden\" name=\"data_fim\" value=\"" . $data_fim . "\" />\n");
-}
+	 echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
+	/* 1 - Perguntas Freq�entes */
+  $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
 
 echo ("            <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo ("              <tr>\n");
 echo ("                <td valign=\"top\">\n");
 echo ("                  <ul class=\"btAuxTabs\">\n");
 /* 2 - Cancelar (geral) */
-echo ("                    <li><span onClick=\"CancelarImportacao()\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span></li>\n");
+echo("      <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
 echo ("                </ul>\n");
 echo ("                </td>\n");
 echo ("              </tr>\n");
@@ -404,17 +194,24 @@ echo ("                <td>\n");
 echo ("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo ("                    <tr class=\"head\">\n");
 echo ("                      <td align=\"center\" width=\"20px\"><input type=\"checkbox\" name=\"select_all\" onClick=\"CheckAll()\"/></td>\n");
-// 114 - "Materiais" do Curso:
-echo ("                      <td class=\"alLeft\">" . RetornaFraseDaLista($lista_frases, 114) . " " . $nome_curso_import . "</td>\n");
-/* 13 - Data */
-echo ("                      <td>" . RetornaFraseDaLista($lista_frases, 13) . "</td>\n");
-/* 14 - Data */
-echo ("                      <td>" . RetornaFraseDaLista($lista_frases, 14) . "</td>\n");
+// 114 - "Assunto:
+echo ("                      <td class=\"alLeft\" colspan=\"3\">Assunto</td>\n");
 echo ("                    </tr>\n");
 
 /*verificar status... confirmar.. e verificar c eh necessario cancelar a edicao!*/
+
 $lista_topicos = RetornaTopicosDoTopico($sock, $tabela, $cod_topico_raiz);
 $lista_itens = RetornaItensDoTopico($sock, $tabela, $cod_topico_raiz);
+echo("  <form method=post name=frmImportar>");
+echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
+echo("<input type=hidden name=acao value=\"\">\n");
+echo("    <input type=hidden name=cod_item value=".$cod_item.">\n");
+echo("    <input type=hidden name=cod_topico_raiz value=".$cod_topico_raiz.">\n");
+echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
+echo("    <input type=hidden name=cod_assunto_dest value=\"\">\n");
+echo("    <input type=hidden name=cod_ferramenta value=".$cod_ferramenta.">\n");
+echo("    <input type=hidden name=tabela value=".$tabela.">\n");
+echo("    <input type=hidden name=dir value=".$dir.">\n");
 
 if (((count($lista_topicos) < 1) || ($lista_topicos == "")) && ((count($lista_itens) < 1) || ($lista_itens == ""))) {
 	echo ("                    <tr>\n");
@@ -444,25 +241,13 @@ if (((count($lista_topicos) < 1) || ($lista_topicos == "")) && ((count($lista_it
 	}
 
 	foreach ($lista_unificada as $cod => $linha) {
-		//se é tópico...
+			//se é tópico...
 		if (isset ($linha['posicao_topico'])) {
-
-			$data = UnixTime2Data($linha['data']);
-			$max_data = RetornaMaiorData($sock, $tabela, $linha['cod_topico'], 'F', $linha['data']);
-			if ($data_acesso < $max_data) {
-				$marcatr = " class=\"novoitem\"";
-
-			} else {
-				$marcatr = "";
-			}
-
-			echo ("                    <tr" . $marcatr . "  id=\"tr_top_" . $linha['cod_topico'] . "\">\n");
-			echo ("                      <td width=\"2%\">\n");
+			echo ("                    <tr>\n");
+			echo ("                      <td>\n");
 			echo ("                        <input type=\"checkbox\" id=\"chktop_" . $linha['cod_topico'] . "\" name=\"cod_topicos_import[]\" value=\"" . $linha['cod_topico'] . "\" />\n");
 			echo ("                      </td>\n");
 			echo ("                      <td width=\"72%\" class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"MudarTopico('" . $linha['cod_topico'] . "');\">" . $linha['topico'] . "</span></td>\n");
-			echo ("                      <td width=\"8%\" align=\"center\">" . $data . "</td>\n");
-			echo ("                      <td>&nbsp;</td>\n");
 			echo ("                    </tr>\n");
 		} //é item
 
@@ -505,12 +290,11 @@ if (((count($lista_topicos) < 1) || ($lista_topicos == "")) && ((count($lista_it
 				echo ("                    <tr" . $marcatr . " id=\"tr_" . $linha['cod_item'] . "\">\n");
 				echo ("                      <td width=\"2%\"><input type=\"checkbox\" id=\"chkitm_" . $linha['cod_item'] . "\" name=\"cod_itens_import[]\" value=\"" . $linha['cod_item'] . "\" /></td>\n");
 				echo ("                      <td width=\"72%\" class=\"alLeft\">" . $titulo . "</td>\n");
-				echo ("                      <td width=\"8%\" align=\"center\"><span id=\"data_" . $linha['cod_item'] . "\">" . $data . "</span></td>\n");
-				echo ("                      <td width=\"10%\" align=\"center\">" . $compartilhamento . "</td>\n");
 				echo ("                    </tr>\n");
 
 			} //else
 	}
+
 } // else - count(lista_topicos), count(lista_itens)
 
 echo ("                  </table>\n");
@@ -520,7 +304,7 @@ echo ("              <tr>\n");
 echo ("                <td valign=\"top\">\n");
 echo ("                  <ul class=\"btAuxTabs\">\n");
 /* 54(biblioteca) - Importar Selecionados */
-echo ("                    <li><span onClick=\"Importar()\">" . RetornaFraseDaLista($lista_frases_biblioteca, 54) . "</span></li>\n");
+echo ("                    <li><span onClick=\"Importar()\">" . RetornaFraseDaLista($lista_frases, 105) . "</span></li>\n");
 echo ("                  </ul>\n");
 echo ("                </td>\n");
 echo ("              </tr>\n");
