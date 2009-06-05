@@ -171,6 +171,7 @@
     Desconectar($sock);
 
     header("Location:portfolio.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&acao=".$acao."&atualizacao=".$atualizacao);
+    exit; /* Aparentemente sem motivo, ele passava reto por esse header */
   }
 
   /* ação = Comentar - origem = comentarios.php */
