@@ -72,7 +72,7 @@
     Desconectar($sock);
     exit;
   }
-
+  
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
@@ -80,10 +80,12 @@
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
-
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+// adicionar a frase no banco de dados..
+  if($destino == "inscricao")
+  	echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
   echo("        document.getElementById('login').focus();\n");
   echo("        startList();\n");
   echo("      }\n\n");
