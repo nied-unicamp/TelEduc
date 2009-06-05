@@ -176,16 +176,16 @@ function RetornaListaDeCursosUsuario($email, $login)
    RetornaListaDeCursos - Retorna a lista de cursos dado o tipo
    Entrada: $sock - sock da base externa
             $tipo_curso - tipo do curso
-						  'N' - Não iniciado
+						  'N' - Nï¿½o iniciado
                           'A' - Em andamento
-                          'I' - com inscrições aberta
+                          'I' - com inscriï¿½ï¿½es aberta
                           'E' - Encerrados
             $cod_pasta - codigo da pasta a qual pertence os cursos a serem retornados
    Saida: array []['cod_curso']
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 */
 function RetornaListaDeCursos($sock,$tipo_curso,$cod_pasta)
 {
@@ -996,6 +996,40 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
   $objResponse->addScript("trataEnvio('".$flag."');");
 
   return $objResponse->getXML();
+}
+
+function CadastrarLogar($form,$cod_curso,$tipo_curso)
+{
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+    $login=$form['login'];
+    $senha=crypt($form['senha'],"AA");
+	
+    $sock=Conectar("");
+  
+    //Seleciona senha e cÃ³digo global do usuario
+    $query="select senha, cod_usuario from Usuario where login='".VerificaStringQuery($login)."'";
+    
+
+    $res=Enviar($sock,$query);
+    $num=RetornaNumLinhas($res);
+    $linha=RetornaLinha($res);
+
+    $cod_usuario = $linha['cod_usuario'];
+	
+    $_SESSION['cod_usuario_global_s'] = $cod_usuario;
+    $_SESSION['cod_usuario_s'] = (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
+    $_SESSION['login_usuario_s'] = $login;
+    //$_SESSION['tipo_usuario_s'] = "";
+    $_SESSION['cod_lingua_s'] = $cod_lingua; //??
+//    $_SESSION['visitante_s'] = $cod_visitante_s; //??
+//    $_SESSION['visao_formador_s'] = 1;
+
+    Desconectar($sock);
+    
+	$objResponse->addRedirect("inscricao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."");
+
+   return $objResponse->getXML();
 }
 
 /********************************************************************
