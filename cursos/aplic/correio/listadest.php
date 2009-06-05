@@ -56,7 +56,6 @@ $checked = "";
           $num=RetornaNumDestinatariosMsg($sock,$codMsgAnt);
           if (count($num)>0){
             $lista=RetornaCategDestinoCodUsuarioMsg($sock,$codMsgAnt);
-            var_dump($lista);
             foreach($lista as $cod=>$dados){
 // echo ("dados['cod_destino'] : ". $dados['cod_destino'] . "<br> CodFormadores: ". $codFormadores[$i]['cod_usuario'] ."<br> codUsuarioAutosAnt: " . $codUsuarioAutorAnt ."<br> cod_usuario: ". $cod_usuario );
 
