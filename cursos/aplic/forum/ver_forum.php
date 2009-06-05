@@ -89,9 +89,15 @@
   /* Nmero de mensagens exibidas por pï¿½ina.             */
   if (!isset($msg_por_pag)) $msg_por_pag = 10;
 
-  /* Se o tipo de ordenaï¿½o nï¿½ foi especificada escolhe por padrï¿½ a         */
-  /* ordenaï¿½o em ï¿½vore.                                                     */
-  if (!isset($ordem)) $ordem = 'arvore';
+  /* Se o tipo de ordenacao nao for especificada, usa arvore */
+  if (!isset($_SESSION['ordem']) && !isset($_GET['ordem'])) {
+  	$ordem = 'arvore';
+  } else {
+  	/* Se o usuário tentar atualizar a ordenacao, grava na $_SESSION */
+  	if (isset($_GET['ordem']))
+  		$_SESSION['ordem'] = $_GET['ordem'];
+  	$ordem = $_SESSION['ordem'];
+  }
 
   /* Obtï¿½ a data e hora do penltimo acesso para comparar com as datas das   */
   /* mensagens e destacar a que sï¿½ mais recentes.                            */
