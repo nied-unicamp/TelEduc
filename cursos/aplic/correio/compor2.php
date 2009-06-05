@@ -113,6 +113,9 @@
   $codMsg = RetornaProximoCodigo($sock, "Correio_mensagens");
   $dirArq=$diretorio_arq."/".$cod_curso."/correio/".$codMsg;
 
+  $msgCorpo = VerificaStringQuery($msgCorpo);
+  $assunto = VerificaStringQuery($assunto);
+  
   InsereMsgCM($sock, $codMsg, $cod_usuario, $assunto, $data, $msgCorpo, $codMsgAnt);
 
   $todosUsuarios = RetornaDadosTodosUsuarios($sock,$cod_curso);
