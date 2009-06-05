@@ -49,7 +49,8 @@
   $objAjax = new xajax();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->registerFunction("CadastraDadosUsuarioDinamic");
-
+  $objAjax->registerFunction("CadastrarLogar");
+  
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
@@ -58,6 +59,7 @@
 
   $lista_escolaridade=RetornaListaEscolaridade($sock);
   
+
   /* 
   ==================
   Funcoes JavaScript
@@ -236,21 +238,21 @@
   echo("      {\n");
   echo("        if (flag == '1')\n");
   echo("        {\n");
-  /*74 - Login digitado ja existe. Digite outro e tente novamente.*/
+  //74 - Login digitado ja existe. Digite outro e tente novamente.
 //  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
   echo("          document.formulario.login.value='';\n");
   echo("          document.formulario.login.focus();\n");
   echo("        }\n");
   echo("        else if(flag == '2')\n");
   echo("        {\n");
-  /*75 - E-mail digitado ja existe. Digite outro e tente novamente.*/
+  //75 - E-mail digitado ja existe. Digite outro e tente novamente.
 //  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
   echo("          document.formulario.email.value='';\n");
   echo("          document.formulario.email.focus();\n");
   echo("        }\n");
   echo("        else if(flag == '3')\n");
   echo("        {\n");
-  /*76 - Carecteres digitados nao conferem com os da imagem.Tente novamente.*/
+  //76 - Carecteres digitados nao conferem com os da imagem.Tente novamente.
 //  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
   echo("          var imagem = document.getElementById('imagem');\n");
 //   echo("          var src = imagem.src;\n");
@@ -262,9 +264,12 @@
   echo("        }\n");
   echo("        else\n");
   echo("        {\n");
-  /* 184 - Cadastro efetuado com sucesso.*/
+  // 184 - Cadastro efetuado com sucesso.
 //  echo("          alert('".RetornaFraseDaLista($lista_frases,184)."');\n");
-  echo("          window.location='autenticacao.php';\n");
+  if($acao == "inscricao")
+  	echo("xajax_CadastrarLogar(xajax.getFormValues('formulario'),'".$cod_curso."','".$tipo_curso."');\n");
+  else
+  	echo("          window.location='autenticacao.php';\n");
   echo("        }\n");
   echo("      }\n\n");
 
