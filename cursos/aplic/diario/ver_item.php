@@ -361,7 +361,7 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   
   /* 42 - Voltar ao diario */
-  echo("                  <li><a href=\"diario.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."&amp;origem=diario\" >".RetornaFraseDaLista($lista_frases, 42)."</a></li>\n");
+  echo("                  <li><a href=\"#\" onClick=\"javascript:history.go(-1);\">".RetornaFraseDaLista($lista_frases, 42)."</a></li>\n");
   
   /* 5 - Ver outros diarios */
   echo("                  <li><a href=\"ver_outros.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."&amp;origem=diario\">".RetornaFraseDaLista($lista_frases, 5)."</a></li>\n");
