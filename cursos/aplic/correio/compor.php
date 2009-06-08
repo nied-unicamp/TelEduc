@@ -364,7 +364,7 @@
   echo("                    <tr>\n");  
   echo("                      <td colspan=\"2\">\n");
   echo("                        <script type=\"text/javascript\">\n");
-  echo("                          writeRichText('msg_corpo', '".Enter2Br($mensagem)."', 610, 200, true, false);\n");
+  echo("                          writeRichText('msg_corpo', '".VerificaStringQuery(Enter2Br($mensagem))."', 610, 200, true, false);\n");
   echo("                        </script>\n");
   echo("                      </td>\n");  
   echo("                    </tr>\n");
