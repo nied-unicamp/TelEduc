@@ -130,6 +130,10 @@
   	echo("    var gabarito = new Array();\n\n");
   }
   
+  echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
+  echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
+  echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  echo("    var Xpos, Ypos;\n");
   echo("    var editaTexto = 0;\n");
   echo("    var editaTitulo = 0;\n");
   echo("    var input = 0;\n");
@@ -138,8 +142,9 @@
   echo("    var gabaritosVisiveis = 0;\n");
   echo("    var tBody;\n");
   echo("    var tableDnD;\n");
-  echo("    var cancelarTodos = 0;\n\n");
+  echo("    var cod_comp;\n");
   echo("    var js_comp = new Array();\n");
+  echo("    var cancelarTodos = 0;\n\n");
 
   if ($tp_questao == 'O' && (count($alternativas)>0) && ($alternativas != null))
   {
@@ -168,11 +173,41 @@
     }
     echo("\n");
   }
+  
+  echo("    if (isNav)\n");
+  echo("    {\n");
+  echo("      document.captureEvents(Event.MOUSEMOVE);\n");
+  echo("    }\n\n");
+  
+  echo("    document.onmousemove = TrataMouse;\n\n");
+
+  echo("    function TrataMouse(e)\n");
+  echo("    {\n");
+  echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+  echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+  echo("    }\n\n");
+
+  echo("    function getPageScrollY()\n");
+  echo("    {\n");
+  echo("      if (isNav)\n");
+  echo("        return(window.pageYOffset);\n");
+  echo("      if (isIE)\n");
+  echo("        return(document.body.scrollTop);\n");
+  echo("    }\n\n");
+
+  echo("    function AjustePosMenuIE()\n");
+  echo("    {\n");
+  echo("      if (isIE)\n");
+  echo("        return(getPageScrollY());\n");
+  echo("      else\n");
+  echo("        return(0);\n");
+  echo("    }\n\n");
 
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
   echo("      lay_novo_topico = getLayer('layer_novo_topico');\n");
+  echo("      cod_comp = getLayer('comp');\n");
 $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      tableDnD = new TableDnD();\n");
   echo("      tBody = document.getElementById('tBody');\n");
@@ -188,6 +223,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    function EscondeLayers()\n");
   echo("    {\n");
   echo("      hideLayer(lay_novo_topico);\n");
+  echo("      hideLayer(cod_comp);\n");
   echo("    }\n\n");
 
   echo("    function MostraLayer(cod_layer, ajuste)\n");
@@ -1164,7 +1200,6 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   
   echo("    </script>\n\n");
   $objAjax->printJavascript("../xajax_0.2.4/");
-  echo("    <script type=\"text/javascript\" src='jscriptlib.js'></script>\n");
   /* fim - JavaScript */
   /*********************************************************/
 
@@ -1203,7 +1238,6 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("              <td valign=\"top\">\n");
 
   	echo("                <ul class=\"btAuxTabs\">\n");
-
 
   	/* 23 - Voltar  (gen) */
   	echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
@@ -1274,13 +1308,13 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                      </td>\n");
 
 	/* ?? - Compartilhado com Formadores */
-    if($linha_item['tipo_compartilhamento'] == "F")
+    if($questao['tipo_compartilhamento'] == "F")
       $compartilhamento = "Compartilhado com Formadores";
     /* ?? - Nao compartilhado */
     else
       $compartilhamento = "Nao compartilhado";
       
-    $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$tipo_compartilhamento."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+    $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
       
     echo("					    <td>".$compartilhamento."</td>");      
       
