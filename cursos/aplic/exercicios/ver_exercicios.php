@@ -185,24 +185,24 @@
   	/*Voltar*/
   	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
   	
-  if($visualizar=="G")
-  {
-    $nome=NomeGrupo($sock,$cod_grupo_exercicio);
+    if($visualizar=="G")
+    {
+      $nome=NomeGrupo($sock,$cod_grupo_exercicio);
 
-    //Figura de Grupo
-    $fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
+      //Figura de Grupo
+      $fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
 
-    echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
-  }
-  else
-  {
-    $nome=NomeUsuario($sock,$cod_usuario_exercicio,$cod_curso);
+      echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
+    }
+    else
+    {
+      $nome=NomeUsuario($sock,$cod_usuario_exercicio,$cod_curso);
     
-    // Selecionando qual a figura a ser exibida ao lado do nome
-    $fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
+      // Selecionando qual a figura a ser exibida ao lado do nome
+      $fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
 
-    echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$cod_usuario_exercicio.");\" > ".$nome."</span>");
-  }
+      echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$cod_usuario_exercicio.");\" > ".$nome."</span>");
+    }
   	
 	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 	echo("            <tr>\n");
@@ -292,7 +292,7 @@
           $situacao .= "<span class=\"avaliada\">(a)</span>";
           
         echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
-        echo("                    <td align=\"left\">".$icone."<a href=\"\">".$linha_item['titulo']."</a></td>\n");
+        echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a></td>\n");
         echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
         echo("                    <td>".$compartilhamento."</td>\n");
         echo("                    <td>".$comentarios."</td>\n");
