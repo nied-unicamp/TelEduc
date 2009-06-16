@@ -90,7 +90,7 @@
   $questao = RetornaQuestao($sock,$cod_questao);
   $alternativas = RetornaAlternativas($sock,$cod_questao);
   $topicos = RetornaTopicos($sock);
-  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp);
+  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp, "questao");
   $tp_questao = $questao['tp_questao'];
   $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
