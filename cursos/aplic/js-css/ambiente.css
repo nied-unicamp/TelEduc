@@ -307,3 +307,35 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   margin:0;
   height:0.9em;
 }
+
+dl.portlet  {
+margin : 1px 0 1em 0;
+border-bottom : 1px solid #dad4d4;
+}
+
+.portletHeader {
+background-color: #EAE9E9;
+color: #818181;
+font-weight: bold;
+border : 1px solid #dad4d4;
+padding : 0 1em;
+text-transform : none;
+line-height : 1.6em;
+}
+
+.portletItem {
+margin : 0;
+padding : 1em;
+border-left : 1px solid #dad4d4;
+border-right : 1px solid #dad4d4;
+}
+
+dd.portletFooter {
+background-color : transparent;
+margin : 0;
+padding : 0.25em 1em;
+border : 1px solid #dad4d4;
+border-style : dotted solid none solid;
+text-align : left;
+}
+ 
