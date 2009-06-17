@@ -45,8 +45,10 @@ td>#nav3nivel {margin-bottom:-25px;}
 #nav4nivel li { display:inline; color:#818181; font-size:1.0em; }
 
 #btsNivel3 {
-	position:relative; top:16px;
+	position:relative; top:10px;
 	float:right;
+	min-width: 100px;
+	width: auto;
 	color:#818181; font-size:0.8em;
 }
 #nav3nivel li.visoes, li.visoesHover, li.visoes2, li.visoes2Hover {
@@ -240,6 +242,9 @@ td>#nav3nivel {margin-bottom:-25px;}
 	margin:5px 10px 5px 0;
 }
 
+#btsNivel3 li .email, a .email{
+	font-decoration: none;
+}
 
 /* -------------------------------------------
 	BOT�S - FORMUL�IOS
