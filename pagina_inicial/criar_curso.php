@@ -58,10 +58,10 @@
   include("../topo_tela_inicial.php");
 
   /* Caso o usuÃ¡rio naum esteja logado, direciona para pÃ¡gina de login */
-  if (empty($_SESSION['login_usuario_s']))
-  {
+  /*if (empty($_SESSION['login_usuario_s']))
+  {*/
     /* Obtï¿½ a raiz_www */
-    //$sock = Conectar("");
+    /*$sock = Conectar("");
     $query = "select diretorio from Diretorio where item = 'raiz_www'";
     $res = Enviar($sock,$query);
     $linha = RetornaLinha($res);
@@ -72,9 +72,9 @@
     header("Location: {$caminho}/autenticacao.php");
     Desconectar($sock);
     exit;
-  }
+  }*/
 
-  /* Configuraï¿½ï¿½o da tela que serï¿½ exibida ao usuï¿½rio */
+  /* Configuração da tela que será exibida ao usuário */
   $curso_form = RetornaConfiguracao($sock, "curso_form");
   $normas = RetornaConfiguracao($sock, "normas");
   $tem_normas = (trim($normas) != '');
