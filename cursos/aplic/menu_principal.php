@@ -1,5 +1,17 @@
 <?
-
+  
+  /* Funções javascript */
+  echo("    <script language=\"JavaScript\" type=\"text/javascript\">\n");
+  /* *********************************************************
+  Funcao MostraPerfil
+    Abre nova janela com o perfil
+  */
+  echo("      function MostrarPerfil() \n");
+  echo("      {\n");
+  echo("           window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario."\",'NOME','width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("      }\n\n");
+  echo("</script>");
+  
   echo("  </head>\n");
   echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"Iniciar();\" >\n");
   echo("    <a name=\"topo\"></a>\n");
@@ -7,7 +19,7 @@
   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
   echo("      <tr>\n");
   echo("        <td></td>\n");
-  echo("        <td style=\"\" valign=\"top\">\n");
+  echo("        <td valign=\"top\">\n");
     
   $tela_curso_ferramentas    = RetornaFerramentasCurso($sock);
   $tela_novidade_ferramentas = RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario);
@@ -15,11 +27,15 @@
 
   $tela_ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
 
+  if (!empty ($_SESSION['cod_usuario_global_s'])){
+  	$email_usuario = RetornaEmailUsuario1($_SESSION['cod_usuario_global_s']);
+  }
+  $tela_email = "<li><a href=# onclick=javascript:MostrarPerfil(); style=\"text-decoration:none;\" class=\"email\">".$email_usuario."</a>&nbsp;&nbsp;|&nbsp;&nbsp";
+  
   if ($tela_formadormesmo)
   {
     echo("          <!-- Navegacao Nivel 3 -->\n");
     echo("          <ul id=\"nav3nivel\">\n");
-    
     if ($tela_formador)
     {
 
@@ -44,26 +60,20 @@
 
     }
     
- 
-  
-   // 46 - Visï¿½o de Formador
+    // 46 - Visão de Formador
     $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,46);
-
     echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
-    // 45 - Visï¿½o de Aluno
+    // 45 - Visão de Aluno
 
     $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,45);
     echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
-  
     echo("          </ul>\n");
   
    }
-   
- 
-  
+     
   echo("          <div id=\"btsNivel3\" class=\"menu_dd\">\n");
-  echo("            <ul>\n");
 
+  echo("            <ul>\n".$tela_email);
   RetornaListaDeCursosUsuario($sock);
 
   /* 47 - Configurar */
@@ -71,7 +81,6 @@
 
   $tela_cod_ferr=-7;
   $tela_diretorio="configurar";
-
   echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
   echo("              <li><a href=\"../".$tela_diretorio."/".$tela_diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$tela_cod_ferr."\">$tela_nome_ferramenta</a></li>\n");
   echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
@@ -170,4 +179,22 @@
 
   echo("        </td>\n");
 
+  /* Layer de perfil */
+  echo("    <div id=\"perfil\" class=popup>\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_novapasta);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  //echo("        <form name=form_novo_top method=post action='' onSubmit='return (VerificaNovoItemTopico(document.form_novo_top.novo_nome));'>\n");
+  echo("          <div class=ulPopup>\n");    
+  /* 24 - Digite o nome da pasta a ser criada aqui: */
+  //echo("            ".RetornaFraseDaLista($lista_frases,24)."<BR />\n");
+  //echo("            <input id=\"titulopasta\" class=\"input\" type=text name=\"novo_nome\" value=\"\" maxlength=\"150\" /><br />\n");
+  /* 18 - Ok (gen) */
+  //echo("            <input type=\"submit\" id=\"ok_novapasta\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  /* 2 - Cancelar (gen) */
+  //echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(cod_novapasta);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("          </div>\n");    
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
+  
 ?>
