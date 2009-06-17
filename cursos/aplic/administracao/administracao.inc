@@ -913,6 +913,7 @@ function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
 
 
   // abandonamos a ideia de mostrar convidados com inscricao rejeitada. Agora mostramos apenas os convidados no curso
+  // como não fazia sentido, voltamos atrás. 17/06/09
   $acao = 'a';
 
   if ($acao == 'a')
