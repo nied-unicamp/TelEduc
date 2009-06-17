@@ -828,4 +828,42 @@ function PreencheuDadosPessoais($sock)
     return false;
 }
 
+/* *********************************************************************
+   RetornaEmailUsuario - Retorna email de um unico usuario
+   entrada: $sock - sock de conexao
+            $cod_usuario - codigo do usuario
+   saida:   array ['email'] - email do usuario
+*/
+/*function RetornaEmailUsuario($cod_usuario)
+{
+  $sock=Conectar("");
+  var_dump($sock);
+   // 2Session
+  //$dbnamebase = $_SESSION['dbnamebase'];
+
+  //$cod_usuario_global = RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso);
+  $query="select email from TelEducRichard1a.Usuario where cod_usuario=".$cod_usuario;
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  Desconectar($sock);
+  return $linha;
+}*/
+
+/* *********************************************************************
+   RetornaEmailUsuario - Retorna o email do usuario
+   Entradas: $sock - sock da base externa
+            $cod_usuario - o cod_usuario_global do usuario  
+   Saida: email
+*/
+function RetornaEmailUsuario1($cod_usuario)
+{
+  $sock = Conectar("");
+  $query="select email from Usuario where cod_usuario=".$cod_usuario."";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  //Desconectar($sock);
+  return ($linha['email']);
+}
+
+
 ?>
