@@ -918,7 +918,7 @@ function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
   if ($acao == 'a')
   {
     // convidados com inscricao aceita
-    $where .= "(UC.tipo_usuario='Z' or UC.tipo_usuario='z')";
+    $where .= "(UC.tipo_usuario='Z' or UC.tipo_usuario='z' or UC.tipo_usuario='t')";
   }
   else if ($acao == 'r')
   {
