@@ -61,6 +61,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
+  if($ecoordenador = ECoordenador($sock, $cod_curso, $cod_usuario)){
   echo("      function verifica_intervalos() \n");
   echo("      {\n");
   echo("        i_ini=document.form.inscricao_inicio;\n");
@@ -101,7 +102,7 @@
   echo("        }\n");
   echo("        return(true);\n");
   echo("      }\n");
-
+  }
   echo("    </script>\n");
 
   include("../menu_principal.php");
@@ -161,8 +162,12 @@
   echo("                      <ul>\n");
   echo("                        <li>\n");
   echo("                          <div>\n");
-  echo("                            <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"inscricao_inicio\" name=\"inscricao_inicio\" value=\"".UnixTime2Data($linha['inscricao_inicio'])."\" />\n");
-  echo("                               <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_inicio'),'dd/mm/yyyy',this);\" />\n");
+  if($ecoordenador){
+  	echo("                            <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"inscricao_inicio\" name=\"inscricao_inicio\" value=\"".UnixTime2Data($linha['inscricao_inicio'])."\" />\n");
+  	echo("                               <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_inicio'),'dd/mm/yyyy',this);\" />\n");
+  } else {
+  	echo(UnixTime2Data($linha['inscricao_inicio']));
+  }
   echo("                          </div>\n");
   echo("                        </li>\n");
   echo("                      </ul>\n");
@@ -173,8 +178,12 @@
   echo("                      <ul>\n");
   echo("                        <li>\n");
   echo("                          <div>\n");
+  if($ecoordenador){
   echo("                            <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"inscricao_fim\" name=\"inscricao_fim\" value=\"".UnixTime2Data($linha['inscricao_fim'])."\" />\n");
   echo("                               <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_fim'),'dd/mm/yyyy',this);\" />\n");
+  } else {
+  	echo(UnixTime2Data($linha['inscricao_fim']));
+  }
   echo("                          </div>\n");
   echo("                        </li>\n");
   echo("                      </ul>\n");
@@ -185,8 +194,12 @@
   echo("                      <ul>\n");
   echo("                        <li>\n");
   echo("                          <div>\n");
+  if($ecoordenador){
   echo("                            <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"curso_inicio\" name=\"curso_inicio\" value=\"".UnixTime2Data($linha['curso_inicio'])."\" />\n");
   echo("                               <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('curso_inicio'),'dd/mm/yyyy',this);\" />\n");
+  } else {
+  	echo(UnixTime2Data($linha['curso_inicio']));
+  }
   echo("                          </div>\n");
   echo("                        </li>\n");
   echo("                      </ul>\n");
@@ -197,8 +210,12 @@
   echo("                      <ul>\n");
   echo("                        <li>\n");
   echo("                          <div>\n");
+  if($ecoordenador){
   echo("                            <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"curso_fim\" name=\"curso_fim\" value=\"".UnixTime2Data($linha['curso_fim'])."\" />\n");
   echo("                               <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('curso_fim'),'dd/mm/yyyy',this);\" />\n");
+  } else {
+  	echo(UnixTime2Data($linha['curso_fim']));
+  }
   echo("                          </div>\n");
   echo("                        </li>\n");
   echo("                      </ul>\n");
@@ -215,7 +232,7 @@
   echo("                <br><br><b>".RetornaFraseDaLista($lista_frases,23)."</b> ".RetornaFraseDaLista($lista_frases,229)."<br><br>\n");
   
   /* 24 - Alterar (geral) */
-  echo("                <div align=right><input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,24)."'></div>\n");
+  if($ecoordenador) echo("                <div align=right><input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,24)."'></div>\n");
 
   echo("              </td>\n");
   echo("            </tr>\n");
