@@ -41,10 +41,9 @@
   ARQUIVO : cursos/aplic/portfolio/acoes.php
   ========================================================== */
 
-
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
- include($bibliotecas."importar.inc");
+  include($bibliotecas."importar.inc");
   include("material.inc");
   
   $cod_ferramenta = $cod_ferramenta_m; //cod_ferramenta_m é uma variável de sessão que guarda a ferramenta atualmente utilizada
@@ -68,7 +67,7 @@
 
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso); 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
+  
   switch ($cod_ferramenta) {
     case 3 :
       $tabela="Atividade";
@@ -184,14 +183,13 @@
 
     if (!RealizaUpload($input_files,$dir.$nome_arquivo))
     {
-      AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
       /* 61 - Atenção: o arquivo que você anexou não existe ou tem mais de %dMb. Se você digitou o nome do arquivo, procure certificar-se que ele esteja correto ou então selecione o arquivo a partir do botão Procurar (ou Browse). */
-	  header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=false");
-      exit;
+      $atualizacao='false';
     }
 
-//     AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
-	$atualizacao='true';	
+    AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
+	$atualizacao='true';
+	header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
   }
   
 
