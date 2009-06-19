@@ -143,17 +143,15 @@
     $dir=$diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item."/";
 
     $nome_arquivo = $_FILES['input_files']['name'];
-    $nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
+    //$nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
 
     if (!RealizaUpload($input_files,$dir.$nome_arquivo))
     {
-      AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
       /* 50 - Atenção: o arquivo que você anexou não existe ou tem mais de %dMb. Se você digitou o nome do arquivo, procure certificar-se que ele esteja correto ou então selecione o arquivo a partir do botão Procurar (ou Browse). */
 	 $atualizacao = "false";
     }
 
     AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
-    Desconectar($sock);
     header("Location:ver_linha.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
