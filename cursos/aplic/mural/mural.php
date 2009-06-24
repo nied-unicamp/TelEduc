@@ -905,7 +905,7 @@
         }
         echo("                        <td colspan=\"2\" id=\"td_msg_".$cod_mural."\" align=\"left\">\n");
         echo("                          <b>Mensagem:</b><br /><br />\n");
-        echo("                          <div class=\"divRichText\" style=\"width:595px;overflow:auto;\";>". PreparaExibicaoMensagem($dados['texto'])."</div>\n");
+        echo("                          <div class=\"divRichText\" style=\"overflow:auto;\";>". PreparaExibicaoMensagem($dados['texto'])."</div>\n");
         echo("                        </td>\n");
         echo("                        <td id=\"td_close".$cod_mural."\">\n");
         echo("                          <span class=\"link\" id=\"fechar_".$cod_mural."\" onclick=\"FecharMsg(".$cod_mural.");\">Fechar</span>\n");

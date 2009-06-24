@@ -238,6 +238,6 @@ function ApagaMensagem($sock, $cod_mural)
 }
 
 function PreparaExibicaoMensagem($mensagem){
-  return (ConverteBarraAspas2Aspas(Enter2BR(LimpaConteudo($mensagem))));
+  return VerificaTagTable(ConverteBarraAspas2Aspas(LimpaConteudo($mensagem)));
 }
 ?>
