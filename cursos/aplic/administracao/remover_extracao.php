@@ -53,20 +53,25 @@
   /* Conta quantas ferramentas existem. */
   $total_ferramentas = count($tela_lista_ferramentas);
 
-  if (!ECoordenador($sock,$cod_curso,$cod_usuario))
+  if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad='document.frmErro.cmdVoltar.focus();'>\n");
-    /* 1 - Administração */
-    $cabecalho = "    <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
-    /* 28 - Área restrita ao formador. */
-    $cabecalho .= "    <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 29)."</b>";
-    echo($cabecalho);
-    echo("    <br>\n");
+  	/* 1 - Administracao  297 - Area restrita ao formador. */
+  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+	
+    /*Voltar*/
+    echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
+
     /* 23 - Voltar (gen) */
-    echo("<form name=frmErro><input class=text type=button name=cmdVoltar value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
-    echo("</body></html>\n");
+    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+
     Desconectar($sock);
-    exit;
+    exit();
   }
 
   echo("  <script type=\"text/javascript\">\n\n");

@@ -56,21 +56,23 @@
   /* Conta quantas ferramentas existem. */
   $total_ferramentas = count($tela_lista_ferramentas);
 
-  if (!ECoordenador($sock,$cod_curso,$cod_usuario))
+    if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Administra��o */
-    $cabecalho = "  <br /><br /><h5>".RetornaFraseDaLista($lista_frases, 1);
-    /* 29 - �rea restrita ao coordenador. */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 29)."</h5>";
-    echo($cabecalho);
-    // 23 - Voltar (geral)
-    echo("    <ul class=\"btAuxTabs\">\n");
-    echo("      <li><span onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
-    echo("    </ul>\n");
-    echo("    <br />\n");
-    echo("  </body>\n");
-    echo("</html>\n");
+  	/* 1 - Administracao  297 - Area restrita ao formador. */
+  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+	
+    /*Voltar*/
+    echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
+
+    /* 23 - Voltar (gen) */
+    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+
     Desconectar($sock);
     exit();
   }
