@@ -2000,3 +2000,17 @@ function EditarRespostaQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_quest
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
 }
+
+/* *********************************************************************
+   ApagarExercicio - Atualiza o status da questao para X (apagado)
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
+            $cod_questao - codigo da questao
+            $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
+*/
+function EviarLixeira($cod_curso, $cod_questao, $status)
+{
+  $sock=Conectar($cod_curso);
+  $consulta = "UPDATE Exercicios_questao SET status = '".$status."' WHERE cod_questao = ".$cod_questao;
+  $res=Enviar($sock, $consulta);
+  Desconectar($sock);
+}
