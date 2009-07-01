@@ -132,10 +132,9 @@
 
 
       foreach ($cod_itens_array as $cod => $linha){
-        ApagarItem($sock, $tabela, $linha, $cod_usuario);
+		ApagarItem($sock, $tabela, $linha, $cod_usuario);
 
 
-        ApagarItem($sock, $tabela, $linha, $cod_usuario);
         if (($cod_ferramenta==3) && ($AcessoAvaliacao))          
         {          
           if (AtividadeEhAvaliacao($sock,$linha))
@@ -254,7 +253,7 @@
   	
   	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
   		$_SESSION['flag_curso_compartilhado'] = TRUE;
-  		header("Location:importar_perguntas.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_assunto_pai=1");
+  		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1");
   	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
   		$_SESSION['flag_curso_compartilhado'] = FALSE;
   		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem);

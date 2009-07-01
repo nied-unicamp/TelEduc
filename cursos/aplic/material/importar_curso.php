@@ -388,6 +388,7 @@ if ('E' == $tipo_curso) {
 echo ("                    <form name=frmImpMaterial method=get action=\"acoes.php\">\n");
 echo ("                      <td align=\"center\">\n");
 
+echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
