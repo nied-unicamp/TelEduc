@@ -356,6 +356,9 @@ function CriarQuestao($sock, $cod_usuario, $cod_curso, $titulo, $tp_questao)
 
   $consulta="insert into Exercicios_questao_historico values (".VerificaNumeroQuery($cod_questao).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'C')";
   $res=Enviar($sock, $consulta);
+  
+  $consulta="insert into Exercicios_questao_diss (cod_questao) values (".VerificaNumeroQuery($cod_questao).")";
+  $res=Enviar($sock, $consulta);
 
   return($cod_questao);
 }
@@ -498,6 +501,14 @@ function RetornaQuestao($sock,$cod_questao)
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   return $linha;
+}
+
+function RetornaQuestaoDiss($sock,$cod_questao)
+{
+  $query="select gabarito from Exercicios_questao_diss where cod_questao=".$cod_questao;
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return $linha['gabarito'];
 }
 
 /* *********************************************************************
@@ -1469,14 +1480,14 @@ function EditarTextoExercicioDinamic($cod_curso, $cod_exercicio, $novo_texto, $c
             $texto - mensagem de feedback
    Saida: XML da função Ajax
 */
-function EditarGabaritoQuestaoDissDinamic($cod_curso, $cod_questao, $cod_alternativa, $novo_nome, $cod_usuario, $texto)
+function EditarGabaritoQuestaoDissDinamic($cod_curso, $cod_questao, $texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
-  $novo_nome=ConverteAspas2BarraAspas($novo_nome);
+  //$novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
 
-  $consulta="update Exercicios_questao_diss set gabarito='".VerificaStringQuery(trim(VerificaTexto($novo_nome)))."' where cod_questao=".VerificaNumeroQuery($cod_questao)." and cod_alternativa=".VerificaNumeroQuery($cod_alternativa);
+  $consulta="update Exercicios_questao_diss set gabarito='".$texto."' where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock, $consulta);
 
   Desconectar($sock);
@@ -1486,7 +1497,7 @@ function EditarGabaritoQuestaoDissDinamic($cod_curso, $cod_questao, $cod_alterna
   //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("text_".$cod_questao.$cod_alternativa, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
+  $objResponse->addAssign("texto_".$cod_questao, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($texto))), true));
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
