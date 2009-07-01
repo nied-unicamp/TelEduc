@@ -70,8 +70,6 @@
   $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
   $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
   $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
-  $dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $resolucao['cod_exercicio'], $diretorio_arquivos, $diretorio_temp, "exercicio");
-  $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_exercicio_temp['link']);
   
   /*********************************************************/
   /* in�io - JavaScript */
@@ -291,10 +289,9 @@
     if($resolucao['cod_grupo'] != null)
     {
       $nome=NomeGrupo($sock,$resolucao['cod_grupo']);
-
       //Figura de Grupo
       $fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
-
+      
       echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$resolucao['cod_grupo'].");\">".$nome."</span>");
     }
     else
@@ -316,9 +313,16 @@
 	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 	echo("            <tr>\n");
 	echo("              <td valign=\"top\">\n");
-  	echo("                <ul class=\"btAuxTabs\">\n");	
+  	echo("                <ul class=\"btAuxTabs\">\n");
+  	
+  	$cod = $resolucao['cod_usuario'];
+  	if($resolucao['cod_grupo'] != null)
+  	{
+  	  $cod = $resolucao['cod_grupo'];
+  	}
+  	
   	/* ? - Voltar */
-    echo("                  <li><a href=''>Voltar</a></li>\n");
+    echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>Voltar</a></li>\n");
     /* ? - Historico */
     echo("                  <li><a href=''>Historico</a></li>\n");
   	echo("                </ul>\n");
@@ -377,6 +381,9 @@
 	echo("                    <td colspan=\"6\" class=\"alLeft\">".$texto."</td>\n");
 	echo("                  </tr>\n");
 	
+	$dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $resolucao['cod_exercicio'], $diretorio_arquivos, $diretorio_temp,"exercicio");
+    $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_exercicio_temp['link']);
+    
 	if(count($lista_arq) > 0 || $lista_arq != null)
     {
 	  echo("                  <tr class=\"head\">\n");
@@ -385,13 +392,14 @@
 	  echo("                  </tr>\n");
 	  echo("                  <tr>\n");
 	  echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
-
+	  
       foreach ($lista_arq as $cod => $linha_arq)
       {
-        $caminho_arquivo = $dir_questao_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
+        $caminho_arquivo = $dir_exercicio_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
 	    //converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
 	    //ISO-8859-1 para ser exibido corretamente na página.
 	    $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
+	    
 		$linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");			
 		if(eregi(".zip$", $linha_arq['Arquivo'])) {
 	      // arquivo zip

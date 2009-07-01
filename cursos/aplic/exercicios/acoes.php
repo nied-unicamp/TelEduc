@@ -133,11 +133,10 @@
     }
 
     if($pasta == 'questao')
-      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/";
+      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/questao/".$cod_questao."/".$subpasta;
     else if($pasta == 'exercicio')
-      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_exercicio."/";
+      $dir=$diretorio_arquivos."/".$cod_curso."/exercicios/exercicio/".$cod_exercicio."/".$subpasta;
     
-
     $nome_arquivo = $_FILES['input_files']['name'];
     //converte o nome para UTF-8, pois o linux insere com essa codificação o arquivo 
     //nas pasta de destino.
@@ -150,7 +149,7 @@
 
     //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
     Desconectar($sock);
-    header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
+    //header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
   }
   
   /* ação = Descompactar Arquivo - origem = editar_questao.php */

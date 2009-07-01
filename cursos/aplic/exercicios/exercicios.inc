@@ -965,8 +965,17 @@ function CriaLinkVisualizar($sock,$cod_curso,$cod_usuario,$cod_item,$diretorio_a
   /* Cria link simb?ico (apaga antigo, se houver)*/
   if ($cod_usuario<0)
     $cod_usuario=0;
-  $dirlink=$diretorio_temp."/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
-  $dirlinkpath="../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
+
+  if($pasta == "questao")
+  {  
+    $dirlink=$diretorio_temp."/questoes_".$cod_curso."_".$cod_item."_".$cod_usuario;
+    $dirlinkpath="../../diretorio/questoes_".$cod_curso."_".$cod_item."_".$cod_usuario;
+  }
+  else if($pasta == "exercicio")
+  {
+    $dirlink=$diretorio_temp."/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
+    $dirlinkpath="../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario;
+  }
 
   if (ExisteArquivo($dirlink))
   {
@@ -1523,16 +1532,12 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   
   RemoveDiretorio($arq);
 
-  $objResponse->addRemove('arq_'.$numero);
-
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
-
-  //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
 
   return $objResponse->getXML();
 }
 
-/* *********************************************************************
+/***********************************************************************
    ExibeArquivoAnexadoDinamic - Insere  na pagina os dados do arquivo anexado
    Entrada: $cod_curso - codigo do curso
             $cod_questao - codigo da questao
@@ -1547,10 +1552,11 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
   
   $caminho = "../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario."/".$nomeArq;
   $tamanho = round((filesize($caminho) / 1024), 2);
+  $data = filemtime($caminho);
   
   if($tamanho > 0)
   {
-  	$objResponse->addScript("InsereLinhaArq('".$nomeArq."',".$tamanho.",".$arqNum.",'".$caminho."');");
+  	$objResponse->addScript("InsereLinhaArq('".$nomeArq."',".$tamanho.",".$arqNum.",'".$caminho."','".unixTime2DataHora($data)."','arquivo');");
   }
   else
   {
@@ -1562,19 +1568,59 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
   return $objResponse->getXML();
 }
 
+/***********************************************************************
+   RetornaArquivosPastaDinamic - Retorna um diretorio
+   Entrada: $caminho - caminho do diretorio a ser aberto
+   Saida: XML da função Ajax
+*/
+function RetornaArquivosDiretorioDinamic($caminho){
+
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $diretorio = RetornaArrayDiretorio($caminho);
+  foreach ($diretorio as $cod => $linha)
+  {
+    if (!($linha['Arquivo'] == "") && $linha['Diretorio'] == "")
+    {
+      $nome = $linha['Arquivo'];
+      $tipo = "arquivo";
+      $caminho_arquivo = $caminho.$nome;
+	  $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
+    }
+    else
+    {
+      $nome = $linha['Diretorio'];
+      $tipo = "pasta";
+    }
+    
+    $tamanho = $linha['Tamanho'];
+    $data = unixTime2DataHora($linha['Data']);
+    
+    $objResponse->addScript("NovoArquivo('".$nome."',".round(($tamanho/1024),2).",'".$tipo."','".$data."','".$caminho_arquivo."',".$cod.");");    
+  }
+  
+  $objResponse->addScript("ExibeDiretorio(".$cod.");");
+  
+  return $objResponse->getXML();
+}
+
 /**********************************************************************
    VerificaExistenciaArquivoDinamic - Verifica se ja existe um arquivo com o nome passado como parametro
    Entrada: $cod_curso - codigo do curso
             $cod_questao - codigo da questao
 			$cod_item - chave primária da questao ou do exercicio
 			$nomeArq - nome do arquivo
+            $pasta - indica se o arquivo pertence a uma questao ou a um exercicio
    Saida: XML da função Ajax
 */
 function VerificaExistenciaArquivoDinamic($cod_curso, $cod_item, $cod_usuario, $nomeArq, $pasta){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
+  if($pasta == "exercicio")
+    $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
+  else if($pasta == "questao")
+    $dir = RetornaArrayDiretorio("../../diretorio/questoes_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
   
   $flag = 0;
   if ( ($total = count($dir)) > 0 && $dir != NULL){

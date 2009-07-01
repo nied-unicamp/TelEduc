@@ -1004,7 +1004,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      var nomeArq,td;\n");
   echo("      nomeArq = getfilename(document.getElementById('input_files').value);\n");
   echo("      if ((i==1)&&(ArquivoValido(nomeArq))){\n"); //OK
-  echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",nomeArq);\n");
+  echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",nomeArq,\"questao\");\n");
   echo("      }\n");
   echo("      else {\n");
   echo("        document.getElementById('input_files').style.visibility='hidden';\n");
@@ -1145,7 +1145,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
   echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))");
   echo("      {");
-  echo("		EncontraArquivoEApaga(nomeArq);");
+  echo("		EncontraArquivoEApaga(nomeArq);\n");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
   echo("      }");
   echo("    }\n\n");
@@ -1541,7 +1541,9 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
 	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
 	echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_questao."\" />\n");
-        echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+	echo("                        <input type=\"hidden\" name=\"pasta\" value=\"questao\" />\n");
+    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+    
 	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");

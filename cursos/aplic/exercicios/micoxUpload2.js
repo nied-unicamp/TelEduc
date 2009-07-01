@@ -126,6 +126,8 @@ function micoxUpload2(form,timeout,loading,callback,arqNum,nomeArq,cod_curso,cod
 		removeEvent(iframe,'load',loaded)
 		//removind loading msg
 		//loading_msg.parentNode.removeChild(loading_msg);
+		document.getElementById('divAnexando').className = 'divHidden';
+		document.getElementById('divArquivo').className='';
 		
 		xajax_ExibeArquivoAnexadoDinamic(cod_curso,cod_questao,cod_usuario,arqNum,nomeArq);
 		
@@ -162,31 +164,13 @@ function micoxUpload2(form,timeout,loading,callback,arqNum,nomeArq,cod_curso,cod
 	form.submit();
 	
 	//make loading
-	loading_msg = document.createElement('span');
-	loading_msg.setAttribute("id","arq_"+arqNum);
-	loading_msg.innerHTML = loading+nomeArq+'<br/>';
+	document.getElementById('divArquivoEdit').className='divHidden';
+    document.getElementById('divArquivo').className='divHidden';
+	loading_msg = document.getElementById('divAnexando');
+	loading_msg.className = '';
+	loading_msg.innerHTML = loading+nomeArq;
     //form.parentNode.insertBefore(loading_msg,form);
 	
-	//Gustavo
-	//finding td where to input loading_msg
-	td = document.getElementById('listFiles');
-	
-	if(td == null) //create a new row to input loading_msg 
-	{
-		tr = document.createElement('tr');
-		td = document.createElement('td');
-		td.setAttribute("class","itens");
-		td.setAttribute("id","listFiles");
-		td.setAttribute("colspan","4");
-		tr.appendChild(td);
-		trOpt = document.getElementById('optArq');
-		trOpt.parentNode.insertBefore(tr,trOpt);
-	} 
-	
-	td.appendChild(loading_msg);
-	
-	
-
 	//making new form and hidden old form
 	input_file.value='';
 	form.reset();
