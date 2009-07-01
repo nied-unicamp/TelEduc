@@ -88,6 +88,7 @@
   $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
 
   $questao = RetornaQuestao($sock,$cod_questao);
+  $questao_diss = RetornaQuestaoDiss($sock,$cod_questao);
   $alternativas = RetornaAlternativas($sock,$cod_questao);
   $topicos = RetornaTopicos($sock);
   $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp, "questao");
@@ -356,6 +357,16 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
+  
+  echo("    function LimparGabarito(id)\n");
+  echo("    {\n");
+  echo("      if(confirm(\"confirm\"))\n");
+  echo("      {\n");
+  //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("        document.getElementById('texto_'+id).innerHTML='';\n");
+  echo("        xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.", ".$cod_questao.", '');\n");
+  echo("      }\n");
+  echo("    }\n\n");
 
   echo("    function AlteraTexto(id){\n");
   echo("      if (editaTexto==-1 || editaTexto != id){\n");
@@ -365,6 +376,19 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
   echo("        startList();\n");
   echo("        document.getElementById('text_'+id+'_text').focus();\n");
+  echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("        editaTexto = id;\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function AlteraGabarito(id){\n");
+  echo("      if (editaTexto==-1 || editaTexto != id){\n");
+  echo("        CancelaTodos();\n");
+  //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("        conteudo = document.getElementById('texto_'+id).innerHTML;\n");
+  echo("        writeRichTextOnJS_gabarito('texto_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
+  echo("        startList();\n");
+  echo("        document.getElementById('texto_'+id+'_text').focus();\n");
   echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
   echo("        editaTexto = id;\n");
   echo("      }\n");
@@ -394,6 +418,19 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   // Cancela Edi�o
   //echo("        if (!cancelarTodos)\n");
   //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+  echo("      }\n");
+  echo("      document.getElementById(id).innerHTML=conteudo;\n");
+  echo("      editaTexto=-1;\n");
+  echo("      cancelarElemento=null;\n");
+  echo("      HabilitarMudancaPosicaoAlt();\n");
+  echo("    }\n\n");
+  
+  echo("    function EdicaoTexto_gabarito(codigo, id, valor){\n");
+  echo("      var cod;\n");
+  echo("      if (valor=='ok'){\n");
+  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  echo("          cod = RetornaCodAlternativa(codigo);");
+  echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",conteudo);\n");
   echo("      }\n");
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
@@ -1212,13 +1249,20 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     $titulo="<span id=\"tit_".$questao['cod_questao']."\">".$questao['titulo']."</span>";
     // ? - Renomear
     $renomear="<span onclick=\"AlteraTitulo('".$questao['cod_questao']."');\" id=\"renomear_".$questao['cod_questao']."\">Renomear</span>";
+    // ? - Enunciado
 	$enunciado="<span id=\"text_".$questao['cod_questao']."\">".$questao['enunciado']."</span>";
+	// ? - Gabarito
+	$gabarito="<span id=\"texto_".$questao['cod_questao']."\">".$questao_diss."</span>";
     // ? - Editar enunciado
     $editar="<span onclick=\"AlteraTexto(".$questao['cod_questao'].");\">Editar enunciado</span>";
     // ? - Novo topico
     $novo_topico="<span onclick=\"NovoTopico(".$questao['cod_questao'].");\">Novo topico</span>";
     // ? - Limpar enunciado
-    $limpar="<span onclick=\"LimparTexto(".$questao['cod_questao'].");\">Limpar enunciado</span>";	
+    $limpar="<span onclick=\"LimparTexto(".$questao['cod_questao'].");\">Limpar enunciado</span>";
+    // ? - Editar gabarito
+    $editar_gabarito="<span onclick=\"AlteraGabarito(".$questao['cod_questao'].");\">Editar Gabarito</span>";
+    // ? - Limpar gabarito
+	$limpar_gabarito="<span onClick=\"LimparGabarito(".$questao['cod_questao'].");\">Limpar Gabarito</span>";
 
 	/* ? - Exercicios */
 	/* ? - Editar Questao */
@@ -1299,9 +1343,15 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
 	echo("                        <ul>\n");
 	echo("                          <li>".$renomear."</li>\n");
-	echo("                          <li>".$limpar."</li>\n");
 	echo("                          <li>".$editar."</li>\n");
-        echo("                          <li>".$novo_topico."</li>\n");
+	echo("                          <li>".$limpar."</li>\n");
+	
+	if($tp_questao == 'D')
+    {
+	  echo("                          <li>".$editar_gabarito."</li>\n");
+	  echo("                          <li>".$limpar_gabarito."</li>\n");
+    }
+    echo("                          <li>".$novo_topico."</li>\n");
 	// G 1 - Apagar
 	echo("                          <li><span onclick=\"ApagarQuestao();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
 	echo("                        </ul>\n");
@@ -1331,6 +1381,20 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                        </div>\n");
 	echo("                      </td>\n");
 	echo("                    </tr>\n");
+	
+	if($tp_questao == "D")
+	{
+	  /* ? - Gabarito */
+	  echo("                    <tr class=\"head\">\n");
+	  echo("                      <td class=\"center\" colspan=\"6\">Gabarito</td>\n");
+	  echo("                    </tr>\n");
+	  echo("                      <td class=\"itens\" colspan=\"6\">\n");
+      echo("                        <div class=\"divRichText\">\n");
+	  echo ("                        ".$gabarito."\n");
+	  echo("                        </div>\n");
+	  echo("                      </td>\n");
+	  echo("                    </tr>\n");
+	}
 
 	if($tp_questao == "O")
 	{
