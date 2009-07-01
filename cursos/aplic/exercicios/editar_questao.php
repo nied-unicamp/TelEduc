@@ -1210,8 +1210,8 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   
   echo("	function ApagarQuestao()\n");
   echo("	{\n");
-  echo("	  confirm('Tem certeza que deseja excluir definitivamente a questoes?');\n");
-  echo("	  document.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=apagar';\n");
+  echo("	  if(confirm('Tem certeza que deseja excluir definitivamente a questoes?'))\n");
+  echo("	    document.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=apagar&lixeira=".$lixeira."';\n");
   echo("	}\n\n");
   
   echo("      function AtualizaComp(js_tipo_comp)\n");
