@@ -175,9 +175,12 @@
   }
   else if($acao == "apagar")
   {
-  	$status = "X";
-  	ApagarExerc($cod_curso, $cod_questao, $status);
-  	Desconectar($sock);
+  	/* se a questao ja estiver na lixeira, entao o novo status sera X (excluida) */
+  	if($lixeira == "ok")
+  	  $status = "X";
+  	else
+  	  $status = "L";
+  	EviarLixeira($cod_curso, $cod_questao, $status);
     header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=Q");
   }
 
