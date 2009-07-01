@@ -216,8 +216,8 @@
   	$flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
   	$array_topicos_origem = $cod_assunto;
   	$array_itens_origem = $cod_pergunta;
-  	$dirname = "perguntas";
-  	$nome_tabela = "Pergunta";
+  	$dirname = "agenda";
+  	$nome_tabela = "Agenda";
   	
   	$sock=Conectar("");
   	if ($curso_extraido)

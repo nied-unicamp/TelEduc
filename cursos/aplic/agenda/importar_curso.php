@@ -56,21 +56,28 @@ $objMaterial->registerFunction("AlterarPeriodoDinamic");
 $objMaterial->processRequests();
 
 
-// **************** VARI�VEIS DE ENTRADA ****************
-//    c�digo do curso
+
+// **************** VARIAVEIS DE ENTRADA ****************
+//    codigo do curso
 if (isset ($_GET['cod_curso']))
 	$cod_curso = $_GET['cod_curso'];
 
-//    c�digo da categoria do curso
-if (isset ($_POST['cod_categoria']))
-	$cod_categoria = $_POST['cod_categoria'];
+//    codigo da categoria do curso
+if (isset ($_GET['cod_categoria']))
+	$cod_categoria = $_GET['cod_categoria'];
 else
-	$cod_categoria = "NULL";
+	if (isset ($_POST['cod_categoria']))
+		$cod_categoria = $_POST['cod_categoria'];
+	else
+		$cod_categoria = "NULL";
 
-if (isset ($_POST['tipo_curso']))
-	$tipo_curso = $_POST['tipo_curso'];
+if (isset ($_GET['tipo_curso']))
+	$tipo_curso = $_GET['tipo_curso'];
 else
-	$tipo_curso = 'A';
+	if (isset ($_POST['tipo_curso']))
+		$tipo_curso = $_POST['tipo_curso'];
+	else
+		$tipo_curso = 'A';
 
 if ($tipo_curso == 'E') {
 	// Inicializa as datas para um per�odo de um semestre anterior
@@ -78,14 +85,18 @@ if ($tipo_curso == 'E') {
 		// calcula, aproximadamente, 6 meses antes do dia de hoje (data_fim)
 		$data_inicio = UnixTime2Data(time() - (60 * 60 * 24 * 30 * 6) - (60 * 60 * 24 * 2));
 	} else
-		$data_inicio = $_GET['data_inicio'];
+		if (isset ($_GET['data_inicio'])) {
+			$data_inicio = $_GET['data_inicio'];
+		}
 
 	if (!isset ($data_fim)) {
 		$data_fim = UnixTime2Data(time());
-	} else {
-		$data_fim = $_GET['data_fim'];
-	}
+	} else
+		if (isset ($_GET['data_fim'])) {
+			$data_fim = $_GET['data_fim'];
+		}
 }
+$cod_topico_raiz = $_GET['cod_topico_raiz'];
 
 // ******************************************************
 
@@ -169,60 +180,29 @@ if ($tipo_curso == 'E')
 echo ("          return(selecionouCurso());\n");
 echo ("        }\n");
 
-/*echo ("        function selecionouCurso()\n");
-echo ("        {\n");
-echo ("          if ((document.getElementById('cod_curso_compart').selectedIndex != -1) ||
-                  (document.getElementById('cod_curso_todos').selectedIndex != -1))\n");
-echo ("          {\n");
-
-echo ("            if (document.getElementById('cod_curso_todos').selectedIndex != -1)\n");
-echo ("            {\n");
-echo ("              login_imp = document.getElementById('login_import').value;\n");
-echo ("              while (login_imp.search(\" \") != -1)\n");
-echo ("              login_imp = login_imp.replace(/ /, \"\");\n\n");
-echo ("              senha_imp = document.getElementById('senha_import').value;\n");
-echo ("              while (senha_imp.search(\" \") != -1)\n");
-echo ("              senha_imp = senha_imp.replace(/ /, \"\");\n\n");
-
-echo ("              if ((login_imp == \"\") || (senha_imp == \"\"))\n");
-echo ("              {\n");
-// 52(biblioteca) - Login ou senha inv�lidos
-echo ("                alert(\"" . RetornaFraseDaLista($lista_frases_biblioteca, 52) . "\");\n");
-echo ("                if (login_imp == \"\")\n");
-echo ("                  document.getElementById('login_import').focus();\n");
-echo ("                else if (senha_imp == \"\")\n");
-echo ("                  document.getElementById('senha_import').focus();\n");
-echo ("                return(false);\n");
-echo ("              }\n");
-echo ("              document.getElementById('senha_import').value =");
-echo ("              Javacrypt.displayPassword(document.getElementById('senha_import').value, 'AA');\n");
-echo ("            }\n");
-
-echo ("            return(true);\n");
-echo ("          }\n");
-echo ("          else\n");
-// 33 - Selecione um curso em uma das listas.
-echo ("          alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 33) . "');\n");
-echo ("          return(false);\n");
-echo ("        }\n\n");*/
-
 echo ("        function extracheck(obj)\n");
 echo ("        {\n");
 echo ("          return !obj.disabled;\n");
 echo ("        }\n\n");
 
-echo ("        function ListarCursos(tipo_curso)\n");
-echo ("        {\n");
-echo ("          document.frmImpMaterial.tipo_curso.value = tipo_curso;\n");
-echo ("          document.frmImpMaterial.action = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
-echo ("          document.frmImpMaterial.submit();\n");
-echo ("        }\n\n");
+echo ("      function ListarCursos(tipo_curso)\n");
+echo ("      {\n");
+echo ("        document.frmImpMaterial.tipo_curso.value = tipo_curso;\n");
+echo ("        document.frmImpMaterial.action = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_ferramenta=" . $cod_ferramenta . "&cod_topico_raiz=" . $cod_topico_raiz . "';\n");
+echo ("        document.frmImpMaterial.submit();\n");
+echo ("      }\n\n");
 
-echo ("        function mudarCategoria()\n");
-echo ("        {\n");
-echo ("          document.frmImpMaterial.action = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . ".&cod_ferramenta=" . $cod_ferramenta . "';\n");
-echo ("          document.frmImpMaterial.submit();\n");
-echo ("        }\n\n");
+echo ("      function mudarCategoria()\n");
+echo ("      {\n");
+
+//echo("        x = document.getElementById('select_categorias');");
+//echo("        cod_categoria = x.options[x.selectedIndex].value;");
+//echo("		document.frmImpPergunta.cod_categoria;");
+echo ("        document.frmImpMaterial.action = 'importar_curso.php';\n");
+echo ("        document.frmImpMaterial.cod_curso.value = " . $cod_curso . ";\n");
+echo ("        document.frmImpMaterial.tipo_curso.value = '" . $tipo_curso . "';\n");
+echo ("        document.frmImpMaterial.submit();\n");
+echo ("      }\n\n");
 
 echo ("  function mudafonte(tipo) {\n");
 echo ("    if ( tipo == 0 ) {");
@@ -406,12 +386,11 @@ if ('E' == $tipo_curso) {
 echo ("                      <td>\n");
 echo ("                <form name=\"frmImpMaterial\" method=\"get\" action=\"acoes_linha.php\">\n");
 
-
+echo ("                  <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                  <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
 echo ("                  <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
 echo ("                  <input type=\"hidden\" id=getme name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
 echo ("                  <input type=hidden name=tipo_curso value='" . $tipo_curso . "' />\n");
-echo ("                  <input type=hidden name=cod_ferramenta value='" . $cod_ferramenta . "' />\n");
 
 if ('E' == $tipo_curso) {
 	echo ("                        <input type=hidden name=data_inicio value='' />\n");
@@ -439,7 +418,7 @@ echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td align=\"center\">\n");
 // Monta select com os cursos com material compatilhado
-echo ("                        <select class=\"input\" name=\"cod_curso_compart\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_todos\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "}'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_todos\");' onDblClick='if(this.value!=0){" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "}'>\n");
 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
