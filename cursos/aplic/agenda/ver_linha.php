@@ -520,11 +520,11 @@
     echo("                          <span class=\"destaque\">".RetornaFraseDaLista ($lista_frases_geral, 26)."</span>\n");
     echo("                          <span> - ".RetornaFraseDaLista ($lista_frases, 48).RetornaFraseDaLista ($lista_frases, 49)."</span>\n");
     echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-    echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" style=\"border:2px solid #9bc\" />\n");
+    echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" onchange=\"EdicaoArq(1);\" style=\"border:2px solid #9bc\" />\n");
     echo("                          &nbsp;&nbsp;\n");
-    echo("                          <span onClick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 18)."</span>\n");
-    echo("                          &nbsp;&nbsp;\n");
-    echo("                          <span onClick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 2)."</span>\n");
+    //echo("                          <span onClick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 18)."</span>\n");
+    //echo("                          &nbsp;&nbsp;\n");
+    //echo("                          <span onClick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 2)."</span>\n");
     echo("                        </div>\n");
                                     /* 26 - Anexar arquivo (ger) */
     echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=0 /> <span class=\"link\" id =\"insertFile\" onClick=\"AcrescentarBarraFile(1);\">".RetornaFraseDaLista($lista_frases_geral,26)."</span></div>\n");
