@@ -1586,12 +1586,16 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
    Entrada: $caminho - caminho do diretorio a ser aberto
    Saida: XML da função Ajax
 */
-function RetornaArquivosDiretorioDinamic($caminho){
+function RetornaArquivosDiretorioDinamic($cod_curso,$cod_usuario,$caminho){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $sock = Conectar($cod_curso);
+  $eformador = EFormadorMesmo($sock,$cod_curso,$cod_usuario);
+  Desconectar($sock);
   
+  $cont = 0;
   $diretorio = RetornaArrayDiretorioSimples($caminho);
-  $n = count($diretorio);
   
   foreach ($diretorio as $cod => $linha)
   {
@@ -1611,11 +1615,15 @@ function RetornaArquivosDiretorioDinamic($caminho){
     
     $nome = ConverteAspas2BarraAspas($nome);
     $linha['Caminho'] = ConverteAspas2BarraAspas($linha['Caminho']);
-            
-    $objResponse->addScript("NovoArquivo('".$nome."',".round(($tamanho/1024),2).",'".$tipo."','".$data."','".$linha['Caminho']."',".$cod.");"); 
+    
+    if(!($linha['Status'] == true && !$eformador))
+    {
+      $cont++;
+      $objResponse->addScript("NovoArquivo('".$nome."',".round(($tamanho/1024),2).",'".$tipo."','".$data."','".$linha['Caminho']."','".$linha['Status']."',".$cod.");");
+    }
   }
   
-  $objResponse->addScript("ExibeDiretorio(".$n.");\n");
+  $objResponse->addScript("ExibeDiretorio(".$cont.");\n");
   
   return $objResponse->getXML();
 }
@@ -1673,6 +1681,46 @@ function DescompactarArquivoDinamic($pasta, $nomeArq){
   	  	
   	ModificaDataArquivo($linha['Caminho'],$data);
   }
+}
+
+/**********************************************************************
+   MudaStatusArquivos - Muda status dos arquivos
+   Entrada: $arrayArq - array que contem os caminhos dos arquivos a serem adicionados ao pacote
+   Saida: void
+*/
+function MudaStatusArquivos($arrayArq)
+{
+  foreach ($arrayArq as $cod => $linha)
+  {
+  	if(is_dir($linha))
+  	{
+  	  $dir = RetornaArrayDiretorioSimples($linha);
+  	  foreach($dir as $cod1 => $linhaNext)
+  	  {
+  	    $arrayArqNext[$cod1] = $linhaNext['Caminho'];
+  	  }
+  	  MudaStatusArquivos($arrayArqNext);
+  	}
+  	
+    AlteraStatusArquivo($linha,!RetornaStatusArquivo($linha));
+  }
+}
+
+/**********************************************************************
+   MudaStatusArquivosDinamic - Muda status dos arquivos
+   Entrada: $arrayArq - array que contem os caminhos dos arquivos a serem adicionados ao pacote
+            $texto - texto de feedback
+   Saida: XML da função Ajax
+*/
+function MudaStatusArquivosDinamic($arrayArq,$texto)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  MudaStatusArquivos($arrayArq);
+  $objResponse->addScript("AbrePasta(pastaAtual);");
+  $objResponse->addScript("mostraFeedback(\"".$texto."\",true);");
+  
+  return $objResponse->getXML();
 }
 
 /********************************************************************************************************

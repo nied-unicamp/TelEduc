@@ -65,6 +65,7 @@
   $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
   $objAjax->registerFunction("RetornaArquivosDiretorioDinamic");
   $objAjax->registerFunction("DescompactarArquivoDinamic");
+  $objAjax->registerFunction("MudaStatusArquivosDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -531,11 +532,13 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("            flag = 1;\n");
   echo("        }\n");
   echo("      }\n");
-  echo("      if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
+  echo("      if (j == (cod_itens.length) && i != 0) Cabecalho.checked=true;\n");
   echo("      else Cabecalho.checked=false;\n");
   echo("      if(j > 0){\n");
   echo("        document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
   echo("        document.getElementById('mArq_apagar').onclick=function(){ ApagarArq(); };\n");
+  echo("        document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("        document.getElementById('mArq_ocultar').onclick=function(){ Ocultar(); };\n");
   echo("        if(flag == 0)\n");
   echo("        {\n");
   echo("          document.getElementById('mArq_descomp').className=\"menuUp02\";\n");
@@ -546,15 +549,36 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n");
   echo("          document.getElementById('mArq_descomp').onclick=function(){ };\n");
   echo("        }\n");
-  echo("        document.getElementById('mArq_baixar').className=\"menuUp02\";\n");
-  echo("        document.getElementById('mArq_baixar').onclick=function(){ Download(); };\n");
   echo("      }else{\n");
   echo("        document.getElementById('mArq_apagar').className=\"menuUp\";\n");
   echo("        document.getElementById('mArq_apagar').onclick=function(){ };\n");
   echo("        document.getElementById('mArq_descomp').className=\"menuUp\";\n");
   echo("        document.getElementById('mArq_descomp').onclick=function(){ };\n");
-  echo("        document.getElementById('mArq_baixar').className=\"menuUp\";\n");
-  echo("        document.getElementById('mArq_baixar').onclick=function(){ };\n");
+  echo("        document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("        document.getElementById('mArq_ocultar').onclick=function(){ };\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function ApagarArq(){\n");
+  echo("      var i,j,checks,getNumber,nomeArq,arrayIdArq,caminho;\n");
+  echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      arrayIdArq = new Array();\n");
+  echo("      j = 0;\n");
+  echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
+  echo("      if (confirm('Confirmacao')){\n");
+  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
+  echo("        for (i=0; i<checks.length; i++){\n");
+  echo("          if(checks[i].checked){\n");
+  echo("            getNumber=checks[i].id.split(\"_\");\n");
+  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
+  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.", \"texto\");\n");
+  echo("            arrayIdArq[j++] = getNumber[1];\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        DeletaLinhaArq(arrayIdArq,j);\n");
+  echo("        if(contaArq == 0)\n");
+  echo("          InsereDiretorioVazio();\n");
+  echo("        VerificaChkBoxArq();\n");
   echo("      }\n");
   echo("    }\n\n");
   
@@ -581,6 +605,24 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        AbrePasta(pastaAtual);\n");
   echo("        VerificaChkBoxArq();\n");
   echo("    }\n");
+  
+  echo("    function Ocultar(){\n");
+  echo("      var i,checks,getNumber,nomeArq,arrayArq,caminho;\n");
+  echo("      arrayArq = new Array();\n");
+  echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
+  echo("      if (confirm('Confirmacao')){\n");
+  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
+  echo("        for (i=0; i<checks.length; i++){\n");
+  echo("          if(checks[i].checked){\n");
+  echo("            getNumber=checks[i].id.split(\"_\");\n");
+  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
+  echo("            arrayArq[i] = caminho+nomeArq;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        xajax_MudaStatusArquivosDinamic(arrayArq,\"Arquivo(s) ocultado(s) com sucesso.\");\n");
+  echo("      }\n");
+  echo("    }\n\n");
   
   echo("    function getfilename(path)\n");
   echo("    {\n");
@@ -635,30 +677,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        contaArq--;\n");
   echo("      }\n");
   echo("    }\n\n");
-
-  echo("    function ApagarArq(){\n");
-  echo("      var i,jchecks,getNumber,nomeArq,arrayIdArq,caminho;\n");
-  echo("      checks = document.getElementsByName('chkArq');\n");
-  echo("      arrayIdArq = new Array();\n");
-  echo("      j = 0;\n");
-  echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm('Confirmacao')){\n");
-  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
-  echo("        for (i=0; i<checks.length; i++){\n");
-  echo("          if(checks[i].checked){\n");
-  echo("            getNumber=checks[i].id.split(\"_\");\n");
-  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
-  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.", \"texto\");\n");
-  echo("            arrayIdArq[j++] = getNumber[1];\n");
-  echo("          }\n");
-  echo("        }\n");
-  echo("        DeletaLinhaArq(arrayIdArq,j);\n");
-  echo("        if(contaArq == 0)\n");
-  echo("          InsereDiretorioVazio();\n");
-  echo("        VerificaChkBoxArq();\n");
-  echo("      }\n");
-  echo("    }\n\n");
-  
+    
   echo("    function RetornaSrcImg(nomeArq)\n");
   echo("    {\n");	
   echo("      var array,formato,n;\n");
@@ -784,7 +803,15 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      return span;\n");
   echo("    }\n\n");
   
-  echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho,data,tipo){\n");
+  echo("    function criaSpanArqOculto(){\n");
+  echo("	  var span;\n");
+  echo("	  span = document.createElement(\"span\");\n");
+  echo("      span.style.color = \"red\";\n");
+  echo("	  span.innerHTML = \" (oculto)\";\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho,data,tipo,status){\n");
   echo("      var novaTr,trRef,tdChk,tdNome;\n");
   echo("      if(contaArq == 0)\n");
   echo("        RemoveDiretorioVazio();\n");
@@ -798,6 +825,8 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        tdNome.appendChild(criaSpanArq(nomeArq,numArq,caminho));\n");
   echo("      else if(tipo == \"pasta\")\n");
   echo("        tdNome.appendChild(criaSpanPasta(nomeArq,numArq,caminho));\n");
+  echo("      if(status == '1')\n");
+  echo("        tdNome.appendChild(criaSpanArqOculto());\n");
   echo("      novaTr.appendChild(tdChk);\n");
   echo("      novaTr.appendChild(tdNome);\n");
   echo("      novaTr.appendChild(criaTd(tamanho+\" Kb\",1));\n");
@@ -873,7 +902,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("	  trLoading.parentNode.removeChild(trLoading);\n");
   echo("    }\n\n");
   
-  echo("    function NovoArquivo(nome,tamanho,tipo,data,caminho,i)\n");
+  echo("    function NovoArquivo(nome,tamanho,tipo,data,caminho,status,i)\n");
   echo("    {\n");
   echo("      if(tipo == \"pasta\")\n");
   echo("      {\n");
@@ -885,6 +914,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      conteudoPasta[i][2] = data;\n");
   echo("      conteudoPasta[i][3] = caminho;\n");
   echo("      conteudoPasta[i][4] = tipo;\n");
+  echo("      conteudoPasta[i][5] = status;\n");
   echo("    }\n\n");
   
   echo("    function InsereDiretorioVazio(){\n");
@@ -940,7 +970,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      AtualizaCaminhoPastas();\n");
   echo("      for(i=0;i<n;i++)\n");
   echo("      {\n");
-  echo("      	InsereLinhaArq(conteudoPasta[i][0],conteudoPasta[i][1],i,conteudoPasta[i][3],conteudoPasta[i][2],conteudoPasta[i][4]);\n");
+  echo("      	InsereLinhaArq(conteudoPasta[i][0],conteudoPasta[i][1],i,conteudoPasta[i][3],conteudoPasta[i][2],conteudoPasta[i][4],conteudoPasta[i][5]);\n");
   echo("      }\n");
   echo("      if(i == 0)\n");
   echo("      {\n");
@@ -953,9 +983,10 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      var caminho;\n");
   echo("      caminho = pastaRaiz + pasta.split(\"Raiz/\")[1];\n");
   echo("      FechaPastaAtual();\n");
-  echo("      InsereMsgLoadingPasta();");
+  echo("      VerificaChkBoxArq();\n");
+  echo("      InsereMsgLoadingPasta();\n");
   echo("      pastaAtual = pasta;\n");
-  echo("      xajax_RetornaArquivosDiretorioDinamic(caminho);\n");
+  echo("      xajax_RetornaArquivosDiretorioDinamic(".$cod_curso.",".$cod_usuario.",caminho);\n");
   echo("    }\n\n");
   
   echo("    function AplicarExercicio(cod)\n");
@@ -1249,7 +1280,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	  echo("                      </ul>\n");
 	  echo("                    </td>\n");
 	  echo("                  </tr>\n");
-      echo("                  <tr id=\"optQuestoes\">\n");
+      echo("                  <tr id=\"addQuestoes\">\n");
 	  echo("                    <td align=\"left\" colspan=\"6\"><span id=\"adicionarQuestao\" class=\"link\" onclick=\"window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q&cod_exercicio=".$cod_exercicio."';\">(+) Adicionar questoes</span></td>\n");
 	  echo("                  </tr>\n");
 	}
@@ -1257,10 +1288,6 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
 	echo("                    <td colspan=\"6\">Arquivos</td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr class=\"head01\">\n");
-	/* ? - Localizacao */
-	echo("                    <td colspan=\"6\">Localizacao</td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
 	echo("                    <td colspan=\"6\" class=\"alLeft\" id=\"caminhoPastas\"><span class=\"link\" onclick=\"AbrePasta('Raiz/');\"><img src=\"../imgs/pasta.gif\">Raiz</span></td>\n");
@@ -1326,10 +1353,15 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 		  $tag_fecha = "</span>";
         }
         
+        if($linha_arq['Status'] == true)
+        	$oculto = " <span style='color:red;'>(oculto)</span>";
+        else
+        	$oculto = ""; 
+        
 	    echo("                        <tr name=\"Raiz/\" id=\"trArq_".($cod+1)."\">\n");
 	    if($exercicio['situacao'] == 'C')
           echo("                          <td width=\"2\"><input type=\"checkbox\" name=\"chkArq\" id=\"chkArq_".($cod+1)."\" onclick=\"VerificaChkBoxArq();\" value=\"".$cod."\" /></td>\n");
-        echo("                          <td colspan=\"3\" class=\"alLeft\">".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."</td>\n");
+        echo("                          <td colspan=\"3\" class=\"alLeft\">".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha.$oculto."</td>\n");
         echo("                          <td>".round(($linha_arq['Tamanho']/1024),2)." Kb</td>\n");
         echo("                          <td>".unixTime2DataHora($linha_arq['Data'])."</td>\n");
         echo("                        </tr>\n");
@@ -1343,7 +1375,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	  echo("                      <ul>\n");
 	  echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
       echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">Descompactar</span></li>\n");
-      echo("                        <li class=\"menuUp\" id=\"mArq_baixar\"><span id=\"sArq_baixar\">Download</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
 	  echo("                      </ul>\n");
 	  echo("                    </td>\n");
 	  echo("                  </tr>\n");
