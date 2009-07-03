@@ -1,4 +1,4 @@
-function micoxUpload2(form,timeout,loading,callback,arqNum,nomeArq,cod_curso,cod_questao,cod_usuario){
+function micoxUpload2(form,timeout,loading,callback,arqNum,pasta,nomeArq,cod_curso,cod_questao,cod_usuario){
 /**
 * micoxUpload2 - Submete um form para um iframe oculto e pega o resultado. Consequentemente pode
 *               ser usado pra fazer upload de arquivos de forma assincrona.
@@ -129,7 +129,7 @@ function micoxUpload2(form,timeout,loading,callback,arqNum,nomeArq,cod_curso,cod
 		document.getElementById('divAnexando').className = 'divHidden';
 		document.getElementById('divArquivo').className='';
 		
-		xajax_ExibeArquivoAnexadoDinamic(cod_curso,cod_questao,cod_usuario,arqNum,nomeArq);
+		xajax_ExibeArquivoAnexadoDinamic(cod_curso,cod_questao,cod_usuario,arqNum,pasta,nomeArq,'');
 		
 		//removing old form
 		form.parentNode.removeChild(form);	
