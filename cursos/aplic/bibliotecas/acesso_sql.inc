@@ -648,7 +648,10 @@ function PegaSemaforo($sock,$ferramenta)
 
   $query = "select * from Semaforo_".$ferramenta." where data < ".$tempo_comparacao."";
   $res = mysql_query($query);
-  $rows = mysql_num_rows($res);
+  if($res)
+  	$rows = mysql_num_rows($res);
+  else
+  	$rows=0;	
 
   //se existe um semaforo e ele foi criado ha mais de 1 minuto, entao o liberamos
   if($res && $rows != 0)
