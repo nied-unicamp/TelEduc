@@ -934,7 +934,7 @@ function RetornaRespostaQuestao($sock,$cod_resolucao,$cod_questao,$tp_questao)
 */
 function RetornaArquivosQuestao($cod_curso, $dirlink)
 {
-  return (RetornaArrayDiretorio($dirlink));
+  return (RetornaArrayDiretorioSimples($dirlink));
 }
 
 /* *********************************************************************
@@ -1528,7 +1528,7 @@ function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
 /* *********************************************************************
    ExcluiArquivoDinamic - Exclui o arquivo, dinamicamente
    Entrada: $numero - numero do arquivo, no item
-            $arq - endereco do arquivo no servidor
+            $arq - caminho do arquivo no servidor
             $cod_curso - codigo do curso
             $cod_item - codigo do item
             $cod_usuario - codigo do usuario
@@ -1554,14 +1554,16 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
             $cod_questao - codigo da questao
 			$cod_usuario - codigo do usuario
             $arqNum - numero do arquivo
+			$pasta - pasta onde se encontra o arquivo
+			$nomeArq - nome do arquivo
 			$textoFeedback - texto de feedback
    Saida: XML da função Ajax
 */
-function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arqNum, $nomeArq, $textoFeedback){
+function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arqNum, $pasta, $nomeArq, $textoFeedback){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  $caminho = "../../diretorio/exercicios_".$cod_curso."_".$cod_questao."_".$cod_usuario."/".$nomeArq;
+  $caminho = $pasta.$nomeArq;
   $tamanho = round((filesize($caminho) / 1024), 2);
   $data = filemtime($caminho);
   
@@ -1588,15 +1590,15 @@ function RetornaArquivosDiretorioDinamic($caminho){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  $diretorio = RetornaArrayDiretorio($caminho);
+  $diretorio = RetornaArrayDiretorioSimples($caminho);
+  $n = count($diretorio);
+  
   foreach ($diretorio as $cod => $linha)
   {
     if (!($linha['Arquivo'] == "") && $linha['Diretorio'] == "")
     {
       $nome = $linha['Arquivo'];
       $tipo = "arquivo";
-      $caminho_arquivo = $caminho.$nome;
-	  $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
     }
     else
     {
@@ -1607,10 +1609,13 @@ function RetornaArquivosDiretorioDinamic($caminho){
     $tamanho = $linha['Tamanho'];
     $data = unixTime2DataHora($linha['Data']);
     
-    $objResponse->addScript("NovoArquivo('".$nome."',".round(($tamanho/1024),2).",'".$tipo."','".$data."','".$caminho_arquivo."',".$cod.");");    
+    $nome = ConverteAspas2BarraAspas($nome);
+    $linha['Caminho'] = ConverteAspas2BarraAspas($linha['Caminho']);
+            
+    $objResponse->addScript("NovoArquivo('".$nome."',".round(($tamanho/1024),2).",'".$tipo."','".$data."','".$linha['Caminho']."',".$cod.");"); 
   }
   
-  $objResponse->addScript("ExibeDiretorio(".$cod.");");
+  $objResponse->addScript("ExibeDiretorio(".$n.");\n");
   
   return $objResponse->getXML();
 }
@@ -1620,32 +1625,54 @@ function RetornaArquivosDiretorioDinamic($caminho){
    Entrada: $cod_curso - codigo do curso
             $cod_questao - codigo da questao
 			$cod_item - chave primária da questao ou do exercicio
+			$pasta - pasta onde procurar o arquivo
 			$nomeArq - nome do arquivo
-            $pasta - indica se o arquivo pertence a uma questao ou a um exercicio
    Saida: XML da função Ajax
 */
-function VerificaExistenciaArquivoDinamic($cod_curso, $cod_item, $cod_usuario, $nomeArq, $pasta){
+function VerificaExistenciaArquivoDinamic($cod_curso, $cod_item, $cod_usuario, $pasta, $nomeArq){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  if($pasta == "exercicio")
-    $dir = RetornaArrayDiretorio("../../diretorio/exercicios_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
-  else if($pasta == "questao")
-    $dir = RetornaArrayDiretorio("../../diretorio/questoes_".$cod_curso."_".$cod_item."_".$cod_usuario."/");
-  
-  $flag = 0;
-  if ( ($total = count($dir)) > 0 && $dir != NULL){
-    foreach($dir as $cod => $linha){
-      if ($linha['Arquivo'] == $nomeArq){
-        $flag = 1;
-        break;
-      }
-    }
-  }
+  if(file_exists($pasta.$nomeArq))
+  	$flag = 1;
+  else
+  	$flag = 0;
   
   $objResponse->addScript("VerificaUpload('".$nomeArq."',$flag);");
 
   return $objResponse->getXML();
+}
+
+/**********************************************************************
+   DescompactarArquivoDinamic - Descompacta arquivo
+   Entrada: $pasta - pasta em que se encontra o arquivo
+			$nomeArq - nome do arquivo
+   Saida: XML da função Ajax
+*/
+function DescompactarArquivoDinamic($pasta, $nomeArq){
+
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $data = time();
+  
+  $caminho = $pasta.$nomeArq;
+  $diretorio_antes = RetornaArrayDiretorioSimples($pasta);
+  DescompactarArquivoZip($caminho,$pasta);
+  RemoveArquivo($caminho);
+  $diretorio_depois = RetornaArrayDiretorioSimples($pasta);
+  
+  foreach ($diretorio_depois as $cod => $linha)
+  {
+  	foreach ($diretorio_antes as $cod1 => $linha1)
+  	{
+  	  if($linha['Diretorio'] == "" && $linha['Arquivo'] == $linha1['Arquivo'])
+  	  	break;
+  	  else if($linha['Diretorio'] == $linha1['Diretorio'])
+  	  	break;
+  	}
+  	  	
+  	ModificaDataArquivo($linha['Caminho'],$data);
+  }
 }
 
 /********************************************************************************************************
