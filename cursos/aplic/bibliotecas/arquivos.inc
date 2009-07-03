@@ -1179,5 +1179,143 @@ function RenomeiaPHPDoDiretorio ($diretorio)
   return ($flag);
 }
 
+function getDirectorySize($path)
+{
+  $totalsize = 0;
+  
+  if ($handle = opendir ($path))
+  {
+    while (false !== ($file = readdir($handle)))
+    {
+      $nextpath = $path . '/' . $file;
+      if ($file != '.' && $file != '..' && !is_link ($nextpath))
+      {
+        if (is_dir($nextpath))
+        {
+          $totalsize += getDirectorySize($nextpath);
+        }
+        elseif (is_file($nextpath))
+        {
+          $totalsize += filesize($nextpath);
+        }
+      }
+    }
+  }
+  
+  closedir ($handle);
+
+  return $totalsize;
+} 
+
+/* ************************************************************************
+   RetornaArrayDiretorioSimples - Retorna um array com os arquivos do diretorio (apenas primeiro nível)
+   Entrada: $diretorio - diretorio a ser varrido.
+   Saida: Array multidimensional com:
+          $lista[<num>]['Caminho'] - caminho completo.
+          $lista[<num>]['Diretorio'] - Diretorio do arquivo
+          $lista[<num>]['Arquivo'] - Nome do arquivo
+          $lista[<num>]['Status'] - Condi��o especial (true ou false);
+          $lista[<num>]['Tamanho'] - tamanho do arquivo
+          $lista[<num>]['Data'] - data da �ltima modifica��o
+*/
+function RetornaArrayDiretorioSimples($diretorio)
+{
+
+  if (!ExisteArquivo($diretorio))
+    return (array());
+
+  $diretorio = rtrim($diretorio, DIRECTORY_SEPARATOR);
+
+  // Inicializamos o contador de arquivos encontrados
+  $cont = 0;
+
+  // Inicializamos a fila
+  $dirs = array();
+  // Inserimos o primeiro elemento na fila
+  array_push($dirs, $diretorio);
+
+  // Remove o primeiro elemento da fila
+  $dir_cur = array_shift($dirs);
+
+  // Lista o padr�o procurado
+  if (($e1 = glob($dir_cur.DIRECTORY_SEPARATOR.'*')) === false)
+    return (array());
+
+  if (($e2 = glob($dir_cur.DIRECTORY_SEPARATOR.'.*')) === false)
+    return (array());
+
+  $e2 = array_filter($e2, "FiltraDiretorioRelativos");
+  $encontrados = array_merge($e1, $e2);
+
+  if (count($encontrados))
+  {
+    foreach ($encontrados as $idx => $nome)
+    {
+      clearstatcache();
+      $tipo_arquivo = filetype($nome);
+
+      if ($tipo_arquivo == 'dir')
+      {
+        $lista[$cont]['Caminho'] = $nome;
+        $lista[$cont]['Diretorio'] = trim(substr($nome, strlen($diretorio) + 1), DIRECTORY_SEPARATOR);
+        $lista[$cont]['Arquivo'] = "";
+        $lista[$cont]['Tamanho'] = getDirectorySize($nome);
+        clearstatcache();
+        $lista[$cont]['Data'] = filemtime($nome);;
+        $lista[$cont]['Status'] = RetornaStatusArquivo($nome);
+      }
+      else if ($tipo_arquivo == 'file')
+      {
+        $lista[$cont]['Caminho'] = $nome;
+        $dir_pai = dirname($nome);
+        $lista[$cont]['Diretorio'] = trim(substr($dir_pai, strlen($diretorio) + 1), DIRECTORY_SEPARATOR);
+        // correção feita para exibicao de todos os acentos - a função basename não é "not utf-8 safe"          
+        $lista[$cont]['Arquivo'] = ltrim(basename(preg_replace("/\//", "/ ", $nome)));
+        clearstatcache();
+        $lista[$cont]['Tamanho'] = filesize($nome);
+        clearstatcache();
+        $lista[$cont]['Data'] = filemtime($nome);;
+        $lista[$cont]['Status'] = RetornaStatusArquivo($nome);
+      }
+      $cont++;
+    }
+  }
+  
+  // Lista os subdiret�rios da pasta corrente e
+  // adiciona-os na fila
+  // Lista o padr�o procurado
+  if (($c1 = glob($dir_cur.DIRECTORY_SEPARATOR.'*')) === false)
+    return (array());
+
+  if (($c2 = glob($dir_cur.DIRECTORY_SEPARATOR.'.*')) === false)
+    return (array());
+  $c2 = array_filter($c2, "FiltraDiretorioRelativos");
+
+  $conteudo = array_merge($c1, $c2);
+
+  if (count($lista) > 0)
+    uasort ($lista, 'CompareRetornaArrayDiretorio');
+  return ($lista);
+}
+
+/* ************************************************************************
+   ModificaDataArquivo - Modifica a data de ultima modificação do arquivo
+   Entrada: $caminho - caminho do arquivo
+            $novadata - nova data a ser colocada
+   Saida: nada
+*/
+function ModificaDataArquivo($caminho,$novadata)
+{
+	if(is_dir($caminho))
+	{
+	  $dir = RetornaArrayDiretorioSimples($caminho);
+	  foreach ($dir as $cod => $linha)
+      {
+      	ModificaDataArquivo($linha['Caminho'],$data);
+	  }
+	}
+	
+	touch($caminho,$novadata);
+}
 
 ?>
