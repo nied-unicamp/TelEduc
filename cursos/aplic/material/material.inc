@@ -693,18 +693,21 @@ function ArrumaPosicoes($sock, $tabela, $cod_topico)
     }
   }
 
-  foreach($lista_unificada as $cod => $linha){
-    //é item
-    if(isset($linha['posicao_item'])){
-      $update = "update ".$tabela."_itens set posicao_item=".($cod+1)." where cod_item = ".$linha['cod_item'];
-      Enviar($sock, $update);
-    }
-    //é tópico
-    else if(isset($linha['posicao_topico'])) {
-      $update = "update ".$tabela."_topicos set posicao_topico=".($cod+1)." where cod_topico = ".$linha['cod_topico'];
-      Enviar($sock, $update);
-    }
+  if($lista_unificada)	
+  {
+    foreach($lista_unificada as $cod => $linha){
 
+    //é item
+      if(isset($linha['posicao_item'])){
+        $update = "update ".$tabela."_itens set posicao_item=".($cod+1)." where cod_item = ".$linha['cod_item'];
+        Enviar($sock, $update);
+      }
+      //é tópico
+      else if(isset($linha['posicao_topico'])) {
+        $update = "update ".$tabela."_topicos set posicao_topico=".($cod+1)." where cod_topico = ".$linha['cod_topico'];
+        Enviar($sock, $update);
+      }
+    }
   }
 
   LiberaSemaforo($sock, $tabela);
