@@ -788,7 +788,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 		echo ("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
 		echo ("                          <span> - " . RetornaFraseDaLista($lista_frases, 59) . RetornaFraseDaLista($lista_frases, 60) . "</span>\n");
 		echo ("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-		echo ("                          <input type=\"file\" id=\"input_files\" name=\"input_files\"  onchange=\"EdicaoArq(1);\" class=\"input\">\n");
+		echo ("                          <input type=\"file\" id=\"input_files\" name=\"input_files\"  class=\"input\" onchange=\"EdicaoArq(1);\">\n");
 		//echo ("                          &nbsp;&nbsp;\n");
 		//echo ("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
 		//echo ("                          &nbsp;&nbsp;\n");
