@@ -47,6 +47,8 @@
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
+  
+  $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
 
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
   
