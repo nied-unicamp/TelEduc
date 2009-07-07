@@ -793,6 +793,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 		//echo ("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
 		//echo ("                          &nbsp;&nbsp;\n");
 		//echo ("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
+		// blah blah blah
 		echo ("                        </div>\n");
 		/* 26 - Anexar arquivos (ger) */
 		echo ("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
