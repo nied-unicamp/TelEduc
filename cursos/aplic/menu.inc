@@ -510,7 +510,6 @@ function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ul
     echo("            </li>\n");
     
   }
-  
 //   function ExibeLinkAux2($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$cod_usuario){
 //     if ($data>$ultimo_acesso)
 //       $novidade= "../estrelinha.gif";
@@ -597,5 +596,19 @@ function RetornaListaDeCursosUsuario($sock){
   echo("                <!--[if lte IE 6]></td></tr></table></a><![endif]-->\n");
   echo("              </li>\n");
 }
-  
+
+/* **********************************************************************
+   RetornaLinguaCurso - Retorna a língua do curso que está aberto.
+
+   Entrada: $sock - Socket da conexão
+            $cod_curso - Código do curso a ter seus dados retornados
+   Saida: variável com o código de língua do curso
+*/
+function RetornaLinguaCurso($sock,$cod_curso)
+{
+	$query="select cod_lingua from Cursos where cod_curso='".$cod_curso."'";
+  	$res=Enviar($sock,$query);
+  	$linha=RetornaLinha($res);
+  	return $linha[0];
+}
 ?>
