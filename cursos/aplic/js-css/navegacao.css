@@ -16,11 +16,23 @@
 	color: #4F7A95;
 }
 
+#nav li.selected, #nav a.selected{
+	background-color:#E3DDC7;
+	color:#000000;
+}
+
+#nav li.SelectedEndLine, #nav li.SelectedEndLine {
+	margin-bottom:6px;
+	border-bottom:1px solid #8f8f8f;
+	background:url(../imgs/bulletSeta.gif) no-repeat right;
+}
+
 #nav li.endLine, #nav li.endLineHover {
 	margin-bottom:6px;
 	border-bottom:1px solid #8f8f8f;
 	background:url(../imgs/bulletSeta.gif) no-repeat right;
 }
+
 #nav li.topLine, #nav li.topLineHover {
 	border-top:1px solid #8f8f8f;
 	background:url(../imgs/navLine.gif) no-repeat bottom;
