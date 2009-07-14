@@ -113,6 +113,7 @@
   $codMsg = RetornaProximoCodigo($sock, "Correio_mensagens");
   $dirArq=$diretorio_arq."/".$cod_curso."/correio/".$codMsg;
 
+
   $msgCorpo = VerificaStringQuery($msgCorpo);
   $assunto = VerificaStringQuery($assunto);
   
@@ -217,7 +218,11 @@
 
 
  /* Limpa as barras indesejadas. */
+    /* Ja foi verificado com o VerificaString */
     $assunto = stripslashes($assunto);
+    
+    /* Elimina \r\n do Conteudo */
+    $msgCorpo = str_replace("\\r\\n", "", $msgCorpo);
     $msgCorpo = stripslashes($msgCorpo);
 
 
