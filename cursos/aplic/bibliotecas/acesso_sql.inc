@@ -179,21 +179,31 @@ function ImprimeErroSemTela($tipo_erro, $erro, $prefixo)
 */
 function LeConfig()
 {
-//   global $_SESSION['dbuser'],$_SESSION['dbpassword'],$_SESSION['dbnamecurso'],$_SESSION['dbhostname'],$_SESSION['dbport'],
-//          $_SESSION['dbtmpuser'],$_SESSION['dbtmppassword'],$_SESSION['dbtmpnamecurso'],$_SESSION['dbtmphost'],$_SESSION['dbtmpport'];
-  
-  $fp = fopen (".auth", "r");
+	
+  /* Verifica se o arquivo de autorizacao existe, se ele pode ser aberto e se nao esta em branco */
+  if (file_exists(".auth"))
+  	$fp = fopen (".auth", "r");
+  else 
+  	die("LeConfig(): Diret&oacute;rio sem arquivo de autoriza&ccedil;&atilde;o.");
   
   if (!$fp)
-    ImprimeErroSemTela("de Configura&ccedil;&atilde;o","LeConfig(): Diret&oacute;rio sem arquivo de autoriza&ccedil;&atilde;o.", "C");
+    die("LeConfig(): Diret&oacute;rio sem arquivo de autoriza&ccedil;&atilde;o.");
 
   $cam=fgets($fp,256);
+  if ($cam == "") die("LeConfig(): Arquivo de autoriza&ccedil;&atilde;o em branco. Se você está vendo isso depois da instalação do ambiente, talvez tenha esquecido de rodar os scripts configure e configure_end. Reveja o manual.");
   $cam1=explode("\n",$cam);
   $caminho=$cam1[0];
   fclose($fp);
-  $fp=fopen($caminho."teleduc.conf","r"); 
+  
+  /* Verifica se o teleduc.conf existe, e se ele pode ser aberto */
+  if (file_exists($caminho."teleduc.conf"))
+  	$fp=fopen($caminho."teleduc.conf","r");
+  else 
+  	die("LeConfig(): Arquivo de configura&ccedil;&atilde;o do TelEduc n&atilde;o encontrado.");
+  
+  
   if (!$fp)
-    ImprimeErroSemTela("de Configura&ccedil;&atilde;o","LeConfig(): Arquivo de configura&ccedil;&atilde;o do TelEduc n&atilde;o encontrado.", "C");
+    die("LeConfig(): Arquivo de configura&ccedil;&atilde;o do TelEduc n&atilde;o encontrado.");
 
   while (!feof($fp))
   {
@@ -202,18 +212,20 @@ function LeConfig()
 
     $parte=explode("=",$linha, 2);
     @$conteudo=explode("\n",$parte[1]);
+    
+    /* Para os campos criticos, verifica se eles nao estao vazios */
     if ($parte[0]=="dbuser")
-      $_SESSION['dbuser'] = $conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbuser'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbpassword")
-      $_SESSION['dbpassword'] = $conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbpassword'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbnamebase")
-      $_SESSION['dbnamebase']=$conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbnamebase'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbnamecurso")
-      $_SESSION['dbnamecurso']=$conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbnamecurso'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");  
     if ($parte[0]=="dbhost")
-      $_SESSION['dbhost']=$conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbhost'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbport")
-      $_SESSION['dbport']=$conteudo[0];
+      ($conteudo[0] != "") ? $_SESSION['dbport'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbtmpuser")
       $_SESSION['dbtmpuser']=$conteudo[0];
     if ($parte[0]=="dbtmppassword")
