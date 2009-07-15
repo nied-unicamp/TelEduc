@@ -53,28 +53,6 @@
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock = Conectar("");
-
-  if(!empty($_POST['cod_curso'])){
-  	$query="select cod_lingua from Cursos where cod_curso='".$_POST['cod_curso']."'";
-  	$res=Enviar($sock,$query);
-  	$linha=RetornaLinha($res);
-  	$_SESSION['cod_lingua_s'] = $linha[0];
-  	$cod_lin = $linha[0];
-  }//editado - 06/07/09 por Richard
-  if(!empty($_GET['cod_curso'])){
-  	$query="select cod_lingua from Cursos where cod_curso='".$_GET['cod_curso']."'";
-  	$res=Enviar($sock,$query);
-  	$linha=RetornaLinha($res);
-  	$_SESSION['cod_lingua_s'] = $linha[0];
-  	$cod_lin = $linha[0];
-  }//editado - 06/07/09 por Richard
-  if(!empty($curso_valido)){
-    $query="select cod_lingua from Cursos where cod_curso='".$_GET['cod_curso']."'";
-  	$res=Enviar($sock,$query);
-  	$linha=RetornaLinha($res);
-  	$_SESSION['cod_lingua_s'] = $linha[0];
-  	$cod_lin = $linha[0];
-  }//editado - 06/07/09 por Richard
   
   
   if(!PreencheuDadosPessoais($sock))
