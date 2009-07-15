@@ -48,8 +48,14 @@
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   
+  $auxiliar = $_SESSION['cod_lingua_s'];
   $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-
+  // Se diferente, então língua do curso é diferente da língua do usuário, atualiza a lista de frases. 
+  if($auxiliar != $_SESSION['cod_lingua_s']){
+  	unset($_SESSION['lista_frases_s']);
+  }
+  
+  
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
   
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
