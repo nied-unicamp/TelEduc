@@ -187,8 +187,9 @@
    else if ($acao == "validarImportacao"){
  	$sock = MudarDB($sock, "");
  	
-  	$tipo_curso_origem = $cod_curso_todos[0]; // B = Base, E = Extra�do
-  	$cod_curso_origem = $cod_curso_todos[2];
+ 	$cod_cursos = explode(";", $cod_curso_todos);
+  	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
+  	$cod_curso_origem = $cod_cursos[1];
   	
   	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
   	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
