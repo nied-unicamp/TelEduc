@@ -456,7 +456,7 @@ function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultim
     if ($cod_ferr != $cod_ferramenta)
       ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_usuario);
     else{
-         $style2="style=\"color:#2a6686\"";
+         $style2="ativo";
 	 ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style2,$cod_usuario);
      }
   }
@@ -466,11 +466,19 @@ function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ul
       $novidade= "../imgs/estrelinha.gif";
     else
       $novidade="../imgs/estrela1.gif";
-    
+    if($style == "ativo"){
+//    	echo("            <li style=\"background-color:#4388AE;\">\n");
+//    	echo("               <a style=\"color:#FFFFFF;\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+    	echo("            <li class=\"selected\">\n");
+    	echo("               <a class=\"selected\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+    }else{
     // Ferramenta 17 - Estrutura de Ambiente
-    if ($cod_ferr==17)
-        echo("            <li class=\"endLine firstLine\">\n");
-        
+    if ($cod_ferr==17){
+		if($style == "ativo")
+    		echo("            <li class=\"SelectedEndLine firstLine\">\n");
+		else
+    		echo("            <li class=\"endLine firstLine\">\n");
+    }
     // Ferramenta 8 - Mural
     // Ferramenta 11 - Correio
     // Ferramenta 15 - Portfï¿½lio
@@ -500,10 +508,10 @@ function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ul
 
     echo("             <div>\n");
     if ($cod_ferr==15)
-    	echo("               <a href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" $style >");	
+    	echo("               <a href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
     else 
-	echo("               <a href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\" $style >");
-    
+	echo("               <a href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+    }
     echo(" <img src='".$novidade."' border=\"0\" alt=\"\" /> <b>".$nome_ferramenta."</b>");
     echo("               </a>\n");
     echo("             </div>\n");
@@ -598,11 +606,11 @@ function RetornaListaDeCursosUsuario($sock){
 }
 
 /* **********************************************************************
-   RetornaLinguaCurso - Retorna a língua do curso que está aberto.
+   RetornaLinguaCurso - Retorna a lï¿½ngua do curso que estï¿½ aberto.
 
-   Entrada: $sock - Socket da conexão
-            $cod_curso - Código do curso a ter seus dados retornados
-   Saida: variável com o código de língua do curso
+   Entrada: $sock - Socket da conexï¿½o
+            $cod_curso - Cï¿½digo do curso a ter seus dados retornados
+   Saida: variï¿½vel com o cï¿½digo de lï¿½ngua do curso
 */
 function RetornaLinguaCurso($sock,$cod_curso)
 {
