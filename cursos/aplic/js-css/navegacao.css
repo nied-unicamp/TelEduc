@@ -20,6 +20,10 @@
 	background-color:#E3DDC7;
 	color:#000000;
 }
+ #nav a.selected:hover{
+	color:#000000;
+}
+
 
 #nav li.SelectedEndLine, #nav li.SelectedEndLine {
 	margin-bottom:6px;
@@ -28,8 +32,8 @@
 }
 
 #nav li.endLine, #nav li.endLineHover {
-	margin-bottom:6px;
-	border-bottom:1px solid #8f8f8f;
+	/*margin-bottom:6px;
+	border-bottom:1px solid #8f8f8f;*/
 	background:url(../imgs/bulletSeta.gif) no-repeat right;
 }
 
