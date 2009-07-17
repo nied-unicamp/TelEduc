@@ -138,10 +138,11 @@
   	header("Location:perguntas.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=2&acao=".$acao."&atualizacao=true");
   	
   } else if ($acao == "validarImportacao"){
- 	$sock = MudarDB($sock, "");
+ 	$sock = MudarDB($sock, "");	
  	
-  	$tipo_curso_origem = $cod_curso_import[0]; // B = Base, E = Extraído
-  	$cod_curso_origem = $cod_curso_import[2];
+ 	$array = explode(";", $cod_curso_import);
+  	$tipo_curso_origem = $array[0]; 
+  	$cod_curso_origem = $array[1];
 
   	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
   	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
