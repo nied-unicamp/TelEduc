@@ -445,13 +445,13 @@
   echo("                  <tr class=\"head01\">\n");
   echo("                    <td align=\"left\" valign=\"top\" colspan=\"4\">");
   /* 283 - Usuários */
-  echo(RetornaFraseDaLista($lista_frases, 283)." (");
+  echo(RetornaFraseDaLista($lista_frases, 297)." (");
   echo("<span id=\"prim_usr_index\"></span> ");
   /* 284 - a */
-  echo(RetornaFraseDaLista($lista_frases, 284)." ");
+  echo(RetornaFraseDaLista($lista_frases, 298)." ");
   echo("<span id=\"ult_usr_index\"></span> ");
   /* 285 - de */
-  echo(RetornaFraseDaLista($lista_frases, 285)." ");
+  echo(RetornaFraseDaLista($lista_frases, 299)." ");
   echo(($total_usuarios).")</td>\n");
   echo("                  </tr>\n");
   
