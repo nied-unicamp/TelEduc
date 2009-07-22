@@ -1570,4 +1570,19 @@ function RetornaNomeEmailUsuario($sock,$login)
 
   return $linha;
 }
+
+/********************************************************************
+  Fun�ao RetornaNomeEmailUsuario - Retorna nome e o email do usuario
+  Entrada:  $sock - conexão com a base de dados
+            $login - login do usuario
+  Saida:    array contendo nome e email do usuario
+********************************************************************/
+function VerificaSeLoginExiste($sock,$login)
+{
+  $query = "select nome from Usuario where login='".$login."'";
+  $res = Enviar($sock,$query);
+  $linha = RetornaLinha($res);
+
+  return $linha;
+}
 ?>
