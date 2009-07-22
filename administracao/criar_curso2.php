@@ -95,9 +95,14 @@
   if($optUsu == "sim")
     $cod_usuario = RetornaCodUsuarioLogin($sock,$login);
   // senao, atribui a cod_usuario -1 para indicar que queremos cadastrar um novo usuario
-  else
-    $cod_usuario = -1;
-
+  else{
+  	$verifica = VerificaSeLoginExiste($sock,$login);
+  	if(empty($verifica)){
+  		$cod_usuario = -1;
+  		}
+  	else
+  		$cod_usuario = RetornaCodUsuarioLogin($sock,$login);
+  }
   if($cod_usuario != 0)
   {
     // Criando Base
