@@ -215,27 +215,27 @@ function LeConfig()
     
     /* Para os campos criticos, verifica se eles nao estao vazios */
     if ($parte[0]=="dbuser")
-      ($conteudo[0] != "") ? $_SESSION['dbuser'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbuser'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbpassword")
-      ($conteudo[0] != "") ? $_SESSION['dbpassword'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbpassword'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbnamebase")
-      ($conteudo[0] != "") ? $_SESSION['dbnamebase'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbnamebase'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbnamecurso")
-      ($conteudo[0] != "") ? $_SESSION['dbnamecurso'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");  
+      ($conteudo[0] != "") ? $_SESSION['dbnamecurso'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");  
     if ($parte[0]=="dbhost")
-      ($conteudo[0] != "") ? $_SESSION['dbhost'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbhost'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbport")
-      ($conteudo[0] != "") ? $_SESSION['dbport'] = $conteudo[0] : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbport'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
     if ($parte[0]=="dbtmpuser")
-      $_SESSION['dbtmpuser']=$conteudo[0];
+      $_SESSION['dbtmpuser']=trim($conteudo[0]);
     if ($parte[0]=="dbtmppassword")
-      $_SESSION['dbtmppassword']=$conteudo[0];
+      $_SESSION['dbtmppassword']=trim($conteudo[0]);
     if ($parte[0]=="dbtmpnamecurso")
-      $_SESSION['dbtmpnamecurso']=$conteudo[0];
+      $_SESSION['dbtmpnamecurso']=trim($conteudo[0]);
     if ($parte[0]=="dbtmphost")
-      $_SESSION['dbtmphost']=$conteudo[0];
+      $_SESSION['dbtmphost']=trim($conteudo[0]);
     if ($parte[0]=="dbtmpport")
-      $_SESSION['dbtmpport']=$conteudo[0];
+      $_SESSION['dbtmpport']=trim($conteudo[0]);
   }
   fclose($fp);
 }
@@ -287,14 +287,14 @@ function ConectarDB($base, $opt = NULL)
   }
 
   if (! $sock = mysql_connect($host.":".$port, $user, $password))
-    ImprimeErroSemTela("de SQL","mysql_connect(): ".mysql_error()."<br />\n", "S");
+    die("Erro de SQL: mysql_connect(): ".mysql_error()."<br />\n");
 
   else
   {
     if ((isset($base)) && ($base != ""))
     {
       if (!mysql_select_db($base, $sock))
-        ImprimeErroSemTela("de SQL","mysql_select_db(): ".mysql_error()."<br />\n", "S");
+        die("Erro de SQL: mysql_select_db(): ".mysql_error()."<br />\n");
       else
         return($sock);
     }
@@ -328,7 +328,7 @@ function MudarDB($sock, $cod_curso="", $opt="")
     $base=$_SESSION['dbnamebase'];
 
   if (! mysql_select_db($base, $sock))
-    ImprimeErroSemTela("de SQL", "ERRO : mysql_select_db = ".mysql_error()."<br />\n", "S");
+    die("Erro de SQL: mysql_select_db = ".mysql_error()."<br />\n");
   else
     return($sock);
 
