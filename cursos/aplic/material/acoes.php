@@ -245,14 +245,14 @@
   	$cod_cursos = explode(";", $cod_curso_todos);
   	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
   	$cod_curso_origem = $cod_cursos[1];
-
+  	
   	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
   	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
   	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
   	
   	$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
   	
-  	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+  if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
   		$_SESSION['flag_curso_compartilhado'] = TRUE;
   		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1");
   	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
