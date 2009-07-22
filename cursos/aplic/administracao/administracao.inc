@@ -799,7 +799,7 @@ function RetornaListaEscolaridade($sock)
                     [$cod_usuario]['senha']
 
 */
-function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca="")
+function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$num_registros)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -821,10 +821,80 @@ function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca="")
           from ".$dbnamebase.".Usuario
           where cod_usuario NOT IN (".implode($usuario_curso, ",").")
           and ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
+          order by nome
+          LIMIT ".$inicio." , ".$num_registros;
+  
+  $res=Enviar($sock,$query);
+  $saida= RetornaArrayLinhas($res);
+
+  return $saida;
+}
+
+/* ********************************************************************************
+   ListaUsuariosPaginaDinamic - busca dinamicamente os usuarios no banco de dados
+   								e os adiciona a pagina
+   entrada:  $pagina - pagina atual
+   			 $tam_pagina - numero de itens exibidos por pagina
+             $cod_curso - Codigo do curso
+             $busca - string opcional para filtrar resultados
+   saida:    XML
+*/
+function ListaUsuariosPaginaDinamic($pagina, $tam_pagina, $cod_curso, $busca="") {
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+	$inicio = ($pagina-1) * $tam_pagina;
+	$sock=Conectar("");
+	$lista = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$tam_pagina);
+	Desconectar($sock);
+
+	$objResponse->addScriptCall("RemovePaginaAntiga");
+	
+	foreach($lista as $user) {
+		$objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email']);
+	}
+	
+	$objResponse->addScriptCall("IncluiControlePaginacao");
+	$objResponse->addScriptCall("ExibeControles", $pagina);
+	
+	return $objResponse->getXML();
+}
+
+/* *********************************************************************
+   RetornaContagemUsuariosGlobal - Retorna a contagem usuarios nao cadastrados no curso
+                                         para a tela inscrever3.php
+   Entrada: $sock - BASE DO CURSO
+   			$cod_curso - Codigo do curso
+            $busca - string opcional para filtrar resultados
+   Saida: inteiro com o numero de resultados da busca
+
+*/
+function RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca="")
+{
+   // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  //Seleciona usuario do curso
+  $query ="select cod_usuario_global
+           from ".$dbnamebase.".Usuario_curso
+           where cod_curso = '".$cod_curso."'";
+  $res=Enviar($sock,$query);
+
+  $array = RetornaArrayLinhas($res);
+
+  foreach($array as $cod => $linha){
+    $usuario_curso[$cod] = $linha['cod_usuario_global'];
+  }
+
+  //Conta todos os usuarios, exceto os ja cadastrados no curso
+  $query="select count(*) as total
+          from ".$dbnamebase.".Usuario
+          where cod_usuario NOT IN (".implode($usuario_curso, ",").")
+          and ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
           order by nome";
   $res=Enviar($sock,$query);
 
-  $saida= RetornaArrayLinhas($res);
+  $ar = mysql_fetch_array($res);
+  $saida= $ar["total"];
 
   return $saida;
 }
@@ -913,13 +983,12 @@ function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
 
 
   // abandonamos a ideia de mostrar convidados com inscricao rejeitada. Agora mostramos apenas os convidados no curso
-  // como não fazia sentido, voltamos atrás. 17/06/09
   $acao = 'a';
 
   if ($acao == 'a')
   {
     // convidados com inscricao aceita
-    $where .= "(UC.tipo_usuario='Z' or UC.tipo_usuario='z' or UC.tipo_usuario='t')";
+    $where .= "(UC.tipo_usuario='Z' or UC.tipo_usuario='z')";
   }
   else if ($acao == 'r')
   {
@@ -984,17 +1053,6 @@ function RemoverFormador ($sock,$cod_curso,$cod_usuario)
   $dbnamebase = $_SESSION['dbnamebase'];
 
   $tipo_usuario='f';
-
-  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".$tipo_usuario."' where cod_usuario='".$cod_usuario."' and cod_curso='".$cod_curso."'";
-  $res   = Enviar ($sock, $query);
-}
-
-function RemoverAluno ($sock,$cod_curso,$cod_usuario)
-{
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-  $tipo_usuario='a';
 
   $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".$tipo_usuario."' where cod_usuario='".$cod_usuario."' and cod_curso='".$cod_curso."'";
   $res   = Enviar ($sock, $query);
