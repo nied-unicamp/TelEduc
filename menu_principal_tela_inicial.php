@@ -79,12 +79,13 @@
       echo("            <li>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<a href=\"".$pag_atual."?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."&amp;cod_lin=".$cod_lin."\">".$lingua."</a></li>\n");  
     }
   }
+  
 
   echo("          </ul>\n");
   /* 17 - Administra��o */
   /* 18 - �rea Restrita */
   //Se nao estiver logado ou se for admtele, permite link para a administracao
-  if(empty($_SESSION['cod_usuario_global_s']) || $_SESSION['cod_usuario_global_s'] == -1)
+  if($_SESSION['cod_usuario_global_s'] == -1)
     echo("          <a href=\"../administracao/index.php\" title=\"".RetornaFraseDaLista($lista_frases,17)." (".RetornaFraseDaLista($lista_frases,18).")\"><img src=\"../cursos/aplic/imgs/btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
   echo("          <h3>TelEduc</h3>\n");
   echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicitacao</span></div>\n");
