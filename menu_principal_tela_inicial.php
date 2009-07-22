@@ -61,8 +61,7 @@
   echo("        <td></td>\n");
   echo("        <td valign=\"top\" id=\"topo\"><!--NAVEGACAO NIVEL 3-->\n");
   echo("          <ul id=\"nav3nivel\">\n");
-  echo("            <li class=\"visoes\"><a href=\"".$link."contato.php\">".RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
-  echo("            <li class=\"visoes\"><a href=\"".$link."apoio.php\">".RetornaFraseDaLista($lista_frases,11)."</a></li>\n");
+  echo("            <li class=\"visoes\"><a href=\"".$link."equipe.php\">".RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
   //?? - 157 Login
   if(empty($_SESSION['login_usuario_s']))
     echo("            <li class=\"visoes\"><a href=\"autenticacao.php\">Login</a></li>\n");
@@ -95,7 +94,7 @@
   echo("        <td rowspan=\"2\" style=\"width:200px\" valign=\"top\">\n");
   echo("          <ul id=\"nav\">\n");
   echo("            <li class=\"menu1\" style=\"background: none\">TelEduc</li>\n");
-  echo("            <li><a href=\"".$link."index.php\">".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
+  echo("            <li><a href=\"".$link."teleduc.php\">".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
   echo("            <li><a href=\"".$link."estrutura.php\">".RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
   /*Se nao estiver logado, deixa link pra se cadastrar*/
   if(empty($_SESSION['login_usuario_s']))

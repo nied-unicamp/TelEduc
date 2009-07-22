@@ -61,7 +61,7 @@
   $lista_frases_adm=RetornaListaDeFrases($sock,-5);
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  /* 10 - Contato */
+  /* 10 - Equipe */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,10)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
@@ -81,14 +81,8 @@
   /* 29 - Lista de Responsáveis */
   echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases_adm,29)."</td>\n");
   echo("                  </tr>\n");
-  echo("                  <tr class=\"head01\">\n");
-  /* 32 - Nome do responsável: */
-  echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases_adm,32)."</td>\n");
-  /* 43 - E-mail */
-  echo("                    <td>".RetornaFraseDaLista($lista_frases,43)."</td>\n");
-  echo("                  </tr>\n");
 
-  $query = "select nome, email from Contatos";
+  $query = "select nome from Contatos";
 
   $res=Enviar($sock,$query);
   $num=RetornaNumLinhas($res);
@@ -99,8 +93,7 @@
     foreach($lista as $cod => $linha)
     {
         echo("                  <tr>\n");
-        echo("                    <td colspan=\"2\"><b>".$linha[0]."</b></td>\n");
-        echo("                    <td ><a href=mailto:".$linha[1].">".$linha[1]."</a></td>\n");
+        echo("                    <td colspan=\"3\"><b>".$linha[0]."</b></td>\n");
         echo("                  </tr>\n");
     }
   }

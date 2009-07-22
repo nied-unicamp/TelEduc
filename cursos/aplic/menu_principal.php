@@ -1,6 +1,6 @@
 <?
   
-  /* Funções javascript */
+  /* Funï¿½ï¿½es javascript */
   echo("    <script language=\"JavaScript\" type=\"text/javascript\">\n");
   /* *********************************************************
   Funcao MostraPerfil
@@ -60,10 +60,10 @@
 
     }
     
-    // 46 - Visão de Formador
+    // 46 - Visï¿½o de Formador
     $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,46);
     echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
-    // 45 - Visão de Aluno
+    // 45 - Visï¿½o de Aluno
 
     $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,45);
     echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
