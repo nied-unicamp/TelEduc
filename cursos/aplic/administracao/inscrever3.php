@@ -43,6 +43,15 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("administracao.inc");
+  
+  require_once("../xajax_0.2.4/xajax.inc.php");
+  
+  //Instancia o objeto XAJAX
+  $objAjax = new xajax();
+  //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
+  $objAjax->registerFunction("ListaUsuariosPaginaDinamic");
+  //Manda o xajax executar os pedidos acima.
+  $objAjax->processRequests();
 
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -61,17 +70,212 @@
   include("../topo_tela.php");
   include("../menu_principal.php");
 
+  $itens_por_pagina = 10;
+  //$lista_usuarios = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,0,10);
+  $total_usuarios= RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
+  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /*Funcao JavaScript*/
+  $objAjax->printJavascript("../xajax_0.2.4/");
+  
   echo("    <script type=\"text/javascript\">\n\n");
+  
   echo("      var numLogins = 5;\n");
+  echo("      var total_usuarios = ".$total_usuarios.";\n");
+  echo("      var itens_por_pagina = ".$itens_por_pagina.";\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
+  echo("      	ExibePagina(1);\n"); 
   echo("        startList();\n");
   echo("      }\n\n");
 
+  echo("
+  function ExibePagina(pagina)
+  {
+  	index_ini = (pagina - 1) * itens_por_pagina + 1;
+  	index_fim = pagina * itens_por_pagina;
+  	if (index_fim > total_usuarios)
+  		index_fim = total_usuarios;
+  	
+  	document.getElementById('prim_usr_index').innerHTML = index_ini;
+  	document.getElementById('ult_usr_index').innerHTML = index_fim;
+  	
+  	xajax_ListaUsuariosPaginaDinamic(pagina,".$itens_por_pagina.",".$cod_curso.",'".$busca."');
+  }
+  
+  function ExibeControles(pagina)
+  {
+  	pagina = parseInt(pagina);
+  	
+  	var pagina_aux;
+    var fim = pagina * itens_por_pagina;
+  	var ultima_pag = Math.ceil(total_usuarios / itens_por_pagina);
+  	
+  	if (pagina == 1) {
+  		document.getElementById('paginacao_first').onclick = '';
+  		document.getElementById('paginacao_first').className = '';
+  		document.getElementById('paginacao_back').onclick = '';
+  		document.getElementById('paginacao_back').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_first').onclick = function(){ ExibePagina(1); };
+  		document.getElementById('paginacao_first').className = 'link';
+  		document.getElementById('paginacao_back').onclick = function(){ ExibePagina(pagina - 1); };
+  		document.getElementById('paginacao_back').className = 'link';
+  	}
+  	
+  	if (fim >= total_usuarios) {
+  		document.getElementById('paginacao_last').onclick = '';
+  		document.getElementById('paginacao_last').className = '';
+  		document.getElementById('paginacao_fwd').onclick = '';
+  		document.getElementById('paginacao_fwd').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_last').onclick = function(){ ExibePagina(ultima_pag); };
+  		document.getElementById('paginacao_last').className = 'link';
+  		document.getElementById('paginacao_fwd').onclick = function(){ ExibePagina(pagina + 1); };
+  		document.getElementById('paginacao_fwd').className = 'link';
+  	}
+  	
+  	pagina_aux = pagina - 2;
+  	if (pagina_aux < 1) {
+  		document.getElementById('paginacao_1').innerHTML = '';
+  		document.getElementById('paginacao_1').onclick = '';
+  		document.getElementById('paginacao_1').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_1').innerHTML = pagina_aux + ' ';
+  		document.getElementById('paginacao_1').onclick = function(){ ExibePagina(pagina - 2); };
+  		document.getElementById('paginacao_1').className = 'link';
+  	}
+  	
+  	pagina_aux = pagina - 1;
+	if (pagina_aux < 1) {
+		document.getElementById('paginacao_2').innerHTML = '';
+  		document.getElementById('paginacao_2').onclick = '';
+  		document.getElementById('paginacao_2').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_2').innerHTML = pagina_aux + ' ';
+  		document.getElementById('paginacao_2').onclick = function(){ ExibePagina(pagina - 1); };
+  		document.getElementById('paginacao_2').className = 'link';
+  	}
+  	
+  	document.getElementById('paginacao_3').innerHTML = '<b>[' + pagina + '] </b>';
+  	
+  	pagina_aux = pagina + 1;
+	if (pagina_aux > ultima_pag) {
+		document.getElementById('paginacao_4').innerHTML = '';
+  		document.getElementById('paginacao_4').onclick = '';
+  		document.getElementById('paginacao_4').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_4').innerHTML = pagina_aux + ' ';
+  		document.getElementById('paginacao_4').onclick = function(){ ExibePagina(pagina + 1); };
+  		document.getElementById('paginacao_4').className = 'link';
+  	}
+  	
+  	pagina_aux = pagina + 2;
+	if (pagina_aux > ultima_pag) {
+		document.getElementById('paginacao_5').innerHTML = '';
+  		document.getElementById('paginacao_5').onclick = '';
+  		document.getElementById('paginacao_5').className = '';
+  	}
+  	else {
+  		document.getElementById('paginacao_5').innerHTML = pagina_aux + ' ';
+  		document.getElementById('paginacao_5').onclick = function(){ ExibePagina(pagina + 2); };
+  		document.getElementById('paginacao_5').className = 'link';
+  	}
+  }
+  
+  function IncluiUsuarioTabela(cod, nome, login, email)
+  {
+  	tbody = document.getElementById('tabInterna').children[0];
+  	
+  	tr = document.createElement('tr');
+	td_check = document.createElement('td');
+	td_nome = document.createElement('td');
+	td_login = document.createElement('td');
+	td_email = document.createElement('td');
+  	
+	td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
+	td_nome.innerHTML = nome;
+	td_email.innerHTML = email;
+	td_login.innerHTML = login;
+	
+	tr.appendChild(td_check);
+	tr.appendChild(td_nome);
+	tr.appendChild(td_email);
+	tr.appendChild(td_login);
+	tr.setAttribute('name','user');
+	
+  	tbody.appendChild(tr);
+  }
+  
+  function IncluiControlePaginacao()
+  {
+  	tbody = document.getElementById('tabInterna').children[0];
+  	
+  	tr = document.createElement('tr');
+  	td = document.createElement('td');
+  	span1 = document.createElement('span');
+  	span2 = document.createElement('span');
+  	span31 = document.createElement('span');
+  	span32 = document.createElement('span');
+  	span33 = document.createElement('span');
+  	span34 = document.createElement('span');
+  	span35 = document.createElement('span');
+  	span4 = document.createElement('span');
+  	span5 = document.createElement('span');
+  	
+  	
+  	tr.setAttribute('id','controle_pag');
+  	td.setAttribute('align','right');
+  	td.setAttribute('colspan','5');
+  	span1.setAttribute('id','paginacao_first');
+  	span1.innerHTML = '<<';
+  	span2.setAttribute('id','paginacao_back');
+  	span2.innerHTML = '<';
+  	span31.setAttribute('id','paginacao_1');
+  	span32.setAttribute('id','paginacao_2');
+  	span33.setAttribute('id','paginacao_3');
+  	span34.setAttribute('id','paginacao_4');
+  	span35.setAttribute('id','paginacao_5');
+  	span4.setAttribute('id','paginacao_fwd');
+  	span4.innerHTML = '>';
+  	span5.setAttribute('id','paginacao_last');
+  	span5.innerHTML = '>>';
+  	
+  	td.appendChild(span1);
+  	td.appendChild(span2);
+  	td.appendChild(span31);
+  	td.appendChild(span32);
+  	td.appendChild(span33);
+  	td.appendChild(span34);
+  	td.appendChild(span35);
+  	td.appendChild(span4);
+  	td.appendChild(span5);
+  	tr.appendChild(td);
+  	tbody.appendChild(tr);
+  }
+  
+  function RemovePaginaAntiga()
+  {
+  
+  	tbody = document.getElementById('tabInterna').children[0];
+	users = document.getElementsByName('user');
+	var tam = users.length;
+
+	for (i = 0; i < tam; i++) 
+		tbody.removeChild(users[0]);
+
+	cp = document.getElementById('controle_pag');
+	tbody.removeChild(cp); 
+  }
+  ");
+ 
   echo("      function verifica_submit(e)\n");
   echo("      {\n");
   echo("        var keynum;\n\n");
@@ -225,7 +429,7 @@
   echo("            </tr>\n");
   echo("            <tr>\n");
   echo("              <td>\n");
-  echo("                <table  cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+  echo("                <table id=\"tabInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head alLeft\">\n");
   /* - */
   echo("                    <td colspan=\"4\">Selecione abaixo os usu&aacute;rios que deseja cadastrar:"/*.RetornaFraseDaLista($lista_frases,58)*/."</td>\n");
@@ -234,45 +438,46 @@
   /* - */
   echo("                    <td align=\"left\" valign=\"top\" colspan=\"4\">Nome/E-mail/Login: <input type='text' class='input' name='busca' onkeypress='return verifica_submit(event);' value='".$busca."'>&nbsp;<input type=\"button\" class=\"input\" onclick=\"return(buscar());\" value='Buscar"/*.RetornaFraseDaLista($lista_frases,59)*/."'></td>\n");
   echo("                  </tr>\n");
+  
+ 
+  
+  /* Contagem de usuarios: Usuarios (1 a 10 de 23) */
   echo("                  <tr class=\"head01\">\n");
-  echo("                    <td width='10px'></td>\n");
-  /* 15 - Nome */
-  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,15)."</b></td>\n");
-  /* 52 - E-mail */
-  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,52)."</b></td>\n");
-  /* 53 - Login */
-  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,53)."</b></td>\n");
+  echo("                    <td align=\"left\" valign=\"top\" colspan=\"4\">");
+  /* 283 - Usuários */
+  echo(RetornaFraseDaLista($lista_frases, 283)." (");
+  echo("<span id=\"prim_usr_index\"></span> ");
+  /* 284 - a */
+  echo(RetornaFraseDaLista($lista_frases, 284)." ");
+  echo("<span id=\"ult_usr_index\"></span> ");
+  /* 285 - de */
+  echo(RetornaFraseDaLista($lista_frases, 285)." ");
+  echo(($total_usuarios).")</td>\n");
   echo("                  </tr>\n");
+  
+  
+  echo("                  		<tr class=\"head\">\n");
+  echo("                    		<td width='10px'></td>\n");
+  /* 15 - Nome */
+  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,15)."</b></td>\n");
+  /* 52 - E-mail */
+  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,52)."</b></td>\n");
+  /* 53 - Login */
+  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,53)."</b></td>\n");
+  echo("                  		</tr>\n");
 
-  $lista_usuarios = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca);
-  $i=0;
+  //echo("                 		<tr>\n");
+  /* 279 - Sua pesquisa n&atilde;o retornou resultado. */
+  //echo("                   		<td colspan=\"4\">".RetornaFraseDaLista($lista_frases,279)."</td>\n");
+  //echo("                  	</tr>\n");
 
-  if ((count($lista_usuarios))==0 || $lista_usuarios == "")
-  {
-    echo("                 <tr>\n");
-    /* 279 - Sua pesquisa n&atilde;o retornou resultado. */
-    echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,279)."</td>\n");
-    echo("                  </tr>\n");
-  }
-  else
-  {
-    foreach ($lista_usuarios as $cod_usu => $array_usu)
-    {  
-      echo("                  <tr>\n");
-      echo("                    <td><input type=\"checkbox\" class=\"input\" name=\"cod_usu_global[]\" onclick=\"VerificaCheck();\" value=\"".$array_usu['cod_usuario']."\"></td>\n");
-      echo("                    <td>".$array_usu['nome']."</td>\n");
-      echo("                    <td>".$array_usu['email']."</td>\n");
-      echo("                    <td>".$array_usu['login']."</td>\n");
-      echo("                  </tr>\n");
-
-      $i++;
-    }
-  }
-
-  echo("                </table>\n");
-
+  echo("                  	</table>\n");
+  echo("              </td>\n");
+  echo("              </tr>\n");
+    
+  echo("              <tr>\n");
+  echo("              <td>\n");
   /* 59 - Inscrever */
-//   echo("                <div align=\"right\"><br><input type=\"submit\" id=\"inscreve\" class=\"menuUp\" value='".RetornaFraseDaLista($lista_frases,59)."'></div>\n");
   echo("                <div align=\"right\"><br>\n");
   echo("                  <li id=\"inscreve\" class=\"menuUp\"><span>  ".RetornaFraseDaLista($lista_frases,59)."</span></li></div>\n");
   echo("              </td>\n");
