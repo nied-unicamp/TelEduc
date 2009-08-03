@@ -76,7 +76,6 @@
   $nsubmetidas = RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
   $ncorrigidas = RetornaNumExerciciosNaoCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
 
-
   /*********************************************************/
   /* in�io - JavaScript */
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
@@ -242,27 +241,27 @@
 
     for($i = 0;$i < $numlinhas;$i++)
     {
-      $nome[$j] = $titulos[$i]["titulo"];
-      $cod_user_lista[$j] = $titulos[$i]["cod"];
+      $nome[$i] = $titulos[$i]["titulo"];
+      $cod_user_lista[$i] = $titulos[$i]["cod"];
 
       while($k<count($nsubmetidas) && $nsubmetidas[$k]["cod"] < $cod_user_lista[$j])
         $k++;
 
-      if($nsubmetidas != null && $cod_user_lista[$j] == $nsubmetidas[$k]["cod"])
-        $nao_submetidos[$j]=$nsubmetidas[$k]["num"];
+      if($nsubmetidas != null && $cod_user_lista[$i] == $nsubmetidas[$k]["cod"])
+        $nao_submetidos[$i]=$nsubmetidas[$k]["num"];
       else
-        $nao_submetidos[$j]=0;
+        $nao_submetidos[$i]=0;
 
       while($ic<count($ncorrigidas) && $ncorrigidas[$ic]["cod"]<$cod_user_lista[$j])
         $ic++;
 
-      if($ncorrigidas != null && $cod_user_lista[$j] == $ncorrigidas[$ic]["cod"])
-        $nao_corrigidos[$j]=$ncorrigidas[$ic]["num"];
+      if($ncorrigidas != null && $cod_user_lista[$i] == $ncorrigidas[$ic]["cod"])
+        $nao_corrigidos[$i]=$ncorrigidas[$ic]["num"];
       else
-        $nao_corrigidos[$j]=0;
+        $nao_corrigidos[$i]=0;
     }
-
-    $total += $i;
+    
+    $total = $numlinhas;
     $i = 0;
 	    
     if ($total > 0)
