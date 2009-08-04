@@ -59,6 +59,16 @@
   $visualizar = $_GET['visualizar'];
   $data_atual = time();
 
+  $cod_curso = $_GET['cod_curso'];
+  $cod_usuario_global=VerificaAutenticacao($cod_curso);
+  
+  $sock = Conectar("");
+  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
+  
+  /* Se for aluno, manda para a pagina de exercicios individuais dele */
+  if (!EFormador($sock,$cod_curso,$cod_usuario))
+  	header("Location: ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_global); 
+  
   include("../topo_tela.php");
   
   if($visualizar == "E")
