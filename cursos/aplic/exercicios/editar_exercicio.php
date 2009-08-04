@@ -69,7 +69,7 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
-  $cod_ferramenta=24;
+  $cod_ferramenta = 24;
 
   // Descobre os diretorios de arquivo, para os portfolios com anexo
   $sock = Conectar("");

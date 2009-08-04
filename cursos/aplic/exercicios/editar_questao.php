@@ -72,7 +72,7 @@
   $objAjax->processRequests();
   
   
-  $cod_ferramenta=24;
+  $cod_ferramenta = 23;
 
   // Descobre os diretorios de arquivo, para os portfolios com anexo
   $sock = Conectar("");

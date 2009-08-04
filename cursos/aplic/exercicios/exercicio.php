@@ -44,7 +44,7 @@
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  $cod_ferramenta=24;
+  $cod_ferramenta = 23;
   $agrupamento = $_GET['agrupar'];
   $visualizar = $_GET['visualizar'];
   

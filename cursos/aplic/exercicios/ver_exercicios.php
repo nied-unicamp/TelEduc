@@ -53,7 +53,7 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
-  $cod_ferramenta=24;
+  $cod_ferramenta = 23;
   $visualizar = $_GET['visualizar'];
   
   if($visualizar != "I" && $visualizar != "G")

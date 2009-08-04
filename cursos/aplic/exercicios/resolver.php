@@ -61,7 +61,7 @@
   $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
   Desconectar($sock);
 
-  $cod_ferramenta=24;
+  $cod_ferramenta = 23;
   $cod_resolucao = $_GET['cod_resolucao'];
   
   include("../topo_tela.php");
