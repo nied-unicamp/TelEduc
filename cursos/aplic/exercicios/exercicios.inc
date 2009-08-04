@@ -212,7 +212,7 @@ function RetornaNumComentariosExercicio($sock, $cod_usuario, $cod_resolucao)
   // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select Erc.cod_comentarista 'cod', count(*) 'ct', max(Erc.data) 'dt' from Exercicios_resolucao_questao_comentarios Erc where Erc.cod_resolucao=".$cod_resolucao." and Erc.status='A' group by Erc.cod_comentarista order by Erc.cod_comentarista";
+  $query="select Erc.cod_usuario 'cod', count(*) 'ct', max(Erc.data) 'dt' from Exercicios_resolucao_questao_comentarios Erc where Erc.cod_resolucao=".$cod_resolucao." and Erc.status='A' group by Erc.cod_usuario order by Erc.cod_usuario";
   $res=Enviar($sock,$query);
 
   $num_f=0;
