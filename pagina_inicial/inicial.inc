@@ -955,8 +955,11 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
   }else
   {
     $cod_usuario=RetornaProximoCodigo($sock,"Usuario");
+    
+    //Gera uma sequencia aletoria de 20 caracteres
+    $sequencia = GeraChave(20);
 
-    $query="insert into Usuario (cod_usuario,login,senha,nome,rg,email,telefone,endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,cod_escolaridade,informacoes,data_inscricao,cod_lingua) values (".VerificaNumeroQuery($cod_usuario).",'".VerificaStringQuery($login)."','".VerificaStringQuery($senha)."','".VerificaStringQuery($nome_usuario)."','".VerificaStringQuery($rg)."','".VerificaStringQuery($email)."','".VerificaStringQuery($telefone)."','".VerificaStringQuery($endereco)."','".VerificaStringQuery($cidade)."','".VerificaStringQuery($estado)."','".VerificaStringQuery($pais)."','".VerificaStringQuery($data)."','".VerificaStringQuery($sexo)."','".VerificaStringQuery($local)."','".VerificaStringQuery($profissao)."','".VerificaStringQuery($cod_escolaridade)."','".VerificaStringQuery($informacoes)."','".time()."',1)";
+    $query="insert into Usuario (cod_usuario,login,senha,nome,rg,email,telefone,endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,cod_escolaridade,informacoes,data_inscricao,cod_lingua,confirmacao) values (".VerificaNumeroQuery($cod_usuario).",'".VerificaStringQuery($login)."','".VerificaStringQuery($senha)."','".VerificaStringQuery($nome_usuario)."','".VerificaStringQuery($rg)."','".VerificaStringQuery($email)."','".VerificaStringQuery($telefone)."','".VerificaStringQuery($endereco)."','".VerificaStringQuery($cidade)."','".VerificaStringQuery($estado)."','".VerificaStringQuery($pais)."','".VerificaStringQuery($data)."','".VerificaStringQuery($sexo)."','".VerificaStringQuery($local)."','".VerificaStringQuery($profissao)."','".VerificaStringQuery($cod_escolaridade)."','".VerificaStringQuery($informacoes)."','".time()."',1,'".VerificaStringQuery($sequencia)."')";
 
     $res=Enviar($sock,$query);
 
@@ -970,23 +973,32 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 
     $lista_frases_email = RetornaListaDeFrases($sock,-2);
     $lista_frases_correio = RetornaListaDeFrases($sock,11);
-    /* 74 - Bem-Vindo ao TelEduc! */
+    
+    //87 - Confirmação de cadastro TelEduc
+    $assunto = RetornaFraseDaLista($lista_frases_email, 87);
+    
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://$host$raiz_www/pagina_inicial/confirmacao.php?u=$cod_usuario&s=$sequencia</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    
+    /*
+    // 74 - Bem-Vindo ao TelEduc!
     $assunto = RetornaFraseDaLista($lista_frases_email, 74);
 
-    /* 75 - Para acessar o ambiente, a sua Identificação é: */
-    /* 76 - e a sua senha é: */
-    /* 77 - O acesso deve ser feito a partir do endereco: */
-    /* 78 - Atenciosamente */
-    /* 3 - Ambiente de Administração do TelEduc */
+    // 75 - Para acessar o ambiente, a sua Identificação é:
+    // 76 - e a sua senha é:
+    // 77 - O acesso deve ser feito a partir do endereco:
+    // 78 - Atenciosamente
+    // 3 - Ambiente de Administração do TelEduc
 
     $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 75)." <big><em><strong>".$login."</strong></em></big> ".RetornaFraseDaLista($lista_frases_email, 76)."<big><em><strong> ".$dadosForm['senha']."</strong></em></big></p><p>".RetornaFraseDaLista($lista_frases_email, 77)." http://$host$raiz_www/</p><br /><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
 
-    /* 115 - NAO_RESPONDA */
+	*/
+    
+    // 115 - NAO_RESPONDA
     $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
     $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
     MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
 
-    /* Fim da Notificacao */
+    // Fim da Notificacao
     $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
   }
 
@@ -996,6 +1008,52 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
   $objResponse->addScript("trataEnvio('".$flag."');");
 
   return $objResponse->getXML();
+}
+
+/********************************************************************
+  Funcao GeraChave - Gera uma sequencia aleatoria de caracteres
+  Entrada:  $digitos - tamanho da sequencia gerada
+  Saida:    String com a sequencia gerada
+********************************************************************/
+function GeraChave($digitos) {
+	$chave = '';
+	$caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+	srand((double)microtime()*1000000); 
+	for($i=0; $i<$digitos; $i++) { 
+		$chave .= $caracteres[rand()%strlen($caracteres)]; 
+	}
+	return $chave;
+}
+
+/********************************************************************
+  Funcao ConfirmaUsuario - Verifica se o código enviado por email esta correto
+  						   Se estiver, o email é valido e o cadastro é efetivado
+  Entradas:  $user - Código do usuário
+  			 $seq - Sequencia de caracteres enviada por email
+  Saida:     Boolean - True se foi efetivado, false caso contrario
+********************************************************************/
+function ConfirmaUsuario($user, $seq) {
+	
+	$sock=Conectar("");
+	
+	//Seleciona a sequencia de caracteres cadastrada para este usuario
+    $query="select confirmacao from Usuario where cod_usuario='".VerificaNumeroQuery($user)."'";
+    
+    $res=Enviar($sock,$query);
+    $linha=RetornaLinha($res);
+
+    $seq_bd = $linha['confirmacao'];
+    
+    if (strcmp($seq, $seq_bd) == 0) {
+		$query="UPDATE Usuario SET confirmacao=NULL WHERE cod_usuario=".VerificaNumeroQuery($user);
+  		$res=Enviar($sock,$query);
+  		Desconectar($sock);
+    	return true;
+    }
+	else {
+		Desconectar($sock);
+		return false;
+	}
 }
 
 function CadastrarLogar($form,$cod_curso,$tipo_curso)
