@@ -64,7 +64,7 @@
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /*185 - Confirmação*/
-  echo("          <h4>".RetornaFraseDaLista($lista_frases,197)."</h4>\n");
+  echo("          <h4>".RetornaFraseDaLista($lista_frases,204)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
@@ -92,12 +92,12 @@
   	//199 - Clique
   	//200 - aqui
   	//201 - para efetuar o login.
-  	echo(RetornaFraseDaLista($lista_frases,198)." ".RetornaFraseDaLista($lista_frases,199));
-  	echo(" <a href='autenticacao.php' alt='Efetuar login'>".RetornaFraseDaLista($lista_frases,200)."</a> ".RetornaFraseDaLista($lista_frases,201));
+  	echo(RetornaFraseDaLista($lista_frases,205)." ".RetornaFraseDaLista($lista_frases,206));
+  	echo(" <a href='autenticacao.php' alt='Efetuar login'>".RetornaFraseDaLista($lista_frases,207)."</a> ".RetornaFraseDaLista($lista_frases,208));
   }
   else {
   	//202 - Problemas na confirmação do cadastro. Contate o administrador.
-  	echo(RetornaFraseDaLista($lista_frases,202));
+  	echo(RetornaFraseDaLista($lista_frases,209));
   }
   
   
