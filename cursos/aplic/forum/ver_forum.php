@@ -56,6 +56,7 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
+  //$_SESSION['cod_usuario'] = $cod_usuario; 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
   session_register('sin_pag_s');
@@ -750,7 +751,15 @@
   echo("            <tr>\n");
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
+  
+  if(isset($status)){
+  	echo("				  <li><a href=\"imprimir_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&status=".$status."&ordem=".$_SESSION['ordem']."\">Imprimir</a></li>");
+  }
+  else{
+  	echo("				  <li><a href=\"imprimir_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\">Imprimir</a></li>");
+  }
 
+  
   echo("                  <li><a href=\"forum.php?cod_curso=".$cod_curso."&amp;status=".$status."\">");
   if (isset($status) && ($status=='D'))
   {
