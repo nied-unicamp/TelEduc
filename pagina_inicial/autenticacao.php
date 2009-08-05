@@ -77,6 +77,7 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("erroAutenticacao", 0, 180);
+  $feedbackObject->addAction("emailConfirmacao", 203, 0);
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
