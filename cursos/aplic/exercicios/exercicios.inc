@@ -887,6 +887,7 @@ function CancelaResolucaoDoExercicio($sock,$cod_exercicio)
   $consulta = "delete from Exercicios_resolucao where cod_exercicio = ".$cod_exercicio;
   $res = Enviar($sock, $consulta);
   
+  if (!empty($linha['cod_resolucao'])){
   $consulta = "delete from Exercicios_resolucao_questao_obj where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
   
@@ -895,6 +896,7 @@ function CancelaResolucaoDoExercicio($sock,$cod_exercicio)
   
   $consulta = "delete from Exercicios_resolucao_questao_comentarios where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
+  }
 }
 
 /***********************************************************************
