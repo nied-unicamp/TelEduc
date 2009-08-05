@@ -893,7 +893,7 @@ function CancelaResolucaoDoExercicio($sock,$cod_exercicio)
   $consulta = "delete from Exercicios_resolucao_questao_diss where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
   
-  $consulta = "delete from Exercicios_resolucao_comentarios where cod_resolucao = ".$linha['cod_resolucao'];
+  $consulta = "delete from Exercicios_resolucao_questao_comentarios where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
 }
 
