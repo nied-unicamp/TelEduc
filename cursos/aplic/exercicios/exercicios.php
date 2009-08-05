@@ -389,7 +389,7 @@
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>Exercicios Individuais</a></li>\n");
     
     /* ? - Exercicios em Grupo */
-    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=Gagrupar=G'>Exercicios em Grupo</a></li>\n");
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>Exercicios em Grupo</a></li>\n");
 
   	/* ? - Biblioteca de Exercicios */
     echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
