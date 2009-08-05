@@ -1055,13 +1055,13 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        }\n");
   echo("        return(true);\n");
   echo("      }\n");
-  
+
   echo("    function AplicarExercicio()\n");
   echo("    {\n");
   echo("      var dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao;\n");
   echo("      if(verifica_intervalos())\n");
   echo("      {\n");
-  echo("        if(document.getElementById(\"disponibilizacao\").value == \"A\")\n");
+  echo("        if(document.getElementById(\"disponibilizacaoa\").checked)\n");
   echo("        {\n");
   echo("          dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
   echo("          hr_disp = document.getElementById(\"hora_disponibilizacao\").value+':00';\n");
@@ -1073,9 +1073,9 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        }\n");
   echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
   echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value+':00';\n");
-  echo("        tp_aplicacao = document.getElementById(\"tp_aplicacao\").value;\n");
-  echo("        disp_gabarito = document.getElementById(\"disp_gabarito\").value;\n");
-  echo("        avaliacao = document.getElementById(\"avaliacao\").value;\n");
+  echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
+  echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
+  echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
   if($exercicio['situacao'] != "C")
     echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",0);\n");
   echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
@@ -1460,28 +1460,24 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        <div class=ulPopup>\n");    
   /* ? - Associar a avaliação: */
   echo("          Associar a avaliacao: <br />");
-  echo("          <select class=\"input\" id=\"avaliacao\">\n");
-  echo("		    <option value=\"N\">Nao</option>\n");
-  echo("		    <option value=\"S\">Sim</option>\n");
-  echo("		  </select><br /><br />\n");
+  echo("		  <input type=\"radio\" name=\"avaliacao\" id=\"avaliacaos\" value=\"S\">Sim\n");
+  echo("		  <input type=\"radio\" name=\"avaliacao\" id=\"avaliacaon\" value=\"N\">Nao\n");
+  echo("		  <br /><br />\n");
   /* ? - Disponibilizar gabarito com a correcao: */
   echo("          Disponibilizar gabarito com a correcao: <br />");
-  echo("          <select class=\"input\" id=\"disp_gabarito\">\n");
-  echo("		    <option value=\"N\">Nao</option>\n");
-  echo("		    <option value=\"S\">Sim</option>\n");
-  echo("		  </select><br /><br />\n");
+  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabaritos\" value=\"S\">Sim\n");
+  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabariton\" value=\"N\">N�o\n");
+  echo("		  <br /><br />\n");
   /* ? - Tipo de aplicacao: */
   echo("          Tipo de aplicacao: <br />");
-  echo("          <select class=\"input\" id=\"tp_aplicacao\">\n");
-  echo("		    <option value=\"I\">Exercicio individual</option>\n");
-  echo("		    <option value=\"G\">Exercicio em grupo</option>\n");
-  echo("		  </select><br /><br />\n");
+  echo("		    <input type=\"radio\" name=\"tp_aplicacao\" id=\"tp_aplicacaoi\" value=\"I\">Individual\n");
+  echo("		    <input type=\"radio\" name=\"tp_aplicacao\" id=\"tp_aplicacaog\" value=\"G\">Em grupo\n");
+  echo("		  <br /><br />\n");
   /* ? - Disponibilizacao: */
   echo("          Disponibilizacao: <br />");
-  echo("          <select class=\"input\" id=\"disponibilizacao\" onchange=\"ExibirAgendamento(this.value);\">\n");
-  echo("		    <option value=\"I\">Imediata</option>\n");
-  echo("		    <option value=\"A\">Agendar</option>\n");
-  echo("		  </select><br /><br />\n");
+  echo("		    <input type=\"radio\" onChange=\"ExibirAgendamento(this.value);\" name=\"disponibilizacao\" id=\"disponibilizacaoi\" value=\"I\">Imediata\n");
+  echo("		    <input type=\"radio\" onChange=\"ExibirAgendamento(this.value);\" name=\"disponibilizacao\" id=\"disponibilizacaoa\" value=\"A\">Agendar\n");
+  echo("		  <br /><br />\n");
   echo("          <div id=\"div_disp\" style=\"display:none;\">\n");
   echo("            Data: <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"dt_disponibilizacao\" name=\"dt_disponibilizacao\" />\n");
   echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('dt_disponibilizacao'),'dd/mm/yyyy',this);\" />\n");
