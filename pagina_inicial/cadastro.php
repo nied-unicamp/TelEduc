@@ -269,7 +269,7 @@
   if($acao == "inscricao")
   	echo("xajax_CadastrarLogar(xajax.getFormValues('formulario'),'".$cod_curso."','".$tipo_curso."');\n");
   else
-  	echo("          window.location='autenticacao.php';\n");
+  	echo("          window.location='autenticacao.php?acao=emailConfirmacao&atualizacao=true';\n");
   echo("        }\n");
   echo("      }\n\n");
 
