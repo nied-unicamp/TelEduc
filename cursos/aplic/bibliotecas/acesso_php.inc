@@ -78,8 +78,8 @@ function VerificaLoginSenha ($login, $senha)
   if ($login=="admtele"){
     $query="select valor from Config where item='admtele'";
   }else{
-    //Seleciona senha e código global do usuario
-    $query="select senha, cod_usuario from Usuario where login='".VerificaStringQuery($login)."'";
+    //Seleciona senha, código global do usuario e codigo de confirmacao de cadastro
+    $query="select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
   }
 
   $res=Enviar($sock,$query);
@@ -90,8 +90,10 @@ function VerificaLoginSenha ($login, $senha)
     $cod_usuario = -1;
   else
     $cod_usuario = $linha['cod_usuario'];
-// echo $num . "-" . $linha[0] ."-senha-". $senha_crypt;exit;
-  return ($num<1 || $linha[0]!=$senha_crypt) ? 0 : $cod_usuario;
+
+  $confirmacao = $linha['confirmacao'];
+  
+  return ($num<1 || $linha[0]!=$senha_crypt || $confirmacao!="") ? 0 : $cod_usuario;
 }
 
 /* *********************************************************************
