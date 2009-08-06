@@ -172,7 +172,23 @@
 
   $permitido=VerificaPermissao($sock,$cod_usuario,$forum_dados['permissoes']);
 
-
+  /* *********************************************************
+  Funcao OpenWindowLink
+    Abre nova janela com o historico de desempenho, se acessado atraves do link
+    Entrada: funcao = $cod_curso - Codigo do curso
+    Saida:   false - para nao dar reload na pagina. Conferir a
+                     chamada da função
+  */
+  echo("    <script type=\"text/javascript\">\n\n");
+  echo("function OpenWindowLink(status) \n");
+  echo("{\n");
+  	echo("if(status == 1) ");
+    	echo("  	window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&status=".$status."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+	echo("else");
+		echo("  	window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("}\n\n");
+  echo("    </script>\n\n");
+  
    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
     echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
     echo("    <script type=\"text/javascript\">\n");
@@ -752,10 +768,10 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   
   if(isset($status)){
-  	echo("				  <li><a href=\"imprimir_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&status=".$status."&ordem=".$_SESSION['ordem']."\">Imprimir</a></li>");
+  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">Imprimir</a></li>");
   }
   else{
-  	echo("				  <li><a href=\"imprimir_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\">Imprimir</a></li>");
+  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">Imprimir</a></li>");
   }
 
   
