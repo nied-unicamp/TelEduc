@@ -91,13 +91,13 @@
   if (!isset($msg_por_pag)) $msg_por_pag = 10;
 
   /* Se o tipo de ordenacao nao for especificada, usa arvore */
-  if (!isset($_SESSION['ordem']) && !isset($_GET['ordem'])) {
+  if (!isset($_SESSION['forum_ordem']) && !isset($_GET['ordem'])) {
   	$ordem = 'arvore';
   } else {
   	/* Se o usuário tentar atualizar a ordenacao, grava na $_SESSION */
   	if (isset($_GET['ordem']))
-  		$_SESSION['ordem'] = $_GET['ordem'];
-  	$ordem = $_SESSION['ordem'];
+  		$_SESSION['forum_ordem'] = $_GET['ordem'];
+  	$ordem = $_SESSION['forum_ordem'];
   }
 
   /* Obtï¿½ a data e hora do penltimo acesso para comparar com as datas das   */
