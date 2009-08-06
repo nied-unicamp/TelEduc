@@ -136,7 +136,19 @@
     echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
     echo("    </script>\n");
   }
-
+  
+  
+  echo("    <script type=\"text/javascript\">\n\n");
+  echo("function OpenWindowLink(status) \n");
+  echo("{\n");
+  	echo("if(status == 1) ");
+    	echo("  	window.open(\"imprimir_mural.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+	echo("else");
+		echo("  	window.open(\"imprimir_mural.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("}\n\n");
+  echo("    </script>\n\n");
+  
+  
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var pag_atual = ".$pag_atual.";\n\n");
   echo("      var total_pag = ".$total_pag.";\n\n");
@@ -697,7 +709,6 @@
   echo("              <td valign=\"top\">\n");
   /* Se o usuario FOR Formador entao exibe os controles. */
   if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)) {
-
     if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
       echo("                <ul class=\"btAuxTabs\">\n");
       /* Se estiver visualizando os fóruns disponíveis então cria um link para o */
@@ -708,6 +719,12 @@
         echo("                  <li><span onclick='ComporMensagem();'>".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
       }
     }
+    if(isset($status)){
+	  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
+	}
+	else{
+	  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
+	}
   }
   echo("                </ul>\n");
   /* Repassa o status da mensagens que ser� selecionadas: A ou D (Lixeira)            */
