@@ -178,23 +178,5 @@
   echo("          </ul>\n");
 
   echo("        </td>\n");
-
-  /* Layer de perfil */
-  echo("    <div id=\"perfil\" class=popup>\n");
-  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_novapasta);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  echo("      <div class=int_popup>\n");
-  //echo("        <form name=form_novo_top method=post action='' onSubmit='return (VerificaNovoItemTopico(document.form_novo_top.novo_nome));'>\n");
-  echo("          <div class=ulPopup>\n");    
-  /* 24 - Digite o nome da pasta a ser criada aqui: */
-  //echo("            ".RetornaFraseDaLista($lista_frases,24)."<BR />\n");
-  //echo("            <input id=\"titulopasta\" class=\"input\" type=text name=\"novo_nome\" value=\"\" maxlength=\"150\" /><br />\n");
-  /* 18 - Ok (gen) */
-  //echo("            <input type=\"submit\" id=\"ok_novapasta\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  /* 2 - Cancelar (gen) */
-  //echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(cod_novapasta);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-  echo("          </div>\n");    
-  echo("        </form>\n");
-  echo("      </div>\n");
-  echo("    </div>\n");
   
 ?>
