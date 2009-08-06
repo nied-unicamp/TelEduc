@@ -768,10 +768,10 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   
   if(isset($status)){
-  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">Imprimir</a></li>");
+  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
   }
   else{
-  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">Imprimir</a></li>");
+  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
   }
 
   
