@@ -56,7 +56,6 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
-  //$_SESSION['cod_usuario'] = $cod_usuario; 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
   session_register('sin_pag_s');
@@ -91,12 +90,12 @@
   if (!isset($msg_por_pag)) $msg_por_pag = 10;
 
   /* Se o tipo de ordenacao nao for especificada, usa arvore */
-  if (!isset($_SESSION['forum_ordem']) && !isset($_GET['ordem'])) {
+  if ((!isset($_SESSION['forum_ordem']) || $_SESSION['forum_ordem'] == "") && (!isset($_GET['forum_ordem']) || $_GET['forum_ordem'] == "")) {
   	$ordem = 'arvore';
   } else {
   	/* Se o usuário tentar atualizar a ordenacao, grava na $_SESSION */
-  	if (isset($_GET['ordem']))
-  		$_SESSION['forum_ordem'] = $_GET['ordem'];
+  	if (isset($_GET['forum_ordem']))
+  		$_SESSION['forum_ordem'] = $_GET['forum_ordem'];
   	$ordem = $_SESSION['forum_ordem'];
   }
 
