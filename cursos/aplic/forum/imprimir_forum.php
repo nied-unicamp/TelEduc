@@ -932,25 +932,25 @@
     /* 23 - )             */
     echo($total_mensagens.RetornaFraseDaLista($lista_frases, 23)."\n");
     echo("              </td>\n");
-    echo("              <td style=\"text-align:right;border:none\">\n");
+    //echo("              <td style=\"text-align:right;border:none\">\n");
     /* Se houver mensagens exibe a caixa de seleção do método de ordenação.           */
     /* 41 - Ordenar por:  */
-    echo("                ".RetornaFraseDaLista($lista_frases, 41)."\n");
-    echo("                <select name=\"ordem\" id=\"ordem_foruns\" onchange='MudaOrdenacao();' style=\"margin:5px 0 0 0;\">\n");
+    //echo("                ".RetornaFraseDaLista($lista_frases, 41)."\n");
+    //echo("                <select name=\"ordem\" id=\"ordem_foruns\" onchange='MudaOrdenacao();' style=\"margin:5px 0 0 0;\">\n");
     /* 43 - Árvore */
     
-    echo("                  <option value='arvore'>".RetornaFraseDaLista($lista_frases, 43)."</option>\n");
+    //echo("                  <option value='arvore'>".RetornaFraseDaLista($lista_frases, 43)."</option>\n");
 //     if (isset($status) && ($status=='A'))
-      if($status != 'D')
+      //if($status != 'D')
       /* 130 - Relevância */
-      echo("                  <option value='relevancia'>".RetornaFraseDaLista($lista_frases, 130)."</option>\n");
+      //echo("                  <option value='relevancia'>".RetornaFraseDaLista($lista_frases, 130)."</option>\n");
     /* 45 - Autor */
-    echo("                  <option value='emissor'>".RetornaFraseDaLista($lista_frases, 45)."</option>\n");
+    //echo("                  <option value='emissor'>".RetornaFraseDaLista($lista_frases, 45)."</option>\n");
     /* 44 - Data */
-    echo("                  <option value='data'>".RetornaFraseDaLista($lista_frases, 44)."</option>\n");
-    /* 46 - Título */
-    echo("                  <option value='titulo'>".RetornaFraseDaLista($lista_frases, 46)."</option>\n");
-    echo("                </select>\n");
+    //echo("                  <option value='data'>".RetornaFraseDaLista($lista_frases, 44)."</option>\n");
+    ///* 46 - Título */
+    //echo("                  <option value='titulo'>".RetornaFraseDaLista($lista_frases, 46)."</option>\n");
+    //echo("                </select>\n");
 
   /* Procura e seleciona a ordenação escolhida. */
     echo("                <script type=\"text/javascript\">\n\n");
