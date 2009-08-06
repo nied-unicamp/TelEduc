@@ -34,7 +34,7 @@
   
   if ($tela_formadormesmo)
   {
-    echo("          <!-- Navegacao Nivel 3 -->\n");
+    echo("          <!-- Navegacao Nível 3 -->\n");
     echo("          <ul id=\"nav3nivel\">\n");
     if ($tela_formador)
     {
