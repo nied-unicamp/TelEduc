@@ -1000,18 +1000,18 @@ Saida:  zero se realizou a atividade ou o cdigo do modelo, caso contr�io
 */
 function RespondeuExercicio($sock,$cod_avaliacao,$cod,$exercicio_grupo)
 {
-$query="select cod_modelo from Exercicios_aplicado where avaliacao=".$cod_avaliacao;
+$query="select cod_exercicio from Exercicios_aplicado where avaliacao=".$cod_avaliacao;
 $res=Enviar($sock,$query);
-$modelo=RetornaLinha($res);
+$exercicio=RetornaLinha($res);
 if ($exercicio_grupo)
- $query="select cod_resolucao from Exercicios_resolucao where cod_grupo=".$cod." and submetida='S' and cod_modelo=".$modelo['cod_modelo'];
+ $query="select cod_resolucao from Exercicios_resolucao where cod_grupo=".$cod." and submetida='S' and cod_exercicio=".$exercicio['cod_exercicio'];
 else
- $query="select cod_resolucao from Exercicios_resolucao where cod_usuario=".$cod." and submetida='S' and cod_modelo=".$modelo['cod_modelo'];
+ $query="select cod_resolucao from Exercicios_resolucao where cod_usuario=".$cod." and submetida='S' and cod_exercicio=".$exercicio['cod_exercicio'];
 
 $res=Enviar($sock,$query);
 $lista=RetornaLinha($res);
 if(count($lista['cod_resolucao'])>0)
- return($modelo['cod_modelo']);
+ return($exercicio['cod_exercicio']);
 else
  return(0); 
 
