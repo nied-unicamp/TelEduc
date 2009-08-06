@@ -78,10 +78,20 @@
   echo("          <!-- Tabelao -->\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
+  echo("              <td valign=\"top\">\n");
+  /* 23 - Voltar (gen) */
+  echo("              <ul class=\"btAuxTabs\">\n");
+  echo("                <li><a href='autenticacao.php'>".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+  echo("              </ul>\n");
+  echo("            </tr>");
+  echo("            <tr>\n");
   echo("              <td>\n");
   echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
+  echo("                  <tr class=\"head\">\n");
+  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,211)."</b></td>\n");
+  echo("                  </tr>");
   echo("                  <tr>\n");
-  echo("                    <td align=\"center\">\n");
+  echo("                    <td align=\"center\" style=\"padding:25px 5px 25px 5px; text-indent:25px;\">\n");
   
   
   $user = $_GET["u"];
