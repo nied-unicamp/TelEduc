@@ -53,7 +53,7 @@
 
   Desconectar($sock);
 
-  $cod_ferramenta = 1;
+  $cod_ferramenta = 23;
   include("../topo_tela.php");
   
   echo("    <script type=\"text/javascript\">\n");
