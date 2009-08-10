@@ -57,6 +57,12 @@
   
   $cod_ferramenta = 23;
   $visualizar = $_GET['visualizar'];
+  if(!isset($visualizar))
+  	$visualizar = "E";
+
+  if($visualizar == "L") $defColspan = "colspan=\"4\"";
+  	
+
   $data_atual = time();
 
   $cod_curso = $_GET['cod_curso'];
@@ -80,14 +86,52 @@
   	$lista_exercicios = RetornaExerciciosLixeira($sock);
   }
 
+  
+   	
+  if($lista_exercicios != "")
+    $totalExercicios = count($lista_exercicios);
+  else
+    $totalExercicios = 0;
+    
+  /* Nmero de questoes exibidas por p�ina.             */
+  if (!isset($exerciciosPorPag)) $exerciciosPorPag = 10;
+  
+  /* Se o nmero total de questoes for superior que o nmero de questoes por  */
+  /* p�ina ent� calcula o total de p�inas. Do contr�io, define o nmero de     */
+  /* p�inas para 1.                                                           */
+
+  /* Calcula o nmero de p�inas geradas.    */
+  if($totalExercicios > $exerciciosPorPag)
+    $totalPag = ceil($totalExercicios / $exerciciosPorPag);
+  else
+    $totalPag = 1;
+
+  /* Se a p�ina atual n� estiver setada ent�, por padr�, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a p�ina �maior que o total de p�inas, se for */
+  /* atribui o valor de $total_pag �$pagAtual.                                    */
+  if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
+    $pagAtual =  1;
+  else $pagAtual = min($pagAtual, $totalPag);
+
   /*********************************************************/
   /* in�io - JavaScript */
+  echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
   
   echo("    var js_cod_item;\n");
   echo("    var js_comp = new Array();\n");
+  echo("    var pagAtual = ".$pagAtual.";\n");
+  echo("    var totalQuestoes = ".$totalExercicios.";\n");
+  echo("    var totalPag = ".$totalPag.";\n");
+  echo("    var topico = 'T';\n");
+//  echo("    var tp_questao = 'T';\n");
+//  echo("    var dificuldade = 'T';\n");
+  echo("    var window_handle;\n");
+  echo("    var t;\n");
+  echo("    this.name = 'principal';\n\n");
+  
   echo("    var cod_comp;");
   echo("    var numExercicios = ".count($lista_exercicios).";\n\n");
   
@@ -100,8 +144,108 @@
   	echo("      cod_comp = getLayer(\"comp\");\n");
   }
   echo("      startList();\n");
+  echo("      ExibeMsgPagina(".$pagAtual.");\n");
   echo("    }\n\n");
 
+  
+  echo("      function ExibeMsgPagina(pagina){\n");
+  echo("        var i = 0;\n");
+  echo("        if (pagina < 1) return;\n");
+  echo("        document.getElementById(\"checkMenu\").checked=false;\n");
+  echo("        tabela = document.getElementById('tabelaInterna');\n");
+  echo("        if(!tabela) return;\n");
+  echo("        inicio = 1;\n");
+  echo("        final = ((totalPag)*".$exerciciosPorPag.")+1;\n");
+  echo("        for (i=inicio; i < final; i++){\n");
+  echo("          if (!tabela.rows[i]) break;\n");
+  echo("          tabela.rows[i].style.display=\"none\";\n");
+  echo("        }\n"); 
+  
+  echo("        var browser=navigator.appName;\n\n");
+  echo("        inicio = ((pagina-1)*".$exerciciosPorPag.")+1;\n");
+  echo("        final = ((pagina)*".$exerciciosPorPag.");\n");
+  echo("        for (i=inicio; i < final+1; i++){\n");
+  echo("          if (!tabela.rows[i+1] || i > totalQuestoes){break;}\n");
+  echo("          if (browser==\"Microsoft Internet Explorer\")\n");
+  echo("            tabela.rows[i].style.display=\"block\";\n");
+  echo("          else\n");
+  echo("            tabela.rows[i].style.display=\"table-row\";\n");
+  echo("          tabela.rows[i].className = 'altColor'+((i+1)%2);");
+  echo("        }\n\n");
+  echo("        document.getElementById('primQuestaoIndex').innerHTML=inicio;\n"); 
+  echo("        document.getElementById('ultQuestaoIndex').innerHTML=(i-1);\n\n");
+
+  echo("        if (browser==\"Microsoft Internet Explorer\")\n");
+  echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
+  echo("        else\n");
+  echo("          tabela.rows[tabela.rows.length-1].style.display=\"table-row\";\n");
+
+  echo("        pagAtual=pagina;\n\n");
+
+  echo("        if (pagAtual != 1){\n");
+  echo("          document.getElementById('paginacao_first').onclick = function(){ ExibeMsgPagina(1); };\n");
+  echo("          document.getElementById('paginacao_first').className = \"link\";\n");
+  echo("          document.getElementById('paginacao_back').onclick = function(){ ExibeMsgPagina(pagAtual-1); };\n");
+  echo("          document.getElementById('paginacao_back').className = \"link\";\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('paginacao_first').onclick = function(){};\n");
+  echo("          document.getElementById('paginacao_first').className = \"\";\n");
+  echo("          document.getElementById('paginacao_back').onclick = function(){};\n");
+  echo("          document.getElementById('paginacao_back').className = \"\";\n");
+  echo("        }\n");
+  echo("        document.getElementById('paginacao_first').innerHTML = \"&lt;&lt;\";\n");
+  echo("        document.getElementById('paginacao_back').innerHTML = \"&lt;\";\n");    
+  echo("        inicio = pagAtual-2;\n");
+  echo("        if (inicio < 1) inicio=1;\n");
+  echo("        fim = pagAtual+2;\n");
+  echo("        if (fim > totalPag) fim=totalPag;\n");
+  echo("        var controle=1;\n");
+  echo("        var vetor= new Array();\n");
+  echo("        for (j=inicio; j <= fim; j++){\n");
+  echo("          // A página atual Não é exibida com link.\n");
+  echo("          if (j == pagAtual){\n");
+  echo("             document.getElementById('paginacao_'+controle).innerHTML='<b>['+j+']<\/b>';\n");
+  echo("             document.getElementById('paginacao_'+controle).className='';\n");
+  echo("             vetor[controle] = -1;\n");
+  echo("          }else{\n");
+  echo("             document.getElementById('paginacao_'+controle).innerHTML=j;\n");
+  echo("             document.getElementById('paginacao_'+controle).className='link';\n");
+  echo("             vetor[controle]=j;\n");
+  echo("          }\n");
+  echo("          controle++;\n");
+  echo("        }\n");
+  echo("        while (controle<=5){\n");
+  echo("          document.getElementById('paginacao_'+controle).innerHTML='';\n");
+  echo("          document.getElementById('paginacao_'+controle).className='';\n");
+  echo("          document.getElementById('paginacao_'+controle).onclick= function() { };\n");
+  echo("          controle++;\n");
+  echo("        }\n");
+  echo("        document.getElementById('paginacao_1').onclick=function(){ ExibeMsgPagina(vetor[1]); };\n");
+  echo("        document.getElementById('paginacao_2').onclick=function(){ ExibeMsgPagina(vetor[2]); };\n");
+  echo("        document.getElementById('paginacao_3').onclick=function(){ ExibeMsgPagina(vetor[3]); };\n");
+  echo("        document.getElementById('paginacao_4').onclick=function(){ ExibeMsgPagina(vetor[4]); };\n");
+  echo("        document.getElementById('paginacao_5').onclick=function(){ ExibeMsgPagina(vetor[5]); };\n\n");
+
+  echo("        /* Se a página atual Não for a última página então cria um   \n");
+  echo("           link para a próxima página */\n");
+  echo("        if (pagAtual != totalPag){\n");
+  echo("          document.getElementById('paginacao_fwd').onclick = function(){ ExibeMsgPagina(pagAtual+1); };\n");
+  echo("          document.getElementById('paginacao_fwd').className = \"link\";\n");
+  echo("          document.getElementById('paginacao_last').onclick = function(){ ExibeMsgPagina(totalPag); };\n");
+  echo("          document.getElementById('paginacao_last').className = \"link\";\n");
+  echo("        }\n");
+  echo("        else{\n");
+  echo("          document.getElementById('paginacao_fwd').onclick = function(){};\n");
+  echo("          document.getElementById('paginacao_fwd').className = \"\";\n");
+  echo("          document.getElementById('paginacao_last').onclick = function(){};\n");
+  echo("          document.getElementById('paginacao_last').className = \"\";\n");
+  echo("        }\n");
+  echo("        document.getElementById('paginacao_fwd').innerHTML = \"&gt;\";\n");
+  echo("        document.getElementById('paginacao_last').innerHTML = \"&gt;&gt;\";\n");
+//  echo("        ControlaSelecao();\n");
+  echo("      }\n\n");
+  
+  
   if($visualizar == "E")
   {
   	echo("    function VerificaNovoTitulo(textbox, aspas) {\n");
@@ -242,18 +386,27 @@
   	echo("      }\n");
   	echo("    }\n\n");
   }
-
-  echo("    function CheckTodos(){\n");
-  echo("      var e;\n");
-  echo("      var i;\n");
-  echo("      var CabMarcado = document.getElementById('checkMenu').checked;\n");
-  echo("      var cod_itens=document.getElementsByName('chkExercicio');\n");
-  echo("      for(i = 0; i < cod_itens.length; i++){\n");
-  echo("        e = cod_itens[i];\n");
-  echo("        e.checked = CabMarcado;\n");
-  echo("      }\n");
+  
+  
+  echo("      function MarcaOuDesmarcaTodos(pagAtual){\n");
+  echo("        var e;\n");
+  echo("        var i;\n");
+  echo("        var inicio;\n");
+  echo("        var final;\n");
+  echo("        var elementos = document.getElementsByName('chkExercicio')\n");      
+  echo("        inicio = ((pagAtual-1)*".$exerciciosPorPag.");\n");
+  echo("        final = ((pagAtual)*".$exerciciosPorPag.");\n");
+  echo("        controle = (pagAtual-1)*".$exerciciosPorPag.";\n");
+  echo("        controle = elementos.length - controle;\n");
+  echo("        if(controle < final) {final = inicio + controle;}\n");
+  echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
+  echo("        for(i = inicio; i < final; i++){\n");
+  echo("          e = document.getElementsByName('chkExercicio')[i];\n");
+  echo("          e.checked = CabMarcado;\n");
+  echo("        }\n");
   echo("      VerificaCheck();\n");
-  echo("    }\n\n");
+  echo("      }\n\n");
+
   
   echo("    function DeletarLinhas(deleteArray,j){\n");
   echo("      var i,trExercicio;\n");
@@ -418,25 +571,59 @@
     echo("                </ul>\n");
     echo("              </td>\n");
     echo("            </tr>\n");
-  	echo("            <tr>\n");
-  	echo("              <td valign=\"top\">\n");
-	echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
+//  	echo("            <tr>\n");
+//  	echo("             <td>\n");
+  	
+  	
+  	
+  	  	
+    if($totalExercicios > 0){
+      // Calcula o índice da primeira mensagem.
+      $primQuestaoIndex = (($pagAtual - 1) * $exerciciosPorPag) + 1;
+      // Calcula o índice da última mensagem.
+      $ultQuestaoIndex = $pagAtual * $exerciciosPorPag;
+
+      // Se o índice da ultima mensagem for maior que o número de mensagens, então copia este 
+      // para o índice da última mensagem.
+      if ($ultQuestaoIndex > ($totalExercicios))
+        $ultQuestaoIndex = ($totalExercicioss);
+      echo("            <tr class=\"head01\" id=\"trIndicaEstadoPag\">\n");
+      echo("              <td colspan=\"6\">\n");
+      /* ? - Exercicios     */
+      echo("                Exercicios ");
+      echo("(<span id=\"primQuestaoIndex\"></span>");
+      /* ? - a             */
+      echo(" a&nbsp;");
+      /* ? - de            */
+      echo("<span id=\"ultQuestaoIndex\"></span> de ");
+      echo("<span id=\"totalQuestoes\">".($totalExercicios)."</span>)\n");
+      echo("              </td>\n");
+      echo("            </tr>\n");
+    }
+    
+    echo("            <tr>\n");
+//    echo("              <td>\n");
+  	
+  	
+  	
+ 	echo("              <td valign=\"top\">\n");
+  	echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"sortable tabInterna\">\n");
 	echo("                  <tr class=\"head\">\n");
-    echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
+    echo("                    <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"MarcaOuDesmarcaTodos(pagAtual);\" /></td>\n");
 	/* ? - T�ulo */
-	echo("                    <td class=\"alLeft\">Titulo</td>\n");
+	echo("                    <td class=\"alLeft\" style=\"cursor:pointer\" $defColspan>Titulo</td>\n");
     /* ? - Data*/
-	echo("                    <td width=\"10%\">Data</td>\n");
+	echo("                    <td width=\"10%\" style=\"cursor:pointer\">Data</td>\n");
 	if($visualizar == "E")
     {
       /* ? - Disponibilizacao */
-	  echo("                    <td width=\"10%\">Disponibilizacao</td>\n");
+	  echo("                    <td width=\"10%\" style=\"cursor:pointer\">Disponibilizacao</td>\n");
       /* ? - Limite de entrega*/
-	  echo("                    <td width=\"10%\">Limite de entrega</td>\n");
+	  echo("                    <td width=\"10%\" style=\"cursor:pointer\">Limite de entrega</td>\n");
       /* ? - Compartilhamento */
-	  echo("                    <td width=\"10%\">Compartilhamento</td>\n");
+	  echo("                    <td width=\"10%\" style=\"cursor:pointer\">Compartilhamento</td>\n");
 	  /* ? - Situacao */
-	  echo("                    <td width=\"10%\">Situacao</td>\n");
+	  echo("                    <td width=\"10%\" style=\"cursor:pointer\">Situacao</td>\n");
     }
 	echo("                  </tr>\n");
 
@@ -471,7 +658,7 @@
 
         echo("                  <tr id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
         echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkExercicio\" id=\"itm_".$linha_item['cod_exercicio']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_exercicio']."\" /></td>\n");
-        echo("                    <td align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
+        echo("                    <td $defColspan align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
         echo("                    <td id=\"data_".$linha_item['cod_exercicio']."\">".$data."</td>\n");
         if($visualizar == "E")
         {
@@ -491,6 +678,26 @@
       echo("                  </tr>\n");
     }
 
+    echo("                <tfoot>\n");
+    echo("                  <tr id=\"trIndicePag\">\n");
+    echo("                    <td colspan=\"3\" align=\"left\" style=\"border-right:none\">\n");
+    if($totalExercicios>1)
+      echo("                      *clique no cabe&ccedil;alho para ordenar os exercicios\n");
+    echo("                    </td>\n");
+
+    echo("                    <td colspan=\"4\" align=\"right\">\n");
+    echo("                    <span id=\"paginacao_first\"></span> <span id=\"paginacao_back\"></span>\n");
+    $controle=1;
+    while($controle<=5){
+      echo("                      <span id=\"paginacao_".$controle."\"></span>\n");
+      $controle++;
+    }
+    echo("                    <span id=\"paginacao_fwd\"></span> <span id=\"paginacao_last\"></span>\n");
+    echo("                    </td>\n");
+    echo("                  </tr>\n");
+    echo("                </tfoot>\n");
+    
+    
 	echo("                </table>\n");
 	
 	if($visualizar == "E")
