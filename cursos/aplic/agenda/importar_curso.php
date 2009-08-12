@@ -55,10 +55,7 @@ $objMaterial->registerFunction("AlterarPeriodoDinamic");
 // Manda o xajax executar os pedidos acima.
 $objMaterial->processRequests();
 
-$feedbackObject =  new FeedbackObject($lista_frases);
 
-//adicionar as acoes possiveis, 1o parametro é
-$feedbackObject->addAction("validarImportacao", 0, 88);
   
 
 // **************** VARIAVEIS DE ENTRADA ****************
@@ -115,6 +112,11 @@ $cod_ferramenta = 1;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 6;
 include ("../topo_tela.php");
+
+$feedbackObject =  new FeedbackObject($lista_frases);
+
+//adicionar as acoes possiveis, 1o parametro é
+$feedbackObject->addAction("validarImportacao", 0, 88);
 
 echo ("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
 echo ("    <script type=\"text/javascript\" language=javascript src=\"../bibliotecas/javacrypt.js\"></script>\n");
