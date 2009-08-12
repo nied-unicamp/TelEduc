@@ -211,7 +211,7 @@
 		}
   	}
   	else
-  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."");
   	
   } else if ($acao == "importarItem"){
   	
