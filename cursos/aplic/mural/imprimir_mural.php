@@ -756,9 +756,8 @@
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 1 - Mural */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1));
-
-
-  echo("</h4>\n");
+  /* Nome do curso */
+  echo(" - ".NomeCurso($sock,$cod_curso)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
   echo("<div id=\"mudarFonte\">\n");
