@@ -185,7 +185,12 @@ Programa Principal
   */
   
   echo("  </head>\n");
-  echo("  <body bgcolor=\"white\" onload=\"Iniciar();\">\n");
+  if($_GET['imprimir'] == 1){
+  		echo("  <body bgcolor=\"white\" onload=\"Iniciar();self.print();\">\n");
+  }
+  else{
+  		echo("  <body bgcolor=\"white\" onload=\"Iniciar();\">\n");
+  }
   echo("    <a name=\"topo\"></a>\n");
   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
   echo("      <tr>\n");
@@ -369,7 +374,10 @@ Programa Principal
       echo("                </td>\n");
       echo("              </tr>\n");
       echo("            </table>\n");
-      echo("            <br />\n");
+      if($_GET['imprimir'] == 0){
+      	echo("            <br />\n");
+      }
+      
       echo("            <table border=\"0\" width=\"100%\" cellspacing=\"0\">\n");
       
       
@@ -426,7 +434,9 @@ Programa Principal
 
       echo("                  <div id=\"dados1_".$cod_usuario_ficha."\">\n");
       echo("                    <b>".$nome."</b>\n");
-      echo("                    <br />\n");
+      if($_GET['imprimir'] == 0){
+      	echo("                    <br />\n");
+      }
 
       if (! $econvidado)
         /* 33 - Email */
@@ -470,7 +480,9 @@ Programa Principal
       }
 
       echo("            </table>\n");
-      echo("            <br />\n");
+      if($_GET['imprimir'] == 0){
+      	echo("            <br />\n");
+      }
       echo("            <div class=\"divRichText\" id=\"text_".$cod_usuario_ficha."\">\n");
       if ($perfil_existe) /* se o perfil existe */
       {
@@ -483,7 +495,9 @@ Programa Principal
         echo("              ".RetornaFraseDaLista($lista_frases,26)." ".$nome." ".RetornaFraseDaLista($lista_frases,27)."\n");
       }
       echo("            </div>\n");
-      echo("            <br /><br />\n");
+      if($_GET['imprimir'] == 0){
+      	echo("            <br /><br />\n");
+      }
       echo("            <hr />\n");
       echo("            <div align=\"right\">\n");
       echo("            </div>\n");
