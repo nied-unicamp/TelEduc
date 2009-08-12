@@ -88,7 +88,7 @@
   {
     $atualizacao = "true";
 
-    $cod_exercicio = CriarExercicio($sock, $cod_curso, $cod_usuario, $novo_titulo);
+    $cod_exercicio = CriarExercicio($sock, $cod_usuario, $cod_curso, $novo_titulo);
     if($cod_exercicio == -1) //erro na criacao! algum parametro da func. esta vazio
     {
       $atualizacao="false";
