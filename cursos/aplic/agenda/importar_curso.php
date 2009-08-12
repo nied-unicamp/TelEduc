@@ -55,7 +55,11 @@ $objMaterial->registerFunction("AlterarPeriodoDinamic");
 // Manda o xajax executar os pedidos acima.
 $objMaterial->processRequests();
 
+$feedbackObject =  new FeedbackObject($lista_frases);
 
+//adicionar as acoes possiveis, 1o parametro é
+$feedbackObject->addAction("validarImportacao", 0, 88);
+  
 
 // **************** VARIAVEIS DE ENTRADA ****************
 //    codigo do curso
@@ -166,6 +170,7 @@ if ($tipo_curso == 'E') {
 echo ("      function Iniciar()\n");
 echo ("      {\n");
 echo ("        startList();\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo ("      }\n\n");
 
 echo ("        function desmarcaSelect(selectObj)\n");
