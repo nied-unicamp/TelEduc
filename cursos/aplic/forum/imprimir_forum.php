@@ -785,7 +785,8 @@
   }
   
   /* 7 - Ver fórum */
-  echo(" - ".RetornaFraseDaLista($lista_frases, 7)." - ".$forum_dados['nome']);  
+  //echo(" - ".RetornaFraseDaLista($lista_frases, 7)." - ".$forum_dados['nome']);  
+  echo(" - ".$forum_dados['nome']);
 
   if (($forum_dados['status'] == 'L') || (($forum_dados['status'] == 'R') && (! $permitido)) )
   {
