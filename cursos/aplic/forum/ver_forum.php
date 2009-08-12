@@ -767,13 +767,6 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   
-  if(isset($status)){
-  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
-  }
-  else{
-  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
-  }
-
   
   echo("                  <li><a href=\"forum.php?cod_curso=".$cod_curso."&amp;status=".$status."\">");
   if (isset($status) && ($status=='D'))
@@ -784,7 +777,7 @@
     /* 34 - Retornar à lista de fóruns */
     echo(RetornaFraseDaLista($lista_frases, 34)."</a></li>\n");
   }
-
+  
   /* checa se o curso terminou ou não */
   $status_curso = RetornaStatusCurso($sock,$cod_curso);
 
@@ -803,7 +796,15 @@
       echo("                  <li><span onclick='ComporMensagem();'>".RetornaFraseDaLista($lista_frases, 12)."</span></li>\n");
     }
   }
-
+  
+  if(isset($status)){
+  	/*  137 - Imprimir */
+  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
+  }
+  else{
+  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
+  }
+  
   echo("                </ul>\n");
 
 
