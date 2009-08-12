@@ -144,7 +144,20 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
 */
 function RetornaFraseDaLista($textos, $cod_texto)
 {
-  return(ConverteAspas2Html($textos[$cod_texto]));
+	if(ConverteAspas2Html($textos[$cod_texto]) != "")
+  		return(ConverteAspas2Html($textos[$cod_texto]));
+  	else{
+  		switch($_SESSION[cod_lingua_s]){
+  			case 1://Português
+  				return("Falta o texto");
+  			case 2://Espanhol
+  				return("Falta texto");
+  			case 3://Inglês
+  				return("Missing Text");
+  			case 4://Português PT
+  				return("Falta o texto");
+  		}
+  	}
 }
 
 /* ************************************************************************
