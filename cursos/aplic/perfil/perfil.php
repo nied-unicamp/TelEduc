@@ -62,7 +62,7 @@
 
   /* Funções javascript */
   echo("    <script type=\"text/javascript\">\n");
-
+  echo(" 	  var imprimir_perfil = 0;");//vari�vel global 
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
@@ -78,6 +78,31 @@
   echo("      function OpenWindow() \n");
   echo("      {\n");
   echo("         window.open(\"\",\"PerfilDisplay\", \"width=600,height=400,screenX=100,screenY=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("      }\n\n");
+    /* *****************************************************************
+  Funcao ImprimeWindow
+  Abre nova janela com os perfis, se acessados atraves de checkboxes
+    Entrada: nenhuma
+    Saida:   nenhuma
+  ***************************************************************** */
+  echo("      function ImprimeWindow() \n");
+  echo("      {\n");
+  echo("         window.open(\"imprimir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  //echo("         window.open(\"\",\"PerfilDisplay\", \"width=600,height=400,screenX=100,screenY=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("        return(false);\n");
+  echo("      }\n\n");
+    /* *****************************************************************
+  Funcao setImprimir
+  Abre nova janela com os perfis, se acessados atraves de checkboxes
+    Entrada: nenhuma
+    Saida:   nenhuma
+  ***************************************************************** */
+  echo("      function setImprimir(funcao) \n");
+  echo("      {\n");
+  echo("      		if(funcao == 1)");
+  echo("				document.Perfil.imprimir.value = 1;");
+  echo("      		else");
+  echo("				document.Perfil.imprimir.value = 0;");
   echo("      }\n\n");
 
   /* *********************************************************
@@ -156,7 +181,7 @@
   echo("          i++;\n");
   echo("        }\n");
   echo("      }\n");
-
+  
   /* ********************************************************************************************
   Funcao CheckHeader
     Marca as checkboxes que marcam todas, caso todas checkbox de usuario tenham sido marcadas
@@ -201,23 +226,28 @@
   echo("        {\n");
   echo("		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_aluno[]' && check[0] == false){\n");
   echo("		  	document.getElementById('MostrarSelAlunos').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelAlunosB').onclick = function(){OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('MostrarSelAlunosB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelAlunosB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[0] = true;}\n");
   echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_formador[]' && check[1] == false){\n"); 
   echo("		  	document.getElementById('MostrarSelFormadores').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelFormadoresB').onclick = function(){OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('MostrarSelFormadoresB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelFormadoresB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[1] = true;}\n");
   echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_convidado[]' && check[2] == false){\n"); 
   echo("		  	document.getElementById('MostrarSelConvidados').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelConvidadosB').onclick = function(){OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('MostrarSelConvidadosB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelConvidadosB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[2] = true;}\n");
   echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_visitante[]' && check[3] == false){\n"); 
   echo("		  	document.getElementById('MostrarSelVisitantes').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelVisitantesB').onclick = function(){OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('MostrarSelVisitantesB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelConvidadosB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[3] = true;}\n");  		  	
   echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_coordenador[]' && check[4] == false){\n"); 
   echo("		  	document.getElementById('MostrarSelCoordenadores').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = function(){OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelCoordenadoresB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[4] = true;}\n");  			
   echo("          i++;\n");
   echo("        }\n");
@@ -279,6 +309,7 @@
   echo("              <td>\n");
   echo("                <form target=\"PerfilDisplay\" name=\"Perfil\" action=\"exibir_perfis.php\" method=\"get\" onsubmit=\"OpenWindow();\">\n");
   echo("                  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"imprimir\" id=\"imprimir\" value=\"\" />\n");
   echo("                  <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabInterna\">\n");
 
   $ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
@@ -350,6 +381,8 @@
     echo("                          <li id=\"MostrarSelAlunos\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelAlunosB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    /* 138 - Imprimir Selecionados */
+    echo("                            <span id=\"ImprimirSelAlunosB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");    
     echo("                        </ul>\n");
@@ -433,6 +466,8 @@
     echo("                          <li id=\"MostrarSelConvidados\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelConvidadosB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    /* 138 - Imprimir Selecionados */
+    echo("                            <span id=\"ImprimirSelConvidadosB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");    
     echo("                        </ul>\n");
@@ -515,6 +550,8 @@
     echo("                          <li id=\"MostrarSelVisitantes\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelVisitantesB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    /* 138 - Imprimir Selecionados */
+    echo("                            <span id=\"ImprimirSelVisitantesB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");    
@@ -624,6 +661,8 @@
     echo("                          <li id=\"MostrarSelFormadores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelFormadoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    /* 138 - Imprimir Selecionados */
+    echo("                            <span id=\"ImprimirSelFormadoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");
@@ -696,6 +735,8 @@
     echo("                          <li id=\"MostrarSelCoordenadores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelCoordenadoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    /* 138 - Imprimir Selecionados */
+    echo("                            <span id=\"ImprimirSelCoordenadoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");    
