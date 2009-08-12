@@ -66,7 +66,7 @@ $sock = Conectar($cod_curso);
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  /* Funï¿½ï¿½es JavaScript */
+  /* Funções JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
 

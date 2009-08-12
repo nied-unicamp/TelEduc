@@ -92,7 +92,7 @@
   $raiz_www = $linha[0];
 
 
-  /* Caso o usu√°rio n√£o esteja logado, manda para tela de login. */
+  /* Caso o usu·rio n√o esteja logado, manda para tela de login. */
   if (empty ($_SESSION['login_usuario_s']))
   {
     $caminho = $raiz_www."/cursos/aplic";
@@ -100,7 +100,7 @@
     Desconectar($sock);
     exit;
   }
-  /* Caso o usu√°rio n√£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
+  /* Caso o usu·rio n√£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
   else if(!PreencheuDadosPessoais($sock))
   {
     $caminho = $raiz_www."/pagina_inicial";

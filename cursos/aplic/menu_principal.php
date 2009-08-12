@@ -6,6 +6,7 @@
   Funcao MostraPerfil
     Abre nova janela com o perfil
   */
+
   echo("      function MostrarPerfil() \n");
   echo("      {\n");
   echo("           window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario."\",'NOME','width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
