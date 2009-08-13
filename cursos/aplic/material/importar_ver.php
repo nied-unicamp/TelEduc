@@ -96,19 +96,7 @@
   $curso_extraido = $_GET['curso_extraido'];
   //    c?digo do t?pico do curso do qual itens ser?o importados.
   $cod_topico_raiz_import = $_GET['cod_topico_raiz_import'];
-
   // ******************************************************
-
-  session_register("login_import_s");
-  if (isset($login_import))
-    $login_import_s = $login_import;
-  else
-    $login_import = $_SESSION['login_import_s'];
-
-  if ($curso_extraido)
-    $opt = TMPDB;
-  else
-    $opt = "";
 
   Desconectar($sock);
   $sock=Conectar("");
@@ -216,7 +204,8 @@
 
   echo("          <span class=\"btsNav\" onClick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>");
   //		"<!--<span class=\"btsNav\">".PreparaBusca($cod_curso,$cod_ferramenta)."</span>-->\n");
-
+  $sock = MudarDB($sock, $cod_curso_origem);
+  
   $linha_item=RetornaDadosDoItem($sock, $tabela, $cod_item);
   $cod_topico_pai = $linha_item['cod_topico'];
 

@@ -55,8 +55,14 @@ $objMaterial = new xajax();
 $objMaterial->registerFunction("AlterarPeriodoDinamic");
 // Manda o xajax executar os pedidos acima.
 $objMaterial->processRequests();
-
 include ("../topo_tela.php");
+// instanciar o objeto, passa a lista de frases por parametro
+$feedbackObject =  new FeedbackObject($lista_frases);
+
+//adicionar as acoes possiveis, 1o parametro é
+$feedbackObject->addAction("validarImportacao", 0, 88);
+
+
 // **************** VARIAVEIS DE ENTRADA ****************
 //    codigo do curso
 if (isset ($_GET['cod_curso']))
@@ -230,6 +236,7 @@ echo ("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
 echo ("      function Iniciar()\n");
 echo ("      {\n");
 echo ("        startList();\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo ("      }\n\n");
 echo ("    </script>\n");
 
