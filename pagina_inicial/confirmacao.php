@@ -124,6 +124,4 @@
   echo("  </body>\n");
   echo("</html>\n");
   
-  Desconectar($sock);
-  
 ?>

@@ -53,25 +53,16 @@
   if(!isset($erro_autenticacao))
     $erro_autenticacao="";
 
+  if (!empty ($_SESSION['login_usuario_s']))
+  {
+  header("Location: exibe_cursos.php");
+  }
+
   $pag_atual = "autenticacao.php";
   include("../topo_tela_inicial.php");
 
   /* Caso o usuário já esteja logado, direciona para páigna inicial do curso */
-  if (!empty ($_SESSION['login_usuario_s']))
-  {
-    /* Obt� a raiz_www */
-    //$sock = Conectar("");
-    $query = "select diretorio from Diretorio where item = 'raiz_www'";
-    $res = Enviar($sock,$query);
-    $linha = RetornaLinha($res);
-    $raiz_www = $linha[0];
 
-    $caminho = $raiz_www."/pagina_inicial";
-
-    header("Location: {$caminho}/exibe_cursos.php");
-    Desconectar($sock);
-    exit;
-  }
   
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
