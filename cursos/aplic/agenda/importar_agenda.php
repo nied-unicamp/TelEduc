@@ -184,7 +184,7 @@ echo ("          <tr>\n");
 echo ("            <td valign=\"top\">\n");
 echo ("              <ul class=\"btAuxTabs\">\n");
 /* 2 - Cancelar (geral) */
-echo ("                  <li><span onclick='CancelarImportacao();'>" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span></li>\n");
+echo ("                  <li><span onClick=history.go(-1);>" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span></li>\n");
 echo ("              </ul>\n");
 echo ("            </td>\n");
 echo ("          </tr>\n");
