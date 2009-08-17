@@ -69,10 +69,10 @@ include("../topo_tela.php");
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
-AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_global);
+AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
 
 if($visualizar == "I")
-$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario_global,$cod_curso,$eformador,$cod_usuario_exercicio);
+$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
 else if($visualizar == "G")
 $exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
  
