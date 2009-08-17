@@ -211,7 +211,7 @@
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");		
    /*23 - (Geral) Voltar*/
-  echo("                  <li><span onclick=\"BtnVoltarClick();\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");
+  echo("                  <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");
   echo("                </ul>\n");	
   echo("              </td>\n");
   echo("            </tr>\n");
