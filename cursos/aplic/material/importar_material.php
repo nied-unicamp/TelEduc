@@ -148,7 +148,7 @@ echo ("         }\n");
 echo ("       }\n\n");
 
 echo ("       function MudarTopico(cod_topico){\n");
-echo ("         document.frmImportar.action = \"importar_material.php\";\n");
+echo ("         document.frmImportar.action = \"importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem."\";\n");
 echo ("         document.frmImportar.cod_topico_raiz.value = cod_topico;\n");
 echo ("         document.frmImportar.submit();\n");
 echo ("       }\n");
