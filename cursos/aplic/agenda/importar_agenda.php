@@ -119,7 +119,7 @@ echo ("       }\n\n");
 
 echo ("       function Cancelar()\n");
 echo ("       {\n");
-echo ("         window.location = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=1';\n");
+echo ("         document.location = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=1';\n");
 echo ("       }\n\n");
 
 echo ("      function CheckAll(){\n");
