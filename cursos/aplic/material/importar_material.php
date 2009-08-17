@@ -124,7 +124,7 @@ echo ("       }\n\n");
 
 echo ("       function CancelarImportacao()\n");
 echo ("       {\n");
-echo ("         window.location='material.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
+echo ("         document.location='material.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
 echo ("       }\n\n");
 
 echo ("       function CheckAll()\n");
