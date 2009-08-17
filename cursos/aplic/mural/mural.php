@@ -54,7 +54,6 @@
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();  
 
-
   $cod_ferramenta=8;
   $cod_ferramenta_ajuda=$cod_ferramenta;
   $cod_pagina_ajuda=1;
@@ -601,7 +600,10 @@
         echo("        }\n");
         echo("      }\n");
   
-  
+  		echo("      function ApagarAtual(cod_mural){\n");
+  		echo("      	document.location='acoes.php?cod_curso=".$cod_curso."&acao=apagarMuralAtual&cod_mural='+cod_mural+'&pag_atual='+pag_atual+'&ordem=".$ordem."&todas_abertas='+todas_abertas;\n");
+  		echo("      }\n");
+  		
         echo("      function ApagarMsgSelecionadas(){\n");
         echo("        var j=0;\n");
         echo("        var elementos = document.getElementsByName('chk')\n");
@@ -925,8 +927,12 @@
         echo("                          <div class=\"divRichText\" style=\"overflow:auto;\";>". PreparaExibicaoMensagem($dados['texto'])."</div>\n");
         echo("                        </td>\n");
         echo("                        <td id=\"td_close".$cod_mural."\">\n");
-        echo("                          <span class=\"link\" id=\"fechar_".$cod_mural."\" onclick=\"FecharMsg(".$cod_mural.");\">Fechar</span>\n");
-        echo("                        </td>\n");
+        echo("                          <span class=\"link\" id=\"fechar_".$cod_mural."\" onclick=\"FecharMsg(".$cod_mural.");\">Fechar</span><br/>\n");
+      /* 1 - Apagar */
+  		if($usr_formador){
+    		echo("                  	<span class=\"link\" id=\"apagar_msg_".$cod_mural."\" onclick=\"ApagarAtual(".$cod_mural.");\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span>\n");
+  		}
+  		echo("                        </td>\n");
         echo("                      </tr>\n");
 
         }
