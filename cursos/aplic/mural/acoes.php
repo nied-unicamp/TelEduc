@@ -62,8 +62,17 @@
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
- 
-  if ($acao=='nova_msg'){
+  if($acao=='apagarMuralAtual'){
+      if($usr_formador){
+	      $query = "update Mural set status='X' where cod_mural =".VerificaNumeroQuery($cod_mural);
+	      Enviar($sock, $query);
+	      $atualizacao="true";
+      }
+      Desconectar($sock);
+      header("Location:mural.php?cod_curso=".$cod_curso."&pag_atual=".$pag_atual."&ordem=".$ordem."&todas_abertas=".$todas_abertas."&acao=apagarMuralAtual&atualizacao=".$atualizacao);
+      exit;
+    }
+  else if ($acao=='nova_msg'){
     $msg_titulo=ConverteAspas2BarraAspas($msg_titulo);
     $msg_corpo=ConverteAspas2BarraAspas($msg_corpo);
       $atualizacao="true";
