@@ -167,7 +167,7 @@ $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
 
 echo ("          <form method=\"post\" name=\"frmImportar\">\n");
 echo ("          <input type=\"hidden\" name=\"cod_curso\" value=\"" . $cod_curso . "\">\n");
-echo ("          <input type=\"hidden\" name=\"cod_categoria\" value=\"" . $cod_categoria . "\">\n");
+echo ("          <input type=\"hidden\" name=\"cod_categoria\" value=NULL>\n");
 echo ("          <input type=\"hidden\" name=\"cod_curso_import\" value=\"" . $cod_curso_origem . "\">\n");
 echo ("          <input type=\"hidden\" name=\"cod_item\" value=''>\n");
 echo ("          <input type=\"hidden\" name=\"curso_compartilhado\" value=\"" . $curso_compartilhado . "\">\n");

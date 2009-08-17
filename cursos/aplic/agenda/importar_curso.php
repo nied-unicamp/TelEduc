@@ -71,7 +71,7 @@ else
 		$cod_categoria = $_POST['cod_categoria'];
 	else
 		$cod_categoria = "NULL";
-
+		
 if (isset ($_GET['tipo_curso']))
 	$tipo_curso = $_GET['tipo_curso'];
 else
