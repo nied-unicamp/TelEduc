@@ -56,6 +56,8 @@ $objAjax->processRequests();
 $cod_ferramenta = 23;
 $visualizar = $_GET['visualizar'];
 
+include("../topo_tela.php");
+
 if($visualizar != "I" && $visualizar != "G")
 $visualizar = "I";
 
@@ -66,8 +68,6 @@ if($visualizar == "I"){
 	$cod_grupo_exercicio = $_GET['cod'];
 	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
 }
- 
-include("../topo_tela.php");
 
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
