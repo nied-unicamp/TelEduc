@@ -59,17 +59,20 @@ $visualizar = $_GET['visualizar'];
 if($visualizar != "I" && $visualizar != "G")
 $visualizar = "I";
 
-if($visualizar == "I")
-$cod_usuario_exercicio = $_GET['cod'];
-else
-$cod_grupo_exercicio = $_GET['cod'];
+if($visualizar == "I"){
+	$cod_usuario_exercicio = $_GET['cod'];
+	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
+} else {
+	$cod_grupo_exercicio = $_GET['cod'];
+	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
+}
  
 include("../topo_tela.php");
 
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
-AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
+
 
 if($visualizar == "I")
 $exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
