@@ -73,7 +73,7 @@
   
   /* Se for aluno, manda para a pagina de exercicios individuais dele */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
-  	header("Location: ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_global); 
+  	header("Location: ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario); 
   
   include("../topo_tela.php");
   

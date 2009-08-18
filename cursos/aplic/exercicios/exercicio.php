@@ -73,9 +73,43 @@
   AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
   
   $titulos = RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
-  $nsubmetidas = RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
-  $ncorrigidas = RetornaNumExerciciosNaoCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
-
+  $ex_num = RetornaNumExercicios($sock, $visualizar);
+  $ex_entregues = RetornaNumExerciciosEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
+  $ex_corrigidos = RetornaNumExerciciosCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
+	
+  $total_ex_entregues = count($ex_entregues);
+  $total_ex_corrigidos = count($ex_corrigidos);
+  $total_titulos = count($titulos);
+  
+  	
+  /* Coloca o numero de exercicios entregues e tambem corridos
+   * No array titulos, que contem o nome dos usuarios/ grupos.
+   * Assim na hora de exibicao podemos fazer a conta com o 
+   * numero total de exercicios.
+   */
+  $i_titulos = 0;
+  $i_ex_entregues = 0;
+  $i_ex_corrigidos = 0;
+  	
+  while ($i_titulos < $total_titulos){
+  
+  	if ($titulos[$i_titulos]['cod'] != $ex_entregues[$i_ex_entregues]['cod']){
+  		$titulos[$i_titulos]['entregues'] = 0;
+  	} else {
+  		$titulos[$i_titulos]['entregues'] = $ex_entregues[$i_ex_entregues]['num'];
+  		$i_ex_entregues++;
+  	}
+  	
+  	if ($titulos[$i_titulos]['cod'] != $ex_corrigidos[$i_ex_corrigidos]['cod']){
+  		$titulos[$i_titulos]['corrigidos'] = 0;
+  	} else {
+  		$titulos[$i_titulos]['corrigidos'] = $ex_corrigidos[$i_ex_corrigidos]['num'];
+  		$i_ex_corrigidos++;
+  	}
+  	
+  	$i_titulos++;
+  }
+  
   /*********************************************************/
   /* in�io - JavaScript */
   echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
@@ -204,86 +238,30 @@
 	echo("                    <td width=\"15%\">Exercicios nao corrigidos</td>\n");
 	echo("                  </tr>\n");
 
-    //Inicializacao de indices
-    $i = 0;
-	$j = 0;
-    $k = 0;
-    $ic = 0;
-    $total = 0;
-    $numlinhas = count($titulos);
-    
-    if($visualizar == "I" && $agrupamento == "A" && $cod_usuario != -1)
-    {
-      $nome[$j] = NomeUsuario($sock,$cod_usuario,$cod_curso);
-      $cod_user_lista[$j] = $cod_usuario;
-      
-      while($k<count($nsubmetidas) && $nsubmetidas[$k]["cod"] < $cod_user_lista[$j])
-        $k++;
-
-      if($nsubmetidas != null && $cod_user_lista[$j] == $nsubmetidas[$k]["cod"])
-        $nao_submetidos[$j]=$nsubmetidas[$k]["num"];
-      else
-        $nao_submetidos[$j]=0;
-
-      while($ic<count($ncorrigidas) && $ncorrigidas[$ic]["cod"]<$cod_user_lista[$j])
-        $ic++;
-
-      if($ncorrigidas != null && $cod_user_lista[$j] == $ncorrigidas[$ic]["cod"])
-        $nao_corrigidos[$j]=$ncorrigidas[$ic]["num"];
-      else
-        $nao_corrigidos[$j]=0;
-  
-      $j = 1; //o 0 eh reservado para o dono(usuario q esta logado), a não ser que o mesmo seja o admtele
-      $total = 1;
-      $k = 0;
-      $ic = 0;
-    }
-
-    for($i = 0;$i < $numlinhas;$i++)
-    {
-      $nome[$i] = $titulos[$i]["titulo"];
-      $cod_user_lista[$i] = $titulos[$i]["cod"];
-
-      while($k<count($nsubmetidas) && $nsubmetidas[$k]["cod"] < $cod_user_lista[$j])
-        $k++;
-
-      if($nsubmetidas != null && $cod_user_lista[$i] == $nsubmetidas[$k]["cod"])
-        $nao_submetidos[$i]=$nsubmetidas[$k]["num"];
-      else
-        $nao_submetidos[$i]=0;
-
-      while($ic<count($ncorrigidas) && $ncorrigidas[$ic]["cod"]<$cod_user_lista[$j])
-        $ic++;
-
-      if($ncorrigidas != null && $cod_user_lista[$i] == $ncorrigidas[$ic]["cod"])
-        $nao_corrigidos[$i]=$ncorrigidas[$ic]["num"];
-      else
-        $nao_corrigidos[$i]=0;
-    }
-    
-    $total = $numlinhas;
-    $i = 0;
-	    
-    if ($total > 0)
-    {
-      for($i=0;$i<$total;$i++)
-      {
-        $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-         
-        echo("                  <tr id=\"tr_".$cod_user_lista[$i]."\">\n");
-        echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod_user_lista[$i]."\">".$nome[$i]."</a></td>\n");
-        echo("                    <td>".$nao_submetidos[$i]."</td>\n");
-        echo("                    <td>".$nao_corrigidos[$i]."</td>\n");
+	/* Monta a tabela:
+	 * Usuario | Exercicios nao entregues | Exercicios nao corrigidos
+	 */
+	
+	$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+	
+	if ($total_titulos){
+  	foreach($titulos as $cod => $linha){
+  		 
+        echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
+        echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$linha['cod']."\">".$linha['titulo']."</a></td>\n");
+        echo("                    <td>".($ex_num - $linha['entregues'])."</td>\n");
+        echo("                    <td>".($linha['entregues'] - $linha['corrigidos'])."</td>\n");
         echo("                  </tr>\n");
-      }
+        
     }
+  }
     else
-    {
+  {
       echo("                  <tr>\n");
       /* ? - Nao ha nenhum exericio */
       echo("                    <td colspan=\"7\">Nao ha nenhum exericio</td>\n");
       echo("                  </tr>\n");
-    }
+  }
 
 	echo("                </table>\n");
 	echo("              </td>\n");

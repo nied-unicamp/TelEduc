@@ -649,28 +649,28 @@ function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador
                 ['num'] - numero de exercicios nao entregues
                 
 */
-function RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
+function RetornaNumExerciciosEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
 {
   if($agrupamento == "A")
   {
     if($tela_formador)
-      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='N' and er.cod_grupo IS NULL) OR (er.cod_grupo IS NULL and er.status = 'R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='S' and er.cod_grupo IS NULL) OR (er.cod_grupo IS NULL and er.status = 'R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
     else
-      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='N' and er.cod_grupo IS NULL and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") ) OR ( er.cod_grupo IS NULL and (er.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE (er.submetida='S' and er.cod_grupo IS NULL and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") ) OR ( er.cod_grupo IS NULL and (er.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
   }
   else if($agrupamento == "G")
   {
     if($tela_formador)
-      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.submetida = 'N') or (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.status = 'R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
+      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.submetida = 'S') or (er.cod_usuario IS NULL and g.cod_grupo = er.cod_grupo and er.status = 'R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
     else //pega apenas o dono e os compartilhados
-      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.submetida='N') or (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
+      $consulta = "SELECT er.cod_grupo as cod, COUNT(er.submetida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.submetida='S') or (g.cod_grupo = er.cod_grupo and (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.status='R') GROUP BY er.cod_grupo ORDER BY g.cod_grupo";
   }
   else if($agrupamento == "T")
   {
     if($visualizar == "I")
-      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='N' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
     else if($visualizar == "G")
-      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='N' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.submetida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
   }
     
   $res=Enviar($sock, $consulta);
@@ -689,33 +689,48 @@ function RetornaNumExerciciosNaoEntregues($sock,$cod_usuario,$tela_formador,$agr
                 ['num'] - numero de exercicios nao corrigidos
                 
 */
-function RetornaNumExerciciosNaoCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
+function RetornaNumExerciciosCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
 {
   if($agrupamento == "A")
   {
     if($tela_formador)
-      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='S' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
     else
-      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL  and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
+      $consulta = "SELECT er.cod_usuario as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.corrigida='S' and er.submetida='S' and er.status!='R' and er.cod_grupo IS NULL  and (er.compartilhada='T' or er.cod_usuario = ".$cod_usuario.") GROUP BY er.cod_usuario ORDER BY er.cod_usuario";
   }
   else if($agrupamento == "G")
   {
     if($tela_formador)
-      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE er.corrigida='N' and er.submetida='S' and er.status!='R' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
+      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g, Exercicios_resolucao as er WHERE er.corrigida='S' and er.submetida='S' and er.status!='R' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
     else
-      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.corrigida='N' and er.submetida='S' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
+      $consulta = "SELECT g.cod_grupo as cod, COUNT(er.corrigida) as num FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE (gu.cod_usuario = ".$cod_usuario." or er.compartilhada='T') and er.corrigida='S' and er.submetida='S' and g.cod_grupo = er.cod_grupo and er.cod_usuario IS NULL GROUP BY er.cod_grupo ORDER BY er.cod_usuario";
   }
   else if($agrupamento == "T")
   {
     if($visualizar == "I")
-      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='N' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='S' AND er.cod_grupo IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
     else if($visualizar == "G")
-      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='N' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
+      $consulta = "SELECT er.cod_exercicio as cod, COUNT(er.corrigida) as num FROM Exercicios_resolucao as er WHERE er.submetida='S' AND er.corrigida='S' AND er.cod_usuario IS NULL GROUP BY er.cod_exercicio ORDER BY er.cod_exercicio";
   }
   
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return $lista;
+}
+
+/***********************************************************************
+   RetornaNumExercicios - Retorna o numero de exercicios
+   Entrada: $sock - BASE DO CURSO
+            $visualizar - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: Numero de exercicios         
+*/
+function RetornaNumExercicios($sock, $visualizar){
+	
+	$query = 'select COUNT(cod_exercicio) as cod from Exercicios_aplicado where tp_aplicacao = \''.VerificaStringQuery($visualizar).'\'';
+	$res = Enviar($sock, $query);
+	$linha = RetornaLinha($res);
+	return (int) $linha[0];
+	
 }
 
 /***********************************************************************
