@@ -708,22 +708,23 @@
         
         if($cod_usuario == $linha_item['cod_usuario'])
           $compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
-
-        echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\" style=\"".$style."\">\n");
-        echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chk[]\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"ControlaSelecao();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
+        if($cod_usuario == $linha_item['cod_usuario'] || $linha_item['tipo_compartilhamento'] == "F"){
+          echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\" style=\"".$style."\">\n");
+          echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chk[]\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"ControlaSelecao();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
         
-        if($visualizar == "Q")
-          echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."\">".$titulo."</a></td>\n");
-        else
-          echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."&lixeira=ok\">".$titulo."</a></td>\n");
-        echo("                    <td>".$data."</td>\n");
-        echo("                    <td id=\"topico_".$linha_item['cod_questao']."\">".$topico."</td>\n");
-        if($visualizar == "Q")
-        {
-          echo("                    <td id=\"tipo_".$linha_item['cod_questao']."\">".$tipo."</td>\n");
-          echo("                    <td>".$compartilhamento."</td>\n");
+          if($visualizar == "Q")
+            echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."\">".$titulo."</a></td>\n");
+          else
+            echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."&lixeira=ok\">".$titulo."</a></td>\n");
+          echo("                    <td>".$data."</td>\n");
+          echo("                    <td id=\"topico_".$linha_item['cod_questao']."\">".$topico."</td>\n");
+          if($visualizar == "Q")
+          {
+            echo("                    <td id=\"tipo_".$linha_item['cod_questao']."\">".$tipo."</td>\n");
+            echo("                    <td>".$compartilhamento."</td>\n");
+          }
+          echo("                  </tr>\n");
         }
-        echo("                  </tr>\n");
         $numQuestoesPag++;
       }
     }
