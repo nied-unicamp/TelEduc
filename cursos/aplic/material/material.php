@@ -597,7 +597,8 @@
                 5: Importar Leitura
                 7: Importar Parada Obrigat�ria
         */
-    echo("                    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_ferramenta=".$cod_ferramenta."\">".RetornaFraseDaLista($lista_frases,105)."</a></li>\n");
+    if(($cod_topico_raiz < 2))
+    	echo("                    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_ferramenta=".$cod_ferramenta."\">".RetornaFraseDaLista($lista_frases,105)."</a></li>\n");
 
         /* 9 - Nova Pasta */
     echo("                    <li><span onclick=\"MostraLayer(cod_novo_top,150, event);document.getElementById('nome_novo_topico').focus();document.getElementById('nome_novo_topico').value='';\" title=\"".RetornaFraseDaLista($lista_frases,9)."\">".RetornaFraseDaLista($lista_frases,9)."</span></li>\n");
