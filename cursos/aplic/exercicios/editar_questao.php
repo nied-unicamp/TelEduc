@@ -1364,7 +1364,8 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     else
       $compartilhamento = "Nao compartilhado";
       
-    $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+    if($cod_usuario == $questao['cod_usuario'])
+      $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
       
     echo("					    <td>".$compartilhamento."</td>");      
       
