@@ -70,7 +70,7 @@
   {
     $atualizacao = "true";
 
-    $cod_questao = CriarQuestao($sock, $cod_curso, $cod_usuario, $novo_titulo, $tp_questao);
+    $cod_questao = CriarQuestao($sock, $cod_usuario, $cod_curso,$novo_titulo , $tp_questao);
     if($cod_questao == -1) //erro na criacao! algum parametro da func. esta vazio
     {
       $atualizacao="false";
