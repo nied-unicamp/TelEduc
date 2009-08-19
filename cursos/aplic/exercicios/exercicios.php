@@ -655,19 +655,20 @@
         
         if($cod_usuario == $linha_item['cod_usuario'])
           $compartilhamento = "<span id=\"comp_".$linha_item['cod_exercicio']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_exercicio']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
-
-        echo("                  <tr id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
-        echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkExercicio\" id=\"itm_".$linha_item['cod_exercicio']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_exercicio']."\" /></td>\n");
-        echo("                    <td $defColspan align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
-        echo("                    <td id=\"data_".$linha_item['cod_exercicio']."\">".$data."</td>\n");
-        if($visualizar == "E")
-        {
-          echo("                    <td id=\"disp_".$linha_item['cod_exercicio']."\">".$disponibilizacao."</td>\n");
-          echo("                    <td id=\"entrega_".$linha_item['cod_exercicio']."\">".$entrega."</td>\n");
-          echo("                    <td>".$compartilhamento."</td>\n");
-          echo("                    <td id=\"situacao_".$linha_item['cod_exercicio']."_".$linha_item['situacao']."\">".$situacao."</td>\n");
+        if($cod_usuario == $linha_item['cod_usuario'] || $linha_item['tipo_compartilhamento'] == "F"){
+          echo("                  <tr id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
+          echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkExercicio\" id=\"itm_".$linha_item['cod_exercicio']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_exercicio']."\" /></td>\n");
+          echo("                    <td $defColspan align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
+          echo("                    <td id=\"data_".$linha_item['cod_exercicio']."\">".$data."</td>\n");
+          if($visualizar == "E")
+          {
+            echo("                    <td id=\"disp_".$linha_item['cod_exercicio']."\">".$disponibilizacao."</td>\n");
+            echo("                    <td id=\"entrega_".$linha_item['cod_exercicio']."\">".$entrega."</td>\n");
+            echo("                    <td>".$compartilhamento."</td>\n");
+            echo("                    <td id=\"situacao_".$linha_item['cod_exercicio']."_".$linha_item['situacao']."\">".$situacao."</td>\n");
+          }
+          echo("                  </tr>\n");
         }
-        echo("                  </tr>\n");
       }
     }
     else
@@ -766,7 +767,7 @@
   	/* 18 - Ok (gen) */
   	echo("            <input type=\"submit\" id=\"ok_novoexercicio\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   	/* 2 - Cancelar (gen) */
-  	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_novo_exercicio);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_novo_exercicio);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   	echo("         </div>\n");
   	echo("        </form>\n");
   	echo("      </div>\n");
