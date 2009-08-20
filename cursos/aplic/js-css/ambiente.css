@@ -259,6 +259,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
 
 .divRichText{
   width:100%;
+  overflow: auto;
 }
 
 .divRichText h1{
