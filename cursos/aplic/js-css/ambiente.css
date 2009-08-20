@@ -268,7 +268,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   position:static;
   margin:0;
   padding:0;
-  height:1.0em;
+  /*height:1.0em;*/
 }
 
 
@@ -276,7 +276,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   font-size:2.0em;
   font-weight:bold;
 /*  background-color:#ff0;*/
-  height:0.9em;
+  /*height:0.9em;*/
 }
 
 .divRichText h3{
@@ -286,7 +286,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   background-color:#FFF;
   padding:0;
   margin:0;
-  height:0.9em;
+  /*height:0.9em;*/
 }
 
 .divRichText h4{
@@ -295,7 +295,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   color:#696969;
   background-color:#FFF;
   padding:0;
-  height:0.9em;
+  /*height:0.9em;*/
 }
 
 .divRichText h5{
@@ -305,7 +305,7 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
 /*  background-color:none;*/
   padding:0;
   margin:0;
-  height:0.9em;
+  /*height:0.9em;*/
 }
 
 dl.portlet  {
