@@ -1221,7 +1221,7 @@ if (!function_exists("DecodificaString")){
 function RetornaListaTodosLogins($sock)
 {
 
-  $query="select login from Usuario where cod_usuario <> -1";
+  $query="select login,email from Usuario where cod_usuario <> -1";
   $res = Enviar($sock,$query);
 
   return RetornaArrayLinhas($res);
@@ -1242,7 +1242,7 @@ function SugerirLoginDinamic($pal,$frase)
   {
     if ($pal != "" && $pal == substr($logins_usuarios[$i]['login'],0,strlen($pal)))
     {
-      $hint .= "<li><a href=\"#\" onclick=\"javascript:document.getElementById('login').value='".$logins_usuarios[$i]['login']."';document.getElementById('divSugs').style.display = 'none';document.getElementById('tr_sugs').style.display = 'none';\">".$logins_usuarios[$i]['login']."</a></li>";
+      $hint .= "<li><a href=\"#\" onclick=\"javascript:document.getElementById('login').value='".$logins_usuarios[$i]['login']."';document.getElementById('divSugs').style.display = 'none';document.getElementById('tr_sugs').style.display = 'none';\">".$logins_usuarios[$i]['login']."&nbsp;-&nbsp;(".$logins_usuarios[$i]['email'].")</a></li>";
       $count++;
     }
   }
