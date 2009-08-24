@@ -1223,7 +1223,7 @@ function SalvaAssunto($sock, $cod_assunto_pai, $nome, $descricao)
     $res2 = Enviar($sock, $query2);
 
     $tupla = RetornaLinha($res2);
-
+	 AtualizaFerramentasNova($sock, 6, 'T');
     return array (true, $tupla['cod_assunto']);
   }
   else
