@@ -378,6 +378,7 @@ function aplicarEnquete($sock, $idEnquete)
   $data = time();
   $consulta="update Enquete set data_inicio = ".$data." where idEnquete=".VerificaNumeroQuery($idEnquete);
   $res=Enviar($sock, $consulta);
+  
   return($res);
 }
 
@@ -578,7 +579,10 @@ function SalvaEnquete($sock,$cod_usuario,$titulo,$pergunta, $data_inicio, $data_
   if (!$res)
     return false;
   else
+  {
+  	AtualizaFerramentasNova($sock, 24, 'T');
     return $idEnquete;
+  }
 }
 
 /*******************************************************
@@ -625,8 +629,9 @@ function EditaEnquete($sock, $idEnquete, $titulo,$pergunta, $data_inicio, $data_
   if (!$res)
     return false;
   else
+  {
     return true;
-
+  }
 }
 
 /* *******************************************************************
