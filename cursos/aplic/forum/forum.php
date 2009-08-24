@@ -139,6 +139,8 @@
     list ($lista_foruns, $total_por_forum, $total_foruns) = RetornaForunsDeletados($sock, $ordem_foruns);
   }
 
+  
+    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
   /* 56 - Configuracao alterada com sucesso */
   echo("      var msg_56='".RetornaFraseDaLista($lista_frases, 56)."';\n");
@@ -572,21 +574,21 @@
   echo("            </tr>\n");
   echo("            <tr>\n");
   echo("              <td>\n");
-  echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+  echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   /* 58 - Fórum */
-  echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
+  echo("                    <td style=\"cursor:pointer\" class=\"alLeft\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
 
   if($usr_formador){
     /* 70 (ger) - Opções */
-    echo("                    <td align=\"center\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
+    echo("                    <td class=\"sorttable_nosort\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
   }
   /* 11 - Data */
-  echo("                    <td align=\"center\">".RetornaFraseDaLista($lista_frases,11)."</td>\n");
+  echo("                    <td style=\"cursor:pointer\" align=\"center\">".RetornaFraseDaLista($lista_frases,11)."</td>\n");
  
   if($AcessoAvaliacao){
     /* 92 - Avaliação */
-    echo("                    <td align=\"center\">".RetornaFraseDaLista($lista_frases,92)."</td>\n");
+    echo("                    <td style=\"cursor:pointer\" align=\"center\">".RetornaFraseDaLista($lista_frases,92)."</td>\n");
   }
 
   echo("                  </tr>\n");
