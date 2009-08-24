@@ -102,7 +102,7 @@
   Fun��es JavaScript
   ==================
   */
-  
+  echo("        <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("        <script type=\"text/javascript\">\n");
 
   echo("          var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
@@ -337,22 +337,22 @@
   /* <!----------------- Tabela Interna -----------------> */
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+  echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
   $lista_itens = RetornaItens ($sock, $cod_curso, $cod_usuario, $cod_propriet);
 
 
   echo("                  <tr class=\"head\">\n");
   if($dono_diario){
-    echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
+    echo("                    <td width=\"2\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
   }
   /* 8 - Titulo */
-  echo("                    <td class=\"colorfield\" width=\"49%\">".RetornaFraseDaLista($lista_frases, 8)."</td>\n");
+  echo("                    <td class=\"colorfield\" style=\"cursor:pointer\" width=\"49%\">".RetornaFraseDaLista($lista_frases, 8)."</td>\n");
   /* 10 - Data */
-  echo("                    <td class=\"colorfield\" width=\"20%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 10)."</td>\n");
+  echo("                    <td class=\"colorfield\" style=\"cursor:pointer\" width=\"20%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 10)."</td>\n");
   /* 57 - Modo de compartilhamento */
-  echo("                    <td class=\"colorfield\" width=\"10%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
+  echo("                    <td class=\"colorfield\" style=\"cursor:pointer\" width=\"10%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
   /* 12 - Comentarios */
-  echo("                    <td class=\"colorfield\" width=\"20%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
+  echo("                    <td class=\"colorfield\" style=\"cursor:pointer\" width=\"20%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
   echo("                  </tr>\n");
 
   // variavel que indica cor no gfield. varia entre 1 ou 2
