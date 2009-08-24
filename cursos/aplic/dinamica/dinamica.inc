@@ -606,7 +606,7 @@ function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 
   $consulta="update Dinamica set texto='".VerificaStringQuery(trim(VerificaTexto($novo_nome)))."' where cod_dinamica=".VerificaNumeroQuery($cod_item);
   $res=Enviar($sock, $consulta);
-
+	 AtualizaFerramentasNova($sock, 16, 'T');
   Desconectar($sock);
 
   // Imprime no div valores do formulário
