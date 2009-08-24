@@ -60,7 +60,7 @@
   $feedbackObject->addAction("apagarItem", 101, 0);
   $feedbackObject->addAction("apagarSelecionados", 101, 0);
   $feedbackObject->addAction("ativaragenda", 102, 0);
-  $feedbackObject->addAction("importarItem", 107, 0);
+  $feedbackObject->addAction("importarItem", 108, 0);
 
   echo("    <script type=\"text/javascript\">\n\n");	
 
