@@ -60,6 +60,7 @@
   $feedbackObject->addAction("apagarItem", 101, 0);
   $feedbackObject->addAction("apagarSelecionados", 101, 0);
   $feedbackObject->addAction("ativaragenda", 102, 0);
+  $feedbackObject->addAction("importarItem", 107, 0);
 
   echo("    <script type=\"text/javascript\">\n\n");	
 
@@ -222,6 +223,12 @@
   echo("      {\n");
   echo("        window.location='agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."';;\n");
   echo("      }\n\n");
+  
+  //echo("      function Iniciar()\n");
+  //echo("      {\n");
+  //$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  //echo("        startList();\n");
+  //echo("      }\n\n");	
   
   echo("    </script>\n\n");
 	
