@@ -60,6 +60,7 @@
   $objMaterial->registerFunction("AtualizaPosicoes");
   $objMaterial->registerFunction("CriaTopicoDinamic");
   $objMaterial->registerFunction("RenomearTopicoDinamic");
+  
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
 
@@ -77,6 +78,7 @@
   $feedbackObject->addAction("apagarSelecionados", 128, 0);
   $feedbackObject->addAction("moveritem", 130, 0);
   $feedbackObject->addAction("movertopico", 130, 0);
+  $feedbackObject->addAction("importarItem", 148, 0);
 
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 1;
