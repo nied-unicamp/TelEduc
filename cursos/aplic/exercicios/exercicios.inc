@@ -382,7 +382,7 @@ function CriarExercicio($sock, $cod_usuario, $cod_curso, $titulo)
 
   $consulta="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'C')";
   $res=Enviar($sock, $consulta);
-
+	AtualizaFerramentasNova($sock, 23, 'T');
   return($cod_questao);
 }
 
