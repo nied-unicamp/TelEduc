@@ -35,7 +35,7 @@
   
   if ($tela_formadormesmo)
   {
-    echo("          <!-- Navegacao Nível 3 -->\n");
+    echo("          <!-- Navegacao Nvel 3 -->\n");
     echo("          <ul id=\"nav3nivel\">\n");
     if ($tela_formador)
     {
@@ -132,17 +132,15 @@
   $tela_array_convidado_passivo = array (11, 12, 14, 15, 22, 23);
   // Lista das ferramentas a esconder de convidados ativos
   $tela_array_convidado_ativo   = array (12, 14, 22, 23);
-
+	
     foreach($tela_ordem_ferramentas as $cod => $linha)
-    {
-
+    {	
       $tela_cod_ferr=$linha['cod_ferramenta'];
+      
       if($tela_cod_ferr != -1){
         $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
         $tela_diretorio=$tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
         $tela_status=$tela_curso_ferramentas[$tela_cod_ferr]['status'];
-
-
   
         $tela_exibir = false;
         if (! $tela_convidado)
@@ -158,7 +156,7 @@
         {
           $tela_exibir = ! in_array ($tela_cod_ferr, $tela_array_convidado_passivo);
         }
-  
+  		
         if ($tela_exibir)
         {
           @$tela_data=$tela_novidade_ferramentas[$tela_cod_ferr];
@@ -169,8 +167,7 @@
   
           if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))
           {
-
-            ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_convidado,$tela_convidado_passivo,$tela_convidado_ativo,$tela_style,$cod_ferramenta,$cod_usuario);
+			ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_convidado,$tela_convidado_passivo,$tela_convidado_ativo,$tela_style,$cod_ferramenta,$cod_usuario);
           }
         }
       }

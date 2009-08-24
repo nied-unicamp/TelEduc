@@ -181,6 +181,7 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   $lista_ferramentas=RetornaArrayLinhas($res);
   /* inicia como 0 a data de atualiza��o de cada ferramenta ativa do curso */
   foreach($lista_ferramentas as $cod => $ferramenta)
+  
     $saida[$ferramenta['cod_ferramenta']]= 0;
   
     
@@ -196,7 +197,9 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   /* Atualiza o vetor de saida para cada codigo de ferramenta */
   if (count($lista) > 0){
     foreach($lista as $cod => $linha){
+    	
       $saida[$linha['cod_ferramenta']] = $linha['data'];
+      
     }
   } 
   
@@ -239,6 +242,7 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   do que o valor atual (vindo da data de atualiza��o pelo tipo do usuario)  */
   if ((is_array($lista)) && (count($lista) > 0)){
     foreach($lista as $cod => $linha){
+      
       $saida[$linha['cod_ferramenta']]= max($saida[$linha['cod_ferramenta']], $linha['data']);
     }
   }  
@@ -284,11 +288,6 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   }
  
   /* Portfolio e Portfolio de Grupos */
-
-  if ((isset($eformador)) && ($eformador))
-    $saida[15]=RetornaMaiorDataItemComentario($sock,1,'F',0,$cod_usuario);
-  else
-    $saida[15]=RetornaMaiorDataItemComentario($sock,1,'T',0,$cod_usuario);
 
   return $saida;
 }
@@ -462,7 +461,8 @@ function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultim
   }
 
 function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_usuario){
-    if ($data>$ultimo_acesso)
+  
+	if ($data>$ultimo_acesso)
       $novidade= "../imgs/estrelinha.gif";
     else
       $novidade="../imgs/estrela1.gif";
@@ -512,6 +512,7 @@ function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ul
     else 
 	echo("               <a href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
     }
+  
     echo(" <img src='".$novidade."' border=\"0\" alt=\"\" /> <b>".$nome_ferramenta."</b>");
     echo("               </a>\n");
     echo("             </div>\n");
