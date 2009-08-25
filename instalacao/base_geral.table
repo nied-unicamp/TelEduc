@@ -13504,6 +13504,7 @@ CREATE TABLE `Usuario` (
   `informacoes` text,
   `data_inscricao` int(11) default NULL,
   `cod_lingua` int(11) default NULL,
+  `confirmacao` varchar(20) NULL,
   PRIMARY KEY  (`cod_usuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -13513,7 +13514,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (-1,'admtele','','Administracao Do Teleduc','','','','','','','',0,'M','','',3,'',0,1);
+INSERT INTO `Usuario` VALUES (-1,'admtele','','Administracao Do Teleduc','','','','','','','',0,'M','','',3,'',0,1,NULL);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
