@@ -109,7 +109,7 @@
     if (NaoExisteTop($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario))
     {
       $cod_topico=CriarTopico($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario);
-
+		AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
       Desconectar($sock);
       header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico."&acao=".$acao."&statusAcao=true");
 	  exit();
@@ -188,6 +188,7 @@
 
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
 	$atualizacao='true';
+	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
 	header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
   }
   
@@ -215,6 +216,7 @@
 
     $cod_item=IniciaCriacao($sock, $tabela, $cod_topico_raiz, $cod_usuario, $cod_curso, $dirname, $diretorio_temp, $novo_nome);
 	$atualizacao = 'true';
+	 AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
 	  Desconectar($sock);
   header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=".$atualizacao);
   exit;
@@ -287,6 +289,7 @@
   	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
 	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
 
+	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
 	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
                       $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
                       $array_topicos_origem, $array_itens_origem, $nome_tabela,
