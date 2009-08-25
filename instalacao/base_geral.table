@@ -325,8 +325,7 @@ UNLOCK TABLES;
 -- Table structure for table `Ferramentas`
 --
 
-DROP TABLE IF EXISTS `Ferramentas`;
-CREATE TABLE `Ferramentas` (
+CREATE TABLE IF NOT EXISTS `Ferramentas` (
   `cod_ferramenta` int(11) NOT NULL default '0',
   `cod_texto_nome` int(11) NOT NULL default '0',
   `cod_texto_descricao` int(11) NOT NULL default '0',
@@ -339,9 +338,30 @@ CREATE TABLE `Ferramentas` (
 --
 
 LOCK TABLES `Ferramentas` WRITE;
-/*!40000 ALTER TABLE `Ferramentas` DISABLE KEYS */;
-INSERT INTO `Ferramentas` (`cod_ferramenta`, `cod_texto_nome`, `cod_texto_descricao`, `diretorio`) VALUES (1,5,6,'agenda'),(3,7,8,'material'),(4,9,10,'material'),(5,11,12,'material'),(7,15,16,'material'),(8,17,18,'mural'),(9,19,20,'forum'),(11,23,24,'correio'),(12,25,26,'grupos'),(13,27,28,'perfil'),(14,29,30,'diario'),(15,31,32,'portfolio'),(16,3,4,'dinamica'),(17,1,2,'estrutura'),(18,33,34,'acessos'),(22,52,53,'avaliacoes'),(24,54,55,'enquete'),(25,56,57,'autenticacao'),(30,58,59,'busca'),(6,13,14,'perguntas'),(10,21,22,'batepapo'),(19,35,36,'intermap');
-/*!40000 ALTER TABLE `Ferramentas` ENABLE KEYS */;
+INSERT INTO `Ferramentas` (`cod_ferramenta`, `cod_texto_nome`, `cod_texto_descricao`, `diretorio`) VALUES
+(1, 5, 6, 'agenda'),
+(3, 7, 8, 'material'),
+(4, 9, 10, 'material'),
+(5, 11, 12, 'material'),
+(7, 15, 16, 'material'),
+(8, 17, 18, 'mural'),
+(9, 19, 20, 'forum'),
+(11, 23, 24, 'correio'),
+(12, 25, 26, 'grupos'),
+(13, 27, 28, 'perfil'),
+(14, 29, 30, 'diario'),
+(15, 31, 32, 'portfolio'),
+(16, 3, 4, 'dinamica'),
+(17, 1, 2, 'estrutura'),
+(18, 33, 34, 'acessos'),
+(22, 52, 53, 'avaliacoes'),
+(24, 54, 55, 'enquete'),
+(25, 56, 57, 'autenticacao'),
+(30, 58, 59, 'busca'),
+(6, 13, 14, 'perguntas'),
+(10, 21, 22, 'batepapo'),
+(19, 35, 36, 'intermap'),
+(23, 48, 49, 'exercicios');
 UNLOCK TABLES;
 
 --
@@ -13438,12 +13458,12 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 /*!40000 ALTER TABLE `Lingua_textos` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
 --
 -- Table structure for table `Menu`
 --
 
-DROP TABLE IF EXISTS `Menu`;
-CREATE TABLE `Menu` (
+CREATE TABLE IF NOT EXISTS `Menu` (
   `cod_ferramenta` int(11) NOT NULL default '0',
   `posicao` int(11) NOT NULL default '0',
   PRIMARY KEY  (`posicao`)
@@ -13454,11 +13474,35 @@ CREATE TABLE `Menu` (
 --
 
 LOCK TABLES `Menu` WRITE;
-/*!40000 ALTER TABLE `Menu` DISABLE KEYS */;
-INSERT INTO `Menu` (`cod_ferramenta`, `posicao`) VALUES (17,0),(22,4),(-1,1),(16,2),(1,3),(-1,5),(3,6),(4,7),(5,8),(7,12),(24,11),(-1,13),(8,14),(9,15),(6,9),(11,17),(-1,18),(12,19),(13,20),(14,21),(15,22),(-1,23),(18,24),(30,26),(10,16),(19,25);
-/*!40000 ALTER TABLE `Menu` ENABLE KEYS */;
+INSERT INTO `Menu` (`cod_ferramenta`, `posicao`) VALUES
+(17, 0),
+(22, 4),
+(-1, 1),
+(16, 2),
+(1, 3),
+(-1, 5),
+(3, 6),
+(4, 7),
+(5, 8),
+(7, 12),
+(24, 11),
+(-1, 13),
+(8, 14),
+(9, 15),
+(6, 9),
+(11, 17),
+(-1, 18),
+(12, 19),
+(13, 20),
+(14, 21),
+(15, 22),
+(-1, 23),
+(18, 24),
+(30, 26),
+(10, 16),
+(19, 25),
+(23, 10);
 UNLOCK TABLES;
-
 --
 -- Table structure for table `Patchs`
 --
@@ -13504,7 +13548,7 @@ CREATE TABLE `Usuario` (
   `informacoes` text,
   `data_inscricao` int(11) default NULL,
   `cod_lingua` int(11) default NULL,
-  `confirmacao` varchar(20) NULL,
+  `confirmacao` varchar(20) NULL;
   PRIMARY KEY  (`cod_usuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -13514,7 +13558,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (-1,'admtele','','Administracao Do Teleduc','','','','','','','',0,'M','','',3,'',0,1,NULL);
+INSERT INTO `Usuario` VALUES (-1,'admtele','','Administracao Do Teleduc','','','','','','','',0,'M','','',3,'',0,1);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
