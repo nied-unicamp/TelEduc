@@ -173,12 +173,11 @@
   	$dirname = "perguntas";
   	$nome_tabela = "Pergunta";
   	
-  	
+  	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
   	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
                       $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
                       $array_topicos_origem, $array_itens_origem, $nome_tabela,
                       $dirname, $diretorio_arquivos_destino, $diretorio_arquivos_origem);
-                      
     header("Location:perguntas.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_topico_destino."&acao=".$acao."&atualizacao=true");
   }
   
