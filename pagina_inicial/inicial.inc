@@ -1044,7 +1044,7 @@ function ConfirmaUsuario($user, $seq) {
 
     $seq_bd = $linha['confirmacao'];
     
-    if (strcmp($seq, $seq_bd) == 0) {
+    if ((strcmp($seq, $seq_bd) == 0) || ($seq_bd == NULL)) {
 		$query="UPDATE Usuario SET confirmacao=NULL WHERE cod_usuario=".VerificaNumeroQuery($user);
   		$res=Enviar($sock,$query);
   		Desconectar($sock);
