@@ -84,6 +84,7 @@ INSERT INTO Curso_ferramentas VALUES (25,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (30,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (10,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (19,'A','N',0);
+INSERT INTO Curso_ferramentas VALUES (23,'A','N',0);
 
 #
 # Table structure for table 'Ferramentas_nova'
@@ -987,7 +988,7 @@ CREATE TABLE Avaliacao_expressao (
   `tipo_compartilhamento` char(1) NOT NULL default 'A',
   `data` int(11) NOT NULL default '0',
   PRIMARY KEY  (`cod_expressao`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 #
 # Table structure for table `Avaliacao_externa`
@@ -1002,7 +1003,7 @@ CREATE TABLE Avaliacao_externa (
   `valor` decimal(4,2) NOT NULL,
   `status` varchar(1) NOT NULL,
   PRIMARY KEY  (`codigo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1  ;
 
 #
 # Table structure for table `Avaliacao_historicos`
@@ -1032,7 +1033,7 @@ CREATE TABLE Avaliacao_notas (
   `nota` float NOT NULL default '0',
   `data_alteracao` int(11) NOT NULL default '0',
   PRIMARY KEY  (`cod_nota`,`cod_aluno`,`cod_avaliacao`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 #
 # Table structure for table `Avaliacao_notas_sequencia`
@@ -1043,7 +1044,7 @@ CREATE TABLE Avaliacao_notas_sequencia (
   `cod_usuario` int(11) default NULL,
   `data` int(11) default NULL,
   PRIMARY KEY  (`cod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 #
 # Table structure for table `Avaliacao_sequencia`
@@ -1054,7 +1055,7 @@ CREATE TABLE Avaliacao_sequencia (
   `cod_usuario` int(11) default NULL,
   `data` int(11) default NULL,
   PRIMARY KEY  (`cod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 
 ###################################################
@@ -1076,7 +1077,7 @@ CREATE TABLE IF NOT EXISTS `Batepapo_apelido` (
   PRIMARY KEY  (`cod_sessao`,`cod_usuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-# --------------------------------------------------------
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 
 # Estrutura da tabela `Batepapo_assuntos`
@@ -1088,9 +1089,9 @@ CREATE TABLE IF NOT EXISTS `Batepapo_assuntos` (
   `data_inicio` int(11) NOT NULL default '0',
   `data_fim` int(11) default NULL,
   PRIMARY KEY  (`cod_assunto`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
-# --------------------------------------------------------
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 #
 # Estrutura da tabela `Batepapo_conversa`
@@ -1105,7 +1106,7 @@ CREATE TABLE IF NOT EXISTS `Batepapo_conversa` (
   `data` int(11) NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-# --------------------------------------------------------
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 
 # Estrutura da tabela `Batepapo_fala`
@@ -1128,7 +1129,7 @@ INSERT INTO `Batepapo_fala` (`cod_fala`, `cod_texto_fala`) VALUES
 (7, 14),
 (8, 15);
 
-# --------------------------------------------------------
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 
 # Estrutura da tabela `Batepapo_online`
@@ -1140,7 +1141,7 @@ CREATE TABLE IF NOT EXISTS `Batepapo_online` (
   PRIMARY KEY  (`cod_usuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-# --------------------------------------------------------
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 
 # Estrutura da tabela `Batepapo_sessoes`
@@ -1152,4 +1153,235 @@ CREATE TABLE IF NOT EXISTS `Batepapo_sessoes` (
   `data_fim` int(11) NOT NULL default '0',
   `status` char(1) NOT NULL default '',
   PRIMARY KEY  (`cod_sessao`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+#
+#  Table structure for table `Exercicios_aplicado`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_aplicado` (
+  `cod_exercicio` int(5) NOT NULL,
+  `dt_disponibilizacao` int(11) NOT NULL,
+  `dt_limite_submissao` int(11) NOT NULL,
+  `tp_aplicacao` char(1) NOT NULL,
+  `tp_correcao` char(1) NOT NULL,
+  `disp_gabarito` char(1) NOT NULL,
+  `avaliacao` int(11) default NULL,
+  PRIMARY KEY  (`cod_exercicio`,`dt_disponibilizacao`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_modelo`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_modelo` (
+  `cod_exercicio` int(5) NOT NULL auto_increment,
+  `cod_usuario` int(11) NOT NULL,
+  `titulo` tinytext NOT NULL,
+  `texto` text,
+  `status` char(1) NOT NULL,
+  `situacao` char(1) default NULL,
+  `tipo_compartilhamento` char(1) NOT NULL,
+  `data` int(11) NOT NULL,
+  `inicio_edicao` int(11) NOT NULL,
+  `posicao_item` int(11) default NULL,
+  PRIMARY KEY  (`cod_exercicio`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_modelo_historico`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_modelo_historico` (
+  `cod_exercicio` int(5) NOT NULL,
+  `cod_usuario` int(11) NOT NULL,
+  `data` int(11) NOT NULL,
+  `acao` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_exercicio`,`cod_usuario`,`data`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_modelo_questao`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_modelo_questao` (
+  `cod_questao` int(5) NOT NULL,
+  `cod_exercicio` int(5) NOT NULL,
+  `valor` decimal(4,2) NOT NULL,
+  `status` char(1) NOT NULL,
+  `posicao_item` int(11) default NULL,
+  PRIMARY KEY  (`cod_questao`,`cod_exercicio`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_questao`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao` (
+  `cod_questao` int(5) NOT NULL auto_increment,
+  `cod_topico` int(3) NOT NULL,
+  `cod_usuario` int(11) NOT NULL,
+  `titulo` tinytext NOT NULL,
+  `enunciado` text,
+  `nivel` char(1) default NULL,
+  `tp_questao` char(1) default NULL,
+  `status` char(1) NOT NULL,
+  `tipo_compartilhamento` char(1) NOT NULL,
+  `data` int(11) NOT NULL,
+  `inicio_edicao` int(11) NOT NULL,
+  PRIMARY KEY  (`cod_questao`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_questao_alternativa`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao_alternativa` (
+  `cod_alternativa` int(6) NOT NULL auto_increment,
+  `cod_questao` int(5) NOT NULL,
+  `texto` tinytext NOT NULL,
+  `posicao_item` int(11) default NULL,
+  PRIMARY KEY  (`cod_alternativa`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_questao_diss`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao_diss` (
+  `cod_questao` int(5) NOT NULL,
+  `cod_alternativa` int(6) NOT NULL default '0',
+  `gabarito` mediumtext,
+  PRIMARY KEY  (`cod_questao`,`cod_alternativa`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_questao_historico`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao_historico` (
+  `cod_questao` int(5) NOT NULL,
+  `cod_usuario` int(11) NOT NULL,
+  `data` int(11) NOT NULL,
+  `acao` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_questao`,`cod_usuario`,`data`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_questao_obj`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao_obj` (
+  `cod_questao` int(5) NOT NULL,
+  `gabarito` varchar(10) NOT NULL,
+  `tipo` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_questao`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao` (
+  `cod_resolucao` int(6) NOT NULL auto_increment,
+  `cod_exercicio` int(5) NOT NULL,
+  `cod_usuario` int(11) default NULL,
+  `cod_grupo` int(11) default NULL,
+  `dt_submissao` int(11) default NULL,
+  `nota` decimal(4,2) default NULL,
+  `submetida` char(1) NOT NULL,
+  `corrigida` char(1) NOT NULL,
+  `compartilhada` char(1) NOT NULL,
+  `status` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_resolucao`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao_historico`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_historico` (
+  `cod_resolucao` int(6) NOT NULL,
+  `cod_usuario` int(11) NOT NULL,
+  `data` int(11) NOT NULL,
+  `acao` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_resolucao`,`cod_usuario`,`data`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao_questao_comentarios`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_questao_comentarios` (
+  `cod_comentario` int(11) NOT NULL auto_increment,
+  `cod_questao` int(5) NOT NULL,
+  `cod_resolucao` int(6) NOT NULL,
+  `cod_usuario` int(11) NOT NULL,
+  `comentario` mediumtext NOT NULL,
+  `data` int(11) NOT NULL,
+  `status` char(1) NOT NULL,
+  PRIMARY KEY  (`cod_comentario`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao_questao_diss`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_questao_diss` (
+  `cod_resolucao` int(6) NOT NULL,
+  `cod_questao` int(5) NOT NULL,
+  `cod_alternativa` int(6) NOT NULL default '0',
+  `resposta` mediumtext NOT NULL,
+  `nota` decimal(4,2) default NULL,
+  PRIMARY KEY  (`cod_resolucao`,`cod_questao`,`cod_alternativa`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao_questao_obj`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_questao_obj` (
+  `cod_questao` int(5) NOT NULL,
+  `cod_resolucao` int(6) NOT NULL,
+  `resposta` varchar(10) NOT NULL,
+  `nota` decimal(4,2) default NULL,
+  PRIMARY KEY  (`cod_questao`,`cod_resolucao`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_topico`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_topico` (
+  `cod_topico` int(3) NOT NULL auto_increment,
+  `topico` varchar(20) NOT NULL,
+  PRIMARY KEY  (`cod_topico`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
