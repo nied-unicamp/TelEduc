@@ -71,6 +71,7 @@
   else
     $usr_formador = false;
 
+  echo("<script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
   echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
@@ -651,12 +652,12 @@
 
   echo("              <tr>\n");
   echo("                <td valign=\"top\">\n");
-  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");  
+  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");  
   echo("                    <tr class=\"head\">\n");
   
-  echo("                      <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
+  echo("                      <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
 
-  echo("					<td class=alLeft colspan=\"3\">Assunto</td>");
+  echo("					<td class=alLeft colspan=\"3\" style=\"cursor:pointer\">Assunto</td>");
   echo("					</tr>");
   
   /* 67 - N�o h� nenhuma pergunta freq�ente. */
