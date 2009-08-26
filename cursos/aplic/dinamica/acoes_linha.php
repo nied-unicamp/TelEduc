@@ -83,7 +83,7 @@
     if (!file_exists($diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/")) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/");
     }
-
+	
     $dir=$diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/";
 
     $nome_arquivo = $_FILES[input_files][name];
@@ -93,7 +93,6 @@
       /* 52 - Atenção: o arquivo que você anexou não existe ou tem mais de %dMb.*/
       $atualizacao="false";
     }
-
     Desconectar($sock);
     header("Location:editar_dinam.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
   }
