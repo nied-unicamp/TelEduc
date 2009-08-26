@@ -175,7 +175,7 @@
   echo ("                    <br/>".RetornaFrase($sock, 67, -2)." <a href='esqueci_login.php'>".RetornaFrase($sock, 68, -2)."</a><br/>");
   /* 24 - Caso tenha esquecido sua senha siga o link: */
   /* 23 - Esqueci minha senha!                        */
-  echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".RetornaFrase($sock, 23, -2)."</a>".RetornaFrase($sock, 88, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 87, -2)."</a>");
+  echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".RetornaFrase($sock, 23, -2)."</a></br>");
   /* 90 - Caso ainda não seja cadastrado,                                 */
   /* 91 - Cadastre-se!                                */
   echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 91, -2)."</a>");
