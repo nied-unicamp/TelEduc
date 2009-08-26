@@ -143,7 +143,7 @@ echo ("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInt
 
 $texto = ConverteAspas2Html(Enter2Br(RetornaTextoDinamica($sock, $cod_curso_import)));
 $tipo_import = ExisteDinamicaImport($sock, $cod_curso_import, $diretorio_arquivos);
-if ($tipo_import != 'N' && ($texto != "" || $tipo_import == 'A' || $tipo_import == 'R')) {
+if ($tipo_import != 'N' && ($texto != "" || $tipo_import == 'A')) {
 	echo ("                  <tr class=\"head\">\n");
 	/* Conte�do da Din�mica */
 	echo ("                    <td align=\"center\">" . RetornaFraseDaLista($lista_frases, 43) . "</td>\n");
