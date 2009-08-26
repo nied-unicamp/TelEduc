@@ -90,13 +90,6 @@ if ($tipo_curso == 'E') {
 
 // ******************************************************
 
-// Destrói a chave de login do usuário
-unset ($login_import_s);
-session_unregister("login_import_s");
-// Destrói o contador de tentativas de login do usuário.
-unset ($login_import_count_s);
-session_unregister("login_import_count_s");
-
 $sock = Conectar("");
 $lista_frases_biblioteca = RetornaListaDeFrases($sock, -2);
 Desconectar($sock);
@@ -160,8 +153,6 @@ if ($tipo_curso == 'E') {
 echo ("        function Iniciar()\n");
 echo ("        {\n");
 echo ("          startList();\n");
-if ($usr_formador)
-	echo ("          DesabilitaLoginSenha();\n");
 echo ("        }\n\n");
 
 echo ("      function Voltar()\n");
@@ -216,17 +207,6 @@ echo ("          else\n");
 // 33 - Selecione um curso em uma das listas.
 echo ("            alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 33) . "');\n");
 echo ("            return(false);\n");
-echo ("        }\n\n");
-
-echo ("        function DesabilitaLoginSenha()\n");
-echo ("        {\n");
-echo ("          document.getElementById('tr_senha').style.display = \"none\";\n");
-echo ("        }\n\n");
-
-echo ("        function HabilitaLoginSenha()\n");
-echo ("        {\n");
-//   echo("          if(document.getElementById('');\n");
-echo ("          document.getElementById('tr_senha').style.display = \"\";\n");
 echo ("        }\n\n");
 
 echo ("        function extracheck(obj)\n");
@@ -407,9 +387,13 @@ if ('E' == $tipo_curso) {
 	echo ("                    </td>\n");
 }
 
-echo ("                <form name=\"frmImpMaterial\" method=\"post\" action='importar_curso2.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "' />\n");
-echo ("                  <input type=\"hidden\" name=\"tipo_curso\" value='" . $tipo_curso . "' />\n");
-echo ("                  <input type=\"hidden\" name=\"cod_categoria\" value='" . $cod_categoria . "' />\n");
+echo ("                <form name=\"frmImpMaterial\" method=\"get\" action=\"acoes_linha.php\" />\n");
+echo ("                        <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
+echo ("                        <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
+echo ("                        <input type=\"hidden\" name=\"tipo_curso\" value='" . $tipo_curso . "' />\n");
+echo ("                        <input type=\"hidden\" id=getme name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
+echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
+echo ("                  <input type=hidden name=tipo_curso value='" . $tipo_curso . "' />\n");
 
 if ('E' == $tipo_curso) {
 	echo ("                  <input type=\"hidden\" name=\"data_inicio\" value='" . $data_inicio . "' />\n");
@@ -438,15 +422,18 @@ echo ("                      </select>\n");
 echo ("                    </td>\n");
 echo ("                    <td align=\"center\">\n");
 // Monta select com os cursos com material compatilhado
-echo ("                      <select class=\"input\" name=\"cod_curso_compart\" id=\"cod_curso_compart\" size=\"4\" style=\"width:100%\" onfocus='DesabilitaLoginSenha();desmarcaSelect(\"cod_curso_todos\");' ondblclick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
+echo ("                      <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_compart\" size=\"4\" style=\"width:100%\" onfocus='DesabilitaLoginSenha();desmarcaSelect(\"cod_curso_todos\");' ondblclick='" . (('E' == $tipo_curso) ? "CopiaPeriodo();" : "") . "selecionouCurso();'>\n");
 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
 		// 46(biblioteca) - (extraído)
+		
 		echo ("                        <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . RetornaFraseDaLista($lista_frases_biblioteca, 46)) : "") . "</option>\n");
 	}
 }
+
 echo ("                      </select>\n");
+
 echo ("                    </td>\n");
 echo ("                    <td>\n");
 $todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $periodo_inicio, $periodo_fim);
@@ -465,26 +452,7 @@ echo ("                      </select>\n");
 echo ("                    </td>\n");
 echo ("                    <td>\n");
 /* 36 - Importar dinamica */
-echo ("                      <input type=\"submit\" class=\"input\" style=\"width:150px;\" onclick=\"return(EnviaReq());\" value=\"" . RetornaFraseDaLista($lista_frases, 36) . "\" />\n");
-echo ("                    </td>\n");
-echo ("                  </tr>\n");
-echo ("                  <tr id=\"tr_senha\" style=\"display:none;\">\n");
-echo ("                    <td colspan=\"2\">&nbsp;</td>\n");
-echo ("                    <td colspan=\"2\">\n");
-echo ("                      <table>\n");
-echo ("                        <tr>\n");
-// 27(biblioteca) - Login:
-echo ("                          <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 27) . "</td>\n");
-echo ("                          <td style=\"border:0pt;\"><input type=\"text\" class=\"input\" onkeydown=\"return extracheck(this);\" name=\"login_import\" id=\"login_import\" value=\"\" /></td>\n");
-echo ("                          <td style=\"border:0pt;\" rowspan=\"2\" valign=\"bottom\">\n");
-echo ("                          </td>\n");
-echo ("                        </tr>\n");
-echo ("                        <tr>\n");
-// 48(biblioteca) - Senha:
-echo ("                          <td style=\"border:0pt;\">" . RetornaFraseDaLista($lista_frases_biblioteca, 48) . "</td>\n");
-echo ("                          <td style=\"border:0pt;\"><input type=\"password\" class=\"input\" onkeydown=\"return extracheck(this);\" name=\"senha_import\" id=\"senha_import\" value=\"\" /></td>\n");
-echo ("                        </tr>\n");
-echo ("                      </table>\n");
+echo ("                      <input type=\"submit\" class=\"input\" style=\"width:150px;\" value=\"" . RetornaFraseDaLista($lista_frases, 36) . "\" />\n");
 echo ("                    </td>\n");
 echo ("                  </tr>\n");
 echo ("                </table>\n");

@@ -454,11 +454,9 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
   $query="update ".$nome_tabela." set texto='".VerificaStringQuery($texto)."',status='".VerificaStringQuery($linhas_itens['status'])."',data=".time();
   // flag - Testa se consegui fazer o update
   $flag = Enviar($sock, $query);
-
-  Desconectar($sock);
-
+  AtualizaFerramentasNova($sock, 16, 'T');
 }
-AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+
   return($flag);
 }
 
