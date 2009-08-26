@@ -363,15 +363,22 @@
     echo("        document.getElementById('paginacao_last').innerHTML = \"&gt;&gt;\";\n");
     echo("      }\n");
 
-
-    echo("      function ExibirMensagem(cod_mural)\n");
+    echo("      function AlternaMensagem(cod_mural)\n");
     echo("      {\n");
     echo("        var browser=navigator.appName;\n\n");
     echo("        var totalMsgs=document.getElementsByName('tr_msg').length;\n");
-    echo("        if (browser==\"Microsoft Internet Explorer\")\n");
-    echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"block\";\n");
-    echo("        else\n");
-    echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"table-row\";\n");
+    echo("		  var sts = document.getElementById('tr_msg_'+cod_mural).style.display;\n");
+    echo("		  if ((sts == 'table-row') || (sts == 'block'))\n");
+    echo("		  {\n");
+    echo("         	document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
+    echo("		  }");
+    echo("		  else\n");
+    echo("		  {\n");
+    echo("        	if (browser==\"Microsoft Internet Explorer\")\n");
+    echo("          	document.getElementById('tr_msg_'+cod_mural).style.display=\"block\";\n");
+    echo("        	else\n");
+    echo("          	document.getElementById('tr_msg_'+cod_mural).style.display=\"table-row\";\n");    
+    echo("		  }");
     echo("        mensagens_abertas++;\n");
     echo("        if(totalMsgs <= 10){\n");
     echo("          VerificaAbertas();\n");
@@ -452,7 +459,7 @@
 
     echo("        if(mensagens_abertas==0 && total_pag==1) VoltarPaginacao(pag_atual);\n");
     echo("      }\n\n");
-
+   
     echo("      function ExibirTodasMsgs(){\n");
     echo("        tabela = document.getElementById('tabelaMsgs');\n");
     echo("        final = tabela.rows.length-1;\n");
@@ -885,7 +892,7 @@
           $nome_usuario="<span id=\"emissor_".$cod_mural."\" class=\"link\" onclick='OpenWindowPerfil(".$dados['cod_usuario'].");'>". $nome_usuario."</span>";
       
         $titulo=LimpaTitulo($dados['titulo']);
-        $titulo="<span id=\"titulo_".$cod_mural."\" class=\"link\" onclick='ExibirMensagem(".$cod_mural.");'>". $titulo."</span>";
+        $titulo="<span id=\"titulo_".$cod_mural."\" class=\"link\" onclick='AlternaMensagem(".$cod_mural.");'>". $titulo."</span>";
         /* Retorna a data da mensagem */
         $data = UnixTime2DataHora($lista_mensagens[$num_msg]['data']);
         $dataaux = explode(" ",$data);
