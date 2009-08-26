@@ -401,7 +401,7 @@ echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td align=\"center\">\n");
 // Monta select com os cursos com material compatilhado
-echo ("                        <select class=\"input\" name=\"cod_curso_import\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onfocus='desmarcaSelect(\"cod_curso_todos\");' '>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_compart\" size=4 style=\"width:100%\" onfocus='desmarcaSelect(\"cod_curso_todos\");' '>\n");
 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
@@ -416,7 +416,7 @@ $todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $periodo_
 //  $cursos_menos_compart =  Diferenca_Entre_Vetores ($Todos_Cursos, $Todos_Cursos_Compart);
 Desconectar($sock);
 // Monta select com os demais cursos (todos - compartilhados)
-echo ("                        <select class=\"input\" name=\"cod_curso_import\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_compart\");'>\n");
+echo ("                        <select class=\"input\" name=\"cod_curso_todos\" id=\"cod_curso_todos\" size=4 style=\"width:100%\" onFocus='desmarcaSelect(\"cod_curso_compart\");'>\n");
 
 if (count($todos_cursos) > 0) {
 	foreach ($todos_cursos as $idx => $dados) {

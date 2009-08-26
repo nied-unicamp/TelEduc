@@ -140,7 +140,7 @@
   } else if ($acao == "validarImportacao"){
  	$sock = MudarDB($sock, "");	
  	
- 	$array = explode(";", $cod_curso_import);
+ 	$array = explode(";", $cod_curso_todos);
   	$tipo_curso_origem = $array[0]; 
   	$cod_curso_origem = $array[1];
 
