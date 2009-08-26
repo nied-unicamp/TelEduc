@@ -65,6 +65,7 @@
   if ($acao == "novoAssunto"){
   	
   	list ($assunto_salvo, $cod_assunto) = SalvaAssunto($sock, $cod_assunto_pai, VerificaStringQuery($novo_nome), "");
+  	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
   	header("Location:editar_assunto.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_assunto."&acao=".$acao."&atualizacao=true");
   
   } else if ($acao == "novaPergunta"){
