@@ -370,6 +370,7 @@
     echo("		  var sts = document.getElementById('tr_msg_'+cod_mural).style.display;\n");
     echo("		  if ((sts == 'table-row') || (sts == 'block'))\n");
     echo("		  {\n");
+    echo("			mensagens_abertas--;\n");
     echo("         	document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
     echo("		  }");
     echo("		  else\n");
@@ -378,8 +379,8 @@
     echo("          	document.getElementById('tr_msg_'+cod_mural).style.display=\"block\";\n");
     echo("        	else\n");
     echo("          	document.getElementById('tr_msg_'+cod_mural).style.display=\"table-row\";\n");    
-    echo("		  }");
     echo("        mensagens_abertas++;\n");
+    echo("		  }");
     echo("        if(totalMsgs <= 10){\n");
     echo("          VerificaAbertas();\n");
     echo("        }\n");
