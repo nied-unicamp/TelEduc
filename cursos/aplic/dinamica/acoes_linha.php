@@ -72,7 +72,7 @@
   {
 
     $atualizacao="true";
-
+  	AtualizaFerramentasNova($sock, 16, 'T');
     /* Verifica a existência do diretório a ser movido o arquivo */
     if (!file_exists($diretorio_arquivos."/".$cod_curso)) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso);

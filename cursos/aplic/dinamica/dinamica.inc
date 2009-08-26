@@ -291,7 +291,7 @@ function AtualizaDinamica($sock,$cod_curso,$texto,$diretorio_arquivos,$diretorio
   $dirtemp=$diretorio_temp."/tmp/".$cod_curso."/dinamica/";
 
   $ret=SobrepoeDiretorio($dirtemp,$dir);
-
+	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
   $query="update Dinamica set texto='".$texto."',status='A',data=".time();
   Enviar($sock,$query);
 }
@@ -458,7 +458,7 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
   Desconectar($sock);
 
 }
-
+AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
   return($flag);
 }
 
@@ -600,7 +600,7 @@ function VerificaTexto($texto){
 function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+	
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
 
@@ -608,7 +608,6 @@ function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   $res=Enviar($sock, $consulta);
 	 AtualizaFerramentasNova($sock, 16, 'T');
   Desconectar($sock);
-
   // Imprime no div valores do formulário
   $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
   $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
@@ -629,7 +628,6 @@ function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 function ExcluirArquivo($numero, $arq){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
-
   $arq=htmlspecialchars_decode($arq);
 
   RemoveDiretorio($arq);
@@ -664,7 +662,6 @@ function SelecionarEntradaDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_u
   }
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario);
-
   $objResponse->addScript('window.location = "editar_dinam.php?cod_curso='.$cod_curso.'&cod_usuario='.$cod_usuario.'&cod_ferramenta=16&acao=selecionarEntrada&atualizacao=true"');
   return $objResponse->getXML();
 }
