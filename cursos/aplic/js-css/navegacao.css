@@ -75,7 +75,6 @@ td>#nav3nivel {margin-bottom:-25px;}
 	background-color: #FCFCFC;
 	border: 1px solid #D6D6D6;
  	margin: 0 5px 52px 0;
-        *margin:0 5px 0 0;
 	display: block;
 	text-decoration: none;
 	font-weight: normal;
@@ -87,7 +86,6 @@ td>#nav3nivel {margin-bottom:-25px;}
 	background-color: #B5B5B5;
 	border: 1px solid #D6D6D6;
  	margin: 0 5px 52px 0;
-        *margin:0 5px 0 0;
 	display: block;
 	text-decoration: none;
 	font-weight: normal;
