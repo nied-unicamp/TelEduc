@@ -77,10 +77,8 @@ echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibli
 echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
 echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
 echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n");
-echo("  <!--\n");
 //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
 echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-echo("  //-->\n");
 echo("  </script>\n");
 
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
@@ -128,8 +126,10 @@ echo("    }\n\n");
 /* Iniciliza os layers. */
 echo("    function Iniciar()\n");
 echo("    {\n");
-echo("      cod_comp = getLayer(\"comp\");\n");
-echo("      startList();\n");
+if ($tela_formador){
+	echo("      cod_comp = getLayer(\"comp\");\n");
+	echo("      startList();\n");
+}
 echo("    }\n\n");
 
 echo("    function WindowOpenVer(id)\n");
@@ -143,50 +143,51 @@ echo("      window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&c
 echo("      return(false);\n");
 echo("    }\n");
 
-echo("    function EscondeLayers()\n");
-echo("    {\n");
-echo("      hideLayer(cod_comp);\n");
-echo("    }\n");
+if ($tela_formador){
+	echo("    function EscondeLayers()\n");
+	echo("    {\n");
+	echo("      hideLayer(cod_comp);\n");
+	echo("    }\n");
 
-echo("    function MostraLayer(cod_layer, ajuste)\n");
-echo("    {\n");
-echo("      EscondeLayers();\n");
-echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
-echo("      showLayer(cod_layer);\n");
-echo("    }\n");
+	echo("    function MostraLayer(cod_layer, ajuste)\n");
+	echo("    {\n");
+	echo("      EscondeLayers();\n");
+	echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
+	echo("      showLayer(cod_layer);\n");
+	echo("    }\n");
 
-echo("    function EscondeLayer(cod_layer)\n");
-echo("    {\n");
-echo("      hideLayer(cod_layer);\n");
-echo("    }\n");
+	echo("    function EscondeLayer(cod_layer)\n");
+	echo("    {\n");
+	echo("      hideLayer(cod_layer);\n");
+	echo("    }\n");
 
-echo("      function AtualizaComp(js_tipo_comp)\n");
-echo("      {\n");
-echo("        if ((isNav) && (!isMinNS6)) {\n");
-echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
-echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
-echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'),document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
-echo("        } else {\n");
-echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
-echo("            document.form_comp.cod_item.value=js_cod_item;\n");
-echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'),document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
-echo("        }\n");
-echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
-echo("        if (js_tipo_comp=='T') {\n");
-echo("          tipo_comp[0].innerHTML=imagem;\n");
-echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
-echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
-echo("        }else if (js_tipo_comp=='F'){\n");
-echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
-echo("          tipo_comp[1].innerHTML=imagem;\n");
-echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
-echo("        }else{\n");
-echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
-echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
-echo("          tipo_comp[2].innerHTML=imagem;\n");
-echo("        }\n");
-echo("      }\n\n");
-
+	echo("      function AtualizaComp(js_tipo_comp)\n");
+	echo("      {\n");
+	echo("        if ((isNav) && (!isMinNS6)) {\n");
+	echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+	echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+	echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'),document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+	echo("        } else {\n");
+	echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+	echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+	echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'),document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+	echo("        }\n");
+	echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+	echo("        if (js_tipo_comp=='T') {\n");
+	echo("          tipo_comp[0].innerHTML=imagem;\n");
+	echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+	echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+	echo("        }else if (js_tipo_comp=='F'){\n");
+	echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+	echo("          tipo_comp[1].innerHTML=imagem;\n");
+	echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+	echo("        }else{\n");
+	echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+	echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+	echo("          tipo_comp[2].innerHTML=imagem;\n");
+	echo("        }\n");
+	echo("      }\n\n");
+}
 echo("    function AbreResposta(cod_questao)\n");
 echo("    {\n");
 echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"\";\n");
@@ -214,7 +215,9 @@ echo("    }\n");
 
 echo("    function AlteraTexto(id){\n");
 echo("      if (editaTexto==-1 || editaTexto != id){\n");
-echo("        CancelaTodos();\n");
+if ($tela_formador){
+	echo("        CancelaTodos();\n");
+}
 //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
 echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
 echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
@@ -279,7 +282,7 @@ else if($visualizar == "G")
 	/* ? - Exercicios - Ver exercicio - */
 	$frase = "Exercicios - Ver exercicio";
 }
- 
+
 echo("          <h4>".$frase."</h4>\n");
 
 /*Voltar*/
@@ -302,24 +305,24 @@ else
 
 	echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$resolucao['cod_usuario'].");\" > ".$nome."</span>");
 }
- 
+
 echo("          <div id=\"mudarFonte\">\n");
 echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
 echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
 echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
 echo("          </div>\n");
- 
+
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
- 
+
 $cod = $resolucao['cod_usuario'];
 if($resolucao['cod_grupo'] != null)
 {
 	$cod = $resolucao['cod_grupo'];
 }
- 
+
 /* ? - Voltar */
 echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>Voltar</a></li>\n");
 /* ? - Historico */
@@ -375,7 +378,7 @@ echo("                  </tr>\n");
 $texto = $exercicio['texto'];
 if($texto == "" || $texto == null)
 $texto = "Nenhum texto introdutorio foi cadastrado para esse exercicio.";
- 
+
 echo("                  <tr>\n");
 echo("                    <td colspan=\"6\" class=\"alLeft\">".$texto."</td>\n");
 echo("                  </tr>\n");
@@ -391,14 +394,14 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
 	echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
-	 
+
 	foreach ($lista_arq as $cod => $linha_arq)
 	{
 		$caminho_arquivo = $dir_exercicio_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
 		//converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
 		//ISO-8859-1 para ser exibido corretamente na página.
 		$caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
-	  
+		 
 		$linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
 		if(eregi(".zip$", $linha_arq['Arquivo'])) {
 			// arquivo zip
@@ -433,7 +436,7 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
 }
- 
+
 echo("                  <tr class=\"head\">\n");
 /* ? - Questoes */
 echo("                    <td colspan=\"6\">Questoes</td>\n");
@@ -453,7 +456,7 @@ echo("                    <td width=\"15%\">Topico</td>\n");
 /* ? - Status */
 echo("                    <td width=\"10%\">Status</td>\n");
 echo("                  </tr>\n");
- 
+
 if ((count($questoes)>0)&&($questoes != null))
 {
 	foreach ($questoes as $cod => $linha_item)
@@ -557,7 +560,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            <div class=\"divRichText\">\n");
 			echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
 			if($resposta != null)
-			echo("                               ".$resposta);
+			echo($resposta);
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
