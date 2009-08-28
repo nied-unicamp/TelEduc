@@ -538,7 +538,8 @@ function RetornaGabaritoQuestaoObj($sock, $cod_questao)
   $consulta="select gabarito from Exercicios_questao_obj where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock, $consulta);
   $linha=RetornaLinha($res);
-  return($linha['gabarito']);
+  if($linha['gabarito'] != '') return($linha['gabarito']);
+  else return false;
 }
 
 /* *********************************************************************
@@ -1218,15 +1219,23 @@ function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_que
   $consulta="insert into Exercicios_questao_alternativa (cod_questao,posicao_item) values (".VerificaNumeroQuery($cod_questao).",".$posicao.")";
   $res=Enviar($sock, $consulta);
 
+ 
   $cod_alternativa = mysql_insert_id();
 
-  if($tp_questao == 'O')
+if($tp_questao == 'O')
   {
     $gabarito = RetornaGabaritoQuestaoObj($sock, $cod_questao).'0'; 
+    
+    if($gabarito){ 
+	    $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
 
-    $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
-    $res=Enviar($sock, $consulta);
+    }else{
+		$consulta="insert into Exercicios_questao_obj (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'O')";
+    }
+    
+  	$res=Enviar($sock, $consulta);
     $cod = $cod_alternativa;
+
   }
   else if($tp_questao == 'D')
   {
