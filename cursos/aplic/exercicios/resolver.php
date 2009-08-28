@@ -204,7 +204,7 @@ echo("      var resposta,i;\n");
 echo("      resposta=\"\";\n");
 echo("      for(i=0;i<max;i++)\n");
 echo("      {\n");
-echo("        if(i == (max - posicao - 1))\n");
+echo("        if(i == posicao)\n");
 echo("          resposta = resposta + \"1\";\n");
 echo("        else\n");
 echo("          resposta = resposta + \"0\";\n");
