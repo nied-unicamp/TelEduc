@@ -47,18 +47,26 @@ include ("dinamica.inc");
 $cod_ferramenta = 16;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 1;
+$sock = Conectar("");
+$flag_curso_extraido = $_SESSION['flag_curso_extraido'];
+if ($curso_extraido)
+	$diretorio_arquivos = RetornaDiretorio($sock, 'Montagem');
+else
+	$diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
+$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+
 include ("../topo_tela.php");
 
 $tabela = "Dinamica";
 $dir = "dinamica";
+
 
 if (EFormador($sock, $cod_curso, $cod_usuario))
     $usr_formador = true;
   else
     $usr_formador = false;
 
-$sock = MudarDB($sock, $cod_curso_origem);
-
+    
 /* Fun��es JavaScript */
 echo ("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
 echo ("    <script language=\"JavaScript\" type=\"text/javascript\">\n\n");
@@ -70,9 +78,12 @@ echo ("      }\n\n");
 
 echo ("      function Importar()\n");
 echo ("      {\n");
-echo ("        document.frmImportar.action = \"acoes_linha.php\"\n");
-echo("  	  document.frmImportar.acao.value = \"importarItem\";\n");
-echo ("        document.frmImportar.submit();\n");
+echo("			if(confirm('" . RetornaFraseDaLista($lista_frases, 19) . "'))");
+echo ("      	{\n");
+echo ("        		document.frmImportar.action = \"acoes_linha.php\"\n");
+echo("  	  		document.frmImportar.acao.value = \"importarItem\";\n");
+echo ("        		document.frmImportar.submit();\n");
+echo ("      	}\n\n");
 echo ("      }\n\n");
 
 echo ("      function CancelarImportacao()\n");
@@ -91,8 +102,8 @@ echo ("         window.open(id+'?" . time() . "','Dinamica','top=50,left=100,wid
 echo ("      }\n");
 
 echo ("    </script>\n\n");
-
 include ("../menu_principal.php");
+
 $sock = MudarDB($sock, $cod_curso_origem);
 echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
@@ -141,137 +152,146 @@ echo ("            <tr>\n");
 echo ("              <td>\n");
 echo ("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\" id=\"tabInterna\">\n");
 
-$texto = ConverteAspas2Html(Enter2Br(RetornaTextoDinamica($sock, $cod_curso_import)));
-$tipo_import = ExisteDinamicaImport($sock, $cod_curso_import, $diretorio_arquivos);
+$texto = ConverteAspas2Html(Enter2Br(RetornaTextoDinamica($sock, $cod_curso_origem)));
+$tipo_import = ExisteDinamicaImport($sock, $cod_curso_origem, $diretorio_arquivos);
+
 if ($tipo_import != 'N' && ($texto != "" || $tipo_import == 'A')) {
+	
 	echo ("                  <tr class=\"head\">\n");
 	/* Conte�do da Din�mica */
 	echo ("                    <td align=\"center\">" . RetornaFraseDaLista($lista_frases, 43) . "</td>\n");
 	echo ("                  </tr>\n");
-
-	/* Campo para o Texto */
-	echo ("                  <tr class=\"head01\">\n");
-	/* 10 - Texto */
-	echo ("                    <td align=\"left\">" . RetornaFraseDaLista($lista_frases, 10) . "</td>\n");
-	echo ("                  </tr>\n");
-	echo ("                  <tr>\n");
-
-	echo ("                    <td align=\"left\"><div class=\"divRichText\">" . $texto . "</div></td>\n");
-	echo ("                  </tr>\n");
-	echo ("                  <tr class=\"head01\">\n");
-	/* 57 (biblioteca) - Arquivos */
-	echo ("                    <td align=\"left\">" . RetornaFraseDaLista($lista_frases_biblioteca, 57) . "</td>\n");
-	echo ("                  </tr>\n");
-	echo ("                  <tr>\n");
-	echo ("                    <td class=\"itens\" colspan=\"4\" id=\"listFiles\">\n");
-
-	$dir_name = "dinamica";
-	$linha_item = RetornaDadosDinamica($sock);
+	if($texto != "")
+	{
+		/* Campo para o Texto */
+		echo ("                  <tr class=\"head01\">\n");
+		/* 10 - Texto */
+		echo ("                    <td align=\"left\">" . RetornaFraseDaLista($lista_frases, 10) . "</td>\n");
+		echo ("                  </tr>\n");
+		echo ("                  <tr>\n");
 	
-	$cod_item = $linha_item['cod_dinamica'];
+		echo ("                    <td align=\"left\"><div class=\"divRichText\">" . $texto . "</div></td>\n");
+		echo ("                  </tr>\n");
+	}
+	else
+	{
+		echo ("                  <tr class=\"head01\">\n");
+		/* 57 (biblioteca) - Arquivos */
+		echo ("                    <td align=\"left\">" . RetornaFraseDaLista($lista_frases_biblioteca, 57) . "</td>\n");
+		echo ("                  </tr>\n");
 	
-	$dir_item_temp = CriaLinkVisualizar($sock, $dir_name, $cod_curso_import, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
-	$lista_arq = RetornaArquivosDinamicaVer($cod_curso, $dir_item_temp['diretorio']);
-	if (count($lista_arq) > 0) {
-		$conta_arq = 0;
+		echo ("                  <tr>\n");
+		echo ("                    <td class=\"itens\" colspan=\"4\" id=\"listFiles\">\n");
+	
+		$dir_name = "dinamica";
+		$linha_item = RetornaDadosDinamica($sock);
+	
+		$cod_item = $linha_item['cod_dinamica'];
+		
+		$dir_item_temp = CriaLinkVisualizar($sock, $dir_name, $cod_curso_origem, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
+		$lista_arq = RetornaArquivosDinamicaVer($cod_curso, $dir_item_temp['diretorio']);
 
-		// Procuramos na lista de arquivos se existe algum visivel
-		$ha_visiveis = true;
-
-		$nivel_anterior = 0;
-		$nivel = -1;
-
-		foreach ($lista_arq as $cod => $linha) {
-			if (!($linha['Arquivo'] == "" && $linha['Diretorio'] == "")) {
-				$nivel_anterior = $nivel;
-				$espacos = "";
-				$espacos2 = "";
-				$temp = explode("/", $linha['Diretorio']);
-				$nivel = count($temp) - 1;
-				for ($c = 0; $c <= $nivel; $c++) {
-					$espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
-					$espacos2 .= "  ";
-				}
-
-				$caminho_arquivo = $dir_item_temp['link'] . ConverteUrl2Html($linha['Diretorio'] . "/" . $linha['Arquivo']);
-
-				if ($linha['Arquivo'] != "") {
-
-					if ($linha['Diretorio'] != "") {
+		if (count($lista_arq) > 0) {
+			$conta_arq = 0;
+	
+			// Procuramos na lista de arquivos se existe algum visivel
+			$ha_visiveis = true;
+	
+			$nivel_anterior = 0;
+			$nivel = -1;
+	
+			foreach ($lista_arq as $cod => $linha) {
+				if (!($linha['Arquivo'] == "" && $linha['Diretorio'] == "")) {
+					$nivel_anterior = $nivel;
+					$espacos = "";
+					$espacos2 = "";
+					$temp = explode("/", $linha['Diretorio']);
+					$nivel = count($temp) - 1;
+					for ($c = 0; $c <= $nivel; $c++) {
 						$espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
 						$espacos2 .= "  ";
 					}
-
-					if ($linha['Status'])
-						$arqEntrada = "arqEntrada='sim'";
-					else
-						$arqEntrada = "arqEntrada='nao'";
-
-					if (eregi(".zip$", $linha['Arquivo'])) {
-						// arquivo zip
-						$imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
-						$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\" " . $arqEntrada . ">";
+	
+					$caminho_arquivo = $dir_item_temp['link'] . ConverteUrl2Html($linha['Diretorio'] . "/" . $linha['Arquivo']);
+	
+					if ($linha['Arquivo'] != "") {
+	
+						if ($linha['Diretorio'] != "") {
+							$espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+							$espacos2 .= "  ";
+						}
+	
+						if ($linha['Status'])
+							$arqEntrada = "arqEntrada='sim'";
+						else
+							$arqEntrada = "arqEntrada='nao'";
+	
+						if (eregi(".zip$", $linha['Arquivo'])) {
+							// arquivo zip
+							$imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
+							$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\" " . $arqEntrada . ">";
+						} else {
+							// arquivo comum
+							$imagem = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
+							$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" " . $arqEntrada . ">";
+						}
+	
+						$tag_fecha = "</span>";
+	
+						echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+						echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
+	
+						echo ("<span id=\"local_entrada_" . $conta_arq . "\">");
+						if ($linha['Status'])
+							// ?? - entrada
+							echo ("<span id=\"arq_entrada_" . $conta_arq . "\">- <span style='color:red;'>entrada</span></span>");
+						echo ("</span>\n");
+						echo ("                          " . $espacos2 . "<br />\n");
+						echo ("                        " . $espacos2 . "</span>\n");
 					} else {
-						// arquivo comum
-						$imagem = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
-						$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" " . $arqEntrada . ">";
+						if ($nivel_anterior >= $nivel) {
+							$i = $nivel_anterior - $nivel;
+							$j = $i;
+							$espacos3 = "";
+							do {
+								$espacos3 .= "  ";
+								$j--;
+							} while ($j >= 0);
+							do {
+								echo ("                      " . $espacos3 . "</span>\n");
+								$i--;
+							} while ($i >= 0);
+						}
+						// pasta
+						$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
+						echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+						echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
+						if ($usr_formador) {
+							echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
+						}
+						echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
+						echo ("                        " . $espacos2 . "<br />\n");
 					}
-
-					$tag_fecha = "</span>";
-
-					echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
-					echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
-
-					echo ("<span id=\"local_entrada_" . $conta_arq . "\">");
-					if ($linha['Status'])
-						// ?? - entrada
-						echo ("<span id=\"arq_entrada_" . $conta_arq . "\">- <span style='color:red;'>entrada</span></span>");
-					echo ("</span>\n");
-					echo ("                          " . $espacos2 . "<br />\n");
-					echo ("                        " . $espacos2 . "</span>\n");
-				} else {
-					if ($nivel_anterior >= $nivel) {
-						$i = $nivel_anterior - $nivel;
-						$j = $i;
-						$espacos3 = "";
-						do {
-							$espacos3 .= "  ";
-							$j--;
-						} while ($j >= 0);
-						do {
-							echo ("                      " . $espacos3 . "</span>\n");
-							$i--;
-						} while ($i >= 0);
-					}
-					// pasta
-					$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
-					echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
-					echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
-					if ($usr_formador) {
-						echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
-					}
-					echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
-					echo ("                        " . $espacos2 . "<br />\n");
+	
 				}
-
+				$conta_arq++;
 			}
-			$conta_arq++;
-		}
-		do {
-			$j = $nivel;
-			$espacos3 = "";
 			do {
-				$espacos3 .= "  ";
-				$j--;
-			} while ($j >= 0);
-			//           echo("                      ".$espacos3."</span>\n");
-			$nivel--;
+				$j = $nivel;
+				$espacos3 = "";
+				do {
+					$espacos3 .= "  ";
+					$j--;
+				} while ($j >= 0);
+				//           echo("                      ".$espacos3."</span>\n");
+				$nivel--;
+			}
+			while ($nivel >= 0);
 		}
-		while ($nivel >= 0);
+	
+		echo ("                    </td>\n");
+		echo ("                  </tr>\n");
 	}
-
-	echo ("                    </td>\n");
-	echo ("                  </tr>\n");
 	echo ("                </table>\n");
 	echo ("              <input type=\"hidden\" name=\"texto_dinamica\" value='" . $texto . "' />\n");
 	echo ("              <input type=\"hidden\" name=\"naohadinamica\" value=\"1\" />\n");

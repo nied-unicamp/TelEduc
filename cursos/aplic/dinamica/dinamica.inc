@@ -485,7 +485,7 @@ function CriaLinkVisualizar($sock,$dirname,$cod_curso,$cod_usuario,$cod_item,$di
     $cod_usuario = 0;
   $dirlink = $diretorio_temp."/".$dirname."_".$cod_curso."_".$cod_usuario;
   $dirlinkpath="../../diretorio/".$dirname."_".$cod_curso."_".$cod_usuario;
-
+	
   if (ExisteArquivo($dirlink))
   {
     RemoveArquivo($dirlink);
