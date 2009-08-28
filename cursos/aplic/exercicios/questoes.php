@@ -296,7 +296,7 @@
     if($cod_exercicio == null)
       echo("        document.getElementById('mIncluir_Selec').onclick=function(){ MostraLayer(lay_exercicios, 0); };\n");
     else
-      echo("        document.getElementById('mIncluir_Selec').onclick=function(){ IncluirQuestoesNoExercicio(".$cod_exercicio."); };\n");
+      echo("        document.getElementById('mIncluir_Selec').onclick=function(){ IncluirQuestoesNoExercicio(".$cod_exercicio.", ".$cod_curso."); };\n");
   }
   else if($visualizar == 'L'){
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
@@ -411,7 +411,7 @@
     echo("        }\n");
     echo("      }\n\n");
         
-    echo("    function IncluirQuestoesNoExercicio(cod_exercicio){\n");
+    echo("    function IncluirQuestoesNoExercicio(cod_exercicio, cod_curso){\n");
     echo("      var i,questoes,getNumber;\n");
     echo("      questoes = document.getElementsByName('chk[]');\n");
     echo("      for (i=0; i < questoes.length; i++){\n");
@@ -873,7 +873,7 @@
   	  
   	echo("            </select><br /><br />\n");
   	/* 18 - Ok (gen) */
-  	echo("            <input type=\"button\" class=\"input\" onClick=\"IncluirQuestoesNoExercicio(document.getElementById('select_exercicio').value);EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  	echo("            <input type=\"button\" class=\"input\" onClick=\"IncluirQuestoesNoExercicio(document.getElementById('select_exercicio').value, '10');EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   	/* 2 - Cancelar (gen) */
   	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   	echo("        </div>\n");

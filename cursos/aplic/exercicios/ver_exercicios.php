@@ -59,7 +59,7 @@ $visualizar = $_GET['visualizar'];
 include("../topo_tela.php");
 
 if($visualizar != "I" && $visualizar != "G")
-$visualizar = "I";
+	$visualizar = "I";
 
 if($visualizar == "I"){
 	$cod_usuario_exercicio = $_GET['cod'];
@@ -214,17 +214,10 @@ echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
  
 /* ? - Exercicios Individuais */
-echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>Exercicios Individuais</a></li>\n");
+echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
 
 /* ? - Exercicios em Grupo */
-echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>Exercicios em Grupo</a></li>\n");
-
-/* ? - Biblioteca de Exercicios */
-echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
- 
-/* ? - Biblioteca de Questoes */
-echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
-
+echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
