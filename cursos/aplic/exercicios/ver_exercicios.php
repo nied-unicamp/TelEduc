@@ -72,13 +72,13 @@ if($visualizar == "I"){
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
-
-
 if($visualizar == "I")
 $exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
 else if($visualizar == "G")
-$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
- 
+{
+	$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
+	$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
+}
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 // verificamos se a ferramenta de Avaliacoes está disponivel
 $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 22);
@@ -176,7 +176,7 @@ else if($visualizar == "G")
 	/* ? - Exercicios - Exercicios em Grupo*/
 	$frase = "Exercicios - Exercicios em Grupo";
 }
- 
+
 echo("          <h4>".$frase."</h4>\n");
 
 echo("          <div id=\"mudarFonte\">\n");
@@ -218,6 +218,16 @@ echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."
 
 /* ? - Exercicios em Grupo */
 echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
+if($eformador)
+{
+	  	/* ? - Biblioteca de Exercicios */
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
+  	
+    /* ? - Biblioteca de Questoes */
+    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
+	
+}
+
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");

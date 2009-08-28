@@ -806,7 +806,7 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
       
       if($cod_grupo != null)
       {
-        $consulta = "insert into Exercicios_resolucao (cod_resolucao,cod_modelo,cod_grupo,nota,submetida,corrigida,compartilhada,status) values ";
+        $consulta = "insert into Exercicios_resolucao (cod_exercicio,cod_grupo,nota,submetida,corrigida,compartilhada,status) values  ";
         $consulta .= "(".$cod_exercicio.",".$cod_grupo.",0,'N','N','F','A')";
         $res = Enviar($sock, $consulta);
       
@@ -857,7 +857,10 @@ function FoiAplicado($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
   }
   else
   {
+  	
     $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
+    if($cod_grupo==null)
+    	$cod_grupo=-1;
     $consulta = "select * from Exercicios_resolucao where cod_exercicio = ".$cod_exercicio." and cod_grupo = ".$cod_grupo;
     $res = Enviar($sock, $consulta);
   }
