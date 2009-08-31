@@ -214,10 +214,10 @@ echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
  
 /* ? - Exercicios Individuais */
-echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
+echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
 
 /* ? - Exercicios em Grupo */
-echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
+echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
 if($eformador)
 {
 	  	/* ? - Biblioteca de Exercicios */
