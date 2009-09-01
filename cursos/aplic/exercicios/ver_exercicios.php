@@ -227,6 +227,8 @@ if($eformador)
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
 	
 }
+/* ? - Ver resolução */
+echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
 
 echo("                </ul>\n");
 echo("              </td>\n");
