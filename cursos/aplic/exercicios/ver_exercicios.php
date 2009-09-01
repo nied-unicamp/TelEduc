@@ -228,7 +228,7 @@ if($eformador)
 	
 }
 /* ? - Ver resolução */
-echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
+//echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
 
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -260,7 +260,6 @@ if(count($exercicios) > 0 && $exercicios != null)
 		else $varTmp="T";
 
 		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-
 		$aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
 
 		/* ?? - Compartilhado com Formadores */
@@ -300,7 +299,15 @@ if(count($exercicios) > 0 && $exercicios != null)
 		$situacao .= "<span class=\"avaliada\">(a)</span>";
 
 		echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
-		echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a></td>\n");
+		echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+		if(VerificaSeCorrigida($cod_curso,$cod_usuario,$linha_item['cod_resolucao'])){
+				/* ? - - Ver resolução */
+			    $cod_resolucao = $linha_item['cod_resolucao'];
+				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resolução</a></td>\n");
+		}
+		else
+				/* ? -  - Não corrigido */
+				echo(" - Não corrigido</td>\n");
 		echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
 		echo("                    <td>".$compartilhamento."</td>\n");
 		echo("                    <td>".$comentarios."</td>\n");
