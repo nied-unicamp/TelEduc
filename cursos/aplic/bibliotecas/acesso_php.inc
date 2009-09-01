@@ -166,7 +166,7 @@ function VerificaAutenticacao($cod_curso)
       $sock=Conectar("");
 
       /* Usuario é direcionado para a pagina de autenticacao */
-      header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+      header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
 
       Desconectar($sock);
       exit;
@@ -193,8 +193,7 @@ function VerificaAutenticacao($cod_curso)
         {
           //Desconectar($sock);
           $sock=Conectar("");
-
-	  header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso."&erro_autenticacao=1");
+	  	  header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
 
           Desconectar($sock);
           exit;
@@ -209,7 +208,7 @@ function VerificaAutenticacao($cod_curso)
             //Desconectar($sock);
             $sock=Conectar("");
 
-	    header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+	    	header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
 
             Desconectar($sock);
             exit;
