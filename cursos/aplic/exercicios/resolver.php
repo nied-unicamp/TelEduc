@@ -581,7 +581,6 @@ if($resolucao['submetida'] == 'N'){
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-	echo("								<input type='hidden' name='cod' value='".(($cod != "") ? $cod : $cod_usuario)."'/>");
 	echo("                <div align='right'><input type='submit' class='input' value='Entregar'></div>\n");
 	echo("								</form>");
 }

@@ -74,7 +74,16 @@
 
 ************************************************************************/
 
-
+function RetornaUsuarioPorResolucao($sock, $cod_resolucao){
+	
+	$query = "select cod_usuario from Exercicios_resolucao where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
+	
+	$res = Enviar($sock, $query);
+	
+	$linha = RetornaLinha($res);
+	
+	return($linha['cod_usuario']);
+}
 
 
 /* *********************************************************************
