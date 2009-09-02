@@ -2133,3 +2133,22 @@ function EviarLixeira($cod_curso, $cod_questao, $status)
   $res=Enviar($sock, $consulta);
   Desconectar($sock);
 }
+
+/* *********************************************************************
+   VerificaSeCorrigida - Verifica se o exercício já foi corrigido para o usuário
+   Entrada: $cod_curso - cÃ³digo do curso, para conectar ao banco de dados
+            $cod_questao - codigo da questao
+            $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
+*/
+function VerificaSeCorrigida($cod_curso,$cod_usuario,$cod_resolucao)
+{
+  $sock=Conectar($cod_curso);
+  $consulta = "select corrigida from Exercicios_resolucao where cod_resolucao = ".$cod_resolucao." and cod_usuario = ".$cod_usuario;
+  $res = Enviar($sock, $consulta);
+  $linha = RetornaLinha($res);
+  
+  if($linha['corrigida'] == "S")
+  	return true;
+  else
+    return false;
+}
