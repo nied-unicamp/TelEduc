@@ -2143,8 +2143,17 @@ function EviarLixeira($cod_curso, $cod_questao, $status)
   Desconectar($sock);
 }
 
+function AtualizaSubmissao($cod_resolucao, $cod_curso)
+{
+	$sock=Conectar($cod_curso);
+	$query = "update Exercicios_resolucao set submetida='Y', dt_submissao=".time()." where cod_resolucao=".$cod_resolucao;
+	$res=Enviar($sock, $query);
+  	Desconectar($sock);
+}
+
+
 /* *********************************************************************
-   VerificaSeCorrigida - Verifica se o exercício já foi corrigido para o usuário
+   VerificaSeCorrigida - Verifica se o exerccio j foi corrigido para o usurio
    Entrada: $cod_curso - cÃ³digo do curso, para conectar ao banco de dados
             $cod_questao - codigo da questao
             $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
@@ -2161,3 +2170,4 @@ function VerificaSeCorrigida($cod_curso,$cod_usuario,$cod_resolucao)
   else
     return false;
 }
+
