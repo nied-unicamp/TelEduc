@@ -72,7 +72,7 @@
   $feedbackObject->addAction("recuperar_sessao", 82, 104);
   // 105 - Sess�es apagadas com sucesso. As sess�es foram movidas para a lixeira.
   // 106 - Erro ao mover as sess�es para a lixeira.
-  $feedbackObject->addAction("apagar_sessao", 105, 106);
+  $feedbackObject->addAction("apagar_sessao", 76, 106);
   // 76 - Sess�es apagadas com sucesso.
   // 107 - Erro ao apagar as sess�es.
   $feedbackObject->addAction("excluir_sessao", 76, 107);
