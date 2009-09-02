@@ -575,9 +575,16 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 
 echo("                </table>\n");
-if($resolucao['submetida'] == 'N')
+if($resolucao['submetida'] == 'N'){
 /* ? - Entregar */
-echo("                <div align=\"right\"><input type=\"button\" class=\"input\" value='Entregar'></div>\n");
+	echo("								<form method='POST' action='acoes.php'>");
+	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
+	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
+	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
+	echo("								<input type='hidden' name='cod' value='".(($cod != "") ? $cod : $cod_usuario)."'/>");
+	echo("                <div align='right'><input type='submit' class='input' value='Entregar'></div>\n");
+	echo("								</form>");
+}
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");

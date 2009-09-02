@@ -182,6 +182,13 @@
   	  $status = "L";
   	EviarLixeira($cod_curso, $cod_questao, $status);
     header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=Q");
+  } else if($acao == "entregarExercicio"){
+  	
+  	EntregaExercicio($sock, $cod_resolucao);
+  	Desconectar($sock);
+  	
+  	header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true");
+  	
   }
 
   exit;

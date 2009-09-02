@@ -1554,6 +1554,21 @@ function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
   return $objResponse->getXML();
 }
 
+
+/* *********************************************************************
+   EntregaExercicio
+   Entrada: $sock - BASE DO CURSO
+            $cod_resolucao - codigo da resolucao a ser entregue
+   Saida: void
+*/
+function EntregaExercicio($sock, $cod_resolucao){
+
+	$query = "update Exercicios_resolucao set submetida = 'S' where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
+	Enviar($sock, $query);
+	return;
+	
+}
+
 /* *********************************************************************
    ExcluiArquivoDinamic - Exclui o arquivo, dinamicamente
    Entrada: $numero - numero do arquivo, no item
