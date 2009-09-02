@@ -68,23 +68,28 @@ $feedbackObject->addAction("entregarExercicio", 504, 0);
 if($visualizar != "I" && $visualizar != "G")
 	$visualizar = "I";
 
-if($visualizar == "I"){
-	$cod_usuario_exercicio = $_GET['cod'];
-	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
-} else {
-	$cod_grupo_exercicio = $_GET['cod'];
-	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
-}
 
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
-if($visualizar == "I")
-$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
-else if($visualizar == "G")
-{
+if($visualizar == "I"){
+	
+	$cod_usuario_exercicio = $_GET['cod'];
+	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
+	$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
+	
+} else if($visualizar == "G"){
+	
 	$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
+
+	if ($cod_grupo_exercicio == NULL){
+		echo("Usuario sem grupo");
+		exit;
+	}
+
 	$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
+	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
+	
 }
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 // verificamos se a ferramenta de Avaliacoes estÃ¡ disponivel
@@ -221,24 +226,22 @@ echo("              <td valign=\"top\">\n");
 
 echo("                <ul class=\"btAuxTabs\">\n");
  
-/* ? - Exercicios Individuais */
 if($eformador)
 {
-	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
-} else {
-	echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
-}
-
-/* ? - Exercicios em Grupo */
-echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
-if($eformador)
-{
-	  	/* ? - Biblioteca de Exercicios */
+		/* ? - Exercicios Individuais */
+		echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
+		/* ? - Exercicios em Grupo */
+		echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
+	  /* ? - Biblioteca de Exercicios */
     echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
-  	
     /* ? - Biblioteca de Questoes */
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
 	
+} else {
+		/* ? - Exercicios Individuais */
+		echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
+		/* ? - Exercicios em Grupo */
+		echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
 }
 /* ? - Ver resolução */
 //echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
