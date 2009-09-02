@@ -305,9 +305,9 @@ if(count($exercicios) > 0 && $exercicios != null)
 			    $cod_resolucao = $linha_item['cod_resolucao'];
 				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resolução</a></td>\n");
 		}
-		else
-				/* ? -  - Não corrigido */
-				echo(" - Não corrigido</td>\n");
+		else{
+				echo("</td>\n");
+		}
 		echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
 		echo("                    <td>".$compartilhamento."</td>\n");
 		echo("                    <td>".$comentarios."</td>\n");
