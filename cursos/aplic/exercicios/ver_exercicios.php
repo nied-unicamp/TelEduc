@@ -58,6 +58,13 @@ $visualizar = $_GET['visualizar'];
 
 include("../topo_tela.php");
 
+// instanciar o objeto, passa a lista de frases por parametro
+$feedbackObject =  new FeedbackObject($lista_frases);
+
+//adicionar as acoes possiveis, 1o parametro 
+$feedbackObject->addAction("entregarExercicio", 504, 0);
+
+ 
 if($visualizar != "I" && $visualizar != "G")
 	$visualizar = "I";
 
@@ -98,6 +105,7 @@ echo("    function Iniciar()\n");
 echo("    {\n");
 echo("      cod_comp = getLayer(\"comp\");\n");
 echo("      startList();\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("    }\n\n");
 
 echo("    function EscondeLayers()\n");
