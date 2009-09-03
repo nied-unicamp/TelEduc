@@ -873,7 +873,7 @@
   	  
   	echo("            </select><br /><br />\n");
   	/* 18 - Ok (gen) */
-  	echo("            <input type=\"button\" class=\"input\" onClick=\"IncluirQuestoesNoExercicio(document.getElementById('select_exercicio').value, '10');EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  	echo("            <input type=\"button\" class=\"input\" onClick=\"IncluirQuestoesNoExercicio(document.getElementById('select_exercicio').value, '".$cod_curso."');EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   	/* 2 - Cancelar (gen) */
   	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   	echo("        </div>\n");
