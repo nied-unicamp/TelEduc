@@ -2092,10 +2092,44 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     Enviar($sock,$query);
     Desconectar($sock);
     
+    AtualizaNotaDinamic($cod_curso,$cod_questao,$cod_resolucao,$resposta);
+    
     $objResponse->addScript("mostraFeedback(\"".$texto."\",true);");
     
     return $objResponse->getXML();
 }
+
+/* AtualizaNotaDinamica - Atualiza a nota do participante.
+ * 			Entrada: $cod_curso - codigo do curso para conectar ao banco de dados.
+ * 					 $cod_questao - codigo da questÃ£o.
+ * 					 $cod_resolucao - codigo da resoluÃ§Ã£o
+ * 	                 $resposta - resposta do participando na questao
+ */
+
+function AtualizaNotaDinamic($cod_curso,$cod_questao,$cod_resolucao,$resposta)
+{
+	$sock=Conectar($cod_curso);
+
+	$resolucao = RetornaResolucao($sock,$cod_resolucao);
+	
+	$consulta="select valor from Exercicios_modelo_questao where cod_questao=".$cod_questao." and cod_exercicio=".$resolucao['cod_exercicio'];	
+    $res=Enviar($sock, $consulta);
+    $linha=RetornaLinha($res);
+    
+    $consulta = "select gabarito from Exercicios_questao_obj where cod_questao=".$cod_questao;
+    $res=Enviar($sock, $consulta);
+    $gabarito=RetornaLinha($res);
+
+    if($resposta == $gabarito['gabarito'])
+		$valor = $linha['valor'];
+	else $valor = 0;
+
+	$consulta ="update Exercicios_resolucao_questao_obj set nota=".$valor." where cod_resolucao=".$cod_resolucao." and cod_questao=".$cod_questao;
+	Enviar($sock, $consulta);
+	Desconectar($sock);
+
+}
+
 
 /* *********************************************************************
    EditarRespostaQuestaoDissDinamic - Atualiza (ou insere) resposta do usuario para uma questao
@@ -2144,7 +2178,7 @@ function EviarLixeira($cod_curso, $cod_questao, $status)
 }
 
 /* *********************************************************************
-   VerificaSeCorrigida - Verifica se o exercício já foi corrigido para o usuário
+   VerificaSeCorrigida - Verifica se o exercï¿½cio jï¿½ foi corrigido para o usuï¿½rio
    Entrada: $cod_curso - cÃ³digo do curso, para conectar ao banco de dados
             $cod_questao - codigo da questao
             $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
