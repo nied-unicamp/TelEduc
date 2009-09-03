@@ -225,32 +225,26 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 
 echo("                <ul class=\"btAuxTabs\">\n");
-
+ 
 if($eformador)
 {
-	/* ? - Exercicios Individuais */
-	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
-	
-	/* ? - Exercicios em Grupo */
-	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
-
-	  	/* ? - Biblioteca de Exercicios */
+		/* ? - Exercicios Individuais */
+		echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
+		/* ? - Exercicios em Grupo */
+		echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
+	  /* ? - Biblioteca de Exercicios */
     echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
     /* ? - Biblioteca de Questoes */
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
+	
+} else {
+		/* ? - Exercicios Individuais */
+		echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
+		/* ? - Exercicios em Grupo */
+		echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
 }
-else
-{
-	
-	/* ? - Exercicios Individuais */
-	echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario."'>Exercicios Individuais</a></li>\n");
-	
-	/* ? - Exercicios em Grupo */
-	echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
-	
-}
-/* ? - Ver resoluo */
-//echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resoluo</a></li>\n");
+/* ? - Ver resolução */
+//echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
 
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -323,9 +317,9 @@ if(count($exercicios) > 0 && $exercicios != null)
 		echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
 		echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
 		if(VerificaSeCorrigida($cod_curso,$cod_usuario,$linha_item['cod_resolucao'])){
-				/* ? - - Ver resoluo */
+				/* ? - - Ver resolução */
 			    $cod_resolucao = $linha_item['cod_resolucao'];
-				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resoluo</a></td>\n");
+				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resolução</a></td>\n");
 		}
 		else{
 				echo("</td>\n");

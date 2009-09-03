@@ -436,7 +436,7 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
 }
-echo("                  <form method='post' action='acoes.php?cod_curso=".$cod_curso."'");
+
 echo("                  <tr class=\"head\">\n");
 /* ? - Questoes */
 echo("                    <td colspan=\"6\">Questoes</td>\n");
@@ -555,18 +555,16 @@ if ((count($questoes)>0)&&($questoes != null))
 		}
 		else if($linha_item['tp_questao'] == 'D')
 		{
-			if($resolucao['submetida'] == 'N'){
-				echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
-				echo("                          <dd class=\"portletItem\">\n");
-				echo("                            <div class=\"divRichText\">\n");
-				echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
-				if($resposta != null)
-				echo($resposta);
-				echo("                              </span>\n");
-				echo("                            </div>\n");
-				echo("                          </dd>\n");
-				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
-			}
+			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
+			echo("                          <dd class=\"portletItem\">\n");
+			echo("                            <div class=\"divRichText\">\n");
+			echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
+			if($resposta != null)
+			echo($resposta);
+			echo("                              </span>\n");
+			echo("                            </div>\n");
+			echo("                          </dd>\n");
+			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");
@@ -575,11 +573,9 @@ if ((count($questoes)>0)&&($questoes != null))
 
 	}
 }
-  	echo("            <input type=hidden name=acao value=entregar />\n");
-  	echo("            <input type=hidden name=cod_resolucao value=".$cod_resolucao." />\n");
+
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N'){
-
 /* ? - Entregar */
 	echo("								<form method='POST' action='acoes.php'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
@@ -592,6 +588,8 @@ echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
 echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+
+
 
 echo("        </td>\n");
 echo("      </tr>\n");

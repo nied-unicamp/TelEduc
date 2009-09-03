@@ -64,6 +64,7 @@
 
   $dir_name = "exercicios";
   //$dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
+
   /* ação = Criar Nova Questao - origem = questoes.php */
   if ($acao=="criarQuestao")
   {
@@ -188,11 +189,6 @@
   	
   	header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true");
   	
-  }
-  else if($acao == "entregar")
-  {
-  	AtualizaSubmissao($cod_resolucao, $cod_curso);
-  	header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=I&cod=".$cod_curso."");
   }
 
   exit;
