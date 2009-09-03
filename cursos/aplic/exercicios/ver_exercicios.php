@@ -82,13 +82,10 @@ if($visualizar == "I"){
 	
 	$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
 
-	if ($cod_grupo_exercicio == NULL){
-		echo("Usuario sem grupo");
-		exit;
+	if ($cod_grupo_exercicio != NULL){
+		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
+		AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
 	}
-
-	$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
-	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
 	
 }
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
@@ -203,12 +200,14 @@ echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\">
  
 if($visualizar=="G")
 {
-	$nome=NomeGrupo($sock,$cod_grupo_exercicio);
+	if ($cod_grupo_exercicio != NULL){
+		$nome=NomeGrupo($sock,$cod_grupo_exercicio);
 
-	//Figura de Grupo
-	$fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
+		//Figura de Grupo
+		$fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
 
-	echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
+		echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
+	}
 }
 else
 {
