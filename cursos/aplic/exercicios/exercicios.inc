@@ -1572,7 +1572,7 @@ function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
 */
 function EntregaExercicio($sock, $cod_resolucao){
 
-	$query = "update Exercicios_resolucao set submetida = 'S' where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
+	$query = "update Exercicios_resolucao set submetida = 'S', dt_submissao = ".time()."  where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
 	Enviar($sock, $query);
 	return;
 	
