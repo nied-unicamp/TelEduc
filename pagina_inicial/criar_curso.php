@@ -50,37 +50,20 @@
   $objAjax = new xajax();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->registerFunction("EnviaPedidoCriacaoDinamic");
-
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
   $pag_atual = "criar_curso.php";
   include("../topo_tela_inicial.php");
-
-  /* Caso o usuÃ¡rio naum esteja logado, direciona para pÃ¡gina de login */
-  /*if (empty($_SESSION['login_usuario_s']))
-  {*/
-    /* Obtï¿½ a raiz_www */
-    /*$sock = Conectar("");
-    $query = "select diretorio from Diretorio where item = 'raiz_www'";
-    $res = Enviar($sock,$query);
-    $linha = RetornaLinha($res);
-    $raiz_www = $linha[0];
-
-    $caminho = $raiz_www."/pagina_inicial";
-
-    header("Location: {$caminho}/autenticacao.php");
-    Desconectar($sock);
-    exit;
-  }*/
-
+  
+ 
   /* Configuração da tela que será exibida ao usuário */
   $curso_form = RetornaConfiguracao($sock, "curso_form");
   $normas = RetornaConfiguracao($sock, "normas");
   $tem_normas = (trim($normas) != '');
   $categ = RetornaCategorias($sock);
-
-  /*
+    
+   /*
   ==================
   Funcoes JavaScript
   ==================
@@ -95,12 +78,11 @@
 
   if ($curso_form == "sim")
   {
-
-    /* *********************************************************************
-    Funcao ValidaSolicitacao - JavaScript. Chama as funï¿½ï¿½es que verificam os
-                               campos e a caixa de checagem de requisitos.
-      Entrada: Nenhuma. Funcao especï¿½fica para o formulï¿½rio da pï¿½gina
-      Saida:   Boolean, para controle do onSubmit;
+  /* *********************************************************************
+  Funcao ValidaSolicitacao - JavaScript. Chama as funï¿½ï¿½es que verificam os
+                            campos e a caixa de checagem de requisitos.
+  Entrada: Nenhuma. Funcao especï¿½fica para o formulï¿½rio da pï¿½gina
+  Saida:   Boolean, para controle do onSubmit;
                true, se nao houver erros no formulario,
                false, se houver.
     */
@@ -127,30 +109,23 @@
                false, se houver.
     */
 
-    echo("      function VerificaCampos()\n");
-    echo("      {\n");
+    echo("      function VerificaCampos(){\n");
     echo("        curso = document.requisicao.nome_curso.value;\n");
     echo("        duracao = document.requisicao.duracao.value;\n");
     echo("        num_alunos = document.requisicao.num_alunos.value;\n");
-    echo("        nome = document.requisicao.nome_contato.value;\n");
-    echo("        email = document.requisicao.email.value;\n");
-    echo("        login = document.requisicao.login.value;\n");
-    echo("        if (curso == '') \n");
-    echo("        {\n");
+    echo("        if (curso == ''){\n");
     /* 133 - O campo 'Nome do Curso' nï¿½o pode ser vazio. */
     echo("          alert('".RetornaFraseDaLista($lista_frases, 133)."');\n");
     echo("          document.requisicao.nome_curso.focus();\n");
     echo("          return false;\n");
     echo("        }\n");
-    echo("        if (duracao == '') \n");
-    echo("        {\n");
+    echo("        if (duracao == ''){ \n");
     /* 134 - O campo 'Duraï¿½ï¿½o' nï¿½o pode ser vazio. */
     echo("          alert('".RetornaFraseDaLista($lista_frases, 134)."');\n");
     echo("          document.requisicao.duracao.focus();\n");
     echo("          return false;\n");
     echo("        }\n");
-    echo("        if (num_alunos == '') \n");
-    echo("        {\n");
+    echo("        if (num_alunos == ''){ \n");
     /* 135 - O campo 'Nï¿½mero de Alunos' nï¿½o pode ser vazio. */
     echo("          alert('".RetornaFraseDaLista($lista_frases, 135)."');\n");
     echo("          document.requisicao.num_alunos.focus();\n");
@@ -174,57 +149,77 @@
     echo("          document.requisicao.num_alunos.focus();\n");
     echo("          return false;\n");
     echo("        }\n");
-    echo("        if (nome == '') \n");
-    echo("        {\n");
-    /* 137 - O campo 'Nome do Contatante' nï¿½o pode ser vazio. */
-    echo("          alert('".RetornaFraseDaLista($lista_frases, 137)."');\n");
-    echo("          document.requisicao.duracao.focus();\n");
-    echo("          return false;\n");
-    echo("        }\n");
-    echo("        if (email == '') \n");
-    echo("        {\n");
-    /* 97 - O e-mail informado parece estar errado. Por favor verifique se vocï¿½ esqueceu o sinal '@' */
-    echo("          alert('".RetornaFraseDaLista($lista_frases, 97)."');\n");
-    echo("          document.requisicao.email.focus();\n");
-    echo("          return false;\n");
-    echo("        }\n");
-    echo("        else  \n");
-    echo("        {\n");
-    echo("          if (email.indexOf('@')<0)\n");
-    echo("          {\n");
-    /* 97 - O e-mail informado parece estar errado. Por favor verifique se vocï¿½ esqueceu o sinal '@'. */
-    echo("            alert('".RetornaFraseDaLista($lista_frases, 97)."');\n");
-    echo("            document.requisicao.email.focus();\n");
-    echo("            return false;\n");
-    echo("          }\n");
-    echo("          if((email.indexOf(' ')>=0)) \n");
-    echo("          {\n");
-    /* 98 - O e-mail informado possui espaï¿½os em branco. Por favor retire-os. */
-    echo("            alert('".RetornaFraseDaLista($lista_frases, 98)."');\n");
-    echo("            document.requisicao.email.focus();\n");
-    echo("            return false;\n");
-    echo("          }\n");
-    echo("        }\n");
-    echo("        if (login == '') \n");
-    echo("        {\n");
-    /* 99 - O campo login nï¿½o pode ser vazio. */
-    echo("          alert('".RetornaFraseDaLista($lista_frases, 99)."');\n");
-    echo("          document.requisicao.login.focus();\n");
-    echo("          return false;\n");
-    echo("        }\n");
-    echo("        else  \n");
-    echo("        {\n");
-    echo("          if (login.indexOf(' ')>=0)\n");
-    echo("          {\n");
-    /* 107 - O campo login nï¿½o pode conter espaï¿½os. */
-    echo("            alert('".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases, 107)))."');\n");
-    echo("            document.requisicao.login.focus();\n");
-    echo("            return false;\n");
-    echo("          }\n");
-    echo("        }\n");
+    if((!isset($_SESSION['cod_usuario_global_s']))){
+    		echo("	login=document.requisicao.login.value;\n");
+    		echo("	senha=document.requisicao.senha.value;\n");
+    		echo("	senha2=document.requisicao.senha2.value;\n");
+    		echo("	nome=document.requisicao.nome_usuario.value;\n");
+    		echo("	email=document.requisicao.email.value;\n");
+    		echo("  if (login == ''){ \n");
+       		// 59 - O campo de login nï¿½o podem ser vazio. Por favor digite novamente o login desejado.
+    		echo("      alert('".RetornaFraseDaLista($lista_frases_configurar, 59)."');\n");
+    		echo("      document.requisicao.login.focus();\n");
+    		echo("      return false;\n");
+    		echo("  }\n");
+    		echo("  else{\n");
+       		echo("		  if (login.indexOf(' ')>=0){\n");
+       		 /* 107 - O campo login nao pode conter espacos.*/
+       		echo("		        alert('".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases, 107)))."');\n");
+    		echo("      		document.requisicao.login.focus();\n");
+    		echo("	            return false;\n");
+    		echo("         }\n");
+    		echo("    }\n");
+    		echo("if (senha==''){\n");
+   			// 4 - A nova senha nao pode ser vazia. Por favor digite a nova senha. 
+  			echo("	alert('".RetornaFraseDaLista($lista_frases_configurar,4)."');\n");
+  			echo("  document.requisicao.senha.focus();\n");
+  			echo("  return false;\n");
+  			echo("}\n");
+    		echo("if (senha2==''){\n");
+  	        // 4 - A nova senha nao pode ser vazia. Por favor digite a nova senha.
+  			echo("  alert('".RetornaFraseDaLista($lista_frases_configurar,4)."');\n");
+  			echo("  document.requisicao.senha2.focus();\n");
+  			echo("  return false;\n");
+  			echo("}\n");
+  			echo("if (senha!=senha2){ \n");
+   			// 5 - As novas senhas digitadas diferem entre si. Por favor redigite-as. 
+  			echo("  alert('".RetornaFraseDaLista($lista_frases_configurar,5)."');\n");
+  			echo("  document.requisicao.senha.value='';\n");
+  			echo("  document.requisicao.senha2.value='';\n");
+  			echo("  document.requisicao.senha.focus();\n");
+  			echo("  return false;\n");
+  			echo("}\n");
+    		echo("if (nome == ''){\n");
+  			/* 50 - O campo */ /* 32 - Nome */ /* 51 - nï¿½o pode ser vazio */
+  			echo("  alert('".RetornaFraseDaLista($lista_frases_configurar,50)." ".RetornaFraseDaLista($lista_frases_configurar,32)." ".RetornaFraseDaLista($lista_frases_configurar,51).".');\n");
+  			echo("  document.requisicao.nome_usuario.focus();\n");
+  			echo("  return false;\n");
+  			echo("}\n");
+    		echo("  if (email == ''){ \n");
+        	/* 97 - O e-mail informado parece estar errado. Por favor verifique se voce esqueceu o sinal '@' */
+    		echo("     alert('".RetornaFraseDaLista($lista_frases, 97)."');\n");
+    		echo("     document.requisicao.email.focus();\n");
+    		echo("     return false;\n");
+    		echo("  }\n");
+    		echo("  else{\n");
+        	echo("      if (email.indexOf('@')<0){\n");
+        	/* 97 - O e-mail informado parece estar errado. Por favor verifique se voce esqueceu o sinal '@'. */
+    		echo("          alert('".RetornaFraseDaLista($lista_frases, 97)."');\n");
+    		echo("          document.requisicao.email.focus();\n");
+    		echo("          return false;\n");
+    		echo("      }\n");
+    		echo("      if((email.indexOf(' ')>=0)){\n");
+        	/* 98 - O e-mail informado possui espaÃ¯Â¿Â½os em branco. Por favor retire-os. */
+    		echo("          alert('".RetornaFraseDaLista($lista_frases, 98)."');\n");
+    		echo("          document.requisicao.email.focus();\n");
+    		echo("          return false;\n");
+    		echo("      }\n");
+    		echo("  }\n");
+    	}    
     echo("        return true;\n");
     echo("      }\n\n");
-
+    
+    
     if ($tem_normas)
     {
       /* *********************************************************************
@@ -252,10 +247,11 @@
   echo("      function EnviaPedido()\n");
   echo("      {\n");
   echo("        if(ValidaSolicitacao())\n");
-  echo("          xajax_EnviaPedidoCriacaoDinamic(xajax.getFormValues('requisicao'));\n");
+  echo("          xajax_EnviaPedidoCriacaoDinamic(xajax.getFormValues('requisicao'),'".RetornaFraseDaLista($lista_frases_configurar,74)."','".RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
   echo("        return false;\n");
   echo("      }\n\n");
-
+  
+ 
   echo("      function TrataEnvio(flag)\n");
   echo("      {\n");
   echo("        if (flag == '' || flag == null)\n");
@@ -310,169 +306,184 @@
   }
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-
-  if ($curso_form == "sim")
-  {
-    $dados = RetornaDadosUsuario($sock,$_SESSION['cod_usuario_global_s']);
-
-    echo("              <form name=\"requisicao\" id=\"requisicao\" action=\"\" method=\"get\" onSubmit=\"return(EnviaPedido());\">\n");
-    // Passa o valor de curso_form para criar_curso2.php onde seu valor serï¿½ testado para
-    // efetivar a solicitaï¿½ï¿½o.
-    echo("                  <input type=\"hidden\" name=\"curso_form\" value='".$curso_form."' />\n");
-    echo("                  <input type=\"hidden\" name=\"nome_contato\" value='".$dados['nome']."' />\n");
-    echo("                  <input type=\"hidden\" name=\"email\" value='".$dados['email']."' />\n");
-    echo("                  <input type=\"hidden\" name=\"login\" value='".$dados['login']."' />\n");
-    if (count($categ)<=0)
-      echo("                  <input type=\"hidden\" name=\"cod_pasta\" value=\"NULL\" />\n");
-  }
-  echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-
+  echo("					<table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+  if($curso_form=="sim"){
+  			echo("	<form name=\"requisicao\" id=\"requisicao\" action=\"\" method=\"get\" onSubmit=\"return(EnviaPedido());\">\n");
+  		    /* 142 - Dados do Curso */
+    		echo("				 <tr class=\"head\">\n");
+    		echo("	               <td>".RetornaFraseDaLista($lista_frases,142)."</td>\n");
+    		echo("               </tr>\n");
+    		echo("				 <tr>\n");
+    	    echo("                 <td class=\"alLeft\">\n");
+   			/* 154 - Se vocï¿½ deseja utilizar o ambiente TelEduc para realizar um curso a distï¿½ncia, preencha e envie o formulï¿½rio abaixo.  */
+    		/* 155 - O pedido serï¿½ avaliado pelos responsï¿½veis pelo ambiente e, caso aprovado, o curso serï¿½ hospedado no servidor do(a)  */
+    	    echo("                 <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases, 154).RetornaFraseDaLista($lista_frases, 155)."</p><br />\n");
+    		/* 153 - Erro no envio de pedido. Tente novamente.*/
+    		echo("                 <div id=\"divErro\" align=\"center\" style=\"display:none;\"><font color=\"red\">".RetornaFraseDaLista($lista_frases, 153)."</font></div>\n");
+    		echo("                 <div align=\"center\"><br /><table>\n");
+    		echo("	   	   		 </tr>\n");
+    		/* 143 - Nome do Curso:  */
+    		echo("               <tr>\n");
+    		echo("                 <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,143)." (*)</td>\n");
+    		echo("                 <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"nome_curso\" size=\"33\" maxlength=\"128\" /></td>\n");
+    		echo("               </tr>\n");
+   			/* 144 - Duracao estimada:  */
+    		echo("               <tr>\n");
+    		echo("                 <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,144)." (*)</td>\n");
+    		echo("                 <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"duracao\" size=\"20\" maxlength=\"128\" /></td>\n");
+    		echo("               </tr>\n");
+   			/* 145 - Numero de Alunos:  */
+    		echo("               <tr>\n");
+    		echo("                 <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,145)." (*)</td>\n");
+    		echo("                 <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"num_alunos\" size=\"6\" maxlength=\"10\" /></td>\n");
+    		echo("               </tr>\n");
+    		if (!empty($categ)){
+  				/* 146 - Categoria: */
+      			echo("           <tr>\n");
+      			echo("             <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,146)."</td>\n");
+     			echo("             <td class=\"alLeft\" style=\"border:none\">\n");
+      			echo("                 <select class=\"input\" name=\"cod_pasta\">\n");
+      			echo("                 <option value=NULL>&nbsp;</option>\n");
+      			foreach ($categ as $cod_pasta => $pasta){
+        			echo("				<option value=".$cod_pasta.">".$pasta."</option>\n");
+      			}
+      			echo("                   </select>\n");
+      			echo("              </td>\n");
+      			echo("            </tr>\n");
+    		}
+    		/* 60 - Pï¿½blico alvo: */
+    	   echo("                 <tr>\n");
+    	   echo("                   <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
+    	   echo("                   <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"publico_alvo\" size=\"33\" /></td>\n");
+    	   echo("                 </tr>\n");
+    	   /* 63 - Tipo de inscriï¿½ï¿½o: */
+    	   echo("                 <tr>\n");
+           echo("                   <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
+    	   echo("                   <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"tipo_inscricao\" size=\"33\" /></td>\n");
+    	   echo("                 </tr>\n");
+    	   /* 87 - Informaï¿½ï¿½es adicionais: */
+    	   echo("                 <tr>\n");
+    	   echo("                   <td valign=\"top\" style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,87)."</td>\n");
+    	   echo("                   <td class=\"alLeft\" style=\"border:none\"><textarea class=\"input\" name=\"info\" rows=\"4\" cols=\"40\"></textarea></td>\n");
+    	   echo("                 </tr>\n");
+    	  /* 150 - Nome da Instituiï¿½ï¿½o:  */
+    	   echo("                 <tr>\n");
+    	   echo("                   <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,150)."</td>\n");
+    	   echo("                   <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"nome_inst\" size=\"33\" maxlength=\"128\" /></td>\n");
+    	   echo("                 </tr>\n");
+    	   echo("                        <tr>\n");
+    	   echo("                           <td class=\"alLeft\" colspan=\"2\" style=\"border:none;\">\n");
+    	   	if ($tem_normas){
+      	   		echo("                            <br /><div align=center>\n");
+         		/* 140 - Somente serï¿½o avaliados/aceitos cursos que satisfaï¿½am os requisitos abaixo: */
+      			echo("	                          ".RetornaFraseDaLista($lista_frases,140)."<br /><br />\n");
+      			echo(                             "<textarea class=\"input\" name=\"taNormas\" readonly cols=\"60\" rows=\"5\">".$normas."</textarea><br /><br />\n");
+        		/* 141 - Li os requisitos acima e o curso que pretendo criar adequa-se a eles. */
+        		echo("                             <input type=\"checkbox\" name=\"chkAceita\" value=\"1\" />".RetornaFraseDaLista($lista_frases,141)."\n");
+       			echo("                             </div>\n");
+           }
+    	   	echo("                          </td>\n");
+    	   	echo("                        </tr>\n");
+           	echo("                        <tr>\n");
+    	   	echo("                          <td style=\"border:none\"></td>\n");
+    	   	echo("                          <td class=\"alLeft\" style=\"border:none\">\n");
+        /* 66 - (*) Campos Obrigatï¿½rios */
+    	   	echo("                           ".RetornaFraseDaLista($lista_frases_configurar,66)."\n");
+    	   	echo("                            <br /><br />\n");
+    	   	echo("                          </td>\n"); 
+    	   	echo("                        </tr>\n");	
+    	    
+    	   if (isset($_SESSION['cod_usuario_global_s'])){
+    	  		$dados = RetornaDadosUsuario($sock,$_SESSION['cod_usuario_global_s']);
+    			// Passa o valor de curso_form para criar_curso2.php onde seu valor serï¿½ testado para
+   			    // efetivar a solicitaï¿½ï¿½o.
+    			echo("		<input type=\"hidden\" name=\"curso_form\" value='".$curso_form."' />\n");
+    			echo("      <input type=\"hidden\" name=\"nome_contato\" value='".$dados['nome']."' />\n");
+    			echo("      <input type=\"hidden\" name=\"email_cad\" value='".$dados['email']."' />\n");
+    			echo("      <input type=\"hidden\" name=\"login_cad\" value='".$dados['login']."' />\n");
+    			   			if (count($categ)<=0)
+      				echo("  <input type=\"hidden\" name=\"cod_pasta\" value=\"NULL\" />\n");
+    			}
+    		else{
+    			echo("			<tr>\n");
+    			echo("				<td colspan=\"8\" class=\"alleft\">\n");
+    			echo("				<p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_configurar,79)."</p>");
+    		    echo("				</td>\n");
+    			echo("			</tr>\n");
+    			echo("            <tr>\n");
+    			/*157 - Login */
+  				echo("              <td style=\"text-align:right;border:none;\">".RetornaFraseDaLista($lista_frases,157).": (*)</td>\n");
+  				echo("              <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"text\" name=\"login\" size=\"16\" maxlength=\"16\"/></td>\n");
+  				echo("            </tr>\n");
+  				echo("            <tr>\n");
+  				/* 166 - Digite sua senha: */ 
+  				echo("              <td style=\"text-align:right;border:none;\">".RetornaFraseDaLista($lista_frases,166).": (*)</td>\n");
+  				echo("              <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"password\" name=\"senha\" size=\"16\" maxlength=\"16\" /></td>\n");
+  				echo("            </tr>\n");
+  				echo("            <tr>\n");
+  				// 167 -  Redigite sua senha: 
+  				echo("              <td style=\"text-align:right;border:none;\">".RetornaFraseDaLista($lista_frases,167).": (*)</td>\n");
+  				echo("              <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"password\" name=\"senha2\" size=\"16\" maxlength=\"16\" /></td>\n");
+  				echo("            </tr>\n");
+  				echo("            <tr>\n");
+  				/* 32 - Nome */
+  				echo("              <td style=\"border:none; text-align:right;\">\n");
+  				echo("                  &nbsp;".RetornaFraseDaLista($lista_frases_configurar,32).": (*)\n");
+  				echo("              </td>\n");
+  				echo("  	        <td style=\"border:none;text-align:left;\">\n");
+  				echo("	                <input class=\"input\" type=\"text\" size=\"30\" maxlength=\"128\" name=\"nome_usuario\" value=\"\" />\n");
+  				echo(" 	            </td>\n");
+  				echo("             </tr>\n");
+  				echo("             <tr>\n");
+  				echo("                <td style=\"border:none; text-align:right;\">\n");
+  				/* 38 - Email */
+  				echo("                   &nbsp;".RetornaFraseDaLista($lista_frases_configurar,38).": (*)\n");
+  				echo("                </td>\n");
+  				echo("                <td style=\"border:none;text-align:left;\">\n");
+  				echo("                   <input class=\"input\" type=\"text\" size=\"30\" maxlength=\"48\" name=\"email\" value=\"\" />\n");
+  				echo("                </td>\n");
+  				echo("             </tr>\n");
+  				
+   		}
+    	  	echo("                <tr>\n");
+    	    echo("                   <td style=\"border:none; text-align:right;\"></td>\n");
+    	    echo("                   <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral,11)."' /></td>\n");
+    	    echo("                </tr>\n");
+    	    echo("                </table></div>\n");
+    	    echo("              </td>\n");
+    	    echo("            </tr>\n");
+    	   
+   	 }
   $instituicao=RetornaDadosIntituicao($sock);
 
-  if ($curso_form == "nao")
-  {
-    echo("                  <tr class=\"head\">\n");
-    /* 58 - Se vocï¿½ deseja utilizar o ambiente TelEduc para realizar um curso a distï¿½ncia, entre em contato com os responsï¿½veis pelo ambiente. */
-    /* 59 - O curso serï¿½ realizado com a autorizaï¿½ï¿½o destes e serï¿½ hospedado no servidor do(a) */
-    echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases, 58).RetornaFraseDaLista($lista_frases,59)." ".$instituicao['nome']."</td>\n");
-    echo("                  </tr>\n");
-    
-    $lista=RetornaContatos($sock);
-
-    echo("                  <tr class=\"head01\">\n");
-    /* 42 - Responsï¿½veis */
-    /* 43 - E-mail */
-    echo("                    <td width=\"60%\">".RetornaFraseDaLista($lista_frases,42)."</td>\n");
-    echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,43)."</td>\n");
-    echo("                  </tr>\n");
-
-    if (count($lista)>0 && $lista != "")
-    {
-      foreach($lista as $cod => $linha)
-      {
-        echo("                  <tr>\n");
-        echo("                    <td>".$linha['nome']."</td>\n");
-        echo("                    <td class=\"alLeft\"><a href=mailto:".$linha['email'].">".$linha['email']."</a></td>\n");
-        echo("                  </tr>\n");
-      }
-    }
-    else
-    {
-      echo("                  <tr>\n");
-      /* 44 - Nenhum responsï¿½vel cadastrado */
-      echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,44)."</td>\n");
-      echo("                  </tr>\n");
-    }
+  if ($curso_form == "nao"){
+  		   echo("                  <tr class=\"head\">\n");
+    	   /* 58 - Se vocï¿½ deseja utilizar o ambiente TelEduc para realizar um curso a distï¿½ncia, entre em contato com os responsï¿½veis pelo ambiente. */
+    	   /* 59 - O curso serï¿½ realizado com a autorizaï¿½ï¿½o destes e serï¿½ hospedado no servidor do(a) */
+    	   echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases, 58).RetornaFraseDaLista($lista_frases,59)." ".$instituicao['nome']."</td>\n");
+    	   echo("                  </tr>\n");
+           $lista=RetornaContatos($sock);
+    	   echo("                  <tr class=\"head01\">\n");
+    	   /* 42 - Responsï¿½veis */
+    	   /* 43 - E-mail */
+    	   echo("                    <td width=\"60%\">".RetornaFraseDaLista($lista_frases,42)."</td>\n");
+    	   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,43)."</td>\n");
+    	   echo("                  </tr>\n");
+    	   if (count($lista)>0 && $lista != ""){
+      			foreach($lista as $cod => $linha){
+        			echo("                  <tr>\n");
+        			echo("                    <td>".$linha['nome']."</td>\n");
+        			echo("                    <td class=\"alLeft\"><a href=mailto:".$linha['email'].">".$linha['email']."</a></td>\n");
+        			echo("                  </tr>\n");
+      		}
+    	}
+    	  else{
+      		echo("                  <tr>\n");
+      		/* 44 - Nenhum responsï¿½vel cadastrado */
+      		echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,44)."</td>\n");
+      		echo("                  </tr>\n");
+    	  }
   }
-  else if ($curso_form == "sim")
-  {
-    /* 142 - Dados do Curso */
-    echo("                  <tr class=\"head\">\n");
-    echo("                    <td>".RetornaFraseDaLista($lista_frases,142)."</td>\n");
-    echo("                  </tr>\n");
-    echo("                  <tr>\n");
-    echo("                    <td class=\"alLeft\">\n");
-    /* 154 - Se vocï¿½ deseja utilizar o ambiente TelEduc para realizar um curso a distï¿½ncia, preencha e envie o formulï¿½rio abaixo.  */
-    /* 155 - O pedido serï¿½ avaliado pelos responsï¿½veis pelo ambiente e, caso aprovado, o curso serï¿½ hospedado no servidor do(a)  */
-    echo("                    <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases, 154).RetornaFraseDaLista($lista_frases, 155)."</p><br />\n");
-    /* 153 - Erro no envio de pedido. Tente novamente.*/
-    echo("                    <div id=\"divErro\" align=\"center\" style=\"display:none;\"><font color=\"red\">".RetornaFraseDaLista($lista_frases, 153)."</font></div>\n");
-    echo("                      <div align=\"center\"><br /><table>\n");
-
-    /* 143 - Nome do Curso:  */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,143)." (*)</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"nome_curso\" size=\"33\" maxlength=\"128\" /></td>\n");
-    echo("                        </tr>\n");
-
-    /* 144 - Duraï¿½ï¿½o estimada:  */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,144)." (*)</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"duracao\" size=\"20\" maxlength=\"128\" /></td>\n");
-    echo("                        </tr>\n");
-
-    /* 145 - Nï¿½mero de Alunos:  */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,145)." (*)</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"num_alunos\" size=\"6\" maxlength=\"10\" /></td>\n");
-    echo("                        </tr>\n");
-
-    if (!empty($categ))
-    {
-      /* 146 - Categoria: */
-      echo("                        <tr>\n");
-      echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,146)."</td>\n");
-      echo("                          <td class=\"alLeft\" style=\"border:none\">\n");
-      echo("                            <select class=\"input\" name=\"cod_pasta\">\n");
-      echo("                              <option value=NULL>&nbsp;</option>\n");
-      foreach ($categ as $cod_pasta => $pasta)
-      {
-        echo("                              <option value=".$cod_pasta.">".$pasta."</option>\n");
-      }
-      echo("                            </select>\n");
-      echo("                          </td>\n");
-      echo("                        </tr>\n");
-    }
-
-    /* 60 - Pï¿½blico alvo: */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"publico_alvo\" size=\"33\" /></td>\n");
-    echo("                        </tr>\n");
-
-    /* 63 - Tipo de inscriï¿½ï¿½o: */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"tipo_inscricao\" size=\"33\" /></td>\n");
-    echo("                        </tr>\n");
-
-    /* 87 - Informaï¿½ï¿½es adicionais: */
-    echo("                        <tr>\n");
-    echo("                          <td valign=\"top\" style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,87)."</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><textarea class=\"input\" name=\"info\" rows=\"4\" cols=\"40\"></textarea></td>\n");
-    echo("                        </tr>\n");
-
-    /* 150 - Nome da Instituiï¿½ï¿½o:  */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\">".RetornaFraseDaLista($lista_frases,150)."</td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"text\" name=\"nome_inst\" size=\"33\" maxlength=\"128\" /></td>\n");
-    echo("                        </tr>\n");
-
-    echo("                        <tr>\n");
-    echo("                          <td class=\"alLeft\" colspan=\"2\" style=\"border:none;\">\n");
-    if ($tem_normas)
-    {
-      echo("                            <br /><div align=center>\n");
-      /* 140 - Somente serï¿½o avaliados/aceitos cursos que satisfaï¿½am os requisitos abaixo: */
-      echo("                            ".RetornaFraseDaLista($lista_frases,140)."<br /><br />\n");
-      echo(                             "<textarea class=\"input\" name=\"taNormas\" readonly cols=\"60\" rows=\"5\">".$normas."</textarea><br /><br />\n");
-      if ($curso_form == "sim")
-      {
-        /* 141 - Li os requisitos acima e o curso que pretendo criar adequa-se a eles. */
-        echo("                            <input type=\"checkbox\" name=\"chkAceita\" value=\"1\" />".RetornaFraseDaLista($lista_frases,141)."\n");
-      }
-      echo("                            </div>\n");
-    }
-    echo("                          </td>\n");
-    echo("                        </tr>\n");
-    echo("                          <tr>\n");
-    echo("                            <td style=\"border:none\"></td>\n");
-    echo("                            <td class=\"alLeft\" style=\"border:none\">\n");
-    /* 66 - (*) Campos Obrigatï¿½rios */
-    echo("                              ".RetornaFraseDaLista($lista_frases_configurar,66)."\n");
-    echo("                              <br /><br />\n");
-    echo("                            </td>\n"); 
-    echo("                          </tr>\n");
-    /* 11 - Enviar */
-    echo("                        <tr>\n");
-    echo("                          <td style=\"border:none; text-align:right;\"></td>\n");
-    echo("                          <td class=\"alLeft\" style=\"border:none\"><input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral,11)."' /></td>\n");
-    echo("                        </tr>\n");
-    echo("                      </table></div>\n");
-    echo("                    </td>\n");
-    echo("                  </tr>\n");
-  }
-
   echo("                </table>\n");
   echo("                </form>\n");
   echo("              </td>\n");
