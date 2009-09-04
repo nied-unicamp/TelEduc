@@ -463,11 +463,22 @@
     echo("        VerificaCheck();");
     echo("        var browser=navigator.appName;\n\n");
     echo("        var totalMsgs=document.getElementsByName('tr_msg').length;\n");
-    echo("        if (browser==\"Microsoft Internet Explorer\")\n");
-    echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"block\";\n");
-    echo("        else\n");
-    echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"table-row\";\n");
-    //echo("        mensagens_abertas++;\n");
+    echo("		  var vLink = document.getElementById('tr_msg_'+cod_mural);\n");
+
+    echo("		  if((vLink.style.display == 'table-row') || (vLink.style.display == 'block'))");
+    echo("		  {");
+    echo("			vLink.style.display='none';");
+//    echo("			mensagens_abertas--;");
+    echo("		  }");
+    echo("		  else");
+    echo("		  {");
+    echo("        	if (browser==\"Microsoft Internet Explorer\")\n");
+    echo("          	vLink.style.display=\"block\";\n");
+    echo("        	else\n");
+    echo("          	vLink.style.display=\"table-row\";\n");
+//    echo("        mensagens_abertas++;\n");
+    echo("		  }");
+    
     echo("        if(totalMsgs <= 10){\n");
     //echo("          VerificaAbertas();\n");
     echo("        }\n");
@@ -476,6 +487,12 @@
     echo("      function FechaMensagem(cod_mural){\n");
     echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
     echo("			PerguntasAbertas--;");
+    /*
+     
+
+
+
+     */
     echo("			if (PerguntasAbertas == 0) DesabilitaBotaoFechar();");
 	echo("      }\n");
 
