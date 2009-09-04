@@ -55,6 +55,21 @@ function RetornaCursosRequisicao($sock)
   return($cursos);
 }
 
+/*************************************************************************
+  VerificaUsuario - veirifica se o usuario confirmou seu cadastro via email
+  Entrada- $sock - Socket de conexão atual
+  Saida: false para usuario não confirmado, true para usuario confirmado
+*/
+function VerificaUsuario($sock,$email){
+	$query="SELECT confirmacao FROM Usuario WHERE email='".$email."'";
+	$res=Enviar($sock,$query);
+	$linha=RetornaLinha($res);
+	if($linha['confirmacao']=="")
+	 		return true;
+	else
+		return false;    		
+}
+
 /* **********************************************************************
    RetornaTodosCursos - Retorna lista de cursos a serem avaliados e rejeitados
    Entrada: $sock - Socket da conexï¿½o atual

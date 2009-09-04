@@ -176,7 +176,7 @@
   {
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
-    /* 216 - N�o h� nenhum curso a ser avaliado. */
+    /* 216 - Nao ha nenhum curso a ser avaliado. */
     echo("                ".RetornaFraseDaLista($lista_frases, 216)."\n");
     echo("                <br /><br />\n");
 

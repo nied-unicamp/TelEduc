@@ -60,7 +60,7 @@
              true, se nao houver erros no formulario,
              false, se houver.
   */
-
+  
   echo("  function Submissao(onde)\n");
   echo("  {\n");
   echo("    document.Navega.onde.value=onde;\n");
@@ -68,10 +68,18 @@
   echo("    return false;\n");
   echo("  }\n\n");
 
-  echo("  function SubmeteForm(opcao)\n");
+  echo("  function SubmeteForm(opcao,situacao)\n");
   echo("  {\n");
-  echo("    document.avaliacao.opcao.value = opcao;\n");
-  echo("    document.avaliacao.submit();\n");
+  echo("	if(opcao=='Aceitar' && situacao=='N'){");
+  echo("		if (confirm('".RetornaFraseDaLista($lista_frases,212)."')){\n");
+  echo("    		document.avaliacao.opcao.value = opcao;\n");
+  echo("    		document.avaliacao.submit();\n");
+  echo("		}\n");
+  echo("	}\n");
+  echo("	else{");
+  echo("		document.avaliacao.opcao.value = opcao;\n");
+  echo("		document.avaliacao.submit();\n");
+  echo("	}\n");
   echo("  }\n\n");
   
   echo("  function Cancela()\n");
@@ -90,7 +98,7 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  $lista_frases=RetornaListaDeFrases($sock,-5);
+ $lista_frases=RetornaListaDeFrases($sock,-5);
 
   /*
   ==================
@@ -138,10 +146,11 @@
 
   $cod_curso=$cursos[$cod]['cod_curso'];
   $curso=RetornaDadosCursoReq($sock,$cod_curso);
+  $confirmado=VerificaUsuario($sock,$curso['email_contato']);
 
 
   if ($curso['avaliado'] == 'N')
-    /* 213 -  (nï¿½o-avaliado) */
+    /* 213 -  (nao-avaliado) */
     $status = RetornaFraseDaLista($lista_frases, 213);
   else if ($curso['avaliado'] == 'R')
     /* 212 -  (rejeitado) */
@@ -241,7 +250,12 @@
   echo("                        <tr>\n");
   echo("                          <td style=\"text-align:right;border:none;\"><b>".RetornaFraseDaLista($lista_frases, 223)." </b></td>\n");
   echo("                          <td style=\"text-align:left;border:none;\">\n");
-  echo($curso['email_contato']."</td>\n");
+  echo(								$curso['email_contato']);
+  if(!$confirmado){
+  	/*Atenção-email não confirmado pelo usuário)*/
+  	 echo("							<font color=red>".RetornaFrasedaLista($lista_frases,533)."</font>");
+  }
+  echo("						</td>\n");
   echo("                        </tr>\n");
 
   $data_req=UnixTime2DataHora($curso['data']);
@@ -297,12 +311,14 @@
   echo("                        <tr>\n");
   echo("                          <td style=\"border:0;text-align:center;\" colspan=\"2\">\n");
   /* 227 - Aceitar */
-  echo("                              <input class=\"input\" type=button value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar')>&nbsp;&nbsp;\n");
-
+  if(!$confirmado)
+  	echo("                              <input class=\"input\" type=button value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','N')>&nbsp;&nbsp;\n");
+  else
+	echo("                              <input class=\"input\" type=button value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','S')>&nbsp;&nbsp;\n");
   if ($curso['avaliado'] == 'N')
   {
     /* 228 - Rejeitar */
-    echo("                              <input  class=\"input\" type=\"button\" value='".RetornaFraseDaLista($lista_frases, 228)."' onClick=SubmeteForm('Rejeitar')>\n");
+    echo("                              <input  class=\"input\" type=\"button\" value='".RetornaFraseDaLista($lista_frases, 228)."' onClick=SubmeteForm('Rejeitar','".$confirmado."')>\n");
   }
 
   echo("                          </td>\n");
