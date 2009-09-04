@@ -478,10 +478,10 @@ function RetornaCursosUsuario($sock)
   Saida:    Retorna respota XML
 ********************************************************************/
 
-function EnviaPedidoCriacaoDinamic($dadosForm)
+function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+ 
   $nome_curso=$dadosForm['nome_curso'];
   $duracao=$dadosForm['duracao'];
   $num_alunos=$dadosForm['num_alunos'];
@@ -489,10 +489,19 @@ function EnviaPedidoCriacaoDinamic($dadosForm)
   $publico_alvo=$dadosForm['publico_alvo'];
   $tipo_inscricao=$dadosForm['tipo_inscricao'];
   $nome_inst=$dadosForm['nome_inst'];
-  $nome_contato=$dadosForm['nome_contato'];
-  $email=$dadosForm['email'];
-  $login=$dadosForm['login'];
   $cod_pasta=$dadosForm['cod_pasta'];
+  
+  if(isset($_SESSION['cod_usuario_global_s'])){
+  		$nome_contato=$dadosForm['nome_contato'];
+  		$email=$dadosForm['email_cad'];
+  		$login=$dadosForm['login_cad'];
+  }
+  else{
+  		$nome_contato=$dadosForm['nome_usuario'];
+  		$email=$dadosForm['email'];
+  		$login=$dadosForm['login'];
+  		$senha=crypt($dadosForm['senha'],"AA");
+  }
 
   $data=time();
 
@@ -522,8 +531,52 @@ function EnviaPedidoCriacaoDinamic($dadosForm)
 
   $sock = Conectar("");
   $cod_curso=RetornaCodCurso($sock);
+  if(LoginRepetido($sock,$login)&&(!isset($_SESSION['cod_usuario_global_s']))){
+  	$objResponse->addScriptCall("mostraFeedback", $error1, 'false');
+  }
+  else if(EmailRepetido($sock,$email)&&(!isset($_SESSION['cod_usuario_global_s']))){
+  	$objResponse->addScriptCall("mostraFeedback",$error2, 'false');
+  }
+  else{
+  	if(!isset($_SESSION['cod_usuario_global_s'])){
+  		$sequencia = GeraChave(20);	
+  	    $cod_usuario=RetornaProximoCodigo($sock,"Usuario");
+    	$query="INSERT INTO Usuario(cod_usuario,login,senha,nome,email,cod_lingua,confirmacao)values(".$cod_usuario.",'".VerificaStringQuery($login)."','".VerificaStringQuery($senha)."','".VerificaStringQuery($nome_contato)."','".VerificaStringQuery($email)."','1','".VerificaStringQuery($sequencia)."')";
+  		$res=Enviar($sock,$query);
+  		
+  		/* Notificacao do Usuario via Email ************************************/
+  		
+        $sock = Conectar('');
+        $query="select diretorio from Diretorio where item='raiz_www'";
+        $res=Enviar($sock,$query);
+        $raiz_www_linha=RetornaLinha($res);
+        $raiz_www = $raiz_www_linha[0];
+        $host=RetornaConfiguracao($sock,"host");
+        $lista_frases_email = RetornaListaDeFrases($sock,-2);
+        $lista_frases_correio = RetornaListaDeFrases($sock,11);
+        
+        //87 - Confirmação de cadastro TelEduc
+        
+        $assunto = RetornaFraseDaLista($lista_frases_email, 87);
+        $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://$host$raiz_www/pagina_inicial/confirmacao.php?u=$cod_usuario&s=$sequencia</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+                 
+        // 115 - NAO_RESPONDA
+        $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
+        $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
+        MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
+  		$query="select diretorio from Diretorio where item='raiz_www'";
+        $res=Enviar($sock,$query);
+        $raiz_www_linha=RetornaLinha($res);
+        $raiz_www = $raiz_www_linha[0];
+        $host=RetornaConfiguracao($sock,"host");
+        $lista_frases_email = RetornaListaDeFrases($sock,-2);
+        $lista_frases_correio = RetornaListaDeFrases($sock,11);
+        
+    }		
   $enviou=EnviaDadosCurso($sock,$cod_curso,$nome_curso,$duracao,$info,$publico_alvo,$tipo_inscricao,$num_alunos,$cod_pasta,$data,$nome_contato,$login,$email,$nome_inst,$avaliado);
   Desconectar($sock);
+  
+  } 
 
   $objResponse->addScript("TrataEnvio('".$enviou."');");
 
