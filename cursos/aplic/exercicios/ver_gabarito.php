@@ -329,7 +329,7 @@ if($resolucao['cod_grupo'] != null)
 /* ? - Voltar */
 echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>Voltar</a></li>\n");
 /* ? - Historico */
-echo("                  <li><a href=''>Historico</a></li>\n");
+//echo("                  <li><a href=''>Historico</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
