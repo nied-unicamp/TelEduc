@@ -198,20 +198,22 @@ echo("    {\n");
 echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"none\";\n");
 echo("    }\n");
 
-echo("    function SelecionaAlternativa(cod_questao,posicao,max)\n");
-echo("    {\n");
-echo("      var resposta,i;\n");
-echo("      resposta=\"\";\n");
-echo("      for(i=0;i<max;i++)\n");
-echo("      {\n");
-echo("        if(i == posicao)\n");
-echo("          resposta = resposta + \"1\";\n");
-echo("        else\n");
-echo("          resposta = resposta + \"0\";\n");
-echo("      }\n");
-/*? - Resposta gravada*/
-echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",\"O\");\n");
-echo("    }\n");
+if ($resolucao['submetida'] == 'N'){
+	echo("    function SelecionaAlternativa(cod_questao,posicao,max)\n");
+	echo("    {\n");
+	echo("      var resposta,i;\n");
+	echo("      resposta=\"\";\n");
+	echo("      for(i=0;i<max;i++)\n");
+	echo("      {\n");
+	echo("        if(i == posicao)\n");
+	echo("          resposta = resposta + \"1\";\n");
+	echo("        else\n");
+	echo("          resposta = resposta + \"0\";\n");
+	echo("      }\n");
+	/*? - Resposta gravada*/
+	echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",\"O\");\n");
+	echo("    }\n");
+}
 
 echo("    function AlteraTexto(id){\n");
 echo("      if (editaTexto==-1 || editaTexto != id){\n");
@@ -228,23 +230,25 @@ echo("        editaTexto = id;\n");
 echo("      }\n");
 echo("    }\n\n");
 
-echo("    function EdicaoTexto(codigo, id, valor){\n");
-echo("      var cod;\n");
-echo("      if (valor=='ok'){\n");
-echo("        cod = codigo.split(\"_\");\n");
-echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
-echo("      }\n");
-echo("      else{\n");
-// Cancela Edi�o
-//echo("        if (!cancelarTodos)\n");
-//echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
-echo("      }\n");
-echo("      document.getElementById(id).innerHTML=conteudo;\n");
-echo("      document.getElementById('resp_'+codigo).style.display= '';\n");
-echo("      editaTexto=-1;\n");
-echo("      cancelarElemento=null;\n");
-echo("    }\n\n");
+if ($resolucao['submetida'] == 'N'){
+	echo("    function EdicaoTexto(codigo, id, valor){\n");
+	echo("      var cod;\n");
+	echo("      if (valor=='ok'){\n");
+	echo("        cod = codigo.split(\"_\");\n");
+	echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+	echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
+	echo("      }\n");
+	echo("      else{\n");
+	// Cancela Edi�o
+	//echo("        if (!cancelarTodos)\n");
+	//echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+	echo("      }\n");
+	echo("      document.getElementById(id).innerHTML=conteudo;\n");
+	echo("      document.getElementById('resp_'+codigo).style.display= '';\n");
+	echo("      editaTexto=-1;\n");
+	echo("      cancelarElemento=null;\n");
+	echo("    }\n\n");
+}
 
 echo("    function CancelaTodos(){\n");
 echo("      EscondeLayers();\n");
@@ -401,7 +405,7 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 		//converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
 		//ISO-8859-1 para ser exibido corretamente na página.
 		$caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
-		 
+			
 		$linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
 		if(eregi(".zip$", $linha_arq['Arquivo'])) {
 			// arquivo zip
@@ -539,6 +543,11 @@ if ((count($questoes)>0)&&($questoes != null))
 
 		if($linha_item['tp_questao'] == 'O')
 		{
+			/* Desabilita a radiobox, se ja foi entregue o ex. */
+			$estado = "";
+			if ($resolucao['submetida'] == 'S')
+			$estado = "disabled";
+
 			echo("                        <dt class=\"portletHeader\">Alternativas</dt>\n");
 			echo("                          <dd class=\"portletItem\">\n");
 			foreach ($alternativas as $cod => $linha_alt)
@@ -548,7 +557,7 @@ if ((count($questoes)>0)&&($questoes != null))
 				else
 				$selected = "";
 
-				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 				echo("                            <br />\n");
 			}
 			echo("                          </dd>\n");
@@ -564,6 +573,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
+			if ($resolucao['submetida'] == 'N')
 			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 		}
 		echo("                      </dl>\n");
@@ -576,7 +586,7 @@ if ((count($questoes)>0)&&($questoes != null))
 
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N'){
-/* ? - Entregar */
+	/* ? - Entregar */
 	echo("								<form method='POST' action='acoes.php'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
