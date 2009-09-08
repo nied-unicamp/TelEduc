@@ -168,7 +168,7 @@ function RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_
   $consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
              from Exercicios_resolucao ER 
              inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
-             where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio)." ".$regra;
+             where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio);
   $res=Enviar($sock,$consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
@@ -774,6 +774,20 @@ function RetornaExerciciosDisponiveis($sock)
 }
 
 /***********************************************************************
+   RetornaExerciciosAplicados - Retorna os exercicios que foram aplicados
+   Entrada: $sock - BASE DO CURSO
+   Saida: Saida: [array][campos] = 'valores'           
+*/
+function RetornaExerciciosAplicados($sock)
+{
+  $data = time();
+  $consulta="select * from Exercicios_aplicado";
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return $lista;
+}
+
+/***********************************************************************
    InsereTuplaResolucao - Insere uma nova tupla na tabela Exercicios_resolucao 
    Entrada: $sock - BASE DO CURSO
             $cod_usuario - código do usuario
@@ -890,7 +904,7 @@ function FoiAplicado($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
 */
 function AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario)
 {
-  $aplicados = RetornaExerciciosDisponiveis($sock);
+  $aplicados = RetornaExerciciosAplicados($sock);
   
   foreach($aplicados as $cod => $linha) 
   {
