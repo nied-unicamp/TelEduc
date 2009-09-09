@@ -599,7 +599,7 @@ if($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 else if($resolucao['submetida'] == 'S')
 {	if($tela_formador)
 	{
-		echo("<tr><td align='right'><input type='button' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");
+		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");
 	}
 }
 echo("              </td>\n");
