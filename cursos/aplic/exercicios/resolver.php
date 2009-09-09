@@ -73,6 +73,7 @@ $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
 
 /*********************************************************/
 /* in�io - JavaScript */
+
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
 echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
 echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
@@ -270,6 +271,7 @@ echo("  </script>\n\n");
 /*********************************************************/
 
 $objAjax->printJavascript("../xajax_0.2.4/");
+
 
 include("../menu_principal.php");
 
@@ -485,7 +487,7 @@ if ((count($questoes)>0)&&($questoes != null))
 
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		echo("                    <td></td>\n");
+		echo("                    <td>-</td>\n");
 		echo("                    <td>".$valor."</td>\n");
 		echo("                    <td>".$tipo."</td>\n");
 		echo("                    <td>".$topico."</td>\n");
@@ -585,7 +587,7 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 
 echo("                </table>\n");
-if($resolucao['submetida'] == 'N'){
+if($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 	/* ? - Entregar */
 	echo("								<form method='POST' action='acoes.php'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
@@ -593,6 +595,12 @@ if($resolucao['submetida'] == 'N'){
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
 	echo("                <div align='right'><input type='submit' class='input' value='Entregar'></div>\n");
 	echo("								</form>");
+}
+else if($resolucao['submetida'] == 'S')
+{	if($tela_formador)
+	{
+		echo("<tr><td align='right'><input type='button' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");
+	}
 }
 echo("              </td>\n");
 echo("            </tr>\n");
