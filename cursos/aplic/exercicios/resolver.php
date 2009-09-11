@@ -575,7 +575,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
-			if ($resolucao['submetida'] == 'N')
+			if ($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario'])
 			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 		}
 		echo("                      </dl>\n");
