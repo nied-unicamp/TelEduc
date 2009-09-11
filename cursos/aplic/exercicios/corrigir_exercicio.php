@@ -53,6 +53,7 @@ $objAjax->registerFunction("MudarCompartilhamentoDinamic");
 $objAjax->registerFunction("AtualizaRespostaDoUsuarioDinamic");
 $objAjax->registerFunction("EditarRespostaQuestaoDissDinamic");
 $objAjax->registerFunction("EditarComentarioQuestaoDissDinamic");
+$objAjax->registerFunction("AtualizaNotaDinamic");
 //Manda o xajax executar os pedidos acima.
 $objAjax->processRequests();
 
@@ -249,22 +250,27 @@ echo("      document.getElementById(\"resp_\"+id).style.display=\"none\";\n");
 echo("      AlteraTexto(id);\n");
 echo("    }\n");
 
-echo("function EditarNota(nota){\n");
+echo("	function EditarNota(nota){\n");
+echo("		if(document.getElementById('editanota').style.visibility == 'hidden'){");
+echo("			document.getElementById('editanota').style.visibility = \"visible\";\n");
+echo("			document.getElementById('nota').style.visibility = \"hidden\";\n");
+echo("			document.getElementById('editanota').style.display = \"block\";\n");
+echo("			document.getElementById('nota').style.display = \"none\";\n");
+echo("			document.getElementById('inputnota').value = nota;\n");
+echo("			document.getElementById('inputnota').focus();\n");
+echo("		}else{\n");
+echo("			document.getElementById('editanota').style.visibility = \"hidden\";\n");
+echo("			document.getElementById('nota').style.visibility = \"visible\";\n");
+echo("			document.getElementById('editanota').style.display = \"none\";\n");
+echo("			document.getElementById('nota').style.display = \"block\";\n");
+echo("		}\n");
+echo("	}\n");
 
-echo("if(document.getElementById('editanota').style.visibility == 'hidden'){");
-echo("	document.getElementById('editanota').style.visibility = \"visible\";\n");
-echo("	document.getElementById('nota').style.visibility = \"hidden\";\n");
-echo("	document.getElementById('editanota').style.display = \"block\";\n");
-echo("	document.getElementById('nota').style.display = \"none\";\n");
-echo("	document.getElementById('inputnota').value = nota;\n");
-echo("	document.getElementById('inputnota').focus();\n");
-echo("}else{\n");
-echo("	document.getElementById('editanota').style.visibility = \"hidden\";\n");
-echo("	document.getElementById('nota').style.visibility = \"visible\";\n");
-echo("	document.getElementById('editanota').style.display = \"none\";\n");
-echo("	document.getElementById('nota').style.display = \"block\";\n");
-echo("}}\n");
-
+echo("    function AtualizaNotaDinamic(cod_curso, cod_questao, cod_resolucao){\n");
+echo("		nova_nota=8;");
+echo("        xajax_AtualizaNotaDinamic(cod_curso, cod_questao, cod_resolucao, nova_nota, 'atualizanota');\n");
+FAZER FUNCAO
+echo("    }\n");
 
 echo("  </script>\n\n");
 /* fim - JavaScript */
@@ -533,7 +539,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
 			$notaDis=10;
 			echo("                          	  <div id=\"nota\" class=\"portletItem\">".$notaDis."</div>\n");
-  			echo("                          	  <div id=\"editanota\" class=\"portletItem\"><input class=\"input\" id=\"inputnota\" style=\"width:40px\" type=\"text\" value=\"dsa\"></div>\n");
+  			echo("                          	  <div id=\"editanota\" class=\"portletItem\"><input class=\"input\" id=\"inputnota\" style=\"width:40px\" type=\"text\" value=\"dsa\"><span>  </span><span class=\"link\" onclick=\"AtualizaNotaDinamic(".$cod_curso.",".$linha_item['cod_questao'].",".$cod_resolucao.");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota();\">Cancel</span></div>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -543,7 +549,6 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            		 </div>\n");
 			echo("                            	  </dd>\n");
 					
-//			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"MudarNota('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
 			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$notaDis."');\">Editar nota</span></dd>\n");
 			echo("                              <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar comentario</span></dd>\n");
 		}
