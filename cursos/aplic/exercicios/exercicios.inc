@@ -2177,6 +2177,28 @@ function EditarRespostaQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_quest
   return $objResponse->getXML();
 }
 
+function EditarComentarioQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_questao, $novo_texto, $cod_usuario, $feedback)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $novo_texto=ConverteAspas2BarraAspas($novo_texto);
+  $sock=Conectar($cod_curso);
+
+  $consulta="insert into Exercicios_resolucao_questao_diss (cod_resolucao,cod_questao,comentario) values  (".$cod_resolucao.",".$cod_questao.",'".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."') on duplicate key update comentario = '".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."'";
+  $res=Enviar($sock, $consulta);
+
+  Desconectar($sock);
+
+  //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+
+  $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
+
+  $objResponse->addAssign("text_".$cod_resolucao."_".$cod_questao, innerHTML, print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_texto))), true));
+
+  // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
+  return $objResponse->getXML();
+}
+
 /* *********************************************************************
    ApagarExercicio - Atualiza o status da questao para X (apagado)
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
@@ -2208,4 +2230,25 @@ function VerificaSeCorrigida($cod_curso,$cod_usuario,$cod_resolucao)
   	return true;
   else
     return false;
+}
+
+function PegaNotaObjetiva($cod_questao, $cod_curso, $cod_resolucao)
+{
+	$sock=Conectar($cod_curso);
+  	$consulta = "select nota from Exercicios_resolucao_questao_obj where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
+  	$res = Enviar($sock, $consulta);
+  	$linha = RetornaLinha($res);
+	return $linha['nota'];
+}
+
+function VerificaQuestaoDissertativa($cod_questao, $cod_curso, $cod_resolucao)
+{
+	$sock=Conectar($cod_curso);
+  	$consulta = "select * from Exercicios_resolucao_questao_diss where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
+  	$res = Enviar($sock, $consulta);
+  	$linha = RetornaLinha($res);
+	  	
+  	$saida[0]=$linha['nota'];
+  	$saida[1]=$linha['comentario'];
+	return $saida;
 }

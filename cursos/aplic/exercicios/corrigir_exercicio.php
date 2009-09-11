@@ -52,6 +52,7 @@ $objAjax = new xajax();
 $objAjax->registerFunction("MudarCompartilhamentoDinamic");
 $objAjax->registerFunction("AtualizaRespostaDoUsuarioDinamic");
 $objAjax->registerFunction("EditarRespostaQuestaoDissDinamic");
+$objAjax->registerFunction("EditarComentarioQuestaoDissDinamic");
 //Manda o xajax executar os pedidos acima.
 $objAjax->processRequests();
 
@@ -199,23 +200,6 @@ echo("    {\n");
 echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"none\";\n");
 echo("    }\n");
 
-if ($resolucao['submetida'] == 'N'){
-	echo("    function SelecionaAlternativa(cod_questao,posicao,max)\n");
-	echo("    {\n");
-	echo("      var resposta,i;\n");
-	echo("      resposta=\"\";\n");
-	echo("      for(i=0;i<max;i++)\n");
-	echo("      {\n");
-	echo("        if(i == posicao)\n");
-	echo("          resposta = resposta + \"1\";\n");
-	echo("        else\n");
-	echo("          resposta = resposta + \"0\";\n");
-	echo("      }\n");
-	/*? - Resposta gravada*/
-	echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",\"O\");\n");
-	echo("    }\n");
-}
-
 echo("    function AlteraTexto(id){\n");
 echo("      if (editaTexto==-1 || editaTexto != id){\n");
 if ($tela_formador){
@@ -231,25 +215,22 @@ echo("        editaTexto = id;\n");
 echo("      }\n");
 echo("    }\n\n");
 
-if ($resolucao['submetida'] == 'N'){
-	echo("    function EdicaoTexto(codigo, id, valor){\n");
-	echo("      var cod;\n");
-	echo("      if (valor=='ok'){\n");
-	echo("        cod = codigo.split(\"_\");\n");
-	echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-	echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
-	echo("      }\n");
-	echo("      else{\n");
-	// Cancela Edi�o
-	//echo("        if (!cancelarTodos)\n");
-	//echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
-	echo("      }\n");
-	echo("      document.getElementById(id).innerHTML=conteudo;\n");
-	echo("      document.getElementById('resp_'+codigo).style.display= '';\n");
-	echo("      editaTexto=-1;\n");
-	echo("      cancelarElemento=null;\n");
-	echo("    }\n\n");
-}
+echo("    function EdicaoTexto(codigo, id, valor){\n");
+echo("      var cod;\n");
+echo("      if (valor=='ok'){\n");
+echo("        cod = codigo.split(\"_\");\n");
+echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+echo("        xajax_EditarComentarioQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
+echo("      }\n");
+echo("      else{\n");
+// Cancela Edi�o
+//echo("        if (!cancelarTodos)\n");
+echo("      }\n");
+echo("      document.getElementById(id).innerHTML=conteudo;\n");
+echo("      document.getElementById('resp_'+codigo).style.display= '';\n");
+echo("      editaTexto=-1;\n");
+echo("      cancelarElemento=null;\n");
+echo("    }\n\n");
 
 echo("    function CancelaTodos(){\n");
 echo("      EscondeLayers();\n");
@@ -312,11 +293,8 @@ echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" 
 echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
-
 /* ? - Voltar */
 echo("                  <li><a href='resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."'>Voltar</a></li>\n");
-/* ? - Historico */
-echo("                  <li><a href=''>Historico</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -325,13 +303,7 @@ echo("              <td valign=\"top\">\n");
 echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 /* ? - Titulo */
-echo("                    <td colspan=\"3\" class=\"alLeft\">Titulo</td>\n");
-/* ? - Limite submissao */
-echo("                    <td width=\"10%\">Limite submissao</td>\n");
-/* ? - Compartilhamento */
-echo("                    <td width=\"15%\">Compartilhamento</td>\n");
-/* ? - Situacao */
-echo("                    <td width=\"10%\">Situacao</td>\n");
+echo("                    <td colspan=\"7\">".$exercicio['titulo']."</td>\n");
 echo("                  </tr>\n");
 
 /* ?? - Compartilhado com Formadores */
@@ -352,24 +324,9 @@ $situacao .= "<span class=\"\">(e)</span>";
 if($resolucao['corrigida'] == 'S')
 $situacao .= "<span class=\"avaliada\">(a)</span>";
 
-echo("                  <tr>\n");
-echo("                    <td colspan=\"3\" class=\"alLeft\">".$exercicio['titulo']."</td>\n");
-echo("                    <td width=\"10%\">".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
-echo("                    <td width=\"15%\">".$compartilhamento."</td>\n");
-echo("                    <td width=\"10%\">".$situacao."</td>\n");
-echo("                  </tr>\n");
-
-echo("                  <tr class=\"head\">\n");
-/* ? - Texto introdutorio */
-echo("                    <td colspan=\"6\">Texto Introdutorio</td>\n");
-echo("                  </tr>\n");
-
 $texto = $exercicio['texto'];
-if($texto == "" || $texto == null)
-$texto = "Nenhum texto introdutorio foi cadastrado para esse exercicio.";
-
 echo("                  <tr>\n");
-echo("                    <td colspan=\"6\" class=\"alLeft\">".$texto."</td>\n");
+echo("                    <td colspan=\"7\" class=\"alLeft\">".$texto."</td>\n");
 echo("                  </tr>\n");
 
 $dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $resolucao['cod_exercicio'], $diretorio_arquivos, $diretorio_temp,"exercicio");
@@ -425,23 +382,11 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 	echo("                    </td>\n");
 	echo("                  </tr>\n");
 }
-
-echo("                  <tr class=\"head\">\n");
-/* ? - Questoes */
-echo("                    <td colspan=\"6\">Questoes</td>\n");
-echo("                  </tr>\n");
-
 echo("                  <tr class=\"head01\">\n");
 /* ? - Titulo */
-echo("                    <td class=\"alLeft\">Titulo</td>\n");
+echo("                    <td class=\"alLeft\" colspan=\"5\">Titulo</td>\n");
 /* ? - Nota */
-echo("                    <td width=\"5%\">Nota</td>\n");
-/* ? - Valor */
-echo("                    <td width=\"5%\">Valor</td>\n");
-/* ? - Tipo */
-echo("                    <td width=\"10%\">Tipo</td>\n");
-/* ? - Topico */
-echo("                    <td width=\"15%\">Topico</td>\n");
+echo("                    <td width=\"10%\">Nota</td>\n");
 /* ? - Status */
 echo("                    <td width=\"10%\">Status</td>\n");
 echo("                  </tr>\n");
@@ -455,21 +400,41 @@ if ((count($questoes)>0)&&($questoes != null))
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		$valor = $linha_item['valor'];
-		if($linha_item['tp_questao'] == 'O')
-		$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
-
+		
+		if($linha_item['tp_questao'] == 'O'){
+			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
+			$status="corrigida";
+			$notaObj=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+		}
+		else{
+			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+			if($itens[0]==null){
+				$status="nao corrigida";
+				$notaDis="-";
+			}
+			else{
+				$status="corrigida";
+				$notaDis=$itens[0];	
+			}	
+			
+			if($itens[1]==null){
+				$comentario="-";	
+			}
+			else
+				$comentario=$itens[1];
+		}
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		echo("                    <td>-</td>\n");
-		echo("                    <td>".$valor."</td>\n");
-		echo("                    <td>".$tipo."</td>\n");
-		echo("                    <td>".$topico."</td>\n");
-		echo("                    <td>".$linha['']."</td>\n");
+		echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
+		if($linha_item['tp_questao'] == 'O')
+			echo("                    <td>".$notaObj."</td>\n");
+		else
+			echo("                    <td>".$notaDis."</td>\n");
+		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
 		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
@@ -545,16 +510,24 @@ if ((count($questoes)>0)&&($questoes != null))
 		else if($linha_item['tp_questao'] == 'D')
 		{
 			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
-			echo("                          <dd class=\"portletItem\">\n");
-			echo("                            <div class=\"divRichText\">\n");
-			echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
-			if($resposta != null)
-			echo($resposta);
-			echo("                              </span>\n");
-			echo("                            </div>\n");
-			echo("                          </dd>\n");
-			if ($resolucao['submetida'] == 'N')
-			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
+			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
+			echo("                          	  <dd class=\"portletItem\">");
+			echo("                                   <span id=\"tit_".$linha_item['cod_questao']."\">");
+			echo(									    $notaDis);
+			echo("                                   </span>\n");
+			echo("                                </dd>\n");
+			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
+			echo("                                <dd class=\"portletItem\">\n");
+			echo("                                   <div class=\"divRichText\">\n");
+			echo("                                     <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
+			echo(										 $comentario);
+			echo("                              	   </span>\n");
+			echo("                            		 </div>\n");
+			echo("                            	  </dd>\n");
+					
+			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"MudarNota('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
+			echo("                              <dd class=\"portletFooter\"><span onclick=\"AlteraTitulo(".$cod_resolucao."_".$linha_item['cod_questao'].")\" id=\"renomear_".$linha_item['cod_questao']."\">Editar comentario</span></dd>\n");
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");
