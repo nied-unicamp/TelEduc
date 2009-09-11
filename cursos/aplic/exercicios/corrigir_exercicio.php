@@ -512,11 +512,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
 			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
-			echo("                          	  <dd class=\"portletItem\">");
-			echo("                                   <span id=\"tit_".$linha_item['cod_questao']."\">");
-			echo(									    $notaDis);
-			echo("                                   </span>\n");
-			echo("                                </dd>\n");
+			echo("                          	  <dd class=\"portletItem\">".$notaDis."</dd>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -527,7 +523,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            	  </dd>\n");
 					
 			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"MudarNota('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
-			echo("                              <dd class=\"portletFooter\"><span onclick=\"AlteraTitulo(".$cod_resolucao."_".$linha_item['cod_questao'].")\" id=\"renomear_".$linha_item['cod_questao']."\">Editar comentario</span></dd>\n");
+			echo("                              <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar comentario</span></dd>\n");
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");
