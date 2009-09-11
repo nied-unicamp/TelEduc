@@ -131,6 +131,8 @@ echo("    {\n");
 if ($tela_formador){
 	echo("      cod_comp = getLayer(\"comp\");\n");
 	echo("      startList();\n");
+	echo("		document.getElementById('editanota').style.visibility = \"hidden\";\n");
+	echo("		document.getElementById('editanota').style.display = \"none\";\n");
 }
 echo("    }\n\n");
 
@@ -247,13 +249,21 @@ echo("      document.getElementById(\"resp_\"+id).style.display=\"none\";\n");
 echo("      AlteraTexto(id);\n");
 echo("    }\n");
 
-echo("function checktela1(){\n");
-echo("document.getElementById('testenota').style.visibility = \"hidden\";\n");
-echo("document.getElementById('testenota').style.display = \"none\";\n");
-echo("}\n");
-echo("function checktela2(){\n");
-echo("document.getElementById('testenota').style.visibility = \"visible\";\n");
-echo("}\n");
+echo("function EditarNota(nota){\n");
+
+echo("if(document.getElementById('editanota').style.visibility == 'hidden'){");
+echo("	document.getElementById('editanota').style.visibility = \"visible\";\n");
+echo("	document.getElementById('nota').style.visibility = \"hidden\";\n");
+echo("	document.getElementById('editanota').style.display = \"block\";\n");
+echo("	document.getElementById('nota').style.display = \"none\";\n");
+echo("	document.getElementById('inputnota').value = nota;\n");
+echo("	document.getElementById('inputnota').focus();\n");
+echo("}else{\n");
+echo("	document.getElementById('editanota').style.visibility = \"hidden\";\n");
+echo("	document.getElementById('nota').style.visibility = \"visible\";\n");
+echo("	document.getElementById('editanota').style.display = \"none\";\n");
+echo("	document.getElementById('nota').style.display = \"block\";\n");
+echo("}}\n");
 
 
 echo("  </script>\n\n");
@@ -521,8 +531,9 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
 			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
-			echo("                          	  <div class=\"portletItem\">dsada".$notaDis."11</div>\n");
-  			echo("                          	  <div id=\"testenota\" class=\"portletItem\"><input type=\"text\" value=\"dsa\"></div>\n");
+			$notaDis=10;
+			echo("                          	  <div id=\"nota\" class=\"portletItem\">".$notaDis."</div>\n");
+  			echo("                          	  <div id=\"editanota\" class=\"portletItem\"><input class=\"input\" id=\"inputnota\" style=\"width:40px\" type=\"text\" value=\"dsa\"></div>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -533,7 +544,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            	  </dd>\n");
 					
 //			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"MudarNota('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
-			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"checktela1();\">Editar nota</span></dd>\n");
+			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$notaDis."');\">Editar nota</span></dd>\n");
 			echo("                              <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar comentario</span></dd>\n");
 		}
 		echo("                      </dl>\n");
