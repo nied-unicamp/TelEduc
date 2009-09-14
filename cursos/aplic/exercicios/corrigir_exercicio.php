@@ -132,8 +132,8 @@ echo("    {\n");
 if ($tela_formador){
 	echo("      cod_comp = getLayer(\"comp\");\n");
 	echo("      startList();\n");
-	echo("		document.getElementById('editanota').style.visibility = \"hidden\";\n");
-	echo("		document.getElementById('editanota').style.display = \"none\";\n");
+//	echo("		document.getElementById('editanota').style.visibility = \"hidden\";\n");
+//	echo("		document.getElementById('editanota').style.display = \"none\";\n");
 }
 echo("    }\n\n");
 
@@ -250,30 +250,31 @@ echo("      document.getElementById(\"resp_\"+id).style.display=\"none\";\n");
 echo("      AlteraTexto(id);\n");
 echo("    }\n");
 
-echo("	function EditarNota(nota){\n");
-echo("		if(document.getElementById('editanota').style.visibility == 'hidden'){");
-echo("			document.getElementById('editanota').style.visibility = \"visible\";\n");
-echo("			document.getElementById('nota').style.visibility = \"hidden\";\n");
-echo("			document.getElementById('editanota').style.display = \"block\";\n");
-echo("			document.getElementById('nota').style.display = \"none\";\n");
-echo("			document.getElementById('inputnota').value = nota;\n");
-echo("			document.getElementById('inputnota').focus();\n");
+echo("	function EditarNota(nota,cod_questao){\n");
+echo("		if(document.getElementById('editanota_'+cod_questao).style.display == 'none'){");
+echo("			document.getElementById('editanota_'+cod_questao).style.visibility = \"visible\";\n");
+echo("			document.getElementById('nota_'+cod_questao).style.visibility = \"hidden\";\n");
+echo("			document.getElementById('editanota_'+cod_questao).style.display = \"block\";\n");
+echo("			document.getElementById('nota_'+cod_questao).style.display = \"none\";\n");
+echo("			document.getElementById('inputnota_'+cod_questao).value = nota;\n");
+echo("			document.getElementById('inputnota_'+cod_questao).focus();\n");
 echo("		}else{\n");
-echo("			document.getElementById('editanota').style.visibility = \"hidden\";\n");
-echo("			document.getElementById('nota').style.visibility = \"visible\";\n");
-echo("			document.getElementById('editanota').style.display = \"none\";\n");
-echo("			document.getElementById('nota').style.display = \"block\";\n");
+echo("			document.getElementById('editanota_'+cod_questao).style.visibility = \"hidden\";\n");
+echo("			document.getElementById('nota_'+cod_questao).style.visibility = \"visible\";\n");
+echo("			document.getElementById('editanota_'+cod_questao).style.display = \"none\";\n");
+echo("			document.getElementById('nota_'+cod_questao).style.display = \"block\";\n");
 echo("		}\n");
 echo("	}\n");
 
 echo("    function AtualizaNota(cod_questao, cod_curso, cod_resolucao){\n");
-echo("		  notainput = document.getElementById('inputnota').value;\n");
+echo("		  notainput = document.getElementById('inputnota_'+cod_questao).value;\n");
 echo("        xajax_AtualizaNotaDinamicDiss(cod_questao, cod_curso, cod_resolucao,notainput);\n");
-echo("        document.getElementById('nota').innerHTML = notainput;\n");
-echo("  	  document.getElementById('editanota').style.visibility = \"hidden\";\n");
-echo("		  document.getElementById('nota').style.visibility = \"visible\";\n");
-echo("		  document.getElementById('editanota').style.display = \"none\";\n");
-echo("		  document.getElementById('nota').style.display = \"block\";\n");
+echo("        document.getElementById('nota_'+cod_questao).innerHTML = notainput;\n");
+echo("        document.getElementById('NotaDiss_'+cod_questao).innerHTML = notainput;\n");
+echo("  	  document.getElementById('editanota_'+cod_questao).style.visibility = \"hidden\";\n");
+echo("		  document.getElementById('nota_'+cod_questao).style.visibility = \"visible\";\n");
+echo("		  document.getElementById('editanota_'+cod_questao).style.display = \"none\";\n");
+echo("		  document.getElementById('nota_'+cod_questao).style.display = \"block\";\n");
 echo("    }\n");
 
 echo("  </script>\n\n");
@@ -460,9 +461,9 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
 		if($linha_item['tp_questao'] == 'O')
-			echo("                    <td>".$notaObj."</td>\n");
+			echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$notaObj."</td>\n");
 		else
-			echo("                    <td>".$notaDis."</td>\n");
+			echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$notaDis."</td>\n");
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
@@ -541,8 +542,8 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
 			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
-			echo("                          	  <div id=\"nota\" class=\"portletItem\">".$notaDis."</div>\n");
-  			echo("                          	  <div id=\"editanota\" class=\"portletItem\"><input class=\"input\" id=\"inputnota\" style=\"width:50px\" type=\"text\" value=\"dsa\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota();\">Cancel</span></div>\n");
+			echo("                          	  <div id=\"nota_".$linha_item['cod_questao']."\" class=\"portletItem\">".$notaDis."</div>\n");
+  			echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Cancel</span></div>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -552,7 +553,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            		 </div>\n");
 			echo("                            	  </dd>\n");
 					
-			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$notaDis."');\">Editar nota</span></dd>\n");
+			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
 			echo("                              <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar comentario</span></dd>\n");
 		}
 		echo("                      </dl>\n");
