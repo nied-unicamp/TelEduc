@@ -2106,7 +2106,7 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     Enviar($sock,$query);
     Desconectar($sock);
     
-    AtualizaNotaDinamic($cod_curso,$cod_questao,$cod_resolucao,$resposta);
+    AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta);
     
     $objResponse->addScript("mostraFeedback(\"".$texto."\",true);");
     
@@ -2120,7 +2120,7 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
  * 	                 $resposta - resposta do participando na questao
  */
 
-function AtualizaNotaDinamic($cod_curso,$cod_questao,$cod_resolucao,$resposta)
+function AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta)
 {
 	$sock=Conectar($cod_curso);
 
@@ -2142,6 +2142,20 @@ function AtualizaNotaDinamic($cod_curso,$cod_questao,$cod_resolucao,$resposta)
 	Enviar($sock, $consulta);
 	Desconectar($sock);
 
+}
+
+function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota )
+{
+    $objResponse = new xajaxResponse('ISO-8859-1');	
+
+    $sock = Conectar($cod_curso);
+	
+ 	$consulta = "update Exercicios_resolucao_questao_diss SET nota=".$nota."  WHERE cod_resolucao=".$cod_resolucao." AND cod_questao=".$cod_questao;
+	Enviar($sock,$consulta);
+	Desconectar($sock);
+	$feedback = "teste, nota alterada com sucesso";
+    $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
+    return $objResponse->getXML();
 }
 
 
