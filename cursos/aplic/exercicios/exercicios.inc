@@ -2165,20 +2165,23 @@ function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota
 function VerificaEntregaDinamic($cod_curso, $cod_resolucao)
 {
 	$objResponse = new xajaxResponse('ISO-8859-1');	
-	$flag=true;
+	$flag=1;
 	$sock = Conectar($cod_curso);
 		
 	$consulta = "select * from Exercicios_resolucao_questao_diss where cod_resolucao=".$cod_resolucao." and isnull(nota)";
 	$res=Enviar($sock,$consulta);
 	if(RetornaLinha($res))
-		$flag=false;
+		$flag=0;
 
 	$consulta = "select * from Exercicios_resolucao_questao_obj where cod_resolucao=".$cod_resolucao." and isnull(nota)";
 	$res=Enviar($sock,$consulta);
 	if(RetornaLinha($res))
-		$flag=false;
-	
-    return $flag;
+		$flag=0;
+
+
+	$objResponse->addScript("VerificaEntrega(".$cod_curso.",".$cod_resolucao.",".$flag.");");
+		
+    return $objResponse->getXML();
 }
 
 
