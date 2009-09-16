@@ -54,6 +54,8 @@ $objAjax->registerFunction("AtualizaRespostaDoUsuarioDinamic");
 $objAjax->registerFunction("EditarRespostaQuestaoDissDinamic");
 $objAjax->registerFunction("EditarComentarioQuestaoDissDinamic");
 $objAjax->registerFunction("AtualizaNotaDinamicDiss");
+$objAjax->registerFunction("VerificaEntregaDinamic");
+
 //Manda o xajax executar os pedidos acima.
 $objAjax->processRequests();
 
@@ -266,16 +268,24 @@ echo("			document.getElementById('nota_'+cod_questao).style.display = \"block\";
 echo("		}\n");
 echo("	}\n");
 
-echo("    function AtualizaNota(cod_questao, cod_curso, cod_resolucao){\n");
+echo("    function AtualizaNota(cod_questao, cod_curso, cod_resolucao, valor){\n");
 echo("		  notainput = document.getElementById('inputnota_'+cod_questao).value;\n");
-echo("        xajax_AtualizaNotaDinamicDiss(cod_questao, cod_curso, cod_resolucao,notainput);\n");
-echo("        document.getElementById('nota_'+cod_questao).innerHTML = notainput;\n");
-echo("        document.getElementById('NotaDiss_'+cod_questao).innerHTML = notainput;\n");
+echo("        xajax_AtualizaNotaDinamicDiss(cod_questao, cod_curso, cod_resolucao,notainput, valor);\n");
+echo("		  if(notainput <= valor) {");
+echo("        	document.getElementById('nota_'+cod_questao).innerHTML = notainput;\n");
+echo("        	document.getElementById('NotaDiss_'+cod_questao).innerHTML = notainput;\n");
+echo("		  }");
 echo("  	  document.getElementById('editanota_'+cod_questao).style.visibility = \"hidden\";\n");
 echo("		  document.getElementById('nota_'+cod_questao).style.visibility = \"visible\";\n");
 echo("		  document.getElementById('editanota_'+cod_questao).style.display = \"none\";\n");
 echo("		  document.getElementById('nota_'+cod_questao).style.display = \"block\";\n");
 echo("    }\n");
+
+echo("	function VerificaEntrega(cod_curso, cod_resolucao){ \n");
+echo("  	statusExercicio = xajax_VerificaEntregaDinamic(cod_curso, cod_resolucao);\n");
+echo("		if(statusExercicio)");
+echo("			alert('aki'))");
+echo("	}");
 
 echo("  </script>\n\n");
 /* fim - JavaScript */
@@ -333,7 +343,7 @@ echo("              <td valign=\"top\">\n");
 echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 /* ? - Titulo */
-echo("                    <td colspan=\"7\">".$exercicio['titulo']."</td>\n");
+echo("                    <td colspan=\"8\">".$exercicio['titulo']."</td>\n");
 echo("                  </tr>\n");
 
 /* ?? - Compartilhado com Formadores */
@@ -356,7 +366,7 @@ $situacao .= "<span class=\"avaliada\">(a)</span>";
 
 $texto = $exercicio['texto'];
 echo("                  <tr>\n");
-echo("                    <td colspan=\"7\" class=\"alLeft\">".$texto."</td>\n");
+echo("                    <td colspan=\"8\" class=\"alLeft\">".$texto."</td>\n");
 echo("                  </tr>\n");
 
 $dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $resolucao['cod_exercicio'], $diretorio_arquivos, $diretorio_temp,"exercicio");
@@ -416,7 +426,9 @@ echo("                  <tr class=\"head01\">\n");
 /* ? - Titulo */
 echo("                    <td class=\"alLeft\" colspan=\"5\">Titulo</td>\n");
 /* ? - Nota */
-echo("                    <td width=\"10%\">Nota</td>\n");
+echo("                    <td width=\"10%\">Nota do Aluno</td>\n");
+/* ? - Valor */
+echo("                    <td width=\"10%\">Valor da Questao</td>\n");
 /* ? - Status */
 echo("                    <td width=\"10%\">Status</td>\n");
 echo("                  </tr>\n");
@@ -464,10 +476,11 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$notaObj."</td>\n");
 		else
 			echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$notaDis."</td>\n");
+		echo("                    <td>".$linha_item['valor']."</td>\n");
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
-		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
+		echo("                    <td style=\"width:50px\" colspan=\"7\" align=\"left\">\n");
 		echo("                      <dl class=\"portlet\">\n");
 		echo("                        <dt class=\"portletHeader\">Enunciado</dt>\n");
 		echo("                          <dd class=\"portletItem\">".$linha_item['enunciado']."</dd>\n");
@@ -509,7 +522,6 @@ if ((count($questoes)>0)&&($questoes != null))
 
 			  $tag_abre = "<span class=\"link\" id=\"nomeArq_" .$conta_arq ."\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\">";
 				}
-
 				$tag_fecha = "</span>";
 				echo ("                            ".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."<br />");
 			}
@@ -543,7 +555,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
 			echo("                          	  <div id=\"nota_".$linha_item['cod_questao']."\" class=\"portletItem\">".$notaDis."</div>\n");
-  			echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Cancel</span></div>\n");
+  			echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].", ".$linha_item['valor'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Cancel</span></div>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -565,8 +577,8 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 
 echo("                </table>\n");
-	/* ? - Entregar */
-echo("								<form method='POST' action='acoes.php'>");
+	/* ? - Entregar */				
+echo("								<form method='POST'  onsubmit='VerificaEntrega(".$cod_curso.", ".$cod_resolucao.")'>");
 echo("								<input type='hidden' name='acao' value='entregarCorrecao'/>");
 echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");

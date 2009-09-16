@@ -2144,18 +2144,41 @@ function AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta
 
 }
 
-function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota )
+function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota, $valor)
 {
     $objResponse = new xajaxResponse('ISO-8859-1');	
 
-    $sock = Conectar($cod_curso);
-	
- 	$consulta = "update Exercicios_resolucao_questao_diss SET nota=".$nota."  WHERE cod_resolucao=".$cod_resolucao." AND cod_questao=".$cod_questao;
-	Enviar($sock,$consulta);
-	Desconectar($sock);
-	$feedback = "teste, nota alterada com sucesso";
+    if($nota <= $valor)
+    {
+	    $sock = Conectar($cod_curso);
+		
+	 	$consulta = "update Exercicios_resolucao_questao_diss SET nota=".$nota."  WHERE cod_resolucao=".$cod_resolucao." AND cod_questao=".$cod_questao;
+		Enviar($sock,$consulta);
+		Desconectar($sock);
+		$feedback = "teste, nota alterada com sucesso";
+    }
+	$feedback = "teste, nota nao permitida";
     $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
     return $objResponse->getXML();
+}
+
+function VerificaEntregaDinamic($cod_curso, $cod_resolucao)
+{
+	$objResponse = new xajaxResponse('ISO-8859-1');	
+	$flag=true;
+	$sock = Conectar($cod_curso);
+		
+	$consulta = "select * from Exercicios_resolucao_questao_diss where cod_resolucao=".$cod_resolucao." and isnull(nota)";
+	$res=Enviar($sock,$consulta);
+	if(RetornaLinha($res))
+		$flag=false;
+
+	$consulta = "select * from Exercicios_resolucao_questao_obj where cod_resolucao=".$cod_resolucao." and isnull(nota)";
+	$res=Enviar($sock,$consulta);
+	if(RetornaLinha($res))
+		$flag=false;
+	
+    return $flag;
 }
 
 
