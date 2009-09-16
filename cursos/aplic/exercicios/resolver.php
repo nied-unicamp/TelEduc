@@ -473,8 +473,18 @@ if ((count($questoes)>0)&&($questoes != null))
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		$valor = $linha_item['valor'];
 		if($linha_item['tp_questao'] == 'O')
-		$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
-
+		{
+			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
+			$nota=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+		}
+		else
+		{
+			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+			if($itens[0]!=null){
+				$status="corrigida";
+				$nota=$itens[0];	
+			}	
+		}
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
@@ -485,9 +495,11 @@ if ((count($questoes)>0)&&($questoes != null))
 		else
 		$status = "Respondida";
 
+		
+		
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		echo("                    <td>-</td>\n");
+		echo("                    <td>".$nota."</td>\n");
 		echo("                    <td>".$valor."</td>\n");
 		echo("                    <td>".$tipo."</td>\n");
 		echo("                    <td>".$topico."</td>\n");
@@ -589,14 +601,14 @@ if ((count($questoes)>0)&&($questoes != null))
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 	/* ? - Entregar */
-	echo("								<form method='POST' action='acoes.php'>");
+	echo("								<form method='POST' action='acoes.php' onsubmit=return(confirm(\"Deseja \"))>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
 	echo("                <div align='right'><input type='submit' class='input' value='Entregar'></div>\n");
 	echo("								</form>");
 }
-else if($resolucao['submetida'] == 'S')
+else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 {	if($tela_formador)
 	{
 		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");

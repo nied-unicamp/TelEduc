@@ -2178,10 +2178,10 @@ function VerificaEntregaDinamic($cod_curso, $cod_resolucao)
 	if(RetornaLinha($res))
 		$flag=0;
 
-
 	$objResponse->addScript("VerificaEntrega(".$cod_curso.",".$cod_resolucao.",".$flag.");");
 		
     return $objResponse->getXML();
+
 }
 
 
@@ -2224,7 +2224,7 @@ function EditarComentarioQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_que
   $novo_texto=ConverteAspas2BarraAspas($novo_texto);
   $sock=Conectar($cod_curso);
 
-  $consulta="insert into Exercicios_resolucao_questao_diss (cod_resolucao,cod_questao,comentario) values  (".$cod_resolucao.",".$cod_questao.",'".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."') on duplicate key update comentario = '".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."'";
+  $consulta="insert into Exercicios_resolucao_questao_comentarios (cod_questao,cod_resolucao,cod_usuario,comentario,data) values  (".$cod_questao.", ".$cod_resolucao.",".$cod_usuario.", '".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."', ".time().")";
   $res=Enviar($sock, $consulta);
 
   Desconectar($sock);

@@ -190,6 +190,12 @@
   	header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true");
   	
   }
-
+  else if($acao == 'entregarCorrecao')
+  {
+  	$sock = Conectar($cod_curso);
+  	$update = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
+  	$res=Enviar($sock, $update);
+  	header("Location:exercicio.php?cod_curso=".$cod_curso."&atualizacao=true");
+  }
   exit;
 ?>

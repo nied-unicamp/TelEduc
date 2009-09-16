@@ -225,7 +225,7 @@ echo("      var cod;\n");
 echo("      if (valor=='ok'){\n");
 echo("        cod = codigo.split(\"_\");\n");
 echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-echo("        xajax_EditarComentarioQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
+echo("        xajax_EditarComentarioQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,".$cod_usuario.",\"Texto\");\n");
 echo("      }\n");
 echo("      else{\n");
 // Cancela Edi�o
@@ -283,10 +283,11 @@ echo("    }\n");
 
 echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
 echo("  if(flag)\n");
-echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"acao=entregarCorrecao\"\n");
+echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 //echo("  else\n");
 //echo("   \n");
 echo("	}\n");
+
 
 echo("  </script>\n\n");
 /* fim - JavaScript */
