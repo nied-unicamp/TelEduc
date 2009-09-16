@@ -281,11 +281,12 @@ echo("		  document.getElementById('editanota_'+cod_questao).style.display = \"no
 echo("		  document.getElementById('nota_'+cod_questao).style.display = \"block\";\n");
 echo("    }\n");
 
-echo("	function VerificaEntrega(cod_curso, cod_resolucao){ \n");
-echo("  	statusExercicio = xajax_VerificaEntregaDinamic(cod_curso, cod_resolucao);\n");
-echo("		if(statusExercicio)");
-echo("			alert('aki'))");
-echo("	}");
+echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
+echo("  if(flag)\n");
+echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"acao=entregarCorrecao\"\n");
+//echo("  else\n");
+//echo("   \n");
+echo("	}\n");
 
 echo("  </script>\n\n");
 /* fim - JavaScript */
@@ -578,12 +579,12 @@ if ((count($questoes)>0)&&($questoes != null))
 
 echo("                </table>\n");
 	/* ? - Entregar */				
-echo("								<form method='POST'  onsubmit='VerificaEntrega(".$cod_curso.", ".$cod_resolucao.")'>");
-echo("								<input type='hidden' name='acao' value='entregarCorrecao'/>");
-echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
-echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-echo("                <div align='right'><input type='submit' class='input' value='Entregar Correcao'></div>\n");
-echo("								</form>");
+//echo("								<form method='POST'  onsubmit='VerificaEntrega(".$cod_curso.", ".$cod_resolucao.",'')'>");
+//echo("								<input type='hidden' name='acao' value='entregarCorrecao'/>");
+//echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
+//echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
+echo("                <div align='right'><input type='button' onclick='xajax_VerificaEntregaDinamic(".$cod_curso.", ".$cod_resolucao.");'  class='input' value='Entregar Correcao'></div>\n");
+//echo("								</form>");
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
