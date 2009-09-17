@@ -199,23 +199,6 @@ echo("    {\n");
 echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"none\";\n");
 echo("    }\n");
 
-if ($resolucao['submetida'] == 'N'){
-	echo("    function SelecionaAlternativa(cod_questao,posicao,max)\n");
-	echo("    {\n");
-	echo("      var resposta,i;\n");
-	echo("      resposta=\"\";\n");
-	echo("      for(i=0;i<max;i++)\n");
-	echo("      {\n");
-	echo("        if(i == posicao)\n");
-	echo("          resposta = resposta + \"1\";\n");
-	echo("        else\n");
-	echo("          resposta = resposta + \"0\";\n");
-	echo("      }\n");
-	/*? - Resposta gravada*/
-	echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",\"O\");\n");
-	echo("    }\n");
-}
-
 echo("    function AlteraTexto(id){\n");
 echo("      if (editaTexto==-1 || editaTexto != id){\n");
 if ($tela_formador){
@@ -231,13 +214,13 @@ echo("        editaTexto = id;\n");
 echo("      }\n");
 echo("    }\n\n");
 
+
 if ($resolucao['submetida'] == 'N'){
 	echo("    function EdicaoTexto(codigo, id, valor){\n");
 	echo("      var cod;\n");
 	echo("      if (valor=='ok'){\n");
 	echo("        cod = codigo.split(\"_\");\n");
 	echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-	echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
 	echo("      }\n");
 	echo("      else{\n");
 	// Cancela Edi�o
@@ -250,6 +233,33 @@ if ($resolucao['submetida'] == 'N'){
 	echo("      cancelarElemento=null;\n");
 	echo("    }\n\n");
 }
+
+
+/* Salva a resposta da questao no banco de dados, se for uma questao objetiva
+ * a funcao converte para a reposta tipo "00010".
+ */
+echo("				function SalvaRespostaQuestao(cod_questao, resposta, tipo_questao){
+								xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",tipo_questao);\n");
+echo("      	}");
+
+echo("				function SalvaRespostaQuestaoDiss(cod_questao){
+								var resposta = document.getElementById('text_".$cod_resolucao."_'+cod_questao).innerHTML;
+								SalvaRespostaQuestao(cod_questao, resposta, 'D');
+}");
+
+echo("				function SalvaRespostaQuestaoObj(cod_questao){
+								var alternativas = document.getElementsByName('resposta_'+cod_questao);
+								var resposta = '';
+								
+								for(i=0;i<alternativas.length;i++){\n
+										if(alternativas[i].checked)\n
+											resposta = resposta + \"1\";\n
+										else\n
+											resposta = resposta + \"0\";\n
+								}
+								
+								SalvaRespostaQuestao(cod_questao, resposta, 'O');
+}");
 
 echo("    function CancelaTodos(){\n");
 echo("      EscondeLayers();\n");
@@ -571,10 +581,11 @@ if ((count($questoes)>0)&&($questoes != null))
 				else
 				$selected = "";
 
-				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 				echo("                            <br />\n");
 			}
 			echo("                          </dd>\n");
+			echo("													<dd class='portletFooter'><span class='link' onClick='SalvaRespostaQuestaoObj(".$linha_item['cod_questao'].");'>Salvar Resposta</dd>");
 		}
 		else if($linha_item['tp_questao'] == 'D')
 		{
@@ -588,7 +599,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
 			if ($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario'])
-			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");

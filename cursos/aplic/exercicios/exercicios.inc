@@ -2099,10 +2099,11 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     $objResponse = new xajaxResponse('ISO-8859-1');
  
     $sock=Conectar($cod_curso);
-    if($tp_questao == 'O')
+    if($tp_questao == 'O'){
       $query = "insert into Exercicios_resolucao_questao_obj (cod_questao,cod_resolucao,resposta) values (".$cod_questao.",".$cod_resolucao.",'".$resposta."') on duplicate key update resposta = '".$resposta."'";
-    else if($tp_questao == 'D')
+    } else if($tp_questao == 'D'){
       $query = "insert into Exercicios_resolucao_questao_diss (cod_questao,cod_resolucao,resposta) values (".$cod_questao.",".$cod_resolucao.",'".$resposta."') on duplicate key update resposta = '".$resposta."'";
+    }
     Enviar($sock,$query);
     Desconectar($sock);
     
