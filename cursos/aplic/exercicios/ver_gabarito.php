@@ -467,6 +467,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
 		$icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
 		$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+		$icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
 		$tipo = $linha_item['tp_questao'];
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
@@ -589,7 +590,7 @@ if ((count($questoes)>0)&&($questoes != null))
 				$selected = "";
 				if($respostaCorreta){
 					if($respostaCorreta[$cod] == $resposta[$cod]){
-						echo($icone_correto);
+						echo($icone_vazio);
 						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 						echo("                            <br />\n");
 					}
