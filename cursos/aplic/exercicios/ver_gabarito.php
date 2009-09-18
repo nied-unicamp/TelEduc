@@ -590,12 +590,18 @@ if ((count($questoes)>0)&&($questoes != null))
 				$selected = "";
 				if($respostaCorreta){
 					if($respostaCorreta[$cod] == $resposta[$cod]){
-						echo($icone_vazio);
+						if ($respostaCorreta[$cod] == 1)
+							echo($icone_correto);
+						else
+							echo($icone_vazio);
 						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 						echo("                            <br />\n");
 					}
 					else{
-						echo($icone_errado);
+						if ($respostaCorreta[$cod] == 1)
+							echo($icone_correto);
+						else 
+							echo($icone_errado);
 						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 						echo("                            <br />\n");
 					}
