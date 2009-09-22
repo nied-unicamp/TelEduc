@@ -258,6 +258,8 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
 }
 
 .divRichText{
+  line-height:auto;
+  font-size-adjust:auto;
   width:100%;
 }
 
@@ -308,6 +310,10 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
   /*height:0.9em;*/
 }
 
+.divRichText font{
+  line-height:normal;
+}
+
 dl.portlet  {
 margin : 1px 0 1em 0;
 border-bottom : 1px solid #dad4d4;
@@ -338,4 +344,6 @@ border : 1px solid #dad4d4;
 border-style : dotted solid none solid;
 text-align : left;
 }
+
+
  
