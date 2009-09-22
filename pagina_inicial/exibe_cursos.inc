@@ -294,7 +294,7 @@ function RetornaCursosPassadosSemUsuario($sock,$cod_usuario)
                 []['inscricao_fim']
                 []['acesso_visitante'] - 'A' se aceita, 'N' se não
 */
-function RetornaCursosInscricaoSemUsuario($sock,$cod_usuario)
+function RetornaCursosInscricaoSemUsuario($sock)
 {
   $hoje=time();
   $ontem=$hoje - 86400;
