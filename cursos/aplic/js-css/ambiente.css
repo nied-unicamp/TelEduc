@@ -313,6 +313,9 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
 .divRichText font{
   line-height:normal;
 }
+div.divRichText font{
+  line-height:normal;
+}
 
 dl.portlet  {
 margin : 1px 0 1em 0;
