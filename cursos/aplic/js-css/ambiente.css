@@ -129,6 +129,7 @@ span.link:hover, span.linkHover{ color:#1c4c66; text-decoration:underline; curso
 span.linkTexto { display:inline; cursor:pointer; color:#2a6686; }
 span.linkTexto:hover, span.linkTextoHover{ color:#1c4c66; text-decoration:underline; background-color:#F0FAFF; cursor:pointer; }
 span.destaque, span.destaqueHover{ font-weight:bold; }
+span.avaliada {color:red;font-weight:bold;}
 
 input.link { cursor:pointer; color:#2a6686; width:70px;}
 input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
