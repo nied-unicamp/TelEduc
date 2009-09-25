@@ -242,8 +242,8 @@ if($eformador)
 		/* ? - Exercicios em Grupo */
 		echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=G&cod=".$cod_usuario."'>Exercicios em Grupo</a></li>\n");
 }
-/* ? - Ver resolução */
-//echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resolução</a></li>\n");
+/* ? - Ver resoluo */
+//echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resoluo</a></li>\n");
 
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -314,11 +314,14 @@ if(count($exercicios) > 0 && $exercicios != null)
 		$situacao .= "<span class=\"avaliada\">(a)</span>";
 
 		echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
-		echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+		if($linha_item['submetida'] == 'S')
+			echo("                    <td align=\"left\">".$icone."<a href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+		else
+			echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
 		if(VerificaSeCorrigida($cod_curso,$cod_usuario,$linha_item['cod_resolucao'])){
-				/* ? - - Ver resolução */
+				/* ? - - Ver resoluo */
 			    $cod_resolucao = $linha_item['cod_resolucao'];
-				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resolução</a></td>\n");
+				echo(" - <a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>Ver resoluo</a></td>\n");
 		}
 		else{
 				echo("</td>\n");

@@ -500,6 +500,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
+		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
+		
 		if($resposta == null)
 		$status = "Nao respondida";
 		else
