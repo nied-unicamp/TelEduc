@@ -377,6 +377,11 @@ echo("                  </tr>\n");
 $dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $resolucao['cod_exercicio'], $diretorio_arquivos, $diretorio_temp,"exercicio");
 $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_exercicio_temp['link']);
 
+$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+$icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
+$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+$icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
+
 if(count($lista_arq) > 0 || $lista_arq != null)
 {
 	echo("                  <tr class=\"head\">\n");
@@ -451,33 +456,40 @@ if ((count($questoes)>0)&&($questoes != null))
 		if($linha_item['tp_questao'] == 'O'){
 			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
 			$status="corrigida";
-			$notaObj=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+			$nota=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 		}
 		else{
 			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 			if($itens[0]==null){
 				$status="nao corrigida";
-				$notaDis="0.00";
+				$nota="0.00";
 			}
 			else{
 				$status="corrigida";
-				$notaDis=$itens[0];	
+				$nota=$itens[0];	
 			}	
 		}
 		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
 		
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 		if(!$resposta)
-			$notaDis = "0.00";
+			$nota = "0.00";
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		if($linha_item['tp_questao'] == 'O')
-			echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$notaObj."</td>\n");
-		else
-			echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$notaDis."</td>\n");
+		if($nota != $valor && $status != "corrigida")
+			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
+		else if($nota != $valor && $status == "corrigida")
+			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."".$icone_errado."</span></td>\n");
+		else if($nota == $valor && $status == "corrigida")
+			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."".$icone_correto."</span></td>\n");
+		if($linha_item['tp_questao'] == 'O') {
+			echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$nota."</td>\n");
+		}
+		else {
+			echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$nota."</td>\n");
+		}
 		echo("                    <td>".$linha_item['valor']."</td>\n");
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
@@ -556,8 +568,8 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
 			echo("                          <dd class=\"portletItem\">".$resposta."</dd>\n");
 			echo("                        		<dt class=\"portletHeader\">Nota</dt>\n");
-			echo("                          	  <div id=\"nota_".$linha_item['cod_questao']."\" class=\"portletItem\">".$notaDis."</div>\n");
-  			echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].", ".$linha_item['valor'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Cancel</span></div>\n");
+			echo("                          	  <div id=\"nota_".$linha_item['cod_questao']."\" class=\"portletItem\">".$nota."</div>\n");
+  			echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].", ".$linha_item['valor'].");\">Ok</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$nota."','".$linha_item['cod_questao']."');\">Cancel</span></div>\n");
 			echo("                              <dt class=\"portletHeader\">Comentario do Avaliador</dt>\n");
 			echo("                                <dd class=\"portletItem\">\n");
 			echo("                                   <div class=\"divRichText\">\n");
@@ -567,7 +579,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            		 </div>\n");
 			echo("                            	  </dd>\n");
 					
-			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$notaDis."','".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
+			echo("                          	<dd class=\"portletFooter\"><span class=\"link\" onclick=\"EditarNota('".$nota."','".$linha_item['cod_questao']."');\">Editar nota</span></dd>\n");
 			echo("                              <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar comentario</span></dd>\n");
 		}
 		echo("                      </dl>\n");

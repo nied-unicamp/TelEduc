@@ -2158,7 +2158,8 @@ function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota
 		Desconectar($sock);
 		$feedback = "teste, nota alterada com sucesso";
     }
-	$feedback = "teste, nota nao permitida";
+    else
+		$feedback = "teste, nota nao permitida";
     $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
     return $objResponse->getXML();
 }
