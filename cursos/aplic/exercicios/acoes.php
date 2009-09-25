@@ -89,16 +89,17 @@
     $atualizacao = "true";
 
     $cod_exercicio = CriarExercicio($sock, $cod_usuario, $cod_curso, $novo_titulo);
+    
     if($cod_exercicio == -1) //erro na criacao! algum parametro da func. esta vazio
     {
       $atualizacao="false";
       Desconectar($sock);
-      header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao);
+      header("Location:exercicios.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao);
       exit();
     } 
 
     Desconectar($sock);
-    header("Location:exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
+    header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio);
   }
   
   /* ação = Anexar Arquivo*/
