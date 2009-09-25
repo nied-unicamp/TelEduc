@@ -71,6 +71,7 @@ $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
 $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
 $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
 
+
 /*********************************************************/
 /* in�io - JavaScript */
 
@@ -496,7 +497,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			}	
 		}
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
-
+		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
@@ -598,6 +599,11 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
+			if($comentario != "") {
+				echo("                        <dt class=\"portletHeader\">Comentario</dt>\n");
+				echo("                          <dd class=\"portletItem\">\n");
+				echo($comentario."</dd>\n");
+			}
 			if ($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario'])
 			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 		}
