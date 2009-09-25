@@ -497,7 +497,6 @@ if ((count($questoes)>0)&&($questoes != null))
 			}	
 		}
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
-		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
