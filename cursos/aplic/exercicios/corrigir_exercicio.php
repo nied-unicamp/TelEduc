@@ -42,6 +42,7 @@
 
 $bibliotecas="../bibliotecas/";
 include($bibliotecas."geral.inc");
+include("ver_gabarito.inc");
 include("exercicios.inc");
 
 require_once("../xajax_0.2.4/xajax.inc.php");
@@ -457,6 +458,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
 			$status="corrigida";
 			$nota=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+			$respostaCorreta = RespostaQuestao($cod_curso,$linha_item['cod_questao']);
 		}
 		else{
 			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
@@ -557,9 +559,28 @@ if ((count($questoes)>0)&&($questoes != null))
 				$selected = "checked";
 				else
 				$selected = "";
-
-				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-				echo("                            <br />\n");
+				if($respostaCorreta){
+					if($respostaCorreta[$cod] == $resposta[$cod]){
+						if ($respostaCorreta[$cod] == 1)
+							echo($icone_correto);
+						else
+							echo($icone_vazio);
+						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						echo("                            <br />\n");
+					}
+					else{
+						if ($respostaCorreta[$cod] == 1)
+							echo($icone_correto);
+						else 
+							echo($icone_errado);
+						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						echo("                            <br />\n");
+					}
+				}
+				else{
+					echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+					echo("                            <br />\n");
+				}
 			}
 			echo("                          </dd>\n");
 		}
