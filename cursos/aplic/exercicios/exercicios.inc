@@ -2149,7 +2149,7 @@ function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota
 {
     $objResponse = new xajaxResponse('ISO-8859-1');	
 
-    if($nota <= $valor)
+    if($nota <= $valor && $nota >= 0)
     {
 	    $sock = Conectar($cod_curso);
 		
@@ -2299,5 +2299,9 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
   	$consulta = "select comentario from Exercicios_resolucao_questao_comentarios where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao." and cod_usuario = ".$cod_usuario;
   	$res = Enviar($sock, $consulta);
   	$linha = RetornaLinha($res);
-	return $linha[0];
+  	if($linha)
+  		$comentario = $linha[0];
+  	else
+  		$comentario = "Nao ha ocmentarios disponiveis";	 
+	return $comentario;
 }

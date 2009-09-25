@@ -457,7 +457,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 			if($itens[0]==null){
 				$status="nao corrigida";
-				$notaDis="";
+				$notaDis="0.00";
 			}
 			else{
 				$status="corrigida";
