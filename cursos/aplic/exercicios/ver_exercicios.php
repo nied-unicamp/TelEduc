@@ -314,7 +314,7 @@ if(count($exercicios) > 0 && $exercicios != null)
 		$situacao .= "<span class=\"avaliada\">(a)</span>";
 
 		echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
-		if($linha_item['submetida'] == 'S')
+		if($linha_item['submetida'] == 'S' && $eformador)
 			echo("                    <td align=\"left\">".$icone."<a href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
 		else
 			echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
