@@ -282,10 +282,13 @@ echo("		  document.getElementById('nota_'+cod_questao).style.display = \"block\"
 echo("    }\n");
 
 echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
-echo("  if(flag)\n");
+
+echo("  if(flag) {\n");
+echo("  if(confirm('certeza?'))");
 echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
-//echo("  else\n");
-//echo("   \n");
+echo("	}\n");
+echo("  else\n");
+echo("     mostraFeedback('erro', false)\n");
 echo("	}\n");
 
 
@@ -454,21 +457,18 @@ if ((count($questoes)>0)&&($questoes != null))
 			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 			if($itens[0]==null){
 				$status="nao corrigida";
-				$notaDis="-";
+				$notaDis="";
 			}
 			else{
 				$status="corrigida";
 				$notaDis=$itens[0];	
 			}	
-			
-			if($itens[1]==null){
-				$comentario="-";	
-			}
-			else
-				$comentario=$itens[1];
 		}
+		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
+		
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
-
+		if(!$resposta)
+			$notaDis = "0.00";
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
@@ -584,7 +584,7 @@ echo("                </table>\n");
 //echo("								<input type='hidden' name='acao' value='entregarCorrecao'/>");
 //echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 //echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-echo("                <div align='right'><input type='button' onclick='xajax_VerificaEntregaDinamic(".$cod_curso.", ".$cod_resolucao.");'  class='input' value='Entregar Correcao'></div>\n");
+echo("                <div align='right'><input type='button' onclick='xajax_VerificaEntregaDinamic(".$cod_curso.", ".$cod_resolucao.", ".$linha_item['cod_questao'].");'  class='input' value='Entregar Correcao'></div>\n");
 //echo("								</form>");
 echo("              </td>\n");
 echo("            </tr>\n");
