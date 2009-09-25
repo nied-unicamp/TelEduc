@@ -2293,3 +2293,14 @@ function VerificaQuestaoDissertativa($cod_questao, $cod_curso, $cod_resolucao)
   	$saida[1]=$linha['comentario'];
 	return $saida;
 }
+
+function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usuario) {
+	$sock=Conectar($cod_curso);
+  	$consulta = "select * from Exercicios_resolucao_questao_comentario where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
+  	$res = Enviar($sock, $consulta);
+  	$linha = RetornaLinha($res);
+	  	
+  	$saida[0]=$linha['nota'];
+  	$saida[1]=$linha['comentario'];
+	return $saida;
+}
