@@ -1928,16 +1928,25 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
 		   $cod_questao - codigo da questao
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function AdicionaQuestaoAoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questao)
+function AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao)
 { 
-    $objResponse = new xajaxResponse('ISO-8859-1');
- 
+		$cod_exercicio = VerificaNumeroQuery($cod_exercicio);
+	
+		$primeiraQuestao = 1;
+		foreach ($cod_questao as $questao){
+			if ($primeiraQuestao){
+				$primeiraQuestao = 0;
+				$values = "(".$cod_exercicio.",".VerificaNumeroQuery($questao).",0,'V')";
+			} else {
+				$values .= ", (".$cod_exercicio.",".VerificaNumeroQuery($questao).",0,'V')";
+			}
+			
+		}
+		
     $sock=Conectar($cod_curso);
-    $query = "insert ignore into Exercicios_modelo_questao (cod_exercicio,cod_questao,valor,status) values (".VerificaNumeroQuery($cod_exercicio).",".VerificaNumeroQuery($cod_questao).",0,'V')";
+    $query = "insert ignore into Exercicios_modelo_questao (cod_exercicio,cod_questao,valor,status) values ".$values;
     Enviar($sock,$query);
     Desconectar($sock);
- 
-    return $objResponse->getXML();
 }
 
 /********************************************************************************************************

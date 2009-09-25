@@ -51,7 +51,6 @@
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->registerFunction("AlteraStatusQuestaoDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("AdicionaQuestaoAoExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
@@ -248,7 +247,7 @@
   echo("        var i;\n");
   echo("        var inicio;\n");
   echo("        var final;\n");
-  echo("        var elementos = document.getElementsByName('chk[]')\n");      
+  echo("        var elementos = document.getElementsByName('cod_questao[]')\n");      
   echo("        inicio = ((pagAtual-1)*".$questoesPorPag.");\n");
   echo("        final = ((pagAtual)*".$questoesPorPag.");\n");
   echo("        controle = (pagAtual-1)*".$questoesPorPag.";\n");
@@ -256,7 +255,7 @@
   echo("        if(controle < final) {final = inicio + controle;}\n");
   echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
   echo("        for(i = inicio; i < final; i++){\n");
-  echo("          e = document.getElementsByName('chk[]')[i];\n");
+  echo("          e = document.getElementsByName('cod_questao[]')[i];\n");
   echo("          e.checked = CabMarcado;\n");
   echo("        }\n");
   echo("        ControlaSelecao();\n");
@@ -271,7 +270,7 @@
   if($visualizar == 'Q')
     echo("        EscondeLayers();\n");
   echo("        var cabecalho = document.getElementById('checkMenu');\n");
-  echo("        var elementos = document.getElementsByName('chk[]')\n");
+  echo("        var elementos = document.getElementsByName('cod_questao[]')\n");
   echo("        var inicio = ((pagAtual-1)*".$questoesPorPag.");\n");
   echo("        var final = ((pagAtual)*".$questoesPorPag.");\n");
   echo("        controle = (pagAtual-1)*".$questoesPorPag.";\n");
@@ -296,7 +295,7 @@
     if($cod_exercicio == null)
       echo("        document.getElementById('mIncluir_Selec').onclick=function(){ MostraLayer(lay_exercicios, 0); };\n");
     else
-      echo("        document.getElementById('mIncluir_Selec').onclick=function(){ IncluirQuestoesNoExercicio(".$cod_exercicio.", ".$cod_curso."); };\n");
+      echo("        document.getElementById('mIncluir_Selec').onclick=function(){ document.getElementById('incluirQuestoes').submit() };\n");
   }
   else if($visualizar == 'L'){
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
@@ -410,19 +409,6 @@
     echo("          tipo_comp[1].innerHTML=imagem;\n");
     echo("        }\n");
     echo("      }\n\n");
-        
-    echo("    function IncluirQuestoesNoExercicio(cod_exercicio, cod_curso){\n");
-    echo("      var i,questoes,getNumber;\n");
-    echo("      questoes = document.getElementsByName('chk[]');\n");
-    echo("      for (i=0; i < questoes.length; i++){\n");
-    echo("        if (questoes[i].checked){\n");
-    echo("          getNumber = questoes[i].id.split(\"_\");\n");
-    echo("          xajax_AdicionaQuestaoAoExercicioDinamic(cod_curso,cod_exercicio,getNumber[1]);\n");
-    echo("        }\n");
-    echo("      }\n");
-    //?
-    echo("      mostraFeedback(\"Questoes adiocionadas ao exercicio com sucesso.\",true);\n");
-    echo("    }\n\n");
     
     echo("    function entraNoFiltro(id){\n");
     echo("      var tdTopico,tdTipo;\n");
@@ -450,7 +436,7 @@
     echo("      var i,j,questoes,getNumber,arrayExcluidas;\n");
     echo("      j=0;\n");
     echo("      arrayExcluidas = new Array();\n");
-    echo("      questoes = document.getElementsByName('chk[]');\n");
+    echo("      questoes = document.getElementsByName('cod_questao[]');\n");
     echo("      for (i=0; i < questoes.length; i++){\n");
     echo("        getNumber = questoes[i].id.split(\"_\");\n");
     echo("        if (!entraNoFiltro(getNumber[1])){\n");
@@ -480,10 +466,10 @@
   echo("        trQuestao.parentNode.removeChild(trQuestao);\n");
   echo("	  }\n");
   echo("    }\n\n");
-  amp;
+
   echo("    function IntercalaCorLinha(){\n");
   echo("      var checks,i,trQuestao;\n");
-  echo("      checks = document.getElementsByName('chk[]');\n");
+  echo("      checks = document.getElementsByName('cod_questao[]');\n");
   echo("      corLinha = 0;\n");
   echo("      for (i=0; i<checks.length; i++){\n");
   echo("        getNumber=checks[i].id.split('_');\n");
@@ -525,7 +511,7 @@
     
   echo("    function TratarSelecionados(op){\n");
   echo("	  var checks,deleteArray,j;\n");
-  echo("      checks = document.getElementsByName('chk[]');\n");
+  echo("      checks = document.getElementsByName('cod_questao[]');\n");
   echo("	  deletaArray = new Array();\n");
   echo("      j=0;\n");
   echo("      if(Confirma(op)){\n");
@@ -579,6 +565,7 @@
   	echo("          </div>\n");
 
 	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+	echo("					<form id='incluirQuestoes' name='incluirQuestoes' method='POST' action='acoes.php'>");
 	echo("            <tr>\n");
 	echo("              <td valign=\"top\">\n");
 
@@ -710,7 +697,7 @@
           $compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
         if($cod_usuario == $linha_item['cod_usuario'] || $linha_item['tipo_compartilhamento'] == "F"){
           echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\" style=\"".$style."\">\n");
-          echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chk[]\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"ControlaSelecao();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
+          echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"cod_questao[]\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"ControlaSelecao();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
         
           if($visualizar == "Q")
             echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."\">".$titulo."</a></td>\n");
@@ -811,7 +798,7 @@
         echo("          </div>\n");
 
     	/* 23 - Voltar (gen) */
-    	echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    	echo("<input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" />\n");
   }
 
   echo("        </td>\n");
@@ -821,7 +808,43 @@
 
   if($tela_formador && $visualizar == "Q")
   {
-  	/* Nova Questao */
+  	/* Exercicios */
+  	echo("    <div id=\"layer_exercicios\" class=popup>\n");
+  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_exercicios);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("      <div class=int_popup>\n");
+  	echo("        <div class=ulPopup>\n");    
+
+  	echo("					<input type='hidden' name='acao' value='incluirQuestao'/>");
+  	echo("					<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
+  	
+  	/* ? - Escolha um exercicio: */
+  	echo("            Escolha um exercicio:<br />\n");
+  	echo("            <select name='cod_exercicio' class=\"input\" id=\"select_exercicio\">\n");
+  	
+  	if ((count($lista_exercicios)>0)&&($lista_exercicios != null))
+    {
+      foreach ($lista_exercicios as $cod => $linha_item)
+      {
+        if($linha_item['titulo'] == $cod_exercicio)
+          $selected = "selected";
+        else
+          $selected = ""; 
+      
+        echo("              <option name='cod_exercicio' value=\"".$linha_item['cod_exercicio']."\" ".$selected.">".$linha_item['titulo']."</option>\n");
+      }
+    }  
+  	  
+  	echo("            </select><br /><br />\n");
+  	/* 18 - Ok (gen) */
+  	echo("            <input type=\"submit\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  	/* 2 - Cancelar (gen) */
+  	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  	echo("					</form>");
+  	echo("        </div>\n");
+  	echo("      </div>\n");
+  	echo("    </div>\n\n");
+  	
+  	  	/* Nova Questao */
   	echo("    <div id=\"layer_nova_questao\" class=popup>\n");
   	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_questao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
@@ -849,36 +872,6 @@
   	echo("      </div>\n");
   	echo("    </div>\n\n");
   	
-  	/* Exercicios */
-  	echo("    <div id=\"layer_exercicios\" class=popup>\n");
-  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_exercicios);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  	echo("      <div class=int_popup>\n");
-  	echo("        <div class=ulPopup>\n");    
-  	/* ? - Escolha um exercicio: */
-  	echo("            Escolha um exercicio:<br />\n");
-  	echo("            <select class=\"input\" id=\"select_exercicio\">\n");
-  	
-  	if ((count($lista_exercicios)>0)&&($lista_exercicios != null))
-    {
-      foreach ($lista_exercicios as $cod => $linha_item)
-      {
-        if($linha_item['titulo'] == $cod_exercicio)
-          $selected = "selected";
-        else
-          $selected = ""; 
-      
-        echo("              <option value=\"".$linha_item['cod_exercicio']."\" ".$selected.">".$linha_item['titulo']."</option>\n");
-      }
-    }  
-  	  
-  	echo("            </select><br /><br />\n");
-  	/* 18 - Ok (gen) */
-  	echo("            <input type=\"button\" class=\"input\" onClick=\"IncluirQuestoesNoExercicio(document.getElementById('select_exercicio').value, '".$cod_curso."');EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  	/* 2 - Cancelar (gen) */
-  	echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_exercicios);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-  	echo("        </div>\n");
-  	echo("      </div>\n");
-  	echo("    </div>\n\n");
   	
     /* Mudar Compartilhamento */
   	echo("    <div class=popup id=\"comp\">\n");

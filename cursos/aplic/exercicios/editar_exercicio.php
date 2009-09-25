@@ -85,6 +85,7 @@
   $feedbackObject->addAction("cancelar", 'Aplicacao cancelada com sucesso.', 0);
   $feedbackObject->addAction("aplicar", 'Exercicio aplicado com sucesso.', 0);
   $feedbackObject->addAction("reaplicar", 'Exercicio reaplicado com sucesso.', 0);
+  $feedbackObject->addAction("incluirQuestao", 'Questoes incluidas com sucesso', 0);
   
   
   $exercicio = RetornaExercicio($sock,$cod_exercicio);

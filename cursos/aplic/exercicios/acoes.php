@@ -83,6 +83,16 @@
     header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&tp_questao=".$tp_questao."&atualizacao=".$atualizacao);
   }
   
+  if ($acao=="incluirQuestao"){
+  	
+  	if ($cod_questao){
+  		AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao);
+  	}
+  	
+  	header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=".$acao."&atualizacao=true");
+  	
+  }
+  
   /* ação = Criar Novo Exercicio - origem = exercicos.php */
   if ($acao=="criarExercicio")
   {
