@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-  Arquivo : cursos/aplic/exercicios/historico_questao.php
+  Arquivo : cursos/aplic/exercicios/historico_exercicio.php
 
   TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½cia
   Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
   /*==========================================================
-  ARQUIVO : cursos/aplic/exercicios/historico_questao.php
+  ARQUIVO : cursos/aplic/exercicios/historico_exercicio.php
   ========================================================== */
 
   $bibliotecas="../bibliotecas/";
@@ -54,7 +54,6 @@
   Desconectar($sock);
 
   $cod_ferramenta = 23;
-  
   include("../topo_tela.php");
   
   echo("    <script type=\"text/javascript\">\n");
@@ -70,7 +69,7 @@
   /* PÃ¡gina Principal */
 
   // ? - Exercicios - Editar Questao
-  $cabecalho = ("<br /><br /><h4>Exercicios - Editar Questao");
+  $cabecalho = ("<br /><br /><h4>Exercicios - Editar Exercício");
 
   /* ? - Historico */
   $cabecalho.= (" - Historico</h4>\n");
@@ -90,8 +89,8 @@
   echo("        <td colspan=3>\n");    
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
-  echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
-  echo("              <td colspan=2>".RetornaTituloQuestao($sock,$cod_questao)."</td>\n");
+  //echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
+  //echo("              <td colspan=2>".RetornaTituloQuestao($sock,$cod_questao)."</td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
   echo("        </td>\n");
@@ -110,7 +109,7 @@
   echo("              <td><b>Usuario</b></td>\n");
   echo("            </tr>\n");
 
-  $res = RetornaResHistoricoDaQuestao($sock, $cod_questao);
+  $res = RetornaResHistoricoDoExercicio($sock, $cod_exercicio);
   $num_linhas = RetornaNumLinhas($res);
 
     while ($num_linhas>0)
@@ -156,5 +155,4 @@
   echo("  </body>\n");
   echo("</html>\n");
   Desconectar($sock);
-
 ?>

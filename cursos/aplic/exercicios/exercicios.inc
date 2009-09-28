@@ -425,6 +425,22 @@ function RetornaResHistoricoDaQuestao ($sock, $cod_questao)
   return($res);
 }
 
+/* *********************************************************************
+   RetornaResHistoricoDaQuestao - Retorna todas as ocorr�ncias do historico de uma questao
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+   Saida: array []['cod_exercicio']
+                []['cod_usuario']
+                []['data']
+                []['acao']
+*/
+function RetornaResHistoricoDoExercicio ($sock, $cod_exerc)
+{
+  $consulta="select * from Exercicios_modelo_historico where cod_exercicio=".VerificaNumeroQuery($cod_exerc)." order by data desc,acao desc";
+  $res=Enviar($sock, $consulta);
+  return($res);
+}
+
 /**********************************************************************
    RetornaQuestoesExercicio - Retorna as questoes de um exercicio
    Entrada: $sock - BASE Interna
