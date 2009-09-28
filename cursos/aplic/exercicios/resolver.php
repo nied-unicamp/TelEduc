@@ -71,6 +71,8 @@ $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
 $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
 $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
 
+/* Guarda o booleano com a disponibilidade do exercicio baseado na data de submissao */
+$disponivel = (time() < $aplicado['dt_limite_submissao']);
 
 /*********************************************************/
 /* in�io - JavaScript */
@@ -571,7 +573,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		{
 			/* Desabilita a radiobox, se ja foi entregue o ex. */
 			$estado = "";
-			if ($resolucao['submetida'] == 'S')
+			if (!($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']))
 			$estado = "disabled";
 
 			echo("                        <dt class=\"portletHeader\">Alternativas</dt>\n");
@@ -587,7 +589,10 @@ if ((count($questoes)>0)&&($questoes != null))
 				echo("                            <br />\n");
 			}
 			echo("                          </dd>\n");
-			echo("													<dd class='portletFooter'><span class='link' onClick='SalvaRespostaQuestaoObj(".$linha_item['cod_questao'].");'>Salvar Resposta</dd>");
+			
+			if ($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+				echo("													<dd class='portletFooter'><span class='link' onClick='SalvaRespostaQuestaoObj(".$linha_item['cod_questao'].");'>Salvar Resposta</dd>");
+			}
 		}
 		else if($linha_item['tp_questao'] == 'D')
 		{
@@ -605,8 +610,9 @@ if ((count($questoes)>0)&&($questoes != null))
 				echo("                          <dd class=\"portletItem\">\n");
 				echo($comentario."</dd>\n");
 			}
-			if ($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario'])
-			echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+			if ($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+			}
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");
@@ -617,7 +623,7 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 
 echo("                </table>\n");
-if($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+if($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 	/* ? - Entregar */
 	echo("								<form method='POST' action='acoes.php' onsubmit=return(confirm(\"Deseja \"))>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
@@ -627,7 +633,8 @@ if($resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 	echo("								</form>");
 }
 else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
-{	if($tela_formador)
+{	
+	if($tela_formador)
 	{
 		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");
 	}
