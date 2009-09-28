@@ -1849,10 +1849,8 @@ function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
     $objResponse = new xajaxResponse('ISO-8859-1');
  
     $sock=Conectar($cod_curso);
- 
     $query = "update Exercicios_questao set status = '".$status."' where cod_questao = ".$cod_questao;
     Enviar($sock,$query);
- 
     Desconectar($sock);
  
     return $objResponse->getXML();
@@ -2134,6 +2132,8 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     
     AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta);
     
+    /* ? - Respondida */
+    $objResponse->addAssign('tdStatus_'.$cod_questao, "innerHTML", "Respondida");
     $objResponse->addScript("mostraFeedback(\"".$texto."\",true);");
     
     return $objResponse->getXML();

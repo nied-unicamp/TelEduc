@@ -517,7 +517,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                    <td>".$valor."</td>\n");
 		echo("                    <td>".$tipo."</td>\n");
 		echo("                    <td>".$topico."</td>\n");
-		echo("                    <td>".$status."</td>\n");
+		echo("                    <td id='tdStatus_".$linha_item['cod_questao']."'>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
 		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
