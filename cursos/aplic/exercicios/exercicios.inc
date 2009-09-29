@@ -2078,11 +2078,12 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
 /********************************************************************************************************
   CancelaAplicacaoExercicioDinamic - Cancela aplicacao do exercicio
   Entrada: $cod_curso - codigo do curso
+  		   $cod_usuario - codigo do usuario
            $cod_exercicio - codigo do exercicio
            $flag - indica se é um cancelamento definitivo ou apenas uma reaplicacao do exercicio
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function CancelaAplicacaoExercicioDinamic($cod_curso,$cod_exercicio,$flag)
+function CancelaAplicacaoExercicioDinamic($cod_curso,$cod_usuario,$cod_exercicio,$flag)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -2103,6 +2104,11 @@ function CancelaAplicacaoExercicioDinamic($cod_curso,$cod_exercicio,$flag)
     
     $query = "update Exercicios_modelo set situacao = 'C' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
     Enviar($sock,$query);
+    
+    $data = time();
+    
+    $consulta="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'E')";
+	$res=Enviar($sock, $consulta);
     
     Desconectar($sock);
     
@@ -2332,6 +2338,6 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
   	if($linha)
   		$comentario = $linha[0];
   	else
-  		$comentario = "Nao ha ocmentarios disponiveis";	 
+  		$comentario = "Nao ha comentarios disponiveis";	 
 	return $comentario;
 }

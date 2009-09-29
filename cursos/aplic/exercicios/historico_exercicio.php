@@ -124,18 +124,21 @@
                   /* 40 - Criaï¿½o */
         case ('C'): $acao=RetornaFraseDaLista($lista_frases,162); break;
                   /* 39 - Ediï¿½o Cancelada */
-        case ('D'): $acao=RetornaFraseDaLista($lista_frases,163); break;
+        //case ('D'): $acao=RetornaFraseDaLista($lista_frases,163); break;
                   /* 43 - Em Ediï¿½o */
         //case ('E'): $acao=RetornaFraseDaLista($lista_frases,43); break;
-        case ('E'): $acao="Em edição"; break;
                   /* 37 - Ediï¿½o Finalizada */
         //case ('F'): $acao=RetornaFraseDaLista($lista_frases,37); break;
-        case ('F'): $acao="Edição finalizada"; break;
+        //case ('F'): $acao="Edição finalizada"; break;// inutil?
                   /* 42 - Movida para histÃ³rico */
         case ('H'): $acao=RetornaFraseDaLista($lista_frases,164); break;
                   /* 41 - Ativada */
         //case ('A'): $acao=RetornaFraseDaLista($lista_frases,41); break;
-        case ('A'): $acao="Ativada"; break;
+        case ('A'): $acao="Ativada"; break; // inutil?
+        		  /* ? -  Aplicada */
+        case ('P'): $acao="Aplicada"; break;
+        		  /* ? -  Cancelada aplicação */
+        case ('E'): $acao="Cancelada aplicação"; break;
                   /* 38 - Desconhecida */
         default: $acao=RetornaFraseDaLista($lista_frases,38); break;
       }

@@ -311,7 +311,7 @@
     echo("      for (i=0; i < cod_itens.length; i++){\n");
     echo("        if (cod_itens[i].checked){\n");
     echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
-    echo("          xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",getNumber[1]);\n");
+    echo("          xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",getNumber[1]);\n");
     echo("          AtualizaCampos(getNumber[1],'".UnixTime2Data(time())."','-','-','Em criacao');\n");
     echo("        }\n");
     echo("      }\n");
