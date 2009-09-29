@@ -2056,20 +2056,24 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
       $query="insert into Avaliacao (cod_avaliacao, cod_atividade, cod_usuario, ferramenta, tipo, valor, status, data, data_inicio, data_termino, inicio_edicao) values (".$cod_avaliacao.", ".$cod_exercicio.", ".$cod_usuario.", 'E', '".$tp_aplicacao."', ".$valor.", 'F', ".$data.", '".$unixTimeDisp."', '".$unixTimeEntrega."', '0')";
       $res=Enviar($sock, $query);
     }
- 
+    
+ 	$data = time();
     $query = "insert into Exercicios_aplicado (cod_exercicio,dt_disponibilizacao,dt_limite_submissao,tp_aplicacao,disp_gabarito,avaliacao)";
     $query.= "values(".VerificaNumeroQuery($cod_exercicio).",".$unixTimeDisp.",".$unixTimeEntrega.",'".$tp_aplicacao."','".$disp_gabarito."','".$cod_avaliacao."')";
     Enviar($sock,$query);
     
     $query = "update Exercicios_modelo set situacao = 'A' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
     Enviar($sock,$query);
-    
+    $query="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P')";
+  	Enviar($sock, $query);
+  
     Desconectar($sock);
     
     $objResponse->addScript("ExercicioAplicado('".$avaliacao."',".$cod_avaliacao.");");
     
     return $objResponse->getXML();
 }
+
 
 /********************************************************************************************************
   CancelaAplicacaoExercicioDinamic - Cancela aplicacao do exercicio
