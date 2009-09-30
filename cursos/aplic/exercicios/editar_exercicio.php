@@ -1078,7 +1078,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
   echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
   if($exercicio['situacao'] != "C")
-    echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",0);\n");
+    echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
   echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
   echo("      }\n\n");
   echo("    }\n\n");
@@ -1124,7 +1124,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
     $apagar="<span onclick=\"ApagarExercicio();\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span>";
     
     $reaplicar="<span onclick=\"MostraLayer(lay_aplicar,140,event);\">Reaplicar</span>";
-    $cancelar="<span onclick=\"xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",1);\">Cancelar aplicacao</span>";
+    $cancelar="<span onclick=\"xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",1);\">Cancelar aplicacao</span>";
 
     /* ?? - Compartilhado com Formadores */
     if($exercicio['tipo_compartilhamento'] == "F")

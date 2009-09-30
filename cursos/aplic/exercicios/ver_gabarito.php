@@ -529,7 +529,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
-		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
+		echo("                    <td style=\"width:100px\" colspan=\"5\" align=\"left\">\n");
 		echo("                      <dl class=\"portlet\">\n");
 		echo("                        <dt class=\"portletHeader\">Enunciado</dt>\n");
 		echo("                          <dd class=\"portletItem\">".$linha_item['enunciado']."</dd>\n");

@@ -121,20 +121,8 @@
 
       switch ($linha['acao']){
 
-                  /* 40 - Criaï¿½o */
+                  /* 40 - Criação */
         case ('C'): $acao=RetornaFraseDaLista($lista_frases,162); break;
-                  /* 39 - Ediï¿½o Cancelada */
-        //case ('D'): $acao=RetornaFraseDaLista($lista_frases,163); break;
-                  /* 43 - Em Ediï¿½o */
-        //case ('E'): $acao=RetornaFraseDaLista($lista_frases,43); break;
-                  /* 37 - Ediï¿½o Finalizada */
-        //case ('F'): $acao=RetornaFraseDaLista($lista_frases,37); break;
-        //case ('F'): $acao="Edição finalizada"; break;// inutil?
-                  /* 42 - Movida para histÃ³rico */
-        case ('H'): $acao=RetornaFraseDaLista($lista_frases,164); break;
-                  /* 41 - Ativada */
-        //case ('A'): $acao=RetornaFraseDaLista($lista_frases,41); break;
-        case ('A'): $acao="Ativada"; break; // inutil?
         		  /* ? -  Aplicada */
         case ('P'): $acao="Aplicada"; break;
         		  /* ? -  Cancelada aplicação */
