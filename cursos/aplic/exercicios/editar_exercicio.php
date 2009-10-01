@@ -1392,7 +1392,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	  echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	  echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
 	  // ?? - 
-	  echo("                          <span> - Bla bla bla</span>\n");
+	  echo("                          <span> - </span>\n");
 	  echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
 	  echo("                          &nbsp;&nbsp;\n");
@@ -1467,7 +1467,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   /* ? - Disponibilizar gabarito com a correcao: */
   echo("          Disponibilizar gabarito com a correcao: <br />");
   echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabaritos\" value=\"S\">Sim\n");
-  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabariton\" value=\"N\">Não\n");
+  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabariton\" value=\"N\">Nï¿½o\n");
   echo("		  <br /><br />\n");
   /* ? - Tipo de aplicacao: */
   echo("          Tipo de aplicacao: <br />");
