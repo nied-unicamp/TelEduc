@@ -1612,7 +1612,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
-	echo("                          <span> - Bla bla bla</span>\n");
+	echo("                          <span> - Adicionar Descricao</span>\n");
 	echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
 	echo("                          &nbsp;&nbsp;\n");
