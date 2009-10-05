@@ -825,7 +825,7 @@
     {
       foreach ($lista_exercicios as $cod => $linha_item)
       {
-        if($linha_item['titulo'] == $cod_exercicio)
+        if($linha_item['cod_exercicio'] == $cod_exercicio)
           $selected = "selected";
         else
           $selected = ""; 
