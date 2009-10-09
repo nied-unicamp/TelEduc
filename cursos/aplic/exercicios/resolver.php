@@ -192,6 +192,16 @@ if ($tela_formador){
 	echo("        }\n");
 	echo("      }\n\n");
 }
+
+echo("    function ConfirmaEntrega()\n");
+echo("    {\n");
+echo("      if (confirm(\"Você realmente deseja entregar? Questões não salvas não serão enviadas.\")){
+							return true;
+					  } else{ 
+					  	return false;
+						}");
+echo("    }\n");
+
 echo("    function AbreResposta(cod_questao)\n");
 echo("    {\n");
 echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"\";\n");
@@ -625,7 +635,7 @@ if ((count($questoes)>0)&&($questoes != null))
 echo("                </table>\n");
 if($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
 	/* ? - Entregar */
-	echo("								<form method='POST' action='acoes.php' onsubmit=return(confirm(\"Deseja \"))>");
+	echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
