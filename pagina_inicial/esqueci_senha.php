@@ -71,27 +71,28 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  echo("      function LoginValido()\n");
+   echo("      function EmailValido()\n");
   echo("      {\n");
-  echo("        log = document.frmSenha.login.value;\n");
+  echo("        log = document.frmSenha.email.value;\n");
   echo("        while (log.search(\" \") != -1)\n");
   echo("        {\n");
   echo("          log = log.replace(/ /, \"\");\n");
   echo("        }\n");
   echo("        if (log == '')\n");
   echo("        {\n");
-  /* 26 - O campo de login n�o pode estar em branco! */
-  echo("          alert('".RetornaFraseDaLista($lista_frases_esqueci, 26)."');\n");
+  /* 69 - O campo de e-mail n�o pode estar em branco! */
+  echo("          alert('".RetornaFraseDaLista($lista_frases_esqueci, 69)."');\n");
   echo("          return(false);\n");
   echo("        }\n");
   echo("        else\n");
   echo("          return(true);\n");
-  echo("      }\n\n");
+  echo("        }\n\n");
+  
 
   echo("      function confere()\n");
   echo("      {\n");
-  echo("        if(LoginValido())\n");
-  echo("          xajax_EnviarSenhaLoginUsuarioDinamic(document.frmSenha.login.value,1);");
+  echo("        if(EmailValido())\n");
+  echo("          xajax_EnviarSenhaLoginUsuarioDinamic(document.frmSenha.email.value,2);");
   echo("        return false;");
   echo("      }\n\n");
 
@@ -100,9 +101,9 @@
   echo("        if(flag == '1')\n");
   echo("        {\n");
   /* 28 - Login inv�lido! */
-  echo("          alert('".RetornaFraseDaLista($lista_frases_esqueci, 28)."');\n");
-  echo("          document.frmSenha.login.value='';\n");
-  echo("          document.frmSenha.login.focus();\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases_esqueci, 72)."');\n");
+  echo("          document.frmSenha.email.value='';\n");
+  echo("          document.frmSenha.email.focus();\n");
   echo("        }\n");
   echo("        else");
   echo("        {\n");
@@ -148,10 +149,10 @@
   echo("                        <tr>\n");
   echo("                          <td style=\"border:none; text-align:right;\">\n");
   /* 27 - login: */
-  echo("                          ".RetornaFraseDaLista($lista_frases_esqueci,27)."\n");
+  echo("                          ".RetornaFraseDaLista($lista_frases_esqueci,71)."\n");
   echo("                          </td>\n");
   echo("                          <td style=\"border:none\">\n");
-  echo("                            <input class=\"input\" type=\"text\" name=\"login\" />\n");
+  echo("                            <input class=\"input\" type=\"text\" name=\"email\" />\n");
   echo("                          </td>\n");
   echo("                        </tr>\n");
   echo("                        <tr>\n");
