@@ -274,6 +274,17 @@ echo("				function SalvaRespostaQuestaoObj(cod_questao){
 								SalvaRespostaQuestao(cod_questao, resposta, 'O');
 }");
 
+echo("				function SalvaTodasRespostas(){");
+foreach ($questoes as $questao){
+	if ($questao['tp_questao'] == "D"){
+		echo("SalvaRespostaQuestaoDiss(".$questao['cod_questao'].");");
+	} elseif ($questao['tp_questao'] == "O"){
+		echo("SalvaRespostaQuestaoObj(".$questao['cod_questao'].");");
+	}
+}
+echo("			mostraFeedback(\"Todas as respostas foram salvas com sucesso.\", \"true\");");
+echo("}");
+
 echo("    function CancelaTodos(){\n");
 echo("      EscondeLayers();\n");
 echo("      cancelarTodos=1;\n");
@@ -639,7 +650,7 @@ if($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-	echo("                <div align='right'><input type='submit' class='input' value='Entregar'></div>\n");
+	echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='Entregar'></div>\n");
 	echo("								</form>");
 }
 else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
