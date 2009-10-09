@@ -303,7 +303,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 
   echo("    function LimparTexto(id)\n");
   echo("    {\n");
-  echo("      if(confirm(\"confirm\"))\n");
+  echo("      if(confirm(\"Você deseja limpar o Texto? O conteúdo será perdido.\"))\n");
   echo("      {\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('text_'+id).innerHTML='';\n");
@@ -566,7 +566,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      arrayIdArq = new Array();\n");
   echo("      j = 0;\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm('Confirmacao')){\n");
+  echo("      if (confirm(\"Você realmente deseja apagar o arquivo?\")){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
@@ -595,7 +595,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   /* 64 - VocÃª tem certeza de que deseja descompactar este arquivo? */
   /* 65 - (o arquivo ZIP serÃ¡ apagado)*/
   /* 66 - importante: nÃ£o Ã© possÃ­vel a descompactaÃ§Ã£o de arquivos contendo pastas com espaÃ§os no nome.*/
-  echo("          if (confirm('confirmacao')){\n");
+  echo("          if (confirm(\"Você tem certeza de que deseja descompactar este arquivo?\")){\n");
   //echo("            xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
   echo("            xajax_DescompactarArquivoDinamic(pastaRaiz+subpasta,arqZip);\n");
   echo("            flag = 1;\n");
@@ -612,7 +612,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      arrayArq = new Array();\n");
   echo("      checks = document.getElementsByName('chkArq');\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm('Confirmacao')){\n");
+  echo("      if (confirm(\"Você realmente deseja ocultar o arquivo? Ele não será visível para os alunos\")){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
