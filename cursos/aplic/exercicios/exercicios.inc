@@ -1629,6 +1629,7 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
   return $objResponse->getXML();
+  
 }
 
 /***********************************************************************

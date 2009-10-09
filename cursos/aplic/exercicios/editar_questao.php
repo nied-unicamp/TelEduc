@@ -147,6 +147,8 @@
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var tableDnD;\n");
   echo("    var cod_comp;\n");
+    echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
+  echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var js_comp = new Array();\n");
   echo("    var cancelarTodos = 0;\n\n");
 
@@ -1061,20 +1063,86 @@
   echo("    }\n\n");
 
   echo("    function ApagarArq(){\n");
+  echo("      var i,j,checks,getNumber,nomeArq,arrayIdArq,caminho;\n");
   echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      arrayIdArq = new Array();\n");
+  echo("      j = 0;\n");
+  echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
   echo("      if (confirm('Confirmacao')){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
   echo("            getNumber=checks[i].id.split(\"_\");\n");
-  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
-  echo("            xajax_ExcluiArquivoDinamic(getNumber[1], nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
-  echo("            js_conta_arq--;\n");
+  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
+  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,\"texto\", ".$cod_curso.",".$cod_usuario.",".$cod_questao.");\n");
+  echo("            arrayIdArq[j++] = getNumber[1];\n");
   echo("          }\n");
   echo("        }\n");
-  echo("        LimpaBarraArq();\n");
-  echo("        VerificaChkBoxArq(0);\n");
+  echo("        DeletaLinhaArq(arrayIdArq,j);\n");
+  echo("        VerificaChkBoxArq();\n");
   echo("      }\n");
+  echo("    }\n\n");
+  
+  echo("    function VerificaChkBoxArq(){\n");
+  echo("      var i,getNumber,nomeArq;\n");
+  echo("      var j=0;\n");
+  echo("      var flag=0;\n");
+  echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  echo("      var Cabecalho = document.getElementById('checkMenuArq');\n");
+  echo("      EscondeLayers();\n");
+  echo("      for (i=0; i < cod_itens.length; i++){\n");
+  echo("        if (cod_itens[i].checked){\n");
+  echo("          j++;\n");
+  echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
+  echo("          nomeArq = document.getElementById('nomeArq_'+getNumber[1]).innerHTML;\n");
+  echo("          if(RetornaTipoArq(nomeArq) != 'zip')\n");
+  echo("            flag = 1;\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("      if (j == (cod_itens.length) && i != 0) Cabecalho.checked=true;\n");
+  echo("      else Cabecalho.checked=false;\n");
+  echo("      if(j > 0){\n");
+  echo("        document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("        document.getElementById('mArq_apagar').onclick=function(){ ApagarArq(); };\n");
+  echo("        document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("        document.getElementById('mArq_ocultar').onclick=function(){ Ocultar(); };\n");
+  echo("      }else{\n");
+  echo("        document.getElementById('mArq_apagar').className=\"menuUp\";\n");
+  echo("        document.getElementById('mArq_apagar').onclick=function(){ };\n");
+  echo("        document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("        document.getElementById('mArq_ocultar').onclick=function(){ };\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+  
+    echo("    function InsereDiretorioVazio(){\n");
+  echo("	  var trRef,tr,td;");
+  echo("	  tr = document.createElement(\"tr\");\n");
+  echo("      tr.setAttribute(\"id\",\"diretorioVazio\");\n");
+  echo("	  td = document.createElement(\"td\");\n");
+  echo("	  td.colSpan = \"6\";\n");
+  //?
+  echo("	  td.appendChild(document.createTextNode('Diretorio esta vazio.'));\n");
+  echo("	  tr.appendChild(td);\n");
+  echo("      trRef = document.getElementById(\"optArq\");\n");
+  echo("	  trRef.parentNode.insertBefore(tr,trRef);\n");
+  echo("    }\n\n");
+  
+  echo("    function DeletaLinhaArq(arrayIdArq,n){\n");
+  echo("      var i,tr;\n");
+  echo("      for (i=0; i < n; i++){\n");
+  echo("        tr = document.getElementById('arq_'+arrayIdArq[i]);\n");
+  echo("        tr.parentNode.removeChild(tr);\n");
+  echo("        contaArq--;\n");
+  echo("      }\n");
+  echo("    }\n\n");
+  
+    echo("    function criaTrArq(id){\n");
+  echo("	  var tr;\n");
+  echo("	  tr = document.createElement(\"tr\");\n");
+  echo("	  tr.setAttribute(\"id\",\"arq_\"+id);\n");
+  echo("	  tr.setAttribute(\"name\",pastaAtual);\n");
+  echo("      return tr;\n");
   echo("    }\n\n");
   
   echo("    function RetornaSrcImg(nomeArq)\n");
