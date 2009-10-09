@@ -285,11 +285,11 @@ echo("    }\n");
 echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
 
 echo("  if(flag) {\n");
-echo("  if(confirm('certeza?'))");
+echo("  if(confirm('Você deseja entregar a correção?'))");
 echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 echo("	}\n");
 echo("  else\n");
-echo("     mostraFeedback('erro', false)\n");
+echo("     mostraFeedback('Não foi possível entegar a correção. Tente novamente mais tarde.', false)\n");
 echo("	}\n");
 
 
@@ -387,10 +387,10 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 {
 	echo("                  <tr class=\"head\">\n");
 	/* ? - Arquivos */
-	echo("                    <td colspan=\"6\">Arquivos</td>\n");
+	echo("                    <td colspan=\"8\">Arquivos</td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
-	echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
+	echo("                    <td colspan=\"8\" class=\"alLeft\">\n");
 
 	foreach ($lista_arq as $cod => $linha_arq)
 	{
@@ -444,6 +444,7 @@ echo("                    <td width=\"10%\">Valor da Questao</td>\n");
 echo("                    <td width=\"10%\">Status</td>\n");
 echo("                  </tr>\n");
 
+
 if ((count($questoes)>0)&&($questoes != null))
 {
 	foreach ($questoes as $cod => $linha_item)
@@ -480,12 +481,21 @@ if ((count($questoes)>0)&&($questoes != null))
 		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		if($nota != $valor && $status != "corrigida")
+		
+		
+		/* Mostra os icones de certo ou errado de acordo com a avaliacao */
+		$acertou = ($nota == $valor);
+		$corrigida = ($status == "corrigida");
+		
+		if(!$corrigida){
 			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		else if($nota != $valor && $status == "corrigida")
+		} else if(!$acertou && $corrigida){
 			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."".$icone_errado."</span></td>\n");
-		else if($nota == $valor && $status == "corrigida")
+		} else if($acertou && $corrigida){
 			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."".$icone_correto."</span></td>\n");
+		} 
+		
+		
 		if($linha_item['tp_questao'] == 'O') {
 			echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$nota."</td>\n");
 		}
