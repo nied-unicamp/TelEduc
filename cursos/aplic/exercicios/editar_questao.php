@@ -345,7 +345,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 
   echo("    function LimparTexto(id)\n");
   echo("    {\n");
-  echo("      if(confirm(\"confirm\"))\n");
+  echo("      if(confirm(\"Você deseja limpar o Texto? O conteúdo será perdido.\"))\n");
   echo("      {\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('text_'+id).innerHTML='';\n");
@@ -360,7 +360,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   
   echo("    function LimparGabarito(id)\n");
   echo("    {\n");
-  echo("      if(confirm(\"confirm\"))\n");
+  echo("      if(confirm(\"Você realmente deseja limpar o gabarito?\"))\n");
   echo("      {\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('texto_'+id).innerHTML='';\n");
