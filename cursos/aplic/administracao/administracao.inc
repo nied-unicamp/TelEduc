@@ -634,6 +634,120 @@ function RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ord
   return $saida;
 }
 
+function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$acao,$ativado,$desativado){
+	        $objResponse = new xajaxResponse('ISO-8859-1');
+	        
+	        /*busca no banco os registros a serem mostrados*/
+	        $sock=Conectar("");
+	        $lista_usuarios = RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ordem);
+	        $num=count($lista_usuarios);
+
+	        
+	        /* começa a preparar ate onde pegaremos, ou seja, se for a ultima pagina vai ate o fim, caso contrario
+            * pega vai ate um multiplo de 10
+            */
+	             	
+	        $limite=((int)$pag_atual*10);
+	        $i=(((int)$pag_atual-1)*10)+1;
+	       	        
+	        if($i==0)
+	        	$i=1;
+	        	
+	        if(($num-$limite)< 0)
+	        	$limite=$num;
+	        	
+	        /*apaga todas as mensagens anteriores.Teremos 10 mensagens ou até terminar caso seja a ultima pagina*/
+	       	$objResponse->addScriptCall("ApagaPagina",'T');	
+	       	
+	       	/*colocamos na página o conteudo da respectiva pagina*/
+	       	$control=1;
+	        foreach($lista_usuarios as $cod_usuario_l => $linha){
+	        	if($control>=$i && $control<=$limite){
+	        			if($acao=='R'){
+	        				if($linha['portfolio'] == "ativado")
+	        					$port=$ativado;
+	        				else
+	        					$port=$desativado;
+	        			}		 	
+	        			$objResponse->addScriptCall("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$acao,$port);
+	        		}
+	      	    $control++;
+        	   
+	        }
+	        /*muda a variavel atual via javascript, para tirar o evento onclick da pagina que 
+             esta sendo mostrada*/
+	        
+	        $objResponse->addScriptCall("MudaAtual",$pag_atual);
+	         
+	        $objResponse->addScriptCall("Paginacao",$aux);
+	        $objResponse->addScriptCall("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
+            return $objResponse->getXML();
+	        
+}
+/*funcão responsavel por criar a paginação na primeira vez*/
+
+function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
+	    $objResponse = new xajaxResponse('ISO-8859-1');
+		$sock=Conectar("");
+		$lista_usuarios=RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ordem);
+		$num=count($lista_usuarios);
+		
+		/*numero de paginas inteiras a ser mostrada*/
+		$numpagInt=(ceil($num/10));
+	    
+		
+//		/*caso exista mais que 5 páginas mostramos a primeira paginação com 5*/
+//		/*A variavel que controla o proximo é liberada, assim a navegação ainda existe para frente*/	
+		$prox="N";		
+		if($numpagInt>5){
+			$numpagInt=5;
+			$prox="L";
+		}		
+	    $objResponse->addScriptCall("Inicial",(int)$numpagInt,$prox);
+		
+		return $objResponse->getXML();
+		
+		
+		
+}
+
+/*funcão que controla a mudança no intervalo de paginacao*/
+
+function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
+		$objResponse = new xajaxResponse('ISO-8859-1');
+		$sock=Conectar("");
+		$lista_usuarios=RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ordem);
+		$num=count($lista_usuarios);
+		if($flag=='L'){
+			 $intervalo=(ceil(($num-50)/10))+1;
+			 $status='BF';
+		}
+		if($flag=='P'){
+		     if($num-(($intervalo*10)+50)<=0)
+			 	$status='BF';
+			 else
+			 	$status='LF';
+			 $intervalo++;	
+	   	}
+		if($flag=='A'){
+			$intervalo--;
+			if($intervalo==1)
+				$status='BV';
+			else
+				$status='LV';	
+		}
+		if($flag=='PR'){
+			$intervalo=1;
+			$status='BV';
+		}
+		$objResponse->addScriptCall("MudaIntervalo",$intervalo);
+		$objResponse->addScriptCall("ApagaPagina",'N');
+		$objResponse->addScriptCall("Paginacao",$status);
+        return $objResponse->getXML();
+}
+
+
+
 /* *********************************************************************
    MudarTipoUsuarioComMensagem - Altera o tipo de usuï¿½rio e envia um
       e-mail notificando a alteraï¿½ï¿½o.
