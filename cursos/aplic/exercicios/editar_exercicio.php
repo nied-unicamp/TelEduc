@@ -81,12 +81,12 @@
   
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
+
   //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("cancelar", 'Aplicacao cancelada com sucesso.', 0);
   $feedbackObject->addAction("aplicar", 'Exercicio aplicado com sucesso.', 0);
   $feedbackObject->addAction("reaplicar", 'Exercicio reaplicado com sucesso.', 0);
   $feedbackObject->addAction("incluirQuestao", 'Questoes incluidas com sucesso', 0);
-  
   
   $exercicio = RetornaExercicio($sock,$cod_exercicio);
   $lista_questoes = RetornaQuestoesExercicio($sock,$cod_exercicio);
@@ -169,7 +169,7 @@
   echo("      cod_comp = getLayer(\"comp\");\n");
   echo("      lay_atribuir = getLayer(\"layer_atribuir\");\n");
   echo("      lay_aplicar = getLayer(\"layer_aplicar\");\n");
-$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      startList();\n");
   echo("    }\n\n");
 
@@ -303,7 +303,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 
   echo("    function LimparTexto(id)\n");
   echo("    {\n");
-  echo("      if(confirm(\"Você deseja limpar o Texto? O conteúdo será perdido.\"))\n");
+  echo("      if(confirm(\"Vocï¿½ deseja limpar o Texto? O conteï¿½do serï¿½ perdido.\"))\n");
   echo("      {\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('text_'+id).innerHTML='';\n");
@@ -566,7 +566,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      arrayIdArq = new Array();\n");
   echo("      j = 0;\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm(\"Você realmente deseja apagar o arquivo?\")){\n");
+  echo("      if (confirm(\"Vocï¿½ realmente deseja apagar o arquivo?\")){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
@@ -595,7 +595,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   /* 64 - VocÃª tem certeza de que deseja descompactar este arquivo? */
   /* 65 - (o arquivo ZIP serÃ¡ apagado)*/
   /* 66 - importante: nÃ£o Ã© possÃ­vel a descompactaÃ§Ã£o de arquivos contendo pastas com espaÃ§os no nome.*/
-  echo("          if (confirm(\"Você tem certeza de que deseja descompactar este arquivo?\")){\n");
+  echo("          if (confirm(\"Vocï¿½ tem certeza de que deseja descompactar este arquivo?\")){\n");
   //echo("            xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
   echo("            xajax_DescompactarArquivoDinamic(pastaRaiz+subpasta,arqZip);\n");
   echo("            flag = 1;\n");
@@ -612,7 +612,7 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      arrayArq = new Array();\n");
   echo("      checks = document.getElementsByName('chkArq');\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm(\"Você realmente deseja ocultar o arquivo? Ele não será visível para os alunos\")){\n");
+  echo("      if (confirm(\"Vocï¿½ realmente deseja ocultar o arquivo? Ele nï¿½o serï¿½ visï¿½vel para os alunos\")){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
@@ -860,8 +860,9 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    {\n");
   echo("      subpasta = pastaAtual.split(\"Raiz/\")[1];\n");
   echo("      document.formFiles.subpasta.value = subpasta;\n");
-  echo("	  if((flag == 0))\n");
+  echo("	  if((flag == 0)){\n");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++indexArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
+  echo("        mostraFeedback('Arquivo anexado com sucesso',true);}\n");
   echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n");
   echo("      {\n");
   echo("		EncontraArquivoEApaga(nomeArq);\n");
@@ -1394,11 +1395,11 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 	  // ?? - 
 	  echo("                          <span> - Adicionar Descricao</span>\n");
 	  echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
-	  echo("                          &nbsp;&nbsp;\n");
-	  echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
-	  echo("                          &nbsp;&nbsp;\n");
-	  echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
+	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\" onchange=\"EdicaoArq(1)\">\n");
+//	  echo("                          &nbsp;&nbsp;\n");
+//	  echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
+//	  echo("                          &nbsp;&nbsp;\n");
+//	  echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
 	  echo("                        </div>\n");
 	  echo("                        <div id=\"divAnexando\" class=\"divHidden\"></div>");
 	  /* 26 - Anexar arquivos (ger) */
