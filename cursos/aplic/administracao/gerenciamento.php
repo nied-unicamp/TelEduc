@@ -517,13 +517,13 @@
   echo("	td_pagina.align=\"right\";");
   
   echo("	var span_first=document.createElement('span');\n");
-  echo("	span_first.innerHTML=\"<<&nbsp;\";\n");
+  echo("	span_first.innerHTML=\"<<&nbsp;&nbsp;\";\n");
   echo("	var span_ant=document.createElement('span');\n");
-  echo("	span_ant.innerHTML=\"<&nbsp;\";\n");
+  echo("	span_ant.innerHTML=\"<&nbsp;&nbsp;\";\n");
   echo("	var span_last=document.createElement('span');\n");
-  echo("	span_last.innerHTML=\"&nbsp;>>\";\n");
+  echo("	span_last.innerHTML=\"&nbsp;&nbsp;>>\";\n");
   echo("	var span_prox=document.createElement('span');\n");
-  echo("	span_prox.innerHTML=\"&nbsp;>\";\n");
+  echo("	span_prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
   
   /*verificando se a paginação para voltar esta liberada, ou seja se não é a primeira pagina*/
  
@@ -584,7 +584,7 @@
   echo("		var td_span=document.createElement('span');\n");
   echo("		ind=(parseInt(i))+(parseInt(intervalo))-1;\n");
   echo("		if (ind==atual){\n");
-  echo("			td_span.className=\"none\";\n");
+  echo("			td_span.className=\"\";\n");
   echo("			td_span.onclick=\"none\";\n");
   echo("		}\n");
   echo("		else{\n");
@@ -592,7 +592,7 @@
   echo("			td_span.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');};\n");
   echo("		}\n");
   echo("		td_span.id=ind;\n");
-  echo("		td_span.innerHTML='[&nbsp;'+ind+'&nbsp;]';\n");
+  echo("		td_span.innerHTML='<a>[&nbsp;'+ind+'&nbsp;]</a>';\n");
   echo("		td_pagina.appendChild(td_span);\n");
   echo("	}\n");
   
@@ -636,15 +636,15 @@
   */
   
   echo("	var first=document.createElement('span');\n");
-  echo("	first.innerHTML=\"<<&nbsp;\";\n");
+  echo("	first.innerHTML=\"<<&nbsp;&nbsp;\";\n");
   echo("	coluna.appendChild(first);\n");
   echo("	var ant=document.createElement('span');\n");
-  echo("	ant.innerHTML=\"<&nbsp;\";\n");
+  echo("	ant.innerHTML=\"<&nbsp;&nbsp;\";\n");
   echo("	coluna.appendChild(ant);\n");
   echo("	var prox=document.createElement('span');\n");
-  echo("	prox.innerHTML=\"&nbsp;>\";\n");
+  echo("	prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
   echo("	var last=document.createElement('span');\n");
-  echo("	last.innerHTML=\"&nbsp;>>\";\n");
+  echo("	last.innerHTML=\"&nbsp;&nbsp;>>\";\n");
   echo("	first.className=\"none\";\n");
   echo("	ant.className=\"none\";\n");
   echo("	first.onclick=\"none\";\n");
@@ -673,14 +673,14 @@
   echo("	var GerSpan=document.createElement('span');\n");
   echo("	GerSpan.id=i;\n");
   echo("	if (atual==i){\n");
-  echo("		GerSpan.className=\"none\";\n");
+  echo("		GerSpan.className=\"\";\n");
   echo("		GerSpan.onclick=\"none\";");	
   echo("	}\n");
   echo("	else{\n");
   echo("		GerSpan.className=\"paginacao\";\n");
   echo("		GerSpan.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');};\n");
   echo("	}\n");
-  echo("	GerSpan.innerHTML='[&nbsp;'+i+'&nbsp;]';\n");
+  echo("	GerSpan.innerHTML='<a>[&nbsp;'+i+'&nbsp;]</a>';\n");
   echo("	coluna.appendChild(GerSpan);\n");
   echo("}\n");
   echo("coluna.appendChild(prox);\n");
