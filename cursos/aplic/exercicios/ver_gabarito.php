@@ -71,6 +71,10 @@ $resolucao = RetornaResolucao($sock,$cod_resolucao);
 $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
 $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
 $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
+$ehFormador = EFormador($sock,$cod_curso,$cod_usuario);
+$VerificaCorrigida = VerificaSeCorrigida($cod_curso,$resolucao['cod_usuario'],$cod_resolucao);
+
+if($ehFormador || $VerificaCorrigida){
 
 /*********************************************************/
 /* inï¿½io - JavaScript */
@@ -625,8 +629,8 @@ if ((count($questoes)>0)&&($questoes != null))
 			}
 			$comentario = VerificaComentario($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
 			if($comentario){
-				/* ? - Comentário */
-			    echo("                        <dt class=\"portletHeader\">Comentário</dt>\n");
+				/* ? - Comentï¿½rio */
+			    echo("                        <dt class=\"portletHeader\">Comentï¿½rio</dt>\n");
 			    echo("                          <dd class=\"portletItem\">\n");
 			    echo($comentario);
 			    echo("                          </dd>\n");
@@ -693,7 +697,9 @@ if($tela_formador)
 	echo("      </div>\n");
 	echo("    </div>\n");
 }
-
+}else{
+	  	header("Location:resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao);
+}
 echo("  </body>\n");
 echo("</html>\n");
 
