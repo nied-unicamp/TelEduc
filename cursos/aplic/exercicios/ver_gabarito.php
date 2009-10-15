@@ -274,17 +274,9 @@ include("../menu_principal.php");
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
+/* ? - Exercicios - Ver resolução - */
+$frase = "Exercicios - Ver resolução";
 
-if(true)
-{
-	/* ? - Exercicios - Ver resolução - */
-	$frase = "Exercicios - Ver resolução";
-}
-else if($visualizar == "G")
-{
-	/* ? - Exercicios - Ver resolução - */
-	$frase = "Exercicios - Ver resolução";
-}
 
 echo("          <h4>".$frase."</h4>\n");
 
