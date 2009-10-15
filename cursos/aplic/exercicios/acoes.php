@@ -203,9 +203,7 @@
   }
   else if($acao == 'entregarCorrecao')
   {
-  	$sock = Conectar($cod_curso);
-  	$update = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
-  	$res=Enviar($sock, $update);
+  	EntregaCorrecao($sock, $cod_resolucao);
   	header("Location:exercicio.php?cod_curso=".$cod_curso."&atualizacao=true");
   }
   exit;

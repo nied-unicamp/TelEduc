@@ -2292,6 +2292,18 @@ function EviarLixeira($cod_curso, $cod_questao, $status)
 }
 
 /* *********************************************************************
+   EntregaCorrecao - Entrega a correcao do exercicio, isso setando o corrigida = 'S'
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
+            $cod_questao - codigo da questao
+            $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
+*/
+function EntregaCorrecao($sock, $cod_resolucao)
+{
+	$sock = Conectar($cod_curso);
+  $query = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
+  $res=Enviar($sock, $query);
+}
+/* *********************************************************************
    VerificaSeCorrigida - Verifica se o exerc�cio j� foi corrigido para o usu�rio
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_questao - codigo da questao
