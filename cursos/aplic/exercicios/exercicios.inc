@@ -2301,6 +2301,7 @@ function EntregaCorrecao($cod_curso, $cod_resolucao)
 	$sock = Conectar($cod_curso);
   $query = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
   $res=Enviar($sock, $query);
+  Desconectar($sock);
 }
 /* *********************************************************************
    VerificaSeCorrigida - Verifica se o exerc�cio j� foi corrigido para o usu�rio
