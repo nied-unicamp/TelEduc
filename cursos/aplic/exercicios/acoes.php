@@ -203,7 +203,7 @@
   }
   else if($acao == 'entregarCorrecao')
   {
-  	EntregaCorrecao($sock, $cod_resolucao);
+  	EntregaCorrecao($cod_curso, $cod_resolucao);
   	header("Location:exercicio.php?cod_curso=".$cod_curso."&atualizacao=true");
   }
   exit;
