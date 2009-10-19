@@ -60,27 +60,6 @@
   $sock = Conectar($cod_curso);
 
   echo("    <script type=\"text/javascript\">\n");
-  echo("     function MostraExercicio(opcao) {\n");
-  echo("      if (opcao==2)\n");
-  echo("               {document.getElementById('ex_2').disabled=false;\n");
-  echo("                document.getElementById('ex_1').disabled=false;}\n");
-  echo("      if (opcao<2)\n");
-  echo("         {\n");
-  echo("           if (document.getElementById('ex_2').checked==true)\n");
-  echo("               {document.getElementById('ex_1').checked=true;\n");
-  echo("                document.getElementById('ex_2').checked=false;}\n");
-  echo("           document.getElementById('ex_2').disabled=true;\n");
-  echo("           document.getElementById('ex_1').disabled=false;\n");
-  echo("         }\n");
-  echo("      if (opcao<1)\n");
-  echo("         {\n");
-  echo("           if (document.getElementById('ex_1').checked==true)\n");
-  echo("               {document.getElementById('ex_0').checked=true;\n");
-  echo("                document.getElementById('ex_1').checked=false;}\n");
-  echo("           document.getElementById('ex_1').disabled=true;\n");
-  echo("           document.getElementById('ex_0').disabled=false;\n");
-  echo("         }\n");
-  echo("     }\n");
 
   echo("     function Iniciar()\n");
   echo("     {\n");
@@ -173,26 +152,23 @@
     if ($linha['cod_ferramenta']>0)
     {
       $cod_ferramenta=$linha['cod_ferramenta'];
-      if ($cod_ferramenta!=23)
-      {
         echo("                  <tr class=\"altColor".(($i++)%2)."\">\n");
         if ($cod_ferramenta==1 || $cod_ferramenta==16 || $cod_ferramenta==17){
           /* 47 - (Ferramenta Obrigatoria) */
           echo("                    <td>&nbsp;".RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])."&nbsp;<br />&nbsp;<font style=\"font-size:0.9em\" color=\"red\">".RetornaFraseDaLista($lista_frases,47)."</font>&nbsp;</td>\n");
-        } else if ($cod_ferramenta!=23){
+        } else {
           echo("                    <td>&nbsp;".RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])."&nbsp;</td>\n");
         }
 
         echo("                    <td class=\"alLeft\" style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_descricao'])."</td>\n");
         echo("                    <td class=\"alLeft\">");
-      }
 
       if ($cod_ferramenta==1 || $cod_ferramenta==16 || $cod_ferramenta==17)
       {
         /* 41 - Todos */
         echo("&nbsp;<input type=\"radio\" value='A' name=\"status[".$cod_ferramenta."]\" checked>".RetornaFraseDaLista($lista_frases,41)."<br>");
       }
-      else if (($cod_ferramenta!=23)&&($cod_ferramenta!=22))
+      else if (($cod_ferramenta!=22))
       {
         $status=$ferramentas_curso[$cod_ferramenta]['status'];
         /* 41 - Todos */
@@ -202,53 +178,21 @@
         /* 43 - Ningu�m */
         echo("&nbsp;<input type=\"radio\" value='D' ".($status=='D'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_3\"><label for=\"".$cod_ferramenta."_3\">".RetornaFraseDaLista($lista_frases,43)."</label>&nbsp;");
       }
-      else if ($cod_ferramenta==22)
+      else
       {
         $status=$ferramentas_curso[$cod_ferramenta]['status'];
 
         /* 41 - Todos */
-        /* os echos comentados contem informacao relacionada a ferramenta dos exercicios ainda nao 'portada' pra versao nova */
-        //echo("&nbsp;<input type=\"radio\" value='A' ".($status=='A'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_1\" onclick=\"MostraExercicio(2);\"><label for=\"".$cod_ferramenta."_1\">".RetornaFraseDaLista($lista_frases,41)."</label>&nbsp;<br>");
         echo("&nbsp;<input type=\"radio\" value='A' ".($status=='A'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_1\" ><label for=\"".$cod_ferramenta."_1\">".RetornaFraseDaLista($lista_frases,41)."</label>&nbsp;<br>");
         /* 42 - Formador */
-        //echo("&nbsp;<input type=\"radio\" value='F' ".($status=='F'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_2\" onclick=\"MostraExercicio(1);\"><label for=\"".$cod_ferramenta."_2\">".RetornaFraseDaLista($lista_frases,42)."</label>&nbsp;<br>");
         echo("&nbsp;<input type=\"radio\" value='F' ".($status=='F'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_2\" ><label for=\"".$cod_ferramenta."_2\">".RetornaFraseDaLista($lista_frases,42)."</label>&nbsp;<br>");
 
         /* 43 - Ningu�m */
-        //echo("&nbsp;<input type=\"radio\" value='D' ".($status=='D'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_3\" onclick=\"MostraExercicio(0);\"><label for=\"".$cod_ferramenta."_3\">".RetornaFraseDaLista($lista_frases,43)."</label>&nbsp;");
         echo("&nbsp;<input type=\"radio\" value='D' ".($status=='D'?"checked":"")." name=\"status[".$cod_ferramenta."]\" id=\"".$cod_ferramenta."_3\" ><label for=\"".$cod_ferramenta."_3\">".RetornaFraseDaLista($lista_frases,43)."</label>&nbsp;");
       }
-      if ($cod_ferramenta!=23)
-      {
       echo("</td>\n");
       echo("                  </tr>\n");
-      }
 
-      if ($cod_ferramenta==23)
-      {
-      echo("                  <tr class=\"altColor".(($i++)%2)."\">\n");
-      echo("                    <td>&nbsp;".RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[23]['cod_texto_nome'])."&nbsp;</td>\n");
-      echo("                    <td class=\"alLeft\" style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[23]['cod_texto_descricao'])."</td>\n");
-      echo("                    <td class=\"alLeft\">\n");
-      $status_ex=$ferramentas_curso[23]['status'];
-      /* 41 - Todos */
-      echo("&nbsp;<input type=\"radio\" value='A' ".($status=='A'?"checked":"")." name=\"status[23]\" id=\"ex_2\"><label for=\"ex_2\">".RetornaFraseDaLista($lista_frases,41)."</label>&nbsp;<br>");
-      /* 42 - Formador */
-      echo("&nbsp;<input type=\"radio\" value='F' ".($status=='F'?"checked":"")." name=\"status[23]\" id=\"ex_1\"><label for=\"ex_1\">".RetornaFraseDaLista($lista_frases,42)."</label>&nbsp;<br>");
-      /* 43 - Ningu�m */
-      echo("&nbsp;<input type=\"radio\" value='D' ".($status=='D'?"checked":"")." name=\"status[23]\" id=\"ex_0\"><label for=\"ex_0\">".RetornaFraseDaLista($lista_frases,43)."</label>&nbsp;\n");
-
-      echo("  <script type=\"text/javascript\">\n");
-      if ($status=='A') 
-        echo("    MostraExercicio(2);\n");
-      if ($status=='F') 
-        echo("    MostraExercicio(1);\n");
-      if ($status=='D') 
-        echo("    MostraExercicio(0);\n");
-      echo("   </script>\n");
-      echo("                    </td>\n");
-      echo("                  </tr>\n");
-      }
     }
   }
   /*****************/
