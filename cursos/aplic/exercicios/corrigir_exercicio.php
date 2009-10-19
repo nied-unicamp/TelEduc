@@ -462,20 +462,18 @@ if ((count($questoes)>0)&&($questoes != null))
 		
 		if($linha_item['tp_questao'] == 'O'){
 			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
-			$status="corrigida";
-			$nota=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+			$corrigida = true;
+			$nota = PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 			$respostaCorreta = RespostaQuestao($cod_curso,$linha_item['cod_questao']);
 		}
 		else{
 			$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 			if($itens[0]==null){
-				/* Frase #18 - Nao Corrigida */
-				$status= RetornaFraseDaLista($lista_frases, 18);
+				$corrigida = false;
 				$nota="0.00";
 			}
 			else{
-				/* Frase #19 - Corrigida */
-				$status= RetornaFraseDaLista($lista_frases, 19);
+				$corrigida = true;
 				$nota=$itens[0];	
 			}	
 		}
@@ -489,10 +487,8 @@ if ((count($questoes)>0)&&($questoes != null))
 
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		
-		
 		/* Mostra os icones de certo ou errado de acordo com a avaliacao */
 		$acertou = ($nota == $valor);
-		$corrigida = ($status == "corrigida");
 		
 		if(!$corrigida){
 			echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
@@ -510,7 +506,9 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$nota."</td>\n");
 		}
 		echo("                    <td>".$linha_item['valor']."</td>\n");
-		echo("                    <td>".$status."</td>\n");
+		/* Frase #18 - Nao Corrigida */ 				
+		/* Frase #19 - Corrigida */
+		echo("                    <td>".($corrigida ? RetornaFraseDaLista($lista_frases, 19) : RetornaFraseDaLista($lista_frases, 18))."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
 		echo("                    <td style=\"width:50px\" colspan=\"7\" align=\"left\">\n");
