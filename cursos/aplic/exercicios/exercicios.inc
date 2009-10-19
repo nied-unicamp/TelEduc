@@ -2292,16 +2292,35 @@ function EviarLixeira($cod_curso, $cod_questao, $status)
 }
 
 /* *********************************************************************
-   EntregaCorrecao - Entrega a correcao do exercicio, isso setando o corrigida = 'S'
+   EntregaCorrecao - Entrega a correcao do exercicio, isso setando o corrigida = 'S' e atualizando a nota final do exercicio
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_resolucao - codigo da resolucao
 */
 function EntregaCorrecao($cod_curso, $cod_resolucao)
 {
-	$sock = Conectar($cod_curso);
-  $query = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
-  $res=Enviar($sock, $query);
-  Desconectar($sock);
+  	$sock = Conectar($cod_curso);
+  	$query = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
+  	$res=Enviar($sock, $query);
+  
+  	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
+  	$res = Enviar($sock, $nota_final1);
+  	$nota1 = RetornaLinha($res);
+  	
+  	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
+  	$res = Enviar($sock, $nota_final2);
+  	$nota2 = RetornaLinha($res);
+  	
+  	if(is_null($nota1['soma']))
+  		$soma = $nota2['soma'];
+  	else if(is_null($nota2['soma']))
+  		$soma = $nota1['soma'];
+  	else
+  		$soma = $nota1['soma'] + $nota2['soma'];
+  	
+  	$update = "UPDATE Exercicios_resolucao SET nota=".$soma." WHERE cod_resolucao =".$cod_resolucao;
+  	$res=Enviar($sock, $update);
+  
+  	Desconectar($sock);
 }
 /* *********************************************************************
    VerificaSeCorrigida - Verifica se o exerc�cio j� foi corrigido para o usu�rio
@@ -2354,3 +2373,4 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
   		$comentario = "Nao ha comentarios disponiveis";	 
 	return $comentario;
 }
+
