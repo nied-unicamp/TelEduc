@@ -1431,7 +1431,7 @@ function EditarTituloQuestaoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_u
 
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
