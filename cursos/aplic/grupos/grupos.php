@@ -215,7 +215,15 @@
 
   echo("        for (k=0; k < spans.length; k++){\n");
   echo("          if (spans[k].id.substr(0, 6).match(\"grupo_\")){\n");
-  echo("            spans[k].onclick();\n");
+  echo("		  {");
+  // Verifica se o Grupo ja esta aberto
+  echo("			var tmp_cod = spans[k].id.slice(6, spans[k].id.length);");
+  echo("  			var aberto = document.getElementById('aberto_'+tmp_cod).value;\n");
+  echo("			if (aberto == 0)");
+  echo("		  	{");
+  echo("            	spans[k].onclick();\n");
+  echo("		  	}");
+  echo("		  }");
   echo("          }\n");
   echo("        }\n");
   /* 66 - Ocultar Componentes  */
@@ -301,18 +309,25 @@
   echo("      {\n");
   
   echo("        var trElementTmp = document.getElementById('tr_grupo_'+cod_grupo);\n");
+  //TOZO
+  echo("		document.getElementById('grupo_'+cod_grupo).onclick = function() { FechaGrupo(cod_grupo); FecharComponentes(cod_grupo); };");
   echo("        if((trElementTmp)&&(cod_grupo!=-1)){\n");
   echo("          if (navigator.appName==\"Microsoft Internet Explorer\"){\n");
   echo("            trElementTmp.style.display=\"block\";\n");
   echo("          }else{\n");
   echo("            trElementTmp.style.display=\"table-row\";\n");
   echo("          }\n");
-  echo("          return;\n");
+  echo("		return");
   echo("        }\n");
   echo("        var trElement = document.getElementById('tr_'+cod_grupo);\n");
   echo("        var tableElement = trElement.parentNode;\n");
   echo("        trElement=trElement.nextSibling;\n");
-  echo("        if(document.getElementById('td_grupo_'+cod_grupo)) return;\n");
+  echo("        if(document.getElementById('td_grupo_'+cod_grupo))\n");
+  echo("		{");
+  echo("			var tSpan = document.getElementById('fechar_'+cod_grupo);");
+  echo("			tSpan.onclick = function() { FechaGrupo(cod_grupo); FecharComponentes(cod_grupo); };");
+  echo("			return;");
+  echo("		}");
   echo("        newElement = document.createElement('tr');\n");
   echo("        newElement.setAttribute('id', 'tr_grupo_'+cod_grupo);\n");
   echo("        newElement.className='altColor2';\n");
@@ -349,6 +364,8 @@
 
   echo("      function FecharComponentes(cod_grupo){\n");
   echo("          trElement = document.getElementById('tr_grupo_'+cod_grupo);\n");
+    //TOZO
+  echo("		document.getElementById('grupo_'+cod_grupo).onclick = function() { AbreGrupo(cod_grupo); MostrarComponentes(cod_grupo); };");
   echo("        if(cod_grupo==-1){\n");
   echo("          tableElement = trElement.parentNode;\n");
   echo("          tableElement.removeChild(trElement);\n");
@@ -510,7 +527,6 @@
   echo("function FechaGrupo(cod_grupo){\n");
   echo("  var aberto=document.getElementById('aberto_'+cod_grupo).value;\n");
   /* 3 - Componentes dos Grupos */
-
   echo("  document.getElementById('componentes_grupos').innerHTML = '".RetornaFraseDaLista($lista_frases,3)."';\n");
   echo("  document.getElementById('componentes_grupos').onclick = function(){ AbreListaGrupos(); };\n");
   echo("  if (aberto == 1) NGruposAbertos--;\n"); 

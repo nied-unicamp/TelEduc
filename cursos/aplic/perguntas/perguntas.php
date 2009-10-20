@@ -549,6 +549,20 @@
     echo("        VerificaCheck();\n");
     echo("      }\n\n");
     
+    echo("function AlternaMensagem(cod_mural)");
+    echo("{");
+    echo("	if (document.getElementById('aberto_'+cod_mural).value == 0)");
+    echo("	{");
+    echo("		document.getElementById('aberto_'+cod_mural).value = 1;");
+    echo("		ExibirMensagem(cod_mural);");
+    echo("	}");
+    echo("	else");
+    echo("	{");
+    echo("		document.getElementById('aberto_'+cod_mural).value = 0;");
+    echo("		FechaMensagem(cod_mural);");
+    echo("	}");
+    echo("}");
+    
     echo("      function ExibirMensagem(cod_mural)\n");
     echo("      {\n");
     echo("        PerguntasAbertas++;\n");
@@ -557,19 +571,11 @@
     echo("        var totalMsgs=document.getElementsByName('tr_msg').length;\n");
     echo("		  var vLink = document.getElementById('tr_msg_'+cod_mural);\n");
 
-    echo("		  if((vLink.style.display == 'table-row') || (vLink.style.display == 'block'))");
-    echo("		  {");
-    echo("			vLink.style.display='none';");
-//    echo("			mensagens_abertas--;");
-    echo("		  }");
-    echo("		  else");
-    echo("		  {");
-    echo("        	if (browser==\"Microsoft Internet Explorer\")\n");
-    echo("          	vLink.style.display=\"block\";\n");
-    echo("        	else\n");
-    echo("          	vLink.style.display=\"table-row\";\n");
+    echo("        if (browser==\"Microsoft Internet Explorer\")\n");
+    echo("        	vLink.style.display=\"block\";\n");
+    echo("        else\n");
+    echo("         	vLink.style.display=\"table-row\";\n");
 //    echo("        mensagens_abertas++;\n");
-    echo("		  }");
     
     echo("        if(totalMsgs <= 10){\n");
     //echo("          VerificaAbertas();\n");
@@ -581,7 +587,7 @@
     echo("			PerguntasAbertas--;");
     echo("			if (PerguntasAbertas == 0) DesabilitaBotaoFechar();");
 	echo("      }\n");
-
+	
     echo("      function AlteraTexto(id){\n");
     //    echo("        if (editaTexto==0){\n");
 //    echo("          CancelaTodos();\n");
@@ -891,8 +897,8 @@
 //        echo("        </td>\n");
         // e cria um link nela para o layer
 //        echo("        <td class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;".$acao_link_abre.$linha_pergunta['cod_pergunta'].$acao_link_fecha.LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
-        echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=ExibirMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
-        
+        echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");         
+        echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
         echo("      </tr>\n");
         echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
         echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
