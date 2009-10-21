@@ -97,6 +97,36 @@ function VerificaLoginSenha ($login, $senha)
 }
 
 /* *********************************************************************
+   ehEmail - Verifica se login eh um username ou um email
+   Entrada: $login - login utilizado para autenticacao 
+            $cod_curso   - Codigo do curso
+   Saida:   caso o login seja um email, retorna um login correspondente, caso contrario
+			mantem o login. se o email nao corresponder com nenhum login envia para
+			pagina de autenticacao
+*/
+
+function ehEmail($login,$cod_curso){
+	
+	$sock = Conectar("");
+	
+	$email = explode('@',$login);
+
+	if((count($email) == 2) && (substr($login,0,1) != "@")) {
+		$query = "select login from Usuario where email='".VerificaStringQuery($login)."'";
+		$res=Enviar($sock,$query);
+		$linha=RetornaLinha($res);
+		if($linha){
+			return $linha['login'];
+		}else{ 
+    		Desconectar($sock);
+    		header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+		}
+	}	
+    return $login;
+	
+}
+
+/* *********************************************************************
    VerificaAcessoCurso - Verifica se usuario tem acesso ao curso passado por parametro
    Entrada: $cod_usuario - Codigo do Usuario
             $cod_curso   - Codigo do curso
