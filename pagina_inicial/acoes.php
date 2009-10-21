@@ -64,7 +64,9 @@
     $curso_valido = $linha[0];
   }
 
-  if (!$cod_usuario = VerificaLoginSenha($_POST['login'], $_POST['senha']))
+  $login = ehEmail($_POST['login'],$_POST['cod_curso']);
+
+  if (!$cod_usuario = VerificaLoginSenha($login, $_POST['senha']))
   {
     Desconectar($sock);
     header("Location:autenticacao.php?cod_curso=".$_POST['cod_curso']."&acao=erroAutenticacao&atualizacao=false");
