@@ -1141,7 +1141,7 @@
         $grupo=( (($dados['Ferramenta']=='P') || ($dados['Ferramenta'] == 'E')|| ($dados['Ferramenta']=='N') ) && ($dados['Tipo'] == 'G'));
         //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_grupo, $grupo); 
 
-        if (($foiavaliado && $dados['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))
+        if ($foiavaliado && $dados['Ferramenta']!='E')
         {
           // Modificado. Antes retornava o aluno que mais tem notas no grupo.
           // Agora retorna o cod_aluno de um aluno do grupo que recebeu a ultima avaliacao
@@ -1151,6 +1151,7 @@
           $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
           $cod_nota=$dados_nota['cod_nota'];
           $nota=$dados_nota['nota'];
+          //$nota=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario);
           
           // booleano que indica se a nota estah vazia
           $nota_vazia = ($nota == '');
@@ -1380,7 +1381,7 @@
         $grupo=(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'));
         //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_grupo, $grupo);
           
-         if (($foiavaliado && $dados['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))
+         if ($foiavaliado && $dados['Ferramenta']!='E')
  
         //if ($foiavaliado)           //Ja existe uma nota atribuida
         {
@@ -1395,7 +1396,8 @@
           
           $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
           $cod_nota=$dados_nota['cod_nota'];
-          $nota=$dados_nota['nota'];
+          //$nota=$dados_nota['nota'];
+          $nota=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario);
 
           // booleano que indica se a nota estah vazia
           $nota_vazia = ($nota == '');
@@ -1464,7 +1466,7 @@
             {
               echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">");
               
-               if($dados['Ferramenta']=='E' && ($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R' ))
+               if($dados['Ferramenta']=='E')
                   echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
                else
                   echo($nota."</span></td>\n");
@@ -1694,11 +1696,12 @@
         // coluna com a nota, coluna com data da avalia�o, coluna com opcao avaliar e coluna do compartilhamento
         //if ($foiavaliado )             //Ja existe uma nota atribuida
 
-        if (($foiavaliado && $dados['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))
+        if ($foiavaliado && $dados['Ferramenta']!='E')
         {
           $dados_nota=RetornaDadosNota($sock, $cod, $cod_avaliacao, $cod_usuario, $usr_formador);
           $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
           $cod_nota=$dados_nota['cod_nota'];
+          //$nota=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario);
           $nota=$dados_nota['nota'];
 
           // booleano que indica se a nota estah vazia
@@ -1778,7 +1781,7 @@
               else
                 echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\">");
                 
-               if($dados['Ferramenta']=='E' && ($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R' ))
+               if($dados['Ferramenta']=='E')
                   echo($nota."<font><sup>*C</sup></font></span></td>\n");
                else
                   echo($nota."</span></td>\n");
@@ -2002,12 +2005,14 @@
             }
           }
          
-          if (($foiavaliado && $dados['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))
+          if ($foiavaliado && $dados['Ferramenta']!='E')
           { 
             $dados_nota=RetornaDadosNota($sock, $cod, $cod_avaliacao,$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=$dados_nota['nota'];
+            //$nota=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario);
+            
             // booleano que indica se a nota estah vazia
             $nota_vazia = ($nota == '');
             // escrevemos a nota no formato "float", ou seja, com uma casa atras da virgula
@@ -2088,7 +2093,7 @@
                   echo("<span class=\"link\" onClick=return(HistoricodoDesempenho(".$cod.",'tr_formadores_".$cod."'));>");
                 else
                   echo("<span class=\"link\" onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_formadores_".$cod."'));>");
-                 if($dados['Ferramenta']=='E' && ($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R' ))
+                 if($dados['Ferramenta']=='E')
                      echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
                  else
                      echo($nota."</span></td>\n");

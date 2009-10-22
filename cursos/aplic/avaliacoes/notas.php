@@ -161,7 +161,7 @@
           }
           //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
 
-          if (($foiavaliado && $linha['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))  
+          if ($foiavaliado && $linha['Ferramenta']!='E')  
           {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -187,9 +187,20 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
+          }//Exercício
+          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+          	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+            $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
+            $cod_nota=$dados_nota['cod_nota'];
+            $nota=FormataNota($dados_nota['nota']);
+            
+            $contador=$cont_exercicio;
+            $cont_exercicio++;
+            
+            echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
           }
           else // nenhuma nota foi atribuida
-             if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) && !($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R') || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))  
+             if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))  
              {
                if (!strcmp($linha['Ferramenta'], 'B')) {
                   $contador=$cont_batepapo;
@@ -233,9 +244,10 @@
         $cont_av_ext=1;
         $cont_exercicio=1;
 
+        
+        
         foreach ($lista_avaliacoes as $cont => $linha)
         {
-
            $grupo=(($linha['tipo']=='G') && (($linha['Ferramenta']=='E') || ($linha['Ferramenta']=='N')));
            //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $cod, $grupo);
              
@@ -259,7 +271,7 @@
             }  
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
                                                        
-         if ( ($foiavaliado && $linha['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N') )
+         if ( $foiavaliado && $linha['Ferramenta']!='E' )
          {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -285,9 +297,20 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-         }
+         }//Exercício
+          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+          	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+            $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
+            $cod_nota=$dados_nota['cod_nota'];
+            $nota=FormataNota($dados_nota['nota']);
+            
+            $contador=$cont_exercicio;
+            $cont_exercicio++;
+            
+            echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
+          }
          else { // nenhuma nota foi atribuida
-            if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) && !($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R') || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))
+            if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))
             {
               if (!strcmp($linha['Ferramenta'], 'B')) {
                 $contador=$cont_batepapo;
@@ -1326,7 +1349,7 @@ $sock = MudarDB($sock, $cod_curso);
           
           //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);                    /**********************************************/
 
-          if (($foiavaliado && $linha['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N'))  
+          if ($foiavaliado && $linha['Ferramenta']!='E')  
           {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -1383,10 +1406,67 @@ $sock = MudarDB($sock, $cod_curso);
               else //Estï¿½ compartilhada sï¿½ com formadores
                 echo("&nbsp;</td>\n");
             }
-          }
+          }//Exercício
+          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+            $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
+            $cod_nota=$dados_nota['cod_nota'];
+            $nota=FormataNota($dados_nota['nota']);
+            
+	          	if ($usr_formador)
+	            {
+	              $marcaib="";
+	              $marcafb="";
+	              echo("                    <td align=center>");
+	              if (!isset($SalvarEmArquivo))
+	              {
+	                if (strcmp($linha['Ferramenta'],'P'))
+	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                else
+	                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                echo($nota."</a></td>\n");
+	              }
+	              else
+	                echo($nota."</td>\n");
+	            }
+	            else       //ï¿½ ALUNO
+	            {
+	              echo("                    <td align=center>");
+	              if (!strcmp($tipo_compartilhamento,'T'))
+	              {
+	                if (!isset($SalvarEmArquivo))
+	                {
+	                  if (strcmp($linha['Ferramenta'],'P'))
+	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  else
+	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	
+	                  echo($nota."</a></td>\n");
+	                }
+	                else
+	                  echo($nota."</td>\n");
+	              }
+	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
+	              {
+	                if (!isset($SalvarEmArquivo))
+	                {
+	                  if (strcmp($linha['Ferramenta'],'P'))
+	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  else
+	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  
+	                  echo($nota."</a></td>\n");
+	                }
+	                else
+	                  echo($nota."</td>\n");
+	              }
+	              else //Estï¿½ compartilhada sï¿½ com formadores
+	                echo("&nbsp;</td>\n");
+	            }
+	          }
           else // nenhuma nota foi atribuida
           {
-             if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) && !($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R') )  
+             if ($linha['Ferramenta']=='E' && $linha['Data_termino']<=time() )  
              {
                echo("      <td align=center>\n");
                echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1452,7 +1532,7 @@ $sock = MudarDB($sock, $cod_curso);
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
                                                        
             /*******************************************/
-            if ( ($foiavaliado && $linha['Ferramenta']!='E') || ($DadosExercicios['status']=='G' || $DadosExercicios['status']=='N') )
+            if ( $foiavaliado && $linha['Ferramenta']!='E' )
             //Ja existe uma nota atribuida
             {
               $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
@@ -1474,10 +1554,67 @@ $sock = MudarDB($sock, $cod_curso);
               }
               else
                 echo($nota."</td>\n");
-            }
+            }//Exercício
+          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+            $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
+            $cod_nota=$dados_nota['cod_nota'];
+            $nota=FormataNota($dados_nota['nota']);
+            
+	          	if ($usr_formador)
+	            {
+	              $marcaib="";
+	              $marcafb="";
+	              echo("                    <td align=center>");
+	              if (!isset($SalvarEmArquivo))
+	              {
+	                if (strcmp($linha['Ferramenta'],'P'))
+	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                else
+	                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                echo($nota."</a></td>\n");
+	              }
+	              else
+	                echo($nota."</td>\n");
+	            }
+	            else       //ï¿½ ALUNO
+	            {
+	              echo("                    <td align=center>");
+	              if (!strcmp($tipo_compartilhamento,'T'))
+	              {
+	                if (!isset($SalvarEmArquivo))
+	                {
+	                  if (strcmp($linha['Ferramenta'],'P'))
+	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  else
+	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	
+	                  echo($nota."</a></td>\n");
+	                }
+	                else
+	                  echo($nota."</td>\n");
+	              }
+	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
+	              {
+	                if (!isset($SalvarEmArquivo))
+	                {
+	                  if (strcmp($linha['Ferramenta'],'P'))
+	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  else
+	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+	                  
+	                  echo($nota."</a></td>\n");
+	                }
+	                else
+	                  echo($nota."</td>\n");
+	              }
+	              else //Estï¿½ compartilhada sï¿½ com formadores
+	                echo("&nbsp;</td>\n");
+	            }
+	          }
             else // nenhuma nota foi atribuida
             { 
-              if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) && !($DadosExercicios['status']=='C' || $DadosExercicios['status']=='S' || $DadosExercicios['status']=='R') )
+              if ($linha['Ferramenta']=='E' && $linha['Data_termino']<=time() )
               {
                 echo("                    <td align=center>\n");
                 echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));>");    

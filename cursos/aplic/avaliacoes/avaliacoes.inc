@@ -2762,33 +2762,46 @@ RetornaDadosNotaExercicio - retorna array com a nota e um campo indicando a exis
     entrada: $sock - sock de conexao
              $cod_avaliacao - codigo da avaliacao
              $cod_aluno_grupo - codigo do aluno ou do grupo
-    saida: array[][cod_resolucao]    - codigo da resolucao
+    saida:  array[][nota] - retorna a nota
+    		array[][comentario] - retorna o comentario
+    		array[][resolvido] - True se foi resolvido
+    		array[][existe] - True se existe
 */
 function RetornaDadosNotaExercicio($sock, $cod_avaliacao, $cod_aluno_grupo,$grupo)
 {
   if($grupo)
-    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_grupo=".$cod_aluno_grupo." and status='F'"; 
+    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_grupo=".$cod_aluno_grupo; //and status='F'"; 
   else
-    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_aluno=".$cod_aluno_grupo." and status='F'";
+    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_aluno=".$cod_aluno_grupo; //and status='F'";
   $res = Enviar($sock, $query);
   $Existe = RetornaNumLinhas($res);
   $lista = RetornaLinha($res);
-  $retorno['nota']=$lista['nota'];
+  if(!$grupo)
+  	$retorno['nota']=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_aluno_grupo);
+    //$retorno['nota']=$lista['nota'];
   $retorno['comentario']=$lista['comentario'];
 
-  $query2 = "select ER.cod_resolucao from Exercicios_resolucao ER, Exercicios_aplicado EA  where ER.cod_modelo=EA.cod_modelo and EA.avaliacao=".$cod_avaliacao;
-  $res2 = Enviar($sock, $query);
-  $num = RetornaNumLinhas($res2);
- 
-  if($num == 0)
-    $retorno['resolvido']=false;
+  $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
+  $cod_atividade=$dados['Cod_atividade'];
+  
+  //$query2 = "select ER.cod_resolucao from Exercicios_resolucao ER, Exercicios_aplicado EA  where ER.cod_modelo=EA.cod_modelo and EA.avaliacao=".$cod_avaliacao;
+  $query2 = "select corrigida from Exercicios_resolucao where cod_exercicio=".$cod_atividade." and cod_usuario=".$cod_aluno_grupo;
+  $res2 = Enviar($sock, $query2);
+  $return = RetornaLinha($res2);
+  
+  //$num = RetornaNumLinhas($res2);//Tá errado?
+  $retorno['resolvido'] = 1;
+  if($return['corrigida'] == 'S')
+    $retorno['resolvido'] = 1;
   else 
-    $retorno['resolvido']=true;
-
+    $retorno['resolvido'] = 0;
+  
+  $retorno['existe'] = 1;
   if($Existe == 0)
-    $retorno['existe']=false;
+    $retorno['existe'] = 0;
   else
-    $retorno['existe']=true;
+    $retorno['existe'] = 1;
+   
   return $retorno;
 }
 
@@ -2980,8 +2993,6 @@ function RetornaInformacoesMedia($sock)
       
   return $linha;
 }     
-      
-      
       
 /* ************************************************************************
    GravarExpressaoMedia - Seleciona o tipo da questï¿½o
@@ -4845,6 +4856,8 @@ function AvaliarDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo, $exercicio
   $opEnviar = 0;
   $cod_modelo = -1;
   $valueInputNota = 0;
+  
+  //$array_exercicio = RetornaDadosNotaExercicio($sock, $cod_avaliacao, $cod_aluno_grupo,$exercicio_grupo);
 
   if ($dados['Ferramenta'] == 'E')
   {
@@ -4852,13 +4865,13 @@ function AvaliarDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo, $exercicio
     if($array_exercicio['existe'] == false)
     {
       $opNota = 1;
+      $opNota = 3;
       if($array_exercicio['resolvido'] == true)
       {
-        $opNota = 2;
+        $opNota = 3;
       /*if(is_array($lista_itens))
           $cod_modelo=$lista_itens['cod_modelo']; */
       }
-      
     }
     else
     {
@@ -4870,14 +4883,16 @@ function AvaliarDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo, $exercicio
   if (($dados['Ferramenta'] == 'E')&&($array_exercicio['existe'] == false))
     $opJust = 1;
 
-  if (($dados['Ferramenta'] != 'E')||($array_exercicio['existe'] == true))/*Se existe avaliacao para este exercicio*/
+  if (($dados['Ferramenta'] != 'E')||($array_exercicio['existe'] == true))//Se existe avaliacao para este exercicio
     $opComp = 1;
 
-  if((is_null($array_exercicio['existe'])) || ($array_exercicio['existe'] != false))
+  if((is_null($array_exercicio['existe'])) || ($array_exercicio['existe'] == true))//Se existe avaliacao para este exercicio
     $opEnviar = 1;
 
   Desconectar($sock);
-
+	
+  $objResponse->addScript("alert('Existe:".$array_exercicio['existe'].";resolvido:".$array_exercicio['resolvido']." ; id:".$id.",; opNota:".$opNota."; opJust: ".$opJust."; opComp:".$opComp."; valueInputNota:".$valueInputNota."; cod_modelo:".$cod_modelo."; opEnviar:".$opEnviar."; cod_aluno:".$cod_aluno_grupo."');");
+  //$objResponse->addAlert($array_exercicio['corrigida']);
   $objResponse->addScript("HabilitaAvaliar('".$id."',".$opNota.",".$opJust.",".$opComp.",".$valueInputNota.",".$cod_modelo.",".$opEnviar.",".$cod_aluno_grupo.");");
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
@@ -5104,4 +5119,26 @@ function GravarExpressaoDinamic($dadosForm)
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
 }
+
+/* ***************************************************************************
+RetornaNotaExercicio - Retorna a nota do aluno em determinado exercicio pela tabela de exercicio
+    entradas: 	$sock
+    			$cod_usuario
+    			$cod_avaliacao -> usado para descobrir o cod_exercicio == cod_atividade
+    saida: 		$nota - Nota do aluno
+*/
+
+function RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario){
+	// retornar todas as notas visiveis ao usuario
+	$dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
+  	$cod_atividade=$dados['Cod_atividade'];
+  	
+	$query = "select nota from Exercicios_resolucao where cod_usuario=".$cod_usuario." and cod_exercicio=".$cod_atividade;
+	$res = Enviar($sock, $query);
+	$retorno = RetornaLinha($res);
+	$nota = $retorno['nota'];
+	
+	return $nota;
+}
+
 ?>
