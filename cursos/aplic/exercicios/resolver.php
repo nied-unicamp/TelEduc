@@ -526,9 +526,9 @@ if ((count($questoes)>0)&&($questoes != null))
 		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
 		
 		if($resposta == null)
-		$status = "Nao respondida";
+			$status = "Nao respondida";
 		else
-		$status = "Respondida";
+			$status = "Respondida";
 
 		
 		
