@@ -370,8 +370,7 @@
     echo("		  var sts = document.getElementById('tr_msg_'+cod_mural).style.display;\n");
     echo("		  if ((sts == 'table-row') || (sts == 'block'))\n");
     echo("		  {\n");
-    echo("			mensagens_abertas--;\n");
-    echo("         	document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
+    echo("				FecharMsg(cod_mural);");
     echo("		  }");
     echo("		  else\n");
     echo("		  {\n");
