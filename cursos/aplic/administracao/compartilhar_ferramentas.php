@@ -45,6 +45,18 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
+  require_once("../xajax_0.2.4/xajax.inc.php");
+  
+  /** AJAX **/
+  // Estancia Objeto XAJAX
+  $objFerramenta = new xajax();
+  // Registre os nomes das funções em PHP que voc� quer chamar atrav�s do xajax
+  $objFerramenta->registerFunction("AlterarFerramCompartilhadasDinamic");
+  $objFerramenta->registerFunction("AlteraTodasFerramCompartilhadasDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objFerramenta->processRequests();
+
+  
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 1;
@@ -73,11 +85,13 @@
   
   /*Funcao JavaScript*/
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");
   echo("        VerificaCheck();\n");
   echo("      }\n\n");
+  
   echo("      function BtnCancelClick()\n");
   echo("      {\n");
   echo("        document.frmComp.action = \"administracao.php?cod_curso=".$cod_curso."\";\n");
@@ -112,6 +126,8 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
+  
+  $objFerramenta->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
 
@@ -178,7 +194,7 @@
   echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,203)."</td>\n");
   echo("                  </tr>\n"); 
   echo("                  <tr class=\"head01\">\n");
-  echo("                    <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
+  echo("                    <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();xajax_AlteraTodasFerramCompartilhadasDinamic(".$cod_curso.",".$cod_ferramenta.",this.checked)\" /></td>\n");
   /* 45-Ferramenta */
   echo("                    <td align=\"left\" colspan=\"3\"><b>".RetornaFraseDaLista($lista_frases,45)."</b></td>\n");
   echo("                  </tr>\n"); 
@@ -206,10 +222,11 @@
         if($k==0)
             echo("                  <tr>\n");
         echo("                    <td width=\"2%\">");
+        echo($lista_ferramentas_disp[$i]['cod_ferramenta']);
         if($compartilhada) /*se ja era compartilhada a check vem marcada*/
-          echo("<input onclick=\"VerificaCheck();\" type=\"checkbox\" name=\"ferr_comp[]\" value='".$lista_ferramentas_disp[$i]['cod_ferramenta']."'checked>");
+          echo("<input onclick=\"VerificaCheck();xajax_AlterarFerramCompartilhadasDinamic(".$cod_curso.",".$cod_ferramenta.",".$lista_ferramentas_disp[$i]['cod_ferramenta'].",this.checked)\" type=\"checkbox\" name=\"ferr_comp[]\" value='".$lista_ferramentas_disp[$i]['cod_ferramenta']."'checked>");
         else
-          echo("<input onclick=\"VerificaCheck();\" type=\"checkbox\" name=\"ferr_comp[]\" value='".$lista_ferramentas_disp[$i]['cod_ferramenta']."'>");
+          echo("<input onclick=\"VerificaCheck();xajax_AlterarFerramCompartilhadasDinamic(".$cod_curso.",".$cod_ferramenta.",".$lista_ferramentas_disp[$i]['cod_ferramenta'].",this.checked)\" type=\"checkbox\" name=\"ferr_comp[]\" value='".$lista_ferramentas_disp[$i]['cod_ferramenta']."'>");
         echo("</td>\n");
         echo("                    <td width=\"48%\" align=\"left\">".$nome_ferramenta."</td>\n");
         $k++;
@@ -230,7 +247,7 @@
 
   echo("                </table>\n");
   /* 18 - Ok (gen)*/
-  echo("                <div align=\"right\"><input type=\"button\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,18)."' onclick=\"document.frmComp.submit();\"></div>\n");
+  //	echo("                <div align=\"right\"><input type=\"button\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,18)."' onclick=\"document.frmComp.submit();\"></div>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");

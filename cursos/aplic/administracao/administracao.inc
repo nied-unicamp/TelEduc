@@ -1257,6 +1257,26 @@ function RetornaFerramCompartilhaveis ($sock)
   return $lista_ferramentas_disp;
 }
 
+/* *********************************************************************
+   VerificaFerramCompartilhada - retorna true se a ferramenta passada
+   por parâmetro está compartilhada
+   entrada:  $sock - conexao com base do curso
+			 $cod_curso
+			 $cod_ferramenta - Código da Ferramenta para verificar
+   saida:    Boolean - True caso compartilhada, False caso contrário
+*/
+function VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta)
+{
+	$lista_compart = RetornaFerramCompartilhadas($sock, $cod_curso);
+	$tamanho = count($lista_compart);
+	for ($i = 0; $i < $tamanho; $i++)
+	{
+		if ($lista_compart[$i]['cod_ferramenta'] == $cod_ferramenta)
+			return true;
+	}
+	return false;
+}
+
 /* ********************************************************************************
    CompartilhaFerramenta - Insere ferramenta na lista de ferramentas compartilhadas
    entrada:  $sock - conexao com base do curso
@@ -1355,6 +1375,96 @@ $confirma='true';
 $objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
 Desconectar($sock);
 return $objResponse->getXML();
+}
+
+function AlteraTodasFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $status)
+{
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+	$sock = Conectar($cod_curso);
+	$lista_ferramentas_disp = RetornaFerramCompartilhaveis($sock);
+	Desconectar($sock);
+	
+	$sock = Conectar("");
+	$lista_frases = RetornaListaDeFrases($sock, $cod_ferramenta);
+	
+	$tamanho = count($lista_ferramentas_disp); 
+    $confirma = "true";
+    
+	if ($status == 'false')
+		$frase = RetornaFraseDaLista($lista_frases, 300); /* 300 - Todas as Ferramentas foram compartilhadas */
+	else 
+		$frase = RetornaFraseDaLista($lista_frases, 301); /* 301 - Todas as Ferramentas foram descompartilhadas */
+	
+	for($i = 0; $i < $tamanho; $i++) 
+	{
+		$cod_ferramenta_t = $lista_ferramentas_disp[$i]['cod_ferramenta'];
+		if ($status == 'false')
+		{
+			if (VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta_t) == true)
+			{
+				if (DescompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta_t) == false)
+				{
+					$confirma = "false";
+					$frase = RetornaFraseDaLista($lista_frases, 302); /* 302 - Erro ao descompartilhar todas as ferramentas */
+				}
+			}
+		}
+		else
+		{	
+			if (VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta_t) == false)
+			{
+				if (CompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta_t) == false)
+				{
+					$confirma = "false";
+					$frase = RetornaFraseDaLista($lista_frases, 303); /* 303 - Erro ao compartilhar todas as ferramentas */
+				}
+			}
+		}
+	}
+	$objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+	Desconectar($sock);
+	return $objResponse->getXML();
+}
+
+function AlterarFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $cod_ferramenta_compart, $status)
+{
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	$sock = Conectar("");
+	$lista_frases = RetornaListaDeFrases($sock, $cod_ferramenta);
+		
+	if ($status == 'false')
+	{
+		if ((VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta_compart) == false) || 
+			(DescompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta_compart != false)))
+		{
+			$frase = RetornaFraseDaLista($lista_frases, 304); /* 304 - Ferramenta descompartilhada com sucesso */
+			$confirma = "true";			
+		}
+		else
+		{
+			$frase = RetornaFraseDaLista($lista_frases, 305); /* 305 - Erro ao descompartilhar a Ferramenta */
+			$confirma = "false";
+		}
+	}
+	else
+	{	
+			if ((VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta_compart) == true) || 
+				(CompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta_compart) != false))
+		{
+			$frase = RetornaFraseDaLista($lista_frases, 306); /* 306 - Ferramenta compartilhada com sucesso */
+			$confirma = "true";		
+		}
+		else
+		{
+			$frase = RetornaFraseDaLista($lista_frases, 307); /* 307 - Erro em compartilhar a Ferramenta */
+			$confirma = "false";
+		}
+	}
+
+	$objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+	Desconectar($sock);
+	return $objResponse->getXML();	
 }
 
 ?>
