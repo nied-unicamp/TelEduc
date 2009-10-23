@@ -93,7 +93,7 @@
   if ((!isset($_SESSION['forum_ordem']) || $_SESSION['forum_ordem'] == "") && (!isset($_GET['forum_ordem']) || $_GET['forum_ordem'] == "")) {
   	$ordem = 'arvore';
   } else {
-  	/* Se o usuário tentar atualizar a ordenacao, grava na $_SESSION */
+  	/* Se o usuï¿½rio tentar atualizar a ordenacao, grava na $_SESSION */
   	if (isset($_GET['forum_ordem']))
   		$_SESSION['forum_ordem'] = $_GET['forum_ordem'];
   	$ordem = $_SESSION['forum_ordem'];
@@ -177,7 +177,7 @@
     Abre nova janela com o historico de desempenho, se acessado atraves do link
     Entrada: funcao = $cod_curso - Codigo do curso
     Saida:   false - para nao dar reload na pagina. Conferir a
-                     chamada da função
+                     chamada da funï¿½ï¿½o
   */
   echo("    <script type=\"text/javascript\">\n\n");
   echo("function OpenWindowLink(status) \n");
@@ -605,8 +605,7 @@
     echo("		  var sts = document.getElementById('tr_msg_'+cod_msg).style.display;\n");
     echo("		  if ((sts == 'table-row') || (sts == 'block'))\n");
     echo("		  {\n");
-    echo("			mensagens_abertas--;\n");
-    echo("         	document.getElementById('tr_msg_'+cod_msg).style.display=\"none\";\n");
+	echo("			FecharMsg(cod_msg);");
     echo("		  }");
     echo("		  else\n");
     echo("		  {\n");

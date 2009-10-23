@@ -70,7 +70,7 @@
 
   $feedbackObject =  new FeedbackObject($lista_frases);
   $feedbackObject->addAction("nova_msg", 10, 11);
-  $feedbackObject->addAction("apagarMural", 12, 13);
+  $feedbackObject->addAction("apagarMuralAtual", 12, 13);
 
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
@@ -213,6 +213,7 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        relevIni= getLayer(\"relev\");\n");
+    
   echo("        EscondeLayers();\n");
 
   if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
@@ -227,7 +228,6 @@
   if(($todas_abertas==1) && ($existe_mensagem)){
     echo("        ExibirTodasMsgs();\n");
   }
-
 
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
