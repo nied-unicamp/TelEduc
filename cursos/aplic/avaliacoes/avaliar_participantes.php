@@ -1496,7 +1496,7 @@
                     echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
                   else
                     echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
-                    echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                  echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
                 }
               }
               else if($avaliacao_participante)
@@ -1805,15 +1805,15 @@
                   }
                   echo("                    <td align=\"center\">"); 
                   if($portfolio_grupo)
-                    echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(\"".$cod."\",\"".$cod_grupo."\",\"".trim($nome)."\",\"tr_users_".$cod."\"));\">");
+                    echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_users_".$cod."'));\">");
                   else
-                    echo("<span class=\"link\" onClick='return(AvaliarAluno(\"".$cod."\",\"".trim($nome)."\",\"tr_users_".$cod."\"));'>");
+                    echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
                   echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
                 }
                 else if($avaliacao_participante)
                   {
                     echo("                    <td align=\"center\">");
-                    echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(\"".$cod."\",\"".trim($nome)."\",\"tr_users_".$cod."\")\");>");
+                    echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
                   // 66 - Reavaliar
                   echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
                   }
