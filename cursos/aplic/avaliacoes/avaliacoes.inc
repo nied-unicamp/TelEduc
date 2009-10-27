@@ -2699,24 +2699,25 @@ Saida:    true se pode avaliar participante,
 */
 function VerificaAvalicaoParticipantes($sock, $cod_avaliacao)
 {
-$query = "select cod_atividade, ferramenta from Avaliacao where cod_avaliacao=".$cod_avaliacao;
-$res = Enviar($sock, $query);
-$tupla = RetornaLinha($res);
-
-if(strcmp($tupla['ferramenta'],"E")||true)
- return(true);
-else
-{
-  $query = "select objetiva from Exercicios_aplicado where avaliacao=".$cod_avaliacao;
-  $res = Enviar($sock, $query);
-  $linha = RetornaLinha($res);
-  if(!strcmp($linha['objetiva'], "N"))
-  {
-     return(true);
-  }
-  else
-     return(false);
-}
+	$query = "select cod_atividade, ferramenta from Avaliacao where cod_avaliacao=".$cod_avaliacao;
+	$res = Enviar($sock, $query);
+	$tupla = RetornaLinha($res);
+	return true;
+	
+	if(strcmp($tupla['ferramenta'],"E")||true)
+	 return(true);
+	else
+	{
+	  $query = "select objetiva from Exercicios_aplicado where avaliacao=".$cod_avaliacao;
+	  $res = Enviar($sock, $query);
+	  $linha = RetornaLinha($res);
+	  if(!strcmp($linha['objetiva'], "N"))
+	  {
+	     return(true);
+	  }
+	  else
+	     return(false);
+	}
 }
 
 
@@ -4891,8 +4892,6 @@ function AvaliarDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo, $exercicio
 
   Desconectar($sock);
 	
-  $objResponse->addScript("alert('Existe:".$array_exercicio['existe'].";resolvido:".$array_exercicio['resolvido']." ; id:".$id.",; opNota:".$opNota."; opJust: ".$opJust."; opComp:".$opComp."; valueInputNota:".$valueInputNota."; cod_modelo:".$cod_modelo."; opEnviar:".$opEnviar."; cod_aluno:".$cod_aluno_grupo."');");
-  //$objResponse->addAlert($array_exercicio['corrigida']);
   $objResponse->addScript("HabilitaAvaliar('".$id."',".$opNota.",".$opJust.",".$opComp.",".$valueInputNota.",".$cod_modelo.",".$opEnviar.",".$cod_aluno_grupo.");");
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
