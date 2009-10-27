@@ -296,7 +296,14 @@
 
   echo("      function HistoricodoDesempenho(id)\n");
   echo("      {\n");
-  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
+  echo("        docum
+
+    * Criar Avaliação externa
+
+Avaliações Atuais 	Tipo da Avaliação 	Data de início 	Data de Término
+segunda av 	Exercício individual 	27/10/2009 	27/10/2019
+avaliacaoo 	Exercício individual 	27/10/2009 	27/10/2019
+favaliado 	Fórum de Discussão 	27/10/2009 	27/10/2019ent.frmAvaliacao.cod_avaliacao.value = id;\n");
   echo("        document.frmAvaliacao.action = 'historico_desempenho_todos.php'; \n");
   echo("        document.frmAvaliacao.submit();\n");
   echo("      }\n\n");
@@ -462,15 +469,15 @@ $cor_link2[$tela_avaliacao] = "</font>";
 		elseif (!strcmp($linha['Ferramenta'], 'B')) {
 			// 146 - Sessï¿½ de Bate-Papo
 			$ferramenta = RetornaFraseDaLista($lista_frases, 146);
-//		}
-// Comentando parte de exercicios
-//		elseif (!strcmp($linha['Ferramenta'], 'E')) {
-//			if ($linha['tipo'] == 'I')
-//				// 176 - Exercï¿½io Individual
-//				$ferramenta = RetornaFraseDaLista($lista_frases, 176);
-//			elseif ($linha['tipo'] == 'G')
-//			// 174 - Exercï¿½io em Grupo
-//			$ferramenta = RetornaFraseDaLista($lista_frases, 174);
+		}
+
+		elseif (!strcmp($linha['Ferramenta'], 'E')) {
+			if ($linha['tipo'] == 'I')
+				// 176 - Exercï¿½io Individual
+				$ferramenta = RetornaFraseDaLista($lista_frases, 176);
+			elseif ($linha['tipo'] == 'G')
+			// 174 - Exercï¿½io em Grupo
+			$ferramenta = RetornaFraseDaLista($lista_frases, 174);
 		} else
 			if ($linha['Ferramenta'] == 'P') {
 				if ($linha['tipo'] == 'G')
