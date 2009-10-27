@@ -89,7 +89,7 @@ function RetornaBusca($sock,$cod_curso,$cod_usuario,$texto,$tabela,$par1,$par2)
 
       $query.="where ((".$par1." rlike '(^|[^[:alnum:]])".$linha."([^[:alnum:]]|\$)')";
       $query.="or (".$par2." rlike '(^|[^[:alnum:]])".$linha."([^[:alnum:]]|\$)'))";
-    }
+    }	
     else
     {
       //$query.="and (((".$par1." rlike '[ .,:;!?]+".$linha."\$')or(".$par2." rlike '[ .,:;!?]+".$linha."\$'))";
@@ -122,7 +122,7 @@ function RetornaBusca($sock,$cod_curso,$cod_usuario,$texto,$tabela,$par1,$par2)
   if ($tabela=="Pergunta_itens")
     if (!($formador))
       // aluno n�o tem acesso � Lixeira
-      $query.="and cod_topico<>2";
+      $query.="and cod_assunto<>2";
 
   if ($tabela=="Mural")
     // usu�rio n�o tem acesso aos murais apagados
