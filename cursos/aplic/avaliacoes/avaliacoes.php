@@ -296,14 +296,7 @@
 
   echo("      function HistoricodoDesempenho(id)\n");
   echo("      {\n");
-  echo("        docum
-
-    * Criar Avaliação externa
-
-Avaliações Atuais 	Tipo da Avaliação 	Data de início 	Data de Término
-segunda av 	Exercício individual 	27/10/2009 	27/10/2019
-avaliacaoo 	Exercício individual 	27/10/2009 	27/10/2019
-favaliado 	Fórum de Discussão 	27/10/2009 	27/10/2019ent.frmAvaliacao.cod_avaliacao.value = id;\n");
+  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
   echo("        document.frmAvaliacao.action = 'historico_desempenho_todos.php'; \n");
   echo("        document.frmAvaliacao.submit();\n");
   echo("      }\n\n");
