@@ -190,21 +190,23 @@
   	}
   }
   
-  function IncluiUsuarioTabela(cod, nome, login, email)
+  function IncluiUsuarioTabela(cod, nome, login, email,flag)
   {
   	tbody = document.getElementById('tabInterna').children[0];
-  	
   	tr = document.createElement('tr');
 	td_check = document.createElement('td');
 	td_nome = document.createElement('td');
 	td_login = document.createElement('td');
 	td_email = document.createElement('td');
-  	
-	td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
-	td_nome.innerHTML = nome;
+  	if(flag == 'L'){
+		td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
+		td_nome.innerHTML = nome;
+	}
 	td_email.innerHTML = email;
 	td_login.innerHTML = login;
-	
+	if(flag == 'B'){
+		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuário já cadastrado no curso)</span>';
+	}
 	tr.appendChild(td_check);
 	tr.appendChild(td_nome);
 	tr.appendChild(td_email);
