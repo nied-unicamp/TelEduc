@@ -905,36 +905,20 @@ function RetornaListaEscolaridade($sock)
 }
 
 /* *********************************************************************
-   RetornaListaUsuariosGlobal - Retorna a lista de usuarios nao cadastrados no curso
-                                         para a tela inscrever3.php
+   RetornaListaUsuariosGlobal - Retorna a lista de usuarios cadastrados no Sistema
    Entrada: $sock - BASE DO CURSO
    Saida: array com [$cod_usuario]['nome']
                     [$cod_usuario]['login']
                     [$cod_usuario]['senha']
 
 */
-function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$num_registros)
+function RetornaListaUsuariosGlobal($sock,$busca,$inicio,$num_registros)
 {
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-  //Seleciona usuario do curso
-  $query ="select cod_usuario_global
-           from ".$dbnamebase.".Usuario_curso
-           where cod_curso = '".$cod_curso."'";
-  $res=Enviar($sock,$query);
-
-  $array = RetornaArrayLinhas($res);
-
-  foreach($array as $cod => $linha){
-    $usuario_curso[$cod] = $linha['cod_usuario_global'];
-  }
-
-  //Seleciona todos os usuarios, exceto os ja cadastrados no curso
-  $query="select cod_usuario,nome,login,email
+	
+   //Seleciona todos os usuarios, exceto os ja cadastrados no curso
+   $query="select cod_usuario,nome,login,email
           from ".$dbnamebase.".Usuario
-          where cod_usuario NOT IN (".implode($usuario_curso, ",").")
-          and ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
+          where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
           order by nome
           LIMIT ".$inicio." , ".$num_registros;
   
@@ -944,6 +928,29 @@ function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$num_registr
   return $saida;
 }
 
+function RetornaStatusUsuarioCurso($sock,$cod_curso,$cod_usuario){
+  	// 2Session
+  	$objResponse = new xajaxResponse('ISO-8859-1');
+  	
+  	$dbnamebase = $_SESSION['dbnamebase'];
+  	//Seleciona usuario do curso
+  	$query="select count(*) as total
+          from ".$dbnamebase.".Usuario_curso
+          where cod_curso = '".$cod_curso."' and cod_usuario_global='".$cod_usuario."'";
+  	$res=Enviar($sock,$query);
+    $ar = mysql_fetch_array($res);
+    $saida= $ar["total"];
+
+    if($saida==0)
+    	return 'L';
+
+   	else
+   		return 'B';
+   	
+   	
+   	
+  	
+}
 /* ********************************************************************************
    ListaUsuariosPaginaDinamic - busca dinamicamente os usuarios no banco de dados
    								e os adiciona a pagina
@@ -953,18 +960,20 @@ function RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$num_registr
              $busca - string opcional para filtrar resultados
    saida:    XML
 */
+
 function ListaUsuariosPaginaDinamic($pagina, $tam_pagina, $cod_curso, $busca="") {
 	$objResponse = new xajaxResponse('ISO-8859-1');
 	
 	$inicio = ($pagina-1) * $tam_pagina;
 	$sock=Conectar("");
-	$lista = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,$inicio,$tam_pagina);
+	$lista = RetornaListaUsuariosGlobal($sock,$busca,$inicio,$tam_pagina);
 	Desconectar($sock);
-
+	
 	$objResponse->addScriptCall("RemovePaginaAntiga");
 	
 	foreach($lista as $user) {
-		$objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email']);
+		$flag=RetornaStatusUsuarioCurso($sock,$cod_curso,$user['cod_usuario']);
+		$objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email'],$flag);
 	}
 	
 	$objResponse->addScriptCall("IncluiControlePaginacao");
@@ -987,23 +996,10 @@ function RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca="")
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  //Seleciona usuario do curso
-  $query ="select cod_usuario_global
-           from ".$dbnamebase.".Usuario_curso
-           where cod_curso = '".$cod_curso."'";
-  $res=Enviar($sock,$query);
-
-  $array = RetornaArrayLinhas($res);
-
-  foreach($array as $cod => $linha){
-    $usuario_curso[$cod] = $linha['cod_usuario_global'];
-  }
-
   //Conta todos os usuarios, exceto os ja cadastrados no curso
   $query="select count(*) as total
           from ".$dbnamebase.".Usuario
-          where cod_usuario NOT IN (".implode($usuario_curso, ",").")
-          and ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
+          where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
           order by nome";
   $res=Enviar($sock,$query);
 
