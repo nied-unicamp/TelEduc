@@ -159,19 +159,21 @@
   {
     if($visualizar == "I")
     {
-	  /* ? - Exercicios - Exercicios Individuais Disponiveis*/
-  	  $frase = "Exercicios - Exercicios Individuais Disponiveis";
+	  	/* Frase #1 - Exercicios */
+    	/* Frase #107 - Exercicios Individuais Disponiveis */
+  	  $frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 107);
     }
     else if($visualizar == "G")
     {
-	  /* ? - Exercicios - Exercicios em Grupo Disponiveis*/
-  	  $frase = "Exercicios - Exercicios em Grupo Disponiveis";
+	  	/* Frase #1 - Exercicios */ 
+	  	/* Frase #108 -  Exercicios em Grupo Disponiveis */
+  	  $frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 108);
     }
    
 	echo("          <h4>".$frase."</h4>\n");
 	
-  	/*Voltar*/
-  	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
+  	/* Frase #5 - Voltar */
+  	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span>\n");
 
   	echo("          <div id=\"mudarFonte\">\n");
   	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -185,17 +187,17 @@
 
   	echo("                <ul class=\"btAuxTabs\">\n");
   	
-  	/* ? - Exercicios Individuais */
-    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>Exercicios Individuais</a></li>\n");
+  	/* Frase #109 - Exercicios Individuais */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");
     
-    /* ? - Exercicios em Grupo */
-    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>Exercicios em Grupo</a></li>\n");
+    /* Frase #110 - Exercicios em Grupo */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 
-  	/* ? - Biblioteca de Exercicios */
-    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
+  	/* Frase #111 - Biblioteca de Exercicios */
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
   	
-    /* ? - Biblioteca de Questoes */
-    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
+    /* Frase #112 - Biblioteca de Questoes */
+    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
 
   	echo("                </ul>\n");
   	echo("              </td>\n");
@@ -203,8 +205,8 @@
   	echo("            <tr>\n");
     echo("              <td>\n");
     echo("                <ul class=\"btAuxTabs03\">\n");
-    /* ? - Agrupar */
-    echo("                  <li><span onclick=\"MostraLayer(lay_agrupar, 0);\">Agrupar</span></li>\n");
+    /* Frase #113 - Agrupar */
+    echo("                  <li><span onclick=\"MostraLayer(lay_agrupar, 0);\">".RetornaFraseDaLista($lista_frases, 113)."</span></li>\n");
     echo("                </ul>\n");
     echo("              </td>\n");
     echo("            </tr>\n");
@@ -219,23 +221,23 @@
     {
       if($visualizar == "I")
       {
-        // ? - de
-        $aux = " de";
+        /* Frase #114 - de */
+        $aux = RetornaFraseDaLista($lista_frases, 114);
       }
       else if($visualizar == "G")
       {
         // ? - do grupo
-        $aux = " do grupo";
+        /* Frase #115 - do grupo */
+        $aux = RetornaFraseDaLista($lista_frases, 115);
       }
     }
     
-	/* ? - Exercicios */
-	echo("                    <td class=\"alLeft\">Exercicios".$aux."</td>\n");
-    /* ? - Exercicios nao entregues */
-	
-	echo("                    <td width=\"15%\">Exercicios nao entregues</td>\n");
-    /* ? - Exercicios nao corrigidos*/
-	echo("                    <td width=\"15%\">Exercicios nao corrigidos</td>\n");
+	/* Frase #1 - Exercicios */
+	echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 1).$aux."</td>\n");
+  /* Frase #116 - Exercicios nao entregues */
+	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 116)."</td>\n");
+  /* Frase #117 - Exercicios nao corrigidos*/
+	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 117)."</td>\n");
 	echo("                  </tr>\n");
 
 	/* Monta a tabela:
@@ -258,8 +260,8 @@
     else
   {
       echo("                  <tr>\n");
-      /* ? - Nao ha nenhum exericio */
-      echo("                    <td colspan=\"7\">Nao ha nenhum exericio</td>\n");
+      /* Frase #118 - Nao ha nenhum exericio */
+      echo("                    <td colspan=\"7\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
       echo("                  </tr>\n");
   }
 
@@ -267,17 +269,18 @@
 	echo("              </td>\n");
   	echo("            </tr>\n");
   	echo("          </table>\n");
-    echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+  	/* Frase #5 - Voltar */
+    echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
   }
   else
   {
-    //*NAO �FORMADOR*/
-	/* 1 - Enquete */
-  	/* 37 - Area restrita ao formador. */
-  	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,37)."</h4>\n");
+    /* Nao Formador */
+		/* Frase #1 - Exercicios */
+  	/* Frase #74 - Area restrita ao formador. */
+  	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,74)."</h4>\n");
 	
-        /*Voltar*/
-        echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+        /* Frase #5 - Voltar */
+        echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");
 
         echo("          <div id=\"mudarFonte\">\n");
         echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -296,12 +299,12 @@
   
   if($tela_formador)
   {
-  	/* Agrupar*/
+  	/* Agrupar */
   	echo("    <div id=\"layer_agrupar\" class=popup>\n");
   	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_agrupar);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <div class=ulPopup>\n");    
-  	/* ? - Agrupar por: */
+  	/* Frase #119 - Agrupar por: */
   	echo("            Agrupar por:<br />\n");
   	echo("            <select class=\"input\" id=\"agrupamento\">");
   	if($visualizar == "I")
