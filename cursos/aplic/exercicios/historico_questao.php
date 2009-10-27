@@ -69,11 +69,11 @@
 
   /* PÃ¡gina Principal */
 
-  // ? - Exercicios - Editar Questao
-  $cabecalho = ("<br /><br /><h4>Exercicios - Editar Questao");
-
-  /* ? - Historico */
-  $cabecalho.= (" - Historico</h4>\n");
+  /* Frase #1 - Exercicios */
+  /* Frase #56 - Historico */
+  $cabecalho = "<br /><br /><h4>";
+	$cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56);
+  $cabecalho.= ("</h4>\n");
   echo($cabecalho);
   echo ("<br />\n");
 
@@ -102,12 +102,12 @@
   echo("        <td>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
-  /* ? - AÃ§Ã£o */
-  echo("              <td><b>Acao</b></td>\n");
-  /* ? - Data */
-  echo("              <td><b>Data</b></td>\n");
-  /* ? - UsuÃ¡rio */
-  echo("              <td><b>Usuario</b></td>\n");
+  /* Frase #134 - Acao */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 134)."</b></td>\n");
+  /* Frase #69 - Data */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 69)."</b></td>\n");
+  /* Frase #135 - Usuario */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 135)."</b></td>\n");
   echo("            </tr>\n");
 
   $res = RetornaResHistoricoDaQuestao($sock, $cod_questao);
@@ -122,23 +122,16 @@
 
       switch ($linha['acao']){
 
-                  /* 40 - Criaï¿½o */
-        case ('C'): $acao=RetornaFraseDaLista($lista_frases,162); break;
-                  /* 39 - Ediï¿½o Cancelada */
-        case ('D'): $acao=RetornaFraseDaLista($lista_frases,163); break;
-                  /* 43 - Em Ediï¿½o */
-        //case ('E'): $acao=RetornaFraseDaLista($lista_frases,43); break;
-        case ('E'): $acao="Em edição"; break;
-                  /* 37 - Ediï¿½o Finalizada */
-        //case ('F'): $acao=RetornaFraseDaLista($lista_frases,37); break;
-        case ('F'): $acao="Edição finalizada"; break;
-                  /* 42 - Movida para histÃ³rico */
-        case ('H'): $acao=RetornaFraseDaLista($lista_frases,164); break;
-                  /* 41 - Ativada */
-        //case ('A'): $acao=RetornaFraseDaLista($lista_frases,41); break;
-        case ('A'): $acao="Ativada"; break;
-                  /* 38 - Desconhecida */
-        default: $acao=RetornaFraseDaLista($lista_frases,38); break;
+        /* Frase #136 - Criacao */
+        case ('C'): $acao=RetornaFraseDaLista($lista_frases,136); break;
+       	/* Frase #140 - Edicao Cancelada */
+        case ('D'): $acao=RetornaFraseDaLista($lista_frases,140); break;
+        /* Frase #141 - Em Edicao */
+        case ('E'): $acao=RetornaFraseDaLista($lista_frases,141); break;
+        /* Frase #142 - Edicao Finalizada */
+        case ('F'): $acao=RetornaFraseDaLista($lista_frases,142); break;
+        /* Frase #139 - Desconhecida */
+        default: $acao=RetornaFraseDaLista($lista_frases,139); break;
       }
 
       echo("            <tr>\n");
