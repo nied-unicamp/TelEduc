@@ -68,11 +68,11 @@
 
   /* PÃ¡gina Principal */
 
-  // ? - Exercicios - Editar Questao
-  $cabecalho = ("<br /><br /><h4>Exercicios - Editar Exercício");
-
-  /* ? - Historico */
-  $cabecalho.= (" - Historico</h4>\n");
+  /* Frase #1 - Exercicios */
+  /* Frase #56 - Historico */
+  $cabecalho = "<br /><br /><h4>";
+	$cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56);
+  $cabecalho.= ("</h4>\n");
   echo($cabecalho);
   echo ("<br />\n");
 
@@ -101,12 +101,12 @@
   echo("        <td>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
-  /* ? - AÃ§Ã£o */
-  echo("              <td><b>Acao</b></td>\n");
-  /* ? - Data */
-  echo("              <td><b>Data</b></td>\n");
-  /* ? - UsuÃ¡rio */
-  echo("              <td><b>Usuario</b></td>\n");
+  /* Frase #134 - Acao */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 134)."</b></td>\n");
+  /* Frase #69 - Data */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 69)."</b></td>\n");
+  /* Frase #135 - Usuario */
+  echo("              <td><b>".RetornaFraseDaLista($lista_frases, 135)."</b></td>\n");
   echo("            </tr>\n");
 
   $res = RetornaResHistoricoDoExercicio($sock, $cod_exercicio);
@@ -121,14 +121,14 @@
 
       switch ($linha['acao']){
 
-                  /* 40 - Criação */
-        case ('C'): $acao=RetornaFraseDaLista($lista_frases,162); break;
-        		  /* ? -  Aplicada */
-        case ('P'): $acao="Aplicada"; break;
-        		  /* ? -  Cancelada aplicação */
-        case ('E'): $acao="Cancelada aplicação"; break;
-                  /* 38 - Desconhecida */
-        default: $acao=RetornaFraseDaLista($lista_frases,38); break;
+        /* Frase #136 - Criacao */
+        case ('C'): $acao=RetornaFraseDaLista($lista_frases,136); break;
+        /* Frase #137 - Aplicada */
+        case ('P'): $acao=RetornaFraseDaLista($lista_frases,137); break;
+        /* Frase #138 - Cancelada aplicacao */
+        case ('E'): $acao=RetornaFraseDaLista($lista_frases,138); break;
+        /* Frase #139 - Desconhecida */
+        default: $acao=RetornaFraseDaLista($lista_frases,139); break;
       }
 
       echo("            <tr>\n");
