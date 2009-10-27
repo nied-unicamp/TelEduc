@@ -1010,9 +1010,10 @@ else
 
 $res=Enviar($sock,$query);
 $lista=RetornaLinha($res);
-if(count($lista['cod_resolucao'])>0)
- return($exercicio['cod_exercicio']);
-else
+if(count($lista['cod_resolucao'])>0){
+	$exercicio['cod_resolucao'] = $lista['cod_resolucao'];
+	return($exercicio);
+}else
  return(0); 
 
 }
