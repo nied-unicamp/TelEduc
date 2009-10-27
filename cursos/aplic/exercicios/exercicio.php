@@ -236,7 +236,7 @@
 	echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 1).$aux."</td>\n");
   /* Frase #116 - Exercicios nao entregues */
 	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 116)."</td>\n");
-  /* Frase #117 - Exercicios nao corrigidos*/
+  /* Frase #117 - Exercicios nao corrigidos */
 	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 117)."</td>\n");
 	echo("                  </tr>\n");
 
