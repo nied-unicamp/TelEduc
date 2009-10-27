@@ -27,6 +27,12 @@ a { color:#2a6686; text-decoration:none; font-weight:bold; font-size:1.0em; }
 a:visited { color:#4181a3; text-decoration:none; }
 a:hover { color:#1c4c66; text-decoration:underline; }
 
+/*classe para span*/
+
+span.paginacao{
+	cursor:pointer;
+	}
+
 /* -------------------------------------------
 	TITULOS
 ---------------------------------------------- */
@@ -123,6 +129,10 @@ font-size: 1.25em;
 	background:#f3f0e6;
 	font-size:1.0em;
 }
+.aviso {
+	font-size:1.0em;
+	color:#FF0000;
+}	
 
 span.link { display:inline; cursor:pointer; color:#2a6686;}
 span.link:hover, span.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
