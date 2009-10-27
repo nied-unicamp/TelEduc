@@ -372,10 +372,10 @@ if (!isset($SalvarEmArquivo))
 		echo("          return false;\n");
 		echo("}\n");
 
-		echo("        function VerExercicio(cod_modelo, cod_dono) \n");
+		echo("        function VerExercicio(cod_exercicio, cod_resolucao, cod_dono) \n");
 		echo("        { \n");
 		$param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes'";
-		echo("           window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono='+cod_dono+'&cod_modelo='+cod_modelo+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
+		echo("           window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod='+cod_dono+'&cod_exercicio='+cod_exercicio+'&cod_resolucao='+cod_resolucao+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
 		echo("          return(false);\n");
 		echo("} \n");
 	}
@@ -1366,7 +1366,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 				if (!isset($SalvarEmArquivo))
 				{
 					$cod_modelo = RetornaCodigoAtividade($sock, $cod_avaliacao);
-					echo("<a href=# onClick=\"return(VerExercicio(".$cod_modelo.",".$cod_grupo."));\">".$num_itens."</a></td>\n");
+					echo("<a href=# onClick=\"return(VerExercicio(".$cod_modelo.",0,".$cod_grupo."));\">".$num_itens."</a></td>\n");
 				}
 				else
 				echo($num_itens."</td>\n");
@@ -1662,11 +1662,11 @@ else
 			}
 			elseif(!strcmp($dados['Ferramenta'],'E'))
 			{
-				$cod_modelo=RespondeuExercicio($sock,$cod_avaliacao,$cod,$exercicio_grupo);
-				if($cod_modelo!=0)
+				$exercicio=RespondeuExercicio($sock,$cod_avaliacao,$cod,$exercicio_grupo);
+				if($exercicio['cod_exercicio']!=0)
 				{
 	    if (!isset($SalvarEmArquivo))
-	    echo("                   <td align=center><a href# onClick=\"return(VerExercicio(".$cod_modelo.",".$cod."));\">1</td>\n");
+	    echo("                   <td align=center><a href# onClick=\"return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));\">1</td>\n");
 	    else
 	    echo("                   <td align=center>1</td>\n");
 				}
@@ -1960,11 +1960,11 @@ else
 
 				elseif(!strcmp($dados['Ferramenta'],'E'))
 				{
-					$cod_modelo=RespondeuExercicio($sock,$cod_avaliacao,$cod,$exercicio_grupo);
-					if($cod_modelo!=0)
+					$exercicio=RespondeuExercicio($sock,$cod_avaliacao,$cod,$exercicio_grupo);
+					if($exercicio['cod_exercicio']!=0)
 					{
 						if (!isset($SalvarEmArquivo))
-						echo("                    <td align=center><a href# onClick=return(VerExercicio(".$cod_modelo.",".$cod."));>1</td>\n");
+						echo("                    <td align=center><a href# onClick=return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));>1</td>\n");
 						else
 						echo("                    <td align=center>1</td>\n");
 					}
