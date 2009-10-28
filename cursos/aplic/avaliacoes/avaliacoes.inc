@@ -701,7 +701,7 @@ return RetornaLinha($res);
 
 /* ********************************************************************************
 RetornaDadosNotaGrupoStatusF - Retorna a nota do aluno ,caso exista, pertencente ao grupo designado, cujo status da nota 
-                        seja 'F'
+                        seja 'F' ou 'A'
 Entrada:  $sock - BASE DO CURSO
           $cod_grupo - Cdigo do grupo
           $cod_avaliacao - Cdigo da avalia�o
@@ -712,7 +712,7 @@ function RetornaDadosNotaGrupoStatusF($sock,$cod_grupo,$cod_avaliacao,$usr_forma
 {
   $cod_aluno=RetornaCodAlunoMaisNotasnoGrupo($sock,$cod_avaliacao,$cod_grupo);
 
-  $query="select cod_nota,data,nota,tipo_compartilhamento from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao." and status='F' and cod_aluno=".$cod_aluno." order by cod_nota desc";
+  $query="select cod_nota,data,nota,tipo_compartilhamento from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao." and (status='F' || status='A') and cod_aluno=".$cod_aluno." order by cod_nota desc";
   $res=Enviar($sock,$query);
 
   return RetornaLinha($res);
@@ -729,7 +729,7 @@ Saida:   cod_nota,nota,tipo_compartilhamento
 function RetornaDadosNotaGrupo($sock, $cod, $cod_avaliacao,$cod_usuario,$usr_formador,$cod_aluno)
 {
 $sair=0;
-$query="select cod_nota,data,nota,tipo_compartilhamento from Avaliacao_notas where cod_grupo=".$cod." and cod_aluno=".$cod_aluno." and cod_avaliacao=".$cod_avaliacao." and status='F' order by cod_nota desc";
+$query="select cod_nota,data,nota,tipo_compartilhamento from Avaliacao_notas where cod_grupo=".$cod." and cod_aluno=".$cod_aluno." and cod_avaliacao=".$cod_avaliacao." and (status='F' || status='A') order by cod_nota desc";
 $res=Enviar($sock,$query);
 if (RetornaNumLinhas($res) > 0)
 {
@@ -2895,15 +2895,14 @@ function RetornaExercicioResolvido($sock, $cod_avaliacao, $cod_grupo)
   $res = Enviar($sock, $query);
   $cod_exercicio = RetornaLinha($res);
 
-  $query = "select status from Exercicios_resolucao where cod_modelo = ".$cod_exercicio[0]." and cod_grupo = ".$cod_grupo;
+  $query = "select corrigida from Exercicios_resolucao where cod_resolucao = ".$cod_exercicio[0]." and cod_grupo = ".$cod_grupo;
                                                                                                                             
   $res = Enviar($sock, $query);
   $tupla = RetornaLinha($res);
                                                                    
-  if(($tupla[0]=='S')||($tupla[0]=='C')||($tupla[0]=='G')||($tupla[0]=='N'))                                                        
-    return 1;
-  else
-    return 0;
+  if($tupla[0]== 'S')
+  	return 1;
+  return 0;
 }
 
 /* *******************************************************************
@@ -5134,6 +5133,27 @@ function RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario){
   	$cod_atividade=$dados['Cod_atividade'];
   	
 	$query = "select nota from Exercicios_resolucao where cod_usuario=".$cod_usuario." and cod_exercicio=".$cod_atividade;
+	$res = Enviar($sock, $query);
+	$retorno = RetornaLinha($res);
+	$nota = $retorno['nota'];
+	
+	return $nota;
+}
+
+/* ***************************************************************************
+RetornaNotaExercicioGrupo - Retorna a nota do grupo em determinado exercicio pela tabela de exercicio
+    entradas: 	$sock
+    			$cod_usuario
+    			$cod_avaliacao -> usado para descobrir o cod_exercicio == cod_atividade
+    saida: 		$nota - Nota do grupo
+*/
+
+function RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_grupo){
+	// retornar todas as notas visiveis ao usuario
+	$dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
+  	$cod_atividade=$dados['Cod_atividade'];
+  	
+	$query = "select nota from Exercicios_resolucao where cod_grupo=".$cod_grupo." and cod_exercicio=".$cod_atividade;
 	$res = Enviar($sock, $query);
 	$retorno = RetornaLinha($res);
 	$nota = $retorno['nota'];

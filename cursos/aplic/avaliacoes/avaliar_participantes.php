@@ -1365,8 +1365,8 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 				echo("                    <td align=center>");
 				if (!isset($SalvarEmArquivo))
 				{
-					$cod_modelo = RetornaCodigoAtividade($sock, $cod_avaliacao);
-					echo("<a href=# onClick=\"return(VerExercicio(".$cod_modelo.",0,".$cod_grupo."));\">".$num_itens."</a></td>\n");
+					$cod_resolucao = RetornaCodigoAtividade($sock, $cod_avaliacao);
+					echo("<a href=# onClick=\"return(VerExercicio(".$cod_resolucao.",0,".$cod_grupo."));\">".$num_itens."</a></td>\n");
 				}
 				else
 				echo($num_itens."</td>\n");
@@ -1397,7 +1397,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 				$tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
 				$cod_nota=$dados_nota['cod_nota'];
 				//$nota=$dados_nota['nota'];
-				$nota=RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario);
+				$nota=RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_usuario);
 
 				// booleano que indica se a nota estah vazia
 				$nota_vazia = ($nota == '');
