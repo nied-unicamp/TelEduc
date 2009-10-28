@@ -79,14 +79,11 @@ if($visualizar == "I"){
 	$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
 	
 } else if($visualizar == "G"){
-	
-	$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
-
+	//$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
 	if ($cod_grupo_exercicio != NULL){
-		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
 		AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
+		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$_GET['cod']);
 	}
-	
 }
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 // verificamos se a ferramenta de Avaliacoes está disponivel
