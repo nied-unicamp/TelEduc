@@ -684,7 +684,6 @@
   /* Se o usuario FOR Formador entao exibe os controles. */
   if ($usr_formador)
   {
-    //if ($cod_assunto_pai != 1)
     //echo("    <td align=center class=menu width=1%><input type=checkbox name=\"todas\" onClick=\"MarcaOuDesmarcaTodos();\"></td>\n");
     /* Se NAO estiver na lixeira possibilita a inser��o de assunto. */
     if ($cod_assunto_pai != 2)
@@ -696,18 +695,13 @@
 	  /* 2 - Inserir Assunto */
       echo("      <li><span onClick=\"MostraLayer(layer_novo_assunto, this);document.getElementById('nome_novo_assunto').focus();document.getElementById('nome_novo_assunto').value='';\">".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
  	  /* 25 - Editar Assunto */
-      if ($cod_assunto_pai != 1){
-        echo("      <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
-        /* 63 - Importar Perguntas Frequentes*/
-       echo("    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,63)."</a></li>\n");
-      }
-      /* Se NAO estiver na pasta raiz nem na lixeira possibilita a inser��o de */
+      echo("      <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
+      /* 63 - Importar Perguntas Frequentes*/
+      echo("    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,63)."</a></li>\n");
+      /* Se NAO estiver na lixeira possibilita a inser��o de */
       /* perguntas.                                                            */
-      if ($cod_assunto_pai != 1)
-      {
         /* 3 - Inserir Pergunta */
         echo("      <li><span onClick=\"MostraLayer(layer_nova_pergunta, this);document.getElementById('nome_novo_pergunta').focus();document.getElementById('nome_novo_pergunta').value='';\">".RetornaFraseDaLista($lista_frases,3)."</span></li>\n");        
-      }
     }
   }
 
@@ -748,7 +742,8 @@
   else
     echo("ver_pergunta.php");
 
-  echo(" target='pergunta' onsubmit='return(MostrarSelecionadas());'>\n");
+// talvez nao precise mais?
+// echo(" target='pergunta' onsubmit='return(MostrarSelecionadas());'>\n");
   
   echo("  <form method=post name=frm_pergunta target='pergunta'>");
 
@@ -846,100 +841,95 @@
 	  echo("      </tr>\n");
 	  }
 
-  /* Se o assunto pai NAO for a raiz entao lista as perguntas */
-	if ($cod_assunto_pai != 1)
-  {
-    $lista_perguntas = ListaPerguntas($sock, $cod_assunto_pai);
-    if (count($lista_perguntas) > 0)
+   	$lista_perguntas = ListaPerguntas($sock, $cod_assunto_pai);
+   	if (count($lista_perguntas) > 0)
+   	{
+    	// a acao a tomar se o usuario clicar no link da pergunta varia entre formador
+      	// e aluno, lixeira ou nao
+   	  	if (!$usr_formador)
+     	  	{
+       		// apenas ver a pergunta
+       		$acao_link_abre = "<a class=text href=# onClick='Ver(";
+       
+       		// aqui no meio vai o codigo da pergunta a ver
+       		$acao_link_fecha= ");  return false;'>";
+       
+     		}
+     		else if ($cod_assunto_pai != 2)
+     		{
+       		$acao_link_abre = "<a class=text href=# onClick='selected_item=";
+       
+       		// aqui no meio vai o codigo da pergunta a ver
+       		$acao_link_fecha= " ;MostraLayer(lay_pergunta, this);  return false;'>";
+     		}
+     		else
+     		{
+     			$acao_link_abre = "<a class=text href=# onClick='selected_item=";
+       		// aqui no meio vai o codigo da pergunta a ver
+       		$acao_link_fecha= "  ;MostraLayer(lay_lixeira_pergunta, this);  return false;'>";
+     		}
+      	// Mostra as perguntas:
+      	foreach ($lista_perguntas as $c => $linha_pergunta)
+      	{
+			$teste_pergunta = RetornaPergunta($sock, $linha_pergunta['cod_pergunta']);
+        	$questao_pergunta = $teste_pergunta['pergunta'];
+        	$resposta_pergunta = $teste_pergunta['resposta'];
+			echo("      <tr>\n");
+        	/* Coloca uma caixa de sele�ao para exibi�ao multipla de perguntas */
+        	echo("        <td width=1%>\n");
+        	echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() \">");
+        	echo("        </td>\n");
+	
+        	// Insere a imagem associada aa pergunta 
+			//        echo("        <td class=wtfield width=1%><a class=text href=# onClick='Ver(");
+			//        echo($linha_pergunta['cod_pergunta'].");");
+			//        echo("return(false);'>");
+			//        echo("<img src=\"../figuras/inter.gif\" border=0></a>\n");
+			//        echo("        </td>\n");
+	        // e cria um link nela para o layer
+			//        echo("        <td class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;".$acao_link_abre.$linha_pergunta['cod_pergunta'].$acao_link_fecha.LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
+        	echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");         
+        	echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
+        	echo("      </tr>\n");
+        	echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
+        	echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
+        	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div></td>\n");
+			//      	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
+        
+        	if ($tela_formador)
+        	{
+	        	echo("			<td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+	        	echo("             <ul>\n");
+	        	/* 9 - Editar */
+				echo("              <li><span onclick=\"AlteraTexto(".$linha_pergunta['cod_pergunta'].");\">".RetornaFraseDaLista($lista_frases_geral,9)."</span></li>\n");
+				/* 25 - Mover */
+				//     	echo("              <li><span onclick=MostraLayer(layer_estrutura_mover,".$linha_pergunta['cod_pergunta'].");>".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
+				/*1 - Apagar */
+				//        echo("              <li><span onclick='Apagar(".$linha_pergunta['cod_pergunta'].", 2);'>".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
+	        	echo("			   </ul>\n");
+				echo("          </td>\n");
+	       	}
+			echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>Fechar</a></td>\n");
+			echo("      </tr>\n");
+	    }
+	if (count($lista_assuntos) == 0)
     {
-      // a acao a tomar se o usuario clicar no link da pergunta varia entre formador
-      // e aluno, lixeira ou nao
-      if (!$usr_formador)
-      {
-        // apenas ver a pergunta
-        $acao_link_abre = "<a class=text href=# onClick='Ver(";
-        
-        // aqui no meio vai o codigo da pergunta a ver
-        $acao_link_fecha= ");  return false;'>";
-        
-      }
-      else if ($cod_assunto_pai != 2)
-      {
-        $acao_link_abre = "<a class=text href=# onClick='selected_item=";
-        
-        // aqui no meio vai o codigo da pergunta a ver
-        $acao_link_fecha= " ;MostraLayer(lay_pergunta, this);  return false;'>";
-      }
-      else
-      {
-      	$acao_link_abre = "<a class=text href=# onClick='selected_item=";
-        // aqui no meio vai o codigo da pergunta a ver
-        $acao_link_fecha= "  ;MostraLayer(lay_lixeira_pergunta, this);  return false;'>";
-      }
-
-      // Mostra as perguntas:
-      foreach ($lista_perguntas as $c => $linha_pergunta)
-      {
-		$teste_pergunta = RetornaPergunta($sock, $linha_pergunta['cod_pergunta']);
-        $questao_pergunta = $teste_pergunta['pergunta'];
-        $resposta_pergunta = $teste_pergunta['resposta'];
-		echo("      <tr>\n");
-        /* Coloca uma caixa de sele�ao para exibi�ao multipla de perguntas */
-        echo("        <td width=1%>\n");
-        echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() \">");
-        echo("        </td>\n");
-
-        // Insere a imagem associada aa pergunta 
-//        echo("        <td class=wtfield width=1%><a class=text href=# onClick='Ver(");
-//        echo($linha_pergunta['cod_pergunta'].");");
-//        echo("return(false);'>");
-//        echo("<img src=\"../figuras/inter.gif\" border=0></a>\n");
-//        echo("        </td>\n");
-        // e cria um link nela para o layer
-//        echo("        <td class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;".$acao_link_abre.$linha_pergunta['cod_pergunta'].$acao_link_fecha.LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
-        echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");         
-        echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
-        echo("      </tr>\n");
-        echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
-        echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
-        echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div></td>\n");
-//        echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
-        
-        if ($tela_formador){
-        echo("			<td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-        echo("             <ul>\n");
-        /* 9 - Editar */
-		echo("              <li><span onclick=\"AlteraTexto(".$linha_pergunta['cod_pergunta'].");\">".RetornaFraseDaLista($lista_frases_geral,9)."</span></li>\n");
-		/* 25 - Mover */
-//        echo("              <li><span onclick=MostraLayer(layer_estrutura_mover,".$linha_pergunta['cod_pergunta'].");>".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
-		/*1 - Apagar */
-//        echo("              <li><span onclick='Apagar(".$linha_pergunta['cod_pergunta'].", 2);'>".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
-        echo("			   </ul>\n");
-		echo("          </td>\n");
-        }
-		echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>Fechar</a></td>\n");
-		echo("      </tr>\n");
-      }
-    }
-     else if (count($lista_assuntos) == 0)
-    {
-      echo("      <tr >\n");
-
-      echo("        <td  colspan=3>\n");
-      /* 17 - N�o h� perguntas neste assunto. */
-      echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
-      echo("        </td>\n");
-      echo("      </tr>\n");
-    }
-  }
+		echo("      <tr >\n");
+		echo("        <td  colspan=3>\n");
+	    /* 17 - N�o h� perguntas neste assunto. */
+	    echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
+	    echo("        </td>\n");
+	    echo("      </tr>\n");
+	}
+ }
   
-  echo("    </table>\n");
+	echo("    </table>\n");
   	echo(" <ul>\n");
     /* 16 - Exibir selecionadas ff*/ 
-  	if ($cod_assunto_pai != 1) {
+//  	if ($cod_assunto_pai != 1) {
     echo("    <li id=\"mExibir_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,16)."</span></li>\n");
     echo("    <li id=\"mFechar_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,83)."</span></li>\n");
-  	}
+//  	}
     /* 69 - Apagar selecionadas */
     if ($usr_formador){ 
       
@@ -968,9 +958,6 @@
 //  if( (count($lista_assuntos) == 0) && (count($lista_perguntas) > 0) )
  //       echo("  <tr class=text> <td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
 
-  
-  
-  
   echo("  </form>\n\n");
   echo("  <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a><a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
   echo("  <form name=frmAssuntoAcao method=post>\n");
@@ -1265,7 +1252,7 @@
   echo("      <div class=\"int_popup\">\n");
   echo("        <div class=\"ulPopup\">\n"); 
 
-  echo("          ".EstruturaRecuperarAssunto($sock, 1, $usr_formador));
+  echo("          ".EstruturaRecuperarAssunto($sock, 2, $usr_formador));
 
   echo("        </div>\n");
   echo("      </div>\n");

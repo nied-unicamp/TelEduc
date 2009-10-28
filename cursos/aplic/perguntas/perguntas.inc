@@ -809,8 +809,6 @@ function EstruturaMoverAssunto($sock, $cod_assunto_pai)
   $query1 = "select nome from Pergunta_assuntos where ";
   $query1 .= "cod_assunto = 1";
 
-  
-  
   $res1 = Enviar($sock, $query1);
   $tupla = RetornaLinha($res1);
 
@@ -824,7 +822,6 @@ function EstruturaMoverAssunto($sock, $cod_assunto_pai)
 
   /* Parte do nivel zero.                                               */
   $nivel = 0;
-
 
   if ($cod_assunto_pai == 1)
   /* Se estiver no assunto-raiz entao, cria uma apenas uma string com o */
@@ -907,7 +904,7 @@ function EstruturaRecuperarAssunto($sock, $cod_assunto_pai)
   {
     $caminho = "<img src=\"../imgs/pasta.gif\" border=0>\n";
     $caminho .= "<font class=text>".TruncaString($tupla['nome'], 20)."</font><br>\n";
-
+    
     /* Para cada assunto contido nos sub-assuntos cria os links.        */
     for ($i = 0; $i < $total; $i++)
     {
@@ -926,7 +923,7 @@ function EstruturaRecuperarAssunto($sock, $cod_assunto_pai)
     /* Para cada assunto contido nos sub-assuntos cria os links.        */
     for ($i = 0; $i < $total; $i++)
     {
-      $caminho .= EstruturaRecuperarAssuntoRecur($sock, $tuplas[$i]['cod_assunto'], $cod_assunto_pai, $nivel);
+      $caminho .= EstruturaRecuperarAssuntoProprRecur($sock, $tuplas[$i]['cod_assunto'], $cod_assunto_pai, $nivel);
     }
   }
 
