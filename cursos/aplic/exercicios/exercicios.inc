@@ -2192,10 +2192,10 @@ function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota
 	 	$consulta = "update Exercicios_resolucao_questao_diss SET nota=".$nota."  WHERE cod_resolucao=".$cod_resolucao." AND cod_questao=".$cod_questao;
 		Enviar($sock,$consulta);
 		Desconectar($sock);
-		$feedback = "teste, nota alterada com sucesso";
+		$feedback = "Nota alterada com sucesso";
     }
     else
-		$feedback = "teste, nota nao permitida";
+		$feedback = "Nota não permitida";
     $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
     return $objResponse->getXML();
 }
@@ -2317,6 +2317,8 @@ function EntregaCorrecao($cod_curso, $cod_resolucao)
   	else
   		$soma = $nota1['soma'] + $nota2['soma'];
   	
+  	if(is_null($soma)) $soma = 0;
+  		
   	$update = "UPDATE Exercicios_resolucao SET nota=".$soma." WHERE cod_resolucao =".$cod_resolucao;
   	$res=Enviar($sock, $update);
   
