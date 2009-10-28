@@ -238,8 +238,8 @@
   echo("        var t;");
   echo("        AplicaFiltro();\n"); 
   echo("        AtualizaEstadoPaginacao(pagAtual);\n");
-  //?
-  echo("        mostraFeedback(\"Questoes ordenadas.\",true);\n");
+  /* Frase #143 - Questoes ordenadas. */
+  echo("        mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 143)."\",true);\n");
   echo("      }\n\n");
     
   echo("      function MarcaOuDesmarcaTodos(pagAtual){\n");
@@ -346,15 +346,15 @@
   	echo("      texto=textbox.value;\n");
   	echo("      if (texto==''){\n");
   	echo("        // se nome for vazio, nao pode\n");
-                  /* 15 - O titulo nao pode ser vazio. */
-  	echo("        alert(\"".RetornaFraseDaLista($lista_frases,15)."\");\n");
+                  /* Frase #34 - O titulo nao pode ser vazio. */
+  	echo("        alert(\"".RetornaFraseDaLista($lista_frases,34)."\");\n");
   	echo("        textbox.focus();\n");
   	echo("        return false;\n");
   	echo("      }\n");
   	echo("      // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0\n");
   	echo("      else if ((texto.indexOf(\"\\\\\")>=0 || texto.indexOf(\"\\\"\")>=0 || texto.indexOf(\"'\")>=0 || texto.indexOf(\">\")>=0 || texto.indexOf(\"<\")>=0)&&(!aspas)) {\n");
-                /* 16 - O t�tulo n�o pode conter \\. */
-  	echo("         alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases,16)))."\");\n");
+                	/* Frase #120 - O titulo deve conter apenas numeros, letras e espacos. */
+  	echo("         alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases,120)))."\");\n");
   	echo("        textbox.value='';\n");
   	echo("        textbox.focus();\n");
   	echo("        return false;\n");
@@ -480,11 +480,14 @@
   
   echo("    function Confirma(op){\n");
   echo("        if(op == 'X')\n");
-  echo("          return confirm('Tem certeza que deseja excluir definitivamente as questoes selecionadas?');\n");
+  /* Frase #144 - Tem certeza que deseja excluir definitivamente as questoes selecionadas? */
+  echo("          return confirm('".RetornaFraseDaLista($lista_frases, 144)."');\n");
   echo("        else if(op == 'V')\n");
-  echo("          return confirm('Tem certeza que deseja recuperar os exercicios selecionadas?');\n");
+  /* Frase #145 - Tem certeza que deseja recuperar as questoes selecionadas? */
+  echo("          return confirm('".RetornaFraseDaLista($lista_frases, 145)."');\n");
   echo("        else if(op == 'L')\n");
-  echo("          return confirm('Tem certeza que deseja enviar para lixeira as questoes selecionadas?');\n");
+  /* Frase #146 - Tem certeza que deseja enviar para lixeira as questoes selecionadas? */
+  echo("          return confirm('".RetornaFraseDaLista($lista_frases, 146)."');\n");
   echo("    }\n\n");
   
   echo("    function InsereLinhaVazia(){\n");
@@ -494,19 +497,22 @@
   echo("      tr.setAttribute(\"id\",\"trVazia\");\n");
   echo("	  td = document.createElement(\"td\");\n");
   echo("	  td.colSpan = \"6\";\n");
-  //?
-  echo("	  td.appendChild(document.createTextNode('Nao ha nenhuma questao'));\n");
+  /* Frase #35 - Nao ha nenhuma questao */
+  echo("	  td.appendChild(document.createTextNode('".RetornaFraseDaLista($lista_frases, 35)."'));\n");
   echo("	  tr.appendChild(td);\n");
   echo("	  table.appendChild(tr);\n");
   echo("    }\n\n");
   
   echo("    function RetornaTexto(op){\n");
   echo("        if(op == 'X')\n");
-  echo("          return 'Questao(oes) excluida(s) da lixeira.';\n");
+  /* Frase #147 - Questoes excluidas da lixeira. */
+  echo("          return '".RetornaFraseDaLista($lista_frases, 147)."';\n");
   echo("        else if(op == 'V')\n");
-  echo("          return 'Questao(oes) recuperada(s).';\n");
+  /* Frase #148 - Quetoes recuperadas. */
+  echo("          return '".RetornaFraseDaLista($lista_frases, 148)."';\n");
   echo("        else if(op == 'L')\n");
-  echo("          return 'Questao(oes) enviada(s) para lixeira.';\n");
+  /* Frase #149 - Questoes enviadas para a lixeira. */
+  echo("          return '".RetornaFraseDaLista($lista_frases, 149)."';\n");
   echo("    }\n\n");
     
   echo("    function TratarSelecionados(op){\n");
@@ -547,16 +553,17 @@
 
   if ($tela_formador)
   {
-	/* ? - Exercicios*/
-        /* ? - Biblioteca de Questoes*/
-  	$frase = "Exercicios - Biblioteca de Questoes";
+		/* Frase #1 - Exercicios */
+    /* Frase #112 - Biblioteca de Questoes */
+  	$frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 112);
   	if($visualizar == "L")
-  		$frase = $frase." - Lixeira";
+  		/* Frase #128 - Lixeira */
+  		$frase = $frase." - ".RetornaFraseDaLista($lista_frases, 128);
   
 	echo("          <h4>".$frase."</h4>\n");
 	
-  	/*Voltar*/
-  	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+  	/* Frase #5 - Voltar */
+  	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");
 
   	echo("          <div id=\"mudarFonte\">\n");
   	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -571,17 +578,17 @@
 
   	echo("                <ul class=\"btAuxTabs\">\n");
   	
-    /* ? - Exercicios Individuais */
-    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I'>Exercicios Individuais</a></li>\n");
+  	/* Frase #109 - Exercicios Individuais */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");
     
-    /* ? - Exercicios em Grupo */
-    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G'>Exercicios em Grupo</a></li>\n");
+    /* Frase #110 - Exercicios em Grupo */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 
-    /* ? - Biblioteca de Exercicios */
-    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>Biblioteca de Exercicios</a></li>\n");
-    
-    /* ? - Biblioteca de Questoes */
-    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>Biblioteca de Questoes</a></li>\n");
+  	/* Frase #111 - Biblioteca de Exercicios */
+    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
+  	
+    /* Frase #112 - Biblioteca de Questoes */
+    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
     
   	echo("                </ul>\n");
   	echo("              </td>\n");
@@ -593,14 +600,14 @@
     {
     
       if($cod_exercicio != null)
-        /* ? - Exercicios */
-        echo("                  <li><span onclick=\"document.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."';\">Voltar a edicao do exercicio</span></li>\n");
-      // ? - Nova questao
-      echo("                  <li><span onclick=\"NovaQuestao();\">Nova questao</span></li>\n");
-      // ? - Filtrar
-      echo("                  <li><span onclick=\"MostraLayer(lay_filtro,0);\">Filtrar</span></li>\n");
-      // ? - Lixeira
-      echo("                  <li><span onclick=\"document.location='questoes.php?cod_curso=".$cod_curso."&visualizar=L';\">Lixeira</span></li>\n");
+      	/* Frase #150 - Voltar a edicao do exercicio */
+        echo("                  <li><span onclick=\"document.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."';\">".RetornaFraseDaLista($lista_frases, 150)."</span></li>\n");
+			/* Frase #151 - Nova questao */
+      echo("                  <li><span onclick=\"NovaQuestao();\">".RetornaFraseDaLista($lista_frases, 151)."</span></li>\n");
+      /* Frase #152 - Filtrar */
+      echo("                  <li><span onclick=\"MostraLayer(lay_filtro,0);\">".RetornaFraseDaLista($lista_frases, 152)."</span></li>\n");
+			/* Frase #128 - Lixeira */
+      echo("                  <li><span onclick=\"document.location='questoes.php?cod_curso=".$cod_curso."&visualizar=L';\">".RetornaFraseDaLista($lista_frases, 128)."</span></li>\n");
     }
     echo("                </ul>\n");
     echo("              </td>\n");
@@ -620,8 +627,8 @@
         $ultQuestaoIndex = ($totalQuestoes);
       echo("            <tr class=\"head01\" id=\"trIndicaEstadoPag\">\n");
       echo("              <td colspan=\"6\">\n");
-      /* ? - Questoes     */
-      echo("                Questoes ");
+      /* Frase #59 - Questoes */
+      echo("                ".RetornaFraseDaLista($lista_frases, 59)." ");
       echo("(<span id=\"primQuestaoIndex\"></span>");
       /* ? - a             */
       echo(" a&nbsp;");
@@ -648,18 +655,18 @@
     }else{
       echo("                    <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"MarcaOuDesmarcaTodos(pagAtual);\" /></td>\n");
     }
-	/* ? - T�ulo */
-	echo("                    <td class=\"alLeft\" style=\"cursor:pointer\">Titulo</td>\n");
-	/* ? - Data */
-	echo("                    <td width=\"10%\" style=\"cursor:pointer\">Data</td>\n");
-    /* ? - Topico */
-	echo("                    <td width=\"15%\" style=\"cursor:pointer\">Topico</td>\n");
+	/* Frase #13 - Titulo */
+	echo("                    <td class=\"alLeft\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+	/* Frase #69 - Data */
+	echo("                    <td width=\"10%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 69)."</td>\n");
+  /* Frase #61 - Topico */
+	echo("                    <td width=\"15%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 61)."</td>\n");
 	if($visualizar == "Q")
     {
-      /* ? - Tipo*/
-	  echo("                    <td width=\"12%\" style=\"cursor:pointer\">Tipo</td>\n");
-	  /* ? - Compartilhamento */
-	  echo("                    <td width=\"15%\" style=\"cursor:pointer\">Compartilhamento</td>\n");
+    /* Frase #60 - Tipo */
+	  echo("                    <td width=\"12%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 60)."</td>\n");
+	  /* Frase #57 - Compartilhamento */
+	  echo("                    <td width=\"15%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
     }
 	echo("                  </tr>\n");
 	echo("                </thead>\n");
@@ -686,12 +693,12 @@
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
         
-        /* ?? - Compartilhado com Formadores */
+        /* Frase #6 - Compartilhado com Formadores */
         if($linha_item['tipo_compartilhamento'] == "F")
-          $compartilhamento = "Compartilhado com Formadores";
-        /* ?? - Nao compartilhado */
+          $compartilhamento = RetornaFraseDaLista($lista_frases, 6);
+        /* Frase #8 - Nao compartilhado */
         else
-          $compartilhamento = "Nao compartilhado";
+          $compartilhamento = RetornaFraseDaLista($lista_frases, 8);
         
         if($cod_usuario == $linha_item['cod_usuario'])
           $compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
@@ -718,8 +725,8 @@
     else
     {
       echo("                  <tr>\n");
-      /* ? - Não há nenhuma questao */
-      echo("                    <td colspan=\"6\">Nao ha nenhuma questao</td>\n");
+      /* Frase #35 - Nao ha nenhuma questao */
+      echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 35)."</td>\n");
       echo("                  </tr>\n");
     }
     
@@ -731,8 +738,9 @@
     echo("                <tfoot>\n");
     echo("                  <tr id=\"trIndicePag\">\n");
     echo("                    <td colspan=\"".$colspan."\" align=\"left\" style=\"border-right:none\">\n");
+    /* Frase #153 - clique no cabecalho para ordenar as questoes */
     if($totalQuestoes>1)
-      echo("                      *clique no cabe&ccedil;alho para ordenar as questoes\n");
+      echo("                      *".RetornaFraseDaLista($lista_frases, 153)."\n");
     echo("                    </td>\n");
 
     echo("                    <td colspan=\"".$colspan."\" align=\"right\">\n");
@@ -752,53 +760,54 @@
 	if($visualizar == "Q")
 	{
 	  echo("                <ul>\n");
-      /* ? - Apagar selecionadas */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar selecionadas</span></li>\n");
+      /* Frase #64 - Apagar selecionadas */
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 64)."</span></li>\n");
       if($cod_exercicio == null)
       {
-        /* ? - */
-        echo("                  <li id=\"mIncluir_Selec\" class=\"menuUp\"><span id=\"eincluirSelec\">Incluir selecionadas em um exercicio</span></li>\n");
+        /* Frase #154 - Incluir selecionadas em um exercicio */
+        echo("                  <li id=\"mIncluir_Selec\" class=\"menuUp\"><span id=\"eincluirSelec\">".RetornaFraseDaLista($lista_frases, 154)."</span></li>\n");
       }
       else
       {
-        /* ? - */
-        echo("                  <li id=\"mIncluir_Selec\" class=\"menuUp\"><span id=\"eincluirSelec\">Incluir selecionadas no exercicio</span></li>\n");
+        /* Frase #155 - Incluir selecionadas no exercicio */
+        echo("                  <li id=\"mIncluir_Selec\" class=\"menuUp\"><span id=\"eincluirSelec\">".RetornaFraseDaLista($lista_frases, 155)."</span></li>\n");
       }
       echo("                </ul>\n");
 	}
 	else if($visualizar == "L")
 	{
 	  echo("                <ul>\n");
-      /* ? - Apagar selecionadas */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">Apagar Selecionadas</span></li>\n");
-      /* ? - Recuperar selecionadas */
-      echo(" 					<li id=\"mRecup_Selec\" class=\"menuUp\"><span id=\"recuperarSelec\">Recuperar Selecionadas</span></li>\n");
+      /* Frase #64 - Apagar selecionadas */
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 64)."</span></li>\n");
+      /* Frase #156 - Recuperar selecionadas */
+      echo(" 					<li id=\"mRecup_Selec\" class=\"menuUp\"><span id=\"recuperarSelec\">".RetornaFraseDaLista($lista_frases, 156)."</span></li>\n");
       echo("                </ul>\n");
 	}
 	
 	echo("              </td>\n");
   	echo("            </tr>\n");
   	echo("          </table>\n");
-    echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
-  //*NAO �FORMADOR*/
+  	/* Frase #5 - Voltar */
+    echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+  /* Nao Formador */
   }
   else
   {
-	/* 1 - Enquete */
-  	/* 37 - Area restrita ao formador. */
-  	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,37)."</h4>\n");
+		/* Frase #1 - Exercicios */
+  	/* Frase #74 - Area restrita ao formador. */
+  	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,74)."</h4>\n");
 	
-        /*Voltar*/
-        echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+    /* Frase #5 - Voltar */
+    echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");
 
-        echo("          <div id=\"mudarFonte\">\n");
-        echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-        echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-        echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-        echo("          </div>\n");
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
 
-    	/* 23 - Voltar (gen) */
-    	echo("<input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" />\n");
+   	/* 23 - Voltar (gen) */
+    echo("<input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" />\n");
   }
 
   echo("        </td>\n");
@@ -817,8 +826,8 @@
   	echo("					<input type='hidden' name='acao' value='incluirQuestao'/>");
   	echo("					<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
   	
-  	/* ? - Escolha um exercicio: */
-  	echo("            Escolha um exercicio:<br />\n");
+  	/* Frase #157 - Escolha um exercicio: */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 157)."<br />\n");
   	echo("            <select name='cod_exercicio' class=\"input\" id=\"select_exercicio\">\n");
   	
   	if ((count($lista_exercicios)>0)&&($lista_exercicios != null))
@@ -844,20 +853,22 @@
   	echo("      </div>\n");
   	echo("    </div>\n\n");
   	
-  	  	/* Nova Questao */
+  	/* Nova Questao */
   	echo("    <div id=\"layer_nova_questao\" class=popup>\n");
   	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_questao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <form name=form_nova_questao method=post action=acoes.php onSubmit='return(VerificaNovoTitulo(document.form_nova_questao.novo_titulo, 1));'>\n");
   	echo("          <div class=ulPopup>\n");    
-  	/* ? - Titulo: */
-  	echo("            Titulo:<br />\n");
+  	/* Frase #13 - Titulo */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 13).":<br />\n");
   	echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=150 /><br />\n");
-  	/* ? - Tipo da questao: */
-  	echo("            Tipo da questao:<br />\n");
+  	/* Frase #158 - Tipo da questao */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 158).":<br />\n");
   	echo("            <select class=\"input\" name=\"tp_questao\">");
-  	echo("              <option value=\"O\" selected>Objetiva</option>");
-  	echo("              <option value=\"D\">Dissertativa</option>");
+  	/* Frase #159 - Objetiva */
+  	echo("              <option value=\"O\" selected>".RetornaFraseDaLista($lista_frases, 159)."</option>");
+  	/* Frase #160 - Dissertativa */
+  	echo("              <option value=\"D\">".RetornaFraseDaLista($lista_frases, 160)."</option>");
   	echo("            </select><br /><br />");
   	echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
   	echo("            <input type=hidden name=acao value=criarQuestao />\n");
@@ -888,15 +899,15 @@
   	echo("          <ul class=ulPopup>\n");
   	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores','Q'); EscondeLayers();\">\n");
   	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
-  	/* ?? - Compartilhado com formadores */
-  	echo("              <span>Compartilhado com formadores</span>\n");
+  	/* Frase #6 - Compartilhado com formadores */
+  	echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
   	echo("            </li>\n");
   	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'Q'); EscondeLayers();\">\n");
   	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-  	/* ?? - Nao Compartilhado */
-  	echo("              <span>Nao Compartilhado</span>\n");
+  	/* Frase #8 - Nao Compartilhado */
+  	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
   	echo("            </li>\n");
- 	echo("          </ul>\n");    
+ 		echo("          </ul>\n");    
   	echo("        </form>\n");
   	echo("      </div>\n");
   	echo("    </div>\n");
@@ -906,10 +917,11 @@
   	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_filtro);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <div class=ulPopup>\n");    
-  	/* ? - Topico: */
-  	echo("            Topico:<br />\n");
+  	/* Frase #61 - Topico */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 61).":<br />\n");
     echo("            <select class=\"input\" id=\"topico\">");
-  	echo("              <option value=\"T\" selected>Todos</option>");
+    /* Frase #161 - Todos */
+  	echo("              <option value=\"T\" selected>".RetornaFraseDaLista($lista_frases, 161)."</option>");
     
   	$topicos = RetornaTopicos($sock);
   	
@@ -923,20 +935,27 @@
     }
     
   	echo("            </select><br /><br />");
-  	/* ? - Tipo da questao: */
-  	echo("            Tipo da questao:<br />\n");
+  	/* Frase #158 - Tipo da questao */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 158).":<br />\n");
   	echo("            <select class=\"input\" id=\"tp_questao\">");
-  	echo("              <option value=\"T\" selected>Todas</option>");
-  	echo("              <option value=\"O\">Objetiva</option>");
-  	echo("              <option value=\"D\">Dissertativa</option>");
+  	/* Frase #162 - Todas */
+  	echo("              <option value=\"T\" selected>".RetornaFraseDaLista($lista_frases, 162)."</option>");
+  	/* Frase #159 - Objetiva */
+  	echo("              <option value=\"O\">".RetornaFraseDaLista($lista_frases, 159)."</option>");
+  	/* Frase #160 - Dissertativa */
+  	echo("              <option value=\"D\">".RetornaFraseDaLista($lista_frases, 160)."</option>");
   	echo("            </select><br /><br />");
-  	/* ? - Dificuldade: */
-  	echo("            Dificuldade:<br />\n");
+  	/* Frase #62 - Dificuldade */
+  	echo("            ".RetornaFraseDaLista($lista_frases, 62).":<br />\n");
   	echo("            <select class=\"input\" id=\"dificuldade\">");
-  	echo("              <option value=\"T\" selected>Todas</option>");
-  	echo("              <option value=\"F\">Facil</option>");
-  	echo("              <option value=\"M\">Medio</option>");
-  	echo("              <option value=\"D\">Dificil</option>");
+  	/* Frase #162 - Todas */
+  	echo("              <option value=\"T\" selected>".RetornaFraseDaLista($lista_frases, 162)."</option>");
+  	/* Frase #102 - Facil */
+  	echo("              <option value=\"F\">".RetornaFraseDaLista($lista_frases, 102)."</option>");
+  	/* Frase #101 - Medio */
+  	echo("              <option value=\"M\">".RetornaFraseDaLista($lista_frases, 101)."</option>");
+  	/* Frase #100 - Dificil */
+  	echo("              <option value=\"D\">".RetornaFraseDaLista($lista_frases, 100)."</option>");
   	echo("            </select><br /><br />");
   	/* 18 - Ok (gen) */
   	echo("            <input type=\"button\" id=\"ok_novaquestao\" onClick=\"Filtrar(document.getElementById('topico').value,document.getElementById('tp_questao').value);EscondeLayer(lay_filtro);\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
