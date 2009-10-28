@@ -361,6 +361,7 @@ $cod = $resolucao['cod_usuario'];
 if($resolucao['cod_grupo'] != null)
 {
 	$cod = $resolucao['cod_grupo'];
+	$cod_grupo = $resolucao['cod_grupo'];
 }
 
 /* ? - Voltar */
@@ -594,7 +595,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		{
 			/* Desabilita a radiobox, se ja foi entregue o ex. */
 			$estado = "";
-			if (!($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']))
+			if (!($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))))
 			$estado = "disabled";
 
 			echo("                        <dt class=\"portletHeader\">Alternativas</dt>\n");
@@ -611,7 +612,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			}
 			echo("                          </dd>\n");
 			
-			if ($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
 				echo("													<dd class='portletFooter'><span class='link' onClick='SalvaRespostaQuestaoObj(".$linha_item['cod_questao'].");'>Salvar Resposta</dd>");
 			}
 		}
@@ -631,7 +632,7 @@ if ((count($questoes)>0)&&($questoes != null))
 				echo("                          <dd class=\"portletItem\">\n");
 				echo($comentario."</dd>\n");
 			}
-			if ($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
 				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 			}
 		}
@@ -644,7 +645,7 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 
 echo("                </table>\n");
-if($disponivel && $resolucao['submetida'] == 'N' && $cod_usuario == $resolucao['cod_usuario']){
+if($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))){
 	/* ? - Entregar */
 	echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");

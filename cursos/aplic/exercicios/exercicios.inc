@@ -82,9 +82,21 @@ function RetornaUsuarioPorResolucao($sock, $cod_resolucao){
 	
 	$linha = RetornaLinha($res);
 	
-	return($linha['cod_usuario']);
+	//if($linha['cod_usuario'] != null)
+		return($linha['cod_usuario']);
+	//else
+		//RetornaGrupoPorResolucao($sock, $cod_resolucao)
+	
 }
 
+function RetornaGrupoPorResolucao($sock, $cod_resolucao){
+	
+	$query = "select cod_grupo from Exercicios_resolucao where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
+	$res = Enviar($sock, $query);
+	$linha = RetornaLinha($res);
+	
+	return($linha['cod_grupo']);
+}
 
 /* *********************************************************************
    RetornaExercicios - Retorna array com os exercicios válidos (V), ou seja, que não foram excluídos (X) e 

@@ -197,8 +197,13 @@
   	
   	EntregaExercicio($sock, $cod_resolucao);
 		$cod = RetornaUsuarioPorResolucao($sock, $cod_resolucao);
-  	
-  	header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true");
+		
+  	if($cod == null){
+  		$cod = RetornaGrupoPorResolucao($sock, $cod_resolucao);
+  		header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true&visualizar=G");
+  	}
+  	else
+  		header("Location:ver_exercicios.php?cod_curso=".$cod_curso."&cod=".$cod."&acao=".$acao."&atualizacao=true");
   	
   }
   else if($acao == 'entregarCorrecao')
