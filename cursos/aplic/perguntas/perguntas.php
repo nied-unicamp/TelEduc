@@ -137,7 +137,7 @@
   if ($usr_formador)
   {
     if ($acao == "novaPergunta" && $cod_pergunta != NULL){
-  		echo("ExibirMensagem($cod_pergunta); AlteraTexto($cod_pergunta);");
+  		echo("AlternaMensagem($cod_pergunta); AlteraTexto($cod_pergunta);");
   	}
   	echo("    layer_estrutura_mover = getLayer('layer_estrutura_mover');\n");
   	echo("    layer_estrutura_recuperar = getLayer('layer_estrutura_recuperar');\n");
@@ -189,35 +189,31 @@
   echo(" 	  }\n");
   echo("  var PerguntasAbertas = 0;\n");
 
-  echo("
-  function ExibirSelecionadas(){\n
-  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n
-  	var nPerguntas = Perguntas.length;\n
-  	var i = 0;\n
-  	
-  		for (i = 0; i < nPerguntas; i++)\n
-  			if (Perguntas[i].checked){\n
-  				ExibirMensagem(Perguntas[i].value);\n
-  			}\n
-  	}
+  echo("function ExibirSelecionadas(){\n");
+  echo("	var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
+  echo("	var nPerguntas = Perguntas.length;\n");
+  echo("	var i = 0;\n");
+  echo("	");
+  echo("		for (i = 0; i < nPerguntas; i++)\n");
+  echo("			if (Perguntas[i].checked){\n");
+  echo("				ExibirMensagem(Perguntas[i].value);\n");
+  echo("			}\n");
+  echo("	}");
   
-  ");
+  echo("   function FecharSelecionadas(){\n");
+  echo("	");
+  echo("  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
+  echo("  	var nPerguntas = Perguntas.length;\n");
+  echo("  	var i = 0;\n");
+  echo("	"); 	
+  echo("  		for (i = 0; i < nPerguntas; i++)\n");
+  echo("  			if (Perguntas[i].checked){\n");
+  echo("  				FechaMensagem(Perguntas[i].value);\n");
+  echo("			}\n");
+  echo("	");
+  echo("  }\n");
   
-    echo("
-  function FecharSelecionadas(){\n
 
-  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n
-  	var nPerguntas = Perguntas.length;\n
-  	var i = 0;\n
- 	
-  		for (i = 0; i < nPerguntas; i++)\n
-  			if (Perguntas[i].checked){\n
-  				FechaMensagem(Perguntas[i].value);\n
-			}\n
-    
-  }\n
-  
-  ");
   
   echo("  function HabilitaBotoes(){");
   if ($usr_formador){
@@ -912,17 +908,17 @@
 			echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>Fechar</a></td>\n");
 			echo("      </tr>\n");
 	    }
-	if (count($lista_assuntos) == 0)
+   	}
+	else if (count($lista_assuntos) == 0)
     {
 		echo("      <tr >\n");
 		echo("        <td  colspan=3>\n");
-	    /* 17 - N�o h� perguntas neste assunto. */
-	    echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
-	    echo("        </td>\n");
-	    echo("      </tr>\n");
+	   	/* 17 - N�o h� perguntas neste assunto. */
+	   	echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
+	   	echo("        </td>\n");
+	   	echo("      </tr>\n");
 	}
- }
-  
+ 	 
 	echo("    </table>\n");
   	echo(" <ul>\n");
     /* 16 - Exibir selecionadas ff*/ 
@@ -1252,7 +1248,7 @@
   echo("      <div class=\"int_popup\">\n");
   echo("        <div class=\"ulPopup\">\n"); 
 
-  echo("          ".EstruturaRecuperarAssunto($sock, 2, $usr_formador));
+  echo("          ".EstruturaRecuperarAssunto($sock, 0, $usr_formador));
 
   echo("        </div>\n");
   echo("      </div>\n");

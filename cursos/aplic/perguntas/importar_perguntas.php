@@ -832,7 +832,7 @@ echo("      function ExibirMensagem(cod_mural)\n");
   echo("      <div class=\"int_popup\">\n");
   echo("        <div class=\"ulPopup\">\n"); 
 
-  echo("          ".EstruturaRecuperarAssunto($sock, 1, $usr_formador));
+  echo("          ".EstruturaRecuperarAssunto($sock, 0, $usr_formador));
 
   echo("        </div>\n");
   echo("      </div>\n");

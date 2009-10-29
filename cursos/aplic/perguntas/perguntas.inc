@@ -897,35 +897,38 @@ function EstruturaRecuperarAssunto($sock, $cod_assunto_pai)
   /* Parte do nivel zero.                                               */
   $nivel = 0;
 
-
-  if ($cod_assunto_pai == 1)
-  /* Se estiver no assunto-raiz entao, cria uma apenas uma string com o */
-  /* nome do assunto-raiz e chama a fun�ao EstruturaMoverAssuntoPropr.  */
-  {
-    $caminho = "<img src=\"../imgs/pasta.gif\" border=0>\n";
-    $caminho .= "<font class=text>".TruncaString($tupla['nome'], 20)."</font><br>\n";
-    
-    /* Para cada assunto contido nos sub-assuntos cria os links.        */
-    for ($i = 0; $i < $total; $i++)
-    {
-      $caminho .= EstruturaRecuperarAssuntoPropr($sock, $tuplas[$i]['cod_assunto'], $nivel);
-    }
-  }
-  else
-  /* Se NAO estiver no assunto-raiz entao, cria um link para o       */
-  /* assunto-raiz.                                                   */
-  {
-    $caminho .= "<img src=\"../imgs/pasta.gif\" border=0>\n";
+//T  if ($cod_assunto_pai == 1)
+//T  /* Se estiver no assunto-raiz entao, cria uma apenas uma string com o */
+//T  /* nome do assunto-raiz e chama a fun�ao EstruturaMoverAssuntoPropr.  */
+//T  {
+//T    $caminho = "<img src=\"../imgs/pasta.gif\" border=0>\n";
+//T    $caminho .= "<font class=text>".TruncaString($tupla['nome'], 20)."</font><br>\n";
+//T    
+//T    /* Para cada assunto contido nos sub-assuntos cria os links.        */
+//T    for ($i = 0; $i < $total; $i++)
+//T    {
+//T      $caminho .= EstruturaRecuperarAssuntoPropr($sock, $tuplas[$i]['cod_assunto'], $nivel);
+//T    }
+//T  }
+//T  else
+//T  /* Se NAO estiver no assunto-raiz entao, cria um link para o       */
+//T  /* assunto-raiz.                                                   */
+//T  {
+    $caminho .= "<a class=link href=# onClick='RecuperarPergunta";
+    $caminho .= "(selected_item, 1, 1);return(false);'>";
+    $caminho .= "<img src=\"../imgs/pasta.gif\" border=0></a>\n";
     /* Mantem o parametro 'proprietario' da fun�ao javascript         */
     /* MoverAssunto(origem, destino, proprietario) constante em  1    */
     /* (assunto-raiz).                                                */
-    $caminho .= TruncaString($tupla['nome'], 20)."<br>\n";
-    /* Para cada assunto contido nos sub-assuntos cria os links.        */
+    $caminho .= "<a class=link href=# onClick='RecuperarPergunta";
+    $caminho .= "(selected_item, 1, 1);return(false);'>";
+    $caminho .= TruncaString($tupla['nome'], 20)."</a><br>\n";
+    
     for ($i = 0; $i < $total; $i++)
     {
       $caminho .= EstruturaRecuperarAssuntoProprRecur($sock, $tuplas[$i]['cod_assunto'], $cod_assunto_pai, $nivel);
     }
-  }
+//T  }
 
   return($caminho);
 }
