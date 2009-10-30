@@ -502,7 +502,7 @@
   echo("                Digite o nome do item a ser criado aqui: <br />\n");
 
   echo("                <input class=\"input\" type=\"text\" name=\"titulo\" id=\"titulo\" value=\"".$titulo."\" maxlength=\"150\" /><br />\n");
-  echo("                <input type=\"hidden\" name=\"tipo_compartilhamento\" value=\"P\" />\n");
+  echo("                <input type=\"hidden\" name=\"tipo_compartilhamento\" value=\"T\" />\n");
   echo("                <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
   echo("                <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");
   echo("                <input type=\"hidden\" name=\"cod_propriet\" value=\"".$cod_propriet."\" />\n");
