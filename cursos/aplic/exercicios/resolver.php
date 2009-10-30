@@ -252,8 +252,9 @@ if ($resolucao['submetida'] == 'N'){
 /* Salva a resposta da questao no banco de dados, se for uma questao objetiva
  * a funcao converte para a reposta tipo "00010".
  */
+/* Frase #171 - Resposta gravada */
 echo("				function SalvaRespostaQuestao(cod_questao, resposta, tipo_questao){
-								xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",tipo_questao);\n");
+								xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",tipo_questao);\n");
 echo("      	}");
 
 echo("				function SalvaRespostaQuestaoDiss(cod_questao){
