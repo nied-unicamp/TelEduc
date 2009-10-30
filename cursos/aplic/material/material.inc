@@ -907,7 +907,7 @@ function IniciaCriacao ($sock, $tabela, $cod_topico, $cod_usuario, $cod_curso, $
 {
   $cod_item=RetornaProximoCodigo($sock, $tabela."_itens");
   $posicao=UltimaPosicaoLivre($sock, $tabela, $cod_topico);
-  $consulta="insert into ".$tabela."_itens (cod_item, cod_topico, cod_usuario, titulo, data, posicao_item, status, inicio_edicao, tipo_compartilhamento) values (".$cod_item.", ".$cod_topico.", ".$cod_usuario.", '".$novo_nome."', ".time().", ".$posicao.", 'L', ".time().", 'F')";
+  $consulta="insert into ".$tabela."_itens (cod_item, cod_topico, cod_usuario, titulo, data, posicao_item, status, inicio_edicao, tipo_compartilhamento) values (".$cod_item.", ".$cod_topico.", ".$cod_usuario.", '".$novo_nome."', ".time().", ".$posicao.", 'L', ".time().", 'T')";
   $res=Enviar($sock, $consulta);
   $consulta="insert into ".$tabela."_itens_historicos values (".$cod_item.", ".$cod_usuario.", ".time().", 'C')";
   $res=Enviar($sock, $consulta);
