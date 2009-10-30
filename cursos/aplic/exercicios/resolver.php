@@ -545,7 +545,8 @@ if ((count($questoes)>0)&&($questoes != null))
 
 		if(count($lista_arq) > 0 || $lista_arq != null)
 		{
-			echo("                        <dt class=\"portletHeader\">Arquivos</dt>\n");
+			/* Frase #12 - Arquivos */
+			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 12)."</dt>\n");
 			echo("                          <dd class=\"portletItem\">\n");
 			foreach ($lista_arq as $cod => $linha_arq)
 			{
