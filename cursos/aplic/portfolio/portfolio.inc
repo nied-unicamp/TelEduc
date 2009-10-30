@@ -1657,7 +1657,7 @@ function IniciaCriacao ($sock, $cod_topico, $cod_usuario, $cod_grupo, $cod_curso
     $cod_grupo="NULL";
   $cod_item=RetornaProximoCodigo($sock, "Portfolio_itens");
   $posicao=UltimaPosicaoLivre($sock, $cod_topico);
-  $consulta="insert into Portfolio_itens (cod_item, cod_topico, cod_usuario, cod_grupo, titulo, data, posicao_item, status, inicio_edicao, tipo_compartilhamento) values (".$cod_item.", ".$cod_topico.", ".$cod_usuario.", ".$cod_grupo.", '".htmlentities($titulo)."', ".$data.", ".$posicao.", 'L', ".$data.", 'P')";
+  $consulta="insert into Portfolio_itens (cod_item, cod_topico, cod_usuario, cod_grupo, titulo, data, posicao_item, status, inicio_edicao, tipo_compartilhamento) values (".$cod_item.", ".$cod_topico.", ".$cod_usuario.", ".$cod_grupo.", '".htmlentities($titulo)."', ".$data.", ".$posicao.", 'L', ".$data.", 'T')";
   $res=Enviar($sock, $consulta);
   $consulta="insert into Portfolio_itens_historicos values (".$cod_item.", ".$cod_usuario.", ".$data.", 'C')";
   $res=Enviar($sock, $consulta);
