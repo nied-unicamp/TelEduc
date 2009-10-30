@@ -1113,6 +1113,12 @@
   echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=cancelar&atualizacao=true';\n");
   echo("    }\n\n");
   
+	echo(" function VerValor(obj) {
+				var newobj = obj.value.replace(',', '.');
+				obj.value = newobj;
+			} 
+	");
+	
   echo("    </script>\n\n");
   
   $objAjax->printJavascript("../xajax_0.2.4/");
@@ -1468,7 +1474,7 @@
   echo("        <div class=ulPopup>\n");    
   /* Frase #15 - Valor */
   echo("            ".RetornaFraseDaLista($lista_frases, 15).": ");
-  echo("            <input class=\"input\" type=\"text\" id=\"valor\" size=\"8\" value=\"\" maxlength=\"10\" /><br /><br />\n");
+  echo("            <input class=\"input\" type=\"text\" id=\"valor\" size=\"8\" value=\"\" maxlength=\"10\" onkeyup=\"javascript:VerValor(this);\"/><br /><br />\n");
   /* 18 - Ok (gen) */
   echo("            <input type=\"button\" class=\"input\" onClick=\"VerificaValor(document.getElementById('valor').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   /* 2 - Cancelar (gen) */
