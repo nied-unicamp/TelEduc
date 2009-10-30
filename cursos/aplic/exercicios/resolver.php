@@ -195,7 +195,8 @@ if ($tela_formador){
 
 echo("    function ConfirmaEntrega()\n");
 echo("    {\n");
-echo("      if (confirm(\"Você realmente deseja entregar? Questões não salvas não serão enviadas.\")){
+/* Frase #163 - Voce realmente deseja entregar? Questoes nao salvas nao serao enviadas. */
+echo("      if (confirm(\"".RetornaFraseDaLista($lista_frases, 163)."\")){
 							return true;
 					  } else{ 
 					  	return false;
@@ -282,7 +283,8 @@ foreach ($questoes as $questao){
 		echo("SalvaRespostaQuestaoObj(".$questao['cod_questao'].");");
 	}
 }
-echo("			mostraFeedback(\"Todas as respostas foram salvas com sucesso.\", \"true\");");
+/* Frase #164 - Todas as respostas foram salvas com sucesso. */
+echo("			mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 164)."\", \"true\");");
 echo("}");
 
 echo("    function CancelaTodos(){\n");
@@ -311,22 +313,14 @@ include("../menu_principal.php");
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-
-if(true)
-{
-	/* ? - Exercicios - Resolver exercicio - */
-	$frase = "Exercicios - Resolver exercicio";
-}
-else if($visualizar == "G")
-{
-	/* ? - Exercicios - Ver exercicio - */
-	$frase = "Exercicios - Ver exercicio";
-}
+/* Frase #1 - Exercicios */ 
+/* Frase #165 - Resolver exercicio */
+$frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 165);
 
 echo("          <h4>".$frase."</h4>\n");
 
-/*Voltar*/
-echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
+/* Frase #5 - Voltar */
+echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span>\n");
 
 if($resolucao['cod_grupo'] != null)
 {
@@ -364,10 +358,8 @@ if($resolucao['cod_grupo'] != null)
 	$cod_grupo = $resolucao['cod_grupo'];
 }
 
-/* ? - Voltar */
-echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>Voltar</a></li>\n");
-/* ? - Historico */
-//echo("                  <li><a href=''>Historico</a></li>\n");
+/* Frase #5 - Voltar */
+echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>".RetornaFraseDaLista($lista_frases, 5)."</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -375,25 +367,25 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
-/* ? - Titulo */
-echo("                    <td colspan=\"3\" class=\"alLeft\">Titulo</td>\n");
-/* ? - Limite submissao */
-echo("                    <td width=\"10%\">Limite submissao</td>\n");
-/* ? - Compartilhamento */
-echo("                    <td width=\"15%\">Compartilhamento</td>\n");
-/* ? - Situacao */
-echo("                    <td width=\"10%\">Situacao</td>\n");
+/* Frase #13 - Titulo */
+echo("                    <td colspan=\"3\" class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+/* Frase #86 - Limite entrega */
+echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 86)."</td>\n");
+/* Frase #57 - Compartilhamento */
+echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
+/* Frase #130 - Situacao */
+echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 130)."</td>\n");
 echo("                  </tr>\n");
 
-/* ?? - Compartilhado com Formadores */
+/* Frase #6 - Compartilhado com Formadores */
 if($resolucao['compartilhada'] == "F")
-$compartilhamento = "Compartilhado com Formadores";
-/* ?? - Totalmente compartilhado */
+$compartilhamento = RetornaFraseDaLista($lista_frases, 6);
+/* Frase #7 - Totalmente compartilhado */
 else if($resolucao['compartilhada'] == "T")
-$compartilhamento = "Totalmente compartilhado";
-/* ?? - Nao compartilhado */
+$compartilhamento = RetornaFraseDaLista($lista_frases, 7);
+/* Frase #8 - Nao compartilhado */
 else
-$compartilhamento = "Nao compartilhado";
+$compartilhamento = RetornaFraseDaLista($lista_frases, 8);
 
 if($cod_usuario == $resolucao['cod_usuario'] || RetornaCodGrupoUsuario($sock,$cod_usuario) == $resolucao['cod_grupo'])
 $compartilhamento = "<span id=\"comp_".$resolucao['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$resolucao['cod_resolucao'].";AtualizaComp('".$resolucao['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
@@ -412,13 +404,14 @@ echo("                    <td width=\"10%\">".$situacao."</td>\n");
 echo("                  </tr>\n");
 
 echo("                  <tr class=\"head\">\n");
-/* ? - Texto introdutorio */
-echo("                    <td colspan=\"6\">Texto Introdutorio</td>\n");
+/* Frase #58 - Texto */
+echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 58)."</td>\n");
 echo("                  </tr>\n");
 
 $texto = $exercicio['texto'];
+/* Frase #165 - Nenhum texto foi cadastrado para esse exercicio. */
 if($texto == "" || $texto == null)
-$texto = "Nenhum texto introdutorio foi cadastrado para esse exercicio.";
+$texto = RetornaFraseDaLista($lista_frases, 165);
 
 echo("                  <tr>\n");
 echo("                    <td colspan=\"6\" class=\"alLeft\">".$texto."</td>\n");
@@ -430,8 +423,8 @@ $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_exercicio_temp['link']);
 if(count($lista_arq) > 0 || $lista_arq != null)
 {
 	echo("                  <tr class=\"head\">\n");
-	/* ? - Arquivos */
-	echo("                    <td colspan=\"6\">Arquivos</td>\n");
+	/* Frase #12 - Arquivos */
+	echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
 	echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
@@ -479,23 +472,23 @@ if(count($lista_arq) > 0 || $lista_arq != null)
 }
 
 echo("                  <tr class=\"head\">\n");
-/* ? - Questoes */
-echo("                    <td colspan=\"6\">Questoes</td>\n");
+/* Frase #59 - Questoes */
+echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 59)."</td>\n");
 echo("                  </tr>\n");
 
 echo("                  <tr class=\"head01\">\n");
-/* ? - Titulo */
-echo("                    <td class=\"alLeft\">Titulo</td>\n");
-/* ? - Nota */
-echo("                    <td width=\"5%\">Nota</td>\n");
-/* ? - Valor */
-echo("                    <td width=\"5%\">Valor</td>\n");
-/* ? - Tipo */
-echo("                    <td width=\"10%\">Tipo</td>\n");
-/* ? - Topico */
-echo("                    <td width=\"15%\">Topico</td>\n");
-/* ? - Status */
-echo("                    <td width=\"10%\">Status</td>\n");
+/* Frase #13 - Titulo */
+echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+/* Frase #14 - Nota */
+echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 14)."</td>\n");
+/* Frase #15 - Valor */
+echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 15)."</td>\n");
+/* Frase #60 - Tipo */
+echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 60)."</td>\n");
+/* Frase #61 - Topico */
+echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 61)."</td>\n");
+/* Frase #16 - Status */
+echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 16)."</td>\n");
 echo("                  </tr>\n");
 
 if ((count($questoes)>0)&&($questoes != null))
@@ -526,10 +519,12 @@ if ((count($questoes)>0)&&($questoes != null))
 
 		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
 		
+		/* Frase #166 - Nao respondida */
+		/* Frase #167 - Respondida */
 		if($resposta == null)
-			$status = "Nao respondida";
+			$status = RetornaFraseDaLista($lista_frases, 166);
 		else
-			$status = "Respondida";
+			$status = RetornaFraseDaLista($lista_frases, 167);
 
 		
 		
@@ -544,7 +539,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
 		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
 		echo("                      <dl class=\"portlet\">\n");
-		echo("                        <dt class=\"portletHeader\">Enunciado</dt>\n");
+		/* Frase #17 - Enunciado */
+		echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 17)."</dt>\n");
 		echo("                          <dd class=\"portletItem\">".$linha_item['enunciado']."</dd>\n");
 
 		if(count($lista_arq) > 0 || $lista_arq != null)
@@ -598,7 +594,8 @@ if ((count($questoes)>0)&&($questoes != null))
 			if (!($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))))
 			$estado = "disabled";
 
-			echo("                        <dt class=\"portletHeader\">Alternativas</dt>\n");
+			/* Frase #18 - Alternativas */
+			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 18)."</dt>\n");
 			echo("                          <dd class=\"portletItem\">\n");
 			foreach ($alternativas as $cod => $linha_alt)
 			{
@@ -618,7 +615,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		}
 		else if($linha_item['tp_questao'] == 'D')
 		{
-			echo("                        <dt class=\"portletHeader\">Resposta</dt>\n");
+			/* Frase #20 - Resposta */
+			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 20)."</dt>\n");
 			echo("                          <dd class=\"portletItem\">\n");
 			echo("                            <div class=\"divRichText\">\n");
 			echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
@@ -628,7 +626,8 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
 			if($comentario != "") {
-				echo("                        <dt class=\"portletHeader\">Comentario</dt>\n");
+				/* Frase #168 - Comentario */
+				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
 				echo("                          <dd class=\"portletItem\">\n");
 				echo($comentario."</dd>\n");
 			}
@@ -638,7 +637,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		}
 		echo("                      </dl>\n");
 		echo("                    </td>\n");
-		echo("                    <td><span class=\"link\" onclick=\"FechaResposta(".$linha_item['cod_questao'].");\">Fechar</span></td>\n");
+		/* Frase #27 - Fechar */
+		echo("                    <td><span class=\"link\" onclick=\"FechaResposta(".$linha_item['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 27)."</span></td>\n");
 		echo("                  </tr>\n");
 
 	}
@@ -664,7 +664,8 @@ else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
-echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+/* Frase #5 - Voltar */
+echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
 
 
 
@@ -690,18 +691,18 @@ if($tela_formador)
 	echo("          <ul class=ulPopup>\n");
 	echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
 	echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
-	/* ?? - Compartilhado com formadores */
-	echo("              <span>Totalmente compartilhado</span>\n");
+	/* Frase #7 - Totalmente compartilhado */
+	echo("              <span>".RetornaFraseDaLista($lista_frases, 7)."</span>\n");
 	echo("            </li>\n");
 	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
 	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
-	/* ?? - Compartilhado com formadores */
-	echo("              <span>Compartilhado com formadores</span>\n");
+	/* Frase #6 - Compartilhado com formadores */
+	echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
 	echo("            </li>\n");
 	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
 	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-	/* ?? - Nao Compartilhado */
-	echo("              <span>Nao Compartilhado</span>\n");
+	/* Frase #8 - Nao Compartilhado */
+	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
 	echo("            </li>\n");
 	echo("          </ul>\n");
 	echo("        </form>\n");
