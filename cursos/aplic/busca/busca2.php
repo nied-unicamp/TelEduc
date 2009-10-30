@@ -247,8 +247,10 @@
             foreach ($busca as $cod => $retorno)
             {
               $cont++;
-              $pagina="../perguntas/ver_pergunta.php";
-              $parametros="?cod_curso=".$cod_curso."&amp;cod_assunto_pai=".$retorno['cod_assunto']."&amp;check[]=".$retorno['cod_pergunta']."&amp;cod_ferramenta=".$ferramenta;
+                            
+              $pagina="../perguntas/perguntas.php";
+              //$parametros="?cod_curso=".$cod_curso."&amp;cod_assunto_pai=".$retorno['cod_assunto']."&amp;check[]=".$retorno['cod_pergunta']."&amp;cod_ferramenta=".$ferramenta;
+              $parametros="?cod_curso=".$cod_curso."&cod_ferramenta=".$ferramenta."&cod_assunto_pai=".$retorno['cod_assunto']."&acao=exibirPergunta&cod_pergunta=".$retorno['cod_pergunta'];
               $pagina_item=$pagina.$parametros;
               // F 13 - Perguntas Freq�entes
               $resultado[$cont-1]="<b>".$cont." - </b><a href=\"".$pagina_item."\">"

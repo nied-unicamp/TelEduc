@@ -139,6 +139,10 @@
     if ($acao == "novaPergunta" && $cod_pergunta != NULL){
   		echo("AlternaMensagem($cod_pergunta); AlteraTexto($cod_pergunta);");
   	}
+  	// Ação para exibição de respostas da ferramenta busca para perguntas
+  	elseif ($acao == "exibirPergunta")
+  		echo("AlternaMensagem($cod_pergunta);");
+  		
   	echo("    layer_estrutura_mover = getLayer('layer_estrutura_mover');\n");
   	echo("    layer_estrutura_recuperar = getLayer('layer_estrutura_recuperar');\n");
   	echo("    layer_novo_assunto = getLayer('layer_novo_assunto');\n");  
