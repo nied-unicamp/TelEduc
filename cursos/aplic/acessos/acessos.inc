@@ -82,6 +82,12 @@ function RetornaOrdemFerramentas($sock)
   return ($lista);
 }
 */
+
+function FirstName($sock, $cod_usuario, $cod_curso) {
+	$usuario = RetornaInfosUsuario($sock,$cod_curso, $cod_usuario);
+	return $usuario['nome'];
+}
+
 /* *********************************************************************
    RetornaInfosUsuario - Retorna informacoes sobre um unico usuario
    entrada: $sock - sock de conexao
