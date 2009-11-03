@@ -108,6 +108,7 @@
   echo("    var pagAtual = ".$pagAtual.";\n");
   echo("    var totalQuestoes = ".$totalQuestoes.";\n");
   echo("    var totalPag = ".$totalPag.";\n");
+  echo("	var questoesPorPag = ".$questoesPorPag.";\n");
   echo("    var topico = 'T';\n");
   echo("    var tp_questao = 'T';\n");
   echo("    var dificuldade = 'T';\n");
@@ -515,6 +516,13 @@
   echo("          return '".RetornaFraseDaLista($lista_frases, 149)."';\n");
   echo("    }\n\n");
     
+  echo("    function VerificaPaginacao(){\n");
+  echo("    if(Math.ceil(totalQuestoes/questoesPorPag) < pagAtual)\n");
+  echo("		AtualizaEstadoPaginacao(pagAtual-1)\n");
+  echo("    else\n");
+  echo("    	AtualizaEstadoPaginacao(pagAtual)\n");
+  echo("}\n");
+  
   echo("    function TratarSelecionados(op){\n");
   echo("	  var checks,deleteArray,j;\n");
   echo("      checks = document.getElementsByName('cod_questao[]');\n");
@@ -535,7 +543,7 @@
   echo("          IntercalaCorLinha();\n");
   echo("		else\n");
   echo("          InsereLinhaVazia();\n");
-  echo("        AtualizaEstadoPaginacao();\n");
+  echo("        VerificaPaginacao();\n");
   echo("        ControlaSelecao();\n");
   echo("		mostraFeedback(RetornaTexto(op),true);\n");
   echo("      }\n");
