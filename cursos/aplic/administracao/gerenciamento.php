@@ -114,89 +114,87 @@
   $frase1=RetornaFraseDaLista($lista_frases,269);
   // 270 - Portfolio(s) desativado(s) com sucesso.
   $frase2=RetornaFraseDaLista($lista_frases,270); 
-    $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n";
+  $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n";
 
-  if ($acao=="A")
-  {
-    /* 102 - Gerenciamento de Alunos */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 102);
-    $tipo_usuario="A";
-    /* 109 - N� de Alunos: */
-    $frase_qtde=RetornaFraseDaLista($lista_frases,109);
-    $cod_pagina=9;
-  }
-  else if ($acao=="F")
-  {
-    /* 103 - Gerenciamento de Formadores */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 103);
-
-    $tipo_usuario="F";
-    /* 110 - N� de Formadores: */
-    $frase_qtde=RetornaFraseDaLista($lista_frases,110);
-    $cod_pagina=10;
-  }
-  else if ($acao=="G")
-  {
-    /* 258 - Gerenciamento de Formadores desligados */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 258);
-
-    $tipo_usuario="f";
-    /* 259 - N� de Formadores desligados: */
-    $frase_qtde=RetornaFraseDaLista($lista_frases,259);
-    $cod_pagina=10;
-  }
-  else if ($acao=="AG")
-  {
-    /* 283 - Gerenciamento de Alunos desligados */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283);
+  
+  switch ($acao){
+  	case "A":
+  		/* 102 - Gerenciamento de Alunos */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 102);
+    	$tipo_usuario="A";
+    	/* 109 - No de Alunos: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,109);
+    	$cod_pagina=9;
+    	break;
+    	
+  	case "F":
+  		/* 103 - Gerenciamento de Formadores */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 103);
+    	$tipo_usuario="F";
+    	/* 110 - No de Formadores: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,110);
+    	$cod_pagina=10;
+  		break;
+  		
+  	case "G":
+  		/* 258 - Gerenciamento de Formadores desligados */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 258);
+    	$tipo_usuario="f";
+    	/* 259 - No de Formadores desligados: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,259);
+    	$cod_pagina=10;
+  		break;
+  		
+  	case "AG":
+  		/* 283 - Gerenciamento de Alunos desligados */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283);
+    	$tipo_usuario="a";
+    	/* 284 - No de Alunos desligados: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases, 284);
+    	$cod_pagina=10;
+  		break;
+  		
+  	case "z":
+  		/* 165 - Gerenciamento de Convidados */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 165);
+    	/* 166 - No de Convidados: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases, 166);
+    	$cod_pagina=13;
+  		break;
   	
-    $tipo_usuario="a";
-    /* 284 - N� de Alunos desligados: */
-    $frase_qtde=RetornaFraseDaLista($lista_frases, 284);
-    $cod_pagina=10;
+  	case "N":
+  		/* 74 - Gerenciamento de Inscricoes */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 74);
+    	/* 78 - No de Inscricoes: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,78);
+    	$cod_pagina=8;
+      /* 75 - Inscricoes nao avaliadas */
+      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,75);
+      $tipo_usuario="a";
+  		break;
+  		
+  	case "C":
+  		/* 74 - Gerenciamento de Inscricoes */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 74);
+    	/* 78 - No de Inscricoes: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,78);
+  		/* 76 - Inscricoes aceitas */
+      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,76);
+      $tipo_usuario="A";
+  		break;
+  		
+  	case "R":
+  		/* 74 - Gerenciamento de Inscricoes */
+    	$cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 74);
+    	/* 78 - No de Inscricoes: */
+    	$frase_qtde=RetornaFraseDaLista($lista_frases,78);
+  		/* 77 - Inscricoes rejeitadas */
+      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,77);
+      $tipo_usuario="r";
+  		break;
+
   }
   
-  else if ($acao == 'z')
-  {
-    // 165 - Gerenciamento de Convidados
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 165);
-
-    // 166 - N� de Convidados:
-    $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
-    $cod_pagina=13;
-  }
-  else
-  {
-    /* 74 - Gerenciamento de Inscri��es */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 74);
-    /* 78 - N� de Inscri��es: */
-    $frase_qtde=RetornaFraseDaLista($lista_frases,78);
-    $cod_pagina=8;
-
-    if($acao=="N")
-    {
-      // 75 - Inscricoes nao avaliadas 
-      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,75);
-    } 
-
-    else if($acao=="C")
-    {
-      // 76 - Inscricoes aceitas
-      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,76);
-    }
-
-    else if($acao=="R")
-    {
-      // 77 - Inscricoes rejeitadas
-      $cabecalho .= " - ".RetornaFraseDaLista($lista_frases,77);
-    }  
-  }
-  if ($acao=="N")
-      $tipo_usuario="a";
-  else if ($acao=="C")
-      $tipo_usuario="A";
-  else
-      $tipo_usuario="r";
       
   $ativado=RetornaFraseDaLista($lista_frases, 208);
   $desativado=RetornaFraseDaLista($lista_frases, 209);
