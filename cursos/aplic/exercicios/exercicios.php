@@ -94,7 +94,7 @@
     $totalExercicios = 0;
     
   /* Nmero de questoes exibidas por p�ina.             */
-  if (!isset($exerciciosPorPag)) $exerciciosPorPag = 10;
+  if (!isset($exerciciosPorPag)) $exerciciosPorPag = 2;
   
   /* Se o nmero total de questoes for superior que o nmero de questoes por  */
   /* p�ina ent� calcula o total de p�inas. Do contr�io, define o nmero de     */
@@ -123,7 +123,8 @@
   echo("    var js_cod_item;\n");
   echo("    var js_comp = new Array();\n");
   echo("    var pagAtual = ".$pagAtual.";\n");
-  echo("    var totalQuestoes = ".$totalExercicios.";\n");
+  echo("    var totalExercicios = ".$totalExercicios.";\n");
+  echo("	var exerciciosPorPag = ".$exerciciosPorPag.";\n");
   echo("    var totalPag = ".$totalPag.";\n");
   echo("    var topico = 'T';\n");
 //  echo("    var tp_questao = 'T';\n");
@@ -133,7 +134,7 @@
   echo("    this.name = 'principal';\n\n");
   
   echo("    var cod_comp;");
-  echo("    var numExercicios = ".count($lista_exercicios).";\n\n");
+  echo("    var totalExercicios = ".count($lista_exercicios).";\n\n");
   
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
@@ -165,7 +166,7 @@
 	  echo("        inicio = ((pagina-1)*".$exerciciosPorPag.")+1;\n");
 	  echo("        final = ((pagina)*".$exerciciosPorPag.");\n");
 	  echo("        for (i=inicio; i < final+1; i++){\n");
-	  echo("          if (!tabela.rows[i+1] || i > totalQuestoes){break;}\n");
+	  echo("          if (!tabela.rows[i+1] || i > totalExercicios){break;}\n");
 	  echo("          if (browser==\"Microsoft Internet Explorer\")\n");
 	  echo("            tabela.rows[i].style.display=\"block\";\n");
 	  echo("          else\n");
@@ -484,7 +485,37 @@
   /* Frase #127 - Exercicio(s) enviado(s) para lixeira. */
   echo("          return '".RetornaFraseDaLista($lista_frases, 127)."';\n");
   echo("    }\n\n");
+  
+  echo("    function AtualizaEstadoPaginacao(pagina){\n");
+  echo("      var trVazia;");
+  echo("      totalPag = Math.ceil(totalExercicios/".$exerciciosPorPag.");\n");
+  echo("      document.getElementById(\"totalExercicios\").innerHTML = totalExercicios;\n");
+  echo("      ExibeMsgPagina(pagina);\n");
+  echo("      trVazia = document.getElementById(\"trVazia\");");
+  echo("      if(totalExercicios == 0)\n");
+  echo("      {\n");
+  echo("        if(!trVazia)");
+  echo("          InsereLinhaVazia();\n");
+  echo("        document.getElementById(\"trIndicaEstadoPag\").style.display = \"none\";\n");
+  echo("        document.getElementById(\"trIndicePag\").style.display = \"none\";\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
+  echo("        if(trVazia)");
+  echo("          trVazia.parentNode.removeChild(trVazia);\n");
+  echo("        document.getElementById(\"trIndicaEstadoPag\").style.display = \"\";\n");
+  echo("        document.getElementById(\"trIndicePag\").style.display = \"\";\n");
+  echo("      }\n");
+  echo("    }\n\n");
     
+  echo("    function VerificaPaginacao(){\n");
+  echo("    if(Math.ceil(totalExercicios/exerciciosPorPag) < pagAtual)\n");
+  echo("		AtualizaEstadoPaginacao(pagAtual-1)\n");
+  echo("    else\n");
+  echo("    	AtualizaEstadoPaginacao(pagAtual)\n");
+  echo("}\n");
+  
+  
   echo("    function TratarSelecionados(op){\n");
   echo("	  var checks,deleteArray,j;\n");
   echo("      checks = document.getElementsByName('chkExercicio');\n");
@@ -497,14 +528,15 @@
   echo("          getNumber=checks[i].id.split(\"_\");\n");
   echo("          xajax_AlteraStatusExercicioDinamic(".$cod_curso.",getNumber[1],op);\n");
   echo("          deletaArray[j++] = getNumber[1];\n");
-  echo("		  numExercicios--;");
+  echo("		  totalExercicios--;");
   echo("          }\n");
   echo("        }\n");
   echo("		DeletarLinhas(deletaArray,j);\n");
-  echo("		if(numExercicios > 0)\n");
+  echo("		if(totalExercicios > 0)\n");
   echo("          IntercalaCorLinha();\n");
   echo("		else\n");
   echo("          InsereLinhaVazia();\n");
+  echo("        VerificaPaginacao();\n");
   echo("        VerificaCheck();\n");
   echo("		mostraFeedback(RetornaTexto(op),true);\n");
   echo("      }\n");
@@ -604,7 +636,7 @@
       echo(" a&nbsp;");
       /* ? - de            */
       echo("<span id=\"ultQuestaoIndex\"></span> de ");
-      echo("<span id=\"totalQuestoes\">".($totalExercicios)."</span>)\n");
+      echo("<span id=\"totalExercicios\">".($totalExercicios)."</span>)\n");
       echo("              </td>\n");
       echo("            </tr>\n");
     }
