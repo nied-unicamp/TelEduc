@@ -285,8 +285,8 @@ if(count($exercicios) > 0 && $exercicios != null)
 		else
 		$compartilhamento = RetornaFraseDaLista($lista_frases, 8);
 
-		if($cod_usuario == $linha_item['cod_usuario'] || RetornaCodGrupoUsuario($sock,$cod_usuario) == $linha_item['cod_grupo'])
-		$compartilhamento = "<span id=\"comp_".$linha_item['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$linha_item['cod_resolucao'].";AtualizaComp('".$linha_item['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+		if($eformador) $compartilhamento = "<span id=\"comp_".$linha_item['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$linha_item['cod_resolucao'].";AtualizaComp('".$linha_item['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+
 
 		$num_comentarios=RetornaNumComentariosExercicio($sock,$cod_usuario,$linha_item['cod_resolucao']);
 
