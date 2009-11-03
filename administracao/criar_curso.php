@@ -315,7 +315,7 @@
   echo("<input class=\"input\" type=\"text\" name=\"email\" size=\"33\" style=\"maxlenght: 100\" /></td>\n");
   echo("                        </tr>\n");
 
-  /* 97 - Login: */
+  /* 97 - Login ou Email: */
   echo("                        <tr>\n");
   echo("                          <td style=\"text-align:right;border:none;\"><b>".RetornaFraseDaLista($lista_frases, 97)." </b></td>\n");
   /* 520 - Sugestões */
