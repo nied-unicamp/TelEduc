@@ -288,7 +288,7 @@ if($ehFormador){
 	echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
 	
 	echo("  if(flag) {\n");
-	echo("  if(confirm('Você deseja entregar a correção?'))");
+	echo("  if(confirm('Vocï¿½ deseja entregar a correï¿½ï¿½o?'))");
 	echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 	echo("	}\n");
 	echo("  else\n");
@@ -296,7 +296,12 @@ if($ehFormador){
 	echo("     mostraFeedback('".RetornaFraseDaLista($lista_frases, 2)."', false)\n");
 	echo("	}\n");
 	
-	
+	echo(" function VerValor(obj) {
+				var newobj = obj.value.replace(',', '.');
+				obj.value = newobj;
+			} 
+	");
+		
 	echo("  </script>\n\n");
 	/* fim - JavaScript */
 	/*********************************************************/
@@ -613,7 +618,7 @@ if($ehFormador){
 				echo("                          	  <div id=\"nota_".$linha_item['cod_questao']."\" class=\"portletItem\">".$nota."</div>\n");
 				/* Frase #21 - Ok */
 				/* Frase #22 - Cancelar */
-	  		echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].", ".$linha_item['valor'].");\">".RetornaFraseDaLista($lista_frases, 21)."</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$nota."','".$linha_item['cod_questao']."');\">".RetornaFraseDaLista($lista_frases, 22)."</span></div>\n");
+	  		echo("                          	  <div style=\"display:none;\" id=\"editanota_".$linha_item['cod_questao']."\" class=\"portletItem\"><input class=\"input\" onkeyup=\"javascript:VerValor(this);\" id=\"inputnota_".$linha_item['cod_questao']."\" style=\"width:50px;\" type=\"text\" value=\"\"><span>  </span><span class=\"link\" onclick=\"AtualizaNota(".$linha_item['cod_questao'].",".$cod_curso.",".$resolucao['cod_resolucao'].", ".$linha_item['valor'].");\">".RetornaFraseDaLista($lista_frases, 21)."</span><span>  </span><span class=\"link\" onclick=\"EditarNota('".$nota."','".$linha_item['cod_questao']."');\">".RetornaFraseDaLista($lista_frases, 22)."</span></div>\n");
 				/* Frase #23 - Comentario do Avaliador */
 	  		echo("                              <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 23)."</dt>\n");
 				echo("                                <dd class=\"portletItem\">\n");
