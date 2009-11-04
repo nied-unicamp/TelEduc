@@ -1057,7 +1057,8 @@
   echo("      arrayIdArq = new Array();\n");
   echo("      j = 0;\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if (confirm('Confirmacao')){\n");
+  /* Frase #172 - Voce deseja excluir os arquivo(s) selecionado(s) ? */
+  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 172)."')){\n");
   //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
@@ -1616,13 +1617,12 @@
 	/* Frase #12 - Arquivos */
 	echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
 	echo("                  </tr>\n");
-
+	echo ("                  <tr>\n");
+	echo ("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
+	
 	if (count($lista_arq) > 0 || $lista_arq != null) {
 
 		$conta_arq = 0;
-
-		echo ("                  <tr>\n");
-		echo ("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
 		// Procuramos na lista de arquivos se existe algum visivel
 		$ha_visiveis = false;
 
@@ -1745,11 +1745,10 @@
 			}
 			while ($nivel >= 0);
 		}
-		echo ("                    </td>\n");
-		echo ("                  </tr>\n");
 	}
-
-    echo("                  <tr id=\"optArq\">\n");
+	echo ("                    </td>\n");
+	echo ("                  </tr>\n");
+  echo("                  <tr id=\"optArq\">\n");
 	echo("                    <td align=\"left\" colspan=\"6\">\n");
 	echo("                      <ul>\n");
 	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
