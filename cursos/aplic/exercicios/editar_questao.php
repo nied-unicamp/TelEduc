@@ -1307,6 +1307,7 @@
   echo("        spanNome.appendChild(criaSpanArqOculto());\n");
   echo("      tdRef = document.getElementById(\"listFiles\");\n");
   echo("      tdRef.appendChild(spanNome);\n");
+  echo("      tdRef.appendChild(document.createElement(\"br\"));\n");
   echo("      contaArq++;\n");
   echo("    }\n\n");
   
