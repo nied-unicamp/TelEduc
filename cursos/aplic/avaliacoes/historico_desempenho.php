@@ -555,11 +555,11 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
       {
         if($portfolio_grupo)
         {
-          $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_modelo=".$modelo."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
+          $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
         }
         else
         {
-         $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_modelo=".$modelo."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
+         $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
         }
       }
       else
