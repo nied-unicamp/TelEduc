@@ -1033,14 +1033,34 @@
   echo("       return input;\n");
   echo("    }\n\n");
   
+  echo("function RetornaHorarioEntrega()\n");
+  echo("     {\n");
+  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
+  echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
+  echo("        horario_entrega = hr_entrega+':'+min_entrega;\n");
+  echo("        var docHorario_entrega = document.createElement('input'); \n");
+  echo("        docHorario_entrega.setAttribute('value',horario_entrega);\n");
+  echo("		return(docHorario_entrega);\n");
+  echo("     }\n");
+
+  echo("function RetornaHorarioDisponibilizacao()\n");
+  echo("     {\n");
+  echo("        hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("        min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("        horario_disp = hr_disp+':'+min_disp;\n");
+  echo("        var docHorario_disp = document.createElement('input'); \n");
+  echo("        docHorario_disp.setAttribute('value',horario_disp);\n");
+  echo("        return(docHorario_disp);\n");
+  echo("     }\n");
+    
   echo("      function verifica_intervalos()\n");
   echo("      {\n");
   echo("	    var dt_disponibilizacao,limite_entrega,hora_disponibilizacao,hora_limite_entrega,data_atual,hora_atual;\n");
   echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
   echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
   echo("        data_atual = RetornaDataAtual();\n");
-  echo("        hora_disponibilizacao = document.getElementById(\"hora_disponibilizacao\");\n");
-  echo("        hora_limite_entrega = document.getElementById(\"hora_limite_entrega\");\n");
+  echo("		hora_limite_entrega = RetornaHorarioEntrega();\n");
+  echo("		hora_disponibilizacao = RetornaHorarioDisponibilizacao();\n");
   echo("        hora_atual = RetornaHoraAtual();\n");
   echo("        if (!DataValidaAux(dt_disponibilizacao) || !DataValidaAux(limite_entrega))\n");
   echo("          return (false);\n");
@@ -1079,7 +1099,9 @@
   echo("        if(document.getElementById(\"disponibilizacaoa\").checked)\n");
   echo("        {\n");
   echo("          dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
-  echo("          hr_disp = document.getElementById(\"hora_disponibilizacao\").value+':00';\n");
+  echo("          hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("          min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("          horario_disp = hr_disp+':'+min_disp+':00';\n");
   echo("        }\n");
   echo("        else\n");
   echo("        {\n");
@@ -1087,13 +1109,15 @@
   echo("          hr_disp = \"".UnixTime2Hora($data)."\";\n");
   echo("        }\n");
   echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
-  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value+':00';\n");
+  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
+  echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
+  echo("        horario_entrega = hr_entrega+':'+min_entrega+':00';\n");
   echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
   echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
   echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
   if($exercicio['situacao'] != "C")
     echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
-  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
+  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
   echo("      }\n\n");
   echo("    }\n\n");
   
@@ -1526,8 +1550,18 @@
   /* Frase #69 - Data */
   echo("            ".RetornaFraseDaLista($lista_frases, 69).": <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"dt_disponibilizacao\" name=\"dt_disponibilizacao\" />\n");
   echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('dt_disponibilizacao'),'dd/mm/yyyy',this);\" />\n");
-  /* Frase #85 - Hora */
-  echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <input class=\"input\" type=\"text\" size=\"7\" maxlength=\"5\" value=\"".UnixTime2Hora($data)."\" id=\"hora_disponibilizacao\" name=\"hora_disponibilizacao\" />\n");
+  /* Frase #85 - Horario */
+  echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <select id=\"hora_disponibilizacao\" class=\"input\">\n");
+  for($i=0;$i<24;$i++){
+  	if($i<10) $i="0$i";
+  	echo("<option value=".$i.">".$i."</option>\n");
+  }
+  echo("</select><b> : </b><select id=\"minuto_disponibilizacao\" class=\"input\">\n");
+  for($j=0;$j<60;$j++){
+  	if($j<10) $j="0$j";
+  	echo("<option  value=".$j.">".$j."</option>\n");
+  }
+  echo("</select>\n");
   echo("          </div><br />\n");
   /* Frase #86 - Limite de entrega: */
   echo("          ".RetornaFraseDaLista($lista_frases, 86).": <br /><br />");
@@ -1535,7 +1569,18 @@
   /* Frase #69 - Data */
   echo("            ".RetornaFraseDaLista($lista_frases, 69).": <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"limite_entrega\" name=\"limite_entrega\" />\n");
   echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('limite_entrega'),'dd/mm/yyyy',this);\" />\n");
-  echo("            <br /><br />Hora: <input class=\"input\" type=\"text\" size=\"7\" maxlength=\"5\" id=\"hora_limite_entrega\" name=\"hora_limite_entrega\" />\n");
+  /* Frase #85 - Horario */
+  echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <select id=\"hora_limite_entrega\" class=\"input\">\n");
+  for($i=0;$i<24;$i++){
+  	if($i<10) $i="0$i";
+  	echo("<option value=".$i.">".$i."</option>\n");
+  }
+  echo("</select><b> : </b><select id=\"minuto_limite_entrega\" class=\"input\">\n");
+  for($j=0;$j<60;$j++){
+  	if($j<10) $j="0$j";
+  	echo("<option  value=".$j.">".$j."</option>\n");
+  }
+  echo("</select>\n");
   echo("          </div><br /><br />\n");
   /* 18 - Ok (gen) */
   echo("            <input type=\"button\" class=\"input\" onClick=\"AplicarExercicio();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
