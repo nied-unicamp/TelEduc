@@ -129,7 +129,7 @@ echo("} \n");
 echo("function VerExercicio(cod_modelo, cod_dono) \n");
 echo("{ \n");
 $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes'";
-echo(" window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono='+cod_dono+'&cod_modelo='+cod_modelo+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
+echo(" window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono='+cod_dono+'&cod_resolucao='+cod_modelo+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
 echo(" return(false);\n");
 echo("} \n");
 
