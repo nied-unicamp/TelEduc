@@ -462,6 +462,7 @@
   echo("      VerificaCheck();\n");
   echo("    }\n\n");
   
+  
   echo("    function AtribuiValor(valor){\n");
   echo("      var i,questoes,getNumber;\n");
   echo("      questoes = document.getElementsByName('chkQuestao');\n");
@@ -471,7 +472,6 @@
   echo("          xajax_AtribuiValorAQuestaoDinamic(".$cod_curso.",".$cod_exercicio.",getNumber[1],valor);\n");
   echo("        }\n");
   echo("      }\n");
-  echo("      xajax_AtualizaValorTotalExercicioDinamic(".$cod_curso.",".$cod_exercicio.");\n");
   /* Frase #37 - Valores atribuidos com sucesso */
   echo("      mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 37)."\",true);\n");
   echo("    }\n\n");
