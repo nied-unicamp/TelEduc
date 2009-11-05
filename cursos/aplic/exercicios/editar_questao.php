@@ -1464,8 +1464,8 @@
 	echo("                      <td class=\"itens\">".$titulo."</td>\n");
         echo("                      <td>\n");
         echo("                        <select id=\"selectTopico\" class=\"input\" onChange=\"AtualizaTopico(this.value);\">");
-        /* Frase #99 - Escolha um topico */
-        echo("                          <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 99)."</option>\n");
+        /* Frase #173 - Escolha um topico */
+        echo("                          <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 173)."</option>\n");
         if ((count($topicos)>0)&&($topicos != null))
         {
           foreach ($topicos as $cod => $linha_item)
