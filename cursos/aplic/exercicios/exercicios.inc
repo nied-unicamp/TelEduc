@@ -145,7 +145,7 @@ function RetornaDadosExercicioAplicado($sock,$cod_exercicio)
 */
 function RetornaExerciciosLixeira($sock)
 {
-  $consulta="select cod_exercicio, titulo, data from Exercicios_modelo where status='L'";
+  $consulta="select * from Exercicios_modelo where status='L'";
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
