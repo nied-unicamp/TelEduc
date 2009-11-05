@@ -288,7 +288,8 @@ if($ehFormador){
 	echo("	function VerificaEntrega(cod_curso,cod_resolucao,flag){ \n");
 	
 	echo("  if(flag) {\n");
-	echo("  if(confirm('Voc� deseja entregar a corre��o?'))");
+	/* Frase #174 - Voce deseja entregar a correcao? */
+	echo("  if(confirm('".RetornaFraseDaLista($lista_frases, 174)."'))");
 	echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 	echo("	}\n");
 	echo("  else\n");
