@@ -1992,9 +1992,11 @@ function AtribuiValorAQuestaoDinamic($cod_curso, $cod_exercicio, $cod_questao, $
     $query = "update Exercicios_modelo_questao set valor = ".$valor." where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio)." and cod_questao = ".VerificaNumeroQuery($cod_questao);
     Enviar($sock,$query);
     $valor = RetornaValorQuestao($sock,$cod_exercicio,$cod_questao);
-    Desconectar($sock);
-    
+
+   
     $objResponse->addAssign("valorQuestao_".$cod_questao, "innerHTML", $valor);
+    $objResponse->addAssign("totalValorQuestoes", "innerHTML", RetornaSomaValorQuestoes($sock,$cod_exercicio));
+    Desconectar($sock);    
     
     return $objResponse->getXML();
 }
@@ -2013,8 +2015,8 @@ function AtualizaValorTotalExercicioDinamic($cod_curso, $cod_exercicio)
     $valorTotal = RetornaSomaValorQuestoes($sock,$cod_exercicio);
     Desconectar($sock);
     
-    $objResponse->addAssign("totalValorQuestoes", "innerHTML", $valorTotal);
- 
+    $objResponse->addAssign("totalValorQuestoes", "innerHTML", "<b>".$valorTotal."<b>");
+
     return $objResponse->getXML();
 }
 
