@@ -377,7 +377,7 @@
   {
     // 173 - Exerc�cio
     //Quando criar exercicio colocar uma frase no banco de dados pra ele
-    echo("                  <li><span onclick=\"window.location='../portfolio/portfolio.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=15&exibir=myp'\">".RetornaFraseDaLista($lista_frases, X)."</span></li>\n");
+    //echo("                  <li><span onclick=\"window.location='../portfolio/portfolio.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=15&exibir=myp'\">".RetornaFraseDaLista($lista_frases, X)."</span></li>\n");
   }
   else if ($dados_avaliacao['Ferramenta'] == 'F')
   {
