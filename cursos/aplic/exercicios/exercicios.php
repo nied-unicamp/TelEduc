@@ -92,7 +92,7 @@
     $totalExercicios = count($lista_exercicios);
   else
     $totalExercicios = 0;
-    
+
   /* Nmero de questoes exibidas por p�ina.             */
   if (!isset($exerciciosPorPag)) $exerciciosPorPag = 10;
   
@@ -626,7 +626,7 @@
       // Se o índice da ultima mensagem for maior que o número de mensagens, então copia este 
       // para o índice da última mensagem.
       if ($ultQuestaoIndex > ($totalExercicios))
-        $ultQuestaoIndex = ($totalExercicioss);
+        $ultQuestaoIndex = ($totalExercicios);
       echo("            <tr class=\"head01\" id=\"trIndicaEstadoPag\">\n");
       echo("              <td colspan=\"6\">\n");
       /* Frase #1 - Exercicios     */
@@ -669,12 +669,12 @@
 
    	if ((count($lista_exercicios)>0)&&($lista_exercicios != null))
     {
+
       foreach ($lista_exercicios as $cod => $linha_item)
       {
-        $disponibilizacao = "-";
+      	$disponibilizacao = "-";
         $entrega = "-";
-      
-      	if($linha_item['situacao'] == 'A')
+        if($linha_item['situacao'] == 'A')
         {
         	$dados_aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
         	$disponibilizacao = UnixTime2DataHora($dados_aplicado['dt_disponibilizacao']);
@@ -682,7 +682,8 @@
         }
         
       	$data = "<span id=\"data_".$linha_item['cod_exercicio']."\">".UnixTime2Data($linha_item['data'])."</span>";
-        $titulo = $linha_item['titulo'];
+
+      	$titulo = $linha_item['titulo'];
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
         $situacao = RetornaSituacaoExercicio($linha_item['situacao'],$data_atual,$dados_aplicado['dt_disponibilizacao']);
         
