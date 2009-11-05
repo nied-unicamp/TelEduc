@@ -48,6 +48,8 @@
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  
+  //$objAjax->debugOn();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->registerFunction("DecodificaString");
   $objAjax->registerFunction("RetornaFraseDinamic");
@@ -58,7 +60,7 @@
   $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
   $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("AtualizaValorTotalExercicioDinamic");
+  //$objAjax->registerFunction("AtualizaValorTotalExercicioDinamic");
   $objAjax->registerFunction("AtribuiValorAQuestaoDinamic");
   $objAjax->registerFunction("ExluirQuestaoDoExercicioDinamic");
   $objAjax->registerFunction("AplicaExercicioDinamic");

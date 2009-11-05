@@ -687,7 +687,7 @@ $where[] = "cod_aluno=".$cod_aluno;
 // qual avaliacao
 $where[] = "cod_avaliacao=".$cod_avaliacao;
 // a avaliacao foi finalizada
-$where[] = "status='F'";
+$where[] = "(status='F' or status='A')";
 
 // retornar todas as notas visiveis ao usuario
 $query = "select cod_nota, data, data_alteracao, nota, tipo_compartilhamento from Avaliacao_notas".
@@ -4677,11 +4677,11 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
       $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes'";
       if($portfolio_grupo)
       {
-        $script="window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_modelo=".$modelo."&cod_curso=".$cod_curso."','ExercicioResolvido',".$param.");";
+        $script="window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."','ExercicioResolvido',".$param.");";
       }
       else
       {
-         $script="window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_modelo=".$modelo."&cod_curso=".$cod_curso."','ExercicioResolvido',".$param.");";
+         $script="window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."','ExercicioResolvido',".$param.");";
       }
     }
   }

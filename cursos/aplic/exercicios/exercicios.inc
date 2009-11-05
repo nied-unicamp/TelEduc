@@ -847,7 +847,7 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
                     ." values "
                     ."(".$cod_nota.", ".$cod_usuario.",'',"
                     ."".$cod_avaliacao.",-2,"
-                    ."'', '0', 'A', ".time().",'F',".time().")"; 
+                    ."'', '0', 'A', ".time().",'A',".time().")"; 
         $res = Enviar($sock, $consulta);
       }
     }
@@ -878,7 +878,7 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
                         ." values "
                         ."(".$cod_nota.",".$usuario_grupo['cod_usuario'].",".$cod_grupo.","
                         ."".$cod_avaliacao.",-2,'','0'"
-                        .", 'A', ".time().",'F',".time().")";
+                        .", 'A', ".time().",'A',".time().")";
             $res = Enviar($sock, $consulta);
           }
         }
@@ -1977,7 +1977,7 @@ function AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao)
 }
 
 /********************************************************************************************************
-  AtribuiValorAQuestaoDinamic - Atualiza o valor de uma questao
+  AtribuiValorAQuestaoDinamic - Atualiza o valor de uma questao e a soma total.
   Entrada: $cod_curso - codigo do curso
            $cod_exercicio - codigo do exercicio
 		   $cod_questao - codigo da questao
@@ -1993,11 +1993,11 @@ function AtribuiValorAQuestaoDinamic($cod_curso, $cod_exercicio, $cod_questao, $
     Enviar($sock,$query);
     $valor = RetornaValorQuestao($sock,$cod_exercicio,$cod_questao);
 
-   
+
     $objResponse->addAssign("valorQuestao_".$cod_questao, "innerHTML", $valor);
     $objResponse->addAssign("totalValorQuestoes", "innerHTML", RetornaSomaValorQuestoes($sock,$cod_exercicio));
-    Desconectar($sock);    
-    
+    Desconectar($sock);
+
     return $objResponse->getXML();
 }
 
@@ -2335,6 +2335,17 @@ function EntregaCorrecao($cod_curso, $cod_resolucao)
   		
   	$update = "UPDATE Exercicios_resolucao SET nota=".$soma." WHERE cod_resolucao =".$cod_resolucao;
   	$res=Enviar($sock, $update);
+  	
+  	/* TODO: Implementar para atualizar nota do grupo */
+  	$query = "select cod_exercicio, cod_usuario FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
+    $res = Enviar($sock, $query);
+    $linha = RetornaLinha($res); // $linha['cod_exercicio'] e $linha['cod_usuario'] e nota é $soma
+    
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$linha['cod_exercicio']);
+    
+    $query = "UPDATE Avaliacao_notas SET nota=".$soma." WHERE cod_aluno=".$linha['cod_usuario']." and cod_avaliacao=".$cod_avaliacao;
+    $res = Enviar($sock, $query);
+  	
   
   	Desconectar($sock);
 }
