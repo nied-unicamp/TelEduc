@@ -1876,6 +1876,27 @@ function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
 		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
   Saida: XML da funcao ajax
 ********************************************************************************************************/
+function AlteraStatusExercicioInternoDinamic($cod_curso, $cod_exercicio, $status)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+ 
+    $sock=Conectar($cod_curso);
+ 
+    $query = "update Exercicios_modelo set status = '".$status."' where cod_exercicio = ".$cod_exercicio;
+    Enviar($sock,$query);
+ 
+    Desconectar($sock);
+ 	$objResponse->addRedirect("exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  AlteraStatusExercicioDinamic - Altera o status de um exercicio
+  Entrada: $cod_curso - codigo do curso
+           $cod_exercicio - codigo do exercicio
+		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
+  Saida: XML da funcao ajax
+********************************************************************************************************/
 function AlteraStatusExercicioDinamic($cod_curso, $cod_exercicio, $status)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
@@ -2297,7 +2318,8 @@ function EditarComentarioQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_que
             $cod_questao - codigo da questao
             $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
 */
-function EviarLixeira($cod_curso, $cod_questao, $status)
+
+function EnviarLixeira($cod_curso, $cod_questao, $status)
 {
   $sock=Conectar($cod_curso);
   $consulta = "UPDATE Exercicios_questao SET status = '".$status."' WHERE cod_questao = ".$cod_questao;
@@ -2340,6 +2362,12 @@ function EntregaCorrecao($cod_curso, $cod_resolucao)
   	$query = "select cod_exercicio, cod_usuario FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
     $res = Enviar($sock, $query);
     $linha = RetornaLinha($res); // $linha['cod_exercicio'] e $linha['cod_usuario'] e nota é $soma
+    
+    if(is_null($linha['cod_usuario'])){
+    	$query = "select cod_exercicio, cod_grupo FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
+    	$res = Enviar($sock, $query);
+    	$linha = RetornaLinha($res);
+    }
     
     $cod_avaliacao = RetornaCodAvaliacao($sock,$linha['cod_exercicio']);
     

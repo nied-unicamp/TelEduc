@@ -60,7 +60,6 @@
   $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
   $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  //$objAjax->registerFunction("AtualizaValorTotalExercicioDinamic");
   $objAjax->registerFunction("AtribuiValorAQuestaoDinamic");
   $objAjax->registerFunction("ExluirQuestaoDoExercicioDinamic");
   $objAjax->registerFunction("AplicaExercicioDinamic");
@@ -68,6 +67,8 @@
   $objAjax->registerFunction("RetornaArquivosDiretorioDinamic");
   $objAjax->registerFunction("DescompactarArquivoDinamic");
   $objAjax->registerFunction("MudaStatusArquivosDinamic");
+  $objAjax->registerFunction("AlteraStatusExercicioInternoDinamic");
+  
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -1115,11 +1116,16 @@
   echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=cancelar&atualizacao=true';\n");
   echo("    }\n\n");
   
-	echo(" function VerValor(obj) {
+  echo("	function VerValor(obj) {
 				var newobj = obj.value.replace(',', '.');
 				obj.value = newobj;
 			} 
 	");
+  
+  echo("	function ApagarExercicio(){
+				xajax_AlteraStatusExercicioInternoDinamic(".$cod_curso.",".$cod_exercicio.",'L');
+  			}	
+  ");
 	
   echo("    </script>\n\n");
   

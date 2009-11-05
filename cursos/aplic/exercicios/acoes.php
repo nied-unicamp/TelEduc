@@ -191,7 +191,7 @@
   	  $status = "X";
   	else
   	  $status = "L";
-  	EviarLixeira($cod_curso, $cod_questao, $status);
+  	EnviarLixeira($cod_curso, $cod_questao, $status);
     header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=Q");
   } else if($acao == "entregarExercicio"){
   	
