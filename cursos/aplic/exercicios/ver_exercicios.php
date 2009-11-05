@@ -79,10 +79,11 @@ if($visualizar == "I"){
 	$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
 	
 } else if($visualizar == "G"){
-	//$cod_grupo_exercicio = RetornaCodGrupoUsuario($sock,$cod_usuario);
+	
+	$cod_grupo_exercicio = $_GET['cod'];
 	if ($cod_grupo_exercicio != NULL){
 		AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
-		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$_GET['cod']);
+		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
 	}
 }
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
@@ -238,6 +239,14 @@ if($eformador)
     /* Frase #112 - Biblioteca de Questoes */
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
 	
+} else {
+	
+		if($visualizar != "I"){
+			/* Frase #109 - Exercicios Individuais */
+    	echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A&cod=".$cod_usuario."'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");	
+		}
+		/* Frase #110 - Exercicios em Grupo */
+  	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 }
 
 /* ? - Ver resoluo */
