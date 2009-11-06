@@ -190,6 +190,15 @@ function ListaLinguas($sock)
     $saida[$linha['cod_lingua']]=$linha['lingua'];
   return $saida;
 }
+function LinguaLocal($sock,$cod_lin){
+	$dbnamebase = $_SESSION['dbnamebase'];
+	$query="select texto from ".$dbnamebase.".Lingua_textos where cod_ferramenta=-6 and cod_lingua=".$cod_lin." and cod_texto=".$cod_lin."";
+	$res=Enviar($sock,$query);
+	$linha=RetornaLinha($res);
+	$texto=$linha['texto'];
+	return($texto);
+	
+}
 
 /* ************************************************************************
    MemorizaListaDeFrases - Memoriza uma lista com todas as frases da
