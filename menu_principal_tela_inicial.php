@@ -76,7 +76,8 @@
     $lista=ListaLinguas($sock);
     foreach($lista as $cod_lin => $lingua)
     {
-      echo("            <li>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;<a href=\"".$pag_atual."?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."&amp;cod_lin=".$cod_lin."\">".$lingua."</a></li>\n");  
+      $lingua_pais=LinguaLocal($sock,$cod_lin);	
+      echo("            <li>&nbsp;&nbsp;&nbsp;|<img src=\"../imgs/bandeira_".$cod_lin.".jpg\"style=\"vertical-align:text-bottom;\" />&nbsp;&nbsp;<a href=\"".$pag_atual."?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."&amp;cod_lin=".$cod_lin."\">".$lingua_pais."</a></li>\n");  
     }
   }
   
