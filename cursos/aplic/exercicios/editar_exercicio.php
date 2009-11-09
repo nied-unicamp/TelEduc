@@ -68,6 +68,7 @@
   $objAjax->registerFunction("DescompactarArquivoDinamic");
   $objAjax->registerFunction("MudaStatusArquivosDinamic");
   $objAjax->registerFunction("AlteraStatusExercicioInternoDinamic");
+  $objAjax->registerFunction("VerificaNotas");
   
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
@@ -1090,9 +1091,21 @@
   echo("        }\n");
   echo("        return(true);\n");
   echo("      }\n");
+  
+  echo("    function verifica_notas(flag)\n");
+  echo("    {\n");
+  echo("      if(!flag){\n");
+  echo("        if(confirm('Existem questões com valores iguais a 0, Deseja continuar?'))\n");
+  echo("          AplicarExercicio();\n");
+  echo("        else\n");
+  echo("          EscondeLayer(lay_aplicar);\n");
+  echo("      }else\n");
+  echo("        AplicarExercicio();\n");
+  echo("    }\n");
 
   echo("    function AplicarExercicio()\n");
   echo("    {\n");
+  echo(" alert('aplicarexercicio');\n");
   echo("      var dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao;\n");
   echo("      if(verifica_intervalos())\n");
   echo("      {\n");
@@ -1115,9 +1128,9 @@
   echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
   echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
   echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
-  if($exercicio['situacao'] != "C")
-    echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
-  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
+//  if($exercicio['situacao'] != "C")
+//    echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
+//  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
   echo("      }\n\n");
   echo("    }\n\n");
   
@@ -1551,15 +1564,21 @@
   echo("            ".RetornaFraseDaLista($lista_frases, 69).": <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data)."\" id=\"dt_disponibilizacao\" name=\"dt_disponibilizacao\" />\n");
   echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('dt_disponibilizacao'),'dd/mm/yyyy',this);\" />\n");
   /* Frase #85 - Horario */
+  $horario = explode(":",UnixTime2Hora($data));
   echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <select id=\"hora_disponibilizacao\" class=\"input\">\n");
+  
   for($i=0;$i<24;$i++){
   	if($i<10) $i="0$i";
-  	echo("<option value=".$i.">".$i."</option>\n");
+	if($i == $horario[0]) $selected = "selected=selected";
+	else $selected = "";
+  	echo("<option ".$selected." value=".$i.">".$i."</option>\n");
   }
   echo("</select><b> : </b><select id=\"minuto_disponibilizacao\" class=\"input\">\n");
   for($j=0;$j<60;$j++){
   	if($j<10) $j="0$j";
-  	echo("<option  value=".$j.">".$j."</option>\n");
+	if($j == $horario[1]) $selected = "selected=selected";
+	else $selected = "";
+  	echo("<option ".$selected." value=".$j.">".$j."</option>\n");
   }
   echo("</select>\n");
   echo("          </div><br />\n");
@@ -1583,7 +1602,9 @@
   echo("</select>\n");
   echo("          </div><br /><br />\n");
   /* 18 - Ok (gen) */
-  echo("            <input type=\"button\" class=\"input\" onClick=\"AplicarExercicio();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+//  echo("            <input type=\"button\" class=\"input\" onClick=\"AplicarExercicio();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  echo("            <input type=\"button\" class=\"input\" onClick=\"xajax_VerificaNotas(".$cod_exercicio.",".$cod_curso.");\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  
   /* 2 - Cancelar (gen) */
   echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_aplicar);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   echo("        </div>\n");
