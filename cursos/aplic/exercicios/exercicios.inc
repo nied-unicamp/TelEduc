@@ -1279,13 +1279,8 @@ function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_que
 if($tp_questao == 'O')
   {
     $gabarito = RetornaGabaritoQuestaoObj($sock, $cod_questao).'0'; 
-    
-    if($gabarito){ 
-	    $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+	$consulta="insert into Exercicios_questao_obj (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'O') ON duplicate KEY UPDATE gabarito='".VerificaStringQuery($gabarito)."'";
 
-    }else{
-		$consulta="insert into Exercicios_questao_obj (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'O')";
-    }
     
   	$res=Enviar($sock, $consulta);
     $cod = $cod_alternativa;
@@ -1406,11 +1401,15 @@ function CriaNovoTopicoDinamic($cod_curso, $cod_questao, $novo_topico, $textoFee
   $res=Enviar($sock, $consulta);
 
   $cod_topico = mysql_insert_id();
+  
+  $consulta="update Exercicios_questao set cod_topico='".VerificaNumeroQuery($cod_topico)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
 
   Desconectar($sock);
 
   $objResponse->addScript("AdicionaNovoTopico(".$cod_topico.",'".$novo_topico."');");
   $objResponse->addScriptCall("mostraFeedback", $textoFeedback, 'true');
+  $objResponse->addScriptCall("AtualizaTopicoCriado", $cod_topico);
 
   return $objResponse->getXML();
 }

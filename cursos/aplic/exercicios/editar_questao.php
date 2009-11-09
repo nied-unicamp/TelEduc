@@ -448,9 +448,15 @@
 
   echo("    function VerificaNovoTopico(textbox) {\n");
   echo("      var texto = textbox.value;\n");
+  echo("      var select;\n");
   /* Frase #89 - Topico criado com sucesso */
   echo("      xajax_CriaNovoTopicoDinamic(".$cod_curso.",".$cod_questao.",texto,'".RetornaFraseDaLista($lista_frases, 89)."');\n");
   echo("      EscondeLayer(lay_novo_topico);\n");
+  echo("    }\n\n");
+  
+  echo("    function AtualizaTopicoCriado(cod) {\n");
+  echo("      select = document.getElementById('selectTopico');\n");
+  echo("	  select.selectedIndex = cod; ");
   echo("    }\n\n");
 
   echo("    function AdicionaNovoTopico(cod,topico)\n");
@@ -714,8 +720,10 @@
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
   echo("      tr.appendChild(td);\n");
   echo("      tBody.appendChild(tr);\n");
-  if($tp_questao == 'O')
+  if($tp_questao == 'O'){
     echo("      AdicionaLinhaArrayGabEPosi(cod);\n");
+    //echo("	    document.getElementById('textAlt_'+cod).focus();");
+  }
   else if($tp_questao == 'D')
   {
     echo("      trGab = document.createElement(\"tr\");\n");
@@ -737,10 +745,11 @@
   echo("      DesabilitarMudancaPosicaoAlt();\n");
   //echo("      IntercalaCorLinhaAlt();\n");
   echo("      cancelarElemento=document.getElementById('spanCanc_'+cod);\n");
+  if($tp_questao == 'O')
+  	echo("	    document.getElementById('textAlt_'+cod).focus();");
   echo("      qtdAlternativas++;\n");
   echo("    }\n\n");
   
-
   echo("    function NovaAlternativa()\n");
   echo("    {\n");
   echo("      if(qtdAlternativas < 10)\n");
@@ -909,7 +918,9 @@
   echo("      }\n");
   echo("      return stringGabarito;\n");
   echo("    }\n\n");
-
+  
+	$icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
+	$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
   if($tp_questao == 'O')
   {
     echo("    function ConfirmaEdicaoAlternativa(cod){\n");
@@ -920,7 +931,8 @@
     echo("      gabarito[posi] = document.getElementById('select_'+cod).value;\n");
     echo("      stringGabarito = FormaGabarito();\n");
     echo("      DeletaCamposEdicao(span);\n");
-    echo("      span.innerHTML = conteudo;\n");
+    echo("      if(gabarito[posi] == 1) {span.innerHTML = conteudo.toString()+'".$icone_correto."';}\n");
+    echo("      else {span.innerHTML = conteudo.toString()+'".$icone_errado."';}\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
     echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
