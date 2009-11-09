@@ -2406,3 +2406,16 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
 	return $comentario;
 }
 
+function VerificaNotas($cod_exercicio,$cod_curso){
+    $objResponse = new xajaxResponse('ISO-8859-1');
+
+	$sock=Conectar($cod_curso);
+	$consulta = "SELECT * FROM Exercicios_modelo_questao WHERE cod_exercicio=".$cod_exercicio." and valor<=0";
+	$res=Enviar($sock,$consulta);
+    if(RetornaLinha($res)) $valor = 0;
+    else $valor = 1;
+
+    $objResponse->addScript("verifica_notas(".$valor.");");
+    return $objResponse->getXML();
+	
+}
