@@ -1602,7 +1602,6 @@
   echo("</select>\n");
   echo("          </div><br /><br />\n");
   /* 18 - Ok (gen) */
-//  echo("            <input type=\"button\" class=\"input\" onClick=\"AplicarExercicio();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   echo("            <input type=\"button\" class=\"input\" onClick=\"xajax_VerificaNotas(".$cod_exercicio.",".$cod_curso.");\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   
   /* 2 - Cancelar (gen) */
