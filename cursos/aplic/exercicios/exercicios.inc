@@ -2361,10 +2361,10 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
             $cod_questao - codigo da questao
             $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
 */
-function VerificaSeCorrigida($cod_curso,$cod_usuario,$cod_resolucao)
+function VerificaSeCorrigida($cod_curso,$cod_resolucao)
 {
   $sock=Conectar($cod_curso);
-  $consulta = "select corrigida from Exercicios_resolucao where cod_resolucao = ".$cod_resolucao." and cod_usuario = ".$cod_usuario;
+  $consulta = "select corrigida from Exercicios_resolucao where cod_resolucao = ".$cod_resolucao;
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   

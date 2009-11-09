@@ -72,7 +72,8 @@ $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
 $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
 $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
 $ehFormador = EFormador($sock,$cod_curso,$cod_usuario);
-$VerificaCorrigida = VerificaSeCorrigida($cod_curso,$resolucao['cod_usuario'],$cod_resolucao);
+
+$VerificaCorrigida = VerificaSeCorrigida($cod_curso,$cod_resolucao);
 
 if($ehFormador || $VerificaCorrigida){
 
