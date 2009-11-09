@@ -1666,7 +1666,7 @@ else
 				if($exercicio['cod_exercicio']!=0)
 				{
 	    if (!isset($SalvarEmArquivo))
-	    echo("                   <td align=center><a href# onClick=\"return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));\">1</td>\n");
+	    echo("                   <td align=center><a href=\"#\" onClick=\"return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));\">1</td>\n");
 	    else
 	    echo("                   <td align=center>1</td>\n");
 				}
@@ -1964,7 +1964,7 @@ else
 					if($exercicio['cod_exercicio']!=0)
 					{
 						if (!isset($SalvarEmArquivo))
-						echo("                    <td align=center><a href# onClick=return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));>1</td>\n");
+						echo("                    <td align=center><a href=\"#\" onClick=return(VerExercicio(".$exercicio['cod_exercicio'].",".$exercicio['cod_resolucao'].",".$cod."));>1</td>\n");
 						else
 						echo("                    <td align=center>1</td>\n");
 					}
