@@ -1876,27 +1876,6 @@ function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
 		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function AlteraStatusExercicioInternoDinamic($cod_curso, $cod_exercicio, $status)
-{ 
-    $objResponse = new xajaxResponse('ISO-8859-1');
- 
-    $sock=Conectar($cod_curso);
- 
-    $query = "update Exercicios_modelo set status = '".$status."' where cod_exercicio = ".$cod_exercicio;
-    Enviar($sock,$query);
- 
-    Desconectar($sock);
- 	$objResponse->addRedirect("exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
-    return $objResponse->getXML();
-}
-
-/********************************************************************************************************
-  AlteraStatusExercicioDinamic - Altera o status de um exercicio
-  Entrada: $cod_curso - codigo do curso
-           $cod_exercicio - codigo do exercicio
-		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
-  Saida: XML da funcao ajax
-********************************************************************************************************/
 function AlteraStatusExercicioDinamic($cod_curso, $cod_exercicio, $status)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
@@ -2318,8 +2297,7 @@ function EditarComentarioQuestaoDissDinamic($cod_curso, $cod_resolucao, $cod_que
             $cod_questao - codigo da questao
             $status - novo status da questao (V - valido; L - lixeira; X - excluido definitivamente)
 */
-
-function EnviarLixeira($cod_curso, $cod_questao, $status)
+function EviarLixeira($cod_curso, $cod_questao, $status)
 {
   $sock=Conectar($cod_curso);
   $consulta = "UPDATE Exercicios_questao SET status = '".$status."' WHERE cod_questao = ".$cod_questao;
@@ -2332,50 +2310,50 @@ function EnviarLixeira($cod_curso, $cod_questao, $status)
    Entrada: $cod_curso - cÃ³digo do curso, para conectar ao banco de dados
             $cod_resolucao - codigo da resolucao
 */
-function EntregaCorrecao($cod_curso, $cod_resolucao)
-{
-  	$sock = Conectar($cod_curso);
-  	$query = "UPDATE Exercicios_resolucao SET corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
-  	$res=Enviar($sock, $query);
-  
+function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
+{ 
+  	/* Calcula o total de nota das questoes dissertativas */
   	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
   	$res = Enviar($sock, $nota_final1);
   	$nota1 = RetornaLinha($res);
   	
+  	/* Calcula o total de nota das questoes objetivas */
   	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
   	$res = Enviar($sock, $nota_final2);
   	$nota2 = RetornaLinha($res);
   	
+  	/* Calcula a soma total */
   	if(is_null($nota1['soma']))
   		$soma = $nota2['soma'];
   	else if(is_null($nota2['soma']))
   		$soma = $nota1['soma'];
   	else
   		$soma = $nota1['soma'] + $nota2['soma'];
-  	
-  	if(is_null($soma)) $soma = 0;
   		
-  	$update = "UPDATE Exercicios_resolucao SET nota=".$soma." WHERE cod_resolucao =".$cod_resolucao;
+  	if(is_null($soma)) $soma = 0;
+	
+  	/* Salva a nota total e entrega a resolucao do exercicio */
+  	$update = "UPDATE Exercicios_resolucao SET nota=".$soma.", corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
   	$res=Enviar($sock, $update);
-  	
-  	/* TODO: Implementar para atualizar nota do grupo */
-  	$query = "select cod_exercicio, cod_usuario FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
-    $res = Enviar($sock, $query);
-    $linha = RetornaLinha($res); // $linha['cod_exercicio'] e $linha['cod_usuario'] e nota é $soma
+  		
+  	/* Pega info do exercicio por cod_resolucao */
+  	$query = "select * FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
+   	$res = Enviar($sock, $query);
+    $exercicio = RetornaLinha($res);
     
-    if(is_null($linha['cod_usuario'])){
-    	$query = "select cod_exercicio, cod_grupo FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$exercicio['cod_exercicio']);
+    
+  	/* Entrega da correcao para aplicacao Individual */
+  	if ($exercicio['tp_aplicacao'] == "I"){
+   
+    	$query = "UPDATE Avaliacao_notas SET nota=".$soma." WHERE cod_aluno=".$exercicio['cod_usuario']." and cod_avaliacao=".$cod_avaliacao;
     	$res = Enviar($sock, $query);
-    	$linha = RetornaLinha($res);
-    }
-    
-    $cod_avaliacao = RetornaCodAvaliacao($sock,$linha['cod_exercicio']);
-    
-    $query = "UPDATE Avaliacao_notas SET nota=".$soma." WHERE cod_aluno=".$linha['cod_usuario']." and cod_avaliacao=".$cod_avaliacao;
-    $res = Enviar($sock, $query);
-  	
-  
-  	Desconectar($sock);
+    	
+  	} else {
+  		/* Entrega da correcao para aplicacao em Grupo */
+  		$query = "UPDATE Avaliacao_notas SET nota=".$soma." WHERE cod_grupo=".$exercicio['cod_grupo']." and cod_avaliacao=".$cod_avaliacao;
+    	$res = Enviar($sock, $query);
+  	}
 }
 /* *********************************************************************
    VerificaSeCorrigida - Verifica se o exercï¿½cio jï¿½ foi corrigido para o usuï¿½rio

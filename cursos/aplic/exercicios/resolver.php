@@ -360,7 +360,7 @@ if($resolucao['cod_grupo'] != null)
 }
 
 /* Frase #5 - Voltar */
-echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>".RetornaFraseDaLista($lista_frases, 5)."</a></li>\n");
+echo("                  <li><a onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases, 5)."</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");

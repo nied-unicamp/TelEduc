@@ -208,7 +208,8 @@
   }
   else if($acao == 'entregarCorrecao')
   {
-  	EntregaCorrecao($cod_curso, $cod_resolucao);
+  	EntregaCorrecao($sock, $cod_curso, $cod_resolucao);
+  	Desconectar($sock);
   	header("Location:exercicio.php?cod_curso=".$cod_curso."&atualizacao=true");
   }
   exit;
