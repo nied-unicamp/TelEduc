@@ -2092,7 +2092,7 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
     
     $query = "update Exercicios_modelo set situacao = 'A' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
     Enviar($sock,$query);
-    $query="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P')";
+    $query="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P') on duplicate key update data=".$data;
   	Enviar($sock, $query);
   
     Desconectar($sock);
