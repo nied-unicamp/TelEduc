@@ -337,7 +337,7 @@
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
   echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",conteudo,".$cod_usuario.", \"\");\n");
+  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",conteudo,".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 175)."\");\n");
   echo("      }\n");
   echo("      else{\n");
   // Cancela Edi�o
