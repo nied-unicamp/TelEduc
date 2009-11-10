@@ -216,7 +216,7 @@
   echo("      cod_comp = getLayer('comp');\n");
   echo("      tableDnD = new TableDnD();\n");
   echo("      tBody = document.getElementById('tBody');\n");
-  echo("	  HabilitarMudancaPosicaoAlt();\n");
+  //echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
@@ -430,7 +430,7 @@
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
   echo("      cancelarElemento=null;\n");
-  echo("      HabilitarMudancaPosicaoAlt();\n");
+  //echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
   
   echo("    function EdicaoTexto_gabarito(codigo, id, valor){\n");
@@ -443,7 +443,7 @@
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
   echo("      cancelarElemento=null;\n");
-  echo("      HabilitarMudancaPosicaoAlt();\n");
+  //echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function VerificaNovoTopico(textbox) {\n");
@@ -907,7 +907,7 @@
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      DeletaCamposEdicao(span);\n");
   echo("      span.innerHTML = conteudo;\n");
-  echo("	  HabilitarMudancaPosicaoAlt();\n");
+  //echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function FormaGabarito(){\n");
@@ -934,7 +934,7 @@
     echo("      if(gabarito[posi] == 1) {span.innerHTML = conteudo.toString()+'".$icone_correto."';}\n");
     echo("      else {span.innerHTML = conteudo.toString()+'".$icone_errado."';}\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
-    echo("		HabilitarMudancaPosicaoAlt();\n");
+    //echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
@@ -947,7 +947,7 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaDissDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo);\n");
-    echo("		HabilitarMudancaPosicaoAlt();\n");
+    //echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
@@ -979,8 +979,8 @@
   echo("	  {\n");
   echo("        tr.style.display = 'none';\n");
   echo("	    gabaritosVisiveis--;");
-  echo("        if(gabaritosVisiveis == 0)\n");
-  echo("		  HabilitarMudancaPosicaoAlt();");
+  //echo("        if(gabaritosVisiveis == 0)\n");
+  //echo("		  HabilitarMudancaPosicaoAlt();");
   echo("	  }");
   echo("    }\n\n");
 
