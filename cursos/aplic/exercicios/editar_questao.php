@@ -68,6 +68,7 @@
   $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
   $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
+  $objAjax->registerFunction("AtualizaIconesDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -209,6 +210,21 @@
   echo("        return(0);\n");
   echo("    }\n\n");
 
+  $icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
+  $icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+
+  echo("	function AtualizaIcones(alt,gabarito){\n
+  			arrayAlt = alt.split('.');\n
+  				for(i=0;i<gabarito.length;i++){\n
+  					if(gabarito[i] == 0){\n
+  						document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_errado."';\n
+  					}\n
+  					else\n
+  						document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_correto."';\n
+  				}\n
+  			}\n\n
+  ");
+	
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
@@ -218,6 +234,8 @@
   echo("      tBody = document.getElementById('tBody');\n");
   //echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
+  echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');
+  ");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
 
@@ -919,8 +937,6 @@
   echo("      return stringGabarito;\n");
   echo("    }\n\n");
   
-	$icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
-	$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
   if($tp_questao == 'O')
   {
     echo("    function ConfirmaEdicaoAlternativa(cod){\n");
@@ -931,8 +947,7 @@
     echo("      gabarito[posi] = document.getElementById('select_'+cod).value;\n");
     echo("      stringGabarito = FormaGabarito();\n");
     echo("      DeletaCamposEdicao(span);\n");
-    echo("      if(gabarito[posi] == 1) {span.innerHTML = conteudo.toString()+'".$icone_correto."';}\n");
-    echo("      else {span.innerHTML = conteudo.toString()+'".$icone_errado."';}\n");
+    echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
     //echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
@@ -1582,7 +1597,7 @@
           $cod_alternativa = $linha_item['cod_alternativa'];
 
           echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
-          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span></td>\n");
+          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\"></span></td>\n");
           echo("                  </tr>\n");
 
           if($tp_questao == 'D')

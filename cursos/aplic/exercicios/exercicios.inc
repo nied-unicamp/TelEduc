@@ -1204,7 +1204,7 @@ function RetornaFraseGeralDinamic($variavel){
 }
 
 /* *********************************************************************
-   EditarAlternativaObjDinamic - Salva no banco as alteraÃ§Ãµes feitas na alternativa de uma questao objetiva
+   EditarAlternativaObjDinamic - Salva no banco as alterações feitas na alternativa de uma questao objetiva
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
 			$cod_alternativa - codifo da alternativa
@@ -1223,8 +1223,9 @@ function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa,
 
   $consulta="update Exercicios_questao_obj set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock, $consulta);
-
+  
   Desconectar($sock);
+  $objResponse->addScriptCall("xajax_AtualizaIconesDinamic",$cod_questao,$cod_curso);
 
   return $objResponse->getXML();
 }
@@ -2432,4 +2433,31 @@ function VerificaNotas($cod_exercicio,$cod_curso){
     $objResponse->addScript("verifica_notas(".$valor.");");
     return $objResponse->getXML();
 	
+}
+/* *********************************************************************
+   AtualizaIconesDinamic - Atualiza os icones da tabela
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+			$cod_curso - codigo do curso
+   Saida: XML da função Ajax
+*/
+function AtualizaIconesDinamic($cod_questao,$cod_curso){
+	$sock=Conectar($cod_curso);
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+	$alternativas = RetornaAlternativas($sock,$cod_questao);
+	
+	$numalt = count($alternativas);
+	for($i=0;$i<$numalt;$i++){
+		if($i!=0) 
+			$alt = $alt.".".$alternativas[$i]['cod_alternativa'];
+		else
+			$alt = $alternativas[$i]['cod_alternativa'];
+	}
+	$gabarito = RetornaGabaritoQuestaoObj($sock,$cod_questao);
+	$objResponse->addScriptCall("AtualizaIcones",$alt,$gabarito);
+	
+  	Desconectar($sock);
+
+  	return $objResponse->getXML();
 }
