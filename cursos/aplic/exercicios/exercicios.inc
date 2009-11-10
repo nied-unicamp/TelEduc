@@ -1225,7 +1225,6 @@ function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa,
   $res=Enviar($sock, $consulta);
   
   Desconectar($sock);
-  $objResponse->addScriptCall("xajax_AtualizaIconesDinamic",$cod_questao,$cod_curso);
 
   return $objResponse->getXML();
 }

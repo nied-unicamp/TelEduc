@@ -148,7 +148,7 @@
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var tableDnD;\n");
   echo("    var cod_comp;\n");
-    echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
+  echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var js_comp = new Array();\n");
   echo("    var cancelarTodos = 0;\n\n");
@@ -232,7 +232,7 @@
   echo("      cod_comp = getLayer('comp');\n");
   echo("      tableDnD = new TableDnD();\n");
   echo("      tBody = document.getElementById('tBody');\n");
-  //echo("	  HabilitarMudancaPosicaoAlt();\n");
+  echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
   echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');
   ");
@@ -448,7 +448,7 @@
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
   echo("      cancelarElemento=null;\n");
-  //echo("      HabilitarMudancaPosicaoAlt();\n");
+  echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
   
   echo("    function EdicaoTexto_gabarito(codigo, id, valor){\n");
@@ -461,7 +461,7 @@
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
   echo("      cancelarElemento=null;\n");
-  //echo("      HabilitarMudancaPosicaoAlt();\n");
+  echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function VerificaNovoTopico(textbox) {\n");
@@ -626,6 +626,13 @@
   echo("      span.setAttribute(\"id\",'span_'+cod);\n");
   echo("      return span;\n");
   echo("    }\n\n");
+  
+  echo("    function CriaSpanDiv(cod)\n");
+  echo("    {\n");	
+  echo("      var span = document.createElement(\"span\");\n");
+  echo("      span.setAttribute(\"id\",'div_'+cod);\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
 
   echo("    function CriaSpanOk(cod)\n");
   echo("    {\n");	
@@ -736,6 +743,7 @@
   echo("      td.appendChild(CriaCheckBoxAlt(cod));\n");
   echo("      td.appendChild(CriaSpanEspAlt(5));\n");
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
+  echo("      td.appendChild(CriaSpanDiv(cod));\n");
   echo("      tr.appendChild(td);\n");
   echo("      tBody.appendChild(tr);\n");
   if($tp_questao == 'O'){
@@ -830,6 +838,7 @@
   echo("          if(spanAlt.firstChild == null || spanAlt.firstChild.innerHTML != ''){\n");
   echo("            conteudo = spanAlt.innerHTML;\n");
   echo("            spanAlt.innerHTML = '';\n");
+  echo("			document.getElementById('div_'+getNumber[1]).innerHTML = ' ' ;\n");
   echo("            CriaCamposEdicao(conteudo,getNumber[1]);\n");
   echo("            cancelarElemento=document.getElementById('spanCanc_'+getNumber[1]);\n");
   echo("          }\n");
@@ -925,7 +934,7 @@
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      DeletaCamposEdicao(span);\n");
   echo("      span.innerHTML = conteudo;\n");
-  //echo("	  HabilitarMudancaPosicaoAlt();\n");
+  echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
   echo("    function FormaGabarito(){\n");
@@ -949,7 +958,8 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
-    //echo("		HabilitarMudancaPosicaoAlt();\n");
+    echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.");\n");
+    echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
@@ -962,7 +972,7 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaDissDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo);\n");
-    //echo("		HabilitarMudancaPosicaoAlt();\n");
+    echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
     echo("    }\n\n");
   }
@@ -994,8 +1004,8 @@
   echo("	  {\n");
   echo("        tr.style.display = 'none';\n");
   echo("	    gabaritosVisiveis--;");
-  //echo("        if(gabaritosVisiveis == 0)\n");
-  //echo("		  HabilitarMudancaPosicaoAlt();");
+  echo("        if(gabaritosVisiveis == 0)\n");
+  echo("		  HabilitarMudancaPosicaoAlt();");
   echo("	  }");
   echo("    }\n\n");
 
@@ -1597,7 +1607,7 @@
           $cod_alternativa = $linha_item['cod_alternativa'];
 
           echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
-          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\"></span></td>\n");
+          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span></td>\n");
           echo("                  </tr>\n");
 
           if($tp_questao == 'D')
