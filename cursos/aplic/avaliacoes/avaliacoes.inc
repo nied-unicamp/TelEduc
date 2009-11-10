@@ -4466,7 +4466,7 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
     /*Altera��o que talvez resolva o problema da nota da avaliac��o que � registrada mais de uma vez*/
     else if ($dados['Ferramenta'] == 'E' && $dados['Tipo']=='G')
     {
-      $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod);
+      $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod_grupo);
     }
     else if ($dados['Ferramenta'] == 'N' && $dados['Tipo']=='G')
     {
