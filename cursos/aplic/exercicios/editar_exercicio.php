@@ -1105,21 +1105,25 @@
 
   echo("    function AplicarExercicio()\n");
   echo("    {\n");
-  echo("      var dt_disp,hr_disp,dt_entrega,hr_entrega,tp_aplicacao,disp_gabarito,avaliacao;\n");
-  echo("      if(verifica_intervalos())\n");
-  echo("      {\n");
   echo("        if(document.getElementById(\"disponibilizacaoa\").checked)\n");
   echo("        {\n");
-  echo("          dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
-  echo("          hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
-  echo("          min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
-  echo("          horario_disp = hr_disp+':'+min_disp+':00';\n");
+  echo("	      if(verifica_intervalos()){\n");
+  echo("          	dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
+  echo("          	hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("          	min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("          	horario_disp = hr_disp+':'+min_disp+':00';\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            return 0;\n");
+  echo("          }\n");
   echo("        }\n");
   echo("        else\n");
   echo("        {\n");
-  echo("          dt_disp = \"".UnixTime2Data($data)."\";\n");
-  echo("          hr_disp = \"".UnixTime2Hora($data)."\";\n");
+  echo("            dt_disp = \"".UnixTime2Data($data)."\";\n");
+  echo("            horario_disp = \"".UnixTime2Hora($data)."\";\n");
   echo("        }\n");
+  echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
+  echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
   echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
   echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
   echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
@@ -1127,10 +1131,18 @@
   echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
   echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
   echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
+  echo("        if(document.getElementById(\"disponibilizacaoi\").checked)\n");
+  echo("        {\n");
+  echo("          if (ComparaDataHora(dt_disponibilizacao,RetornaHorarioDisponibilizacao(),limite_entrega,RetornaHorarioEntrega()) > 0 )\n");
+  echo("          {\n");
+  /* Frase #48 - O limite de entrega deve ser posterior a disponibilizacao do exercicio. */
+  echo("            alert('".RetornaFraseDaLista($lista_frases, 48)."');\n");
+  echo("            return(false);\n");
+  echo("          }\n");
+  echo("        }\n");
   if($exercicio['situacao'] != "C")
     echo("		  xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
   echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);");
-  echo("      }\n\n");
   echo("    }\n\n");
   
   echo("    function ExercicioAplicado(avaliacao,cod_avaliacao)\n");
@@ -1602,7 +1614,7 @@
   echo("          </div><br /><br />\n");
   /* 18 - Ok (gen) */
   echo("            <input type=\"button\" class=\"input\" onClick=\"xajax_VerificaNotas(".$cod_exercicio.",".$cod_curso.");\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  
+
   /* 2 - Cancelar (gen) */
   echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_aplicar);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   echo("        </div>\n");
