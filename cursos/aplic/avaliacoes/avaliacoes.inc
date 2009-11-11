@@ -2895,8 +2895,8 @@ function RetornaExercicioResolvido($sock, $cod_avaliacao, $cod_grupo)
   $res = Enviar($sock, $query);
   $cod_exercicio = RetornaLinha($res);
 
-  $query = "select corrigida from Exercicios_resolucao where cod_resolucao = ".$cod_exercicio[0]." and cod_grupo = ".$cod_grupo;
-                                                                                                                            
+  $query = "select corrigida from Exercicios_resolucao where cod_exercicio = ".$cod_exercicio[0]." and cod_grupo = ".$cod_grupo;
+                                                                                                                         
   $res = Enviar($sock, $query);
   $tupla = RetornaLinha($res);
                                                                    
@@ -5130,7 +5130,7 @@ RetornaNotaExercicio - Retorna a nota do aluno em determinado exercicio pela tab
 function RetornaNotaExercicio($sock, $cod_avaliacao, $cod_usuario){
 	// retornar todas as notas visiveis ao usuario
 	$dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
-  	$cod_atividade=$dados['Cod_atividade'];
+ 	$cod_atividade=$dados['Cod_atividade'];
   	
 	$query = "select nota from Exercicios_resolucao where cod_usuario=".$cod_usuario." and cod_exercicio=".$cod_atividade;
 	$res = Enviar($sock, $query);
@@ -5151,7 +5151,7 @@ RetornaNotaExercicioGrupo - Retorna a nota do grupo em determinado exercicio pel
 function RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_grupo){
 	// retornar todas as notas visiveis ao usuario
 	$dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
-  	$cod_atividade=$dados['Cod_atividade'];
+  $cod_atividade=$dados['Cod_atividade'];
   	
 	$query = "select nota from Exercicios_resolucao where cod_grupo=".$cod_grupo." and cod_exercicio=".$cod_atividade;
 	$res = Enviar($sock, $query);
@@ -5159,6 +5159,16 @@ function RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_grupo){
 	$nota = $retorno['nota'];
 	
 	return $nota;
+}
+
+function RetornaCodResolucaoExercicio($sock, $cod_avaliacao, $cod_grupo){
+	$dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
+  $cod_atividade=$dados['Cod_atividade'];
+  
+	$query = "select cod_resolucao from Exercicios_resolucao where cod_grupo=".$cod_grupo." and cod_exercicio=".$cod_atividade;
+	$res = Enviar($sock, $query);
+	$retorno = RetornaLinha($res);
+	return($retorno['cod_resolucao']);
 }
 
 ?>

@@ -375,7 +375,7 @@ if (!isset($SalvarEmArquivo))
 		echo("        function VerExercicio(cod_exercicio, cod_resolucao, cod_dono) \n");
 		echo("        { \n");
 		$param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes'";
-		echo("           window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod='+cod_dono+'&cod_exercicio='+cod_exercicio+'&cod_resolucao='+cod_resolucao+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
+		echo("           window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod='+cod_dono+'&cod_resolucao='+cod_resolucao+'&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param."); \n");
 		echo("          return(false);\n");
 		echo("} \n");
 	}
@@ -1365,8 +1365,8 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 				echo("                    <td align=center>");
 				if (!isset($SalvarEmArquivo))
 				{
-					$cod_resolucao = RetornaCodigoAtividade($sock, $cod_avaliacao);
-					echo("<a href=# onClick=\"return(VerExercicio(".$cod_resolucao.",0,".$cod_grupo."));\">".$num_itens."</a></td>\n");
+					$cod_resolucao = RetornaCodResolucaoExercicio($sock, $cod_avaliacao, $cod_grupo);
+					echo("<a href=# onClick=\"return(VerExercicio(0,".$cod_resolucao.",".$cod_grupo."));\">".$num_itens."</a></td>\n");
 				}
 				else
 				echo($num_itens."</td>\n");
@@ -1379,25 +1379,15 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 
 			$foiavaliado=GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo);
 			$grupo=(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'));
-			//$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_grupo, $grupo);
 
-			if ($foiavaliado /*&& $dados['Ferramenta']!='E'*/)
-
-			//if ($foiavaliado)           //Ja existe uma nota atribuida
+			if ($foiavaliado)
 			{
-				// Modificado. Antes retornava o aluno que mais tem notas no grupo.
-				// Agora retorna o cod_aluno de um aluno do grupo que recebeu a ultima avaliacao
-				$cod=RetornaCodAlunoMaisNotasnoGrupo($sock,$cod_avaliacao,$cod_grupo);
-
-				if ($cod > 0)
 				$dados_nota=RetornaDadosNotaGrupoStatusF($sock, $cod_grupo, $cod_avaliacao,$usr_formador);
-				else
-				$dados_nota=RetornaDadosNotaGrupoStatusF($sock, 0, $cod_avaliacao,$usr_formador);
 
 				$tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
 				$cod_nota=$dados_nota['cod_nota'];
-				//$nota=$dados_nota['nota'];
-				$nota=RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_usuario);
+
+				$nota=RetornaNotaExercicioGrupo($sock, $cod_avaliacao, $cod_grupo);
 
 				// booleano que indica se a nota estah vazia
 				$nota_vazia = ($nota == '');
