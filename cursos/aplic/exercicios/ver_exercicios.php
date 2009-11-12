@@ -62,7 +62,7 @@ include("../topo_tela.php");
 $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro 
-$feedbackObject->addAction("entregarExercicio", 504, 0);
+$feedbackObject->addAction("entregarExercicio", 191, 0);
 
  
 if($visualizar != "I" && $visualizar != "G")
