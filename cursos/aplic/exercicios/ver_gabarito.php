@@ -337,6 +337,7 @@ echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaIn
 echo("                  <tr class=\"head\">\n");
 /* Frase #13 - Titulo */
 echo("                    <td colspan=\"2\" class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+/* Frase #176 - Nota Final*/
 echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 176)."</td>\n");
 /* Frase #86 - Limite de entrega */
 echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 86)."</td>\n");
