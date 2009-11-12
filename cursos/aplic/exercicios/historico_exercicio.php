@@ -66,7 +66,7 @@
   echo("  </head>\n");
   echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" onload=\"this.focus();\">\n");
 
-  /* PÃ¡gina Principal */
+  /* Página Principal */
 
   /* Frase #1 - Exercicios */
   /* Frase #56 - Historico */

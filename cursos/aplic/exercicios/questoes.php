@@ -72,21 +72,21 @@
   else
     $totalQuestoes = 0;
         
-  /* Nmero de questoes exibidas por pï¿½ina.             */
+  /* Nmero de questoes exibidas por página.             */
   if (!isset($questoesPorPag)) $questoesPorPag = 10;
   
   /* Se o nmero total de questoes for superior que o nmero de questoes por  */
-  /* pï¿½ina entï¿½ calcula o total de pï¿½inas. Do contrï¿½io, define o nmero de     */
-  /* pï¿½inas para 1.                                                           */
+  /* página entï¿½ calcula o total de páginas. Do contrï¿½io, define o nmero de     */
+  /* páginas para 1.                                                           */
 
-  /* Calcula o nmero de pï¿½inas geradas.    */
+  /* Calcula o nmero de páginas geradas.    */
   if($totalQuestoes > $questoesPorPag)
     $totalPag = ceil($totalQuestoes / $questoesPorPag);
   else
     $totalPag = 1;
 
-  /* Se a pï¿½ina atual nï¿½ estiver setada entï¿½, por padrï¿½, atribui-lhe o valor 1. */
-  /* Se estiver setada, verifica se a pï¿½ina ï¿½maior que o total de pï¿½inas, se for */
+  /* Se a página atual nï¿½ estiver setada entï¿½, por padrão, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a página ï¿½maior que o total de páginas, se for */
   /* atribui o valor de $total_pag ï¿½$pagAtual.                                    */
   if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
     $pagAtual =  1;
@@ -95,7 +95,7 @@
   
 
   /*********************************************************/
-  /* inï¿½io - JavaScript */
+  /* início - JavaScript */
   if($totalQuestoes){
     echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   }
@@ -827,7 +827,7 @@
   {
   	/* Exercicios */
   	echo("    <div id=\"layer_exercicios\" class=popup>\n");
-  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_exercicios);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_exercicios);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <div class=ulPopup>\n");    
 
@@ -863,7 +863,7 @@
   	
   	/* Nova Questao */
   	echo("    <div id=\"layer_nova_questao\" class=popup>\n");
-  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_questao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_questao);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <form name=form_nova_questao method=post action=acoes.php onSubmit='return(VerificaNovoTitulo(document.form_nova_questao.novo_titulo, 1));'>\n");
   	echo("          <div class=ulPopup>\n");    
@@ -894,7 +894,7 @@
   	
     /* Mudar Compartilhamento */
   	echo("    <div class=popup id=\"comp\">\n");
-  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <script type=\"text/javaScript\">\n");
   	echo("        </script>\n");
@@ -912,7 +912,7 @@
   	echo("            </li>\n");
   	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'Q'); EscondeLayers();\">\n");
   	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-  	/* Frase #8 - Nao Compartilhado */
+  	/* Frase #8 - Não Compartilhado */
   	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
   	echo("            </li>\n");
  		echo("          </ul>\n");    
@@ -922,7 +922,7 @@
   	
   	/* Filtro */
   	echo("    <div id=\"layer_filtro\" class=popup>\n");
-  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_filtro);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_filtro);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
   	echo("      <div class=int_popup>\n");
   	echo("        <div class=ulPopup>\n");    
   	/* Frase #61 - Topico */

@@ -677,7 +677,8 @@ if($tela_formador)
 {
 	/* Mudar Compartilhamento */
 	echo("    <div class=popup id=\"comp\">\n");
-	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+	/* 13 - Fechar (ger) */
+	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
 	echo("      <div class=int_popup>\n");
 	echo("        <script type=\"text/javaScript\">\n");
 	echo("        </script>\n");

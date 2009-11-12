@@ -647,19 +647,19 @@ if ((count($questoes)>0)&&($questoes != null))
 
 echo("                </table>\n");
 if($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))){
-	/* ? - Entregar */
+	/* Frase #189 - Entregar */
 	echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-	echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='Entregar'></div>\n");
+	echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
 	echo("								</form>");
 }
 else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 {	
 	if($tela_formador)
 	{
-		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='Corrigir Exercicio'></td></tr>");
+		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='".RetornaFraseDaLista($lista_frases, 190)."'></td></tr>");
 	}
 }
 echo("              </td>\n");
@@ -679,7 +679,8 @@ if($tela_formador)
 {
 	/* Mudar Compartilhamento */
 	echo("    <div class=popup id=\"comp\">\n");
-	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+	/* 13 - Fechar (ger) */
+	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" border=\"0\" /></span></div>\n");
 	echo("      <div class=int_popup>\n");
 	echo("        <script type=\"text/javaScript\">\n");
 	echo("        </script>\n");
