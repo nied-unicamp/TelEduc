@@ -1495,7 +1495,7 @@
   /* Frase #61 - Topico */
 	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 61)."</td>\n");
   /* Frase #62 - Dificuldade */
-	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 91)."</td>\n");
+	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 62)."</td>\n");
   /* 70 - Opcoes (ger)*/
 	echo("                      <td width=\"15%\">" . RetornaFraseDaLista($lista_frases_geral, 70) . "</td>\n");
 	/* Frase #57 - Compartilhamento */
