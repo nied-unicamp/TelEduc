@@ -285,9 +285,12 @@
   	echo("            Agrupar por:<br />\n");
   	echo("            <select class=\"input\" id=\"agrupamento\">");
   	if($visualizar == "I")
+  	/*180 - Aluno*/
   	  echo("              <option value=\"A\" selected>Aluno</option>");
   	else if($visualizar == "G")
+  	/*179 - Grupo*/
   	  echo("              <option value=\"G\" selected>Grupo</option>");
+  	/* 178 - Titulo do Exercicio*/
   	echo("              <option value=\"T\">Titulo do Exercicio</option>");
   	echo("            </select><br /><br />");
   	/* 18 - Ok (gen) */

@@ -222,7 +222,7 @@
   echo("      }else{\n");
   /* Frase #34 - O titulo nao pode ser vazio. */
   echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value==''))\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases, 33)."');\n");
+  echo("        alert('".RetornaFraseDaLista($lista_frases, 34)."');\n");
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      if(navigator.appName.match(\"Opera\")){\n");
   echo("        document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
@@ -286,7 +286,8 @@
   echo("      createSpan.className='link';\n");
   echo("      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
   echo("      createSpan.setAttribute('id', 'OkEdita');\n");
-  echo("      createSpan.innerHTML='OK';\n");
+  // 21 - Ok
+  echo("      createSpan.innerHTML='".RetornaFraseDaLista($lista_frases, 21)."';\n");
   echo("      document.getElementById('tit_'+id).appendChild(createSpan);\n");
   //cria o elemento 'espaco' e adiciona na pagina
   echo("      espaco = document.createElement('span');\n");
@@ -296,7 +297,8 @@
   echo("      createSpan.className='link';\n");
   echo("      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
   echo("      createSpan.setAttribute('id', 'CancelaEdita');\n");
-  echo("      createSpan.innerHTML='Cancelar';\n");
+  //22 - Cancelar
+  echo("      createSpan.innerHTML='".RetornaFraseDaLista($lista_frases, 22)."';\n");
   echo("      document.getElementById('tit_'+id).appendChild(createSpan);\n");
   //cria o elemento 'espaco' e adiciona na pagina
   echo("      espaco = document.createElement('span');\n");
@@ -820,7 +822,8 @@
   echo("	  var span;\n");
   echo("	  span = document.createElement(\"span\");\n");
   echo("      span.style.color = \"red\";\n");
-  echo("	  span.innerHTML = \" (oculto)\";\n");
+  //186 -(oculto)
+  echo("	  span.innerHTML = \" ".RetornaFraseDaLista($lista_frases, 186)."\";\n");
   echo("      return span;\n");
   echo("    }\n\n");
   
@@ -939,8 +942,8 @@
   echo("      tr.setAttribute(\"id\",\"diretorioVazio\");\n");
   echo("	  td = document.createElement(\"td\");\n");
   echo("	  td.colSpan = \"6\";\n");
-  //?
-  echo("	  td.appendChild(document.createTextNode('Diretorio esta vazio.'));\n");
+  //187 - Diretorio esta vazio.
+  echo("	  td.appendChild(document.createTextNode('".RetornaFraseDaLista($lista_frases, 187)."'));\n");
   echo("	  tr.appendChild(td);\n");
   echo("      trRef = document.getElementById(\"optArq\");\n");
   echo("	  trRef.parentNode.insertBefore(tr,trRef);\n");
@@ -1095,7 +1098,8 @@
   echo("    function verifica_notas(flag)\n");
   echo("    {\n");
   echo("      if(!flag){\n");
-  echo("        if(confirm('Existem questões com valores iguais a 0, Deseja continuar?'))\n");
+  //188 - Existem questões com valores iguais a 0, Deseja continuar?
+  echo("        if(confirm('".RetornaFraseDaLista($lista_frases, 188)."'))\n");
   echo("          AplicarExercicio();\n");
   echo("        else\n");
   echo("          EscondeLayer(lay_aplicar);\n");

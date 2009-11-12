@@ -685,15 +685,17 @@
   echo("    function CriaSpanEditarGabarito(cod)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n"); 
-  echo("      span.innerHTML = 'Editar gabarito';\n");
+  /*181 - Editar gabarito*/
+  echo("      span.innerHTML = '".RetornaFraseDaLista($lista_frases, 181)."';\n");
   echo("      span.onclick= function(){ AlteraTexto(cod);DesabilitarMudancaPosicaoAlt(); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
 
   echo("    function CriaSpanLimpaGabarito(cod)\n");
   echo("    {\n");	
-  echo("      var span = document.createElement(\"span\");\n"); 
-  echo("      span.innerHTML = 'Limpar gabarito';\n");
+  echo("      var span = document.createElement(\"span\");\n");
+  /* 182 - Limpar gabarito */ 
+  echo("      span.innerHTML = '".RetornaFraseDaLista($lista_frases, 182)."';\n");
   echo("      span.onclick= function(){ LimparTexto(cod); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
@@ -701,7 +703,8 @@
   echo("    function CriaSpanEsconder(cod)\n");
   echo("    {\n");
   echo("      var span = document.createElement(\"span\");\n"); 
-  echo("      span.innerHTML = 'Esconder';\n");
+  /*183 - Esconder*/
+  echo("      span.innerHTML = '".RetornaFraseDaLista($lista_frases, 183)."';\n");
   echo("      span.onclick= function(){ EsconderGabarito(cod); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
@@ -784,8 +787,8 @@
   echo("        xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",'".$tp_questao."');\n");
   echo("	  }");
   echo("      else\n");
-  //?
-  echo("        alert('Uma questao pode conter no maximo 10 alternativas.');\n");
+  //184 - Uma questao pode conter no maximo 10 alternativas.
+  echo("        alert('".RetornaFraseDaLista($lista_frases, 183)."');\n");
   echo("    }\n\n");
 
   echo("    function IntercalaCorLinhaAlt(){\n");
@@ -1370,6 +1373,7 @@
   echo("      document.formFiles.subpasta.value = subpasta;\n");
   echo("	  if((flag == 0))");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
+  //185 -Arquivo anexado com sucesso.
   echo("        mostraFeedback('Arquivo anexado com sucesso.',true);\n");
   echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))");
   echo("      {");
@@ -1809,6 +1813,7 @@
 	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
+    // Adicionar Descricao
 	echo("                          <span> - Adicionar Descricao</span>\n");
 	echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 //	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");

@@ -747,7 +747,7 @@
 	{
 	  echo("                <ul>\n");
       /* Frase #131 - Apagar selecionados */
-      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 118)."</span></li>\n");
+      echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 131)."</span></li>\n");
       /* Frase #132 - Cancelar aplicacao dos selecionados */
       echo("                  <li id=\"mCancelarAplic_Selec\" class=\"menuUp\"><span id=\"cancelarAplicSelec\">".RetornaFraseDaLista($lista_frases, 132)."</span></li>\n");
       echo("                </ul>\n");
