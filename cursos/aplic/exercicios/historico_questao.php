@@ -91,7 +91,7 @@
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
   /* Frase #177 - Questão */
-  echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
+  echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,177).":&nbsp;</b></td>\n");
   echo("              <td colspan=2>".RetornaTituloQuestao($sock,$cod_questao)."</td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
