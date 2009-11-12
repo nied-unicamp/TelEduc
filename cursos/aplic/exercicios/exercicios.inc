@@ -2357,7 +2357,7 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
     $cod_avaliacao = RetornaCodAvaliacao($sock,$exercicio['cod_exercicio']);
     
   	/* Entrega da correcao para aplicacao Individual */
-  	if ($exercicio['tp_aplicacao'] == "I"){
+  	if (is_null($exercicio['cod_grupo'])){
    
     	$query = "UPDATE Avaliacao_notas SET nota=".$soma." WHERE cod_aluno=".$exercicio['cod_usuario']." and cod_avaliacao=".$cod_avaliacao;
     	$res = Enviar($sock, $query);
