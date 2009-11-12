@@ -141,4 +141,26 @@ function RespostaQuestao($cod_curso,$cod_questao)
 		return $gabarito['gabarito'];
 	return false;
 }
+
+function RetornaNotaFinal($sock, $cod_curso, $cod_resolucao){
+	/* Calcula o total de nota das questoes dissertativas */
+  	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
+  	$res = Enviar($sock, $nota_final1);
+  	$nota1 = RetornaLinha($res);
+  	
+  	/* Calcula o total de nota das questoes objetivas */
+  	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
+  	$res = Enviar($sock, $nota_final2);
+  	$nota2 = RetornaLinha($res);
+  	
+  	/* Calcula a soma total */
+  	if(is_null($nota1['soma']))
+  		$soma = $nota2['soma'];
+  	else if(is_null($nota2['soma']))
+  		$soma = $nota1['soma'];
+  	else
+  		$soma = $nota1['soma'] + $nota2['soma'];
+	return $soma;
+}
+
 ?>
