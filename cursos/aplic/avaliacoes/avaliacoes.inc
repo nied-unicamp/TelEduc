@@ -3767,7 +3767,7 @@ function RetornaCodigoGrupoAvaliacao($sock,$cod_aluno,$cod_avaliacao)
 }
 
 /*RetornaListaIntegrantesMomentoAvaliacao - Retorna um array com a lista de integrantes que o grupo tinha no momento em que foi avaliado*/
-function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao)
+function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$cod_avaliacao)
 {
 	global $dbnamebase;
 
@@ -3776,7 +3776,7 @@ function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao
    $data=RetornaLinha($res);  
    if ($data[0])
       {
-         $query="select cod_aluno from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao." and data_alteracao=".$data[0];
+         $query="select cod_aluno from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao." and data_alteracao<=".$data[0];
          $res=Enviar($sock,$query);         
          $codigos=RetornaArrayLinhas($res);
       }
@@ -3790,16 +3790,17 @@ function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao
             {
                $codigos[$x]['cod_aluno']=$lista_codigo['cod_usuario'];
                $x++;
-            }        
-      }   
+            }     
+      }
    $sock = MudarDB($sock, "");
    foreach ($codigos as $cod => $linha)
    {
-      $query = "select U.nome, UC.tipo_usuario from Usuario U inner join Usuario_curso UC ON (UC.cod_usuario_global = U.cod_usuario) AND (UC.cod_usuario = ".$linha['cod_aluno'].") AND (U.cod_usuario > 0)";
+      $query = "select U.nome, UC.tipo_usuario, U.cod_usuario, UC.cod_usuario as UCcod_usuario, UC.cod_usuario_global from Usuario U inner join Usuario_curso UC ON (UC.cod_usuario_global = U.cod_usuario) AND (UC.cod_usuario = ".$linha['cod_aluno'].") AND (U.cod_usuario > 0) AND (UC.cod_curso = ".$cod_curso.")";
       $res=Enviar($sock,$query);
       $Dados=RetornaLinha($res);
       $saida[$linha['cod_aluno']]['nome']=$Dados['nome'];
-      $saida[$linha['cod_aluno']]['tipo_usuario']=$Dados['tipo_usuario'];      
+      $saida[$linha['cod_aluno']]['tipo_usuario']=$Dados['tipo_usuario'];
+            
    }
    $sock = MudarDB($sock, $_SESSION['cod_curso']);
    return $saida; 
@@ -4958,7 +4959,7 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
          $alteracao = $verificacao['Existe'];
          if (($portfolio_grupo)||($exercicio_grupo))
          {
-            $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo_portfolio,$cod_avaliacao);
+            $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo_portfolio,$cod_avaliacao);
             $sock = MudarDB($sock, $cod_curso);
             foreach ($lista_integrantes as $cod_aluno => $linha)
             {
@@ -4998,7 +4999,7 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
   {
    if (GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo))
    {
-      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao);
+      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$cod_avaliacao);
       $sock = MudarDB($sock, $cod_curso);
       if(is_array($lista_integrantes))
       foreach ($lista_integrantes as $cod_aluno => $linha)

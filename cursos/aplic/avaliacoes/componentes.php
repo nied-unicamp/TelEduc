@@ -164,7 +164,7 @@
   echo("            </tr>\n");
 
   $sock = MudarDB($sock, $cod_curso);
-  $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao);
+  $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$cod_avaliacao);
   if (is_array ($lista_integrantes))
   {
     foreach ($lista_integrantes as $cod_usuario => $linha)

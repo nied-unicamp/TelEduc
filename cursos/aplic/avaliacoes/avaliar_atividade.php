@@ -269,7 +269,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
          $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=".$verificacao['Existe'].">\n");
          if (($portfolio_grupo)||($exercicio_grupo))
          {
-            $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo_portfolio,$cod_avaliacao);
+            $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo_portfolio,$cod_avaliacao);
             foreach ($lista_integrantes as $cod_aluno => $linha)
             {
                $cod_nota=IniciaAvaliacaoAluno($sock,$cod_aluno, $cod_avaliacao, $cod_usuario, $cod_grupo_portfolio);
@@ -307,7 +307,7 @@ else if (($portfolio_grupo)||($exercicio_grupo))
 {
    if (GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo))
    {
-      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao);
+      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$cod_avaliacao);
       if(is_array($lista_integrantes))
       foreach ($lista_integrantes as $cod_aluno => $linha)
       {

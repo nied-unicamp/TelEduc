@@ -122,7 +122,7 @@
   {
     if ($portfolio_grupo)
     {
-      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_grupo,$cod_avaliacao);      
+      $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$cod_avaliacao);      
       foreach ($lista_integrantes as $cod_aluno => $linha)
       {
         AtualizaAlteracaoAvaliacaoElementodoGrupo($sock, $tabela, $cod_aluno, $cod_avaliacao, trim($comentario), $nota, $compartilhamento);
