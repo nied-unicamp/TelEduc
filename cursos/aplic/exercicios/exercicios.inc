@@ -2425,17 +2425,38 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
 	return $comentario;
 }
 
+/* *********************************************************************
+   VerificaNotas - Verifica as notas das questoes de um Exercicio a ser aplicado.
+   Entrada: $cod_exercicio - codigo do exercicio
+						$cod_curso - codigo do curso
+   Saida: valor = 0  -> Questoes sem nota ou nota = 0
+   				valor = 1  -> Todas as questoes com nota, ok
+   				valor = 2	 ->	Nao ha questoes
+*/
 function VerificaNotas($cod_exercicio,$cod_curso){
-    $objResponse = new xajaxResponse('ISO-8859-1');
-
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+	$valor = 1;
+  
 	$sock=Conectar($cod_curso);
-	$consulta = "SELECT * FROM Exercicios_modelo_questao WHERE cod_exercicio=".$cod_exercicio." and valor<=0";
+	$consulta = "SELECT * FROM Exercicios_modelo_questao WHERE cod_exercicio=".$cod_exercicio;
 	$res=Enviar($sock,$consulta);
-    if(RetornaLinha($res)) $valor = 0;
-    else $valor = 1;
-
-    $objResponse->addScript("verifica_notas(".$valor.");");
-    return $objResponse->getXML();
+	
+  $questoes = RetornaArrayLinhas($res);
+	
+  if (count($questoes) > 0){
+  	foreach ($questoes as $questao){
+  		if ($questao['valor'] == 0){
+  			$valor = 0;
+  			break;	
+  		}
+  	}
+  }	else {
+ 		$valor = 2;
+ 	}
+  
+  $objResponse->addScript("verifica_notas(".$valor.");");
+  return $objResponse->getXML();
 	
 }
 /* *********************************************************************

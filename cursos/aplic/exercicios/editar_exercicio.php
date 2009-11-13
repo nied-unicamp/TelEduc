@@ -1094,17 +1094,24 @@
   echo("        }\n");
   echo("        return(true);\n");
   echo("      }\n");
-  
+  /* verifica_notas(flag)
+   * flag = 0  -> Questoes sem nota ou nota = 0
+   * flag = 1  -> Todas as questoes com nota, ok
+   * flag = 2	 ->	Nao ha questoes */
   echo("    function verifica_notas(flag)\n");
   echo("    {\n");
-  echo("      if(!flag){\n");
+  echo("      if(flag == '0'){\n");
   //188 - Existem questões com valores iguais a 0, Deseja continuar?
   echo("        if(confirm('".RetornaFraseDaLista($lista_frases, 188)."'))\n");
   echo("          AplicarExercicio();\n");
   echo("        else\n");
   echo("          EscondeLayer(lay_aplicar);\n");
-  echo("      }else\n");
+  echo("      } else if (flag == '1'){\n");
   echo("        AplicarExercicio();\n");
+  echo("			} else if (flag == '2'){\n ");
+  /* Frase #193 - Nao e possivel aplicar um exercicio vazio. Adicione ao menos uma questao. */
+  echo("        alert('".RetornaFraseDaLista($lista_frases, 193)."');");
+  echo("      }\n");
   echo("    }\n");
 
   echo("    function AplicarExercicio()\n");
