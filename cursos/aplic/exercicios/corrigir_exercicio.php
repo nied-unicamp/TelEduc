@@ -289,12 +289,13 @@ if($ehFormador){
 	
 	echo("  if(flag) {\n");
 	/* Frase #174 - Voce deseja entregar a correcao? */
-	echo("  if(confirm('".RetornaFraseDaLista($lista_frases, 174)."'))");
-	echo("     window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
+	echo("  	if(confirm('".RetornaFraseDaLista($lista_frases, 174)."'))");
+	echo("    	window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 	echo("	}\n");
 	echo("  else\n");
-	/* Frase #2 - Nao foi possivel entegar a correcao. Tente novamente mais tarde. */
-	echo("     mostraFeedback('".RetornaFraseDaLista($lista_frases, 2)."', false)\n");
+	/* Frase #2 - Existem questoes nao corrigidas. */
+	echo("  	if(confirm('".RetornaFraseDaLista($lista_frases, 2).". ".RetornaFraseDaLista($lista_frases, 174)."'))");
+	echo("    	window.location.href = \"acoes.php?cod_resolucao=\" +cod_resolucao+ \"&cod_curso=\" +cod_curso+ \"&acao=entregarCorrecao\"\n");
 	echo("	}\n");
 	
 	echo(" function VerValor(obj) {
