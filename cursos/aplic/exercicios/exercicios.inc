@@ -827,7 +827,14 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
 {
     $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
 
-    /*Aplicacao Individual*/
+    /* Pega quem fez o Exercicio, para colocar como quem avaliou, nas Avaliacoes */
+    $consulta = "select cod_usuario from Exercicios_modelo where cod_exercicio = ".$cod_exercicio;
+    $res = Enviar($sock, $consulta);
+    $cod_formador = RetornaLinha($res);
+    $cod_formador = $cod_formador[0];
+    
+    
+    /* Aplicacao Individual */
     if ($tp_aplicacao == 'I')
     {
       $consulta = "insert into Exercicios_resolucao (cod_exercicio,cod_usuario,nota,submetida,corrigida,compartilhada,status) values ";
@@ -846,12 +853,12 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
                     ."data_alteracao)"
                     ." values "
                     ."(".$cod_nota.", ".$cod_usuario.",'',"
-                    ."".$cod_avaliacao.",-2,"
+                    ."".$cod_avaliacao.",".$cod_formador.","
                     ."'', '0', 'A', ".time().",'A',".time().")"; 
         $res = Enviar($sock, $consulta);
       }
     }
-    else /*Aplicacao em grupo*/
+    else /* Aplicacao em grupo */
     {
       $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
       
@@ -877,7 +884,7 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
                         ." tipo_compartilhamento,data_alteracao)"
                         ." values "
                         ."(".$cod_nota.",".$usuario_grupo['cod_usuario'].",".$cod_grupo.","
-                        ."".$cod_avaliacao.",-2,'','0'"
+                        ."".$cod_avaliacao.",".$cod_formador.",'','0'"
                         .", 'A', ".time().",'A',".time().")";
             $res = Enviar($sock, $consulta);
           }
