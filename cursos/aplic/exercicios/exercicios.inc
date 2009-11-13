@@ -1307,8 +1307,6 @@ if($tp_questao == 'O')
 
   $objResponse->addScript("AdicionarAlternativa(".$cod.");");
 
-  sleep(1);
-
   return $objResponse->getXML();
 }
 
