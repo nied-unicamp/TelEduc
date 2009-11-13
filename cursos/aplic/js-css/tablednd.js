@@ -48,6 +48,12 @@ function TableDnD() {
         var self = this;
         // Now make the onmousemove method in the context of "self" so that we can get back to tableDnD
         document.onmousemove = function(ev){
+        	
+        	// Compatibilidade com os layers!
+        	Ypos = (isMinNS4) ? ev.pageY : ev.clientY;
+        	Xpos = (isMinNS4) ? ev.pageX : ev.clientX;
+        	
+        	
             if (self.dragObject) {
                 ev   = ev || window.event;
                 var mousePos = self.mouseCoords(ev);
