@@ -2421,7 +2421,7 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
   	if($linha)
   		$comentario = $linha[0];
   	else
-  		$comentario = "Nao ha comentarios disponiveis";	 
+  		$comentario = null;	 
 	return $comentario;
 }
 

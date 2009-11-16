@@ -515,9 +515,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		}
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
-		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
-
-		$comentario=PegaComentarioQuestao($cod_curso, $cod_resolucao,$linha_item['cod_questao'], $cod_usuario);	
+		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);	
 		
 		/* Frase #166 - Nao respondida */
 		/* Frase #167 - Respondida */
@@ -626,12 +624,6 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
-			if($comentario != "") {
-				/* Frase #168 - Comentario */
-				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
-				echo("                          <dd class=\"portletItem\">\n");
-				echo($comentario."</dd>\n");
-			}
 			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
 				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 			}

@@ -640,11 +640,18 @@ if ((count($questoes)>0)&&($questoes != null))
 			    echo("                          </dd>\n");
 			}
 			$comentario = VerificaComentario($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-			if($comentario){
-					/* Frase #168 - Comentario */
-					echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
+			if($comentario != null){
+				/* Frase #168 - Comentario */
+				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
 			    echo("                          <dd class=\"portletItem\">\n");
 			    echo($comentario);
+			    echo("                          </dd>\n");
+			}
+			else{
+					/* Frase #168 - Comentario */
+				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
+			    echo("                          <dd class=\"portletItem\">\n");
+			    echo(RetornaFraseDaLista($lista_frases, 194));
 			    echo("                          </dd>\n");
 			}
 			echo("                          </dd>\n");
