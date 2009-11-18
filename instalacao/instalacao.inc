@@ -93,7 +93,7 @@ function AbreFormFinal()
 {
   global $fase_g;
   $fase=$fase_g;
-  echo("<form action='../index.php'>\n");
+  echo("<form action='../pagina_inicial/autenticacao.php'>\n");
 }
 
 function Paragrafo($texto)
