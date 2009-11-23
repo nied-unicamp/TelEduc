@@ -75,11 +75,6 @@
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
 
-  $query="select diretorio from Diretorio where item='raiz_www'";
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  $tela_raiz_www = $linha[0];
-
   $query="select valor from Config where item = 'host'";
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
@@ -100,18 +95,15 @@
   /* Caso o usuário não esteja logado, manda para tela de login. */
   if (empty ($_SESSION['login_usuario_s']))
   {
-    $caminho = $raiz_www."/cursos/aplic";
-    header("Location: {$caminho}/index.php");
+    header("Location: ../index.php");
     Desconectar($sock);
     exit;
   }
   /* Caso o usuário não tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
   else if(!PreencheuDadosPessoais($sock))
   {
-    $caminho = $raiz_www."/pagina_inicial";
-
     Desconectar($sock);
-    header("Location:{$caminho}/preencher_dados.php?acao=preencherDados&atualizacao=true");
+    header("Location: preencher_dados.php?acao=preencherDados&atualizacao=true");
     exit;
   }
 
@@ -133,7 +125,6 @@
   echo("    <link href=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
   echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.js\"></script>\n");
   
-  echo("    <script type=\"text/javascript\" src=bibliotecas/dhtmllib.js></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      function Iniciar()\n");
