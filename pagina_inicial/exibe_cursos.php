@@ -70,11 +70,6 @@
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
 
-  $query="select diretorio from Diretorio where item='raiz_www'";
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  $tela_raiz_www = $linha[0];
-
   $query="select valor from Config where item = 'host'";
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
@@ -85,37 +80,25 @@
   
   $lista_frases_autenticacao = RetornaListaDeFrases($sock, 25);
 
-  /* ObtÔøΩ a raiz_www */
-  $query = "select diretorio from Diretorio where item = 'raiz_www'";
-  $res = Enviar($sock,$query);
-  $linha = RetornaLinha($res);
-  $raiz_www = $linha[0];
-
-
   /* Caso o usu·rio n√o esteja logado, manda para tela de login. */
   if (empty ($_SESSION['login_usuario_s']))
   {
-    $caminho = $raiz_www."/cursos/aplic";
-    header("Location: {$caminho}/index.php");
+    header("Location: ../cursos/aplic/index.php");
     Desconectar($sock);
     exit;
   }
   /* Caso o usu·rio n√£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
   else if(!PreencheuDadosPessoais($sock))
   {
-    $caminho = $raiz_www."/pagina_inicial";
-
     Desconectar($sock);
-    header("Location:{$caminho}/preencher_dados.php?acao=preencherDados&atualizacao=true");
+    header("Location: preencher_dados.php?acao=preencherDados&atualizacao=true");
     exit;
   }
   /* Caso o usu√°rio seja o adm, manda para tela dos cursos em andamento. */
   else if($_SESSION['cod_usuario_global_s'] == -1)
   {
-    $caminho = $raiz_www."/pagina_inicial";
-
     Desconectar($sock);
-    header("Location:{$caminho}/cursos_all.php?tipo_curso=A");
+    header("Location: cursos_all.php?tipo_curso=A");
     exit;
   }
 
@@ -137,7 +120,6 @@
   echo("    <link href=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
   echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.js\"></script>\n");
   
-  echo("    <script type=\"text/javascript\" src=bibliotecas/dhtmllib.js></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      function Iniciar()\n");
