@@ -40,7 +40,7 @@
   ARQUIVO : cursos/aplic/acessos/acessos.php
   ========================================================== */
 
-/* C�igo principal */
+/* C�digo principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -65,7 +65,6 @@
 
   GeraJSComparacaoDatas();
   GeraJSVerificacaoData();
-
   echo("    <script type=\"text/javascript\">\n");
 
 
@@ -204,6 +203,23 @@
   echo("        }\n");
   echo("        return true;\n");
   echo("      }\n\n");
+  
+  echo("      function VerificaCamposFrequenciaIndividual()\n");
+  echo("      {\n");
+  echo("        var campo_i = document.formFreq.data_ini_i;\n");
+  echo("        var campo_f = document.formFreq.data_fim_i;\n");
+  echo("        if (!DataValidaAux(campo_i))\n");
+  echo("          return false;\n");
+  echo("        if (!DataValidaAux(campo_f))\n");
+  echo("          return false;\n");
+  echo("        if (ComparaData(campo_i, campo_f) > 0)\n");
+  echo("        {\n");
+  // 38 - A data inicial n�o pode ser posterior � data final no per�odo de busca.
+  echo("          alert('".RetornaFraseDaLista($lista_frases,38)."');\n");
+  echo("          return false;\n");
+  echo("        }\n");
+  echo("        return true;\n");
+  echo("      }\n\n");
 
   echo("      function EmulaSubmissaoFrequencia()\n");
   echo("      {\n");
@@ -249,6 +265,55 @@
   echo("          {\n");
   echo("            var cod_fer = document.formFreq.cod_ferramenta[index].value;\n");
   echo("            saida+='&cod_ferramenta_relatorio='+cod_fer;\n");
+  echo("          }\n");
+  echo("          window.open(saida,'RelatorioFreq','width=750,height=600,top=60,left=60,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+  echo("        }\n");
+  echo("      }\n");
+
+  echo("      function EmulaSubmissaoFrequenciaIndividual()\n");
+  echo("      {\n");
+  echo("        if (VerificaCamposFrequenciaIndividual())\n");
+  echo("        {\n");
+  echo("          var data_i= document.formFreq.data_ini_i.value;\n");
+  echo("          var data_f= document.formFreq.data_fim_i.value;\n");
+  echo("          var saida = 'relatorio_frequencia.php?cod_curso=".$cod_curso."';\n");
+  echo("          saida+='&data_ini='+data_i;\n");
+  echo("          saida+='&data_fim='+data_f;\n");
+  // Verificando exibição de participantes
+  /*echo("          if (document.formFreq.check_alunos.checked)\n");
+  echo("          {\n");
+  echo("            saida+='&check_alunos=1';\n");
+  echo("          }\n");
+  echo("          if (document.formFreq.check_formadores.checked)\n");
+  echo("          {\n");
+  echo("            saida+='&check_formadores=1';\n");
+  echo("          }\n");
+  // Verificando exibi�o de grupos
+  echo("          if (document.formFreq.check_grupos.checked)\n");
+  echo("          {\n");
+  echo("            saida+='&check_grupos=1';\n");
+  echo("          }\n");
+  if ($ha_convidados)
+  {
+    // Verificando exibi�o de convidados
+    echo("          if (document.formFreq.check_convidados.checked)\n");
+    echo("          {\n");
+    echo("            saida+='&check_convidados=1';\n");
+    echo("          }\n");
+  }
+  if ($ha_visitantes)
+  {
+    // Verificando exibi�o de convidados
+    echo("          if (document.formFreq.check_visitantes.checked)\n");
+    echo("          {\n");
+    echo("            saida+='&check_visitantes=1';\n");
+    echo("          }\n");
+  }*/
+  echo("          var index = document.formFreq.cod_aluno.selectedIndex;\n");
+  echo("          if (index > 0)\n");
+  echo("          {\n");
+  echo("            var cod_alu = document.formFreq.cod_aluno[index].value;\n");
+  echo("            saida+='&cod_aluno_relatorio='+cod_alu;\n");
   echo("          }\n");
   echo("          window.open(saida,'RelatorioFreq','width=750,height=600,top=60,left=60,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
   echo("        }\n");
@@ -453,73 +518,7 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   
-  echo("            <tr>\n");
-  echo("              <td valign=\"top\">\n");
-  echo("                <form name=\"formFreq\" method=\"post\" action=\"relatorio_frequencia.php\">\n");  
-  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-   // esta form nao deve levar a lugar nenhum, vc precisa fazer o window open!
-  echo("                    <tr class=\"head\">\n");
-  /* 3 - Relatório de freqüência */
-  echo("                      <td colspan=6>".RetornaFraseDaLista($lista_frases,3)."</td>\n");
-  echo("                    </tr>\n");
-  echo("                    <tr>\n");
-  /* 24 - Período de busca: */
-  echo("                      <td width=15%><b>".RetornaFraseDaLista($lista_frases,24)."</b></td>\n");
-  /* 25 - Início: */
-  echo("                      <td width=\"23%\" class=\"alLeft\" style=\"border-right:2pt solid #DCDCDC;\">\n");
-  echo("                        <ul>\n");
-  echo("                          <li>\n");
-  echo("                            <div>\n");
-  echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,25)."</div>\n");
-  /* a data de inicio da pesquisa há 15 dias contando de hoje */
-  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_ini\" name=\"data_ini\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
-  echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini'),'dd/mm/yyyy',this);\" />\n");
-  echo("                            </div>\n");
-  echo("                          </li>\n");
-  /* 26 - T�mino: */
-  echo("                          <li>\n");
-  echo("                            <div>\n");
-  echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,26)."</div>\n");
-  // a busca vai até hoje 
-  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_fim\" name=\"data_fim\" value=\"".UnixTime2Data(time())."\" />\n");
-  echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim'),'dd/mm/yyyy',this);\" />\n");
-  echo("                            </div>\n");
-  echo("                          </li>\n");
-  echo("                        </ul>\n");
-  echo("                      </td>\n");
-  
-  $ordem_usuarios = RetornaUsuarios($sock, "nome", $cod_curso);  
-  /* 16 - Ferramenta: */
-  echo("                      <td width=12%><b>".RetornaFraseDaLista($lista_frases,16)."</b></td>\n");
-  /* 25 - Início: */
-  echo("                      <td width=25%>\n");
-  echo("                        <select name=cod_ferramenta size=10 style=\"width:200px\">\n");
-  /* 29 - Entrada no ambiente */
-  echo("                          <option selected>".FirstName($sock, $cod_usuario, $cod_curso)."\n");
-  foreach ($ordem_usuario as $usuario)
-  {
-      echo("                      <option value=".$usuario['nome'].">".$usuario["nome"]."\n");
-  }
-  echo("                        </select>\n");
-  echo("                      </td>\n");
-  echo("<td></td>");
-  echo("                    </tr>\n");
-  echo("                    <tr>\n");
-  echo("                      <td colspan=6>\n");
-  echo("                        <ul class=\"btAuxTabs\">\n");
-  echo("                          <li>\n");
-  /* 15 - Exibir relatório */
-  echo("                            <span onClick=\"EmulaSubmissaoFrequencia();\">".RetornaFraseDaLista($lista_frases,15)."</span>\n");
-  echo("                          </li>\n");
-  echo("                        </ul>\n");
-  echo("                        <br /><br />\n");
-  echo("                      </td>\n");
-  echo("                    </tr>\n");
-  
-  echo("                  </table>\n");
-  echo("                </form>\n");
-  echo("              </td>\n");
-  echo("            </tr>\n");
+
   
   echo("          </table>\n");
   echo("        </td>\n");
