@@ -889,7 +889,8 @@ function RetornaSessoesDeUmAssunto($sock,$cod_assunto)
       Enviar($sock,$query);
       ExcluiAvaliacaoDesmarcada($sock,$array_cod_assunto[$i],$cod_usuario);
     }
-
+	
+    AtualizaFerramentasNova($sock, 10, 'T');
     Desconectar($sock);
  
     $objResponse->addScript("Recarregar();");

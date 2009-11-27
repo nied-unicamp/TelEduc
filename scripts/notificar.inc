@@ -259,9 +259,9 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
 
 
   // 1 - Agenda
-  $query = "select cod_usuario, data from Agenda_itens_historicos where acao = 'A'";
-  if ($formador)
-    $query .= " or acao = 'F' ";
+  // Pega última atualização da agenda (Ativa ou Edição Finalizada)
+  $query = "select cod_usuario, data from Agenda_itens_historicos ";
+  $query .= "where acao = 'A' or acao = 'F' ";
   $query .= "order by data desc limit 1";
 
   $res=Enviar($sock, $query);
@@ -331,6 +331,17 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     $saida[5]['cod_usuario'] = $linha['cod_usuario'];
   }
 
+  // 6 - Perguntas Freqüentes
+  // Modificado para que perguntas da raiz sejam incluídas
+  $query = "select data from Pergunta_itens where (cod_assunto != 2) order by data desc limit 1";
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) > 0)
+  {
+    $linha = RetornaLinha($res);
+    $saida[6]['data'] = $linha['data'];
+    $saida[6]['cod_usuario'] = -1;
+  }
+  
   // 7 - Parada
   $query = "select cod_usuario, data from Obrigatoria_itens where ";
   if (! $formador)
@@ -345,16 +356,6 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     $linha = RetornaLinha($res);
     $saida[7]['data'] = $linha['data'];
     $saida[7]['cod_usuario'] = $linha['cod_usuario'];
-  }
-
-  // 6 - Perguntas Freqüentes
-  $query = "select data from Pergunta_itens where (cod_assunto != 1 and cod_assunto != 2) order by data desc limit 1";
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
-  {
-    $linha = RetornaLinha($res);
-    $saida[6]['data'] = $linha['data'];
-    $saida[6]['cod_usuario'] = -1;
   }
 
   // 8 - Mural
@@ -377,6 +378,39 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     $saida[9]['cod_usuario'] = $linha['cod_usuario'];
   }
 
+  // 10 - Bate-papo
+  $query = "select data from Ferramentas_nova ";
+  $query .= "where (cod_ferramenta = 10) and (tipo_compartilhamento = 'T')";
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) > 0)
+  {
+    $linha = RetornaLinha($res);
+    $saida[10]['data'] = $linha['data'];
+    $saida[10]['cod_usuario'] = -1;
+  }
+
+  // Correio (11)
+  // Se tiver alguma mensagem com N, aparece a estrela
+  $query="select C.cod_usuario, C.data from Correio_mensagens as C, Correio_destinos as Cd where (Cd.estado = 'N') and (Cd.cod_msg = C.cod_msg) and (Cd.cod_usuario = ".$cod_usuario.") and (C.cod_usuario != ".$cod_usuario.") order by C.data desc limit 1";
+  $res=Enviar($sock,$query);
+  if (RetornaNumLinhas($res) > 0)
+  {
+    $linha = RetornaLinha($res);
+    $saida[11]['data'] = $linha['data'];
+    $saida[11]['cod_usuario'] = $linha['cod_usuario'];
+  }
+  
+  // 12 - Grupos
+  $query  = "select data from Ferramentas_nova_usuarios ";
+  $query .= "where (cod_ferramenta = 12) and (cod = ".$cod_usuario.") ";
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) > 0)
+  {
+  	$linha = RetornaLinha($res);
+    $saida[12]['data'] = $linha['data'];
+    $saida[12]['cod_usuario'] = -1;
+  }
+  
   // 13 - Perfil
   $query = "select cod_usuario, data from Perfil_usuarios order by data desc limit 1";
   $res = Enviar($sock, $query);
@@ -385,30 +419,6 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     $linha = RetornaLinha($res);
     $saida[13]['data'] = $linha['data'];
     $saida[13]['cod_usuario'] = $linha['cod_usuario'];
-  }
-
-  // 10 - Bate-papo
-  $saida[10]['cod_usuario'] = -1; // Assume que foi admtele quem marcou a sessao
-
-  // 12 - Grupos
-  $saida[12]['cod_usuario'] = -1; // Assume que foi admtele quem criou o grupo
-
-  // 0 - Administração
-  if ($formador)
-    $saida[12]['cod_usuario'] = -1; // Assume que foi admtele quem criou o grupo
-  else
-    $saida[12]['cod_usuario'] = null;
-
-  // Correio (11)
-  // Se tiver alguma mensagem com N, aparece a estrela
-
-  $query="select C.cod_usuario, C.data from Correio_mensagens as C, Correio_destinos as Cd where (Cd.estado = 'N') and (Cd.cod_msg = C.cod_msg) and (Cd.cod_usuario = ".$cod_usuario.") and (C.cod_usuario != ".$cod_usuario.") order by C.data desc limit 1";
-  $res=Enviar($sock,$query);
-  if (RetornaNumLinhas($res) > 0)
-  {
-    $linha = RetornaLinha($res);
-    $saida[11]['data'] = $linha['data'];
-    $saida[11]['cod_usuario'] = $linha['cod_usuario'];
   }
 
   // Diario (14)
@@ -464,7 +474,19 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   else
     $saida[15]=RetornaMaiorItemComentario($sock,1,'T', array('cod_usuario' => $cod_usuario, 'data' => 0),$cod_usuario);
 
-  return $saida;
+  	// 22- Avaliações
+  	// Pega última atualização da avaliação (Ativa ou Edição Finalizada)
+  	$query = "select cod_usuario, data from Avaliacao_historicos ";
+  	$query .= "where (acao = 'C') or (acao = 'F') order by data desc limit 1";
+  	$res = Enviar($sock, $query);
+  	if (RetornaNumLinhas($res) > 0)
+  	{
+  		$linha = RetornaLinha($res);
+      	$saida[22]['data'] = $linha['data'];
+      	$saida[22]['cod_usuario'] = $linha['cod_usuario'];
+  	}
+
+  	return $saida;
 }
 
 /* *********************************************************************
