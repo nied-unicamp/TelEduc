@@ -206,8 +206,8 @@
   
   echo("      function VerificaCamposFrequenciaIndividual()\n");
   echo("      {\n");
-  echo("        var campo_i = document.formFreq.data_ini_i;\n");
-  echo("        var campo_f = document.formFreq.data_fim_i;\n");
+  echo("        var campo_i = document.formFreqInd.data_ini_i;\n");
+  echo("        var campo_f = document.formFreqInd.data_fim_i;\n");
   echo("        if (!DataValidaAux(campo_i))\n");
   echo("          return false;\n");
   echo("        if (!DataValidaAux(campo_f))\n");
@@ -274,15 +274,17 @@
   echo("      {\n");
   echo("        if (VerificaCamposFrequenciaIndividual())\n");
   echo("        {\n");
-  echo("          var data_i= document.formFreq.data_ini_i.value;\n");
-  echo("          var data_f= document.formFreq.data_fim_i.value;\n");
-  echo("          var saida = 'relatorio_frequencia.php?cod_curso=".$cod_curso."';\n");
+  echo("          var data_i= document.formFreqInd.data_ini_i.value;\n");
+  echo("          var data_f= document.formFreqInd.data_fim_i.value;\n");
+  echo("          var saida = 'relatorio_frequencia_individual.php?cod_curso=".$cod_curso."';\n");
   echo("          saida+='&data_ini='+data_i;\n");
   echo("          saida+='&data_fim='+data_f;\n");
-  // Verificando exibiÃ§Ã£o de participantes
+  // Verificando exibição de participantes
   /*echo("          if (document.formFreq.check_alunos.checked)\n");
   echo("          {\n");
+  */
   echo("            saida+='&check_alunos=1';\n");
+  /*
   echo("          }\n");
   echo("          if (document.formFreq.check_formadores.checked)\n");
   echo("          {\n");
@@ -309,10 +311,10 @@
     echo("            saida+='&check_visitantes=1';\n");
     echo("          }\n");
   }*/
-  echo("          var index = document.formFreq.cod_aluno.selectedIndex;\n");
+  echo("          var index = document.formFreqInd.cod_aluno.selectedIndex;\n");
   echo("          if (index > 0)\n");
   echo("          {\n");
-  echo("            var cod_alu = document.formFreq.cod_aluno[index].value;\n");
+  echo("            var cod_alu = document.formFreqInd.cod_aluno[index].value;\n");
   echo("            saida+='&cod_aluno_relatorio='+cod_alu;\n");
   echo("          }\n");
   echo("          window.open(saida,'RelatorioFreq','width=750,height=600,top=60,left=60,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
@@ -518,7 +520,74 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   
+  echo("            <tr>\n");
+  echo("              <td valign=\"top\">\n");
+  echo("                <form name=\"formFreqInd\" method=\"post\" action=\"relatorio_frequencia.php\">\n");  
+  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+   // esta form nao deve levar a lugar nenhum, vc precisa fazer o window open!
+  echo("                    <tr class=\"head\">\n");
+  /* 3 - Relatório de freqÃ¼Ãªncia */
+  echo("                      <td colspan=6>".RetornaFraseDaLista($lista_frases,3)." individual</td>\n");
+  echo("                    </tr>\n");
+  echo("                    <tr>\n");
+  /* 24 - Período de busca: */
+  echo("                      <td width=15%><b>".RetornaFraseDaLista($lista_frases,24)."</b></td>\n");
+  /* 25 - Início: */
+  echo("                      <td width=\"23%\" class=\"alLeft\" style=\"border-right:2pt solid #DCDCDC;\">\n");
+  echo("                        <ul>\n");
+  echo("                          <li>\n");
+  echo("                            <div>\n");
+  echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,25)."</div>\n");
+  /* a data de inicio da pesquisa hÃ¡ 15 dias contando de hoje */
+  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_ini_i\" name=\"data_ini_i\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
+  echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini_i'),'dd/mm/yyyy',this);\" />\n");
+  echo("                            </div>\n");
+  echo("                          </li>\n");
+  /* 26 - Tï¿½mino: */
+  echo("                          <li>\n");
+  echo("                            <div>\n");
+  echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,26)."</div>\n");
+  // a busca vai atÃ© hoje 
+  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_fim_i\" name=\"data_fim_i\" value=\"".UnixTime2Data(time())."\" />\n");
+  echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim_i'),'dd/mm/yyyy',this);\" />\n");
+  echo("                            </div>\n");
+  echo("                          </li>\n");
+  echo("                        </ul>\n");
+  echo("                      </td>\n");
+  
+  $ordem_usuarios = RetornaUsuarios($sock, "nome", $cod_curso);  
+  /* ? - Aluno: */
+  echo("                      <td width=12%><b>Aluno:</b></td>\n");
+  /* 25 - Início: */
+  echo("                      <td width=25%>\n");
+  echo("                        <select name=cod_aluno size=10 style=\"width:200px\">\n");
+  /* 29 - Primeiro usuário */
+  echo("                          <option selected value=\"-1\">".FirstName($sock, $cod_usuario, $cod_curso)."\n");
 
+  foreach ($ordem_usuarios as $key => $value)
+  {
+	  	if($value["nome"] != "")
+	      echo("                      <option value=\"".$key."\">".$value["nome"]."\n");
+  }
+  echo("                        </select>\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
+  echo("                    <tr>\n");
+  echo("                      <td colspan=6>\n");
+  echo("                        <ul class=\"btAuxTabs\">\n");
+  echo("                          <li>\n");
+  /* 15 - Exibir relatório */
+  echo("                            <span onClick=\"EmulaSubmissaoFrequenciaIndividual();\">".RetornaFraseDaLista($lista_frases,15)."</span>\n");
+  echo("                          </li>\n");
+  echo("                        </ul>\n");
+  echo("                        <br /><br />\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
+  
+  echo("                  </table>\n");
+  echo("                </form>\n");
+  echo("              </td>\n");
+  echo("            </tr>\n");
   
   echo("          </table>\n");
   echo("        </td>\n");

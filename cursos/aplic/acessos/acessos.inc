@@ -91,7 +91,7 @@ function FirstName($sock, $cod_usuario, $cod_curso) {
 /* *********************************************************************
    RetornaInfosUsuario - Retorna informacoes sobre um unico usuario
    entrada: $sock - sock de conexao
-            $cod_usuairo - codigo do usuairo
+            $cod_usuario - codigo do usuairo
    saida:   array ['nome'] - nome do usuario
                   ['cidade'] - cidade do usuario
                   ['estado'] - estado do usuario
@@ -144,6 +144,7 @@ function RetornaUsuarios($sock,$ordenacao, $cod_curso)
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['cidade'] = $linha['cidade'];
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['estado'] = $linha['estado'];
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['local_trab'] = $linha['local_trab'];
+      $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['cod_usuario'] = $linha['cod_usuario'];
     }
 
   return ($lista_usuarios_retorno);
@@ -646,6 +647,120 @@ function ExibeCabecalho($tam_tabela, $num_tabelas, $data_iniUT, $SalvarEmArquivo
       $mes_tmp = substr($mes_tmp, 0 ,$tam_tabela * 2);
     }
     echo("              <td colspan=".$tam_tabela.">".$mes_tmp."</td>\n");
+  }
+  else
+  { // 2 meses
+    $mes_tmp1 = NomeMes($data_tmp[1])." ".$data_tmp[2];
+    // cortando nome do mes para caber na casa
+    if ($n_dias < 5)
+    {
+      $mes_tmp1 = substr($mes_tmp1,0,$n_dias * 2);
+    }
+    echo("              <td colspan=".$n_dias.">".$mes_tmp1."</td>");
+    $mes_tmp2 = NomeMes($mes)." ".$ano;
+    // cortando nome do mes para caber na tabela
+    if (($col_span = ($tam_tabela - $n_dias)) < 5)
+    {
+      $mes_tmp2 = substr($mes_tmp2, 0, $col_span * 2);
+    }
+    echo("              <td colspan=".$col_span.">".$mes_tmp2."</td>\n");
+  }
+  if ($coluna_total)
+  {
+    echo("              <td>&nbsp;</td>\n");
+  }
+  echo("            </tr>\n");
+
+  // segunda linha com os dias
+  echo("            <tr>\n");
+  echo("              <td>&nbsp;</td>\n");
+  for ($c = 0; $c < $tam_tabela; $c++)
+  {
+    $diaST = explode("/",UnixTime2Data($data_iniUT));
+    $tmpUT = Data2UnixTime(($c + $diaST[0])."/".$diaST[1]."/".$diaST[2]);
+    $dia_semana = UnixTime2DiaSemana($tmpUT);
+    /* detectando sabado (1) ou domingo (7) */
+    $cor = (($dia_semana == 1 || $dia_semana == 7) ? "#c73e2c" : "#2a6686");
+    $data_str = explode("/",UnixTime2Data($tmpUT));
+    if (!$SalvarEmArquivo)
+    {
+      // chamar a funcao JS para todos os acessos naquele dia. Somente interessa o segundo e o quinto parametros, os outros sao dummies
+      $link_abre ="<span class=\"link\" style=\"color:".$cor.";\" onClick=\"AbreRelatorioUsuario(0,'".$tmpUT."','','',3);\">";
+      $link_fecha="</span>";
+    }
+    else
+    {
+      $link_abre ="<span style=\"color:".$cor.";\">";
+      $link_fecha="</font>";
+    }
+    echo("              <td>&nbsp;".$link_abre.$data_str[0].$link_fecha."&nbsp;</td>\n");
+  }
+  if ($coluna_total)
+  {
+    // 42 - Total
+    echo("              <td>".RetornaFraseDaLista($lista_frases, 42)."</td>\n");
+  }
+  echo("            </tr>\n");
+}
+
+/* *********************************************************************
+   ExibeCabecalho - cria o cabecalho de cada tabela menor.
+   entrada: $tam_tabela - numero de dias na tabela
+            $num_tabelas - eh o numero de tabelas menos um.
+               Se for zero, precisamos colocar uma coluna a mais na tabela, para constar os totais do periodo
+            $data_iniUT - primeiro dia da tabela
+            $SalvarEmArquivo - booleano, indica se deve salvar em arquivo
+            $coluna_total - booleano, indica se a tabela conta com uma coluna de total de acessos
+   saida: nenhuma
+   OBS: O cabecalho contem duas linhas, uma com o nome dos meses abrangidos, outra com os dias do mes
+*/
+function ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $data_iniUT, $SalvarEmArquivo, $coluna_total, $string)
+{
+  global $data_invertida_g, $lista_frases;
+
+  // primeira linha com os nomes dos meses
+  echo("            <tr class=\"head\">\n");
+  // casa vazia acima da coluna com os nomes dos usuarios
+  echo("              <td style=\"border:0pt;\">&nbsp;</td>\n");
+
+  // descobrindo qtos dias da data passada ateh o fim do mes
+  $data_tmp = explode("/",UnixTime2Data($data_iniUT));
+
+  if ($data_invertida_g)
+  {
+    $tmp1=$data_tmp[0];
+    $data_tmp[0]=$data_tmp[1];
+    $data_tmp[1]=$tmp1;
+  }
+
+  // detectando dezembro
+  if ($data_tmp[1] == 12)
+  {
+    // proximo mes eh Janeiro do ano que vem
+    $mes = "01";
+    $ano = $data_tmp[2] + 1;
+    $prox_mes="01/".$mes."/".$ano;
+  }
+  else
+  {
+    // proximo mes
+    $mes = $data_tmp[1] + 1;
+    $ano = $data_tmp[2];
+    $prox_mes="01/".$mes."/".$ano;
+  }
+  $tmpUT=Data2UnixTime($prox_mes);
+  // dias ateh o proximo mes
+  $n_dias=ceil(($tmpUT - $data_iniUT) / 86400);
+  
+  if ($n_dias >= $tam_tabela)
+  { // 1 mes na tabela
+    $mes_tmp = NomeMes($data_tmp[1])." ".$data_tmp[2];
+    // cortando nome do mes para caber na casa
+    if ($tam_tabela < 5)
+    {
+      $mes_tmp = substr($mes_tmp, 0 ,$tam_tabela * 2);
+    }
+    echo("              <td colspan=".$tam_tabela.">".$mes_tmp." - Ferramenta: ".$string."</td>\n");
   }
   else
   { // 2 meses
