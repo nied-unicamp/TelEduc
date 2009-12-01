@@ -92,19 +92,14 @@
   $raiz_www = $linha[0];
 
 
-  /* Caso o usuário não esteja logado, manda para tela de login. */
-  if (empty ($_SESSION['login_usuario_s']))
-  {
-    header("Location: ../index.php");
-    Desconectar($sock);
-    exit;
-  }
   /* Caso o usuário não tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
-  else if(!PreencheuDadosPessoais($sock))
-  {
-    Desconectar($sock);
-    header("Location: preencher_dados.php?acao=preencherDados&atualizacao=true");
-    exit;
+  if(!empty ($_SESSION['login_usuario_s'])){
+  	if(!PreencheuDadosPessoais($sock))
+  	{
+    	Desconectar($sock);
+    	header("Location: preencher_dados.php?acao=preencherDados&atualizacao=true");
+    	exit;
+  	}
   }
 
   
@@ -188,7 +183,6 @@
   echo("                  <tr class=\"head01\">\n");
   /* 5 - Curso */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
-
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                  </tr>\n");
@@ -245,7 +239,7 @@
   	echo("                  <tr>\n");
    /* 57 - Não há nenhum */
    /* 195 - Curso não iniciado */	
-    echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,195)."</td>\n");
+    echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,195)."</td>\n");
     echo("                  </tr>\n");
   }
   /*171 - Em andamento */
@@ -256,7 +250,6 @@
   echo("                  <tr class=\"head01\">\n");
   /* 5 - Curso */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
-
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                  </tr>\n");
@@ -312,7 +305,7 @@
   	echo("                  <tr>\n");
     /* 57 - Não há nenhum */	
   	/* 171 - Em andamento */
-    echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,171)."</td>\n");
+    echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,171)."</td>\n");
     echo("                  </tr>\n");
   }
   /* 172 - Inscrições abertas */
@@ -376,7 +369,7 @@
   	echo("                  <tr>\n");
     /* 57 - Não há nenhum */	
   	/* 175 - curso com inscrição aberta */
-    echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,175)."</td>\n");
+    echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,175)."</td>\n");
     echo("                  </tr>\n");
   }
 
@@ -387,10 +380,11 @@
   echo("                  <tr class=\"head01\">\n");
   	/* 5 - Curso */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
-
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                    <td width=\"10%\">&nbsp;</td>\n");
   echo("                  </tr>\n");
+  
+
 
   $lista = RetornaCursosPassadosSemUsuario($sock, $_SESSION['codigo_usuario_s']);
     /*Exibe cursos jah encerrados*/
@@ -438,10 +432,10 @@
       }
   }
   else
-  {
+  {  
   	echo("                  <tr>\n");	
   	/* 200 - Não há nenhum curso encerrado */	
-    echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,200)."</td>\n");
+    echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,200)."</td>\n");
     echo("                  </tr>\n");
   }
  
