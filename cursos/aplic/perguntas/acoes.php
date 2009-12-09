@@ -73,6 +73,7 @@
   	/* Pra testar, estou passando pro perguntas.php, o certo será ver_pergunta.php */
   	
   	list ($pergunta_salva, $cod_pergunta) = SalvaPergunta($sock, $cod_assunto_pai, $novo_nome, "");
+  	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
   	header("Location:perguntas.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_assunto_pai."&acao=".$acao."&cod_pergunta=".$cod_pergunta."&atualizacao=true");
 
   } else if ($acao == "apagarItem"){

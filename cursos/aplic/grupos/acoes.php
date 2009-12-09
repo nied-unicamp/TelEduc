@@ -75,15 +75,18 @@
 
     
 
-    if (is_array($chk_com_incluir)){
-      foreach($chk_com_incluir as $cod => $linha){
+    if (is_array($chk_com_incluir))
+    {
+      foreach($chk_com_incluir as $cod => $linha)
+      {
         InsereUsuarioNoGrupoGU($sock,$cod_grupo, $linha);
         AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$linha);
       }
     }
 
     if (is_array($chk_sem_incluir)){
-      foreach($chk_sem_incluir as $cod => $linha){
+      foreach($chk_sem_incluir as $cod => $linha)
+      {
         InsereUsuarioNoGrupoGU($sock,$cod_grupo, $linha);
       }
     }

@@ -123,7 +123,10 @@ function EditarTexto($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
   
   $consulta="update ".$tabela."_itens set resposta='".trim($novo_nome)."' where cod_pergunta=".$cod_item;
   $res=Enviar($sock, $consulta);
-
+  
+  // Atualiza Ferramentas_nova
+  AtualizaFerramentasNova($sock, 6, 'T');
+    
   Desconectar($sock);
 
 //  AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
