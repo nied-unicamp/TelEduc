@@ -40,34 +40,53 @@
   ARQUIVO : cursos/aplic/enquete/enquete.inc
   ========================================================== */
 
-  
-function AtualizaFerramentaEnquete($sock,$cod_ferramenta,$aplic, $result){
-
-  $cod_ferramenta = 24;
-  
-  AtualizaFerramentasNova($sock, $cod_ferramenta, 'F');  
-
-  /* Usuário pode ver e votar */
-  
-  # FAVZ
-  for ($i = 0; $i <= 3; $i++) {
-  	if (strcmp($aplic[$i], "-") != 0)
-        {
-          AtualizaFerramentasNova($sock, $cod_ferramenta, $aplic[$i]);
-        }
-  }
-  
-  /* Usuário só pode ver  */
-  
-  # RFAVZ
-  for ($i = 0; $i <= 4; $i++) {
-  	if (strcmp($result[$i], "-") != 0) 
-        {
-          AtualizaFerramentasNova($sock, $cod_ferramenta, $result[$i]);
-        }
-  }
-
+/* ***************************************************************
+	AtualizaFerramentaEnquete - atualiza a tabela Ferramentas_nova
+							para haver notificações da Enquete via
+							Email.
+	Entrada: $sock - sock da conexao
+			 $idEnquete - para buscar no banco informacoes de
+			  aplicacao / resultado da enquete
+			 $opcao - 'INICIO' - para nova Enquete
+					  'FIM' - para o encerramento da enquete
+	Saída: Atualizacao da tabela Ferramentas_nova
+ */
+function AtualizaFerramentaEnquete($sock, $idEnquete, $opcao)
+{
+	$cod_ferramenta = 24;
+	$query_nova = "select aplicacao from Enquete where idEnquete = ".$idEnquete;
+	$query_fim = "select resultado from Enquete where idEnquete = ".$idEnquete;
+	
+	if ($opcao == 'INICIO')
+	{
+		// Atualiza a tabela apenas para os usuarios que podem ver/votar na
+		// Enquete, setado na coluna 'aplicacao' da tabela Enquete
+		$res = Enviar($sock, $query_nova);
+		$linha =  RetornaLinha($res);
+		$size = strlen($linha['aplicacao']);
+		
+		for ($i = 0; $i < $size; $i++)
+		{
+			if (strcmp($linha['aplicacao'][$i], "-") != 0)
+				AtualizaFerramentasNova($sock, $cod_ferramenta, $linha['aplicacao'][$i]);	
+		}
+	}
+  	else if ($opcao == 'FIM')
+  	{
+  		// Atualiza a tabela apenas para os usuarios que podem ver o resultado
+  		// da Enquete, setado na coluna 'resultado' da tabela Enquete
+  		$res = Enviar($sock, $query_fim);
+		$linha =  RetornaLinha($res);
+		$size = strlen($linha['resultado']);
+		
+  		for ($i = 0; $i < $size; $i++)
+  		{
+  			if (strcmp($linha['resultado'][$i], "-") != 0)
+  				AtualizaFerramentasNova($sock, $cod_ferramenta, $linha['resultado'][$i]);
+  		}
+  	}
 }
+
 
 /* *******************************************************************
    getEnquetesAndamento - retorna lista com as enquetes em andamento para
@@ -351,15 +370,18 @@ function recuperarEnquete($sock, $idEnquete)
 	$linha = RetornaLinha($res);
 	
 	if ($linha['data_fim'] < time())
-  		$consulta="update Enquete set status = 'F' where idEnquete=".VerificaNumeroQuery($idEnquete);
-  	else if ($linha['data_inicio'] > time())
-  		$consulta="update Enquete set status = 'I' where idEnquete=".VerificaNumeroQuery($idEnquete);
-  	else
-  		$consulta="update Enquete set status = 'A' where idEnquete=".VerificaNumeroQuery($idEnquete);
-  		
-  	// Atualiza para notificação Ferramentas_nova (para ambos os casos 'A' ou 'F')
-  	AtualizaFerramentasNova($sock, 24, 'F');
-  		
+		$status = 'F';
+	else if ($linha['data_inicio'] > time ())
+		$status = 'I';
+	else
+		$status = 'A';
+	
+	$consulta="update Enquete set status = ".$status." where idEnquete=".VerificaNumeroQuery($idEnquete);
+  	  		
+  	// Atualiza para notificação Ferramentas_nova (caso 'A')
+  	if ($status == 'A')
+  		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+  		  		
   	$res=Enviar($sock, $consulta);
   	return($res);
 }
@@ -376,7 +398,7 @@ function finalizarEnquete($sock, $idEnquete)
   $data = time();
   $consulta="update Enquete set data_fim = ".$data.", status = 'F' where idEnquete=".VerificaNumeroQuery($idEnquete);
   $res=Enviar($sock, $consulta);
-  AtualizaFerramentasNova($sock, 24, 'F');
+  AtualizaFerramentaEnquete($sock, $idEnquete, 'FIM');
   return($res);
 }
 
@@ -391,7 +413,7 @@ function aplicarEnquete($sock, $idEnquete)
   $data = time();
   $consulta="update Enquete set data_inicio = ".$data.", status = 'A' where idEnquete=".VerificaNumeroQuery($idEnquete);
   $res=Enviar($sock, $consulta);
-  AtualizaFerramentasNova($sock, 24, 'F');
+  AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
   return($res);
 }
 
@@ -535,19 +557,39 @@ function setStatusEnquetesRecentes($sock)
 	$data = time();
 	
 	// Inicializa enquetes Inativas
-	$query = "update Enquete set status = 'A' ";
+	
+	// Pega ids de enquetes que serao ativadas
+	$query  = "select idEnquete from Enquete ";
+	$query .= "where status = 'I' and data_inicio < ".$data;
+	$res = Enviar($sock, $query);
+	$linhas_nova = RetornaArrayLinhas($res);
+	
+	$query  = "update Enquete set status = 'A' ";
 	$query .= "where status = 'I' and data_inicio < ".$data;
 	$res = Enviar($sock, $query);
 	
+	for($i = 0; $i < sizeof($linhas_nova); $i++)
+	{
+		AtualizaFerramentaEnquete($sock, $linhas_nova[$i]['idEnquete'], 'INICIO');
+	}
+	
 	// Finaliza enquetes Ativas
-	$query = "update Enquete set status = 'F' ";
+	
+	// Pega ids de enquetes que serao finalizadas
+	$query  = "select idEnquete from Enquete ";
+	$query .= "where status = 'A' and data_fim < ".$data;
+	$res = Enviar($sock, $query);
+	$linhas_fim = RetornaArrayLinhas($res);
+	
+	$query  = "update Enquete set status = 'F' ";
 	$query .= "where status = 'A' and data_fim < ".$data;	
 	$res = Enviar($sock, $query);
 	
-	// Atualiza Ferramentas_nova para notificação via e-mail
-	AtualizaFerramentasNova($sock, 24, 'F');
-	return $res;	
-}
+	for($i = 0; $i < sizeof($linhas_fim); $i++)
+	{
+		AtualizaFerramentaEnquete($sock, $linhas_fim[$i]['idEnquete'], 'FIM');
+	}
+}	
 
 /* *******************************************************************
    getCodStatusEnquete - retorna o codigo do status da enquete
@@ -588,8 +630,8 @@ function getCodStatusEnquete($sock, $idEnquete)
             $pergunta - pergunta da enquete
             $data_inicio - data de inicio da consulta 
             $data_fim -  data de fim da consulta
-            $aplicacao - especificaï¿½o de quais pï¿½ï¿½s votarï¿½ na enquete (RFAVC)
-            $resultado - especificaï¿½o de quais pï¿½ï¿½s verï¿½ o resultado da enquete (RFAVC)
+            $aplicacao - especificação de quais pessoas votariam na enquete (RFAVC)
+            $resultado - especificação de quais pessoas veriam o resultado da enquete (RFAVC)
             $resultado_parcial - 'S' se possuir resultado parcial, 'N' caso contrï¿½io
             $identidade_votos  - 'S' se a identidade dos votos serï¿½mostrada, 'N' caso contrï¿½io 
             $num_escolhas - '1' se somente uma resposta pode ser escolhida, 'N' caso vï¿½ias possam
@@ -629,7 +671,9 @@ function SalvaEnquete($sock,$cod_usuario,$titulo,$pergunta, $data_inicio, $data_
     return false;
   else
   {
-  	AtualizaFerramentasNova($sock, 24, 'F');
+  	if ($status == 'A')
+  		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+
     return $idEnquete;
   }
 }
@@ -692,7 +736,9 @@ function EditaEnquete($sock, $idEnquete, $titulo,$pergunta, $data_inicio, $data_
     return false;
   else
   {
-  	AtualizaFerramentasNova($sock, 24, 'F');
+  	if ($status == 'A')
+  		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+  		
     return true;
   }
 }
@@ -706,23 +752,32 @@ function EditaEnquete($sock, $idEnquete, $titulo,$pergunta, $data_inicio, $data_
 */ 
 function MudaFimEnquete($sock, $idEnquete, $data_fim)
 {
-	$consulta = "select data_inicio from Enquete where idEnquete = ".VerificaNumeroQuery($idEnquete);
+	$consulta = "select data_inicio, status from Enquete where idEnquete = ".VerificaNumeroQuery($idEnquete);
 	$res = Enviar($sock, $consulta);
 	$linha = RetornaLinha($res);
+	$data = time();
 	
-	if ($linha['data_inicio'] > time())
+	if ($linha['data_inicio'] > $data)
 	{
-		if ($data_fim < time())
-			$consulta="update Enquete set data_fim = ".VerificaNumeroQuery($data_fim).", status = 'F' where idEnquete=".VerificaNumeroQuery($idEnquete);
+		if ($data_fim < $data)
+			$status = "F";
 		else
-			$consulta="update Enquete set data_fim = ".VerificaNumeroQuery($data_fim).", status = 'A' where idEnquete=".VerificaNumeroQuery($idEnquete);
+			$status = "A";
 	}
 	else
 	{
-		$consulta="update Enquete set data_fim = ".VerificaNumeroQuery($data_fim).", status = 'I' where idEnquete=".VerificaNumeroQuery($idEnquete);
+		$status = "I";
 	}
 
+	$consulta="update Enquete set data_fim = ".VerificaNumeroQuery($data_fim).", status = '".$status."' where idEnquete=".VerificaNumeroQuery($idEnquete);
 	$res=Enviar($sock, $consulta);
+	
+	if ((strcmp($linha['status'], "I") == 0) && (strcmp($status,"A") == 0))
+		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+	else if	((strcmp($linha['status'], "A") == 0) && (strcmp($status,"F") == 0))
+		AtualizaFerramentaEnquete($sock, $idEnquete, 'FIM');
+		
+		
   	return($res);
 }
 

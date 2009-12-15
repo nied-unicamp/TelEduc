@@ -89,7 +89,6 @@
   if ($idEnquete = SalvaEnquete($sock,$cod_usuario,$titulo,$pergunta, $data_inicio, $data_fim, $aplicacao, $resultado, $resultado_parcial, $identidade_votos, $num_escolhas , $alternativa))
   {
     $atualizacao="true";
-    AtualizaFerramentaEnquete($sock,$cod_ferramenta,$aplic, $result);
     Desconectar($sock);
     echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
     exit;
