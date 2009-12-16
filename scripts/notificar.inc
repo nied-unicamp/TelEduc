@@ -504,13 +504,24 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
 
   // 24 - Enquete
   // Pega atualização do status da Enquete (Ativa ou Encerrada)
-  $query = "select data from Ferramentas_nova ";
-  $query .= "where (cod_ferramenta = 24) and (tipo_compartilhamento = 'F')";
+  MudarDB($sock, "");
+  $query  = "select tipo_usuario from Usuario_curso ";
+  $query .= "where cod_curso = ".$cod_curso;
+  $query .= " and cod_usuario = ".$cod_usuario;
+  
+  $res = Enviar($sock, $query);
+  $linha_q1 = RetornaLinha($res);
+  
+  MudarDB($sock, $cod_curso);
+  $query  = "select data from Ferramentas_nova ";
+  $query .= "where (cod_ferramenta = 24) "; 
+  $query .= "and (tipo_compartilhamento = '".$linha_q1['tipo_usuario']."')";
+  
   $res = Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
   {
-  	$linha = RetornaLinha($res);
-  	$saida[24]['data'] = $linha['data'];
+  	$linha_q2 = RetornaLinha($res);
+  	$saida[24]['data'] = $linha_q2['data'];
     $saida[24]['cod_usuario'] = -1;
   }
   
@@ -548,7 +559,7 @@ function RetornaListaFerramentas($sock)
         $lista1[$valor['cod_lingua']][0]['texto'] = $adm_dados['texto'];
     }
   }
-  return ($lista1);
+  return ($lista1);																																							
 }
 
 /* *********************************************************************

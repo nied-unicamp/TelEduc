@@ -411,8 +411,9 @@ function finalizarEnquete($sock, $idEnquete)
 function aplicarEnquete($sock, $idEnquete)
 {
   $data = time();
-  $consulta="update Enquete set data_inicio = ".$data.", status = 'A' where idEnquete=".VerificaNumeroQuery($idEnquete);
-  $res=Enviar($sock, $consulta);
+  $consulta  = "update Enquete set data_inicio = ".$data.", status = 'A' ";
+  $consulta .= "where idEnquete = ".VerificaNumeroQuery($idEnquete);
+  $res = Enviar($sock, $consulta);
   AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
   return($res);
 }

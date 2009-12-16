@@ -214,9 +214,9 @@
           // ou o compartilhamento da ferramenta for para todos e a data de novidades for maior
           // que a data base de comparação e não foi o usuário quem postou a novidade, então     
           // lista as ferramentas onde há novidades.                                             
-          if (( ((($curso_ferramentas[$cod_ferr]['status'] == 'F') || ($cod_ferr == 0)) && ($linha[$j]['tipo_usuario'] == 'F')) ||
-                ($curso_ferramentas[$cod_ferr]['status'] == 'A')
-              ) && ($comp_acesso < $dados_ferr['data']) && ($linha[$j]['cod_usuario'] != $dados_ferr['cod_usuario'])
+          if ( ( ( (($curso_ferramentas[$cod_ferr]['status'] == 'F') || ($cod_ferr == 0)) && ($linha[$j]['tipo_usuario'] == 'F')) ||
+                 ($curso_ferramentas[$cod_ferr]['status'] == 'A'))
+             && ($comp_acesso < $dados_ferr['data']) && ($linha[$j]['cod_usuario'] != $dados_ferr['cod_usuario'])
              )
           {
             $frase .= $lista_ferramentas[($linha[$j]['cod_lingua'])][$cod_ferr]['texto']."<br />";
