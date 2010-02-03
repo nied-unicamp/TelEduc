@@ -289,7 +289,10 @@
   	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
 	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
 
+	$sock = Conectar($cod_curso_destino);
 	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+	$sock = Conectar("");
+	
 	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
                       $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
                       $array_topicos_origem, $array_itens_origem, $nome_tabela,
