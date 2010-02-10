@@ -1101,7 +1101,7 @@
   echo("    function verifica_notas(flag)\n");
   echo("    {\n");
   echo("      if(flag == '0'){\n");
-  //188 - Existem questões com valores iguais a 0, Deseja continuar?
+  //188 - Existem questï¿½es com valores iguais a 0, Deseja continuar?
   echo("        if(confirm('".RetornaFraseDaLista($lista_frases, 188)."'))\n");
   echo("          AplicarExercicio();\n");
   echo("        else\n");
@@ -1319,7 +1319,11 @@
     {
       foreach ($lista_questoes as $cod => $linha_item)
       {
-        $tipo = $linha_item['tp_questao'];
+        if($linha_item['tp_questao'] == 'O'){
+        	$tipo = "Objetiva";
+        } elseif($linha_item['tp_questao'] == 'D'){
+        	$tipo = "Dissertativa";
+        }
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
