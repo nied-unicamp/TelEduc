@@ -496,7 +496,11 @@ if ((count($questoes)>0)&&($questoes != null))
 	foreach ($questoes as $cod => $linha_item)
 	{
 		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-		$tipo = $linha_item['tp_questao'];
+		if($linha_item['tp_questao'] == 'O'){
+			$tipo = "Objetiva";
+		} elseif($linha_item['tp_questao'] == 'D'){
+			$tipo = "Dissertativa";
+		}
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		$valor = $linha_item['valor'];
