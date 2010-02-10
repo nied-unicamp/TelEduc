@@ -72,21 +72,21 @@
   else
     $totalQuestoes = 0;
         
-  /* Nmero de questoes exibidas por página.             */
+  /* Nmero de questoes exibidas por pï¿½gina.             */
   if (!isset($questoesPorPag)) $questoesPorPag = 10;
   
   /* Se o nmero total de questoes for superior que o nmero de questoes por  */
-  /* página entï¿½ calcula o total de páginas. Do contrï¿½io, define o nmero de     */
-  /* páginas para 1.                                                           */
+  /* pï¿½gina entï¿½ calcula o total de pï¿½ginas. Do contrï¿½io, define o nmero de     */
+  /* pï¿½ginas para 1.                                                           */
 
-  /* Calcula o nmero de páginas geradas.    */
+  /* Calcula o nmero de pï¿½ginas geradas.    */
   if($totalQuestoes > $questoesPorPag)
     $totalPag = ceil($totalQuestoes / $questoesPorPag);
   else
     $totalPag = 1;
 
-  /* Se a página atual nï¿½ estiver setada entï¿½, por padrão, atribui-lhe o valor 1. */
-  /* Se estiver setada, verifica se a página ï¿½maior que o total de páginas, se for */
+  /* Se a pï¿½gina atual nï¿½ estiver setada entï¿½, por padrï¿½o, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a pï¿½gina ï¿½maior que o total de pï¿½ginas, se for */
   /* atribui o valor de $total_pag ï¿½$pagAtual.                                    */
   if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
     $pagAtual =  1;
@@ -95,7 +95,7 @@
   
 
   /*********************************************************/
-  /* início - JavaScript */
+  /* inï¿½cio - JavaScript */
   if($totalQuestoes){
     echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   }
@@ -696,7 +696,11 @@
         else $style = "display:none";
       
         $data = "<span id=\"data_".$linha_item['cod_questao']."\">".UnixTime2Data($linha_item['data'])."</span>";
-        $tipo = $linha_item['tp_questao'];
+        if($linha_item['tp_questao'] == 'O'){
+        	$tipo = "Objetiva";
+        } elseif($linha_item['tp_questao'] == 'D'){
+        	$tipo = "Dissertativa";
+        }
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
@@ -912,7 +916,7 @@
   	echo("            </li>\n");
   	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'Q'); EscondeLayers();\">\n");
   	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-  	/* Frase #8 - Não Compartilhado */
+  	/* Frase #8 - Nï¿½o Compartilhado */
   	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
   	echo("            </li>\n");
  		echo("          </ul>\n");    
