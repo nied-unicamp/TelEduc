@@ -471,6 +471,11 @@ if ((count($questoes)>0)&&($questoes != null))
 		$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
 		$icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
 		$tipo = $linha_item['tp_questao'];
+		if($tipo == 'O'){
+			$tipo_ext = "Objetiva";
+		} elseif($tipo == 'D'){
+			$tipo_ext = "Dissertativa";
+		}
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		if($tipo == 'O'){
@@ -528,7 +533,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		}
 
 		echo("                    <td>".$valor."</td>\n");
-		echo("                    <td>".$tipo."</td>\n");
+		echo("                    <td>".$tipo_ext."</td>\n");
 		echo("                    <td>".$topico."</td>\n");
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
