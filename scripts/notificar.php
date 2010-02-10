@@ -199,8 +199,9 @@
       }
 
       // Soma um tempo médio estipulado que o usuário gasta em uma ferramenta para 
-      // determinar se ele ainda se encontra online. Neste caso 25 minutos.        
-      $comp_acesso = $ultimo_acesso + (25 * 60);
+      // determinar se ele ainda se encontra online. Neste caso 25 minutos.   
+      //TODO : mudar o 0 pra 25 hehe     
+      $comp_acesso = $ultimo_acesso + (0 * 60);
 
       $frase = "";
       $novo_flag = false;

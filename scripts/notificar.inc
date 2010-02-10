@@ -228,16 +228,7 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
 
   $saida[0]['data'] = "0"; /* para ser usado como retorno padrão */
   $saida[0]['cod_usuario'] = $cod_coordenador;
-
-/*
- * CÓDIGO COMENTADO
- * DESCOMENTAR E ARRUMAR QUANDO ESTE SCRIPT ESTIVER
- * PRONTO PARA UTILIZAR AS TABELAS
- * - FERRAMENTAS_NOVA
- * - FERRAMENTAS_NOVA_USUARIOS
- * COMO UNICA FONTE DE INFORMACAO PARA AS NOVIDADES
- * 
- * 
+ 
   // Se for visitante, nunca há novidade
   if (EVisitante($sock,$cod_curso,$cod_usuario))
     return $saida;
@@ -265,9 +256,6 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     $saida[$linha['cod_ferramenta']]['data'] = $linha['data'];
     $saida[$linha['cod_ferramenta']]['cod_usuario'] = null;
   }
-*
-* 
-*/
 
   // 1 - Agenda
   // Pega última atualização da agenda (Ativa ou Edição Finalizada)
@@ -284,80 +272,157 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   }
 
   // 3 - Atividades
-  $query = "select cod_usuario, data from Atividade_itens where ";
+  $query1 = "select cod_usuario, data from Atividade_itens where ";
+  $query2 = "select cod_usuario, data from Atividade_topicos ";
   if (! $formador)
   {
-    $query .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query1 .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query2 .= "where tipo_compartilhamento = '".$tipo_compart."' ";
   }
-  $query .= "status = 'L' order by data desc limit 1";
+  $query1 .= "status = 'L' order by data desc limit 1";
+  $query2 .= "order by data desc limit 1";
 
-
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
+  $res1 = Enviar($sock, $query1);
+  $res2 = Enviar($sock, $query2);
+  
+  // Verifica se tem novidade nas atividades
+  if (RetornaNumLinhas($res1) > 0)
   {
-    $linha = RetornaLinha($res);
-    $saida[3]['data'] = $linha['data'];
-    $saida[3]['cod_usuario'] = $linha['cod_usuario'];
-  }
-
-  // 4 - Material de Apoio
-  $query = "select cod_usuario, data from Apoio_itens where ";
-  if (! $formador)
-  {
-    $query .= "tipo_compartilhamento = '".$tipo_compart."' and ";
-  }
-  $query .= "status = 'L' order by data desc limit 1";
-
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
-  {
-    $linha = RetornaLinha($res);
-    $saida[4]['data'] = $linha['data'];
-    $saida[4]['cod_usuario'] = $linha['cod_usuario'];
+    $linha1 = RetornaLinha($res1);
+    $saida[3]['data'] = $linha1['data'];
+    $saida[3]['cod_usuario'] = $linha1['cod_usuario'];
   }
 
-  // 5 - Leituras
-  $query = "select cod_usuario, data from Leitura_itens where ";
-  if (! $formador)
+  // Verifica se tem nova organizacao das pastas
+  if (RetornaNumLinhas($res2) > 0)
   {
-    $query .= "tipo_compartilhamento = '".$tipo_compart."' and ";
-  }
-  $query .= "status = 'L' order by data desc limit 1";
-
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
-  {
-    $linha = RetornaLinha($res);
-    $saida[5]['data'] = $linha['data'];
-    $saida[5]['cod_usuario'] = $linha['cod_usuario'];
-  }
-
-  // 6 - Perguntas Freqüentes
-  // Modificado para que perguntas da raiz sejam incluídas
-  $query = "select data from Ferramentas_nova ";
-  $query .= "where (cod_ferramenta = 6) and (tipo_compartilhamento = 'T')";
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
-  {
-    $linha = RetornaLinha($res);
-    $saida[6]['data'] = $linha['data'];
-    $saida[6]['cod_usuario'] = 1;	// Formador que inclui
+    $linha2 = RetornaLinha($res2);
+    if ($linha2['data'] > $linha1['data'])
+    {
+    	$saida[3]['data'] = $linha2['data'];
+    	$saida[3]['cod_usuario'] = $linha2['cod_usuario'];
+    }
   }
   
-  // 7 - Parada
-  $query = "select cod_usuario, data from Obrigatoria_itens where ";
+  // 4 - Material de Apoio
+  $query1 = "select cod_usuario, data from Apoio_itens where ";
+  $query2 = "select cod_usuario, data from Apoio_topicos ";
   if (! $formador)
   {
-    $query .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query1 .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query2 .= "where tipo_compartilhamento = '".$tipo_compart."' ";
   }
-  $query .= "status = 'L' order by data desc limit 1";
-
-  $res = Enviar($sock, $query);
-  if (RetornaNumLinhas($res) > 0)
+  
+  $query1 .= "status = 'L' order by data desc limit 1";
+  $query2 .= "order by data desc limit 1";
+  $res1 = Enviar($sock, $query1);
+  $res2 = Enviar($sock, $query2);
+  
+  // Verifica se tem novidade nos Materiais de Apoio
+  if (RetornaNumLinhas($res1) > 0)
   {
-    $linha = RetornaLinha($res);
-    $saida[7]['data'] = $linha['data'];
-    $saida[7]['cod_usuario'] = $linha['cod_usuario'];
+    $linha1 = RetornaLinha($res1);
+    $saida[4]['data'] = $linha1['data'];
+    $saida[4]['cod_usuario'] = $linha1['cod_usuario'];
+  }
+
+  // Verifica se tem nova organizacao das pastas
+  if (RetornaNumLinhas($res2) > 0)
+  {
+    $linha2 = RetornaLinha($res2);
+    $saida[4]['data'] = $linha2['data'];
+    $saida[4]['cod_usuario'] = $linha2['cod_usuario'];
+  }
+  
+  // 5 - Leituras
+  $query1 = "select cod_usuario, data from Leitura_itens where ";
+  $query2 = "select cod_usuario, data from Leitura_topicos ";
+  if (! $formador)
+  {
+    $query1 .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query2 .= "where tipo_compartilhamento = '".$tipo_compart."' ";
+  }
+  $query1 .= "status = 'L' order by data desc limit 1";
+  $query2 .= "order by data desc limit 1";  
+  
+  $res1 = Enviar($sock, $query1);
+  $res2 = Enviar($sock, $query2);
+
+  // Verifica se tem novidade nas Leituras
+  if (RetornaNumLinhas($res1) > 0)
+  {
+    $linha1 = RetornaLinha($res1);
+    $saida[5]['data'] = $linha1['data'];
+    $saida[5]['cod_usuario'] = $linha1['cod_usuario'];
+  }
+  // Verifica se tem novidade nas Pastas
+  if (RetornaNumLinhas($res2) > 0)
+  {
+  	$linha2 = RetornaLinha($res2);
+  	if ($linha2['data'] > $linha1['data'])
+  	{
+    	$saida[5]['data'] = $linha2['data'];
+    	$saida[5]['cod_usuario'] = $linha2['cod_usuario'];
+  	}
+  }
+  
+  // 6 - Perguntas Freqüentes
+  // Verifica novidade nas Perguntas
+  $query1 = "select data from Ferramentas_nova ";
+  $query1 .= "where (cod_ferramenta = 6) and (tipo_compartilhamento = 'T')";
+  $res1 = Enviar($sock, $query1);
+  if (RetornaNumLinhas($res1) > 0)
+  {
+    $linha1 = RetornaLinha($res1);
+    $saida[6]['data'] = $linha1['data'];
+    $saida[6]['cod_usuario'] = -1;
+  }
+
+  // Verifica novidade nos Assuntos
+  $query2 = "select data from Pergunta_assuntos ";
+  $query2 .= "order by data desc limit 1";
+  $res2 = Enviar($sock, $query2);
+  if (RetornaNumLinhas($res2) > 0)
+  {
+    $linha2 = RetornaLinha($res2);
+    if ($linha2['data'] > $linha1['data'])
+    {
+    	$saida[6]['data'] = $linha2['data'];
+    	$saida[6]['cod_usuario'] = -1;
+    }
+  }
+  
+  // 7 - Parada Obrigatoria
+  $query1 = "select cod_usuario, data from Obrigatoria_itens where ";
+  $query2 = "select cod_usuario, data from Obrigatoria_topicos ";
+  if (! $formador)
+  {
+    $query1 .= "tipo_compartilhamento = '".$tipo_compart."' and ";
+    $query2 .= "where tipo_compartilhamento = '".$tipo_compart."' ";
+  }
+  
+  $query1 .= "status = 'L' order by data desc limit 1";
+  $query2 .= "order by data desc limit 1";
+  $res1 = Enviar($sock, $query1);
+  $res2 = Enviar($sock, $query2);
+
+  // Verifica se tem novidade nas Paradas Obrigatorias
+  if (RetornaNumLinhas($res1) > 0)
+  {
+    $linha1 = RetornaLinha($res1);
+    $saida[7]['data'] = $linha1['data'];
+    $saida[7]['cod_usuario'] = $linha1['cod_usuario'];
+  }
+  
+  // Verifica se tem novidade na organizacao das pastas
+  if (RetornaNumLinhas($res2) > 0)
+  {
+    $linha2 = RetornaLinha($res2);
+    if ($linha2['data'] > $linha1['data'])
+    {
+    	$saida[7]['data'] = $linha2['data'];
+    	$saida[7]['cod_usuario'] = $linha2['cod_usuario'];
+    }
   }
 
   // 8 - Mural
@@ -371,7 +436,16 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   }
 
   // 9 - Fóruns de discussão
-  $query = "select cod_usuario, data from Forum_mensagens where (status != 'X' and status != 'D') order by data desc limit 1";
+  $query = "select cod_usuario, data from Forum_mensagens ";
+  
+  
+  if (! $formador)
+  {
+  	$query .= "where (status != 'X' and status != 'D') ";
+  	
+  }
+  $query .= "order by data desc limit 1";
+  
   $res = Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
   {
@@ -472,8 +546,7 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
     }
   }
 
-  // Portfolio e Portfolio de Grupos
-
+  // 15 - Portfolio e Portfolio de Grupos
   if ($formador)
     $saida[15]=RetornaMaiorItemComentario($sock,1,'F', array('cod_usuario' => $cod_usuario, 'data' => 0),$cod_usuario);
   else

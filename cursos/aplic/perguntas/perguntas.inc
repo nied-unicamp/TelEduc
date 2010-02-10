@@ -150,7 +150,8 @@ function AlteraDadosAssuntoDinamic($id, $valor, $cod_assunto){
 	$campo = ($id == "Assunto") ? "nome" : "descricao";
 	
 	$sock = Conectar($_GET['cod_curso']);
-	$query = "update Pergunta_assuntos set $campo = '".VerificaStringQuery($valor)."' where cod_assunto = $cod_assunto";
+	$query = "update Pergunta_assuntos set $campo = '".VerificaStringQuery($valor);
+	$query .= "', data=".time()." where cod_assunto = ".$cod_assunto;
 	Enviar($sock,$query);
 	Desconectar($sock);
 	
@@ -1226,7 +1227,6 @@ function SalvaAssunto($sock, $cod_assunto_pai, $nome, $descricao)
     $res2 = Enviar($sock, $query2);
 
     $tupla = RetornaLinha($res2);
-	 AtualizaFerramentasNova($sock, 6, 'T');
     return array (true, $tupla['cod_assunto']);
   }
   else
