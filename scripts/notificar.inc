@@ -436,24 +436,56 @@ function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
   }
 
   // 9 - Fóruns de discussão
-  $query = "select cod_usuario, data from Forum_mensagens ";
-  
-  
+  $saida[9]['data'] = 0;
+  $query1 = "select cod_usuario, data from Forum_mensagens ";
+  $query2 = "select data from Forum ";
+  $query3 = "select data from Ferramentas_nova_usuarios ";
+  $query3 .= "where (cod = ".$cod_usuario.") and (cod_ferramenta = 9)";
+   	      
   if (! $formador)
   {
-  	$query .= "where (status != 'X' and status != 'D') ";
-  	
+  	$query1 .= "where (status != 'X' and status != 'D') ";
+  	$query2 .= "where (status != 'X' and status != 'D') ";
   }
-  $query .= "order by data desc limit 1";
-  
-  $res = Enviar($sock, $query);
+  $query1 .= "order by data desc limit 1";
+  $query2 .= "order by data desc limit 1";
+
+  // Verifica novidades nas Mensagens
+  $res = Enviar($sock, $query1);
   if (RetornaNumLinhas($res) > 0)
   {
     $linha = RetornaLinha($res);
     $saida[9]['data'] = $linha['data'];
     $saida[9]['cod_usuario'] = $linha['cod_usuario'];
   }
-
+  
+  // Verifica novidades nos Foruns
+  $res = Enviar($sock, $query2);
+  if (RetornaNumLinhas($res) > 0)
+  {
+    $linha = RetornaLinha($res);
+    if ($linha['data'] > $saida[9]['data'])
+    {
+    	$saida[9]['data'] = $linha['data'];
+    	// na tabela nao ha info do cod_usuario
+    	$saida[9]['cod_usuario'] = -1;	
+    }
+  }
+      
+  // Verifica novidades especificas para o usuario
+  // em Ferramentas_nova_usuario
+  $res = Enviar($sock, $query3);
+  if (RetornaNumLinhas($res) > 0)
+  {
+  	$linha = RetornaLinha($res);
+    if ($linha['data'] > $saida[9]['data'])
+    {
+    	$saida[9]['data'] = $linha['data'];
+    	// na tabela nao ha info do cod_usuario
+    	$saida[9]['cod_usuario'] = -1;	
+    }
+  }
+  
   // 10 - Bate-papo
   $query = "select data from Ferramentas_nova ";
   $query .= "where (cod_ferramenta = 10) and (tipo_compartilhamento = 'T')";

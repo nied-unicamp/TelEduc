@@ -267,12 +267,13 @@
       
     // Armazenando todos os c�igos dos participantes permitidos no array
     // select_participantes_permissao_cod
-
+	  
       $query_inicial="insert ignore into Forum_permissoes (cod_forum, cod_permitido, tipo)";
       $query_final="";
       foreach($select_participantes_permissao_aux as $cod => $cont){
         $cod_usuario_conf= $cont;
         $query_final.=" values (".$cod_forum.", ".$cod_usuario_conf.", 'U')";
+        AtualizaFerramentasNovaUsuario($sock, $cod_ferramenta, $cod_usuario_conf);
 
         if(sizeof($query_final > 100000)){   //garante um tamanho bom de string
           Enviar($sock,$query_inicial.$query_final);
@@ -290,6 +291,7 @@
       foreach($select_grupos_permissao_aux as $cont_g){
         $cod_grupo_conf= $cont_g;
         $query_final.=" values (".$cod_forum.", ".$cod_grupo_conf.", 'G')";
+        AtualizaFerramentasNovaGrupo($sock, $cod_ferramenta, $cod_grupo_conf);
 
         if(sizeof($query_final > 100000)){  //garante um tamanho bom de string
           Enviar($sock,$query_inicial.$query_final);
