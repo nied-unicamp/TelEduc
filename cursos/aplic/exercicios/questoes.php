@@ -592,12 +592,6 @@
     /* Frase #110 - Exercicios em Grupo */
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 
-  	/* Frase #111 - Biblioteca de Exercicios */
-    echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
-  	
-    /* Frase #112 - Biblioteca de Questoes */
-    echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
-    
   	echo("                </ul>\n");
   	echo("              </td>\n");
   	echo("            </tr>\n");
@@ -614,7 +608,11 @@
       echo("                  <li><span onclick=\"NovaQuestao();\">".RetornaFraseDaLista($lista_frases, 151)."</span></li>\n");
       /* Frase #152 - Filtrar */
       echo("                  <li><span onclick=\"MostraLayer(lay_filtro,0);\">".RetornaFraseDaLista($lista_frases, 152)."</span></li>\n");
-			/* Frase #128 - Lixeira */
+   	  /* Frase #111 - Biblioteca de Exercicios */
+      echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
+      /* Frase #112 - Biblioteca de Questoes */
+      echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
+      /* Frase #128 - Lixeira */
       echo("                  <li><span onclick=\"document.location='questoes.php?cod_curso=".$cod_curso."&visualizar=L';\">".RetornaFraseDaLista($lista_frases, 128)."</span></li>\n");
     }
     echo("                </ul>\n");

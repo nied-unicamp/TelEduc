@@ -194,7 +194,16 @@
     
     /* Frase #110 - Exercicios em Grupo */
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
-		if ($tela_formador){
+    echo("                </ul>\n");
+    echo("              </td>\n");
+    echo("            </tr>\n");
+	
+    if ($tela_formador){
+
+    
+    echo("            <tr>\n");
+	echo("              <td valign=\"top\">\n");
+  	echo("                <ul class=\"btAuxTabs03\">\n");
   	/* Frase #111 - Biblioteca de Exercicios */
     echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
   	
@@ -202,10 +211,11 @@
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
     /* Frase #113 - Agrupar */
     echo("                  <li><span onclick=\"MostraLayer(lay_agrupar, 0);\">".RetornaFraseDaLista($lista_frases, 113)."</span></li>\n");
-		}
-    echo("                </ul>\n");
-    echo("              </td>\n");
+  	
+  	echo("              </td>\n");
     echo("            </tr>\n");
+    }  	
+    
   	echo("            <tr>\n");
   	echo("              <td valign=\"top\">\n");
 	echo("                <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
