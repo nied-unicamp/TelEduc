@@ -499,10 +499,11 @@
   echo("    }\n\n");
 
   echo("    function VerificaValor(valor){\n");
-  echo("      if(isNumber(valor))\n");
+  echo("      if(isNumber(valor) && valor != '')\n");
   echo("      {\n");
   echo("        AtribuiValor(valor);\n");
   echo("        EscondeLayer(lay_atribuir);\n");
+  echo("        document.getElementById(\"valor\").value = \"\";");
   echo("      }\n");
   echo("      else\n");
   echo("      {\n");
@@ -1549,7 +1550,7 @@
   /* 18 - Ok (gen) */
   echo("            <input type=\"button\" class=\"input\" onClick=\"VerificaValor(document.getElementById('valor').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   /* 2 - Cancelar (gen) */
-  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_atribuir);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_atribuir);document.getElementById('valor').value='';\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
   echo("        </div>\n");
   echo("      </div>\n");
   echo("    </div>\n\n");
