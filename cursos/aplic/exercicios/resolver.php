@@ -497,9 +497,9 @@ if ((count($questoes)>0)&&($questoes != null))
 	{
 		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
 		if($linha_item['tp_questao'] == 'O'){
-			$tipo = "Objetiva";
+			$tipo = RetornaFraseDaLista($lista_frases, 159);
 		} elseif($linha_item['tp_questao'] == 'D'){
-			$tipo = "Dissertativa";
+			$tipo = RetornaFraseDaLista($lista_frases, 160);
 		}
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);

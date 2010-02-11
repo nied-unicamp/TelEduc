@@ -697,9 +697,9 @@
       
         $data = "<span id=\"data_".$linha_item['cod_questao']."\">".UnixTime2Data($linha_item['data'])."</span>";
         if($linha_item['tp_questao'] == 'O'){
-        	$tipo = "Objetiva";
+        	$tipo = RetornaFraseDaLista($lista_frases, 159);
         } elseif($linha_item['tp_questao'] == 'D'){
-        	$tipo = "Dissertativa";
+        	$tipo = RetornaFraseDaLista($lista_frases, 160);
         }
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);

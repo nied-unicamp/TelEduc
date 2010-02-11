@@ -469,9 +469,9 @@ if ((count($questoes)>0)&&($questoes != null))
 		$icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
 		$tipo = $linha_item['tp_questao'];
 		if($tipo == 'O'){
-			$tipo_ext = "Objetiva";
+			$tipo_ext = RetornaFraseDaLista($lista_frases, 159);
 		} elseif($tipo == 'D'){
-			$tipo_ext = "Dissertativa";
+			$tipo_ext = RetornaFraseDaLista($lista_frases, 160);
 		}
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);

@@ -1458,9 +1458,15 @@
     /* Frase #98 - Limpar gabarito */
 	$limpar_gabarito="<span onClick=\"LimparGabarito(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 98)."</span>";
 
+  	if($tp_questao == 'O'){
+		$tipo_tit = RetornaFraseDaLista($lista_frases, 159);
+	} elseif($tp_questao == 'D'){
+		$tipo_tit = RetornaFraseDaLista($lista_frases, 160);
+	}
+	
 	/* Frase #1 - Exercicios */
 	/* Frase #99 - Editar Questao */
-	echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 99)."</h4>\n");
+	echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 99)." $tipo_tit</h4>\n");
 	
   	/* Frase #5 - Voltar */
   	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");

@@ -1320,9 +1320,9 @@
       foreach ($lista_questoes as $cod => $linha_item)
       {
         if($linha_item['tp_questao'] == 'O'){
-        	$tipo = "Objetiva";
+        	$tipo = RetornaFraseDaLista($lista_frases, 159);
         } elseif($linha_item['tp_questao'] == 'D'){
-        	$tipo = "Dissertativa";
+        	$tipo = RetornaFraseDaLista($lista_frases, 160);
         }
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
