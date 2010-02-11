@@ -517,7 +517,7 @@ if($ehFormador){
 			echo("                    <td>".$linha_item['valor']."</td>\n");
 			/* Frase #18 - Nao Corrigida */ 				
 			/* Frase #19 - Corrigida */
-			echo("                    <td>".($corrigida ? RetornaFraseDaLista($lista_frases, 19) : RetornaFraseDaLista($lista_frases, 18))."</td>\n");
+			echo("                    <td>".($corrigida ? RetornaFraseDaLista($lista_frases, 19) : RetornaFraseDaLista($lista_frases, 503))."</td>\n");
 			echo("                  </tr>\n");
 			echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
 			echo("                    <td style=\"width:50px\" colspan=\"7\" align=\"left\">\n");
