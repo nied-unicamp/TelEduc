@@ -229,7 +229,7 @@ echo("      }\n");
 echo("    }\n\n");
 
 
-if ($resolucao['submetida'] == 'N'){
+if ($resolucao['corrigida'] == 'N'){
 	echo("    function EdicaoTexto(codigo, id, valor){\n");
 	echo("      var cod;\n");
 	echo("      if (valor=='ok'){\n");
@@ -594,7 +594,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		{
 			/* Desabilita a radiobox, se ja foi entregue o ex. */
 			$estado = "";
-			if (!($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))))
+			if (!($disponivel && $resolucao['corrigida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))))
+			
 			$estado = "disabled";
 
 			/* Frase #18 - Alternativas */
@@ -628,7 +629,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                              </span>\n");
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
-			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
+			if ($disponivel && $resolucao['corrigida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
 				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
 			}
 		}
@@ -656,6 +657,15 @@ else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 	if($tela_formador)
 	{
 		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='".RetornaFraseDaLista($lista_frases, 190)."'></td></tr>");
+	}
+	else{//Permite enviar novamente a resolução
+			/* Frase #189 - Entregar */
+		echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
+		echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
+		echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
+		echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
+		echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
+		echo("								</form>");
 	}
 }
 echo("              </td>\n");
