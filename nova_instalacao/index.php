@@ -23,14 +23,15 @@ $dbnamecurso = "TelEducCurso_";
 $dbuser = "root";
 $dbpwd = "Myqui80n";
 $dbhost = "localhost";
+$dbport = "3306";
 
-if (!VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost)){
-	if (!CriaBD($dbname, $dbuser, $dbpwd, $dbhost)){
+if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
+	if (!CriaBasePrincipal($sock)){
 		die("Não foi possível criar o BD, crie manualmente.");
 	}
 } 
 
-InicializaBD($dbname, $dbuser, $dbpwd, $dbhost);
+InicializaBD($sock);
 
 if (!CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost)){
 	die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.");
