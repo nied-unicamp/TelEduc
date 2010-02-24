@@ -26,10 +26,16 @@ function VerificaRegisterGlobals(){
    			$dbpwd - Senha (txt)
    			$dbhost - Host
    			$dbport - Porta
-   Saida: booleano
+   Saida: true se sucesso
 */
 function CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
-	
+	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
+	if (!$sock){
+		die("Não foi possível conectar ao MySQL: ".mysql_error());
+	} else {
+		$sql = 'CREATE DATABASE '.$dbname.' DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;';
+		return(mysql_query($sql, $sock));
+	}
 }
 
 /* ************************************************************************
@@ -38,7 +44,16 @@ function CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
    Saida: booleano
 */
 function InicializaBD($sock){
-	
+	$arq = "base_geral.table";
+	$handle = fopen ($arq, "r");
+	$conteudo = fread ($handle, filesize ($arq));
+	fclose ($arq);
+
+	$array = explode(";\n", $conteudo);
+
+	foreach ($array as $sql){
+		mysql_query($sql, $sock);
+	}
 }
 
 /* ************************************************************************
@@ -49,10 +64,25 @@ function InicializaBD($sock){
    			$dbpwd - Senha (txt)
    			$dbhost - Host
    			$dbport - Porta
-   Saida: booleano
+   Saida: true ou o conteudo
 */
 function CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport){
+	$fp = fopen('../teleduc.conf', 'w');
 	
+	$conf = "dbnamebase=".$dbname."\n";
+	$conf .= "dbnamecurso=".$dbnamecurso."\n";
+	$conf .= "dbuser=".$dbuser."\n";
+	$conf .= "dbpassword=".$dbpwd."\n";
+	$conf .= "dbhost=".$dbhost."\n";
+	$conf .= "dbport=".$dbport."\n";
+	
+	if (!fwrite($fp, $conf)){
+		fclose($fp);
+		return($conf);
+	} else {
+		fclose($fp);
+		return(true);
+	}
 }
 
 /* ************************************************************************
@@ -66,7 +96,13 @@ function CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbpor
    Saida: $sock ou false
 */
 function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
-	
+	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
+	if (!$sock) {
+    	die("Não foi possível conectar ao MySQL: ".mysql_error());
+	}
+
+	$db = mysql_select_db($dbname, $sock);
+	return(($db) ? $sock : false);
 }
 
 /* ************************************************************************
@@ -77,8 +113,15 @@ function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
    			$sendmail - Caminho do sendmail
    Saida: booleano
 */
-function RegistraConfigurações($host, $www, $arquivos, $sendmail){
-	
+function RegistraConfigurações($sock, $host, $www, $arquivos, $sendmail){
+	$sql = "REPLACE Config values ('host', '".$host."')";
+	mysql_query($sql, $sock);
+	$sql2 = "REPLACE Diretorio values ('raiz_www', '".$www."')";
+	mysql_query($sql2, $sock);
+	$sql3 = "REPLACE Diretorio values ('Arquivos', '".$arquivos."')";
+	mysql_query($sql3, $sock);
+	$sql4 = "REPLACE Diretorio values ('sendmail', '".$sendmail."')";
+	mysql_query($sql4, $sock);
 }
 
 /* ************************************************************************
@@ -87,8 +130,22 @@ function RegistraConfigurações($host, $www, $arquivos, $sendmail){
    			$admtele_senha - Senha
    Saida: booleano
 */
-function RegistraDadosAdmtele($admtele_email, $admtele_senha){
-	
+function RegistraDadosAdmtele($sock, $adm_nome, $adm_email, $adm_senha){
+	$sql = "REPLACE Config values ('adm_nome', '".$adm_nome."')";
+	mysql_query($sql, $sock);
+	$sql2 = "REPLACE Config values ('adm_email', '".$adm_email."')";
+	mysql_query($sql2, $sock);
+	$sql3 = "REPLACE Config values ('admtele', '".$adm_senha."')";
+	mysql_query($sql3, $sock);
+}
+
+/* ************************************************************************
+   VerificaExistenciaArq - Verifica se o arquivo existe
+   Entrada: $arq - /home/arquivos/teleduc.conf
+   Saida: $sock ou false
+*/
+function VerificaExistenciaArq($arq){
+	return(file_exists($arq) && filesize($arq) > 0);
 }
 
 ?>

@@ -26,16 +26,20 @@ $dbhost = "localhost";
 $dbport = "3306";
 
 if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
-	if (!CriaBasePrincipal($sock)){
-		die("Não foi possível criar o BD, crie manualmente.");
+	if (!CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
+		die("Não foi possível criar o Banco de Dados: ".mysql_error());
 	}
 } 
 
 InicializaBD($sock);
 
-if (!CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost)){
-	die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.");
+if (!VerificaExistenciaArq("../teleduc.conf")){
+	$conteudo = CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
+	if ($conteudo !== true){
+		die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.<br /> Com o conteudo: <br /><br />".str_replace("\n", "<br/>",$conteudo));
+	}
 }
+
 
 /*
 2a Etapa:
@@ -45,11 +49,11 @@ Configurar os demais diretorios, (rever necessidade de alguns deles). */
 
 /* USER INPUT - Pré-Preenchidas */
 $host = "quimera.nied.unicamp.br";
-$www = "/~bruno/teleduc4";
+$www = "/~bruno/teleduc4OI";
 $arquivos = "/home/bruno/arquivos";
 $sendmail = "/usr/bin/sendmail";
 
-RegistraConfigurações($host, $www, $arquivos, $sendmail);
+RegistraConfigurações($sock, $host, $www, $arquivos, $sendmail);
 
 /*
 3a Etapa:
@@ -57,10 +61,11 @@ Pré-Req: 2a Etapa
 Executar: Pedir ao admin colocar as tarefas do cron, perguntar o email do admtele e a senha para admtele. */
 
 /* USER INPUT */
+$admtele_nome = "Bruno Buccolo";
 $admtele_email = "admtele@gmail.com";
 $admtele_senha = "AAf2dfh9";
 
-RegistraDadosAdmtele($admtele_email, $admtele_senha);
+RegistraDadosAdmtele($sock, $admtele_nome, $admtele_email, $admtele_senha);
 
 echo("Não esqueça de configurar o cron.");
 
