@@ -18,16 +18,20 @@ if (!VerificaPHPMysql()){
 }
 
 /* USER INPUT */
-$dbname = "TelEduc";
-$dbnamecurso = "TelEducCurso_";
+$dbname = "TelEducRemoto";
+$dbnamecurso = "TelEducRemotoCurso_";
 $dbuser = "root";
-$dbpwd = "Myqui80n";
-$dbhost = "localhost";
+$dbpwd = "Mytal80n";
+$dbhost = "talia.nied.unicamp.br";
 $dbport = "3306";
 
 if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
 	if (!CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
 		die("Não foi possível criar o Banco de Dados: ".mysql_error());
+	} else {
+		$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
+		mysql_select_db($dbname, $sock);
+				
 	}
 } 
 
@@ -49,7 +53,7 @@ Configurar os demais diretorios, (rever necessidade de alguns deles). */
 
 /* USER INPUT - Pré-Preenchidas */
 $host = "quimera.nied.unicamp.br";
-$www = "/~bruno/teleduc4OI";
+$www = "/~bruno/teleduc4";
 $arquivos = "/home/bruno/arquivos";
 $sendmail = "/usr/bin/sendmail";
 
@@ -63,7 +67,7 @@ Executar: Pedir ao admin colocar as tarefas do cron, perguntar o email do admtel
 /* USER INPUT */
 $admtele_nome = "Bruno Buccolo";
 $admtele_email = "admtele@gmail.com";
-$admtele_senha = "AAf2dfh9";
+$admtele_senha = "AA2.FEIabj1C6";
 
 RegistraDadosAdmtele($sock, $admtele_nome, $admtele_email, $admtele_senha);
 
