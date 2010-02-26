@@ -52,6 +52,8 @@
   $objAjax->registerFunction("AlteraStatusExercicioDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
   $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
+  $objAjax->registerFunction("VerificaNotas");
+  $objAjax->registerFunction("AplicaExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -112,6 +114,9 @@
   if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
     $pagAtual =  1;
   else $pagAtual = min($pagAtual, $totalPag);
+  
+  GeraJSComparacaoDatas();
+  GeraJSVerificacaoData();
 
   /*********************************************************/
   /* in�io - JavaScript */
@@ -132,7 +137,6 @@
   echo("    var window_handle;\n");
   echo("    var t;\n");
   echo("    this.name = 'principal';\n\n");
-  
   echo("    var cod_comp;");
   echo("    var totalExercicios = ".count($lista_exercicios).";\n\n");
   
@@ -143,6 +147,7 @@
   {
   	echo("      lay_novo_exercicio = getLayer('layer_novo_exercicio');\n");
   	echo("      cod_comp = getLayer(\"comp\");\n");
+    echo("      lay_aplicar = getLayer(\"layer_aplicar\");\n");
   }
   echo("      startList();\n");
   echo("      ExibeMsgPagina(".$pagAtual.");\n");
@@ -268,6 +273,15 @@
   	echo("      }\n");
   	echo("      return true;\n");
   	echo("    }\n\n");
+  	
+  	echo("    function  ExibirAgendamento(value)\n");
+    echo("    {\n");
+    echo("       if(value == \"I\")\n");
+    echo("         document.getElementById(\"div_disp\").style.display = \"none\";\n");
+    echo("       if(value == \"A\")\n");
+    echo("         document.getElementById(\"div_disp\").style.display = \"\";\n");
+    echo("    }\n\n");
+  	
   
   	echo("    function EscondeLayers()\n");
   	echo("    {\n");
@@ -294,6 +308,172 @@
     echo("      document.getElementById(\"nome\").focus();\n");
     echo("    }\n");
     
+    echo("    function VerificaEnv(){\n");
+    echo("    j=0;
+    		  check = document.getElementsByName('chkExercicio');  
+              for(i=0;i<check.length;i++){
+                    if(check[i].checked){
+  					  j++;
+  					  getCodExercicio=check[i].id.split('_');
+  					}
+  				}
+    \n");
+    echo("      if(j == 1){\n");
+    echo("      	MostraLayer(lay_aplicar,0);\n");
+    echo("      }else{\n");
+    echo("        alert('selecione apenas um exercicio');\n");
+    echo("		}");
+    echo("    }\n");
+    
+    echo("    function EnvAplica(){\n");
+    echo("    j=0;
+    		  check = document.getElementsByName('chkExercicio');  
+              for(i=0;i<check.length;i++){
+                    if(check[i].checked){
+  					  getCodExercicio=check[i].id.split('_');
+					  xajax_VerificaNotas(getCodExercicio[1],".$cod_curso.");
+				    }
+  				}
+    \n");
+    echo("    }\n");
+  
+  	echo("    function ExercicioAplicado(avaliacao,cod_avaliacao)\n");
+  	echo("    {\n");
+  	echo("        window.location='exercicios.php?cod_curso=".$cod_curso."&visualizar=E';\n");
+  	echo("    }\n\n");
+    
+    echo("    function verifica_notas(flag,codex)\n");
+    echo("    {\n");
+  	echo("      if(flag == '0'){\n");
+  	//188 - Existem quest�es com valores iguais a 0, Deseja continuar?
+  	echo("        if(confirm('".RetornaFraseDaLista($lista_frases, 188)."'))\n");
+  	echo("          AplicarExercicio(codex);\n");
+  	echo("        else\n");
+  	echo("          EscondeLayer(lay_aplicar);\n");
+  	echo("      } else if (flag == '1'){\n");
+  	echo("        AplicarExercicio(codex);\n");
+  	echo("			} else if (flag == '2'){\n ");
+  	/* Frase #193 - Nao e possivel aplicar um exercicio vazio. Adicione ao menos uma questao. */
+  	echo("        alert('".RetornaFraseDaLista($lista_frases, 193)."');");
+  	echo("      }\n");
+  	echo("    }\n");
+    
+  	  echo("    function AplicarExercicio(codex)\n");
+  echo("    {\n");
+  echo("        if(document.getElementById(\"disponibilizacaoa\").checked)\n");
+  echo("        {\n");
+  echo("	      if(verifica_intervalos()){\n");
+  echo("          	dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
+  echo("          	hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("          	min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("          	horario_disp = hr_disp+':'+min_disp+':00';\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            return 0;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        else\n");
+  echo("        {\n");
+  echo("            dt_disp = \"".UnixTime2Data($data_atual)."\";\n");
+  echo("            horario_disp = \"".UnixTime2Hora($data_atual)."\";\n");
+  echo("        }\n");
+  echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
+  echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
+  echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
+  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
+  echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
+  echo("        horario_entrega = hr_entrega+':'+min_entrega+':00';\n");
+  echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
+  echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
+  echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
+  echo("        if(document.getElementById(\"disponibilizacaoi\").checked)\n");
+  echo("        {\n");
+  echo("          if (ComparaDataHora(dt_disponibilizacao,RetornaHorarioDisponibilizacao(),limite_entrega,RetornaHorarioEntrega()) > 0 )\n");
+  echo("          {\n");
+  /* Frase #48 - O limite de entrega deve ser posterior a disponibilizacao do exercicio. */
+  echo("            alert('".RetornaFraseDaLista($lista_frases, 48)."');\n");
+  echo("            return(false);\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",codex,".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao,0);");
+  echo("    }\n\n");
+  	
+  echo("    function RetornaDataAtual()\n");
+  echo("    {\n");
+  echo("       var input;\n");
+  echo("       input = document.createElement(\"input\");\n");
+  echo("       input.setAttribute(\"value\",\"".UnixTime2Data($data_atual)."\")\n");
+  echo("       return input;\n");
+  echo("    }\n\n");
+  
+  echo("    function RetornaHoraAtual()\n");
+  echo("    {\n");
+  echo("       var input;\n");
+  echo("       input = document.createElement(\"input\");\n");
+  echo("       input.setAttribute(\"value\",\"".UnixTime2Hora($data_atual)."\")\n");
+  echo("       return input;\n");
+  echo("    }\n\n");
+  
+  echo("function RetornaHorarioEntrega()\n");
+  echo("     {\n");
+  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
+  echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
+  echo("        horario_entrega = hr_entrega+':'+min_entrega;\n");
+  echo("        var docHorario_entrega = document.createElement('input'); \n");
+  echo("        docHorario_entrega.setAttribute('value',horario_entrega);\n");
+  echo("		return(docHorario_entrega);\n");
+  echo("     }\n");
+  
+  echo("function RetornaHorarioDisponibilizacao()\n");
+  echo("     {\n");
+  echo("        hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("        min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("        horario_disp = hr_disp+':'+min_disp;\n");
+  echo("        var docHorario_disp = document.createElement('input'); \n");
+  echo("        docHorario_disp.setAttribute('value',horario_disp);\n");
+  echo("        return(docHorario_disp);\n");
+  echo("     }\n");
+  
+  	
+  echo("      function verifica_intervalos()\n");
+  echo("      {\n");
+  echo("	    var dt_disponibilizacao,limite_entrega,hora_disponibilizacao,hora_limite_entrega,data_atual,hora_atual;\n");
+  echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
+  echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
+  echo("        data_atual = RetornaDataAtual();\n");
+  echo("		hora_limite_entrega = RetornaHorarioEntrega();\n");
+  echo("		hora_disponibilizacao = RetornaHorarioDisponibilizacao();\n");
+  echo("        hora_atual = RetornaHoraAtual();\n");
+  echo("        if (!DataValidaAux(dt_disponibilizacao) || !DataValidaAux(limite_entrega))\n");
+  echo("          return (false);\n");
+  echo("        if (!hora_valida(hora_disponibilizacao))\n");
+  echo("        {\n");
+  /* Frase #45 - Hora de disponibilizacao invalida. Por favor volte e corrija. */
+  echo("          alert('".RetornaFraseDaLista($lista_frases, 45)."');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (!hora_valida(hora_limite_entrega))\n");
+  echo("        {\n");
+ /* Frase #46 - Hora de limite de entrega invalida. Por favor volte e corrija. */
+  echo("          alert('".RetornaFraseDaLista($lista_frases, 46)."');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (ComparaDataHora(data_atual,hora_atual,dt_disponibilizacao,hora_disponibilizacao) > 0 )\n");
+  echo("        {\n");
+  /* Frase #47 - A disponibilizacao do exercicio deve ser posterior a data atual. */
+  echo("          alert('".RetornaFraseDaLista($lista_frases, 47)."');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        if (ComparaDataHora(dt_disponibilizacao,hora_disponibilizacao,limite_entrega,hora_limite_entrega) > 0 )\n");
+  echo("        {\n");
+  /* Frase #48 - O limite de entrega deve ser posterior a disponibilizacao do exercicio. */
+  echo("          alert('".RetornaFraseDaLista($lista_frases, 48)."');\n");
+  echo("          return(false);\n");
+  echo("        }\n");
+  echo("        return(true);\n");
+  echo("      }\n");
+  
+  
     echo("    function AtualizaCampos(id,data,dt_disp,dt_entrega,situacao)\n");
     echo("    {\n");
     echo("      document.getElementById('data_'+id).innerHTML = data;\n");
@@ -336,15 +516,27 @@
     echo("          }\n");
     echo("        }\n");
     echo("      }\n");
+    echo("      if(j==1){\n");
+    echo("        document.getElementById('mAplicar_Selec').className=\"menuUp02\";\n");
+	echo("        document.getElementById('mAplicar_Selec').onclick=function(){ MostraLayer(lay_aplicar,0); };\n");
+    echo("      }else{\n");
+    echo("        document.getElementById('mAplicar_Selec').className=\"menuUp\";\n");
+    echo("        document.getElementById('mAplicar_Selec').onclick=function(){  };\n");
+    echo("      }\n");
     echo("      if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
     echo("      else Cabecalho.checked=false;\n");
     echo("      if(j > 0){\n");
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
     echo("        document.getElementById('mExcluir_Selec').onclick=function(){ TratarSelecionados('L'); };\n");
+    echo("        document.getElementById('mAplicar_Selec').className=\"menuUp02\";\n");
+    echo("        document.getElementById('mAplicar_Selec').onclick=function(){ MostraLayer(lay_aplicar,0); };\n");
+    
     echo("        if(flag)\n");
     echo("        {\n");
     echo("          document.getElementById('mCancelarAplic_Selec').className=\"menuUp02\";\n");
     echo("          document.getElementById('mCancelarAplic_Selec').onclick=function(){ CancelarAplicacao(); };\n");
+    echo("          document.getElementById('mAplicar_Selec').className=\"menuUp\";\n");
+	echo("          document.getElementById('mAplicar_Selec').onclick=function(){ };\n");
     echo("        }\n");
     echo("        else\n");
     echo("        {\n");
@@ -354,6 +546,8 @@
     echo("      }else{\n");
     echo("        document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
     echo("        document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+    echo("        document.getElementById('mAplicar_Selec').className=\"menuUp\";\n");
+    echo("        document.getElementById('mAplicar_Selec').onclick=function(){  };\n");
     echo("        document.getElementById('mCancelarAplic_Selec').className=\"menuUp\";\n");
     echo("        document.getElementById('mCancelarAplic_Selec').onclick=function(){ };\n");
     echo("      }\n");
@@ -746,6 +940,7 @@
 	  echo("                <ul>\n");
       /* Frase #131 - Apagar selecionados */
       echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 131)."</span></li>\n");
+      echo("				  <li id=\"mAplicar_Selec\" class=\"menuUp\"><span>Aplicar</span></li>\n");
       /* Frase #132 - Cancelar aplicacao dos selecionados */
       echo("                  <li id=\"mCancelarAplic_Selec\" class=\"menuUp\"><span id=\"cancelarAplicSelec\">".RetornaFraseDaLista($lista_frases, 132)."</span></li>\n");
       echo("                </ul>\n");
@@ -842,6 +1037,89 @@
   	echo("        </form>\n");
   	echo("      </div>\n");
   	echo("    </div>\n");
+  	
+  echo("    <div id=\"layer_aplicar\" class=popup>\n");
+  echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_aplicar);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <div class=ulPopup>\n");    
+  /* Frase #75 - Associar a avaliacao */
+  echo("          ".RetornaFraseDaLista($lista_frases, 75).": <br />");
+  /* Frase #76 - Sim */
+  echo("		  <input type=\"radio\" name=\"avaliacao\" id=\"avaliacaos\" value=\"S\">".RetornaFraseDaLista($lista_frases, 76)."\n");
+  /* Frase #77 - Nao */
+  echo("		  <input type=\"radio\" name=\"avaliacao\" id=\"avaliacaon\" value=\"N\">".RetornaFraseDaLista($lista_frases, 77)."\n");
+  echo("		  <br /><br />\n");
+  /* Frase #78 - Disponibilizar gabarito com a correcao */
+  echo("          ".RetornaFraseDaLista($lista_frases, 78).": <br />");
+  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabaritos\" value=\"S\">".RetornaFraseDaLista($lista_frases, 76)."\n");
+  echo("		    <input type=\"radio\" name=\"disp_gabarito\" id=\"disp_gabariton\" value=\"N\">".RetornaFraseDaLista($lista_frases, 77)."\n");
+  echo("		  <br /><br />\n");
+  /* Frase #79 - Tipo de aplicacao */
+  echo("          ".RetornaFraseDaLista($lista_frases, 79).": <br />");
+  /* Frase #80 - Individual */
+  echo("		    <input type=\"radio\" name=\"tp_aplicacao\" id=\"tp_aplicacaoi\" value=\"I\">".RetornaFraseDaLista($lista_frases, 80)."\n");
+  /* Frase #81 - Em Grupo */
+  echo("		    <input type=\"radio\" name=\"tp_aplicacao\" id=\"tp_aplicacaog\" value=\"G\">".RetornaFraseDaLista($lista_frases, 81)."\n");
+  echo("		  <br /><br />\n");
+  /* Frase #82 - Disponibilizacao */
+  echo("          ".RetornaFraseDaLista($lista_frases, 82).": <br />");
+  /* Frase #83 - Imediata */
+  echo("		    <input type=\"radio\" onChange=\"ExibirAgendamento(this.value);\" name=\"disponibilizacao\" id=\"disponibilizacaoi\" value=\"I\">".RetornaFraseDaLista($lista_frases, 83)."\n");
+  /* Frase #84 - Agendar */
+  echo("		    <input type=\"radio\" onChange=\"ExibirAgendamento(this.value);\" name=\"disponibilizacao\" id=\"disponibilizacaoa\" value=\"A\">".RetornaFraseDaLista($lista_frases, 84)."\n");
+  echo("		  <br /><br />\n");
+  echo("          <div id=\"div_disp\" style=\"display:none;\">\n");
+  /* Frase #69 - Data */
+  echo("            ".RetornaFraseDaLista($lista_frases, 69).": <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data_atual)."\" id=\"dt_disponibilizacao\" name=\"dt_disponibilizacao\" />\n");
+  echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('dt_disponibilizacao'),'dd/mm/yyyy',this);\" />\n");
+  /* Frase #85 - Horario */
+  $horario = explode(":",UnixTime2Hora($data_atual));
+  echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <select id=\"hora_disponibilizacao\" class=\"input\">\n");
+  
+  for($i=0;$i<24;$i++){
+  	if($i<10) $i="0$i";
+	if($i == $horario[0]) $selected = "selected=selected";
+	else $selected = "";
+  	echo("<option ".$selected." value=".$i.">".$i."</option>\n");
+  }
+  echo("</select><b> : </b><select id=\"minuto_disponibilizacao\" class=\"input\">\n");
+  for($j=0;$j<60;$j++){
+  	if($j<10) $j="0$j";
+	if($j == $horario[1]) $selected = "selected=selected";
+	else $selected = "";
+  	echo("<option ".$selected." value=".$j.">".$j."</option>\n");
+  }
+  echo("</select>\n");
+  echo("          </div><br />\n");
+  /* Frase #86 - Limite de entrega: */
+  echo("          ".RetornaFraseDaLista($lista_frases, 86).": <br /><br />");
+  echo("          <div>\n");
+  /* Frase #69 - Data */
+  echo("            ".RetornaFraseDaLista($lista_frases, 69).": <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" value=\"".UnixTime2Data($data_atual)."\" id=\"limite_entrega\" name=\"limite_entrega\" />\n");
+  echo("            <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('limite_entrega'),'dd/mm/yyyy',this);\" />\n");
+  /* Frase #85 - Horario */
+  echo("            <br /><br />".RetornaFraseDaLista($lista_frases, 85).": <select id=\"hora_limite_entrega\" class=\"input\">\n");
+  for($i=0;$i<24;$i++){
+  	if($i<10) $i="0$i";
+  	echo("<option value=".$i.">".$i."</option>\n");
+  }
+  echo("</select><b> : </b><select id=\"minuto_limite_entrega\" class=\"input\">\n");
+  for($j=0;$j<60;$j++){
+  	if($j<10) $j="0$j";
+  	echo("<option  value=".$j.">".$j."</option>\n");
+  }
+  echo("</select>\n");
+  echo("          </div><br /><br />\n");
+  /* 18 - Ok (gen) */
+  echo("            <input type=\"button\" class=\"input\" onClick=\"EnvAplica();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+
+  /* 2 - Cancelar (gen) */
+  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onClick=\"EscondeLayer(lay_aplicar);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("        </div>\n");
+  echo("      </div>\n");
+  echo("    </div>\n\n");
+  	
+  	
   }
 
   echo("  </body>\n");

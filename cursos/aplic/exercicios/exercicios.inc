@@ -1211,7 +1211,7 @@ function RetornaFraseGeralDinamic($variavel){
 }
 
 /* *********************************************************************
-   EditarAlternativaObjDinamic - Salva no banco as alterações feitas na alternativa de uma questao objetiva
+   EditarAlternativaObjDinamic - Salva no banco as alteraï¿½ï¿½es feitas na alternativa de uma questao objetiva
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
 			$cod_alternativa - codifo da alternativa
@@ -2074,11 +2074,10 @@ function ExluirQuestaoDoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questa
 function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,$hr_disp,$dt_entrega,$hr_entrega,$tp_aplicacao,$disp_gabarito,$avaliacao)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
-    
     $unixTimeDisp = DataHora2UnixTime($dt_disp." ".$hr_disp);
     $unixTimeEntrega = DataHora2UnixTime($dt_entrega." ".$hr_entrega);
     $cod_avaliacao = 0;
-    
+
     $sock=Conectar($cod_curso);
     
     if($avaliacao == "S")
@@ -2102,8 +2101,9 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
   
     Desconectar($sock);
     
-    $objResponse->addScript("ExercicioAplicado('".$avaliacao."',".$cod_avaliacao.");");
-    
+   	$objResponse->addScript("ExercicioAplicado('".$avaliacao."',".$cod_avaliacao.");"); 
+
+
     return $objResponse->getXML();
 }
 
@@ -2227,7 +2227,7 @@ function AtualizaNotaDinamicDiss($cod_questao, $cod_curso, $cod_resolucao, $nota
 		$feedback = "Nota alterada com sucesso";
     }
     else
-		$feedback = "Nota não permitida";
+		$feedback = "Nota nï¿½o permitida";
     $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
     return $objResponse->getXML();
 }
@@ -2435,7 +2435,7 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
 */
 function VerificaNotas($cod_exercicio,$cod_curso){
   $objResponse = new xajaxResponse('ISO-8859-1');
-  
+
 	$valor = 1;
   
 	$sock=Conectar($cod_curso);
@@ -2455,7 +2455,8 @@ function VerificaNotas($cod_exercicio,$cod_curso){
  		$valor = 2;
  	}
   
-  $objResponse->addScript("verifica_notas(".$valor.");");
+  $objResponse->addScript("verifica_notas(".$valor.",".$cod_exercicio.");");
+
   return $objResponse->getXML();
 	
 }
@@ -2464,7 +2465,7 @@ function VerificaNotas($cod_exercicio,$cod_curso){
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
 			$cod_curso - codigo do curso
-   Saida: XML da função Ajax
+   Saida: XML da funï¿½ï¿½o Ajax
 */
 function AtualizaIconesDinamic($cod_questao,$cod_curso){
 	$sock=Conectar($cod_curso);
