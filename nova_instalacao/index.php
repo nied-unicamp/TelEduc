@@ -8,6 +8,10 @@ include 'instalacao.inc';
 Pré-Req: php-mysql
 Executar: Informar Nome do Banco, Usuário, Senha e Host tentar criar o banco se não existir e importar o conteúdo para o BD.
 Criar o teleduc.conf com as informações acima. Se não for possível pedir ao usuário e dar o conteúdo. */
+if (!isset($_POST['etapa'])){
+	$etapa = 1;
+}
+
 
 if (!VerificaRegisterGlobals()){
 	die("É necessário habilitar o register_globals.");
@@ -37,8 +41,8 @@ if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
 
 InicializaBD($sock);
 
-if (!VerificaExistenciaArq("../teleduc.conf")){
-	$conteudo = CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
+if (!VerificaExistenciaArq("../cursos/aplic/bibliotecas/teleduc.inc")){
+	$conteudo = CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
 	if ($conteudo !== true){
 		die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.<br /> Com o conteudo: <br /><br />".str_replace("\n", "<br/>",$conteudo));
 	}

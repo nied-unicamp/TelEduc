@@ -66,15 +66,21 @@ function InicializaBD($sock){
    			$dbport - Porta
    Saida: true ou o conteudo
 */
-function CriaTelEducConf($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport){
-	$fp = fopen('../teleduc.conf', 'w');
+function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport){
+	$fp = fopen('../cursos/aplic/bibliotecas/teleduc.inc', 'w');
 	
-	$conf = "dbnamebase=".$dbname."\n";
-	$conf .= "dbnamecurso=".$dbnamecurso."\n";
-	$conf .= "dbuser=".$dbuser."\n";
-	$conf .= "dbpassword=".$dbpwd."\n";
-	$conf .= "dbhost=".$dbhost."\n";
-	$conf .= "dbport=".$dbport."\n";
+	$conf = '<?php ';
+	
+	$conf .= '$_SESSION[\'dbnamebase\']=\''.$dbname.'\';\n';
+	$conf .= '$_SESSION[\'dbnamecurso\']=\''.$dbnamecurso.'\';\n';
+	$conf .= '$_SESSION[\'dbuser\']=\''.$dbuser.'\';\n';
+	$conf .= '$_SESSION[\'dbpassword\']=\''.$dbpwd.'\';\n';
+	$conf .= '$_SESSION[\'dbhost\']=\''.$dbhost.'\';\n';
+	$conf .= '$_SESSION[\'dbport\']=\''.$dbport.'\';\n';
+	
+	$conf .= '?>';
+	
+	echo($conf);
 	
 	if (!fwrite($fp, $conf)){
 		fclose($fp);
