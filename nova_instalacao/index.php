@@ -22,11 +22,11 @@ if (!VerificaPHPMysql()){
 }
 
 /* USER INPUT */
-$dbname = "TelEducRemoto";
-$dbnamecurso = "TelEducRemotoCurso_";
+$dbname = "TelEducNova";
+$dbnamecurso = "TelEducNova";
 $dbuser = "root";
-$dbpwd = "Mytal80n";
-$dbhost = "talia.nied.unicamp.br";
+$dbpwd = "Myqui80n";
+$dbhost = "localhost";
 $dbport = "3306";
 
 if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
@@ -44,7 +44,8 @@ InicializaBD($sock);
 if (!VerificaExistenciaArq("../cursos/aplic/bibliotecas/teleduc.inc")){
 	$conteudo = CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
 	if ($conteudo !== true){
-		die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.<br /> Com o conteudo: <br /><br />".str_replace("\n", "<br/>",$conteudo));
+		die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.<br /> Com o conteudo: <br /><br />".str_replace(";", ";<br/>",$conteudo));
+		var_dump($conteudo);
 	}
 }
 

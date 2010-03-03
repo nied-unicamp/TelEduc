@@ -71,12 +71,12 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	
 	$conf = '<?php ';
 	
-	$conf .= '$_SESSION[\'dbnamebase\']=\''.$dbname.'\';\n';
-	$conf .= '$_SESSION[\'dbnamecurso\']=\''.$dbnamecurso.'\';\n';
-	$conf .= '$_SESSION[\'dbuser\']=\''.$dbuser.'\';\n';
-	$conf .= '$_SESSION[\'dbpassword\']=\''.$dbpwd.'\';\n';
-	$conf .= '$_SESSION[\'dbhost\']=\''.$dbhost.'\';\n';
-	$conf .= '$_SESSION[\'dbport\']=\''.$dbport.'\';\n';
+	$conf .= '$_SESSION[\'dbnamebase\']=\''.$dbname.'\';';
+	$conf .= '$_SESSION[\'dbnamecurso\']=\''.$dbnamecurso.'\';';
+	$conf .= '$_SESSION[\'dbuser\']=\''.$dbuser.'\';';
+	$conf .= '$_SESSION[\'dbpassword\']=\''.$dbpwd.'\';';
+	$conf .= '$_SESSION[\'dbhost\']=\''.$dbhost.'\';';
+	$conf .= '$_SESSION[\'dbport\']=\''.$dbport.'\';';
 	
 	$conf .= '?>';
 	
