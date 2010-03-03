@@ -172,7 +172,11 @@ function ImprimeErroSemTela($tipo_erro, $erro, $prefixo)
 }
 
 /* ************************************************************************
-   LeConfig - Le arquivo de configura�o a partir do arquivo teleduc.conf
+   LeConfig - DEPRECIADA: futuras versoes do teleduc vao extrair as informacoes
+   			  do teleduc.inc localizado na pasta de bibliotecas, sem a necessidade
+   			  do teleduc.conf.
+   			  
+   			  Le arquivo de configura�o a partir do arquivo teleduc.conf
               Todo diretorio deve conter o arquivo ".auth", com o caminho
               para teleduc.con
    Sem entrada ou saida. Afeta globais de uso de acesso_sql.inc
