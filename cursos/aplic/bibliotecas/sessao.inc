@@ -65,8 +65,6 @@ function RetornaSessionIDInput()
                Todas as demais devem ser usadas por passagem de argumento
 */
 
-
-session_start();
 /*if(strcmp(session_name(), "teleduc4.0") != 0){
   session_name("teleduc4.0");
 }*/

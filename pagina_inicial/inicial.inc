@@ -40,8 +40,6 @@
   ARQUIVO : pagina_inicial/inicial.inc
   ========================================================== */
 
-session_start();
-
 
 /* **********************************************************************
    RetornaCadastroUsuario - Retorna o dados cadastrais do usu�rio

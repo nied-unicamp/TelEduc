@@ -46,6 +46,16 @@ if (!isset($bibliotecas))
   $bibliotecas="../bibliotecas/";
 */
 
+
+session_start();
+
+/* De agora em diante, usaremos o teleduc.inc, 
+ * e para não quebrar o ramo desenvolvimento,
+ * vamos manter a compatibilidade reversa.
+ */
+if (file_exists("teleduc.inc"))
+	include("teleduc.inc");
+
 /* Funï¿½ï¿½es de conversï¿½o de texto */
 include ("conversor_texto.inc");
 
