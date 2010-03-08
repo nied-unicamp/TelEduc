@@ -1265,28 +1265,33 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
     $senha = GeraSenha();
     $senha_crypt = crypt($senha,"AA");
 
-    /* 138 - Login e senha do TelEduc */
+    // 138 - Login e senha do TelEduc
     $assunto=RetornaFraseDaLista($lista_frases_mensagem,138);
-    /* 95 - Prezado(a) */
+    // 95 - Prezado(a)
     $mensagem =RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario['nome']."\n\n";
-    /* 281 - Segue abaixo o seu login e senha conforme solicitado para o ambiente Teleduc */
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,281)." \n\n";
-    /* 67 - Seu login ï¿½ */
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
-    /* 68 - e sua senha ï¿½ */
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n";
-    /* 139 - Atenciosamente, */
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,139)."\n".$usuario_adm['nome']."\n\n"; # Administraï¿½ï¿½o TelEduc
+    // 140 - Segue abaixo o seu login e senha conforme solicitado para o curso
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
+    $mensagem.="<br />";
+    // 67 - Seu login é 
+    $mensagem.="<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
+    // 68 - e sua senha é 
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
+    $mensagem.="<br />";
+    // 139 - Atenciosamente,
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,139)."\n";
+    $mensagem.="<br />";
+    $mensagem.=$usuario_adm['nome']."\n\n"; 
+    // Administração TelEduc
 
 
-    /* 115 - NAO_RESPONDA */
+    // 115 - NAO_RESPONDA
     $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
 
     $destinatario = $dados_usuario['email'];
 
     AtualizaSenhaUsuario($sock, $dados_usuario['cod_usuario'], $senha_crypt);
     $mensagem_envio = MontaMsg($host, $raiz_www, '', $mensagem, $assunto);
-    MandaMsg($remetente, $destinatario, $assunto, $mensagem);
+    MandaMsg($remetente, $destinatario, $assunto, $mensagem_envio);
   }
   else
   {
