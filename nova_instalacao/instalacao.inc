@@ -6,7 +6,7 @@
    Saida: booleano
 */
 function VerificaPHPMysql(){
-	return function_exists(mysql_connect);
+	return function_exists("mysql_connect");
 }
 
 /* ************************************************************************
@@ -47,7 +47,7 @@ function InicializaBD($sock){
 	$arq = "base_geral.table";
 	$handle = fopen ($arq, "r");
 	$conteudo = fread ($handle, filesize ($arq));
-	fclose ($arq);
+	fclose ($handle);
 
 	$array = explode(";\n", $conteudo);
 
