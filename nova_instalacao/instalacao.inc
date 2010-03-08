@@ -126,7 +126,7 @@ function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
    			$sendmail - Caminho do sendmail
    Saida: booleano
 */
-function RegistraConfigurações($sock, $host, $www, $arquivos, $sendmail){
+function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
 	$sql = "REPLACE Config values ('host', '".$host."')";
 	mysql_query($sql, $sock);
 	$sql2 = "REPLACE Diretorio values ('raiz_www', '".$www."')";

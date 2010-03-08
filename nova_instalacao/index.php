@@ -25,7 +25,7 @@ if (!VerificaPHPMysql()){
 $dbname = "TelEducNova";
 $dbnamecurso = "TelEducNova";
 $dbuser = "root";
-$dbpwd = "Myqui80n";
+$dbpwd = "root";
 $dbhost = "localhost";
 $dbport = "3306";
 
@@ -57,12 +57,12 @@ Executar: Escolher pasta para arquivos (?), adivinhar host e caminho pela url.
 Configurar os demais diretorios, (rever necessidade de alguns deles). */
 
 /* USER INPUT - Pré-Preenchidas */
-$host = "quimera.nied.unicamp.br";
-$www = "/~bruno/teleduc4";
-$arquivos = "/home/bruno/arquivos";
+$host = "localhost";
+$www = "/teleduc4";
+$arquivos = "/Users/brunobuccolo/Sites/teleduc4/arquivos";
 $sendmail = "/usr/bin/sendmail";
 
-RegistraConfigurações($sock, $host, $www, $arquivos, $sendmail);
+RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail);
 
 /*
 3a Etapa:
