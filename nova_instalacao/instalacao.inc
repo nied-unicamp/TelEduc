@@ -77,6 +77,13 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	$conf .= '$_SESSION[\'dbpassword\']=\''.$dbpwd.'\';';
 	$conf .= '$_SESSION[\'dbhost\']=\''.$dbhost.'\';';
 	$conf .= '$_SESSION[\'dbport\']=\''.$dbport.'\';';
+	$conf .= '$_SESSION[\'dbtmpnamecurso\']=\''.$dbname.'tmp\';';
+	$conf .= '$_SESSION[\'dbtmpuser\']=\''.$dbuser.'\';';
+	$conf .= '$_SESSION[\'dbtmppassword\']=\''.$dbpwd.'\';';
+	$conf .= '$_SESSION[\'dbtmphost\']=\''.$dbhost.'\';';
+	$conf .= '$_SESSION[\'dbtmpport\']=\''.$dbport.'\';';
+	
+	
 	
 	$conf .= '?>';
 	
