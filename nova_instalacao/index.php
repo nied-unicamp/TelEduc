@@ -22,10 +22,10 @@ if (!VerificaPHPMysql()){
 }
 
 /* USER INPUT */
-$dbname = "TelEducNova";
-$dbnamecurso = "TelEducNova";
+$dbname = "TelEducDiego";
+$dbnamecurso = "TelEducDiego";
 $dbuser = "root";
-$dbpwd = "root";
+$dbpwd = "Myhel80n";
 $dbhost = "localhost";
 $dbport = "3306";
 
@@ -44,8 +44,9 @@ InicializaBD($sock);
 if (!VerificaExistenciaArq("../cursos/aplic/bibliotecas/teleduc.inc")){
 	$conteudo = CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
 	if ($conteudo !== true){
-		die("Não foi possível criar o arquivo teleduc.conf, crie manualmente.<br /> Com o conteudo: <br /><br />".str_replace(";", ";<br/>",$conteudo));
-		var_dump($conteudo);
+		echo("Não foi possível criar o arquivo teleduc.inc, crie manualmente.<br /> Com o conteudo: <br /><br />");
+		echo("<textarea cols='70' rows='15'>".str_replace(";",";\n",$conteudo)."</textarea>");
+		exit();
 	}
 }
 
@@ -58,9 +59,9 @@ Configurar os demais diretorios, (rever necessidade de alguns deles). */
 
 /* USER INPUT - Pré-Preenchidas */
 $host = "localhost";
-$www = "/teleduc4";
-$arquivos = "/Users/brunobuccolo/Sites/teleduc4/arquivos";
-$sendmail = "/usr/bin/sendmail";
+$www = "/~diego/teleduc4";
+$arquivos = "/home/diego/public_html/teleduc4/arquivos";
+$sendmail = "/usr/sbin/sendmail";
 
 RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail);
 

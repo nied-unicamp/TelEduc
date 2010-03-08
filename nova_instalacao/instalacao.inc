@@ -70,7 +70,6 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	$fp = fopen('../cursos/aplic/bibliotecas/teleduc.inc', 'w');
 	
 	$conf = '<?php ';
-	
 	$conf .= '$_SESSION[\'dbnamebase\']=\''.$dbname.'\';';
 	$conf .= '$_SESSION[\'dbnamecurso\']=\''.$dbnamecurso.'\';';
 	$conf .= '$_SESSION[\'dbuser\']=\''.$dbuser.'\';';
@@ -82,12 +81,7 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	$conf .= '$_SESSION[\'dbtmppassword\']=\''.$dbpwd.'\';';
 	$conf .= '$_SESSION[\'dbtmphost\']=\''.$dbhost.'\';';
 	$conf .= '$_SESSION[\'dbtmpport\']=\''.$dbport.'\';';
-	
-	
-	
 	$conf .= '?>';
-	
-	echo($conf);
 	
 	if (!fwrite($fp, $conf)){
 		fclose($fp);
