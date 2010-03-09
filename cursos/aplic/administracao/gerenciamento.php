@@ -487,7 +487,7 @@
   echo("	var td_data=document.createElement('td');\n");
   echo("	td_data.innerHTML=dtins;\n");
   echo("	var td_dados=document.createElement('td');\n");
-  echo("		td_dados.innerHTML=\"<a href=gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=".$cod_usuario_l."\>".RetornaFraseDaLista($lista_frases,79)."</a>\";\n");
+  echo("		td_dados.innerHTML=\"<a href=gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=\"+cod+\"\>".RetornaFraseDaLista($lista_frases,79)."</a>\";\n");
   echo("	var tr_ger=document.createElement('tr');\n");
   echo("	tr_ger.setAttribute('name','germen');\n"); 
   echo("	tr_ger.id=\"ger\";\n");
@@ -797,9 +797,22 @@
    
   $lista_usuarios = RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ordem);
 
+  /* Sistema de Paginacao */
+  
   $num=count($lista_usuarios);
+  /* Numero de mensagens exibidas por pagina.*/
+  $msg_por_pag=10;
+  /* Calcula o numero de paginas geradas.*/
+  $total_pag = ceil($num / $msg_por_pag);
 
-
+   /* Se a pagina atual nao estiver setada entao, por padrao, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a pagina eh maior que o total de paginas, se for */
+  /* atribui o valor de $total_pag  a $pag_atual.                                    */
+   if ((!isset($pag_atual))or($pag_atual=='')or($pag_atual==0))
+     $pag_atual =  1;
+   else $pag_atual = min($pag_atual, $total_pag);
+  
+  
 
   echo("            <tr>\n");
   echo("              <td>\n");
@@ -823,7 +836,7 @@
   echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"check_all\" id=\"check_all\" onclick=\"MarcaOuDesmarcaTodos();\"></td>\n");
   // 119 - Nome
   echo("                    <td align=\"left\"><b>".RetornaFraseDaLista($lista_frases,119)."</b></td>\n");
-  // 132 - Data de inscri��o
+  // 132 - Data de inscricao
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,132)."</b></td>\n");
   // 79 - Dados
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,79)."</b></td>\n");
@@ -832,7 +845,7 @@
     echo("                    <td align=\"center\"><b>".RetornaFraseDaLista($lista_frases, 211)."</b></td>\n");
   echo("                  </tr>\n");
 
-  /* C�digo de montagem do conte�do a partir daqui */
+  /* Codigo de montagem do conteudo a partir daqui */
 
   if ($num==0)
   {
@@ -846,10 +859,9 @@
   }
   else
   {
-  	$cont=10;
     foreach($lista_usuarios as $cod_usuario_l => $linha)
     { 
-     if ($cont>=1){
+     if ($msg_por_pag>=1){
           echo("                  <tr name=\"germen\" id=\"ger\" style=\"display: table-row;\">\n");
           echo("                    <td width=\"1%\"><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
           echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
@@ -867,7 +879,7 @@
 	  }
 	echo("                  </tr>\n");
      }
-    $cont--; 
+    $msg_por_pag--;
     }
    echo("                </table>\n");
   }
