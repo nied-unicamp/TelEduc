@@ -335,3 +335,17 @@ td>#nav3nivel {margin-bottom:-25px;}
 /* make the third level visible when you hover over second level list OR link */
 
 .menu_dd ul :hover ul :hover ul{ visibility:visible;}
+
+
+/* -----------------------------------------------
+        Destaque da paginacao
+-------------------------------------------------*/
+
+.paginaAtual a{
+	color:#696969;
+}
+
+.paginaAtual a:hover{
+	color:#696969;
+	text-decoration:none;
+}

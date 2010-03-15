@@ -472,6 +472,12 @@
   echo(" }");
   echo("}\n");
   
+  echo("function MarcaPaginaAtual(pagina){\n");
+  echo("	var indice = document.getElementById(pagina);\n");
+  //echo("	var aTag = indice.getElementsByTagName('a');");
+  echo("	indice.innerHTML = '<a style=\"color:black;\">[&nbsp;   a'+pagina+'&nbsp;]</a>';\n");
+  echo("}\n");
+  
   echo("function CriaElementoTab(nome,dtins,dados,cod,acao,port){\n");
   echo("	var tab=document.getElementsByClassName('tabInterna');\n");
   echo("	var td_check=document.createElement('td');\n");
@@ -582,12 +588,12 @@
   echo("		var td_span=document.createElement('span');\n");
   echo("		ind=(parseInt(i))+(parseInt(intervalo))-1;\n");
   echo("		if (ind==atual){\n");
-  echo("			td_span.className=\"\";\n");
+  echo("			td_span.className=\"paginaAtual\";\n");
   echo("			td_span.onclick=\"none\";\n");
   echo("		}\n");
   echo("		else{\n");
   echo("			td_span.className=\"paginacao\";\n");
-  echo("			td_span.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');};\n");
+  echo("			td_span.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');}\n");
   echo("		}\n");
   echo("		td_span.id=ind;\n");
   echo("		td_span.innerHTML='<a>[&nbsp;'+ind+'&nbsp;]</a>';\n");
@@ -671,12 +677,12 @@
   echo("	var GerSpan=document.createElement('span');\n");
   echo("	GerSpan.id=i;\n");
   echo("	if (atual==i){\n");
-  echo("		GerSpan.className=\"\";\n");
+  echo("		GerSpan.className=\"paginaAtual\";\n");
   echo("		GerSpan.onclick=\"none\";");	
   echo("	}\n");
   echo("	else{\n");
   echo("		GerSpan.className=\"paginacao\";\n");
-  echo("		GerSpan.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');};\n");
+  echo("		GerSpan.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');}\n");
   echo("	}\n");
   echo("	GerSpan.innerHTML='<a>[&nbsp;'+i+'&nbsp;]</a>';\n");
   echo("	coluna.appendChild(GerSpan);\n");
