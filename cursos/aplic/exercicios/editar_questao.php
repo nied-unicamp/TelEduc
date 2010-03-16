@@ -234,8 +234,11 @@
   echo("      tBody = document.getElementById('tBody');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
-  echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');
-  ");
+  echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
+  echo("      if(qtdAlternativas == 0){\n");
+  echo("      	xajax_CriarAlternativaDinamic('".$cod_curso."','".$cod_usuario."','".$questao['cod_questao']."','O');\n");
+  echo("      }\n");
+  
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
 
@@ -964,6 +967,9 @@
     echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.");\n");
     echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
+    echo("		if(qtdAlternativas == 1){\n");
+    echo("			xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",$cod_questao,'O');\n");
+    echo("		}\n");
     echo("    }\n\n");
   }
   else
