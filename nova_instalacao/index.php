@@ -29,7 +29,9 @@ if ($etapa == 0){
 		exit();
 
 	} else {
+		
 		$content .= "<p>A diretiva register_globals está habilitado conforme necessário... OK</p>";
+		
 	}
 
 	/* Erro na Instalacao */
@@ -42,7 +44,9 @@ if ($etapa == 0){
 		exit();
 
 	} else {
+		
 		$content .= "<p>O modulo php-mysql está instalado conforme necessário... OK</p>";
+	
 	}
 	
 	$content_header = "Etapa 0 - Banco de Dados e Arquivo de Configuração:";
@@ -82,8 +86,13 @@ if ($etapa == 0){
 
 		}
 	}
+	
+	$content .= "<p>O banco de dados foi criado com sucesso... OK</p>";
 
 	InicializaBD($sock);
+	
+	$content .= "<p>O banco de dados foi inicializado com sucesso... OK</p>";
+	
 
 	if (!VerificaExistenciaArq("../cursos/aplic/bibliotecas/teleduc.inc")){
 		$conteudo = CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport);
@@ -97,6 +106,8 @@ if ($etapa == 0){
 			exit();
 		}
 	}
+	
+	$content .= "<p>O arquivo de configuração teleduc.inc foi criado com sucesso... OK</p>";
 
 	$content_header = "Etapa 1 - Host e Diretórios:";
 
@@ -123,6 +134,8 @@ if ($etapa == 0){
 	mysql_select_db($dbname, $sock);
 
 	RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail);
+	
+	$content .= "<p>As configurações de diretorio foram salvas com sucesso... OK</p>";
 
 
 	$content .= "<form method='POST' action='index.php'>";
@@ -146,9 +159,11 @@ if ($etapa == 0){
 	mysql_select_db($dbname, $sock);
 
 	RegistraDadosAdmtele($sock, $admtele_nome, $admtele_email, $admtele_senha);
+	
+	$content .= "<p>As configurações do administrador do sistema (admtele) foram salvas com sucesso... OK</p>";
 
 	$content_header = "Etapa 3 - Fim ~!:";
-	$content = "OK, cron";
+	$content = "OK terminou, só falta gravar as coisas no cron";
 
 }
 

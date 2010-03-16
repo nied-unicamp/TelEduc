@@ -235,7 +235,7 @@ CREATE TABLE `Diretorio` (
 
 LOCK TABLES `Diretorio` WRITE;
 
-INSERT INTO `Diretorio` (`item`, `diretorio`) VALUES ('mysqldump','/usr/bin/mysqldump'),('Montagem','/home/teleduc4/montagem'),('Extracao','/home/teleduc4/extraidos'),('raiz_www','/~teleduc4'),('sendmail','/usr/sbin/sendmail'),('ArquivosWeb','/home/teleduc4/public_html/cursos/diretorio'),('Arquivos','/home/teleduc4/arquivos'),('mimetypes','/etc/mime.types'),('tar','/bin/tar');
+INSERT INTO `Diretorio` (`item`, `diretorio`) VALUES ('mysqldump','/usr/bin/mysqldump'),('Montagem','/home/teleduc4/montagem'),('Extracao','/home/teleduc4/extraidos'),('raiz_www','/~teleduc4'),('sendmail','/usr/sbin/sendmail'),('ArquivosWeb','../../diretorio'),('Arquivos','/home/teleduc4/arquivos'),('mimetypes','/etc/mime.types'),('tar','/bin/tar');
 
 UNLOCK TABLES;
 
