@@ -31,7 +31,7 @@ function VerificaRegisterGlobals(){
 function CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
 	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
 	if (!$sock){
-		die("Não foi possível conectar ao MySQL: ".mysql_error());
+		return false;
 	} else {
 		$sql = 'CREATE DATABASE '.$dbname.' DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;';
 		return(mysql_query($sql, $sock));
@@ -105,7 +105,7 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
 	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
 	if (!$sock) {
-    	die("Não foi possível conectar ao MySQL: ".mysql_error());
+    	return false;
 	}
 
 	$db = mysql_select_db($dbname, $sock);

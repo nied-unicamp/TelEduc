@@ -1,0 +1,84 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+body {
+	background: url("../cursos/aplic/imgs/fdoBody.gif") repeat-x;
+	font-family: Arial,Verdana,Trebuchet MS;
+	font-size: 1em;
+}		
+
+#logo {
+	float: left;
+	display: block;
+	margin: 25px 0px 0px 15px;
+}
+
+h1 {
+	float: left;
+    background:none repeat scroll 0 0 #3F6AA0;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: bold;
+	padding: 5px;
+	position: relative;
+	top: 50px;
+	left: 20px;
+	width: 82%;
+}
+
+.container {
+	width: 800px;
+	margin-left: 10px;
+	
+}
+
+.content {
+	height: auto;
+	background-color: #FFF;
+	display: block;
+	float: left;
+	left: 3px;
+	margin:0 auto;
+	position:relative;
+	top:30px;
+	width:791px;
+	padding: 5px;
+	border: 5px solid #DCDCDC;
+}
+
+.content-header {
+	height: auto;
+	background-color: #E3DDC7;
+	display:block;
+	float:left;
+	left:3px;
+	margin:0 auto;
+	position:relative;
+	top:20px;
+	width:801px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.footer {
+	display:block;
+	float:left;
+	position:relative;
+	top:40px;
+}
+
+.footer #signature {
+	font-size: 0.7em;
+	margin-top: 14px;
+	width: 620px;
+	position: relative;
+	left: 70px;
+	
+}
+
+#logo_sampler {
+	float: left;
+}
+
