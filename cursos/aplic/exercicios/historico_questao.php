@@ -67,7 +67,7 @@
   echo("  </head>\n");
   echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" onload=\"this.focus();\">\n");
 
-  /* Página Principal */
+  /* Pï¿½gina Principal */
 
   /* Frase #1 - Exercicios */
   /* Frase #56 - Historico */
@@ -90,7 +90,7 @@
   echo("        <td colspan=3>\n");    
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
-  /* Frase #177 - Questão */
+  /* Frase #177 - Questï¿½o */
   echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,177).":&nbsp;</b></td>\n");
   echo("              <td colspan=2>".RetornaTituloQuestao($sock,$cod_questao)."</td>\n");
   echo("            </tr>\n");
@@ -123,7 +123,9 @@
 
       switch ($linha['acao']){
 
-        /* Frase #136 - Criacao */
+     	/* Frase #503 - Criacao de Alternativa */
+      	case ('A'): $acao=RetornaFraseDaLista($lista_frases,503); break;
+      	/* Frase #136 - Criacao */
         case ('C'): $acao=RetornaFraseDaLista($lista_frases,136); break;
        	/* Frase #140 - Edicao Cancelada */
         case ('D'): $acao=RetornaFraseDaLista($lista_frases,140); break;
