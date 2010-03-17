@@ -51,14 +51,21 @@ if ($etapa == 0){
 	
 	$content_header = "Etapa 0 - Banco de Dados e Arquivo de Configuração:";
 
+	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<input type=text name=dbname value='TelEduc4'/><br />";
-	$content .= "<input type=text name=dbnamecurso value='TelEduc4Curso'/><br />";
-	$content .= "<input type=text name=dbuser value='usuario'/><br />";
-	$content .= "<input type=password name=dbpwd value='senha'/><br />";
-	$content .= "<input type=text name=dbhost value='localhost'/><br />";
-	$content .= "<input type=text name=dbport value='3306'/><br />";
-	$content .= "<input type=hidden name=etapa value='1'/><br />";
+	$content .= "<label class=form for=dbname>Nome do Banco de Dados Principal</label>";
+	$content .= "<input class=form type=text name=dbname value='TelEduc4'/><br />";
+	$content .= "<label class=form for=dbnamecurso>Prefixo dos Bancos de Dados dos Cursos</label>";
+	$content .= "<input class=form type=text name=dbnamecurso value='TelEduc4Curso'/><br />";
+	$content .= "<label class=form for=dbuser>Usuario do MySQL</label>";
+	$content .= "<input class=form type=text name=dbuser value='usuario'/><br />";
+	$content .= "<label class=form for=dbpwd>Senha do MySQL</label>";
+	$content .= "<input class=form type=password name=dbpwd value='senha'/><br />";
+	$content .= "<label class=form for=dbhost>Host do MySQL (link)</label>";
+	$content .= "<input class=form type=text name=dbhost value='localhost'/><br />";
+	$content .= "<label class=form for=dbport>Porta do MySQL</label>";
+	$content .= "<input class=form type=text name=dbport value='3306'/><br />";
+	$content .= "<input class=form type=hidden name=etapa value='1'/><br />";
 	$content .= "<input type=submit value='Enviar'/><br />";
 	$content .= "</form>";
 
@@ -107,14 +114,21 @@ if ($etapa == 0){
 		}
 	}
 	
+	
+	
 	$content .= "<p>O arquivo de configuração teleduc.inc foi criado com sucesso... OK</p>";
 
 	$content_header = "Etapa 1 - Host e Diretórios:";
 
+	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<input type=text name=host value='www.dominio.com.br'/><br />";
-	$content .= "<input type=text name=www value='/ead/teleduc4'/><br />";
+	$content .= "<label class=form for=host>Host do TelEduc</label>";
+	$content .= "<input type=text name=host value='".$_SERVER['SERVER_NAME']."'/><br />";
+	$content .= "<label class=form for=www>Caminho do TelEduc</label>";
+	$content .= "<input type=text name=www value='".str_replace("nova_instalacao/index.php", "", $_SERVER['PHP_SELF'])."'/><br />";
+	$content .= "<label class=form for=arquivos>Pasta dos Arquivos</label>";
 	$content .= "<input type=text name=arquivos value='/home/arquivos'/><br />";
+	$content .= "<label class=form for=sendmail>Caminho do Sendmail</label>";
 	$content .= "<input type=text name=sendmail value='/usr/sbin/sendmail'/><br />";
 	$content .= "<input type=hidden name=etapa value='2'/><br />";
 	$content .= "<input type=submit value='Enviar'/><br />";
@@ -138,9 +152,13 @@ if ($etapa == 0){
 	$content .= "<p>As configurações de diretorio foram salvas com sucesso... OK</p>";
 
 
+	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
+	$content .= "<label class=form for=admtele_nome>Nome do Administrador do Ambiente</label>";
 	$content .= "<input type=text name=admtele_nome value='Nome Sobrenome'/><br />";
+	$content .= "<label class=form for=admtele_email>E-Mail do Administrador do Ambiente</label>";
 	$content .= "<input type=text name=admtele_email value='nome@email.com'/><br />";
+	$content .= "<label class=form for=admtele_senha>Senha do Administrador do Ambiente</label>";
 	$content .= "<input type=password name=admtele_senha value='AA2.FEIabj1C6'/><br />";
 	$content .= "<input type=hidden name=etapa value='3'/><br />";
 	$content .= "<input type=submit value='Enviar'/><br />";

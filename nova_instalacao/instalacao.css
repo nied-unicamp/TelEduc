@@ -82,3 +82,13 @@ h1 {
 	float: left;
 }
 
+input{
+	text-align: left;
+	margin-left: 320px;
+}
+
+label{
+	width:310px;
+	text-align: right;
+	position: absolute;	
+}
