@@ -104,9 +104,11 @@
   }
 
  /*Ajuda */
+  // 43 - Voltar ao início
+  $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,43);
   echo("            ".PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
   echo("            <li><img src=\"../imgs/icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
-  echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">Voltar ao Inicio</a></li>\n");
+  echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
 
   echo("            </ul>\n");
   echo("          </div>\n");
