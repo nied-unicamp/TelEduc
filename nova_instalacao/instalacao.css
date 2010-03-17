@@ -82,13 +82,17 @@ h1 {
 	float: left;
 }
 
-input{
+input.form{
 	text-align: left;
 	margin-left: 320px;
 }
 
-label{
+label {
 	width:310px;
 	text-align: right;
 	position: absolute;	
+}
+
+.feedbackp {
+	font-size: 0.8em;
 }
