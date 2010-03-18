@@ -16,8 +16,16 @@ if (!isset($_POST['etapa'])){
 	$etapa = $_POST['etapa'];
 }
 
-
 if ($etapa == 0){
+	$content_header = "Bem-Vindo à Instalação do TelEduc4!";
+
+	$content .= "<p>Le o Manual e tal..</p>";
+	$content .= "<br /><br />";
+	$content .= "<form method='POST' action='index.php'>";
+	$content .= "<input class='form' type=hidden name=etapa value='1'/><br />";
+	$content .= "<input type=submit value='Instalar o TelEduc' class='form'/><br />";
+
+} else if ($etapa == 1){
 
 	/* Erro na Instalacao */
 	if (!VerificaRegisterGlobals()){
@@ -25,8 +33,8 @@ if ($etapa == 0){
 		$content_header = "Erro na Instalação: A diretiva register_globals está desativada.";
 		$content .= "<p>É necessário habilitar a diretiva register_globals. <img src='../cursos/aplic/imgs/errado.png'></p>";
 		$content .= "<p>Edite seu /etc/php.ini ou então tutorial dreamhost</p>";
-		$content .= "<input type='button' value='Voltar' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente' onClick='history.go(0)'>";
+		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+		$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
 		include 'template_instalacao.php';
 		exit();
 
@@ -42,8 +50,8 @@ if ($etapa == 0){
 		$content_header = "Erro na Instalação: Módulo php-mysql não encontrado.";
 		$content .= "<p>É necessário instalar o módulo php-mysql. <img src='../cursos/aplic/imgs/errado.png'></p>";
 		$content .= "<p>yum install php-mysql genericos.</p>";
-		$content .= "<input type='button' value='Voltar' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente' onClick='history.go(0)'>";
+		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+		$content .= "<input type='button' value='Tentar Novamente class='formtn' onClick='history.go(0)'>";
 		include 'template_instalacao.php';
 		exit();
 
@@ -53,7 +61,7 @@ if ($etapa == 0){
 	
 	}
 	
-	$content_header = "Etapa 1 - Banco de Dados e Arquivo de Configuração";
+	$content_header = "Etapa 1 de 4 - Banco de Dados e Arquivo de Configuração";
 
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
@@ -69,11 +77,11 @@ if ($etapa == 0){
 	$content .= "<input class='form' size=25 type=text name=dbhost value='".(isset($_SESSION['dbhost']) ? $_SESSION['dbhost'] : 'localhost')."'/><br />";
 	$content .= "<label class='form' for=dbport>Porta do MySQL</label>";
 	$content .= "<input class='form' size=25 type=text name=dbport value='".(isset($_SESSION['dbport']) ? $_SESSION['dbport'] : '3306')."'/><br />";
-	$content .= "<input class='form' type=hidden name=etapa value='1'/><br />";
+	$content .= "<input class='form' type=hidden name=etapa value='2'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
 
-} else if ($etapa == 1){
+} else if ($etapa == 2){
 	
 	/* Salva na sessao a informacao do banco de dados */
 	$_SESSION['dbname'] = $_POST['dbname'];
@@ -91,8 +99,8 @@ if ($etapa == 0){
 			$content .= "<p>Não foi possível criar o banco de dados. <img src='../cursos/aplic/imgs/errado.png'><p/>";
 			$content .= "<p>".mysql_error()."</p>";
 			$content .= "<p>Verifique os dados, crie na mão ou de permissao</p>";
-			$content .= "<input type='button' value='Voltar' onClick='history.go(-1)'>";
-			$content .= "<input type='button' value='Tentar Novamente' onClick='history.go(0)'>";
+			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
 			include 'template_instalacao.php';
 			exit();
 		} else {
@@ -118,8 +126,8 @@ if ($etapa == 0){
 			$content .= "<p>Não foi possível criar o arquivo teleduc.inc. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			$content .= "<p>Devido a uma permissao blabla... pode criar na mão, please?</p>";
 			$content .= "<textarea cols='70' rows='15'>".str_replace(";",";\n",$conteudo)."</textarea>";
-			$content .= "<input type='button' value='Voltar' onClick='history.go(-1)'>";
-			$content .= "<input type='button' value='Tentar Novamente' onClick='history.go(0)'>";
+			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
 			include 'template_instalacao.php';
 			exit();
 		}
@@ -129,7 +137,7 @@ if ($etapa == 0){
 	
 	$content .= "<p class=feedbackp>O arquivo de configuração teleduc.inc foi criado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
-	$content_header = "Etapa 2 - Host e Diretórios";
+	$content_header = "Etapa 2 de 4 - Host e Diretórios";
 
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
@@ -141,13 +149,13 @@ if ($etapa == 0){
 	$content .= "<input type=text size=25 class='form' name=arquivos value='/home/arquivos'/><br />";
 	$content .= "<label class='form' for=sendmail>Caminho do Sendmail</label>";
 	$content .= "<input type=text size=25 class='form' name=sendmail value='/usr/sbin/sendmail'/><br />";
-	$content .= "<input type=hidden name=etapa value='2'/><br />";
+	$content .= "<input type=hidden name=etapa value='3'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
 
-} else if ($etapa == 2){
+} else if ($etapa == 3){
 
-	$content_header = "Etapa 3 - Administrador do Ambiente";
+	$content_header = "Etapa 3 de 4 - Administrador do Ambiente";
 
 	/*
 	 2a Etapa:
@@ -171,13 +179,13 @@ if ($etapa == 0){
 	$content .= "<input type=text size=25 class='form' name=admtele_email value='nome@email.com'/><br />";
 	$content .= "<label class='form' for=admtele_senha>Senha do Administrador do Ambiente</label>";
 	$content .= "<input type=password size=25 class='form' name=admtele_senha value='AA2.FEIabj1C6'/><br />";
-	$content .= "<input type=hidden name=etapa value='3'/><br />";
+	$content .= "<input type=hidden name=etapa value='4'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
 
 
 
-} else if ($etapa == 3){
+} else if ($etapa == 4){
 
 	/*
 	 3a Etapa:
@@ -192,7 +200,7 @@ if ($etapa == 0){
 	$content .= "<p class=feedbackp>As configurações do administrador do sistema (admtele) foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	
-	$content_header = "Etapa 4 - Fim da Instalação";
+	$content_header = "Etapa 4 de 4 - Fim da Instalação";
 	
 	$content .= "<br /><br />";
 	$content .= "<p>OK terminou, só falta gravar as coisas no cron</p>";

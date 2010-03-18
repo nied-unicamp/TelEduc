@@ -84,13 +84,24 @@ h1 {
 
 input.form{
 	text-align: left;
-	margin-left: 320px;
+	margin: 0px 10px 10px 320px;
+	border:2px solid #99BBCC;
+	padding: 3px;
+	font-size: 0.9em;
+}
+
+input.formtn{
+	text-align: left;
+	margin: 0px 10px 10px 0px;
+	border:2px solid #99BBCC;
+	padding: 3px;
+	font-size: 0.9em;
 }
 
 label {
 	width:310px;
 	text-align: right;
-	position: absolute;	
+	position: absolute;
 }
 
 .feedbackp {
