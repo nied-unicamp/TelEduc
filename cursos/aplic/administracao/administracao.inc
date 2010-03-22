@@ -1182,11 +1182,7 @@ function RetornaCodigoCoordenador ($sock, $cod_curso)
   $res   = Enviar ($sock, $query);
   $linha = RetornaLinha ($res);
 
-  $query = "select cod_usuario from $dbnamebase.Usuario_curso where cod_usuario_global = ".$linha['cod_coordenador']." and cod_curso = $cod_curso";
-  $res = Enviar($sock, $query);
-  $linha = RetornaLinha ($res);
-
-  return $linha['cod_usuario'];
+  return $linha['cod_coordenador'];
 }
 
 /* *********************************************************************
