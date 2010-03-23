@@ -43,7 +43,22 @@
   /* Rodapï¿½ */
 
   echo("      <tr>\n");
-  echo("        <td valign=\"bottom\" height=\"80\"><a href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" alt=\"nied\" border=\"0\" style=\"margin-right:8px;\" /></a><a href=\"http://www.ic.unicamp.br\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right:6px;\" /></a><a href=\"http://www.unicamp.br\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" border=\"0\" /></a></td>\n");
+  echo("        <td valign=\"bottom\" height=\"80\">");
+  echo("		</td>\n");
+  echo("        <td valign=\"bottom\" id=\"rodape\"> ");
+  /*	Para fins de SEO existe um random que alterna o alt e title da imagem do teleduc  */
+  if(rand(1,2) == 1){
+  	echo("			<a href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc - Ensino à distância\" title=\"TelEduc - Ensino à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>\n");
+  }
+  else{
+  	echo("			<a href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc - Educação à distância\" title=\"TelEduc - Educação à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>\n");
+  }
+  echo("			<a href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" alt=\"nied\" border=\"0\" style=\"margin-right: 8px; margin-bottom: 6px;\" /></a><a href=\"http://www.ic.unicamp.br\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right: 6px; margin-bottom: -2px;\" /></a><a href=\"http://www.unicamp.br\" title=\"Unicamp\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" style=\"margin-bottom: 2px;\"border=\"0\" /></a>\n");
+  echo("		</td>\n");
+  echo("      </tr>\n");
+  echo("      <tr>\n");
+  echo("        <td valign=\"bottom\">");
+  echo("		</td>\n");
   echo("        <td valign=\"bottom\" id=\"rodape\">2008  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
