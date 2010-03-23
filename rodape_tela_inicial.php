@@ -59,7 +59,7 @@
   echo("      <tr>\n");
   echo("        <td valign=\"bottom\">");
   echo("		</td>\n");
-  echo("        <td valign=\"bottom\" id=\"rodape\">2008  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+  echo("        <td valign=\"bottom\" id=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 
