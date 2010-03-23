@@ -1493,7 +1493,7 @@
 	  echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	  echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
 	  // ?? - 
-	  echo("                          <span> - Adicionar Descricao</span>\n");
+	  echo("                          <span> - " . RetornaFraseDaLista($lista_frases, 195) . "</span>\n");
 	  echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\" onchange=\"EdicaoArq(1)\">\n");
 //	  echo("                          &nbsp;&nbsp;\n");
