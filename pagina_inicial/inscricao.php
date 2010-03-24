@@ -144,12 +144,12 @@
     $host=RetornaConfiguracao($sock,"host");
 
     /* Endereço do Link de gerenciamento */
-    $link_gerenciamente = "<a href = \"";
+    $link_gerenciamento = "<a href='";
     $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
  	$link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
  	$link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
  	$link_gerenciamento.= "&cod_ferramenta=0&acao=N";
- 	$link_gerenciamento.= "\"> Gerenciamento de Inscrições </a>";
+ 	$link_gerenciamento.= "'> Gerenciamento de Inscrições </a>";
     
     /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */
