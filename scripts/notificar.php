@@ -151,12 +151,13 @@
   	MudarDB($sock, "");
   	
     // Obtém dados do usuário e a data do último envio de notificação.
-	$query  = "SELECT nome, email, curso.cod_usuario cod_usuario, cod_lingua, notificar_data ";
+	$query  = "SELECT nome, email, curso.cod_usuario cod_usuario, cod_lingua, config.notificar_email ";
 	$query .= "FROM `Usuario` as user, `Usuario_config` as config, `Usuario_curso` as curso ";
 	$query .= "WHERE (user.cod_usuario = curso.cod_usuario_global) ";
 	$query .= "and (curso.cod_usuario = config.cod_usuario) ";
 	$query .= "and (curso.cod_curso = ".$lista[$i]['cod_curso'].") ";
 	$query .= "and (config.cod_curso = curso.cod_curso)";
+	$query .= "and (config.notificar_email != 0)";
    
     $res = Enviar($sock, $query);
     $linha = RetornaArrayLinhas($res);
@@ -179,97 +180,107 @@
 
     $total_usuarios = count($linha);
     // Para cada usuário lista as novidades nas ferramentas e se estas houver, envia e-mail.
+
     for ($j = 0; $j < $total_usuarios; $j++)
     {
-
-      $curso_ferramentas = RetornaFerramentasCurso($sock);
-      $novidade_ferramentas = RetornaNovidadeFerramentas($sock, $lista[$i]['cod_curso'], $linha[$j]['cod_usuario']);
-
-      // Obtém o timestamp do último acesso ao ambiente (esse timestamp conta o acesso às ferramentas). 
-      $ultimo_acesso = UltimoAcessoAmbiente($sock, $linha[$j]['cod_usuario']);
-
-      // Compara o timestamp do último acesso com do último envio de notificações. 
-      // Adota o maior deles para evitar envio de novidades já listadas em e-mail  
-      // anterior (notificar_email = 2).                                           
-      if ($ultimo_acesso > $linha[$j]['notificar_data'])
+      $notificar_email_usuario = $linha[$j]['notificar_email'];
+      // Caso o usuário não queira ser notificado (notificar_email == 0)
+      if (($notificar_email_usuario > 0) && ($notificar_email_usuario < 3))
       {
-        $comp_acesso = $ultimo_acesso;
-      }
-      else
-      {
-        $comp_acesso = $linha[$j]['notificar_data'];
-      }
+    	// notificar_email = 2, recebe email 2x por dia (sempre)
+    	// notificar_email = 1, recebe 1 email só (no momento em que for passado 1 de parametro)
+      	if ((($notificar_email == 1) && ($notificar_email_usuario == 1)) ||
+      		($notificar_email_usuario == 2))
+      	{
+      	
+      		$curso_ferramentas = RetornaFerramentasCurso($sock);
+      		$novidade_ferramentas = RetornaNovidadeFerramentas($sock, $lista[$i]['cod_curso'], $linha[$j]['cod_usuario']);
 
-      // Soma um tempo médio estipulado que o usuário gasta em uma ferramenta para 
-      // determinar se ele ainda se encontra online. Neste caso 25 minutos.   
-      //TODO : mudar o 0 pra 25 hehe     
-      $comp_acesso = $ultimo_acesso + (25 * 60);
+	      	// Obtém o timestamp do último acesso ao ambiente (esse timestamp conta o acesso às ferramentas). 
+      		$ultimo_acesso = UltimoAcessoAmbiente($sock, $linha[$j]['cod_usuario']);
 
-      $frase = "";
-      $novo_flag = false;
+	      	// Compara o timestamp do último acesso com do último envio de notificações. 
+	      	// Adota o maior deles para evitar envio de novidades já listadas em e-mail  
+	      	// anterior (notificar_email = 2).                                           
+	      	if ($ultimo_acesso > $linha[$j]['notificar_data'])
+	      	{
+	        	$comp_acesso = $ultimo_acesso;
+	      	}
+	      	else
+	      	{
+	        	$comp_acesso = $linha[$j]['notificar_data'];
+	      	}
 
-      // Se foram retornadas novidades então envia e-mail.
-      if ((is_array($novidade_ferramentas)) && (is_array($curso_ferramentas)))
-      {
-        foreach($novidade_ferramentas as $cod_ferr => $dados_ferr)
-        {
-          // Se o compartilhamento da ferramenta for para formadores e o usuário for um formador
-          // ou o compartilhamento da ferramenta for para todos e a data de novidades for maior
-          // que a data base de comparação e não foi o usuário quem postou a novidade, então     
-          // lista as ferramentas onde há novidades.                                             
-          if ( ( ( (($curso_ferramentas[$cod_ferr]['status'] == 'F') || ($cod_ferr == 0)) && ($linha[$j]['tipo_usuario'] == 'F')) ||
-                 ($curso_ferramentas[$cod_ferr]['status'] == 'A'))
-             && ($comp_acesso < $dados_ferr['data']) && ($linha[$j]['cod_usuario'] != $dados_ferr['cod_usuario'])
-             )
-          {
-            $frase .= $lista_ferramentas[($linha[$j]['cod_lingua'])][$cod_ferr]['texto']."<br />";
+      		// Soma um tempo médio estipulado que o usuário gasta em uma ferramenta para 
+      		// determinar se ele ainda se encontra online. Neste caso 25 minutos.   
+	      	//TODO : mudar o 0 pra 25 hehe     
+	      	$comp_acesso = $ultimo_acesso + (25 * 60);
+	
+	      	$frase = "";
+	      	$novo_flag = false;
+	
+		    // Se foram retornadas novidades então envia e-mail.
+	      	if ((is_array($novidade_ferramentas)) && (is_array($curso_ferramentas)))
+	      	{
+        		foreach($novidade_ferramentas as $cod_ferr => $dados_ferr)
+        		{
+		        	// Se o compartilhamento da ferramenta for para formadores e o usuário for um formador
+		          	// ou o compartilhamento da ferramenta for para todos e a data de novidades for maior
+        		  	// que a data base de comparação e não foi o usuário quem postou a novidade, então     
+	        	  	// lista as ferramentas onde há novidades.                                             
+          			if ((((($curso_ferramentas[$cod_ferr]['status'] == 'F') || ($cod_ferr == 0)) && ($linha[$j]['tipo_usuario'] == 'F')) ||
+                 		($curso_ferramentas[$cod_ferr]['status'] == 'A'))
+             			&& ($comp_acesso < $dados_ferr['data']) && ($linha[$j]['cod_usuario'] != $dados_ferr['cod_usuario']))
+          			{
+            			$frase .= $lista_ferramentas[($linha[$j]['cod_lingua'])][$cod_ferr]['texto']."<br />";
 
-            $novo_flag = $novo_flag || true;
-          }
+            			$novo_flag = $novo_flag || true;
+          			}
 
-        }
+        		}
 
-        // Se houver novidades monta a mensagem e envia ao usuário.
-        if ($novo_flag)
-        {
-          // 12 - Verificação feita até: 
-          $frase_12 = RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 12);
+		        // Se houver novidades monta a mensagem e envia ao usuário.
+		        if ($novo_flag)
+		        {
+		        	// 12 - Verificação feita até: 
+          			$frase_12 = RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 12);
 
-          // 9 - Curso:
-          $mensagem = "<br />".(str_pad(RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 9), strlen($frase_12)))." ".$dados_curso['nome_curso']."<br />";
-          // 12 - Verificação feita até:
-          $mensagem .= ($frase_12)." ".UnixTime2DataHora(time())."<br /><br />";
+          			// 9 - Curso:
+          			$mensagem = "<br />".(str_pad(RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 9), strlen($frase_12)))." ".$dados_curso['nome_curso']."<br />";
+          			// 12 - Verificação feita até:
+          			$mensagem .= ($frase_12)." ".UnixTime2DataHora(time())."<br /><br />";
 
-          // 10 - Olá  
-          // 11 - , 
-          $mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 10)." ".$linha[$j]['nome']." ".RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 11)."<br /><br />";
+          			// 10 - Olá  
+          			// 11 - , 
+          			$mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 10)." ".$linha[$j]['nome']." ".RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 11)."<br /><br />";
 
 
-          // 13 - Há novidades na(s) ferramenta(s):
-          $mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 13)."<br /><br />";
+          			// 13 - Há novidades na(s) ferramenta(s):
+          			$mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 13)."<br /><br />";
 
-          $mensagem .= $frase;
-          // 14 - Acesse seu curso através do endereço:
-          $mensagem .= "\n".RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 14)."<br />";
-          $mensagem .= $url_acesso."<br />";
-          // 15 - Para não receber mais notificações do ambiente, entre em seu curso e desative a opção na ferramenta Configurar.
-          $mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 15);
+          			$mensagem .= $frase;
+		            // 14 - Acesse seu curso através do endereço:
+        		    $mensagem .= "\n".RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 14)."<br />";
+          			$mensagem .= $url_acesso."<br />";
+		          	// 15 - Para não receber mais notificações do ambiente, entre em seu curso e desative a opção na ferramenta Configurar.
+        		  	$mensagem .= RetornaFraseDaLista($lista_frases_total[($linha[$j]['cod_lingua'])], 15);
 
-          $emissor = $dados_curso['nome_curso']." <NAO_RESPONDA@".$host.">";
-		  echo($mensagem);
-          MandaMsg($emissor, $linha[$j]['email'], $assunto, $mensagem);
+          			$emissor = $dados_curso['nome_curso']." <NAO_RESPONDA@".$host.">";
+		  			echo($mensagem);
+          			MandaMsg($emissor, $linha[$j]['email'], $assunto, $mensagem);
 
-          $query = "update Usuario_config set notificar_data = ".time();
-          //$res = Enviar($sock, $query);
-        }
-      }
-    }
-  }
-
+          			$query = "update Usuario_config set notificar_data = ".time();
+          			//$res = Enviar($sock, $query);
+        		} 	// END IF
+      		} 	// END IF
+    	} 		// END IF
+  	  } 	// END IF
+    } 		// END FOR - usuarios
+  } 	// END FOR - cursos
   Desconectar($sock);
 
   echo("    </pre>\n");
   echo("  </body>\n");
   echo("</html>\n");
-
+  
 ?>
