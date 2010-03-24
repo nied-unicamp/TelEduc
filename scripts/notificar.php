@@ -45,14 +45,6 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
 
   include($bibliotecas."geral.inc");
-  include($bibliotecas."acesso_sql.inc");
-  include($bibliotecas."email.inc");
-  include($bibliotecas."data.inc");
-  include($bibliotecas."conversor_texto.inc");
-  include($bibliotecas."usuarios.inc");
-  include($bibliotecas."cursos.inc");
-  
-
   include("notificar.inc");
 
   $sock = Conectar("");
