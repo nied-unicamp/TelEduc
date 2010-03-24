@@ -120,13 +120,13 @@
 
     $dados_usuario = RetornaDadosUsuario($sock,$_SESSION["cod_usuario_global_s"]);
     /* Tudo ok */
-    /* 113 - Inscriï¿½ï¿½o para o curso */
+    /* 113 - Inscricao para o curso */
     $linha=DadosCursoParaEmail($sock,$cod_curso);
     $assunto = RetornaFraseDaLista($lista_frases,113)." \"".$dados_curso['nome_curso']."\" ";
 
-    /* 108 - Seu pedido de matrï¿½cula no curso */
+    /* 108 - Seu pedido de matricula no curso */
     /* 109 - foi realizado corretamente. */
-    /* 110 - O coordenador e os formadores do curso analisarï¿½o o seu pedido e em breve entrarï¿½o em contato por e-mail com vocï¿½ aceitando-o ou nï¿½o como aluno em sua disciplina.  */
+    /* 110 - O coordenador e os formadores do curso analisarao o seu pedido e em breve entrarao em contato por e-mail com voce aceitando-o ou nao como aluno em sua disciplina.  */
     /* 114 - Atenciosamente, Coordenador(a) */
     $mensagem ="<p>".RetornaFraseDaLista($lista_frases,108)." <b>".$dados_curso['nome_curso']."</b> ".RetornaFraseDaLista($lista_frases,109)."</p>\n";
     $mensagem.="<p>".RetornaFraseDaLista($lista_frases,110)."</p>\n";
@@ -143,13 +143,21 @@
 
     $host=RetornaConfiguracao($sock,"host");
 
-
-    /* 188 - Um pedido de matrï¿½cula no curso */
+    /* Endereço do Link de gerenciamento */
+    $link_gerenciamente = "<a href = \"";
+    $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
+ 	$link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
+ 	$link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
+ 	$link_gerenciamento.= "&cod_ferramenta=0&acao=N";
+ 	$link_gerenciamento.= "\"> Gerenciamento de Inscrições </a>";
+    
+    /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */
-    /* 190 - Para ver os dados do aluno, aceitï¿½-lo no curso, aceitï¿½-lo como visitante ou rejeitar o pedido, acesse o item Administraï¿½ï¿½o e, em seguida, Gerenciamento de Inscriï¿½ï¿½es desse curso. */
-    /* 191 - Atenciosamente, Administraï¿½ï¿½o do Ambiente TelEduc. */
+    /* 190 - Para ver os dados do aluno, aeita-lo no curso, aceita-lo como visitante ou rejeitar o pedido, acesse o item Administracao e, em seguida, Gerenciamento de Inscricoes desse curso. */
+    /* 191 - Atenciosamente, Administracao do Ambiente TelEduc. */
     $mensagem_coord = "<p>".RetornaFraseDaLista($lista_frases,188)." <b>".$dados_curso['nome_curso']."</b> ".RetornaFraseDaLista($lista_frases,189)."</p>\n";
     $mensagem_coord.= "<p>".RetornaFraseDaLista($lista_frases,190)."</p>\n";
+    $mensagem_coord.= "<p>".$link_gerenciamento."</p>";
     $mensagem_coord.= "<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,191)."</p>";
 
     Desconectar($sock);

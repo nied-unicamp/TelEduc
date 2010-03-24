@@ -172,6 +172,7 @@ function VerificaAutenticacao($cod_curso)
 
   $caminho = $raiz_www."/pagina_inicial";
  
+/* Se quem esta acessando o ambiente eh um visitante */
   if ($_SESSION['visitante_s']=="sim")
   {
     $sock=Conectar("");
@@ -191,19 +192,23 @@ function VerificaAutenticacao($cod_curso)
   }
   else
   {
+/* Se quem esta acessando nao esta logado */  	
     if ((!isset($_SESSION['login_usuario_s'])))
     {
       $sock=Conectar("");
 
-      /* Usuario Ã© direcionado para a pagina de autenticacao */
-      header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+      /* Salva a URL de acesso, para o caso de precisar redirecionar */
+  	  $_SESSION['url_de_acesso'] = $_SERVER['REQUEST_URI'];
+
+	  /* Usuario Ã© direcionado para a pagina de autenticacao */
+      header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
 
       Desconectar($sock);
       exit;
     }
     else
     {
-
+/* Se quem esta acessando, esta logado e eh o admtele */
       if (isset($_SESSION['login_usuario_s']) && ($_SESSION['login_usuario_s']=="admtele"))
       {
         $sock=Conectar("");
@@ -214,23 +219,25 @@ function VerificaAutenticacao($cod_curso)
             $_SESSION['cod_usuario_s']=RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso);
           }
 
-	Desconectar($sock);
+		Desconectar($sock);
         return (-1);
       }
       else //VerificaAcessoCurso($_SESSION['cod_usuario_s'], $cod_curso)
       {
-        if (!isset($_SESSION['login_usuario_s'])) //($num<1 || $linha[0]!=$senha)
+// Erro de lógica, condição verificada anteriormente      	
+/*        if (!isset($_SESSION['login_usuario_s'])) //($num<1 || $linha[0]!=$senha)
         {
           //Desconectar($sock);
           $sock=Conectar("");
-	  	  header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+      	 
+		 // Salva a URL de acesso, para o caso de precisar redirecionar
+  	  	 $_SESSION['url_de_acesso'] = $_SERVER['REQUEST_URI'];          
+         header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
 
           Desconectar($sock);
           exit;
-        }
-        else
-        {
-          /* Se o usuï¿½io efetuou o logout, requisita novamente as informaï¿½es para acesso. */
+        } */
+          /* Se o usuário efetuou o logout, requisita novamente as informaï¿½es para acesso. */
           if (isset($_SESSION['logout_flag_s']) && $_SESSION['logout_flag_s'] == 1)
           {
             $_SESSION['logout_flag_s'] = 0;
@@ -246,7 +253,7 @@ function VerificaAutenticacao($cod_curso)
           else
           {
             //Desconectar($sock);
-	    $sock=Conectar("");
+	    	$sock=Conectar("");
 
             $query="SELECT U.senha, U.cod_usuario
 		    FROM Usuario U
@@ -257,8 +264,8 @@ function VerificaAutenticacao($cod_curso)
             $res=Enviar($sock,$query);
             $num=RetornaNumLinhas($res);
             $linha=RetornaLinha($res);
-	    if ($num > 0)
-	    {
+	    	if ($num > 0)
+	    	{
               $cod_curso_s=$cod_curso;
               $cod_usuario_s=RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $cod_curso);
               $cod_lin=RetornaLinguaUsuario($sock,$linha[1], $cod_curso);
@@ -277,7 +284,7 @@ function VerificaAutenticacao($cod_curso)
                 header("Location:../../pagina_inicial/preencher_dados.php?cod_curso=".$cod_curso."&acao=preencherDados&atualizacao=true");
               }
 
-	      Desconectar($sock);
+	      	  Desconectar($sock);
               return ($linha[1]);
             }
             else
@@ -288,7 +295,7 @@ function VerificaAutenticacao($cod_curso)
         }
       }
     }
-  }
+  
   echo("Se vocï¿½estï¿½vendo essa mensagem, ocorreu um erro na codificaï¿½o dos IFs");
   exit;
 }

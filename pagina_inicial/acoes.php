@@ -88,35 +88,51 @@
     header("Location:{$caminho}/inscricao.php?cod_curso=".$_POST['cod_curso']."&tipo_curso=".$tipo_curso."");
   	exit;
   }
-  else if(!empty($curso_valido))
+  else 
   {
-    Desconectar($sock);
-    header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$_POST['$cod_curso']);
-  	exit;
-  }
-  else if(!empty ($cod_usuario))
-  {
-    //se for admtele
-    if($_SESSION["cod_usuario_global_s"] == -1)
-    {
-      Desconectar($sock);
-      header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
-    	exit;
-    }
-    else 
+  	// Caso possua cod_curso, redireciona para o curso.
+  	if(!empty($curso_valido))
     {
     	Desconectar($sock);
-      header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
-    	exit;
-    }
+    	header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$_POST['$cod_curso']);
+  		exit;
+  	}
+  	else 
+  	{
+  		// Caso login e senha sejam compativeis
+  		if(!empty ($cod_usuario))
+  		{
+    		// Se for admtele
+    		if($_SESSION["cod_usuario_global_s"] == -1)
+    		{
+      			Desconectar($sock);
+      			header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
+    			exit;
+    		}
+    		else /* para os outros usuarios */ 
+    		{
+    			Desconectar($sock);
+    			// Caso veio através de redirecionamento por email
+    			// Redireciona o usuario para a antiga pagina
+    			if (!empty($_SESSION['url_de_acesso']))
+    			{
+    				header("Location:".$_SESSION['url_de_acesso']);
+    				unset($_SESSION['url_de_acesso']);
+    				exit;
+    			}
+    			// Do contrario, exibe os cursos
+    			header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
+    			exit;
+    		}
+  		}
+  		else /* login e senha nao compativeis */
+  		{
+    		Desconectar($sock);
+    		header("Location:autenticacao.php?cod_curso=".$_POST['cod_curso']."&erro_autenticacao=1");
+  			exit;
+  		}
+  	}
   }
-  else
-  {
-    Desconectar($sock);
-    header("Location:autenticacao.php?cod_curso=".$_POST['cod_curso']."&erro_autenticacao=1");
-  	exit;
-  }
-
   Desconectar($sock);
   exit;
 ?>
