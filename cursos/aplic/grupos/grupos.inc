@@ -653,7 +653,7 @@ function MostraGrupoDinamic($cod_curso, $cod_grupo, $frases)
         }
 
         $objResponse->addCreate('td_grupo_'.$cod_grupo, 'span', 'span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario']);
-        $objResponse->addAppend('span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario'], 'innerHTML', $tmp.' '.$linha['nome'].'<br />');
+        $objResponse->addAppend('span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario'], 'innerHTML', $tmp.' <a class="text" onclick="return(OpenWindowLink('.$linha['cod_usuario'].'));" href="#">'.$linha['nome'].'</a><br />');
       }
 
     }

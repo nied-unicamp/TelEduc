@@ -83,6 +83,8 @@
   FUN�ES JAVASCRIPT
   ==================
   */
+  
+  
 
   echo("    <script type=\"text/javascript\">\n");
   
@@ -156,6 +158,20 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
+  
+    /* *********************************************************
+  Funcao OpenWindowLink
+    Abre nova janela com o perfil, se acessado atraves do link
+    Entrada: funcao = $cod_curso - Codigo do curso
+    Saida:   false - para nao dar reload na pagina. Conferir a
+                     chamada da fun�o
+  */
+  echo("      function OpenWindowLink(funcao) \n");
+  echo("      {\n");
+  echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("        return(false);\n");
+  echo("      }\n\n");
+  
   echo("      function EscondeLayer(cod_layer)\n");
   echo("      {\n");
   echo("        hideLayer(cod_layer);\n");
