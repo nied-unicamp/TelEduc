@@ -48,7 +48,7 @@
             $cod_ferramenta - cod_ferramenta a ser empregada
    Saida: Array com a lista de frases
 */
-function RetornaListaDeFrases($sock, $cod_ferramenta, $cod_lingua)
+function RetornaListaDeFrasesNotificar($sock, $cod_ferramenta, $cod_lingua)
 {
   $query = "SELECT cod_texto, texto FROM Lingua_textos WHERE ";
   $query .= "cod_lingua=".$cod_lingua." AND ";
@@ -219,7 +219,7 @@ function RetornaMaiorItemComentario($sock,$cod_topico,$tipo_comp,$dados,$cod_usu
                                  ['cod_usuario'] - código do usuário
                                                    que realizou a alteração.
 */
-function RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario)
+function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 {
   $query = "select cod_coordenador from Cursos";
   $res = Enviar($sock, $query);
@@ -674,7 +674,7 @@ function RetornaListaFerramentas($sock)
    Saida: array [$cod_ferramenta]['status'] - D, F, A
                 [$cod_ferramenta]['acesso_visitante'] - A ou N
 */
-function RetornaFerramentasCurso($sock)
+function RetornaFerramentasCursoNotificar($sock)
 {
   $query ="select * from Curso_ferramentas order by cod_ferramenta";
   $res=Enviar($sock,$query);

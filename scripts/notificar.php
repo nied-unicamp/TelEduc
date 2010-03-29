@@ -63,7 +63,7 @@
   $linha = RetornaArrayLinhas($res);
 
   for ($k = 1; $k <= count($linha); $k++) {
-     $lista_frases_total[$k] = RetornaListaDeFrases($sock, -8, $k);
+     $lista_frases_total[$k] = RetornaListaDeFrasesNotificar($sock, -8, $k);
   }
   
   //$lista_frases = RetornaListaDeFrases($sock, -8, 1);
@@ -88,7 +88,7 @@
   {
     $L_host = gethostbyname($L_host);
   }
-
+/*TODO - descomentar
   // Impede que outro usuário execute arbitrariamente esse script.
   if (strcmp($L_host, $R_host) != 0)
   {
@@ -96,7 +96,7 @@
     echo("<br><font color=tomato size=+1>".RetornaFraseDaLista($lista_frases_total[1], 2)."</font><br>");
     exit(); // Executado remotamente saí.
   }
-
+*/
   // Verifica se a variável que determina a forma de envio foi setada e se ela é valida. 
   // Note que o teste de validez inclui o teste <= 0, pois para esses usuários o script  
   // não processa.                                                                       
@@ -133,7 +133,6 @@
   $res = Enviar($sock, $query);
   $linha = RetornaLinha($res);
   $raiz_www = $linha['diretorio'];
-
   unset($linha);
 
   // Lista os cursos não encerrados
@@ -142,14 +141,12 @@
   $lista = RetornaArrayLinhas($res);
 
   $total_cursos = count($lista);
-
   // Para cada curso lista os usuários e envia o e-mail de notificação se eles o requiseram.
   for ($i = 0; $i < $total_cursos; $i++)
   {
-  	
   	// Alterna para base de dados principal
   	MudarDB($sock, "");
-  	
+
     // Obtém dados do usuário e a data do último envio de notificação.
 	$query  = "SELECT nome, email, curso.cod_usuario cod_usuario, cod_lingua, config.notificar_email ";
 	$query .= "FROM `Usuario` as user, `Usuario_config` as config, `Usuario_curso` as curso ";
@@ -164,7 +161,7 @@
 
     // Alterna para a base de dados do curso.
     MudarDB($sock, $lista[$i]['cod_curso']);
-   
+
     // Obtém os dados do curso para o envio do e-mail.
     $dados_curso = DadosCursoParaEmail($sock, $lista[$i]['cod_curso']);
     
@@ -176,14 +173,17 @@
     $assunto = "TelEduc: - ".$dados_curso['nome_curso']." - ".RetornaFraseDaLista($lista_frases, 1);
 
     // Monta a URL de acesso ao curso.
-    $url_acesso = "http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$lista[$i]['cod_curso']."\n\n<br /><br />";
-
+    /** TODO ADICIONAR HREF **/
+//  $url_acesso = "<a href '";
+    $url_acesso.= "http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$lista[$i]['cod_curso']."\n\n<br /><br />";
+//	$url_acesso.= " ".$dados_curso['nome_curso']."</a>";
     $total_usuarios = count($linha);
     // Para cada usuário lista as novidades nas ferramentas e se estas houver, envia e-mail.
 
     for ($j = 0; $j < $total_usuarios; $j++)
     {
-      $notificar_email_usuario = $linha[$j]['notificar_email'];
+
+      $notificar_email_usuario = $linha[$j]['notificar_email'];	  
       // Caso o usuário não queira ser notificado (notificar_email == 0)
       if (($notificar_email_usuario > 0) && ($notificar_email_usuario < 3))
       {
@@ -192,34 +192,22 @@
       	if ((($notificar_email == 1) && ($notificar_email_usuario == 1)) ||
       		($notificar_email_usuario == 2))
       	{
-      	
-      		$curso_ferramentas = RetornaFerramentasCurso($sock);
-      		$novidade_ferramentas = RetornaNovidadeFerramentas($sock, $lista[$i]['cod_curso'], $linha[$j]['cod_usuario']);
+      		$curso_ferramentas = RetornaFerramentasCursoNotificar($sock);
+      		$novidade_ferramentas = RetornaNovidadeFerramentasNotificar($sock, $lista[$i]['cod_curso'], $linha[$j]['cod_usuario']);
 
 	      	// Obtém o timestamp do último acesso ao ambiente (esse timestamp conta o acesso às ferramentas). 
       		$ultimo_acesso = UltimoAcessoAmbiente($sock, $linha[$j]['cod_usuario']);
 
-	      	// Compara o timestamp do último acesso com do último envio de notificações. 
-	      	// Adota o maior deles para evitar envio de novidades já listadas em e-mail  
-	      	// anterior (notificar_email = 2).                                           
-	      	if ($ultimo_acesso > $linha[$j]['notificar_data'])
-	      	{
-	        	$comp_acesso = $ultimo_acesso;
-	      	}
-	      	else
-	      	{
-	        	$comp_acesso = $linha[$j]['notificar_data'];
-	      	}
-
       		// Soma um tempo médio estipulado que o usuário gasta em uma ferramenta para 
       		// determinar se ele ainda se encontra online. Neste caso 25 minutos.   
 	      	//TODO : mudar o 0 pra 25 hehe     
-	      	$comp_acesso = $ultimo_acesso + (25 * 60);
+	      	$comp_acesso = $ultimo_acesso + (0 * 25 * 60);
 	
 	      	$frase = "";
 	      	$novo_flag = false;
 	
 		    // Se foram retornadas novidades então envia e-mail.
+		    //TODO: $novidade_ferramentas sempre volta um array, mesmo quando não tem novidades !
 	      	if ((is_array($novidade_ferramentas)) && (is_array($curso_ferramentas)))
 	      	{
         		foreach($novidade_ferramentas as $cod_ferr => $dados_ferr)
@@ -234,7 +222,7 @@
           			{
             			$frase .= $lista_ferramentas[($linha[$j]['cod_lingua'])][$cod_ferr]['texto']."<br />";
 
-            			$novo_flag = $novo_flag || true;
+            			$novo_flag = true;
           			}
 
         		}
@@ -267,9 +255,11 @@
 
           			$emissor = $dados_curso['nome_curso']." <NAO_RESPONDA@".$host.">";
 		  			echo($mensagem);
-          			MandaMsg($emissor, $linha[$j]['email'], $assunto, $mensagem);
 
-          			$query = "update Usuario_config set notificar_data = ".time();
+		  			$mensagem = MontaMsg($host, $raiz_www, $lista[$i]['cod_curso'], $mensagem, $assunto);
+		  			Desconectar($sock);
+		  			$sock = Conectar($lista[$i]['cod_curso']);
+          			MandaMsg($emissor, $linha[$j]['email'], $assunto, $mensagem);
           			//$res = Enviar($sock, $query);
         		} 	// END IF
       		} 	// END IF
