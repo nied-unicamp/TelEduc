@@ -226,12 +226,13 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   $linha = RetornaLinha($res);
   $cod_coordenador = $linha['cod_coordenador'];
 
-  $saida[0]['data'] = "0"; /* para ser usado como retorno padrão */
+/*
+  $saida[0]['data'] = "0"; // para ser usado como retorno padrão
   $saida[0]['cod_usuario'] = $cod_coordenador;
- 
+*/
   // Se for visitante, nunca há novidade
   if (EVisitante($sock,$cod_curso,$cod_usuario))
-    return $saida;
+    return null;
 
   $formador = false;
   $tipo_compart = "T";

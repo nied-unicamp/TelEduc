@@ -256,11 +256,14 @@
 		  			echo($mensagem);
 //					echo("host = ".$host."\n raiz = ".$raiz_www."\n cod_curso = ".$lista[$i]['cod_curso']."\n mensagem = ".$mensagem."\n assunto = ".$assunto."\n");
 
+		  			// MontaMsg cria o corpo do e-mail, padrão do TelEduc.
 		  			$mensagem = MontaMsg($host, $raiz_www, $lista[$i]['cod_curso'], $mensagem, $assunto);
+		  			
+		  			// MontaMsg() destroi o sock, é necessário reconectar.
 		  			Desconectar($sock);
 		  			$sock = Conectar($lista[$i]['cod_curso']);
+		  			
           			MandaMsg($emissor, $linha[$j]['email'], $assunto, $mensagem);
-          			//$res = Enviar($sock, $query);
         		} 	// END IF
       		} 	// END IF
     	} 		// END IF
