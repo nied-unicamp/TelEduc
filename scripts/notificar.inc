@@ -226,13 +226,17 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   $linha = RetornaLinha($res);
   $cod_coordenador = $linha['cod_coordenador'];
 
-/*
-  $saida[0]['data'] = "0"; // para ser usado como retorno padrão
-  $saida[0]['cod_usuario'] = $cod_coordenador;
-*/
-  // Se for visitante, nunca há novidade
-  if (EVisitante($sock,$cod_curso,$cod_usuario))
+  // Se for visitante ou o participante ainda não foi autorizado
+  // pelo coordenador do curso , nunca há novidade 
+  if ((EVisitante($sock,$cod_curso,$cod_usuario)) || 
+  	  (!EAluno($sock, $cod_curso, $cod_usuario) && 
+  	   !EFormador($sock, $cod_curso, $cod_usuario) && 
+  	   !EConvidado($sock, $cod_usuario, $cod_curso)
+  	  )
+  	 )
+  {
     return null;
+  }
 
   $formador = false;
   $tipo_compart = "T";
@@ -241,6 +245,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $formador = true;
   }
 
+/********************************************************************
+ * IDEAL - Ferramentas_nova && Ferramentas_nova_usuario
+ *******************************************************************/  
   // Pega as ferramentas de tratamento comum
   // Algumas ferramentas tem tratamento especial
   $query="select cod_ferramenta,data from Ferramentas_nova ";
@@ -257,8 +264,10 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[$linha['cod_ferramenta']]['data'] = $linha['data'];
     $saida[$linha['cod_ferramenta']]['cod_usuario'] = null;
   }
-
-  // 1 - Agenda
+  
+/********************************************************************
+ * 1 - Agenda
+ *******************************************************************/
   // Pega última atualização da agenda (Ativa ou Edição Finalizada)
   $query = "select cod_usuario, data from Agenda_itens_historicos ";
   $query .= "where acao = 'A' or acao = 'F' ";
@@ -272,7 +281,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[1]['cod_usuario'] = $linha['cod_usuario'];
   }
 
-  // 3 - Atividades
+/********************************************************************
+ * 3 - Atividades
+ *******************************************************************/
   $query1 = "select cod_usuario, data from Atividade_itens where ";
   $query2 = "select cod_usuario, data from Atividade_topicos ";
   if (! $formador)
@@ -305,7 +316,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     }
   }
   
-  // 4 - Material de Apoio
+/********************************************************************
+ * 4 - Material de Apoio
+ *******************************************************************/  
   $query1 = "select cod_usuario, data from Apoio_itens where ";
   $query2 = "select cod_usuario, data from Apoio_topicos ";
   if (! $formador)
@@ -335,7 +348,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[4]['cod_usuario'] = $linha2['cod_usuario'];
   }
   
-  // 5 - Leituras
+/********************************************************************
+ * 5 - Leituras
+ *******************************************************************/
   $query1 = "select cod_usuario, data from Leitura_itens where ";
   $query2 = "select cod_usuario, data from Leitura_topicos ";
   if (! $formador)
@@ -366,9 +381,10 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     	$saida[5]['cod_usuario'] = $linha2['cod_usuario'];
   	}
   }
-  
-  // 6 - Perguntas Freqüentes
-  // Verifica novidade nas Perguntas
+
+/********************************************************************
+ * 6 - Perguntas Frequentes
+ *******************************************************************/  
   $query1 = "select data from Ferramentas_nova ";
   $query1 .= "where (cod_ferramenta = 6) and (tipo_compartilhamento = 'T')";
   $res1 = Enviar($sock, $query1);
@@ -392,8 +408,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     	$saida[6]['cod_usuario'] = -1;
     }
   }
-  
-  // 7 - Parada Obrigatoria
+/********************************************************************
+ * 7 - Parada Obrigatoria
+ *******************************************************************/  
   $query1 = "select cod_usuario, data from Obrigatoria_itens where ";
   $query2 = "select cod_usuario, data from Obrigatoria_topicos ";
   if (! $formador)
@@ -425,8 +442,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     	$saida[7]['cod_usuario'] = $linha2['cod_usuario'];
     }
   }
-
-  // 8 - Mural
+/********************************************************************
+ * 8 - Mural
+ *******************************************************************/
   $query = "select cod_usuario, data from Mural where status = 'A' order by data desc limit 1";
   $res = Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
@@ -486,8 +504,10 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     	$saida[9]['cod_usuario'] = -1;	
     }
   }
-  
-  // 10 - Bate-papo
+
+/********************************************************************
+ * 10 - Batepapo
+ *******************************************************************/  
   $query = "select data from Ferramentas_nova ";
   $query .= "where (cod_ferramenta = 10) and (tipo_compartilhamento = 'T')";
   $res = Enviar($sock, $query);
@@ -498,7 +518,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[10]['cod_usuario'] = -1;
   }
 
-  // Correio (11)
+/********************************************************************
+ * 11 - Correio
+ *******************************************************************/  
   // Se tiver alguma mensagem com N, aparece a estrela
   $query = "select C.cod_usuario, C.data from Correio_mensagens as C, Correio_destinos as Cd ";
   $query .= "where (Cd.estado = 'N') and (Cd.cod_msg = C.cod_msg) ";
@@ -511,8 +533,10 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[11]['data'] = $linha['data'];
     $saida[11]['cod_usuario'] = $linha['cod_usuario'];
   }
-  
-  // 12 - Grupos
+
+/********************************************************************
+ * 12 - Grupos
+ *******************************************************************/  
   $query  = "select data from Ferramentas_nova_usuarios ";
   $query .= "where (cod_ferramenta = 12) and (cod = ".$cod_usuario.") ";
   $res = Enviar($sock, $query);
@@ -522,8 +546,10 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[12]['data'] = $linha['data'];
     $saida[12]['cod_usuario'] = 1;
   }
-  
-  // 	13 - Perfil
+
+/********************************************************************
+ * 13 - Perfil
+ *******************************************************************/  
   $query = "select cod_usuario, data from Perfil_usuarios order by data desc limit 1";
   $res = Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
@@ -533,7 +559,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[13]['cod_usuario'] = $linha['cod_usuario'];
   }
 
-  // Diario (14)
+/********************************************************************
+ * 14 - Diario
+ *******************************************************************/  
   if ($formador)
   {
     // Se formador, verifica se há itens ou comentários novos em qualquer usuário
@@ -578,14 +606,18 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
       $saida[14]['cod_usuario'] = $linha['cod_comentarist'];
     }
   }
-
-  // 15 - Portfolio e Portfolio de Grupos
+  
+/********************************************************************
+ * 15 - Portfolio e Portfolio de Grupos
+ *******************************************************************/
   if ($formador)
     $saida[15]=RetornaMaiorItemComentario($sock,1,'F', array('cod_usuario' => $cod_usuario, 'data' => 0),$cod_usuario);
   else
     $saida[15]=RetornaMaiorItemComentario($sock,1,'T', array('cod_usuario' => $cod_usuario, 'data' => 0),$cod_usuario);
 
-  // 16 - Dinâmica
+/********************************************************************
+ * 16 - Dinâmica
+ *******************************************************************/    
   $query = "select cod_usuario, data from Dinamica where status = 'A'";
   $res=Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
@@ -595,8 +627,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[16]['cod_usuario'] = $linha['cod_usuario'];
   }
     
-    
-  // 22- Avaliações
+/********************************************************************
+ * 22 - Avaliações
+ *******************************************************************/    
   // Pega última atualização da avaliação (Ativa ou Edição Finalizada)
   $query = "select cod_usuario, data from Avaliacao_historicos ";
   $query .= "where (acao = 'C') or (acao = 'F') order by data desc limit 1";
@@ -608,7 +641,25 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[22]['cod_usuario'] = $linha['cod_usuario'];
   }
 
-  // 24 - Enquete
+/********************************************************************
+ * 23 - Exercicios
+ *******************************************************************/  
+  $query = "select cod_usuario, data from Exercicios_modelo ";
+  $query.= "where (situacao = 'A') ";
+  if ($formador)
+  	$query.= "or (tipo_compartilhamento = 'F') ";
+  $query.= "order by data desc limit 1";
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) > 0)
+  {
+  	$linha = RetornaLinha($res);
+  	$saida[23]['data'] = $linha['data'];
+  	$saida[23]['cod_usuario'] = $linha['cod_usuario'];
+  }
+  
+/********************************************************************
+ * 24 - Enquete
+ *******************************************************************/  
   // Pega atualização do status da Enquete (Ativa ou Encerrada)
   MudarDB($sock, "");
   $query  = "select tipo_usuario from Usuario_curso ";
