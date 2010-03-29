@@ -43,7 +43,7 @@
 /* ************************************************************************
    RetornaListaDeFrases - Retorna uma lista com todas as frases da
                           ferramenta escolhida. usada em conjunto com
-                          RetornaFraseDaLista
+                          RetornaFraseDaListaNotificar
    Entrada: $sock - Sock da base geral aberta
             $cod_ferramenta - cod_ferramenta a ser empregada
    Saida: Array com a lista de frases
@@ -77,12 +77,12 @@ function RetornaListaDeFrasesNotificar($sock, $cod_ferramenta, $cod_lingua)
 }
 
 /* ************************************************************************
-   RetornaFraseDaLista - Retorna a frase pedida da lingua atual
+   RetornaFraseDaListaNotificar - Retorna a frase pedida da lingua atual
    Entrada: $textos - Array com lista de frases (RetornaListaDeFrases)
             $cod_texto - cod_texto a ser empregado.
    Saida: Texto na lingua pedida
 */
-function RetornaFraseDaLista($textos, $cod_texto)
+function RetornaFraseDaListaNotificar($textos, $cod_texto)
 {
   return(ConverteAspas2Html($textos[$cod_texto]));
 }
