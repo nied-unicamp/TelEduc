@@ -56,7 +56,17 @@
   $raiz_www = $linha[0];
   $caminho = $raiz_www."/pagina_inicial";
 
-  if (!empty($_GET['cod_curso']))
+  
+  /* Vamos pegar o cod_curso, seja la por onde ele tenha vindo */
+  if (isset($_GET['cod_curso']) && $_GET['cod_curso'] != ""){
+  	$cod_curso = $_GET['cod_curso'];
+  } else if(isset($_POST['cod_curso']) && $_POST['cod_curso'] != ""){
+  	$cod_curso = $_POST['cod_curso'];
+  } else {
+  	// Estamos sem o cod_curso, tudo bem?
+  }
+  
+  if (!empty($cod_curso))
   {
     $query = "select cod_curso from Cursos where cod_curso = ".VerificaNumeroQuery($cod_curso);
     $res = Enviar($sock,$query);
@@ -64,12 +74,12 @@
     $curso_valido = $linha[0];
   }
 
-  $login = ehEmail($_POST['login'],$_POST['cod_curso']);
+  $login = ehEmail($_POST['login'],$cod_curso);
 
   if (!$cod_usuario = VerificaLoginSenha($login, $_POST['senha']))
   {
     Desconectar($sock);
-    header("Location:autenticacao.php?cod_curso=".$_POST['cod_curso']."&acao=erroAutenticacao&atualizacao=false");
+    header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
     exit;
   }
 
@@ -82,10 +92,10 @@
   $_SESSION['visao_formador_s'] = 1;
   //$_SESSION["logout_flag_s"];
 
-  if(!empty($_POST['cod_curso']) && !empty($_POST['destino']))
+  if(!empty($cod_curso) && !empty($_POST['destino']))
   {
     Desconectar($sock);
-    header("Location:{$caminho}/inscricao.php?cod_curso=".$_POST['cod_curso']."&tipo_curso=".$tipo_curso."");
+    header("Location:{$caminho}/inscricao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."");
   	exit;
   }
   else 
@@ -94,7 +104,7 @@
   	if(!empty($curso_valido))
     {
     	Desconectar($sock);
-    	header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$_POST['$cod_curso']);
+    	header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$cod_curso);
   		exit;
   	}
   	else 
@@ -128,7 +138,7 @@
   		else /* login e senha nao compativeis */
   		{
     		Desconectar($sock);
-    		header("Location:autenticacao.php?cod_curso=".$_POST['cod_curso']."&erro_autenticacao=1");
+    		header("Location:autenticacao.php?cod_curso=".$cod_curso."&erro_autenticacao=1");
   			exit;
   		}
   	}
