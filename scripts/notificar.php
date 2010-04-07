@@ -89,7 +89,7 @@
   {
     $L_host = gethostbyname($L_host);
   }
-/*TODO - descomentar
+
   // Impede que outro usuário execute arbitrariamente esse script.
   if (strcmp($L_host, $R_host) != 0)
   {
@@ -97,7 +97,7 @@
     echo("<br><font color=tomato size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br>");
     exit(); // Executado remotamente saí.
   }
-*/
+
   // Verifica se a variável que determina a forma de envio foi setada e se ela é valida. 
   // Note que o teste de validez inclui o teste <= 0, pois para esses usuários o script  
   // não processa.                                                                       
@@ -199,14 +199,12 @@
 
       		// Soma um tempo médio estipulado que o usuário gasta em uma ferramenta para 
       		// determinar se ele ainda se encontra online. Neste caso 25 minutos.   
-	      	//TODO : mudar o 0 pra 25 hehe     
-	      	$comp_acesso = $ultimo_acesso + (0 * 25 * 60);
+	      	$comp_acesso = $ultimo_acesso + (25 * 60);
 	
 	      	$frase = "";
 	      	$novo_flag = false;
 	
 		    // Se foram retornadas novidades então envia e-mail.
-		    //TODO: $novidade_ferramentas sempre volta um array, mesmo quando não tem novidades !
 	      	if ((is_array($novidade_ferramentas)) && (is_array($curso_ferramentas)))
 	      	{
         		foreach($novidade_ferramentas as $cod_ferr => $dados_ferr)
