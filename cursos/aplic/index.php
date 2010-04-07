@@ -44,6 +44,9 @@
   include($bibliotecas."geral.inc");
 
   $cod_curso = $_GET['cod_curso'];
+  if ($cod_curso == ""){
+    header("Location: ../../");
+  }
 
   if ($visitante=="sim")
     $_SESSION['visitante_s']="sim";
