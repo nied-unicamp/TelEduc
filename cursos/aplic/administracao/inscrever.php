@@ -65,7 +65,6 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
 
   //adicionar as acoes possiveis, 1o parametro Ã©
-  $feedbackObject->addAction("dadosPreenchidosEmail", 0, 282);
   $feedbackObject->addAction("dadosPreenchidosLogin", 0, 281);
 
   /*Funcao JavaScript*/
@@ -75,10 +74,100 @@
   echo("\n");
   echo("      function Iniciar()\n");
   echo("      {\n");
+  echo("		Popula_campo();\n");
   echo("        startList();\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      }\n\n");
-
+  
+  echo("function Popula_campo(){\n");
+  $j=1; 
+  echo("var i=0;");
+  echo("var nome=document.getElementsByName('nome[]');\n");
+  echo("var email=document.getElementsByName('email[]');\n");
+  echo("var login=document.getElementsByName('login[]');\n");
+  echo("tabela=document.getElementsByClassName('tabInterna');\n");
+  
+  //pega a $_SESSION correspondente ao retorno caso exista algum problema de login logo depois mata a $_SESSION
+  //para evitar que os dados permaneçam na memória por muito tempo
+  	
+  $dados_pree=$_SESSION['array_inscricao'];
+  unset($_SESSION['array_inscricao']);
+  
+  //percorre a variavel(matriz) correspondentes aos campos retornados, evitando que o usuário tenha que preencher 
+  //novamente
+  foreach($dados_pree as $cod => $linha){
+  	
+  			 $nome=$linha['nome'];
+  	  		 $email=$linha['email'];
+  		  	 $login=$linha['login'];
+  		  	 if($j<=5){
+  		  	 		echo("nome[i].value=\"$nome\";\n");
+  		  	 		echo("email[i].value=\"$email\";\n");
+  		  	 		echo("login[i].value=\"$login\";\n");	
+  					if($linha['status_login']==1){
+  								echo("var td_login=document.getElementById('login_'+$j);\n");
+  								echo("td_login.innerHTML='<span class=\"asterisco\">* </span>'+td_login.innerHTML;\n");
+  								echo("login[i].value=\"$login\";\n");	
+  				 	}
+  				 	echo("i++\n");
+  				 	$j++;
+  			}
+  			else{
+  				echo("linha=document.createElement('tr');\n");
+  				echo("td_numlinha=document.createElement('td');\n");
+  				echo("td_nome=document.createElement('td');\n");
+  				echo("td_email=document.createElement('td');\n");
+  				echo("td_login=document.createElement('td');\n");
+  				echo("td_numlinha=document.createElement('td');\n");
+  				echo("tr_addlogin=document.getElementById('addLogin');\n");
+  				
+  				echo("td_numlinha.innerHTML=\"<b>$j</b>\";\n");
+  				
+  				echo("nome=document.createElement('input');\n");
+  				echo("nome.setAttribute(\"name\",\"nome[]\");\n");
+  				echo("nome.setAttribute(\"type\",\"text\");\n");
+  				echo("nome.setAttribute(\"size\",\"20\");\n");
+  				echo("nome.setAttribute(\"maxlength\",\"127\");\n");
+  				echo("nome.className=\"input\";\n");
+  				echo("nome.value=\"$nome\";\n");
+  			  				
+  				echo("email=document.createElement('input');\n");
+  				echo("email.setAttribute(\"name\",\"email[]\");\n");
+  				echo("email.setAttribute(\"type\",\"text\");\n");
+  				echo("email.setAttribute(\"size\",\"30\");\n");
+  				echo("email.setAttribute(\"maxlength\",\"127\");\n");
+  				echo("email.className=\"input\";\n");
+  				echo("email.value=\"$email\";\n");
+  				
+  				echo("login=document.createElement('input');\n");
+  				echo("login.setAttribute(\"name\",\"login[]\");\n");
+  				echo("login.setAttribute(\"type\",\"text\");\n");
+  				echo("login.setAttribute(\"size\",\"10\");\n");
+  				echo("login.setAttribute(\"maxlength\",\"20\");\n");
+  				echo("login.className=\"input\";\n");
+  				echo("login.value=\"$login\";\n");
+  				
+  				echo("td_nome.appendChild(nome);\n");
+  				echo("td_email.appendChild(email);\n");
+  				echo("td_login.appendChild(login);\n");
+  				
+  				if($linha['status_login']==1){
+  					echo("td_login.innerHTML='<span class=\"asterisco\">* </span> <input type=\"text\" name=\"login[]\" class=\"input\" maxlength=\"20\" size=\"10\" value=\"$login\">';\n");	
+  				}
+  				
+  				echo("linha.appendChild(td_numlinha);\n");
+  				echo("linha.appendChild(td_nome);\n");
+  				echo("linha.appendChild(td_email);\n");
+  				echo("linha.appendChild(td_login);\n");
+  				
+  				echo("tr_addlogin.parentNode.insertBefore(linha,tr_addlogin);\n");
+  				
+  				$j++;
+  				
+  			} 
+  }
+  echo("}\n");
+  
   echo("      function verificar()\n");
   echo("      {\n");
   echo("        var nome,email,login;\n");
@@ -324,7 +413,7 @@
       echo("                    <td><b>".$i.".</b></td>\n");
       echo("                    <td><input class=\"input\" type=\"text\" name=\"nome[]\" size=\"20\" maxlength=\"127\"></td>\n");
       echo("                    <td><input class=\"input\" type=\"text\" name=\"email[]\" size=\"30\" maxlength=\"127\"></td>\n");
-      echo("                    <td><input class=\"input\" type=text name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
+      echo("                    <td id=\"login_$i\"><input class=\"input\" type=text name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
       echo("                  </tr>\n");
     }
     echo("                  <tr id=\"addLogin\">\n");
