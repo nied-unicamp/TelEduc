@@ -43,8 +43,8 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("administracao.inc");
-
-  $cod_usuario_global=VerificaAutenticacao($cod_curso);
+  
+   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");
 
@@ -195,44 +195,50 @@
         $dados_preenchidos_s[$i]['email']=$email[$i];
       }
     }
-    
     $logins=RetornaLoginsInscricao($sock);
     $emails=RetornaEmailsInscricao($sock);
 
     // booleano que indica se um login passado jah estah sendo usado por outro usuario
     $login_existente = false;
     $email_existente = false;
-
+    /*verifica se o usuario ja esta cadastrado, mudando o login para o dele, caso ele esteja cadastrado*/
+	foreach($dados_preenchidos_s as $cod =>$linha){
+		if($emails[strtoupper($linha['email'])]==1){
+					$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);/*pega o login do usuário*/
+					$dados_preenchidos_s[$cod]['status_email']=1;	
+		}
+		else
+			$dados_preenchidos_s[$cod]['status_email']=0;
+	}
     foreach($dados_preenchidos_s as $cod => $linha)
     {
-      if ($logins[strtoupper($linha['login'])]==1)
+      if ($logins[strtoupper($linha['login'])]==1 && $linha['status_email']==0)
       {
-        $dados_preenchidos_s[$cod]['login']="";
+        $dados_preenchidos_s[$cod]['login'];
+        $dados_preenchidos_s[$cod]['status_login']=1;
+        $dados_preenchidos_s[$cod]['login']=GeraLogin($sock,$linha['email']);
         $login_existente=true;
       }
-
-      if ($emails[strtoupper($linha['email'])]==1)
-      {
-        $dados_preenchidos_s[$cod]['email']="";
-        $email_existente=true;
-      }
     }
 
-    if(($login_existente == true) || ($email_existente == true))
-    {
-    	if($email_existente == true)
-    		header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosEmail&atualizacao=false");
-    	if($login_existente == true)
-        	header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
-    	
-    }
+    if(($login_existente == true)){
+    	$_SESSION['array_inscricao']=$dados_preenchidos_s;
+       	header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
+    }  	
     else
     {
       foreach($dados_preenchidos_s as $cod => $linha)
       {
         $linha['tipo_usuario']=$tipo_usuario;
         $linha['senha']=GeraSenha();
-        $sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
+        if($linha['status_email']==1){
+        		$cadastrado=CadastradoCurso($sock,$linha['status_email'],$linha['login'],$cod_curso);
+        		if($cadastrado==false) 
+         				$sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);	
+        }
+        else
+        	$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
+        
       }
       $dados_preenchidos_s = "";
 
