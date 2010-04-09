@@ -69,6 +69,41 @@ function RetDiretorio($sock,$item)
   return $linha['diretorio'];
 }
 
+/*
+  GeraLogin- Retorna um login válido, apartir do email do usuário
+  Entrada: Email do usuário
+  Saída:   Login válido 	
+ */
+function GeraLogin($sock,$email){
+		$novo_email=explode("@",$email);/*cria login apartir da primeira parte do email do usuario*/	
+		$novo_email=$novo_email[0];		/*pega a primeira parte do email*/	
+
+		/*abaixo verificamos se o login criado apartir do email do usuário ja existe*/
+		$logins=RetornaLoginsInscricao($sock);
+		$i=2;
+		$teste=$novo_email;
+		while($logins[strtoupper($teste)]==1){
+					$teste=$novo_email.'_'.$i;
+					$i++;
+			}
+	   $novo_email=$teste;	
+	   return ($novo_email);
+}
+
+/*
+  Retorna Login de um usuário apartir de um email fornecido
+  Entrada: email do usuário
+  Saída:   Login do usuário	
+*/
+function PegaLogin($sock,$email){
+	  $dbnamebase = $_SESSION['dbnamebase'];
+  	  $query="select login from ".$dbnamebase.".Usuario where email='$email'";
+  	  $res=Enviar($sock,$query);
+  	  $login=RetornaLinha($res);
+  	  return($login[0]);	  	  
+}
+ 
+ 
 /* *********************************************************************
    HouveAlteracoes - Verifica se houve alteraï¿½ï¿½es nas bases de dados
                      utilizada pela administraï¿½ï¿½o.
@@ -386,50 +421,79 @@ function ExisteEmail($sock,$cod_curso,$email, $cod_usuario)
                                ['senha']
    Saida: $sock com a base do curso  (necessï¿½rio por causa do e-mail)
 */
+/*Retorna o codigo do usuario através do login caso ele exista*/
+function RetornaCodigoUsuario($sock,$login){
+	
+		$dbnamebase = $_SESSION['dbnamebase'];
+	    $query="select cod_usuario from ".$dbnamebase.".Usuario where login='$login'";
+  		$res=Enviar($sock,$query);
+  		$linha=RetornaLinha($res);
+  		return($linha[0]);
+}
+/*verifica se o usuario ja esta cadastrado no curso antes de cadastra-lo novamente
+  entrada-  $sock - BASE DO CURSO
+  			$cod_curso - codigo do curso a ser verificado
+			$dados['login do usuario a ser verificado']		
+ */
+
+function CadastradoCurso($sock,$status_email,$login,$cod_curso){
+	
+		$dbnamebase = $_SESSION['dbnamebase'];
+		$status=false;
+		$codigo=RetornaCodigoUsuario($sock,$login);
+		
+		$query="select cod_usuario_global from ".$dbnamebase.".Usuario_curso where cod_curso=$cod_curso";
+		$res=Enviar($sock,$query);
+		
+		while($linha = RetornaLinha($res)){
+					if($linha['cod_usuario_global']==$codigo)
+						$status=true;
+				}
+				
+		return($status);	
+			
+}
+
 function CadastrarUsuario($sock,$cod_curso,$dados, $lista_frases, $cod_usuario)
 {
 
-//   global $lista_frases,$_SESSION['cod_lingua_s'];
-
-
-
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-  $cod_lingua_s = $_SESSION['cod_lingua_s'];
+		// 2Session
+  		$dbnamebase = $_SESSION['dbnamebase'];
+  		$cod_lingua_s = $_SESSION['cod_lingua_s'];
   
-  $data_inscricao = time();
+  		$data_inscricao = time();
 
-  $cod_usuario_global_prox = RetornaProximoCodigo($sock,$dbnamebase.".Usuario");
-  $query="insert into ".$dbnamebase.".Usuario (cod_usuario,nome,login,email,senha,data_inscricao,cod_lingua) values (".$cod_usuario_global_prox.",'".$dados['nome']."','".$dados['login']."','".$dados['email']."','".crypt($dados['senha'],"AA")."',".$data_inscricao.",".$_SESSION['cod_lingua_s'].")";
-  Enviar($sock,$query);
+  		$cod_usuario_global_prox = RetornaProximoCodigo($sock,$dbnamebase.".Usuario");
+  		$query="insert into ".$dbnamebase.".Usuario (cod_usuario,nome,login,email,senha,data_inscricao,cod_lingua) values (".$cod_usuario_global_prox.",'".$dados['nome']."','".$dados['login']."','".$dados['email']."','".crypt($dados['senha'],"AA")."',".$data_inscricao.",".$_SESSION['cod_lingua_s'].")";
+  		Enviar($sock,$query);
 
-  $cod_usuario_prox = RetornaProximoCodigoUsuarioCurso($sock,$cod_curso);
-  $query="insert into ".$dbnamebase.".Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values ('".$cod_usuario_global_prox."','".$cod_usuario_prox."','".$cod_curso."','".$dados['tipo_usuario']."',".$data_inscricao.")";
-  Enviar($sock,$query);
+  		$cod_usuario_prox = RetornaProximoCodigoUsuarioCurso($sock,$cod_curso);
+  		$query="insert into ".$dbnamebase.".Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values ('".$cod_usuario_global_prox."','".$cod_usuario_prox."','".$cod_curso."','".$dados['tipo_usuario']."',".$data_inscricao.")";
+  		Enviar($sock,$query);
 
-  $query = "insert into ".$dbnamebase.".Usuario_config (cod_usuario,cod_curso,notificar_email) values ('".$cod_usuario_prox."','".$cod_curso."','0')";
-  Enviar($sock, $query);
+  		$query = "insert into ".$dbnamebase.".Usuario_config (cod_usuario,cod_curso,notificar_email) values ('".$cod_usuario_prox."','".$cod_curso."','0')";
+  		Enviar($sock, $query);
+ 
+  		$dados_curso=DadosCursoParaEmail($sock, $cod_curso);
 
-  $dados_curso=DadosCursoParaEmail($sock, $cod_curso);
+  		$remetente=$dados_curso['email'];
+  		$destino=$dados['email'];
 
-  $remetente=$dados_curso['email'];
-  $destino=$dados['email'];
+  		Desconectar($sock);
+  		$sock=Conectar("");
 
-  Desconectar($sock);
-  $sock=Conectar("");
+  		$query="select valor from Config where item='host'";
+  		$res=Enviar($sock,$query);
+  		$linha=RetornaLinha($res);
+  		$host=$linha['valor'];
 
-  $query="select valor from Config where item='host'";
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  $host=$linha['valor'];
-
-  $query="select diretorio from Diretorio where item='raiz_www'";
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  $raiz_www=$linha['diretorio'];
-
-  /* 63 - TelEduc: Inscriï¿½ï¿½o */
-  $assunto=RetornaFraseDaLista($lista_frases,63);
+  		$query="select diretorio from Diretorio where item='raiz_www'";
+  		$res=Enviar($sock,$query);
+ 		$linha=RetornaLinha($res);
+  		$raiz_www=$linha['diretorio'];
+  	
+  		/* 63 - TelEduc: Inscriï¿½ï¿½o */
+  		$assunto=RetornaFraseDaLista($lista_frases,63);
   
   if ($dados['tipo_usuario']=="A")
   {
@@ -491,8 +555,9 @@ function CadastrarUsuario($sock,$cod_curso,$dados, $lista_frases, $cod_usuario)
   MandaMsg($remetente,$destino,$assunto,$mensagem_envio);
 
   $sock=Conectar($cod_curso);
-
+  	
   return ($sock);
+  
 }
 
 /* *********************************************************************
