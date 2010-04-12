@@ -643,18 +643,51 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 
 /********************************************************************
  * 23 - Exercicios
- *******************************************************************/  
-  $query = "select cod_usuario, data from Exercicios_modelo ";
-  $query.= "where (situacao = 'A') ";
+ *******************************************************************/
+/*
+ * Casos de notificação criados e testados:
+ * query1:
+ * 1. Usuarios recebem notificação de um exercicio aplicado.
+ * 2. Formadores recebem notificação de um exercício aplicado, salve o que criou.
+ * 3. Formadores recebem notificação de exercícios criados e/ou modificações
+ * query2:
+ * 4. Formadores recebem notificação quando um aluno submete resposta
+ * 5. Alunos recebem notificação quando Exercicío é corrigido.
+ */  
+  $query1 = "select cod_usuario, data from Exercicios_modelo ";
+  $query1.= "where (situacao = 'A') ";
+  $query2 = "select dt_submissao as data from Exercicios_resolucao ";
+  $query2.= "where ((submetida = 'S') ";
   if ($formador)
-  	$query.= "or (tipo_compartilhamento = 'F') ";
-  $query.= "order by data desc limit 1";
-  $res = Enviar($sock, $query);
+  {
+  	$query1.= "or (situacao = 'C') ";
+  	$query1.= "or (tipo_compartilhamento = 'F') ";
+  	$query2.= "and (corrigida = 'N')) ";
+  }
+  else
+  {
+  	$query2.= "and (corrigida = 'S') and (cod_usuario = ".$cod_usuario." )) ";
+  }
+  $query1.= "and (status != 'L') ";
+  $query1.= "order by data desc limit 1";
+  $query2.= "and (status != 'L') ";
+  $query2.= "order by data desc limit 1";
+  
+  $res = Enviar($sock, $query1);
   if (RetornaNumLinhas($res) > 0)
   {
   	$linha = RetornaLinha($res);
   	$saida[23]['data'] = $linha['data'];
   	$saida[23]['cod_usuario'] = $linha['cod_usuario'];
+  }
+  
+  $res = Enviar($sock, $query2);
+  if (RetornaNumLinhas($res) &&
+  	  ( $linha['data'] > $saida[23]['data']));
+  {
+  	$linha = RetornaLinha($res);
+  	$saida[23]['data'] = $linha['data'];
+  	$saida[23]['cod_usuario'] = -1;
   }
   
 /********************************************************************
