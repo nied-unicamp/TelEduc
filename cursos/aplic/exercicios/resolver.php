@@ -658,7 +658,7 @@ else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 	{
 		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='".RetornaFraseDaLista($lista_frases, 190)."'></td></tr>");
 	}
-	else{//Permite enviar novamente a resolução
+	else if($disponivel){//Permite enviar novamente a resolução
 			/* Frase #189 - Entregar */
 		echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
 		echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
