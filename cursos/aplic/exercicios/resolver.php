@@ -478,9 +478,9 @@ echo("                  </tr>\n");
 
 echo("                  <tr class=\"head01\">\n");
 /* Frase #13 - Titulo */
-echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+echo("                    <td colspan=\"2\"class=\"alLeft\" >".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
 /* Frase #14 - Nota */
-echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 14)."</td>\n");
+//echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 14)."</td>\n");
 /* Frase #15 - Valor */
 echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 15)."</td>\n");
 /* Frase #60 - Tipo */
@@ -531,8 +531,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		
 		
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
-		echo("                    <td>".$nota."</td>\n");
+		echo("                    <td colspan=\"2\" align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
+		//echo("                    <td>".$nota."</td>\n");
 		echo("                    <td>".$valor."</td>\n");
 		echo("                    <td>".$tipo."</td>\n");
 		echo("                    <td>".$topico."</td>\n");
