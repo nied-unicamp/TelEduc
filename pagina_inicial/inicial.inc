@@ -1348,4 +1348,18 @@ function AtualizaSenhaUsuario($sock,$cod_usuario,$senha)
   $res=Enviar($sock,$query);
 }
 
+/* *********************************************************************
+   CursoValido - Retorna estado do curso
+   Entrada: $sock - BASE GERAL
+            $cod_curso
+   Saida: curso_valido
+*/
+function CursoValido($sock, $cod_curso){
+    $query = "select cod_curso from Cursos where cod_curso = ".VerificaNumeroQuery($cod_curso);
+    $res = Enviar($sock,$query);
+    $linha = RetornaLinha($res);
+    $curso_valido = $linha[0];
+    return($curso_valido);
+}
+
 ?>

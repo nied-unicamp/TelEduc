@@ -63,7 +63,7 @@ function AcessoNegado()
 
 
 /* *********************************************************************
-   VerificaLoginSenha - Verifica se login e senha são validos para dado curso
+   VerificaLoginSenha - Verifica se login/email e senha são validos para dado curso
    Entrada: $cod_curso - Codigo do curso
 	    $login     - login fornecido pelo usuario
             $senha     - senha fornecida pelo usuario
@@ -79,7 +79,7 @@ function VerificaLoginSenha ($login, $senha)
     $query="select valor from Config where item='admtele'";
   }else{
     //Seleciona senha, código global do usuario e codigo de confirmacao de cadastro
-    $query="select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
+    $query="select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' OR email='".VerificaStringQuery($login)."'";
   }
 
   $res=Enviar($sock,$query);
@@ -120,6 +120,7 @@ function ehEmail($login,$cod_curso){
 		}else{ 
     		Desconectar($sock);
     		header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+    		exit;
 		}
 	}	
     return $login;

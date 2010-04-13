@@ -43,6 +43,7 @@
   
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
+  include("inicial.inc");
   include("autenticacao.inc");
   
   $cod_ferramenta=8;
@@ -50,98 +51,68 @@
 
   $lista_frases=RetornaListaDeFrases($sock,9);
 
-  $query = "select diretorio from Diretorio where item = 'raiz_www'";
-  $res = Enviar($sock,$query);
-  $linha = RetornaLinha($res);
-  $raiz_www = $linha[0];
+  $raiz_www = RetornaRaizWWW($sock);
   $caminho = $raiz_www."/pagina_inicial";
 
-  
+
   /* Vamos pegar o cod_curso, seja la por onde ele tenha vindo */
   if (isset($_GET['cod_curso']) && $_GET['cod_curso'] != ""){
   	$cod_curso = $_GET['cod_curso'];
   } else if(isset($_POST['cod_curso']) && $_POST['cod_curso'] != ""){
   	$cod_curso = $_POST['cod_curso'];
-  } else {
-  	// Estamos sem o cod_curso, tudo bem?
-  }
-  
-  if (!empty($cod_curso))
-  {
-    $query = "select cod_curso from Cursos where cod_curso = ".VerificaNumeroQuery($cod_curso);
-    $res = Enviar($sock,$query);
-    $linha = RetornaLinha($res);
-    $curso_valido = $linha[0];
   }
 
-  $login = ehEmail($_POST['login'],$cod_curso);
-
+  /* Verifica se o usuario e a senha estao corretos */
   if (!$cod_usuario = VerificaLoginSenha($login, $_POST['senha']))
   {
     Desconectar($sock);
     header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
     exit;
-  }
-
+  }  
+  
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
   $_SESSION['cod_usuario_s'] = (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
   $_SESSION['login_usuario_s'] = $login;
-  //$_SESSION['tipo_usuario_s'] = "";
-  $_SESSION['cod_lingua_s'] = $cod_lingua; //??
-  $_SESSION['visitante_s'] = $cod_visitante_s; //??
+  $_SESSION['cod_lingua_s'] = $cod_lingua;
+  $_SESSION['visitante_s'] = $cod_visitante_s;
   $_SESSION['visao_formador_s'] = 1;
-  //$_SESSION["logout_flag_s"];
-
-  if(!empty($cod_curso) && !empty($_POST['destino']))
+  
+  /* Verifica se o cod_curso corresponde a um curso valido e 
+   * se foi fornecido algum cod_curso no ato de login 
+   */
+  $curso_valido = (!empty($cod_curso) ? CursoValido($sock, $cod_curso) : "");
+  if(!empty($curso_valido))
   {
     Desconectar($sock);
-    header("Location:{$caminho}/inscricao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."");
+    header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$cod_curso);
   	exit;
   }
   else 
   {
-  	// Caso possua cod_curso, redireciona para o curso.
-  	if(!empty($curso_valido))
+    /* Verifica se quem esta fazendo login eh o administrador do ambiente, admtele */
+    if($_SESSION["cod_usuario_global_s"] == -1)
     {
-    	Desconectar($sock);
-    	header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$cod_curso);
-  		exit;
-  	}
-  	else 
-  	{
-  		// Caso login e senha sejam compativeis
-  		if(!empty ($cod_usuario))
-  		{
-    		// Se for admtele
-    		if($_SESSION["cod_usuario_global_s"] == -1)
-    		{
-      			Desconectar($sock);
-      			header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
-    			exit;
-    		}
-    		else /* para os outros usuarios */ 
-    		{
-    			Desconectar($sock);
-    			// Caso veio através de redirecionamento por email
-    			// Redireciona o usuario para a antiga pagina
-    			if (!empty($_SESSION['url_de_acesso']))
-    			{
-    				header("Location:".$_SESSION['url_de_acesso']);
-    				unset($_SESSION['url_de_acesso']);
-    				exit;
-    			}
-    			// Do contrario, exibe os cursos
-    			header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
-    			exit;
-    		}
-  		}
-  		else /* login e senha nao compativeis */
-  		{
-    		Desconectar($sock);
-    		header("Location:autenticacao.php?cod_curso=".$cod_curso."&erro_autenticacao=1");
-  			exit;
-  		}
-  	}
+      Desconectar($sock);
+      header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
+      exit;
+    }
+    else
+    {
+      /* Usuario comum esta fazendo o login */
+      Desconectar($sock);
+
+      /* Se o usuario recebeu algum email com endereco especifico, mande ele para la */
+      if (!empty($_SESSION['url_de_acesso']))
+      {
+      	$urldeacesso = $_SESSION['url_de_acesso'];
+      	unset($_SESSION['url_de_acesso']);
+    	header("Location:".$urldeacesso);
+    	exit;
+      }
+    	/* Redireciona para a tela de Meus Cursos */
+    	header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
+    	exit;
+    }
   }
   Desconectar($sock);
   exit;

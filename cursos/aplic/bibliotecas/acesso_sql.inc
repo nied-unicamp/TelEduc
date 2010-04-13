@@ -733,4 +733,17 @@ function EnviarNC($sock, $query)
   return($ms);
 }
 
+/* **********************************************
+   RetornaRaizWWW - Retorna a raiz_www
+   Entradas: $sock - Sock da base geral
+   Saida: raiz_www
+*/  
+function RetornaRaizWWW($sock){
+  $query = "select diretorio from Diretorio where item = 'raiz_www'";
+  $res = Enviar($sock,$query);
+  $linha = RetornaLinha($res);
+  $raiz_www = $linha[0];
+  return ($raiz_www);
+}
+
 ?>

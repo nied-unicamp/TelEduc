@@ -43,7 +43,6 @@
   $bibliotecas = "../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc"); 
   include("exibe_cursos.inc");
-
   $pag_atual = "exibe_cursos.php";
   // Inicio TopoTela
   $sock=Conectar("");
@@ -53,9 +52,11 @@
   else if(!empty($_SESSION['login_usuario_s']))
   {
     $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
+    $cod_lin = ($cod_lin == NULL) ? 1 : $cod_lin;
     MudancaDeLingua($sock,$cod_lin);
   }
 	
+
   $cod_ferramenta = -3;//Cursos
   $lista_frases = RetornaListaDeFrases($sock,$cod_ferramenta);
   
