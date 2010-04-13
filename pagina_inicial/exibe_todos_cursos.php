@@ -86,10 +86,7 @@
   $lista_frases_autenticacao = RetornaListaDeFrases($sock, 25);
 
   /* Obtï¿½ a raiz_www */
-  $query = "select diretorio from Diretorio where item = 'raiz_www'";
-  $res = Enviar($sock,$query);
-  $linha = RetornaLinha($res);
-  $raiz_www = $linha[0];
+  $raiz_www = RetornaRaizWWW($sock);
 
 
   /* Caso o usuário não tenha preenchido seus dados pessoais, manda para tela de preenchimento. */

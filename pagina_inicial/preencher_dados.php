@@ -60,11 +60,7 @@
   if (empty($_SESSION['login_usuario_s']))
   {
     /* Obt� a raiz_www */
-    //$sock = Conectar("");
-    $query = "select diretorio from Diretorio where item = 'raiz_www'";
-    $res = Enviar($sock,$query);
-    $linha = RetornaLinha($res);
-    $raiz_www = $linha[0];
+	$raiz_www = RetornaRaizWWW($sock);
 
     $caminho = $raiz_www."/pagina_inicial";
 
