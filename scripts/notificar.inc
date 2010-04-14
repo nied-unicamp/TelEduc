@@ -208,6 +208,20 @@ function RetornaMaiorItemComentario($sock,$cod_topico,$tipo_comp,$dados,$cod_usu
   return $dados;
 }
 
+/* *******************************************************************
+    RetornaGruposDoUsuario - Retorna os cod_grupo de todos os grupos nï¿½ apagados
+                              a que o usuario pertence
+    entrada: $sock - sock de conexao
+              $cod_usuario - codigo do usuario do qual listar os grupos
+**/
+function RetornaGruposDoUsuarioNotificar($sock,$cod_usuario)
+{
+	$query = "select grupoUsuario.cod_grupo as cod_grupo from Grupos_usuario as grupoUsuario, Grupos as grupo ";
+	$query.= "where (grupoUsuario.cod_usuario = 16) and (grupo.cod_grupo = grupoUsuario.cod_grupo) ";
+	$query.= "and ((grupo.status = 'A') or (grupo.status = 'T'))";
+    $res=Enviar($sock,$query);
+    return (RetornaNumLinhas($res) > 0) ? RetornaArrayLinhas($res) : null;
+}
 
 /* *********************************************************************
    RetornaNovidadeFerramentas - retorna um array com as datas das últimas
@@ -644,46 +658,66 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 /********************************************************************
  * 23 - Exercicios
  *******************************************************************/
-/*
- * Casos de notificação criados e testados:
- * query1:
- * 1. Usuarios recebem notificação de um exercicio aplicado.
- * 2. Formadores recebem notificação de um exercício aplicado, salve o que criou.
- * 3. Formadores recebem notificação de exercícios criados e/ou modificações
- * query2:
- * 4. Formadores recebem notificação quando um aluno submete resposta
- * 5. Alunos recebem notificação quando Exercicío é corrigido.
- */  
-  $query1 = "select cod_usuario, data from Exercicios_modelo ";
-  $query1.= "where (situacao = 'A') ";
+ /**
+  * TODO: Falta adicionar lógica de tempo, uma notificação não deve ser entregue
+  * 	a um usuario antes de terminar o deadline para resolver o exercício e
+  * 	antes de um professor entregar a correção (alternativas e discursivas)
+  * 	ticket #223
+  */
   $query2 = "select dt_submissao as data from Exercicios_resolucao ";
   $query2.= "where ((submetida = 'S') ";
+  
   if ($formador)
   {
-  	$query1.= "or (situacao = 'C') ";
-  	$query1.= "or (tipo_compartilhamento = 'F') ";
+  	$query1 = "select data from Exercicios_modelo ";
+  	$query1.= "where ((situacao = 'A') or (situacao = 'C')) ";
+  	  	
   	$query2.= "and (corrigida = 'N')) ";
   }
   else
   {
-  	$query2.= "and (corrigida = 'S') and (cod_usuario = ".$cod_usuario." )) ";
+  	$query1 = "select aplic.dt_disponibilizacao as data from Exercicios_aplicado as aplic, Exercicios_modelo as modelo ";
+  	$query1.= "where ((modelo.cod_exercicio = aplic.cod_exercicio) and (modelo.situacao='A')) ";
+  	$query2.= "and (corrigida = 'S') ";
+  	
+  	// Para questões individuais
+  	$query2.= "and ((cod_usuario = ".$cod_usuario.") ";
+
+  	// Para questões em grupo
+  	$lista_grupos = RetornaGruposDoUsuarioNotificar($sock, $cod_usuario);
+  	$num_grupos = count($lista_grupos);
+  	for ($i = 0; $i < $num_grupos; $i++)
+  		$query2.= "or (cod_grupo = ".$lista_grupos[$i]['cod_grupo'].") ";
+  	
+  	$query2.= ")) ";
   }
+  
   $query1.= "and (status != 'L') ";
   $query1.= "order by data desc limit 1";
+  
   $query2.= "and (status != 'L') ";
   $query2.= "order by data desc limit 1";
-  
+
+  /**
+   	* 1. Usuarios recebem notificação de um exercicio aplicado.
+ 	* 2. Formadores recebem notificação de um exercício aplicado, salve o que criou.
+ 	* 3. Formadores recebem notificação de exercícios criados e/ou modificações
+   **/
   $res = Enviar($sock, $query1);
   if (RetornaNumLinhas($res) > 0)
   {
   	$linha = RetornaLinha($res);
   	$saida[23]['data'] = $linha['data'];
-  	$saida[23]['cod_usuario'] = $linha['cod_usuario'];
+  	$saida[23]['cod_usuario'] = -1;
   }
-  
+
+  /**
+  	* 4. Formadores recebem notificação quando um aluno submete resposta
+ 	* 5. Alunos recebem notificação quando Exercicío é corrigido. (Individual ou em Grupo)
+   **/
   $res = Enviar($sock, $query2);
   if (RetornaNumLinhas($res) &&
-  	  ( $linha['data'] > $saida[23]['data']));
+  	  ($linha['data'] > $saida[23]['data'])) 
   {
   	$linha = RetornaLinha($res);
   	$saida[23]['data'] = $linha['data'];
