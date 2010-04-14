@@ -45,6 +45,7 @@
 
   if (empty($cod_curso)){
     header("Location: ../../");
+    exit;
   }
 
   if ($visitante=="sim")
