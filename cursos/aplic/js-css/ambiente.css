@@ -28,7 +28,9 @@ a:visited { color:#4181a3; text-decoration:none; }
 a:hover { color:#1c4c66; text-decoration:underline; }
 
 /*classe para span*/
-
+span.asterisco{
+	font:16px Arial, Verdana, Trebuchet MS; color:#FF0000;
+	}
 span.paginacao{
 	cursor:pointer;
 	}
@@ -39,7 +41,7 @@ span.paginacao{
 h1 { 
 	z-index:1;
 	position:absolute; top:0px;
-	width:113px; height:46px; padding-top:24px; margin-left:6px;
+	width:113px; height:46px; padding-top:24px; margin-left:8px;
 }
 h3 {
 	font-size:1.1em; font-weight:bold; color:#FFFFFF;
