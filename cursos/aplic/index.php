@@ -43,7 +43,6 @@
   $bibliotecas="bibliotecas/";
   include($bibliotecas."geral.inc");
 
-  $cod_curso = $_GET['cod_curso'];
   if (empty($cod_curso)){
     header("Location: ../../");
   }
