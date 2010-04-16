@@ -1183,7 +1183,7 @@
 	");
   
   echo("	function ApagarExercicio(){
-				xajax_AlteraStatusExercicioInternoDinamic(".$cod_curso.",".$cod_exercicio.",'L');
+				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');
   			}	
   ");
 	

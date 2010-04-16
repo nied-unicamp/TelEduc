@@ -1466,12 +1466,19 @@ function EditarTituloExercicioDinamic($cod_curso, $cod_exercicio, $novo_nome, $c
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
-  // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
-  $data = time();
-
   $sock=Conectar($cod_curso);
-  $consulta="update Exercicios_modelo set titulo='".VerificaStringQuery(htmlentities($novo_nome))."' where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
-  $res=Enviar($sock, $consulta);
+  $data = time();
+  
+  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteração)
+  $query = "update Exercicios_modelo set titulo='".VerificaStringQuery(htmlentities($novo_nome))."', ";
+  $query.= "data=".$data." where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res = Enviar($sock, $query);
+  
+  // Inserindo alteração na tabela Exercicios_modelo_historico
+  $query = "insert into Exercicios_modelo_historico ";
+  $query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  $query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'E')";
+  $res = Enviar($sock, $query);
 
   Desconectar($sock);
 
@@ -1535,10 +1542,19 @@ function EditarTextoExercicioDinamic($cod_curso, $cod_exercicio, $novo_texto, $c
 
   $novo_texto=ConverteAspas2BarraAspas($novo_texto);
   $sock=Conectar($cod_curso);
+  $data = time();
+  
+  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteração)
+  $query = "update Exercicios_modelo set texto='".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."', ";
+  $query.= "data=".$data." where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $res=Enviar($sock, $query);
 
-  $consulta="update Exercicios_modelo set texto='".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."' where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
-  $res=Enviar($sock, $consulta);
-
+  // Inserindo alteração na tabela Exercicios_modelo_historico
+  $query = "insert into Exercicios_modelo_historico ";
+  $query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  $query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'E')";
+  $res = Enviar($sock, $query);
+  
   Desconectar($sock);
 
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
@@ -1635,13 +1651,29 @@ function EntregaExercicio($sock, $cod_resolucao){
    Saida: XML da funÃ§Ã£o Ajax
 */
 function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $texto){
-
+  //obs: cod_item = cod_exercicio
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $arq=htmlspecialchars_decode($arq);
   
   RemoveDiretorio($arq);
+  
+  $sock=Conectar($cod_curso);
+  $data = time();
+  
+  // Alterando o status e a data (referente a modificação feita = recuperada)
+  $query = "update Exercicios_modelo data = ".$data;
+  $query.= "where cod_exercicio = ".$cod_exercicio;
+  Enviar($sock,$query);
+    
+  // Inserindo alteração na tabela Exercicios_modelo_historico
+  $query = "insert into Exercicios_modelo_historico ";
+  $query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  $query.= "(".$cod_item.", ".$cod_usuario.", ".$data.", 'N')";
+  $res = Enviar($sock, $query);
 
+  Desconectar($sock);
+  
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
   return $objResponse->getXML();
@@ -1873,12 +1905,24 @@ function AlteraStatusQuestaoDinamic($cod_curso, $cod_questao, $status)
     return $objResponse->getXML();
 }
 
-function AlteraStatusExercicioInternoDinamic($cod_curso, $cod_exercicio, $status)
+function AlteraStatusExercicioInternoDinamic($cod_usuario, $cod_curso, $cod_exercicio, $status)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
+    
     $sock=Conectar($cod_curso);
-    $query = "update Exercicios_modelo set status = '".$status."' where cod_exercicio = ".$cod_exercicio;
+    $data = time();
+    
+    // Alterando o status e a data (referente a modificação feita = recuperada)
+    $query = "update Exercicios_modelo set status = '".$status."', ";
+    $query.= "data = ".$data." where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
+    
+   	// Inserindo alteração na tabela Exercicios_modelo_historico
+  	$query = "insert into Exercicios_modelo_historico ";
+  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", '".$status."')";
+  	$res = Enviar($sock, $query);
+    
     Desconectar($sock);
 
  	$objResponse->addRedirect("exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
@@ -1894,14 +1938,23 @@ function AlteraStatusExercicioInternoDinamic($cod_curso, $cod_exercicio, $status
 		   $status - status da questao (V - valido; L - lixeira;X - excluido definitivamente)	
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function AlteraStatusExercicioDinamic($cod_curso, $cod_exercicio, $status)
+function AlteraStatusExercicioDinamic($cod_usuario, $cod_curso, $cod_exercicio, $status)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
  
     $sock=Conectar($cod_curso);
- 
-    $query = "update Exercicios_modelo set status = '".$status."' where cod_exercicio = ".$cod_exercicio;
+ 	$data = time();
+    
+ 	// Alterando o status e a data (referente a modificação feita = recuperada)
+    $query = "update Exercicios_modelo set status = '".$status."', ";
+    $query.= "data = ".$data." where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
+    
+  	// Inserindo alteração na tabela Exercicios_modelo_historico
+  	$query = "insert into Exercicios_modelo_historico ";
+  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", '".$status."')";
+  	$res = Enviar($sock, $query);
  
     Desconectar($sock);
  
@@ -1973,7 +2026,7 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
 		   $cod_questao - codigo da questao
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao)
+function AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $cod_questao)
 { 
 		$cod_exercicio = VerificaNumeroQuery($cod_exercicio);
 	
@@ -1989,8 +2042,23 @@ function AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao)
 		}
 		
     $sock=Conectar($cod_curso);
-    $query = "insert ignore into Exercicios_modelo_questao (cod_exercicio,cod_questao,valor,status) values ".$values;
+    $data = time();
+    
+    $query = "insert ignore into Exercicios_modelo_questao ";
+    $query.= "(cod_exercicio,cod_questao,valor,status) values ".$values;
     Enviar($sock,$query);
+    
+    // Alterando o status e a data (referente a modificação feita = recuperada)
+    $query = "update Exercicios_modelo data = ".$data;
+    $query.= "where cod_exercicio = ".$cod_exercicio;
+    Enviar($sock,$query);
+    
+    // Inserindo alteração na tabela Exercicios_modelo_historico
+  	$query = "insert into Exercicios_modelo_historico ";
+  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'I')";
+  	$res = Enviar($sock, $query);
+        
     Desconectar($sock);
 }
 
@@ -2045,13 +2113,29 @@ function AtualizaValorTotalExercicioDinamic($cod_curso, $cod_exercicio)
            $cod_questao - codigo da questao
   Saida: XML da funcao ajax
 ********************************************************************************************************/
-function ExluirQuestaoDoExercicioDinamic($cod_curso, $cod_exercicio, $cod_questao)
+function ExluirQuestaoDoExercicioDinamic($cod_usuario, $cod_curso, $cod_exercicio, $cod_questao)
 { 
     $objResponse = new xajaxResponse('ISO-8859-1');
  
     $sock=Conectar($cod_curso);
-    $query = "delete from Exercicios_modelo_questao where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio)." and cod_questao = ".VerificaNumeroQuery($cod_questao);
+    $data = time();
+    
+    $query = "delete from Exercicios_modelo_questao ";
+    $query.= "where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio)." ";
+    $query.= "and cod_questao = ".VerificaNumeroQuery($cod_questao);
     Enviar($sock,$query);
+    
+    // Alterando o status e a data (referente a modificação feita = recuperada)
+    $query = "update Exercicios_modelo data = ".$data;
+    $query.= "where cod_exercicio = ".$cod_exercicio;
+    Enviar($sock,$query);
+    
+    // Inserindo alteração na tabela Exercicios_modelo_historico
+  	$query = "insert into Exercicios_modelo_historico ";
+  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'R')";
+  	$res = Enviar($sock, $query);
+    
     Desconectar($sock);
     
     return $objResponse->getXML();
@@ -2090,13 +2174,21 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
     }
     
  	$data = time();
-    $query = "insert into Exercicios_aplicado (cod_exercicio,dt_disponibilizacao,dt_limite_submissao,tp_aplicacao,disp_gabarito,avaliacao)";
-    $query.= "values(".VerificaNumeroQuery($cod_exercicio).",".$unixTimeDisp.",".$unixTimeEntrega.",'".$tp_aplicacao."','".$disp_gabarito."','".$cod_avaliacao."')";
+ 	
+ 	// Cria o exercicio na tabela Exercicios_aplicados
+    $query = "insert into Exercicios_aplicado (cod_exercicio,dt_disponibilizacao,dt_limite_submissao,tp_aplicacao,disp_gabarito,avaliacao) ";
+    $query.= "values (".VerificaNumeroQuery($cod_exercicio).",".$unixTimeDisp.",".$unixTimeEntrega.",'".$tp_aplicacao."','".$disp_gabarito."','".$cod_avaliacao."')";
     Enviar($sock,$query);
     
-    $query = "update Exercicios_modelo set situacao = 'A' where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
+    // Atualiza o status e a data do modelo do exercício em Exercicios_modelo
+    $query = "update Exercicios_modelo set situacao = 'A', ";
+    $query.= "data = ".$data." where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
     Enviar($sock,$query);
-    $query="insert into Exercicios_modelo_historico values (".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P') on duplicate key update data=".$data;
+    
+    // Atualiza o 'log' dos Exercicios em Exercicios_modelo_historico
+    $query ="insert into Exercicios_modelo_historico values ";
+    $query.= "(".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P') ";
+//    $query.= "on duplicate key update data=".$data; #tozo: eh valido ter duplicatas em um 'log' do sistema, desde que a data seja diferente.
   	Enviar($sock, $query);
   
     Desconectar($sock);
@@ -2434,32 +2526,38 @@ function PegaComentarioQuestao($cod_curso, $cod_resolucao,$cod_questao, $cod_usu
    				valor = 2	 ->	Nao ha questoes
 */
 function VerificaNotas($cod_exercicio,$cod_curso){
-  $objResponse = new xajaxResponse('ISO-8859-1');
-
-	$valor = 1;
+  	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+  	$valor = 1;
   
 	$sock=Conectar($cod_curso);
+	
 	$consulta = "SELECT * FROM Exercicios_modelo_questao WHERE cod_exercicio=".$cod_exercicio;
 	$res=Enviar($sock,$consulta);
 	
-  $questoes = RetornaArrayLinhas($res);
+  	$questoes = RetornaArrayLinhas($res);
 	
-  if (count($questoes) > 0){
-  	foreach ($questoes as $questao){
-  		if ($questao['valor'] == 0){
-  			$valor = 0;
-  			break;	
+  	if (count($questoes) > 0)
+  	{
+  		foreach ($questoes as $questao)
+  		{
+  			if ($questao['valor'] == 0)
+  			{
+  				$valor = 0;
+  				break;	
+  			}
   		}
-  	}
-  }	else {
+  	}	
+  	else 
+  	{
  		$valor = 2;
  	}
-  
-  $objResponse->addScript("verifica_notas(".$valor.",".$cod_exercicio.");");
+ 	
+  	$objResponse->addScript("verifica_notas(".$valor.",".$cod_exercicio.");");
 
-  return $objResponse->getXML();
-	
+  	return $objResponse->getXML();
 }
+
 /* *********************************************************************
    AtualizaIconesDinamic - Atualiza os icones da tabela
    Entrada: $sock - BASE DO CURSO

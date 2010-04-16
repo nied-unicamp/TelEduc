@@ -86,7 +86,7 @@
   if ($acao=="incluirQuestao"){
   	
   	if ($cod_questao){
-  		AdicionaQuestaoAoExercicio($cod_curso, $cod_exercicio, $cod_questao);
+  		AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $cod_questao);
   	}
   	
   	header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=".$acao."&atualizacao=true");
@@ -157,7 +157,23 @@
     {
       $atualizacao="false";
     }
-
+	
+    if ($atualizacao == "true")
+    {
+    	$data = time();
+    	
+	    // Alterando o status e a data (referente a modificação feita = recuperada)
+	    $query = "update Exercicios_modelo data = ".$data;
+	    $query.= "where cod_exercicio = ".$cod_exercicio;
+	    Enviar($sock,$query);
+	    
+	    // Inserindo alteração na tabela Exercicios_modelo_historico
+	  	$query = "insert into Exercicios_modelo_historico ";
+	  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
+	  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'F')";
+	  	$res = Enviar($sock, $query);	
+    }
+    
     //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
     Desconectar($sock);
     //header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);

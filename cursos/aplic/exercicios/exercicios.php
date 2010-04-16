@@ -720,7 +720,7 @@
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("        if(checks[i].checked){\n");
   echo("          getNumber=checks[i].id.split(\"_\");\n");
-  echo("          xajax_AlteraStatusExercicioDinamic(".$cod_curso.",getNumber[1],op);\n");
+  echo("          xajax_AlteraStatusExercicioDinamic(".$cod_usuario.",".$cod_curso.",getNumber[1],op);\n");
   echo("          deletaArray[j++] = getNumber[1];\n");
   echo("		  totalExercicios--;");
   echo("          }\n");
