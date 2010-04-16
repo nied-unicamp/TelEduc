@@ -1663,14 +1663,14 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   
   // Alterando o status e a data (referente a modificação feita = recuperada)
   $query = "update Exercicios_modelo set data = ".$data." ";
-  $query.= "where cod_exercicio = ".$cod_exercicio;
+  $query.= "where cod_exercicio = ".$cod_item;
   Enviar($sock,$query);
     
   // Inserindo alteração na tabela Exercicios_modelo_historico
   $query = "insert into Exercicios_modelo_historico ";
   $query.= "(cod_exercicio, cod_usuario, data, acao) values ";
   $query.= "(".$cod_item.", ".$cod_usuario.", ".$data.", 'N')";
-  $res = Enviar($sock, $query);
+  Enviar($sock, $query);
 
   Desconectar($sock);
   
