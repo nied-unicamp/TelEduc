@@ -449,7 +449,7 @@
   echo("      for (i=0; i < questoes.length; i++){\n");
   echo("        if (questoes[i].checked){\n");
   echo("          getNumber = questoes[i].id.split(\"_\");\n");
-  echo("          xajax_ExluirQuestaoDoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",getNumber[1]);\n");
+  echo("          xajax_ExluirQuestaoDoExercicioDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",getNumber[1]);\n");
   echo("          arrayIdQuestoes[j++] = getNumber[1];\n");
   echo("        }\n");
   echo("      }\n");
