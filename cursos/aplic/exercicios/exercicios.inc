@@ -1662,7 +1662,7 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   $data = time();
   
   // Alterando o status e a data (referente a modificação feita = recuperada)
-  $query = "update Exercicios_modelo set data = ".$data;
+  $query = "update Exercicios_modelo set data = ".$data." ";
   $query.= "where cod_exercicio = ".$cod_exercicio;
   Enviar($sock,$query);
     
@@ -2049,7 +2049,7 @@ function AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $c
     Enviar($sock,$query);
     
     // Alterando o status e a data (referente a modificação feita = recuperada)
-    $query = "update Exercicios_modelo set data = ".$data;
+    $query = "update Exercicios_modelo set data = ".$data." ";
     $query.= "where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
@@ -2126,7 +2126,7 @@ function ExluirQuestaoDoExercicioDinamic($cod_usuario, $cod_curso, $cod_exercici
     Enviar($sock,$query);
     
     // Alterando o status e a data (referente a modificação feita = recuperada)
-    $query = "update Exercicios_modelo set data = ".$data;
+    $query = "update Exercicios_modelo set data = ".$data." ";
     $query.= "where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
