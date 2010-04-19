@@ -2188,7 +2188,7 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
     // Atualiza o 'log' dos Exercicios em Exercicios_modelo_historico
     $query ="insert into Exercicios_modelo_historico values ";
     $query.= "(".VerificaNumeroQuery($cod_exercicio).", ".VerificaNumeroQuery($cod_usuario).", ".$data.", 'P') ";
-//    $query.= "on duplicate key update data=".$data; #tozo: eh valido ter duplicatas em um 'log' do sistema, desde que a data seja diferente.
+    $query.= "on duplicate key update data=".$data;
   	Enviar($sock, $query);
   
     Desconectar($sock);
@@ -2534,6 +2534,8 @@ function VerificaNotas($cod_exercicio,$cod_curso){
 	
 	$consulta = "SELECT * FROM Exercicios_modelo_questao WHERE cod_exercicio=".$cod_exercicio;
 	$res=Enviar($sock,$consulta);
+	
+	Desconectar($sock);
 	
   	$questoes = RetornaArrayLinhas($res);
 	
