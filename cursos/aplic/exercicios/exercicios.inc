@@ -646,7 +646,7 @@ function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador
       //Pega todos os usuarios
       $consulta = "SELECT U.nome as titulo, UC.cod_usuario as cod
                    FROM ".$dbnamebase.".Usuario U
-                   INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') WHERE UC.cod_usuario <> -1 ORDER BY UC.cod_usuario";
+                   INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') WHERE UC.cod_usuario <> -1 ORDER BY U.nome";
     else
       //Pega apenas os usuarios com exercicios compartilhados
       $consulta = "SELECT U.nome as titulo,ER.cod_usuario as cod 
