@@ -823,7 +823,7 @@ function RetornaExerciciosAplicados($sock)
             $tp_aplicacao - 'I' ou 'G', indicando se individual ou em grupo
    Saida:           
 */
-function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
+function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao,$cod_curso)
 {
     $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
 
@@ -832,7 +832,9 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao)
     $res = Enviar($sock, $consulta);
     $cod_formador = RetornaLinha($res);
     $cod_formador = $cod_formador[0];
-    
+    MudarDB($sock,"");
+    $cod_formador = RetornaCodigoUsuarioGlobal($sock,$cod_formador,$cod_curso);
+    MudarDB($sock,$cod_curso);
     
     /* Aplicacao Individual */
     if ($tp_aplicacao == 'I')
@@ -945,7 +947,7 @@ function AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario)
   {
     if(!FoiAplicado($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao']))
       /*Cria uma tupla na tabela Exercicios_resolucao*/
-      InsereTuplaResolucao($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao']);
+      InsereTuplaResolucao($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao'],$cod_curso);
   }
 }
 
