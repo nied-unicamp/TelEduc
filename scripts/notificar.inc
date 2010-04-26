@@ -658,71 +658,68 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 /********************************************************************
  * 23 - Exercicios
  *******************************************************************/
- /**
-  * TODO: Falta adicionar lógica de tempo, uma notificação não deve ser entregue
-  * 	a um usuario antes de terminar o deadline para resolver o exercício e
-  * 	antes de um professor entregar a correção (alternativas e discursivas)
-  * 	ticket #223
-  */
-  $query2 = "select dt_submissao as data from Exercicios_resolucao ";
-  $query2.= "where ((submetida = 'S') ";
-  
-  if ($formador)
-  {
-  	$query1 = "select data from Exercicios_modelo ";
-  	$query1.= "where ((situacao = 'A') or (situacao = 'C')) ";
-  	  	
-  	$query2.= "and (corrigida = 'N')) ";
-  }
-  else
-  {
-  	$query1 = "select aplic.dt_disponibilizacao as data from Exercicios_aplicado as aplic, Exercicios_modelo as modelo ";
-  	$query1.= "where ((modelo.cod_exercicio = aplic.cod_exercicio) and (modelo.situacao='A')) ";
-  	$query2.= "and (corrigida = 'S') ";
-  	
-  	// Para questões individuais
-  	$query2.= "and ((cod_usuario = ".$cod_usuario.") ";
 
-  	// Para questões em grupo
-  	$lista_grupos = RetornaGruposDoUsuarioNotificar($sock, $cod_usuario);
-  	$num_grupos = count($lista_grupos);
-  	for ($i = 0; $i < $num_grupos; $i++)
-  		$query2.= "or (cod_grupo = ".$lista_grupos[$i]['cod_grupo'].") ";
-  	
-  	$query2.= ")) ";
-  }
-  
-  $query1.= "and (status != 'L') ";
-  $query1.= "order by data desc limit 1";
-  
-  $query2.= "and (status != 'L') ";
-  $query2.= "order by data desc limit 1";
+/**
+ *  $query1
+ *  1. Formador cria um exercicio, todos os formadores são notificados.
+ *  2. Formador edita um exercício, todos os formadores são notificados.
+ *  3. Formador aplica um exercício, todos os formadores e alunos são
+ *  notificados.
+ *
+ *  $query2
+ *  1. Formador corrige um trabalho, aluno recebe a notificação SE o tempo
+ *  de submissão do exercício acabou.
+ *  2. Aluno submete um exercício, Formador recebe notificação.
+ *
+**/
 
-  /**
-   	* 1. Usuarios recebem notificação de um exercicio aplicado.
- 	* 2. Formadores recebem notificação de um exercício aplicado, salve o que criou.
- 	* 3. Formadores recebem notificação de exercícios criados e/ou modificações
-   **/
-  $res = Enviar($sock, $query1);
-  if (RetornaNumLinhas($res) > 0)
-  {
-  	$linha = RetornaLinha($res);
-  	$saida[23]['data'] = $linha['data'];
-  	$saida[23]['cod_usuario'] = -1;
-  }
+    $query1 = "select data from Exercicios_modelo_historico where ";
+    $query1.= "(acao != 'L') and (acao != 'C') ";	
 
-  /**
-  	* 4. Formadores recebem notificação quando um aluno submete resposta
- 	* 5. Alunos recebem notificação quando Exercicío é corrigido. (Individual ou em Grupo)
-   **/
-  $res = Enviar($sock, $query2);
-  if (RetornaNumLinhas($res) &&
-  	  ($linha['data'] > $saida[23]['data'])) 
-  {
-  	$linha = RetornaLinha($res);
-  	$saida[23]['data'] = $linha['data'];
-  	$saida[23]['cod_usuario'] = -1;
-  }
+    // As 3 tabelas serão necessárias para verificar o timelimit de um
+    // exercício, para nao notificar aluno antes do fim do exercício.
+    $query2 = "select hist.data as data from Exercicios_resolucao_historico as hist, ";
+    $query2.= "Exercicios_resolucao as reso, Exercicios_aplicado as aplic ";
+    $query2.= "where ";
+
+    if ($formador)
+    {
+      /* Formador quer saber se algum aluno submeteu exercicio */
+      $query2.= "(acao = 'S') ";
+    }
+    else    /* se não é formador */
+    {
+      /* Aluno quer saber se algum exercicio foi aplicado */
+      $query1.= "and (acao = 'P') ";
+
+      /* Aluno quer saber se tem correção disponível pra ele ver */
+      $query2.= "(hist.cod_usuario = ".$cod_usuario.") and (hist.acao = 'C') ";
+      $query2.= "and ((hist.cod_resolucao = reso.cod_resolucao) ";
+      $query2.= "and (reso.cod_exercicio = aplic.cod_exercicio) ";
+      $query2.= "and (".time()." > aplic.dt_limite_submissao)) ";
+    }
+    $query1.= "order by data desc limit 1";
+    $query2.= "order by data desc limit 1";
+
+    $saida[23]['data'] = 0;     /* Inicialização necessária */
+    $res = Enviar($sock, $query1);
+    if (RetornaNumLinhas($res) > 0)
+    {
+      $linha = RetornaLinha($res);
+      $saida[23]['data'] = $linha['data'];
+      $saida[23]['cod_usuario'] = -1;
+    }
+    
+    $res = Enviar($sock, $query2);
+    if (RetornaNumLinhas($res) > 0)
+    {
+    	$linha = RetornaLinha($res);
+    	if ($linha['data'] > $saida[23]['data'])
+    	{
+       		$saida[23]['data'] = $linha['data'];
+      		$saida[23]['cod_usuario'] = -1;
+    	}
+    }
   
 /********************************************************************
  * 24 - Enquete
