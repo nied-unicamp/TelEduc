@@ -3375,7 +3375,6 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
         return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS)));
     }
   }
-
 /* *********************************************************************
    ExcluirArquivo - Exclui o arquivo, dinamicamente
    Entrada: $numero - numero do arquivo, no item
@@ -3389,11 +3388,10 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
 function ExcluirArquivo($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $texto){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
-
   $arq=htmlspecialchars_decode($arq);
-
+  $arq=str_replace("%20"," ",$arq);
+  
   RemoveDiretorio($arq);
-
   $objResponse->addRemove('arq_'.$numero);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
