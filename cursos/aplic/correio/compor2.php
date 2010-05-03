@@ -51,9 +51,6 @@
   /* correio.inc                                                */
   include("mime_lookup.inc");
 
-  $cod_ferramenta = 11;
-  include("../topo_tela.php");
-
   Desconectar($sock);
 
   $cod_curso  = $_POST['cod_curso'];
@@ -70,7 +67,9 @@
   $nomesArquivosAnexos = $_POST['input_files'];
   $msgExterna = $_POST['msgExterna'];
 
-
+  $cod_ferramenta = 11;
+  include("../topo_tela.php");
+  
    /* Obtem o nome do emissor da mensagem. */
   $sock=Conectar("");
 

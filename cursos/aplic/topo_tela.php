@@ -44,7 +44,15 @@
   $bibliotecas="../bibliotecas/";
   include("menu.inc");
 
-  $cod_curso = $_GET['cod_curso'];
+  /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
+  if (!isset($cod_curso)){
+  	if (isset($_GET['cod_curso'])){
+  		$cod_curso = $_GET['cod_curso'];
+  	} else if (isset($_POST['cod_curso'])){
+  		$cod_curso = $_POST['cod_curso'];
+  	}
+  }
+  	
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   

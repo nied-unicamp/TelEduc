@@ -282,7 +282,7 @@
 
   echo("      <tr>\n");
   echo("        <td width=\"100%\">\n");
-  echo("          <form enctype=\"multipart/form-data\" name=\"enviarMsg\" id=\"enviarMsg\" method=\"post\" action=\"compor2.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."\" onsubmit=\"return(submitForm());\">\n");
+  echo("          <form enctype=\"multipart/form-data\" name=\"enviarMsg\" id=\"enviarMsg\" method=\"post\" action=\"compor2.php\" onsubmit=\"return(submitForm());\">\n");
   echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
   echo("            <input type=hidden name=codMsgAnt value=\"".$codMsgAnt."\" />\n");
   echo("            <input type=hidden name=acao value=".$acao." />\n");
