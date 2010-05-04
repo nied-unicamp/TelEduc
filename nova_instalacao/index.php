@@ -19,7 +19,11 @@ if (!isset($_POST['etapa'])){
 if ($etapa == 0){
 	$content_header = "Bem-Vindo à Instalação do TelEduc4!";
 
-	$content .= "<p>Le o Manual e tal..</p>";
+	$content .= "<p>Bem vindo à instalação do ambiente TelEduc4!</p>";
+	$content .= "<p>Recomendamos a leitura do manual de instalação(link) antes de começar.</p>";
+	$content .= "<p>Nele estão cobertos todos os tipos de instalação possíveis para o ambiente.</p>";
+	$content .= "<p>Nas próximas etapas serão pedidas informações à respeito do servidor onde está sendo instalado o ambiente.</p>";
+	$content .= "<p>O uso do navegador Mozilla Firefox (link) é recomendado para a instalação e o uso do TelEduc4.</p>";
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<input class='form' type=hidden name=etapa value='1'/><br />";
@@ -31,10 +35,16 @@ if ($etapa == 0){
 	if (!VerificaRegisterGlobals()){
 
 		$content_header = "Erro na Instalação: A diretiva register_globals está desativada.";
-		$content .= "<p>É necessário habilitar a diretiva register_globals. <img src='../cursos/aplic/imgs/errado.png'></p>";
-		$content .= "<p>Edite seu /etc/php.ini ou então tutorial dreamhost</p>";
+
+		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita que a diretiva register_globals esteja ligada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		$content .= "<p>Para isso, edite o arquivo de configuração do php (/etc/php.ini normalmente) e mude para:</p>";
+		$content .= "<p>register_globals = On</p>";
+
+		$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, contate o seu host sobre</p>";
+		$content .= "<p>a possibilidade da alteração da diretiva register_globals.</p>";
+		
 		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
+		$content .= "<input type='button' value='Tentar Novamente' class='form' onClick='history.go(0)'>";
 		include 'template_instalacao.php';
 		exit();
 
@@ -48,10 +58,17 @@ if ($etapa == 0){
 	if (!VerificaPHPMysql()){
 
 		$content_header = "Erro na Instalação: Módulo php-mysql não encontrado.";
-		$content .= "<p>É necessário instalar o módulo php-mysql. <img src='../cursos/aplic/imgs/errado.png'></p>";
-		$content .= "<p>yum install php-mysql genericos.</p>";
+		
+		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita do módulo php-mysql. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		$content .= "<p>A instalação pode ser feita através da linha de comando:</p>";
+
+		$content .= "<p>yum install php-mysql # No caso do Fedora ou</p>";
+		$content .= "<p>apt-get install php5-mysql # No caso do Debian</p>";
+
+		$content .= "<p>Ou a ação equivalente na distribuição utilizada no servidor.</p>";
+		
 		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente class='formtn' onClick='history.go(0)'>";
+		$content .= "<input type='button' value='Tentar Novamente class='form' onClick='history.go(0)'>";
 		include 'template_instalacao.php';
 		exit();
 
@@ -63,6 +80,14 @@ if ($etapa == 0){
 	
 	$content_header = "Etapa 1 de 4 - Banco de Dados e Arquivo de Configuração";
 
+	$content .= "<p>O TelEduc 4 utiliza um banco de dados principal para manter as configurações, dados dos cursos e dos usuáios, e</p>";
+	$content .= "<p>também um banco de dados para cada curso. O nome dos bancos de dados para os curso é composto da seguinte maneira:</p>";
+	$content .= "<p>BancoDeDadosCurso+Cod_Curso, por exemplo, TelEduc4Curso1 seria o banco de dados do curso 1.</p>";
+
+	$content .= "<p>Para poder acessar os bancos de dados, é necessário que o ambiente grave estas configurações em um arquivo:</p>";
+	$content .= "<p>cursos/aplic/bibliotecas/teleduc.inc, que será criado a seguir. Certifique-se que as permissões desse arquivo</p>";
+	$content .= "<p>estão corretas antes de colocar o ambiente em produção.</p>";
+	
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<label class='form' for=dbname>Nome do Banco de Dados Principal</label>";
@@ -73,7 +98,7 @@ if ($etapa == 0){
 	$content .= "<input class='form' size=25 type=text name=dbuser value='".(isset($_SESSION['dbuser']) ? $_SESSION['dbuser'] : 'usuario')."'/><br />";
 	$content .= "<label class='form' for=dbpwd>Senha do MySQL</label>";
 	$content .= "<input class='form' size=25 type=password name=dbpwd value='".(isset($_SESSION['dbpwd']) ? $_SESSION['dbpwd'] : 'senha')."'/><br />";
-	$content .= "<label class='form' for=dbhost>Host do MySQL (link)</label>";
+	$content .= "<label class='form' for=dbhost>Servidor do MySQL</label>";
 	$content .= "<input class='form' size=25 type=text name=dbhost value='".(isset($_SESSION['dbhost']) ? $_SESSION['dbhost'] : 'localhost')."'/><br />";
 	$content .= "<label class='form' for=dbport>Porta do MySQL</label>";
 	$content .= "<input class='form' size=25 type=text name=dbport value='".(isset($_SESSION['dbport']) ? $_SESSION['dbport'] : '3306')."'/><br />";
@@ -96,9 +121,12 @@ if ($etapa == 0){
 		/* Erro na Instalacao */
 		if (!CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
 			$content_header = "Erro: Não foi possível criar o banco de dados principal.";
-			$content .= "<p>Não foi possível criar o banco de dados. <img src='../cursos/aplic/imgs/errado.png'><p/>";
+			
+			$content .= "<p>Não foi possível criar o banco de dados principal. Verifique o nome de usuário e senha do banco de dados. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			$content .= "<p>Em caso de instalação com banco de dados remoto, verifique se não há algum firewall impedindo a conexão,</p>";
+			$content .= "<p>e se foi dada a permissão correta para a conexão remota. O erro exibido pelo MySQL foi:</p>";
 			$content .= "<p>".mysql_error()."</p>";
-			$content .= "<p>Verifique os dados, crie na mão ou de permissao</p>";
+			
 			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
 			include 'template_instalacao.php';
@@ -123,8 +151,11 @@ if ($etapa == 0){
 		/* Erro na Instalacao */
 		if ($conteudo !== true){
 			$content_header = "Erro: Não foi possível criar o teleduc.inc";
-			$content .= "<p>Não foi possível criar o arquivo teleduc.inc. <img src='../cursos/aplic/imgs/errado.png'></p>";
-			$content .= "<p>Devido a uma permissao blabla... pode criar na mão, please?</p>";
+			
+			$content .= "<p>Não foi possível criar o arquivo de configuração teleduc.inc <img src='../cursos/aplic/imgs/errado.png'></p>";
+			$content .= "<p>Corrija as permissões do diretório cursos/aplic/bibliotecas ou então crie manualmente</p>";
+			$content .= "<p>o arquivo teleduc.inc na pasta cursos/aplic/bibliotecas com o seguinte conteúdo:</p>";
+			
 			$content .= "<textarea cols='70' rows='15'>".str_replace(";",";\n",$conteudo)."</textarea>";
 			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
@@ -139,9 +170,16 @@ if ($etapa == 0){
 
 	$content_header = "Etapa 2 de 4 - Host e Diretórios";
 
+	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do teleduc,</p>";
+	$content .= "<p>que podem ser verificados no próprio endereço: http://nome-do-servidor/caminho/do/teleduc/instalacao</p>";
+	$content .= "<p>O TelEduc precisa de uma pasta para armazenar os arquivos dos usuários, certifique-se de</p>";
+	$content .= "<p>que o servidor web tem as permissões necessárias para escrever nessa pasta.</p>";
+	$content .= "<p>O caminho para o executável do sendmail é que permite que o TelEduc envie emails</p>";
+	$content .= "<p>para o correio externo dos usuários.</p>";
+
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<label class='form' for=host>Host do TelEduc</label>";
+	$content .= "<label class='form' for=host>Servidor do TelEduc</label>";
 	$content .= "<input type=text size=25 class='form' name=host value='".$_SERVER['SERVER_NAME']."'/><br />";
 	$content .= "<label class='form' for=www>Caminho do TelEduc</label>";
 	$content .= "<input type=text size=25 class='form' name=www value='".str_replace("nova_instalacao/index.php", "", $_SERVER['PHP_SELF'])."'/><br />";
@@ -170,6 +208,9 @@ if ($etapa == 0){
 	
 	$content .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
+	$content .= "<p>A conta do Administrador do Ambiente (nome de usuário: admtele) será utilizada para gerenciar a abertura</p>";
+	$content .= "<p>de cursos e o ambiente em geral. O Administrador tem acesso irrestrito a todos</p>";
+	$content .= "<p>os cursos, pode inscrever e remover usuários do Ambiente entre outras funcionalidades.</p>";
 
 	$content .= "<br /><br />";
 	$content .= "<form method='POST' action='index.php'>";

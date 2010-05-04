@@ -92,6 +92,14 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	}
 }
 
+function LeTelEducInc(){
+	$arquivo = "../cursos/aplic/bibliotecas/teleduc.inc";
+	$fp = fopen($arquivo);
+	$teleducinc = fread($fp, filesize($arquivo));
+	return $teleducinc;
+	
+}
+
 /* ************************************************************************
    VerificaExistenciaBD - Se o bd existir, devolve uma conexao, caso contrario
    devolve falso
