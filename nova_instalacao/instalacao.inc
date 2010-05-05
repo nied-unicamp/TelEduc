@@ -64,10 +64,11 @@ function InicializaBD($sock){
    			$dbpwd - Senha (txt)
    			$dbhost - Host
    			$dbport - Porta
+   			$opt - se for false, apenas retorna o teleduc.inc
    Saida: true ou o conteudo
 */
-function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport){
-	$fp = fopen('../cursos/aplic/bibliotecas/teleduc.inc', 'w');
+function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport, $opt = true){
+	
 	
 	$conf = '<?php ';
 	$conf .= '$_SESSION[\'dbnamebase\']=\''.$dbname.'\';';
@@ -83,6 +84,11 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	$conf .= '$_SESSION[\'dbtmpport\']=\''.$dbport.'\';';
 	$conf .= '?>';
 	
+	if (!$opt)
+		return $conf;
+	
+	$fp = fopen('../cursos/aplic/bibliotecas/teleduc.inc', 'w');
+	
 	if (!fwrite($fp, $conf)){
 		fclose($fp);
 		return($conf);
@@ -94,7 +100,7 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 
 function LeTelEducInc(){
 	$arquivo = "../cursos/aplic/bibliotecas/teleduc.inc";
-	$fp = fopen($arquivo);
+	$fp = fopen($arquivo, "r");
 	$teleducinc = fread($fp, filesize($arquivo));
 	return $teleducinc;
 	
@@ -150,7 +156,7 @@ function RegistraDadosAdmtele($sock, $adm_nome, $adm_email, $adm_senha){
 	mysql_query($sql, $sock);
 	$sql2 = "REPLACE Config values ('adm_email', '".$adm_email."')";
 	mysql_query($sql2, $sock);
-	$sql3 = "REPLACE Config values ('admtele', '".$adm_senha."')";
+	$sql3 = "REPLACE Config values ('admtele', '".crypt($adm_senha,"AA")."')";
 	mysql_query($sql3, $sock);
 }
 
