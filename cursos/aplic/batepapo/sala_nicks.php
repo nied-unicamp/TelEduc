@@ -94,24 +94,44 @@
   echo("        }\n");
   
   echo("      }\n");
-
-  echo("      function SelecionaNick(apelido, cod){\n");
-  echo("        window.parent.base.document.getElementById('apelido_r').innerHTML=apelido;\n");
-  echo("        window.parent.base.document.formBaixo.apelido_usuario_r.value=apelido;\n");
-  echo("        window.parent.base.document.formBaixo.cod_usuario_r.value=cod;\n");
-  echo("  window.parent.base.document.formBaixo.mensagem.focus();\n");
-  echo("      }\n");
+  
+  //lista que sera usada tanto na funcao OpenWindowLink como para colocar um link de perfil em cada aluno
+   $lista_apelidos=RetornaListaApelidosOnline($sock,$cod_sessao);
+   
+    /* *********************************************************
+  Funcao OpenWindowLink
+    Abre nova janela com o perfil, se acessado atraves do link
+    Entrada: funcao = $cod_curso - Codigo do curso
+    Saida:   false - para nao dar reload na pagina. Conferir a
+                     chamada da fun�o
+  */
+  echo("      function OpenWindowLink(cod_aluno) \n");
+  echo("      {\n");
+  echo("		if (cod_aluno >= 0)\n");	/* perfil de apenas um aluno */
+  echo("		{\n");
+  echo("         	window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+cod_aluno,\"PerfilDisplay\",\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("		}\n");
+  echo("		if (cod_aluno == ' ')\n");	/* perfil de todos os alunos */
+  echo("		{\n");
+  					$url_exibir_todos = "window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso;
+  					foreach($lista_apelidos as $cod => $apelido){
+  						$url_exibir_todos .= "&cod_aluno[]=".$cod;
+  					}
+  					$url_exibir_todos .= "\",'PerfilDisplay',\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\"); \n";
+  echo(				$url_exibir_todos);
+  echo("		}\n");
+  echo("        return(false);\n");
+  echo("      }\n\n");
 
   echo("    </script>\n");
   echo("  </head>\n");
   echo("  <body style=\"background:none;border-left:1px solid; padding-left:5px;\">\n");
-  $lista_apelidos=RetornaListaApelidosOnline($sock,$cod_sessao);
   echo("    <br />\n");
   echo("    <b>Usu&aacute;rios Online</b><br >\n");
-  echo("    <a href=# onclick=\"SelecionaNick('Todos', '');\">Todos</a><BR>\n");
+  echo("    <a href=# onclick=\"OpenWindowLink(' ');\">Todos</a><br />\n");
   foreach($lista_apelidos as $cod => $apelido){
      if ($cod!=$cod_usuario)
-      echo("    <a href=# onclick=\"SelecionaNick('".$apelido."', ".$cod.");\">".html_entity_decode($apelido)."</a><br />\n");
+      echo("    <a href=# onclick=\"OpenWindowLink(".$cod.");\">".html_entity_decode($apelido)."</a><br />\n");
   }
 
   echo("  </body>\n");
