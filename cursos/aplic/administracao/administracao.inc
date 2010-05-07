@@ -1229,9 +1229,27 @@ function RemoverFormador ($sock,$cod_curso,$cod_usuario)
 
   $tipo_usuario='f';
 
-  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".$tipo_usuario."' where cod_usuario='".$cod_usuario."' and cod_curso='".$cod_curso."'";
+  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".VerificaStringQuery($tipo_usuario)."' where cod_usuario='".VerificaStringQuery($cod_usuario)."' and cod_curso='".VerificaStringQuery($cod_curso)."'";
   $res   = Enviar ($sock, $query);
 }
+/*
+  RemoverAluno - Deleta o aluno
+  Entrada:
+		$sock- sock de conexao
+		$cod_usuario - codigo do usuario (convidado) a ter seu tipo_usuario alterado
+		$interacao - booleano que indica se convidado tem interacao (tipo-usuario = 'F' maiusculo), ou nao (tipo-usuario = 'f' minusculo)
+  Saida:	
+		Nenhuma
+ 		
+ */		
+function RemoverAluno($sock,$cod_curso,$cod_usuario){
+	$dbnamebase=$_SESSION['dbnamebase'];
+	$tipo_usuario='a';
+
+	$query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".VerificaStringQuery($tipo_usuario)."' where cod_usuario='".VerificaStringQuery($cod_usuario)."' and cod_curso='".VerificaStringQuery($cod_curso)."'";
+  	$res=Enviar($sock,$query);
+}
+
 
 /* *********************************************************************
    RetornaCodigoCoordenador - retorna cod_usuario do coordenador do curso
