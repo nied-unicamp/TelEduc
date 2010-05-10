@@ -61,13 +61,13 @@
   $pag_atual = "autenticacao.php";
   include("../topo_tela_inicial.php");
 
-  /* Caso o usuário já esteja logado, direciona para páigna inicial do curso */
-
   
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
-  //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
-  $feedbackObject->addAction("erroAutenticacao", 0, 180);
+  // adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase 
+  // para ser impressa se for "true", o terceiro caso "false"
+  $feedbackObject->addAction("erroAutenticacao", 214, 180);
+  $feedbackObject->addAction("erroConfirmacao", 0, 213);
   $feedbackObject->addAction("emailConfirmacao", 210, 0);
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
@@ -75,7 +75,7 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-// adicionar a frase no banco de dados..
+	// adicionar a frase no banco de dados..
   if($destino == "inscricao")
   	echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
   echo("        document.getElementById('login').focus();\n");
@@ -152,7 +152,7 @@
   echo("                          	    <input type=\"text\" id=\"login\" name=\"login\" size=\"20\" maxlength=\"100\" value='".$login."' style=\"border: 2px solid #9bc;\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
-  /* 158 Senha */
+  // 158 Senha
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">\n");
   echo("                          	    <b>".RetornaFraseDaLista($lista_frases,158)."</b>\n");
@@ -164,21 +164,29 @@
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
   echo("                          	  <td style=\"border:none\">\n");
-  /* 18 - Ok */
+  // 18 - Ok
   echo("                          <br /><input type=\"submit\" class=\"input\" id=\"OKLogin\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
   echo("                          </table>\n");
   echo("                        </form>\n");
-  /* 67 - Se esqueceu seu login, siga o link: */
-  /* 68 - Esqueci meu login!                  */
+  
+  // 67 - Se esqueceu seu login, siga o link:
+  // 68 - Esqueci meu login!
   echo ("                    <br/>".RetornaFrase($sock, 67, -2)." <a href='esqueci_login.php'>".RetornaFrase($sock, 68, -2)."</a><br/>");
-  /* 24 - Caso tenha esquecido sua senha siga o link: */
-  /* 23 - Esqueci minha senha!                        */
+  
+  // 24 - Caso tenha esquecido sua senha siga o link:
+  // 23 - Esqueci minha senha!
   echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".RetornaFrase($sock, 23, -2)."</a><br/>");
-  /* 90 - Caso ainda n�o seja cadastrado,                                 */
-  /* 91 - Cadastre-se!                                */
+  
+  // 92 - Se seu cadastro ainda nao foi autenticado, siga o link:
+  // 93 - Autenticar meu login!
+  echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
+  
+  // 90 - Caso ainda n�o seja cadastrado,
+  // 91 - Cadastre-se!
   echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 91, -2)."</a>");
+  
   echo("                    </td>\n");
   echo("                  </tr>\n");
   echo("                </table>\n");

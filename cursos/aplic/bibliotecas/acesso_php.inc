@@ -75,10 +75,13 @@ function VerificaLoginSenha ($login, $senha)
   $senha_crypt=crypt($senha,"AA");
   $sock=Conectar("");
   
-  if ($login=="admtele"){
+  if ($login=="admtele")
+  {
     $query="select valor from Config where item='admtele'";
-  }else{
-    //Seleciona senha, código global do usuario e codigo de confirmacao de cadastro
+  }
+  else
+  {
+    //Seleciona senha, codigo global do usuario e codigo de confirmacao de cadastro
     $query="select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' OR email='".VerificaStringQuery($login)."'";
   }
 
@@ -146,6 +149,22 @@ function VerificaAcessoCurso ($cod_usuario, $cod_curso)
   return ($num > 0);
 }
 
+/* *********************************************************************
+   VerificaConfirmacaoEmail - Verifica se o email do login foi autenticado
+   Entrada: $login - que sera verificado
+   Saida:   true - email confirmado
+						false - email nao confirmado
+*/
+function VerificaConfirmacaoEmail ($login)
+{
+	$sock = Conectar("");
+	$query = "select confirmacao from Usuario ";
+	$query.= "where login='".$login."'";
+	$res = Enviar($sock, $query);
+	$linha = RetornaLinha($res);
+	Desconectar($sock);
+	return ($linha[0] == "") ? true : false;
+}
 
 /* *********************************************************************
    VerificaAutenticacao - Verifica se o usu�io tem autoriza�o no curso
