@@ -157,7 +157,7 @@
 //   else 
 //     echo("        document.formBaixo.cod_usuario_r.selectedIndex = 0;\n");
   echo("      }\n");
-
+  
   echo("      function ConfirmaSair()\n");
   echo("      {\n");
   /* 86 - Tem certeza que deseja sair da sala de batepapo? */

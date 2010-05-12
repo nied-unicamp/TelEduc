@@ -71,7 +71,7 @@
   ManterOnline($sock,$cod_usuario);
 
   /* Verifica quem n�o est� mais online */
-  LimpaOnline($sock,$cod_curso);
+  LimpaOnline($sock,$cod_curso, 90);
 
   $cod_sessao=RetornaSessaoCorrente($sock);
   $assunto=RetornaAssuntoSessao($sock,$cod_sessao);

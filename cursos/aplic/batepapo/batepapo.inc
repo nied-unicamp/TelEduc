@@ -231,14 +231,14 @@ function VerificaRetiradaOnline($sock)
 
 /* *********************************************************************
    LimpaOnline - retira aqueles sem marca��o de acesso nos �ltimos
-                 1:30 minutos
-   Entrada: $sock - BASE DO CURSO
+                 $tempo minutos
+   Entrada: $sock - BASE DO CURSO, $tempo: tempo para retirar o cara
    Saida: $sock - BASE DO CURSO
 */
-function LimpaOnline($sock,$cod_curso)
+function LimpaOnline($sock,$cod_curso, $tempo)
 {
-  /* 1min30s sem aviso tira o cara */
-  $data=time() - 90;
+  /* $tempo sem aviso tira o cara */
+  $data=time() - $tempo;
   $query="select cod_usuario,data from Batepapo_online";
   $res=Enviar($sock,$query);
   $cont = 0;

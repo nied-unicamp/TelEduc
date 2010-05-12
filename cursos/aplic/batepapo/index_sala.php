@@ -49,8 +49,6 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-
-
   /* topo_tela.php faz isso
   $cod_usuario=VerificaAutenticacao($cod_curso);
 
@@ -113,9 +111,10 @@
 					      
   /* Enviar mensagem de entrada na sala */
   InsereConversa($sock,$cod_curso,$cod_sessao,$cod_usuario,"",1,$fala,"");
-
+  
 //   global $dbnamebase;
   $dbnamebase = $_SESSION['dbnamebase'];
+
 
   echo("<frameset rows=\"50,*,175,0\" border=1>\n");
   echo("  <frame name=assunto src=\"sala_assunto.php?cod_curso=".$cod_curso."\" NORESIZE SCROLLING=no>\n");

@@ -95,7 +95,7 @@ session_start();
 
   if (VerificaRetiradaOnline($sock))
   {
-    $removidos=LimpaOnline($sock,$cod_curso);
+    $removidos=LimpaOnline($sock,$cod_curso, 600);
   }
 
 Desconectar($sock);

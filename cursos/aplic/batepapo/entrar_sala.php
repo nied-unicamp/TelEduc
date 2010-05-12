@@ -69,7 +69,7 @@
   $cod_sessao=RetornaSessaoCorrente($sock);
   if (VerificaRetiradaOnline($sock))
   {
-    LimpaOnline($sock,$cod_curso);
+    LimpaOnline($sock,$cod_curso, 90);
   }
 
   if (!VerificaOnline($sock))
