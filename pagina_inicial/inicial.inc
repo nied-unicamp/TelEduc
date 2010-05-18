@@ -958,47 +958,89 @@ function EmailRepetido($sock, $email)
   return false;
 }
 
-function ReenviaConfirmacaoEmail($sock, $nome, $cod_usuario, $email)
+function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 {
-		// Gera novo código de confirmação (20 caracteres)
-		$sequencia = GeraChave(20);
-		$query = "insert into Usuario ";
-		$query.= "(confirmacao) values (".$sequencia.")";
-		Enviar($sock, $query);
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	
+	$sock = Conectar("");
+	$lista_frases_email 	= RetornaListaDeFrases($sock,-2);
+  $lista_frases_correio = RetornaListaDeFrases($sock,11);
+	$flag = "";	/* Inicialmente, não há flag ativiada */
+	
+  $query 	= "select diretorio from Diretorio where item='raiz_www'";
+  $res		= Enviar($sock,$query);
+  $raiz_www_l = RetornaLinha($res);
+  $raiz_www 	= $raiz_www_l[0];
+  $host	=	RetornaConfiguracao($sock,"host");
+	
+	switch ($opcao)
+	{
+		case (1):	/* $opcao = login */
+		{
+			$dados_usuario = RetornaDadosUsuarioLogin($sock,$valor);
+			break;
+		}
+		case (2):	/* $opcao = email */
+		{
+			$dados_usuario = RetornaDadosUsuarioEmail($sock,$valor);
+			break;
+		}
+		default:	/* $opcao = desconhecido */
+		$dados_usuario = "";
+	}
+
+	if ($dados_usuario != "")
+	{
+		if ($dados_usuario["confirmacao"] != "")
+		{
+			// Gera uma nova sequencia de confirmação para o usuário
+			$sequencia = GeraChave(20);
+	
+			// Atualiza no BD, essa nova chave do usuario
+	    $query = "update Usuario set confirmacao='".$sequencia."' ";
+	    $query.= "where (cod_usuario = ".$dados_usuario['cod_usuario'].")";
+	    $res	 = Enviar($sock,$query);
+	       
+	    // 87 - Confirmação de cadastro TelEduc
+	    $assunto = RetornaFraseDaLista($lista_frases_email, 87);
+	    
+	    // 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail
+	    //  clicando no link abaixo. Após isso, sua inscrição será efetuada com sucesso. 
+	    //  Você receberá neste e-mail a sua identificação e senha, e poderá acessar o ambiente normalmente.
+	    // 89 - Caso contrário, favor desconsiderar esta mensagem.
+	    // 78 - Atenciosamente
+	    // 03 - Ambiente de Administração do TelEduc
+	    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p>";
+	    $mensagem.= "<p>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?";
+	    $mensagem.= "u=".$dados_usuario['cod_usuario']."&s=".$sequencia."</p>";
+	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 89)."</p>";
+	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 78).",</p>";
+	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+	    
+	    // 115 - NAO_RESPONDA
+	    $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
+	    $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $dados_usuario['nome']);
+	    MandaMsg($remetente, $dados_usuario['email'], $assunto, $mensagem_html, '');
+	    $flag = 0; /* Email com autenticação enviada */
+		}
+		else
+		{
+			$flag = 2; /* usuario já fez a confirmação */
+		}
+	}
+	else
+	{
+		$flag = 1;	/* Usuario não encontrado */
+	}
 		
-	  $query = "select diretorio from Diretorio where item='raiz_www'";
-    $res = Enviar($sock,$query);
-    $raiz_www_linha = RetornaLinha($res);
-    $raiz_www = $raiz_www_linha[0];
-    $host = RetornaConfiguracao($sock,"host");
-
-    $lista_frases_email = RetornaListaDeFrases($sock,-2);
-    $lista_frases_correio = RetornaListaDeFrases($sock,11);
-    
-    // 87 - Confirmação de cadastro TelEduc
-    $assunto = RetornaFraseDaLista($lista_frases_email, 87);
-    
-    // 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail
-    // clicando no link abaixo. Após isso, sua inscrição será efetuada com sucesso. 
-    // Você receberá neste e-mail a sua identificação e senha, e poderá acessar o ambiente normalmente.
-    // 89 - Caso contrário, favor desconsiderar esta mensagem.
-    // 78 - Atenciosamente
-    // 03 - Ambiente de Administração do TelEduc
-    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://";
-    $mensagem.= $host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=";
-    $mensagem.= $sequencia."</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>";
-    $mensagem.= RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ";
-    $mensagem.= RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-
-    // 115 - NAO_RESPONDA
-    $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
-    $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome);
-    MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
-		return;
+	Desconectar($sock);
+	
+	$objResponse->addScript("trataEnvio(".$flag.");");
+  return $objResponse->getXML();
 }
 
 /********************************************************************
-  Função CadastraDadosUsuarioDinamic - Cadastra usuario, dinamicamente
+  Funï¿½ao CadastraDadosUsuarioDinamic - Cadastra usuario, dinamicamente
   Entradas:  $dadosForm - dados do formulario de cadastro
   Saida:    reposta XML
 ********************************************************************/
@@ -1006,19 +1048,19 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
-  $login				=	$dadosForm['login'];
-  $senha				=	crypt($dadosForm['senha'],"AA");
+  $login	=	$dadosForm['login'];
+  $senha	=	crypt($dadosForm['senha'],"AA");
   $nome_usuario	=	$dadosForm['nome_usuario'];
-  $endereco			=	$dadosForm['endereco'];
-  $cidade				=	$dadosForm['cidade'];
-  $estado				=	$dadosForm['estado'];
-  $pais					=	$dadosForm['pais'];
-  $email				=	$dadosForm['email'];
-  $rg						=	$dadosForm['rg'];
-  $telefone			=	$dadosForm['telefone'];
-  $sexo					=	$dadosForm['sexo'];
-  $local				=	$dadosForm['local'];
-  $profissao		=	$dadosForm['profissao'];  
+  $endereco	=	$dadosForm['endereco'];
+  $cidade	=	$dadosForm['cidade'];
+  $estado	=	$dadosForm['estado'];
+  $pais		=	$dadosForm['pais'];
+  $email	=	$dadosForm['email'];
+  $rg			=	$dadosForm['rg'];
+  $telefone	=	$dadosForm['telefone'];
+  $sexo		=	$dadosForm['sexo'];
+  $local	=	$dadosForm['local'];
+  $profissao	=	$dadosForm['profissao'];  
   $informacoes	=	$dadosForm['informacoes'];
   $cod_escolaridade	=	$dadosForm['cod_escolaridade'];
   $data_nascimento	=	$dadosForm['data_nascimento'];
@@ -1029,44 +1071,27 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 
   $hash = false;
   $resultado = $dadosForm['resultado'];
-  if($resultado  != $_SESSION['answer'])
-  {
+  if($resultado  != $_SESSION['answer']){
     $hash = true;
   }
 
-  if(LoginRepetido($sock,$login))
-  {
+  if(LoginRepetido($sock,$login)){
     $flag=1;
   	$objResponse->addScriptCall("mostraFeedback", $erro1, 'false');
-  } 
-  else if(EmailRepetido($sock,$email))
-  {
+  }else if(EmailRepetido($sock,$email)){
     $flag=2;
   	$objResponse->addScriptCall("mostraFeedback", $erro2, 'false');
-  }
-  else if($hash)
-  {
+  }else if($hash){
     $flag=3;
   	$objResponse->addScriptCall("mostraFeedback", $erro3, 'false');
-  }
-  else
+  }else
   {
     $cod_usuario=RetornaProximoCodigo($sock,"Usuario");
     
     //Gera uma sequencia aletoria de 20 caracteres
     $sequencia = GeraChave(20);
 
-    $query = "insert into Usuario (cod_usuario,login,senha,nome,rg,email,telefone,";
-    $query.= "endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,";
-    $query.= "cod_escolaridade,informacoes,data_inscricao,cod_lingua,confirmacao) values (";
-    $query.= VerificaNumeroQuery($cod_usuario).",'".VerificaStringQuery($login)."','";
-    $query.= VerificaStringQuery($senha)."','".VerificaStringQuery($nome_usuario)."','";
-    $query.= VerificaStringQuery($rg)."','".VerificaStringQuery($email)."','".VerificaStringQuery($telefone)."','";
-    $query.= VerificaStringQuery($endereco)."','".VerificaStringQuery($cidade)."','";
-    $query.= VerificaStringQuery($estado)."','".VerificaStringQuery($pais)."','".VerificaStringQuery($data)."','";
-    $query.= VerificaStringQuery($sexo)."','".VerificaStringQuery($local)."','".VerificaStringQuery($profissao)."','";
-    $query.= VerificaStringQuery($cod_escolaridade)."','".VerificaStringQuery($informacoes)."','".time()."',1,'";
-    $query.= VerificaStringQuery($sequencia)."')";
+    $query="insert into Usuario (cod_usuario,login,senha,nome,rg,email,telefone,endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,cod_escolaridade,informacoes,data_inscricao,cod_lingua,confirmacao) values (".VerificaNumeroQuery($cod_usuario).",'".VerificaStringQuery($login)."','".VerificaStringQuery($senha)."','".VerificaStringQuery($nome_usuario)."','".VerificaStringQuery($rg)."','".VerificaStringQuery($email)."','".VerificaStringQuery($telefone)."','".VerificaStringQuery($endereco)."','".VerificaStringQuery($cidade)."','".VerificaStringQuery($estado)."','".VerificaStringQuery($pais)."','".VerificaStringQuery($data)."','".VerificaStringQuery($sexo)."','".VerificaStringQuery($local)."','".VerificaStringQuery($profissao)."','".VerificaStringQuery($cod_escolaridade)."','".VerificaStringQuery($informacoes)."','".time()."',1,'".VerificaStringQuery($sequencia)."')";
 
     $res=Enviar($sock,$query);
 
@@ -1081,21 +1106,25 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     $lista_frases_email = RetornaListaDeFrases($sock,-2);
     $lista_frases_correio = RetornaListaDeFrases($sock,11);
     
-    // 87 - Confirmação de cadastro TelEduc
+    //87 - ConfirmaÃ§Ã£o de cadastro TelEduc
     $assunto = RetornaFraseDaLista($lista_frases_email, 87);
     
-    // 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail
-    // clicando no link abaixo. Após isso, sua inscrição será efetuada com sucesso. 
-    // Você receberá neste e-mail a sua identificação e senha, e poderá acessar o ambiente normalmente.
-    // 89 - Caso contrário, favor desconsiderar esta mensagem.
-    // 78 - Atenciosamente
-    // 03 - Ambiente de Administração do TelEduc
-    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://";
-    $mensagem.= $host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=";
-    $mensagem.= $sequencia."</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>";
-    $mensagem.= RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ";
-    $mensagem.= RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://$host$raiz_www/pagina_inicial/confirmacao.php?u=$cod_usuario&s=$sequencia</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    
+    /*
+    // 74 - Bem-Vindo ao TelEduc!
+    $assunto = RetornaFraseDaLista($lista_frases_email, 74);
 
+    // 75 - Para acessar o ambiente, a sua IdentificaÃ§Ã£o Ã©:
+    // 76 - e a sua senha Ã©:
+    // 77 - O acesso deve ser feito a partir do endereco:
+    // 78 - Atenciosamente
+    // 3 - Ambiente de AdministraÃ§Ã£o do TelEduc
+
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 75)." <big><em><strong>".$login."</strong></em></big> ".RetornaFraseDaLista($lista_frases_email, 76)."<big><em><strong> ".$dadosForm['senha']."</strong></em></big></p><p>".RetornaFraseDaLista($lista_frases_email, 77)." http://$host$raiz_www/</p><br /><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+
+	*/
+    
     // 115 - NAO_RESPONDA
     $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
     $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
@@ -1168,7 +1197,7 @@ function CadastrarLogar($form,$cod_curso,$tipo_curso)
 	
     $sock=Conectar("");
   
-    //Seleciona senha e codigo global do usuario
+    //Seleciona senha e cÃ³digo global do usuario
     $query="select senha, cod_usuario from Usuario where login='".VerificaStringQuery($login)."'";
     
 
@@ -1253,7 +1282,7 @@ function ExcluiUsuarios($lista_usuarios,$ordem,$pag_atual)
             $cod_usuario - codigo do usuario
   Saida: array com os dados do usuario que possui o codigo de usuario dado, se houver
 */
-function RetornaDadosUsuario_local($sock,$cod_usuario)
+function RetornaDadosUsuario($sock,$cod_usuario)
 {
 
   $query="select * from Usuario where cod_usuario=".VerificaNumeroQuery($cod_usuario);
@@ -1267,9 +1296,9 @@ function RetornaDadosUsuario_local($sock,$cod_usuario)
            $login - login do usuario
   Saida: array com os dados do usuario que possui o login dado, se houver
 */
-function RetornaDadosUsuarioLogin_local($sock,$login)
+function RetornaDadosUsuarioLogin($sock,$login)
 {
-  $query="select * from Usuario where login='".VerificaStringQuery($login)."'";
+  $query="select cod_usuario,nome,email,login,confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
   $res=Enviar($sock,$query);
   return RetornaLinha($res); 
 }
@@ -1280,10 +1309,12 @@ function RetornaDadosUsuarioLogin_local($sock,$login)
            $email - email do usuario
   Saida: array com os dados do usuario que possui o email dado, se houver
 */
-function RetornaDadosUsuarioEmail_local($sock,$email)
+function RetornaDadosUsuarioEmail($sock,$email)
 {
-  $query="select * from Usuario where email='".VerificaStringQuery($email)."'";
+  $query="select cod_usuario,nome,login,email,confirmacao from Usuario where email='".VerificaStringQuery($email)."'";
   $res=Enviar($sock,$query);
+
+ 
   return RetornaLinha($res); 
 }
 
@@ -1296,27 +1327,19 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
-  $sock	=	Conectar("");
+  $sock=Conectar("");
   $lista_frases_mensagem = RetornaListaDeFrases($sock,0);
-  $lista_frases_correio  = RetornaListaDeFrases($sock,11);
+  $lista_frases_correio = RetornaListaDeFrases($sock,11);
 
-  $host 		= RetConfig($sock, "host");
+  $host = RetConfig($sock, "host");
   $raiz_www = RetDiretorio($sock, "raiz_www");
-  $flag			=	"";
-  
-  $usuario_adm = RetornaDadosUsuario_local($sock, -1);
-  
-  switch($opt)
-  {
-    case 1: /* $valor é um login */ 
-  	$dados_usuario = RetornaDadosUsuarioLogin_local($sock,$valor);
-  	break;
-  	case 2: /* $valor é um emal */
-    $dados_usuario = RetornaDadosUsuarioEmail_local($sock,$valor);
-    break;
-  	default: /* $valor é desconhecido */
-  	$dados_usuario = "";
-  }
+  $flag="";
+  /* Obtï¿½m os dados do administrador: nome e e-mail para o remetente da mensagem. */
+  $usuario_adm = RetornaDadosUsuario($sock, -1);
+  if($opt == 1)
+    $dados_usuario = RetornaDadosUsuarioLogin($sock,$valor);
+  else
+    $dados_usuario = RetornaDadosUsuarioEmail($sock,$valor);
 
   if($dados_usuario != "")
   {
@@ -1324,22 +1347,23 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
     $senha_crypt = crypt($senha,"AA");
 
     // 138 - Login e senha do TelEduc
-    $assunto  = RetornaFraseDaLista($lista_frases_mensagem,138);
-    
-    // 95  - Prezado(a)
+    $assunto=RetornaFraseDaLista($lista_frases_mensagem,138);
+    // 95 - Prezado(a)
+    $mensagem =RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario['nome']."\n\n";
     // 140 - Segue abaixo o seu login e senha conforme solicitado para o curso
-    // 67  - Seu login é 
-    // 68  - e sua senha é 
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
+    $mensagem.="<br />";
+    // 67 - Seu login é 
+    $mensagem.="<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
+    // 68 - e sua senha é 
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
+    $mensagem.="<br />";
     // 139 - Atenciosamente,
-    $mensagem = RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario['nome']."\n\n";
-    $mensagem.= RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
-    $mensagem.= "<br />";
-    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
-    $mensagem.= RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
-    $mensagem.= "<br />";
-    $mensagem.= RetornaFraseDaLista($lista_frases_mensagem,139)."\n";
-    $mensagem.= "<br />";
-    $mensagem.= $usuario_adm['nome']."\n\n"; 
+    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,139)."\n";
+    $mensagem.="<br />";
+    $mensagem.=$usuario_adm['nome']."\n\n"; 
+    // Administração TelEduc
+
 
     // 115 - NAO_RESPONDA
     $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
@@ -1356,8 +1380,10 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
   }
 
   Desconectar($sock);
+
   $objResponse->addScript("trataEnvio('".$flag."');");
 
+  //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
 }
 

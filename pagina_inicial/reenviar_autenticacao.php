@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO :pagina_inicial/esqueci_login.php
+  ARQUIVO :pagina_inicial/reenviar_autenticacao.php
   ========================================================== */
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -49,7 +49,7 @@
   $objAjax = new xajax();
   
   // Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax->registerFunction("EnviarSenhaLoginUsuarioDinamic");
+  $objAjax->registerFunction("EnviarConfirmacaoUsuarioDinamic");
   
   // Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
@@ -58,7 +58,7 @@
 
   // Obtém as mensagens da ferramenta Administração.
   $pag_atual = "reenviar_autenticacao.php";
-  $lista_frases_mensagem			= RetornaListaDeFrases($sock, 0);
+  $lista_frases_configuracao	= RetornaListaDeFrases($sock,-3);
   $lista_frases_autenticacao	=	RetornaListaDeFrases($sock,-2);
 
   $query 		= "select diretorio from Diretorio where item = 'raiz_www'";
@@ -80,7 +80,7 @@
   echo("        {\n");
   echo("          log = log.replace(/ /, '');\n");
   echo("        }\n");
-  echo("        if (log == '')\n");				  /* 69 - O campo de e-mail não pode estar em branco! */
+  echo("        if (log == '')\n");				  /* 69 - O campo de e-mail/login não pode estar em branco! */
   echo("        {\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases_autenticacao, 69)."');\n");
   echo("          return(false);\n");
@@ -102,26 +102,40 @@
   echo("        if(EntradaValida())\n");
   echo("				{\n");
   echo("					opcao = EmailouLogin();\n");
-  echo("          xajax_EnviarSenhaLoginUsuarioDinamic(document.frmLogin.input.value,opcao);\n");
+  echo("          xajax_EnviarConfirmacaoUsuarioDinamic(document.frmLogin.input.value,opcao);\n");
   echo("				}\n");
   echo("        return false;\n");
   echo("      }\n\n");
 
   echo("      function trataEnvio(flag)\n");
   echo("      {\n");
-  echo("        if(flag == '1')\n");			  /* 72 - Email inválido! */
-  echo("        {\n");
-  echo("          alert('".RetornaFraseDaLista($lista_frases_autenticacao, 72)."');\n");
-  echo("          document.frmLogin.input.value='';\n");
-  echo("          document.frmLogin.input.focus();\n");
-  echo("        }\n");
-  echo("        else");
-  echo("        {\n");		/*  228 - Login e nova senha enviados por e-mail. */
-  echo("          alert('".RetornaFraseDaLista($lista_frases_mensagem,228)."');\n");
-  echo("          document.location='autenticacao.php';\n");
-  echo("        }\n");
-  echo("      }\n\n");
+  echo("				switch (flag)\n");
+  echo("				{\n");
+  echo("					case (0):\n");
+  echo("  	      {\n");												/* 100 - Email de confirmação enviado com sucesso!. */
+  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao,100)."');\n");
+  echo("      	    document.location='autenticacao.php';\n");
+  echo("						break;");
+  echo("  	      }\n");
+  echo("	        case (1):\n");
+  echo("  	      {\n");												/* 72 - Email inválido! */
+  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 72)."');\n");
+  echo("						break;");
+  echo("	        }\n");
+  echo(" 	       	case (2):\n");
+  echo("  	     	{\n");												/* 99 - Usuário já efetuou confirmação do cadastro! */
+  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 99)."');\n");
+  echo("						break;");
+  echo("       	 	}\n");
+  echo("					default:");
+  echo("  	      {\n");
+  echo("    	      alert('FAIL AT FAILLING'+flag);\n");
+  echo("						break;");
 
+  echo("        	}\n");
+  echo("				}\n");
+  echo("      }\n\n");
+  
   echo("    </script>\n\n");
 
   $objAjax->printJavascript("../xajax_0.2.4/");
@@ -165,8 +179,7 @@
   echo("                        		<tr>\n");
   
   echo("                          		<td style=\"border:none; text-align:right;\">\n");
-  echo("                          			".RetornaFraseDaLista($lista_frases_autenticacao,98)."\n");
-  echo("                          			".RetornaFraseDaLista($lista_frases_autenticacao,71)."\n");
+  echo("                          			".RetornaFraseDaLista($lista_frases,157)."\n");
   echo("                          		</td>\n");
   echo("                          		<td style=\"border:none\">\n");
   echo("                            		<input class='input' type='text' name='input' />\n");
