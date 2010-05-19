@@ -193,9 +193,13 @@
   {
     echo("          <form name=\"ajuda1\" method=\"post\" action=\"\">\n");
     echo("            <ul class=\"btAuxTabs\">\n");
+    if (isset($ver_toda) && $ver_toda==1){
+    	/* G 23 - Voltar */
+      	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
+    }
     if (!isset($ver_toda) || $ver_toda!=1)
-      /* ?? - Ver toda a Ajuda */
-      echo("              <li><span onclick=\"VerToda(document.ajuda1);AlteraAjuda(document.ajuda1);\">Ver toda a Ajuda</span></li>\n");
+      /* G 508 - Ver toda a Ajuda */
+      echo("              <li><span onclick=\"VerToda(document.ajuda1);AlteraAjuda(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral, 508)."</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
@@ -210,9 +214,9 @@
 
     echo("              <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
 
-    if (isset($ver_toda) && $ver_toda==1)
+    if (isset($ver_toda) && $ver_toda==1){
       echo("              <input type=\"hidden\" name=\"nome_arquivo\" value=\"".$nome_ferramenta.".html\" />\n");
-    else
+    }else
     {
       $nome_provisorio=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
       echo("              <input type=\"hidden\" name=\"nome_arquivo\" value=\"".$nome_ferramenta." - ".$nome_provisorio.".html\" />\n");
@@ -283,9 +287,13 @@
     echo("          <form name=\"ajuda2\" method=\"post\" action=\"\">\n");
     echo("            ".RetornaSessionIDInput());
     echo("            <ul class=\"btAuxTabs\">\n");
+    if (isset($ver_toda) && $ver_toda==1){
+    	/* G 23 - Voltar */
+      	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
+    }
     if (!isset($ver_toda) || $ver_toda!=1)
-      /* ?? - Ver toda a Ajuda */
-      echo("              <li><span onclick=\"VerToda(document.ajuda2);AlteraAjuda(document.ajuda2);\">Ver toda a Ajuda</span></li>\n");
+      /* G 508 - Ver toda a Ajuda */
+      echo("              <li><span onclick=\"VerToda(document.ajuda2);AlteraAjuda(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,508)."</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
