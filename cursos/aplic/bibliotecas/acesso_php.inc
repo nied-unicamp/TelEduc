@@ -72,8 +72,8 @@ function AcessoNegado()
 */
 function VerificaLoginSenha ($login, $senha)
 {
-  $senha_crypt=crypt($senha,"AA");
-  $sock=Conectar("");
+  $senha_crypt	=	crypt($senha,"AA");
+  $sock					=	Conectar("");
   
   if ($login=="admtele")
   {
@@ -81,13 +81,15 @@ function VerificaLoginSenha ($login, $senha)
   }
   else
   {
-    //Seleciona senha, codigo global do usuario e codigo de confirmacao de cadastro
-    $query="select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' OR email='".VerificaStringQuery($login)."'";
+		// $login podera ser o login ou email cadastrado
+    $query = "select senha, cod_usuario, confirmacao from Usuario ";
+    $query.= "where login='".VerificaStringQuery($login)."' ";
+    $query.= "OR email='".VerificaStringQuery($login)."'";
   }
 
-  $res=Enviar($sock,$query);
-  $num=RetornaNumLinhas($res);
-  $linha=RetornaLinha($res);
+  $res	=	Enviar($sock,$query);
+  $num	=	RetornaNumLinhas($res);
+  $linha=	RetornaLinha($res);
 
   if($login=="admtele")
     $cod_usuario = -1;
@@ -96,7 +98,7 @@ function VerificaLoginSenha ($login, $senha)
 
   $confirmacao = $linha['confirmacao'];
   
-  return ($num<1 || $linha[0]!=$senha_crypt || $confirmacao!="") ? 0 : $cod_usuario;
+  return ( ($num < 1) || ($linha['senha'] != $senha_crypt) || ($confirmacao != "") ) ? 0 : $cod_usuario;
 }
 
 /* *********************************************************************

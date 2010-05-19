@@ -75,22 +75,26 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-	// adicionar a frase no banco de dados..
+
+  // Esse $destino é utilizado como verificação para execução do
+  // feedback hardcoded abaixo (com link na mensagem)
   if($destino == "inscricao")
   	echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
+  	
   echo("        document.getElementById('login').focus();\n");
   echo("        startList();\n");
   echo("      }\n\n");
 
+  // Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços
+  // 181 - Por favor preencha o campo 'Login'.
+  // 182 - Por favor preencha o campo \"Senha\".
   echo("      function TestaNome(form){\n");
-  /* Elimina os espaÃ§os para verificar se o titulo nao eh formado por apenas espaÃ§os */
   echo("        Campo_login = form.login.value;;\n");
   echo("        Campo_senha = form.senha.value;\n");
   echo("        while (Campo_login.search(\" \") != -1){\n");
   echo("          Campo_login = Campo_login.replace(/ /, \"\");\n");
   echo("        }\n");
   echo("        if (Campo_login == ''){\n");
-  /* 181 - Por favor preencha o campo 'Login'. */
   echo("          alert('".html_entity_decode(RetornaFraseDaLista($lista_frases, 181))."');\n");
   echo("          document.formAutentica.login.focus();\n");
   echo("          return(false);\n");
@@ -99,7 +103,6 @@
   echo("            Campo_senha = Campo_senha.replace(/ /, \"\");\n");
   echo("          }\n");
   echo("          if (Campo_senha == ''){\n");
-  /* 182 - Por favor preencha o campo \"Senha\". */
   echo("            alert('".html_entity_decode((RetornaFraseDaLista($lista_frases, 182)))."');\n");
   echo("          document.formAutentica.senha.focus();\n");
   echo("            return(false);\n");  
@@ -112,8 +115,8 @@
 
   include("../menu_principal_tela_inicial.php");
 
+  // 183 -  Autenticacao
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  /* 183 -  Autenticacao */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,183)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
@@ -130,7 +133,6 @@
   echo("              <td colspan=\"4\">\n");
   echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">   \n");
-  // 165
   echo("                    <td align=\"left\">".RetornaFraseDaLista($lista_frases,165)."</td>\n");
   echo("                  </tr>   \n");
   echo("                  <tr id=\"caixaAutenticacao\">   \n");
@@ -142,11 +144,11 @@
     echo("                          <input type=\"hidden\" name=\"tipo_curso\" value=\"".$tipo_curso."\" />\n");
   if(isset($destino))
     echo("                          <input type=\"hidden\" name=\"destino\" value=\"".$destino."\" />\n");
-  /* 157 Login */			
+  /* 215 Login / Email */			
   echo("                          <table>\n");
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">\n");
-  echo("                          	    <b>".RetornaFraseDaLista($lista_frases,157)."</b>\n");
+  echo("                          	    <b>".RetornaFraseDaLista($lista_frases,215)."</b>\n");
   echo("                          	  </td>\n");
   echo("                          	  <td style=\"border:none\">\n");
   echo("                          	    <input type=\"text\" id=\"login\" name=\"login\" size=\"20\" maxlength=\"100\" value='".$login."' style=\"border: 2px solid #9bc;\" />\n");

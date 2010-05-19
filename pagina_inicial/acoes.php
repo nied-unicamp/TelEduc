@@ -46,24 +46,28 @@
   include("inicial.inc");
   include("autenticacao.inc");
   
-  $cod_ferramenta=8;
-  $sock=Conectar("");
+  $cod_ferramenta	=	8;
+  $sock	=	Conectar("");
 
-  $lista_frases=RetornaListaDeFrases($sock,9);
+  $lista_frases	=	RetornaListaDeFrases($sock,9);
 
   $raiz_www = RetornaRaizWWW($sock);
-  $caminho = $raiz_www."/pagina_inicial";
+  $caminho 	= $raiz_www."/pagina_inicial";
 
 
-  /* Vamos pegar o cod_curso, seja la por onde ele tenha vindo */
-  if (isset($_GET['cod_curso']) && $_GET['cod_curso'] != ""){
+  // Vamos pegar o cod_curso, seja la por onde ele tenha vindo
+  if (isset($_GET['cod_curso']) && ($_GET['cod_curso'] != ""))
+  {
   	$cod_curso = $_GET['cod_curso'];
-  } else if(isset($_POST['cod_curso']) && $_POST['cod_curso'] != ""){
+  } 
+  else if(isset($_POST['cod_curso']) && ($_POST['cod_curso'] != ""))
+  {
   	$cod_curso = $_POST['cod_curso'];
   }
 
-  /* Verifica se o usuario e a senha estao corretos */
-  if (!$cod_usuario = VerificaLoginSenha($login, $_POST['senha']))
+  // Verifica se o usuario e a senha estao corretos
+  $cod_usuario = VerificaLoginSenha($login, $_POST['senha']);
+  if ($cod_usuario == 0)
   {
     Desconectar($sock);
     header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
@@ -71,10 +75,10 @@
   }  
   
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
-  $_SESSION['cod_usuario_s'] = (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
-  $_SESSION['login_usuario_s'] = $login;
-  $_SESSION['cod_lingua_s'] = $cod_lingua;
-  $_SESSION['visitante_s'] = $cod_visitante_s;
+  $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
+  $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock, $login) : $login;
+  $_SESSION['cod_lingua_s'] 		= $cod_lingua;
+  $_SESSION['visitante_s'] 			= $cod_visitante_s;
   $_SESSION['visao_formador_s'] = 1;
   
   /* Verifica se o cod_curso corresponde a um curso valido e 

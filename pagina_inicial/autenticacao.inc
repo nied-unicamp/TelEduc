@@ -88,4 +88,15 @@ function EliminaEspacos($frase)
 }
 
 
+/* **********************************************************************
+ * BoolEhEmail - Verifica se o $login <parametro> é um email, apenas.
+ * 
+ * Entrada: $login - login/email do usuário
+ * 
+ * Saída: 1 se for email, 0 caso contrario;
+**/
+function BoolEhEmail($login)
+{
+	return (strchr($login,"@") ? 1 : 0);  
+}
 ?>

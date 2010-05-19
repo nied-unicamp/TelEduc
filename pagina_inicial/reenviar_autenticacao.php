@@ -160,7 +160,7 @@
   // 95 - Você precisará do seu login ou do email que você cadastrou para o acesso.  
   // 96 - Preencha o campo abaixo e selecione o botão Enviar.
   // 97 - Um novo email será enviado para efetuar a confirmação de seu cadastro.
-	// 71 - email:
+	// 215 - Login / Email:
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td>\n");
@@ -179,7 +179,7 @@
   echo("                        		<tr>\n");
   
   echo("                          		<td style=\"border:none; text-align:right;\">\n");
-  echo("                          			".RetornaFraseDaLista($lista_frases,157)."\n");
+  echo("                          			".RetornaFraseDaLista($lista_frases,215)."\n");
   echo("                          		</td>\n");
   echo("                          		<td style=\"border:none\">\n");
   echo("                            		<input class='input' type='text' name='input' />\n");

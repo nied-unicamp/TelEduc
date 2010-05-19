@@ -40,7 +40,6 @@
   ARQUIVO : pagina_inicial/inicial.inc
   ========================================================== */
 
-
 /* **********************************************************************
    RetornaCadastroUsuario - Retorna o dados cadastrais do usu�rio
                                  especificado.
@@ -637,7 +636,7 @@ function ParticipaDoCurso($cod_curso)
 }
 
 /* **************************************************************
-  FichaUsuario - Retorna array com TODOS os dados do usuario
+  FichaUsuario - Retorna array com todos os dados do usuario
   Entradas: $sock - sock de conexao,
             $cod_usuario - codigo do usuario
   Saida:    Array com ['nome'] - nome do Usuario
