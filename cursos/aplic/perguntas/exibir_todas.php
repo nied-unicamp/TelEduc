@@ -44,7 +44,10 @@
   include($bibliotecas."geral.inc");
   include("perguntas.inc");
   
-  $cod_ferramenta = 6;  
+  $cod_ferramenta = 6;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda=4;  
+  
   $tabela = "Pergunta";
   
   
@@ -767,10 +770,10 @@
   echo("    </table>\n");
   	echo(" <ul>\n");
     /* 16 - Exibir selecionadas ff*/ 
-  	if ($cod_assunto_pai != 1) {
+  	//if ($cod_assunto_pai != 1) {
     echo("    <li id=\"mExibir_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,16)."</span></li>\n");
     echo("    <li id=\"mFechar_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,83)."</span></li>\n");
-  	}
+  	//}
     /* 69 - Apagar selecionadas */
     if ($usr_formador){ 
       
