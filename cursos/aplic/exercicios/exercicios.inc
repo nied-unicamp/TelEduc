@@ -1370,9 +1370,8 @@ if($tp_questao == 'O')
 function ApagarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $cod_alternativa, $tp_questao)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+  
   $sock=Conectar($cod_curso);
-
   $consulta="delete from Exercicios_questao_alternativa where cod_alternativa=".VerificaNumeroQuery($cod_alternativa);
   $res=Enviar($sock, $consulta);
 
