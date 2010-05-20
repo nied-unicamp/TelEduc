@@ -46,6 +46,8 @@
   include("perguntas.inc");
 
   $cod_ferramenta = 6;  
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda=7;  
   
     /**************** ajax ****************/
 
