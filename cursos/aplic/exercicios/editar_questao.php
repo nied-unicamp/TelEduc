@@ -235,9 +235,6 @@
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
   echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
-  echo("      if(qtdAlternativas == 0){\n");
-  echo("      	xajax_CriarAlternativaDinamic('".$cod_curso."','".$cod_usuario."','".$questao['cod_questao']."','O');\n");
-  echo("      }\n");
   
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
