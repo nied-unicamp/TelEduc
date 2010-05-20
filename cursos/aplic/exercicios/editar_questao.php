@@ -186,9 +186,9 @@
   echo("      document.captureEvents(Event.MOUSEMOVE);\n");
   echo("    }\n\n");
   
-  echo("    document.onmousemove = TrataMouse;\n\n");
-
-  echo("    function TrataMouse(e)\n");
+  echo("      document.onmousemouve = TrataMouse;\n\n");
+ 
+  echo("      function TrataMouse(e)\n");
   echo("    {\n");
   echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
   echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
@@ -253,10 +253,11 @@
   echo("      hideLayer(cod_comp);\n");
   echo("    }\n\n");
 
-  echo("    function MostraLayer(cod_layer, ajuste)\n");
+  echo("    function MostraLayer(cod_layer,ajusteX,ajusteY)\n");
   echo("    {\n\n");
   echo("      EscondeLayers();\n");
-  echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
+  //echo("if(cod_layer==lay_novo_topico)")
+  echo("      moveLayerTo(cod_layer,Xpos-ajusteX,Ypos+AjustePosMenuIE()-ajusteY);\n");
   echo("      showLayer(cod_layer);\n");
   echo("    }\n\n");
 
@@ -467,9 +468,14 @@
   echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
 
-  echo("    function VerificaNovoTopico(textbox) {\n");
+  echo("    function VerificaNovoTopico(textbox){\n");
   echo("      var texto = textbox.value;\n");
   echo("      var select;\n");
+  echo("	  if(texto==''){\n");
+  echo("			alert('Digite um nome para o tópico');\n");
+  echo("			textbox.focus();\n");
+  echo("			return false;\n");
+  echo("	  }\n");
   /* Frase #89 - Topico criado com sucesso */
   echo("      xajax_CriaNovoTopicoDinamic(".$cod_curso.",".$cod_questao.",texto,'".RetornaFraseDaLista($lista_frases, 89)."');\n");
   echo("      EscondeLayer(lay_novo_topico);\n");
@@ -653,7 +659,7 @@
   echo("      span.setAttribute(\"id\",'spanCanc_'+cod);\n"); 
   echo("      span.setAttribute(\"class\",\"link\");\n");
   echo("      span.innerHTML = 'Cancelar';\n");
-  echo("      span.onclick= function(){ CancelaEdicaoAlternativa(cod,conteudo); };\n");
+  echo("      span.onclick= function(){ CancelaAlternativa(cod); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
 
@@ -793,6 +799,15 @@
   //184 - Uma questao pode conter no maximo 10 alternativas.
   echo("        alert('".RetornaFraseDaLista($lista_frases, 183)."');\n");
   echo("    }\n\n");
+  
+  echo("function CancelaAlternativa(cod){\n");
+  echo("	tr=document.getElementById('trAlt_'+cod);\n");
+  echo("	if(tr!=null){\n");
+  echo("		tr.parentNode.removeChild(tr);\n");
+  echo("		xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",cod,'".$tp_questao."');\n");
+  echo("		HabilitarMudancaPosicaoAlt();");
+  echo("	}\n");
+  echo("}\n");
 
   echo("    function IntercalaCorLinhaAlt(){\n");
   echo("      var checks,i,corLinha,trAlt;\n");
@@ -1000,7 +1015,7 @@
 
   echo("    function NovoTopico(cod)\n");
   echo("    {\n");
-  echo("        MostraLayer(lay_novo_topico, 100);\n");
+  echo("        MostraLayer(lay_novo_topico,0,50);\n");
   echo("        document.getElementById(\"nome\").value = '';\n");
   echo("        document.getElementById(\"nome\").focus();\n");
   echo("    }\n\n");
@@ -1456,7 +1471,7 @@
     /* Frase #94 - Editar enunciado */
     $editar="<span onclick=\"AlteraTexto(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 94)."</span>";
     /* Frase #95 - Novo topico */
-    $novo_topico="<span onclick=\"NovoTopico(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 95)."</span>";
+    /*$novo_topico="<span onclick=\"NovoTopico(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 95)."</span>";
     /* Frase #96 - Limpar enunciado */
     $limpar="<span onclick=\"LimparTexto(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 96)."</span>";
     /* Frase #97 - Editar gabarito */
@@ -1519,6 +1534,8 @@
         echo("                        <select id=\"selectTopico\" class=\"input\" onChange=\"AtualizaTopico(this.value);\">");
         /* Frase #173 - Escolha um topico */
         echo("                          <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 173)."</option>\n");
+        /*Frase #106*/
+        echo("							<option value=\"-1\"".$texto." onclick=\"NovoTopico(1);\">".RetornaFraseDaLista($lista_frases,95)."</option>\n");
         if ((count($topicos)>0)&&($topicos != null))
         {
           foreach ($topicos as $cod => $linha_item)
@@ -1575,7 +1592,7 @@
       $compartilhamento = RetornaFraseDaLista($lista_frases, 8);
       
     if($cod_usuario == $questao['cod_usuario'])
-      $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+      $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,0);return(false);\">".$compartilhamento."</span>";
       
     echo("					    <td>".$compartilhamento."</td>");      
       
