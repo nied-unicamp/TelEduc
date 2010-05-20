@@ -257,13 +257,13 @@ echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heig
 echo ("          </div>\n");
 
 /*Voltar*/
-echo ("          <a class=\"btsNav\" href=\"material.php?cod_curso=" . $cod_curso . "&amp;cod_ferramenta=" . $cod_ferramenta . ";\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a><br /><br />\n");
+echo ("          <a class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a><br /><br />\n");
 echo ("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo ("            <tr>\n");
 echo ("              <td valign=\"top\" colspan=3>\n");
 echo ("                <ul class=\"btAuxTabs\">\n");
 /* 23(ger) - Voltar */
-echo ("                  <li><a href=\"material.php?cod_curso=" . $cod_curso . "&amp;cod_ferramenta=" . $cod_ferramenta . "\">" . RetornaFraseDaLista($lista_frases_geral, 23) . "</a></li>\n");
+echo ("                  <li><a onclick=\"javascript:history.back(-1);\">" . RetornaFraseDaLista($lista_frases_geral, 23) . "</a></li>\n");
 /* 35(biblioteca) - Cursos Em Andamento */
 echo ("                  <li><span onclick=\"ListarCursos('A');\">" . RetornaFraseDaLista($lista_frases_biblioteca, 35) . "</span></li>\n");
 /* 36(biblioteca) - Cursos Com Inscrições Abertas  */
