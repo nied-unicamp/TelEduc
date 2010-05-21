@@ -732,8 +732,9 @@
 //        echo("        </td>\n");
         // e cria um link nela para o layer
 //        echo("        <td class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;".$acao_link_abre.$linha_pergunta['cod_pergunta'].$acao_link_fecha.LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
-        echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=ExibirMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>&nbsp;(".RetornaCaminhoAssunto($sock, $linha_pergunta['cod_assunto']).")</td>\n");
-        
+        //linha para caminho sem link: echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=ExibirMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>&nbsp;(".RetornaCaminhoAssunto($sock, $linha_pergunta['cod_assunto']).")</td>\n");
+		echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=ExibirMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>&nbsp;(".RetornaLinkCaminhoAssunto($sock, $cod_assunto_pai, $cod_curso, "perguntas").")</td>\n");
+                
         echo("      </tr>\n");
         echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
         echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
