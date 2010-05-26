@@ -117,10 +117,24 @@
   echo("      nome_form.action=\"ajuda.php?cod_curso=\"+nome_form.cod_curso.value;\n");
   echo("      nome_form.submit();\n");
   echo("    }\n");
+  
+  /* *********************************************************************
+  Funcao AlteraAjudaIndice - JavaScript.  Altera o formulario para submissao da pagina seguinte.
+    Entrada: nome_form = nome do formulario que sera alterado
+             cod_p = codigo da pagina que o referencia o link do nome
+    Saida:   Nenhuma.
+  */
+  
+  echo("    function AlteraAjudaIndice(nome_form, cod_p)\n");
+  echo("    {\n");
+  echo("      nome_form.action=\"ajuda.php?cod_curso=\"+nome_form.cod_curso.value;\n");
+  echo("      nome_form.cod_pagina.value = cod_p;\n");
+  echo("      nome_form.submit();\n");
+  echo("    }\n");
 
   /* *********************************************************************
   Funcao VerToda - JavaScript.  Altera o valor de um input hidden.
-    Entrada: nome_form = nome do formulï¿½rio que contem o input que serï¿½ alterado
+    Entrada: nome_form = nome do formulario que contem o input que sera alterado
     Saida:   Nenhuma.
   */
 
@@ -129,9 +143,29 @@
   echo("      nome_form.ver_toda.value=\"1\";\n");
   echo("    }\n");
 
+  /* *********************************************************************
+  Funcao VerIndice - JavaScript.  Altera o valor de um input hidden para colocar o botão de indice.
+    Entrada: nome_form = nome do formulario que contem o input que sera alterado
+    Saida:   Nenhuma.
+  */
+  
+  echo("    function VerIndice(nome_form)\n");
+  echo("    {\n");
+  echo("      nome_form.ver_toda.value=\"2\";\n");
+  echo("    }\n");
+  
+  /* *********************************************************************
+  Funcao VerAjudaEspecifica - JavaScript.  Altera o valor de um input hidden para mostrar a ajuda especifica do cod_pagina.
+    Entrada: nome_form = nome do formulario que contem o input que sera alterado
+    Saida:   Nenhuma.
+  */
+  echo("    function VerAjudaEspecifica(nome_form)\n");
+  echo("    {\n");
+  echo("      nome_form.ver_toda.value=\"3\";\n");
+  echo("    }\n");
+
   echo("  </script>\n");
-
-
+  
   if (!isset($SalvarEmArquivo))
   {
     echo("    <script type=\"text/javascript\">\n");
@@ -193,13 +227,16 @@
   {
     echo("          <form name=\"ajuda1\" method=\"post\" action=\"\">\n");
     echo("            <ul class=\"btAuxTabs\">\n");
-    if (isset($ver_toda) && $ver_toda==1){
+    if (isset($ver_toda) && ($ver_toda==1 || $ver_toda == 2 || $ver_toda == 3)){
     	/* G 23 - Voltar */
       	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
     }
     if (!isset($ver_toda) || $ver_toda!=1)
       /* G 508 - Ver toda a Ajuda */
       echo("              <li><span onclick=\"VerToda(document.ajuda1);AlteraAjuda(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral, 508)."</span></li>\n");
+	
+      /*?? - Indice */
+      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">Índice</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
@@ -238,44 +275,76 @@
   echo("      <tr>\n");
   echo("        <td>\n");
 
+  if (isset($ver_toda) && $ver_toda==2){
 
-  if (!isset($ver_toda) || $ver_toda!=1)
-    $paginas[0]['cod_pagina']=$cod_pagina;
-  else
+    echo("          <form name=\"ajuda3\" method=\"post\" action=\"\">\n");
+    echo("          	<table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
+	echo("		            <tr>\n");
+	echo("		              <td><b>".$nome_ferramenta." - Índice</b>\n");
+	echo ("<br /><br />\n");
+    echo("			            <ul>\n");	
+
     $paginas=RetornaPaginasFerramenta($sock,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
 
-  foreach ($paginas as $cod => $cod_p)
-  {
-    if (!isset($ver_toda) || $ver_toda!=1)
-      $nome_pagina=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
-    else
-      $nome_pagina=RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+    foreach ($paginas as $cod_p){
+    	$nome = RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+    	if($nome == ''){
+    		echo("              		<li><a href=# onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome_ferramenta."</a></li>\n");
+    	}
+    	echo("              		<li><a href=# onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome."</a></li>\n");
+    	
+    }
+    echo("			            </ul>\n");
+    echo("              		<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("              		<input type=\"hidden\" name=\"cod_pagina\" value='' />\n");
+    echo("              		<input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\" />\n");
+    echo("              		<input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\" />\n");
+    echo("		                <input type=\"hidden\" name=\"ver_toda\" value=\"".$ver_toda."\" />\n");
 
-    echo("          <table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"padding:8px 8px 8px 8px\">\n");
-    echo("            <tr>\n");
-    echo("              <td><b>".$nome_ferramenta."</b>\n");
-
-
-
-    if ($nome_pagina!='')
-      echo("                <b> - ".$nome_pagina."</b>\n");
-
-
-
-    if (!isset($ver_toda) || $ver_toda!=1)
-      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_pagina,$_SESSION['cod_lingua_s'],$tipo_usuario);
-    else
-      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_p,$_SESSION['cod_lingua_s'],$tipo_usuario);
-
-    echo($texto."\n");
-
-
-    echo ("<br /><br />\n");
-    echo("              </td>\n");
-    echo("            </tr>\n");
-    echo("          </table>\n");
+	echo("	              	</td>\n");
+	echo("	          	</tr>\n");
+	echo("          </table>\n");    
+    echo("        </form>\n");
   }
-
+  else{
+	  if (!isset($ver_toda) || $ver_toda!=1)
+	    $paginas[0]['cod_pagina']=$cod_pagina;
+	  else
+	    $paginas=RetornaPaginasFerramenta($sock,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+	
+	  foreach ($paginas as $cod => $cod_p)
+	  {
+	    if (!isset($ver_toda) || $ver_toda!=1)
+	      $nome_pagina=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+	    else
+	      $nome_pagina=RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+	
+	    echo("          <table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
+	    echo("            <tr>\n");
+	    echo("              <td><b>".$nome_ferramenta."</b>\n");
+	
+	
+	
+	    if ($nome_pagina!='')
+	      echo("                <b> - ".$nome_pagina."</b>\n");
+		
+	
+	
+	    if (!isset($ver_toda) || $ver_toda!=1)
+	      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_pagina,$_SESSION['cod_lingua_s'],$tipo_usuario);
+	    else
+	      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_p,$_SESSION['cod_lingua_s'],$tipo_usuario);
+	
+	    echo($texto."\n");
+	
+	
+	    echo ("<br /><br />\n");
+	    echo("              </td>\n");
+	    echo("            </tr>\n");
+	    echo("          </table>\n");
+	  }
+  }
+	
 
   echo("        </td>\n");
   echo("      </tr>\n");
@@ -287,13 +356,16 @@
     echo("          <form name=\"ajuda2\" method=\"post\" action=\"\">\n");
     echo("            ".RetornaSessionIDInput());
     echo("            <ul class=\"btAuxTabs\">\n");
-    if (isset($ver_toda) && $ver_toda==1){
+    if (isset($ver_toda) && ($ver_toda==1 || $ver_toda == 2 || $ver_toda == 3)){
     	/* G 23 - Voltar */
       	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
     }
     if (!isset($ver_toda) || $ver_toda!=1)
       /* G 508 - Ver toda a Ajuda */
       echo("              <li><span onclick=\"VerToda(document.ajuda2);AlteraAjuda(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,508)."</span></li>\n");
+      
+      /*?? - Indice */
+      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">Índice</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
