@@ -1182,10 +1182,11 @@
 			} 
 	");
   
-  echo("	function ApagarExercicio(){
-				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');
-  			}	
-  ");
+  echo("	function ApagarExercicio(){\n");
+  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 196)."')){\n");
+  echo("				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
+  echo("	  }\n");
+  echo("	}\n");	
 	
   echo("    </script>\n\n");
   
