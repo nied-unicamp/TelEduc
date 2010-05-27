@@ -782,6 +782,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 		echo ("                        <input type=\"hidden\" name=\"cod_item\" value=\"" . $cod_item . "\" />\n");
 		echo ("                        <input type=\"hidden\" name=\"cod_topico_raiz\" value=\"" . $cod_topico_raiz . "\" />\n");
 		echo ("                        <input type=\"hidden\" name=\"cod_usuario_portfolio\" value=\"" . $cod_usuario_portfolio . "\" />\n");
+		echo ("                        <input type=\"hidden\" name=\"cod_grupo_portfolio\" value=\"" . $cod_grupo_portfolio . "\" />\n");
 		echo ("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
 		echo ("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 		echo ("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
