@@ -826,7 +826,7 @@
   echo("      checks = document.getElementsByName('chkAlt');\n");
   echo("	  deleteArray = new Array();\n");
   /* Frase #90 - Voce realmente deseja apagar o(s) item(s) selecionado(s)? */
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 33)."')){\n");
+  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 90)."')){\n");
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
   echo("            getNumber=checks[i].id.split('_');\n");
