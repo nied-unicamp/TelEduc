@@ -62,7 +62,7 @@
   $feedbackObject->addAction("comentar", 107, sprintf(RetornaFraseDaLista($lista_frases,189), ((int) ini_get('upload_max_filesize'))));
 
   
-  /* 1 - Portf�io */
+  /* 1 - Portffolio */
   echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
   echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n";
   echo("    <script type=\"text/javascript\">\n");
@@ -371,11 +371,12 @@
     echo("                    <td colspan=\"3\" width=\"70%\" id=\"td_coment\" align=\"left\">\n");
 
   echo("                      <form name=\"formFiles\" id=\"formFiles\" action=\"acoes.php\" method=\"post\" enctype=\"multipart/form-data\" onsubmit=\"return(submitForm());\">\n");
-  echo("                        <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_curso."\" />\n");
+  echo("                        <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
   echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
   echo("                        <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");
   echo("                        <input type=\"hidden\" name=\"cod_topico_raiz\" value=\"".$cod_topico_raiz."\" />\n");
   echo("                        <input type=\"hidden\" name=\"cod_usuario_portfolio\" value=\"".$cod_usuario_portfolio."\" />\n");
+  echo("                        <input type=\"hidden\" name=\"cod_grupo_portfolio\" value=\"".$cod_grupo_portfolio."\" />\n");
   echo("                        <input type=\"hidden\" name=\"acao\" value=\"comentar\" />\n");
 
   if ((count($lista_comentario)>0)&&($lista_comentario!=""))
