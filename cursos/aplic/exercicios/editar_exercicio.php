@@ -313,12 +313,13 @@
 
   echo("    function LimparTexto(id)\n");
   echo("    {\n");
-  /* Frase #33 - Voce deseja limpar o texto? O conteudo sera perdido. */
-  echo("      if(confirm(\"".RetornaFraseDaLista($lista_frases, 33)."\"))\n");
+  /* Frase #197 - Voce deseja limpar o texto? O conteudo sera perdido. */
+  echo("      if(confirm(\"".RetornaFraseDaLista($lista_frases, 197)."\"))\n");
   echo("      {\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('text_'+id).innerHTML='';\n");
-  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",'',".$cod_usuario.", \"\");\n");
+  //feedback: Frase #198 - Texto excluido com sucesso!
+  echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",'',".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 198)."\");\n");
   echo("      }\n");
   echo("    }\n\n");
 
