@@ -58,6 +58,9 @@
   $objAjax->processRequests();
   
   $cod_ferramenta = 23;
+  //$cod_ferramenta_ajuda = $cod_ferramenta;
+  //$cod_pagina_ajuda=1;
+  
   $visualizar = $_GET['visualizar'];
   if(!isset($visualizar))
   	$visualizar = "E";
@@ -485,20 +488,24 @@
     
     echo("    function CancelarAplicacao()\n");
     echo("    {\n");
-    echo("      var i;\n");
-    echo("      var getNumber;\n");
-    echo("      var cod_itens=document.getElementsByName('chkExercicio');\n");
-    echo("      var Cabecalho = document.getElementById('checkMenu');\n");
-    echo("      for (i=0; i < cod_itens.length; i++){\n");
-    echo("        if (cod_itens[i].checked){\n");
-    echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
-    echo("          xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",getNumber[1]);\n");
-    echo("          AtualizaCampos(getNumber[1],'".UnixTime2Data(time())."','-','-','Em criacao');\n");
-    echo("        }\n");
-    echo("      }\n");
+  	/* Frase #199 - Voce realmente deseja cancelar aplicação dos selecionados? */
+  	echo("      if(confirm(\"".RetornaFraseDaLista($lista_frases, 199)."\"))\n");
+  	echo("      {\n");
+    echo("      	var i;\n");
+    echo("      	var getNumber;\n");
+    echo("      	var cod_itens=document.getElementsByName('chkExercicio');\n");
+    echo("      	var Cabecalho = document.getElementById('checkMenu');\n");
+    echo("      	for (i=0; i < cod_itens.length; i++){\n");
+    echo("        		if (cod_itens[i].checked){\n");
+    echo("          		getNumber = cod_itens[i].id.split(\"_\");\n");
+    echo("          		xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",getNumber[1]);\n");
+    echo("          		AtualizaCampos(getNumber[1],'".UnixTime2Data(time())."','-','-','Em criacao');\n");
+    echo("        		}\n");
+    echo("      	}\n");
     /* Frase #121 - Aplicacao cancelada com sucesso. */
-    echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 121)."',true);\n");
-    echo("    }\n");
+    echo("      	mostraFeedback('".RetornaFraseDaLista($lista_frases, 121)."',true);\n");
+    echo("    	}\n");
+    echo("   }\n");
     
     echo("    function VerificaCheck(){\n");
     echo("      var i;\n");
