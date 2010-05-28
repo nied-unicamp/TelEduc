@@ -76,7 +76,7 @@
   $ex_num = RetornaNumExercicios($sock, $visualizar);
   $ex_entregues = RetornaNumExerciciosEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
   $ex_corrigidos = RetornaNumExerciciosCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
-	
+  
   $total_ex_entregues = count($ex_entregues);
   $total_ex_corrigidos = count($ex_corrigidos);
   $total_titulos = count($titulos);
@@ -252,17 +252,42 @@
 	
 	$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
 	
-	if ($total_titulos){
-  	foreach($titulos as $cod => $linha){
+	if($agrupamento != "T"){
+		if ($total_titulos){
+ 	 		foreach($titulos as $cod => $linha){
   		 
-        echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
-        echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$linha['cod']."\">".$linha['titulo']."</a></td>\n");
-        echo("                    <td>".($ex_num - $linha['entregues'])."</td>\n");
-        echo("                    <td>".($linha['entregues'] - $linha['corrigidos'])."</td>\n");
-        echo("                  </tr>\n");
+        	echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
+        	echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$linha['cod']."\">".$linha['titulo']."</a></td>\n");
+        	echo("                    <td>".($ex_num - $linha['entregues'])."</td>\n");
+        	//echo("                    <td>".($num_usuarios - $total_ex_entregues)."</td>\n");
+        	echo("                    <td>".($linha['entregues'] - $linha['corrigidos'])."</td>\n");
+        	echo("                  </tr>\n");
         
-    }
-  }
+    		}
+  		}
+	}
+	
+	if($agrupamento == "T"){
+		//retorna o número de usuários que recebem exercicios
+		$num_usuarios = RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,'A',$visualizar);
+		$num_grupos = RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,'G',$visualizar);
+		if ($total_titulos){
+ 	 		foreach($titulos as $cod => $linha){
+  		 
+        	echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
+        	echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$linha['cod']."\">".$linha['titulo']."</a></td>\n");
+        	if($visualizar == "A"){
+        		echo("                    <td>".(count($num_usuarios) - $linha['entregues'])."</td>\n");
+        	}
+        	if($visualizar == "G"){
+        		echo("                    <td>".(count($num_grupos) - $linha['entregues'])."</td>\n");
+        	}
+        	echo("                    <td>".($linha['entregues'] - $linha['corrigidos'])."</td>\n");
+        	echo("                  </tr>\n");
+        
+    		}
+  		}
+	}
     else
   {
       echo("                  <tr>\n");
