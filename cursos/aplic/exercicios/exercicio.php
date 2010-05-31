@@ -276,7 +276,7 @@
   		 
         	echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
         	echo("                    <td align=\"left\">".$icone."<a href=\"ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$linha['cod']."\">".$linha['titulo']."</a></td>\n");
-        	if($visualizar == "A"){
+        	if($visualizar == "I"){
         		echo("                    <td>".(count($num_usuarios) - $linha['entregues'])."</td>\n");
         	}
         	if($visualizar == "G"){
