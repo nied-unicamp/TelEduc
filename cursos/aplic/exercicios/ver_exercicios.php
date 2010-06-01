@@ -55,6 +55,8 @@ $objAjax->processRequests();
 
 $cod_ferramenta = 23;
 $visualizar = $_GET['visualizar'];
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda=1;
 
 include("../topo_tela.php");
 

@@ -74,7 +74,8 @@
   
   
   $cod_ferramenta = 23;
-
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda=3;
   // Descobre os diretorios de arquivo, para os portfolios com anexo
   $sock = Conectar("");
   $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');

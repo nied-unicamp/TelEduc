@@ -45,6 +45,9 @@
   include("exercicios.inc");
 
   $cod_ferramenta = 23;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda=1;
+  
   $agrupamento = $_GET['agrupar'];
   $visualizar = $_GET['visualizar'];
   

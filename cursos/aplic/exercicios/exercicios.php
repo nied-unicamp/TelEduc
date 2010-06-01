@@ -58,15 +58,20 @@
   $objAjax->processRequests();
   
   $cod_ferramenta = 23;
-  //$cod_ferramenta_ajuda = $cod_ferramenta;
-  //$cod_pagina_ajuda=1;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
   
   $visualizar = $_GET['visualizar'];
   if(!isset($visualizar))
   	$visualizar = "E";
 
   if($visualizar == "L") $defColspan = "colspan=\"4\"";
-  	
+
+  if($visualizar == "L"){
+  	$cod_pagina_ajuda=5;
+  }
+  else{
+	  $cod_pagina_ajuda=1;
+  }
 
   $data_atual = time();
 
