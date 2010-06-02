@@ -1195,9 +1195,9 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 							{
 								echo("                    <td align=center>");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								// 65 - Avaliar
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
@@ -1244,9 +1244,9 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 							{
 								echo("                    <td align=center>");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 							}
 						}
@@ -1288,9 +1288,9 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 						if($avaliacao_participante)
 						{
 							if($portfolio_grupo)
-							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 							else
-							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 							// 65 - Avaliar
 							echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							echo("                    <td align=center>");
@@ -1431,9 +1431,9 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 							{
 								echo("                    <td align=center>");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								// 65 - Avaliar
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
@@ -1483,9 +1483,9 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 							{
 								echo("                    <td align=center>");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 								echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 							}
 						}
@@ -1527,9 +1527,9 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 						if($avaliacao_participante)
 						{
 							if($portfolio_grupo)
-							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 							else
-							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_grupos_".$cod_grupo."'));\">");
+							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
 							// 65 - Avaliar
 							echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 						}
@@ -1739,15 +1739,15 @@ else
 								}
 								echo("                   <td align=center>");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=r\"eturn(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
 							else if($avaliacao_participante)
 							{
 								echo("                   <td align=center>");
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								// 65 - Avaliar
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
@@ -1795,15 +1795,15 @@ else
 								}
 								echo("                    <td align=\"center\">");
 								if($portfolio_grupo)
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								else
-								echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 							}
 							else if($avaliacao_participante)
 							{
 								echo("                    <td align=\"center\">");
-								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+								echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 								// 66 - Reavaliar
 								echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 							}
@@ -1847,14 +1847,14 @@ else
 								$cod = 0;
 							}
 							if($portfolio_grupo)
-							echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_users_".$cod."'));\">");
+							echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 							else
-							echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+							echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 							echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 						}
 						else if($avaliacao_participante)
 						{
-							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_users_".$cod."'));\">");
+							echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
 							// 65 - Avaliar
 							echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 						}
@@ -2050,15 +2050,15 @@ else
 									}
 									echo("                    <td align=center>");
 									if($portfolio_grupo)
-									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									else
-									echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 								}
 								else if($avaliacao_participante)
 								{
 									echo("                    <td align=center>");
-									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									// 65 - Avaliar
 									echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 								}
@@ -2110,15 +2110,15 @@ else
 									}
 									echo("                    <td align=center>");
 									if($portfolio_grupo)
-									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									else
-									echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 								}
 								else if($avaliacao_participante)
 								{
 									echo("                    <td align=center>");
-									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+									echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 									// 66 - Reavaliar
 									echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
 								}
@@ -2166,14 +2166,14 @@ else
 									$cod = 0;
 								}
 								if($portfolio_grupo)
-								echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+								echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 								else
-								echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+								echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
 							else if($avaliacao_participante)
 							{
-								echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".trim($nome)."','tr_formadores_".$cod."'));\">");
+								echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
 								// 65 - Avaliar
 								echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 							}
