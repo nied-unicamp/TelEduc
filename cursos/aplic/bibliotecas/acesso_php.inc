@@ -81,7 +81,7 @@ function VerificaLoginSenha ($login, $senha)
   }
   else
   {
-		// $login podera ser o login ou email cadastrado
+	// $login podera ser o login ou email cadastrado
     $query = "select senha, cod_usuario, confirmacao from Usuario ";
     $query.= "where login='".VerificaStringQuery($login)."' ";
     $query.= "OR email='".VerificaStringQuery($login)."'";
@@ -91,14 +91,17 @@ function VerificaLoginSenha ($login, $senha)
   $num	=	RetornaNumLinhas($res);
   $linha=	RetornaLinha($res);
 
-  if($login=="admtele")
+  if($login=="admtele"){
     $cod_usuario = -1;
-  else
+    $confirmacao = ""; // admtele nao precisa confirmar a conta
+    $senha_db = $linha['valor'];
+  } else {
     $cod_usuario = $linha['cod_usuario'];
-
-  $confirmacao = $linha['confirmacao'];
+	$confirmacao = $linha['confirmacao'];
+	$senha_db = $linha['senha'] ;
+  }
   
-  return ( ($num < 1) || ($linha['senha'] != $senha_crypt) || ($confirmacao != "") ) ? 0 : $cod_usuario;
+  return (($num < 1) || ($senha_db != $senha_crypt) || ($confirmacao != "") ? 0 : $cod_usuario);
 }
 
 /* *********************************************************************

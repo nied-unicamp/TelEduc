@@ -88,16 +88,16 @@
   if(!empty($curso_valido))
   {
     Desconectar($sock);
-    header("Location:{$caminho}/../cursos/aplic/index.php?cod_curso=".$cod_curso);
+    header("Location: ../cursos/aplic/index.php?cod_curso=".$cod_curso);
   	exit;
   }
   else 
   {
     /* Verifica se quem esta fazendo login eh o administrador do ambiente, admtele */
-    if($_SESSION["cod_usuario_global_s"] == -1)
+    if($_SESSION['cod_usuario_global_s'] == -1)
     {
       Desconectar($sock);
-      header("Location:{$caminho}/../administracao/index.php?acao=logar&atualizacao=true");
+      header("Location: ../administracao/index.php?acao=logar&atualizacao=true");
       exit;
     }
     else
@@ -114,7 +114,7 @@
     	exit;
       }
     	/* Redireciona para a tela de Meus Cursos */
-    	header("Location:{$caminho}/exibe_cursos.php?acao=logar&atualizacao=true");
+    	header("Location: exibe_cursos.php?acao=logar&atualizacao=true");
     	exit;
     }
   }
