@@ -464,7 +464,7 @@ function CadastrarUsuario($sock,$cod_curso,$dados, $lista_frases, $cod_usuario)
   		$data_inscricao = time();
 
   		$cod_usuario_global_prox = RetornaProximoCodigo($sock,$dbnamebase.".Usuario");
-  		$query="insert into ".$dbnamebase.".Usuario (cod_usuario,nome,login,email,senha,data_inscricao,cod_lingua) values (".$cod_usuario_global_prox.",'".$dados['nome']."','".$dados['login']."','".$dados['email']."','".crypt($dados['senha'],"AA")."',".$data_inscricao.",".$_SESSION['cod_lingua_s'].")";
+  		$query="insert into ".$dbnamebase.".Usuario (cod_usuario,nome,login,email,senha,data_inscricao,cod_lingua) values (".$cod_usuario_global_prox.",'".VerificaStringQuery(trim($dados['nome']))."','".VerificaStringQuery($dados['login'])."','".VerificaStringQuery($dados['email'])."','".crypt($dados['senha'],"AA")."',".$data_inscricao.",".$_SESSION['cod_lingua_s'].")";
   		Enviar($sock,$query);
 
   		$cod_usuario_prox = RetornaProximoCodigoUsuarioCurso($sock,$cod_curso);
