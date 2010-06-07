@@ -406,6 +406,14 @@
   echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",codex,".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao,0);");
   echo("    }\n\n");
   	
+  echo("    function ExercicioAplicado(avaliacao,cod_avaliacao)\n");
+  echo("    {\n");
+  echo("      if(avaliacao == 'N')\n");
+  echo("        window.location='exercicios.php?cod_curso=".$cod_curso."&visualizar=E';\n");
+  echo("      else\n");
+  echo("        window.location='../avaliacoes/ver.php?cod_curso=".$cod_curso."&cod_avaliacao='+cod_avaliacao+'&origem=exercicios&operacao=null&acao=aplicar&atualizacao=true';\n");
+  echo("    }\n\n");
+  
   echo("    function RetornaDataAtual()\n");
   echo("    {\n");
   echo("       var input;\n");
