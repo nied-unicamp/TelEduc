@@ -203,9 +203,17 @@ echo("      if (confirm(\"".RetornaFraseDaLista($lista_frases, 163)."\")){
 						}");
 echo("    }\n");
 
-echo("    function AbreResposta(cod_questao)\n");
+echo("    function AlternaResposta(cod_questao)\n");
 echo("    {\n");
-echo("      document.getElementById(\"trResposta_\"+cod_questao).style.display = \"\";\n");
+echo("		questaoDisplay = document.getElementById(\"trResposta_\"+cod_questao).style.display;\n");
+echo("			if (questaoDisplay == 'none')\n");
+echo("    	{\n");
+echo("	      document.getElementById('trResposta_'+cod_questao).style.display = '';\n");
+echo("    	}\n");
+echo("			else\n");
+echo("    	{\n");
+echo("	      document.getElementById('trResposta_'+cod_questao).style.display = 'none';\n");
+echo("    	}\n");
 echo("    }\n");
 
 echo("    function FechaResposta(cod_questao)\n");
@@ -531,7 +539,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		
 		
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		echo("                    <td colspan=\"2\" align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
+		echo("                    <td colspan=\"2\" align=left>".$icone."<span class=\"link\" onclick=\"AlternaResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
 		//echo("                    <td>".$nota."</td>\n");
 		echo("                    <td>".$valor."</td>\n");
 		echo("                    <td>".$tipo."</td>\n");
