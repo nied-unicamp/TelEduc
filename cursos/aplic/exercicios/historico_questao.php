@@ -72,7 +72,7 @@
   /* Frase #1 - Exercicios */
   /* Frase #56 - Historico */
   $cabecalho = "<br /><br /><h4>";
-	$cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56);
+	$cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56)." Questão ";
   $cabecalho.= ("</h4>\n");
   echo($cabecalho);
   echo ("<br />\n");
