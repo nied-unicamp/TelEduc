@@ -155,11 +155,13 @@
   
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
+  //echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  //echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
+  //echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
+  //echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");
@@ -388,7 +390,8 @@ echo("      function TestaDatas()\n");
 
     echo("      function EdicaoTexto(codigo, id, valor){\n");
     echo("        if (valor=='ok'){\n");
-    echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+    //echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+    echo("				conteudo=CKEDITOR.instances.msg_corpo.getData();");
     echo("            xajax_EditarTexto('".$tabela."', ".$cod_curso.", codigo, conteudo, ".$cod_usuario.");\n");
     echo("            mostraFeedback('".htmlentities(RetornaFraseDaLista($lista_frases, 54))."', true)\n");
     echo("          }\n");
@@ -512,16 +515,22 @@ echo("      function TestaDatas()\n");
     echo("          editaTitulo++;\n");
     echo("        }\n");
     echo("      }\n\n");
-
+    
+	$botoes = "<input type=\"submit\" style=\"margin-bottom: 5px; margin-right:3px;\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" id=\"OKComent\" onclick=\"EdicaoTexto(id_aux,\'text_\'+id_aux,\'ok\');\" class=\"input\"/>";
+	$botoes .= "<input type=\"button\" style=\"margin-bottom: 5px;\" value=\"Cancelar\" onclick=\"EdicaoTexto(id_aux,\'text_\'+id_aux,\'cancela\');\" id=\"cancComent\" class=\"input\"/>";
     echo("      function AlteraTexto(id){\n");
     echo("        if (editaTexto==0){\n");
     echo("          CancelaTodos();\n");
 
     echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
     echo("          conteudo = document.getElementById('text_'+id).innerHTML;\n");
+    echo("			id_aux = id;");
+    echo(" 			newDiv = document.createElement('span');\n");
+  	echo("			newDiv.innerHTML = '<br/>".$botoes."';\n");
     echo("          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
     echo("          startList();\n");
-    echo("          document.getElementById('text_'+id+'_text').focus();\n");
+    echo("			document.getElementById('text_'+id).appendChild(newDiv);\n");
+    //echo("          document.getElementById('text_'+id+'_text').focus();\n");
     echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
     echo("          editaTexto++;\n");
     echo("        }\n");
@@ -1154,9 +1163,9 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("                    <td align=\"left\" width=\"19%\" valign=\"top\" class=\"botao2\">\n");
     echo("                      <ul>\n");
     /* 146 - Renomear */
-    echo("                        <li><span onclick=\"AlteraTitulo(".$linha_item['cod_item'].")\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span></li>\n");
+    echo("                        <li><span onclick=\"AlteraTitulo(".$linha_item['cod_item'].");\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span></li>\n");
     /* 120 - Editar texto */
-    echo("                        <li><span onclick=\"AlteraTexto(".$linha_item['cod_item'].")\">".RetornaFraseDaLista($lista_frases,120)."</span></li>\n");
+    echo("                        <li><span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista($lista_frases,120)."</span></li>\n");
     /* 121 - Limpar texto */
     echo ("                       <li><span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 121)."</span></li>\n");
     /* 25 - Mover (gen) */
