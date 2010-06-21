@@ -86,7 +86,8 @@
   if ($acao=="incluirQuestao"){
   	
   	if ($cod_questao){
-  		AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $cod_questao);
+  		
+  		AdicionaQuestaoAoExercicio($cod_usuario,$cod_curso,$cod_exercicio,$cod_questao);
   	}
   	
   	header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=".$acao."&atualizacao=true");
@@ -210,8 +211,8 @@
   	EnviarLixeira($cod_curso, $cod_questao, $status);
     header("Location:questoes.php?cod_curso=".$cod_curso."&atualizacao=".$atualizacao."&visualizar=Q");
   } else if($acao == "entregarExercicio"){
-  	
-  	EntregaExercicio($sock, $cod_resolucao);
+        EntregaExercicio($sock, $cod_resolucao,$cod_usuario);
+  		
 		$cod = RetornaUsuarioPorResolucao($sock, $cod_resolucao);
 		
   	if($cod == null){
