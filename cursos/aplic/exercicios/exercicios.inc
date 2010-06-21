@@ -104,17 +104,12 @@ function marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 
 			$acao 			- Acao da edição, verifique na wiki todas as disponíveis
    Saida:	Uma inserção na tabela Exercicios_resolucao_historico
 */
-function marcaLogExerciciosResolucaoHistorico($sock, $cod_resolucao, $acao)
+function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_usuario)
 {
-	$query = "select cod_usuario from Exercicios_resolucao ";
-    $query.= "where (cod_resolucao = ".$cod_resolucao.")";
-    $res = Enviar($sock, $query);
-    $linha = RetornaLinha($res);
-	
 	$query = "insert into Exercicios_resolucao_historico ";
-    $query.= "(cod_resolucao, cod_usuario, data, acao) values ";
-    $query.= "(".$cod_resolucao.", ".$linha['cod_usuario'].", ";
-    $query.= time().", '".$acao."') ";
+    $query.= "(cod_resolucao,cod_usuario,data, acao) values ";
+    $query.= "(".$cod_resolucao.", ".$cod_usuario.",";
+    $query.= time().",'".$acao."') ";
     $query.= "on duplicate key update data=".time();
     Enviar($sock, $query);
 }
@@ -870,6 +865,7 @@ function RetornaExerciciosAplicados($sock)
 */
 function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao,$cod_curso)
 {
+	
     $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
 
     /* Pega quem fez o Exercicio, para colocar como quem avaliou, nas Avaliacoes */
@@ -907,8 +903,8 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao,$c
     }
     else /* Aplicacao em grupo */
     {
+      		
       $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
-      
       if($cod_grupo != null)
       {
         $consulta = "insert into Exercicios_resolucao (cod_exercicio,cod_grupo,nota,submetida,corrigida,compartilhada,status) values  ";
@@ -1670,8 +1666,7 @@ function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
             $cod_resolucao - codigo da resolucao a ser entregue
    Saida: void
 */
-function EntregaExercicio($sock, $cod_resolucao){
-
+function EntregaExercicio($sock, $cod_resolucao,$cod_usuario){
 	$data = time();
 	$query = "update Exercicios_resolucao set submetida = 'S', dt_submissao = ".$data;
 	$query.= "  where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
@@ -1679,7 +1674,7 @@ function EntregaExercicio($sock, $cod_resolucao){
 	
 	// Marca no log das resoluções, na tabela Exercicio_resolucao_historico
     // o evento de ter entregue o exercicio
-    marcaLogExerciciosResolucaoHistorico($sock, $cod_resolucao, 'S');
+    marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao, 'S',$cod_usuario);
     return;	
 }
 
@@ -2062,8 +2057,8 @@ function MudarCompartilhamentoDinamic($dadosForm, $novo_comp, $op)
 function AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $cod_questao)
 { 
 		$cod_exercicio = VerificaNumeroQuery($cod_exercicio);
-	
 		$primeiraQuestao = 1;
+		
 		foreach ($cod_questao as $questao){
 			if ($primeiraQuestao){
 				$primeiraQuestao = 0;
