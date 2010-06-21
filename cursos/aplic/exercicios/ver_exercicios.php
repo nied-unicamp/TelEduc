@@ -77,6 +77,7 @@ $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 if($visualizar == "I"){
 	
 	$cod_usuario_exercicio = $_GET['cod'];
+	
 	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
 	$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
 	
