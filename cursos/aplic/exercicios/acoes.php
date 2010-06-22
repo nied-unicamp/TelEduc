@@ -161,18 +161,11 @@
 	
     if ($atualizacao == "true")
     {
-    	$data = time();
-    	
-	    // Alterando o status e a data (referente a modificação feita = recuperada)
-	    $query = "update Exercicios_modelo data = ".$data;
-	    $query.= "where cod_exercicio = ".$cod_exercicio;
-	    Enviar($sock,$query);
+    	// Alterando o status e a data (referente a modificação feita = recuperada)
+	    AtualizaExerciciosModelo($sock, $cod_exercicio);
 	    
 	    // Inserindo alteração na tabela Exercicios_modelo_historico
-	  	$query = "insert into Exercicios_modelo_historico ";
-	  	$query.= "(cod_exercicio, cod_usuario, data, acao) values ";
-	  	$query.= "(".$cod_exercicio.", ".$cod_usuario.", ".$data.", 'F')";
-	  	$res = Enviar($sock, $query);	
+	    marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'F');
     }
     
     //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);

@@ -74,6 +74,33 @@
 
 ************************************************************************/
 
+/* *********************************************************************
+  	atualizaExercicioModelo - H‡ muito c—digo repetido fazendo altera‹o,
+  		isso Ž, update na tabela Exercicio_Modelo.
+  		Fun‹o criada para evitar repeti‹o de c—digo.
+   Entrada: $sock 			- BASE DO CURSO
+			$cod_exercicio 	- c—digo do exerc’cio que est‡ sendo marcado.
+			$opt			- array ['coluna'=>'valor'] para atualizar os valores
+				da 'coluna' com 'valor' referenciado.
+				Importante: Se inteiro, s— passar valor como nœmero; se for string
+				passar como "'valor'" para evitar conflito no SQL
+	//TODO - Alterar as fun›es desta biblioteca para implementar esta idŽia.
+*/
+function AtualizaExerciciosModelo($sock, $cod_exercicio, $opt="")
+{
+	$query = "update Exercicios_modelo set data = ".time()." ";
+	
+	if ($opt!="")
+	{
+		foreach ($opt as $coluna=>$valor)
+		{
+			$query.= $coluna." = ".$valor." ";
+		}
+	}
+	
+	$query.= "where cod_exercicio = ".$cod_exercicio;
+	Enviar($sock, $query);
+}
 
 /* *********************************************************************
    marcaLogExerciciosModeloHistorico - Ao efetuar uam alteração em algum exercício,
@@ -1275,7 +1302,7 @@ function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa,
   $res=Enviar($sock, $consulta);
   
   Desconectar($sock);
-
+  
   return $objResponse->getXML();
 }
 
@@ -1706,7 +1733,7 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
     
   
   // Inserindo alteração na tabela Exercicios_modelo_historico
-  marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'N');
+  marcaLogExerciciosModeloHistorico($sock, $cod_item, $cod_usuario, 'N');
   Desconectar($sock);
   
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
