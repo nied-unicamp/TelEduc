@@ -2431,7 +2431,7 @@ function EnviarLixeira($cod_curso, $cod_questao, $status)
 
 /* *********************************************************************
    EntregaCorrecao - Entrega a correcao do exercicio, isso setando o corrigida = 'S' e atualizando a nota final do exercicio
-   Entrada: $cod_curso - c√≥digo do curso, para conectar ao banco de dados
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_resolucao - codigo da resolucao
 */
 function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
@@ -2483,6 +2483,114 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
     	$res = Enviar($sock, $query);
   	}
 }
+
+/* *********************************************************************
+   EntregaCorrecaoExsObjetivos - Entrega a correção de todos os exercícios com questões
+   			apenas objetivas, com data após o limite de submissão.
+   Entrada: $cod_curso - código do curso, para conectar ao banco de dados.
+   Saída: True se teve resoluções entregues e False caso contrário.
+*/
+function EntregaCorrecaoExsObjetivos($cod_curso)
+{
+	// Conecta com a banco do curso.
+	$sock = Conectar($cod_curso);
+	
+	// Pega todos os exercícios que podem ter seu gabarito liberado.
+	$query = "select cod_exercicio from Exercicios_aplicado ";
+	$query.= "where (dt_limite_submissao < ".time().") and ";
+	$query.= "(disp_gabarito = 'S')";
+	$res = Enviar($sock, $query);
+	
+	// Se não houver resultados, não há exercícios que possam ser entregues.
+	if (RetornaNumLinhas($res) <= 0)
+		return false;
+		
+	// Exercicios que possam ter gabaritos disponibilizados
+	$array_cod_exercicios = RetornaArrayLinhas($res);
+		
+	// Nesse array, apenas estarão os exercícios que possam ser entregues
+	// e tenham apenas questões objetivas
+	$ex_entregaveis = array();
+	$atual = -1;				// Atual posição do array criado		
+	
+	// Pega todas as questões objetivas do banco.
+	$query = "select cod_questao from Exercicios_questao ";
+	$query.= "where (tp_questao = 'O')";
+	$res = Enviar($sock, $query);
+	
+	// Se não houver resultados, não há questões objetivas no banco e
+	// portanto, não haverá exercícios a serem entregues.
+	if (RetornaNumLinhas($res) <= 0)
+		return false;
+		
+	// Todas as questões objetivas do banco de dados.	
+	$array_questoes_obj = RetornaArrayLinhas($res);
+	
+	// Seleciona, de todos os exercícios passíveis de serem entregues até agora
+	// quais possuem apenas questões objetivas e adiciona no array $ex_entregaveis	
+	for ($i = 0; $i < sizeof($array_cod_exercicios); $i++)
+	{
+		$query = "select cod_questao from Exercicios_modelo_questao ";
+		$query.= "where (cod_exercicio = ".$array_cod_exercicios[$i]['cod_exercicio'].")";
+		$res = Enviar($sock, $query);
+		
+		if (RetornaNumLinhas($res) > 0)
+		{
+			$array_cod_questoes = RetornaArrayLinhas($res);
+			
+			// Se alguma destas questoes não esta na lista de questões
+			// objetivas, esse exercicio não deve ser entregue
+			for ($j = 0; $j < sizeof($array_cod_questoes); $j++)
+			{
+				$flag = false;
+				$k = 0;
+				while (($k < sizeof($array_questoes_obj)) && ($flag == false))
+				{
+					if ($array_cod_questoes[$j]['cod_questao'] == $array_questoes_obj[$k]['cod_questao'])
+						$flag = true;
+					$k++;
+				}
+				
+				if ($flag == false)
+					break;
+			}
+			
+			// Se a flag permaneceu true, todas as questões são objetivas
+			// e podemos adicionar este exercicio ao array
+			if ($flag == true)
+			{
+				$atual++;
+				$ex_entregaveis[$atual] = $array_cod_exercicios[$i]['cod_exercicio'];
+			}
+			
+		}
+	}
+	
+	// Pega todas as resolucoes ainda não entregues dos ex_entregaveis
+	$query = "select cod_resolucao from Exercicios_resolucao ";
+	$query.= "where (corrigida = 'N') and ( ";
+
+	while ($atual >= 0)
+	{
+		$query.= "(cod_exercicio = ".$ex_entregaveis[$atual].") ";
+		if ($atual == 0)
+			$query.= ")";
+		else
+			$query.= "or ";
+			
+		$atual--;
+	}
+	
+	$res = Enviar($sock, $query);
+	$array_cod_resolucoes = RetornaArrayLinhas($res);
+	for ($i = 0; $i < sizeof($array_cod_resolucoes); $i++)
+		EntregaCorrecao($sock, $cod_curso, $array_cod_resolucoes[$i]['cod_resolucao']);
+		
+	// Fim da função.
+	Desconectar($sock);
+	return true;
+}
+
 /* *********************************************************************
    VerificaSeCorrigida - Verifica se o exercÔøΩcio jÔøΩ foi corrigido para o usuÔøΩrio
    Entrada: $cod_curso - c√≥digo do curso, para conectar ao banco de dados

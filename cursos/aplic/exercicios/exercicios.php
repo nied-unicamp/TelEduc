@@ -78,6 +78,10 @@
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   
+  // Se h‡ exerc’cios com apenas quest›es objetivas
+  // e data limite de entrega j‡ passou, entrega gabaritos.
+  EntregaCorrecaoExsObjetivos($cod_curso);
+  
   $sock = Conectar("");
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   
