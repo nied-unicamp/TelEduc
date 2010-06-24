@@ -131,8 +131,17 @@ function marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 
 			$acao 			- Acao da edição, verifique na wiki todas as disponíveis
    Saida:	Uma inserção na tabela Exercicios_resolucao_historico
 */
-function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_usuario)
+function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_usuario="")
 {
+	if ($cod_usuario == "")
+	{
+		$query = "select cod_usuario from Exercicios_Resolucao ";
+		$query.= "where cod_resolucao = ".$cod_resolucao;
+		$res = Enviar($sock, $query);
+		$linha = RetornaLinha($res);
+		$cod_usuario = $linha['cod_usuario'];
+	}
+	
 	$query = "insert into Exercicios_resolucao_historico ";
     $query.= "(cod_resolucao,cod_usuario,data, acao) values ";
     $query.= "(".$cod_resolucao.", ".$cod_usuario.",";
