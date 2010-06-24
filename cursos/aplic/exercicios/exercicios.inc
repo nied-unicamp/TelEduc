@@ -135,7 +135,7 @@ function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_us
 {
 	if ($cod_usuario == "")
 	{
-		$query = "select cod_usuario from Exercicios_Resolucao ";
+		$query = "select cod_usuario from Exercicios_resolucao ";
 		$query.= "where cod_resolucao = ".$cod_resolucao;
 		$res = Enviar($sock, $query);
 		$linha = RetornaLinha($res);
