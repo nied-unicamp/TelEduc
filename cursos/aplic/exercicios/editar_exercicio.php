@@ -96,6 +96,8 @@
   $feedbackObject->addAction("reaplicar", RetornaFraseDaLista($lista_frases, 31), 0);
   /* Frase #32 - Questoes incluidas com sucesso */
   $feedbackObject->addAction("incluirQuestao", RetornaFraseDaLista($lista_frases, 32), 0);
+  /* Frase #201 - Exercicio criado com sucesso */
+  $feedbackObject->addAction("criarExercicio", RetornaFraseDaLista($lista_frases, 201), 0);
   
   $exercicio = RetornaExercicio($sock,$cod_exercicio);
   $lista_questoes = RetornaQuestoesExercicio($sock,$cod_exercicio);
