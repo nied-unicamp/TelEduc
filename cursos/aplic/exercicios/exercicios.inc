@@ -75,16 +75,16 @@
 ************************************************************************/
 
 /* *********************************************************************
-  	atualizaExercicioModelo - Há muito código repetido fazendo alteração,
-  		isso é, update na tabela Exercicio_Modelo.
-  		Função criada para evitar repetição de código.
+  	atualizaExercicioModelo - HÔøΩ muito cÔøΩdigo repetido fazendo alteraÔøΩÔøΩo,
+  		isso ÔøΩ, update na tabela Exercicio_Modelo.
+  		FunÔøΩÔøΩo criada para evitar repetiÔøΩÔøΩo de cÔøΩdigo.
    Entrada: $sock 			- BASE DO CURSO
-			$cod_exercicio 	- código do exercício que está sendo marcado.
+			$cod_exercicio 	- cÔøΩdigo do exercÔøΩcio que estÔøΩ sendo marcado.
 			$opt			- array ['coluna'=>'valor'] para atualizar os valores
 				da 'coluna' com 'valor' referenciado.
-				Importante: Se inteiro, só passar valor como número; se for string
+				Importante: Se inteiro, sÔøΩ passar valor como nÔøΩmero; se for string
 				passar como "'valor'" para evitar conflito no SQL
-	//TODO - Alterar as funções desta biblioteca para implementar esta idéia.
+	//TODO - Alterar as funÔøΩÔøΩes desta biblioteca para implementar esta idÔøΩia.
 */
 function AtualizaExerciciosModelo($sock, $cod_exercicio, $opt="")
 {
@@ -103,18 +103,18 @@ function AtualizaExerciciosModelo($sock, $cod_exercicio, $opt="")
 }
 
 /* *********************************************************************
-   marcaLogExerciciosModeloHistorico - Ao efetuar uam alteraÁ„o em algum exercÌcio,
-								essa funÁ„o deve ser chamada para registrar a aÁ„o 
-								no log dos exercÌcios em Exercicios_modelo_historico
+   marcaLogExerciciosModeloHistorico - Ao efetuar uam alteraÔøΩÔøΩo em algum exercÔøΩcio,
+								essa funÔøΩÔøΩo deve ser chamada para registrar a aÔøΩÔøΩo 
+								no log dos exercÔøΩcios em Exercicios_modelo_historico
    Entrada: $sock 			- BASE DO CURSO
-			$cod_exercicio 	- cÛdigo do exercÌcio que est· sendo marcado
-			$cod_usuario   	- cÛdigo do usu·rio que est· editando o exercÌcio
-			$acao 			- Acao da ediÁ„o, verifique na wiki todas as disponÌveis
-   Saida:	Uma inserÁ„o na tabela Exercicios_modelo_historico
+			$cod_exercicio 	- cÔøΩdigo do exercÔøΩcio que estÔøΩ sendo marcado
+			$cod_usuario   	- cÔøΩdigo do usuÔøΩrio que estÔøΩ editando o exercÔøΩcio
+			$acao 			- Acao da ediÔøΩÔøΩo, verifique na wiki todas as disponÔøΩveis
+   Saida:	Uma inserÔøΩÔøΩo na tabela Exercicios_modelo_historico
 */
 function marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, $acao)
 {
-  // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+  // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
   $query = "insert into Exercicios_modelo_historico ";
   $query.= "(cod_exercicio, cod_usuario, data, acao) values ";
   $query.= "(".$cod_exercicio.", ".$cod_usuario.", ".time().", '".$acao."') ";
@@ -123,13 +123,13 @@ function marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 
 }
 
 /* *********************************************************************
-   marcaLogExerciciosResolucaoHistorico - Quando o aluno entrega um exercÌcio ou
-								um formador corrige o trabalho, essa funÁ„o È 
-								chamada para registrar a aÁ„o no log das resoluÁıes.
+   marcaLogExerciciosResolucaoHistorico - Quando o aluno entrega um exercÔøΩcio ou
+								um formador corrige o trabalho, essa funÔøΩÔøΩo ÔøΩ 
+								chamada para registrar a aÔøΩÔøΩo no log das resoluÔøΩÔøΩes.
    Entrada: $sock 			- BASE DO CURSO
-			$cod_resolucao 	- cÛdido da resoluÁ„o que est· sendo feita do exercÌcio. 
-			$acao 			- Acao da ediÁ„o, verifique na wiki todas as disponÌveis
-   Saida:	Uma inserÁ„o na tabela Exercicios_resolucao_historico
+			$cod_resolucao 	- cÔøΩdido da resoluÔøΩÔøΩo que estÔøΩ sendo feita do exercÔøΩcio. 
+			$acao 			- Acao da ediÔøΩÔøΩo, verifique na wiki todas as disponÔøΩveis
+   Saida:	Uma inserÔøΩÔøΩo na tabela Exercicios_resolucao_historico
 */
 function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_usuario="")
 {
@@ -1547,12 +1547,12 @@ function EditarTituloExercicioDinamic($cod_curso, $cod_exercicio, $novo_nome, $c
   $sock=Conectar($cod_curso);
   $data = time();
   
-  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteraÁ„o)
+  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteraÔøΩÔøΩo)
   $query = "update Exercicios_modelo set titulo='".VerificaStringQuery(htmlentities($novo_nome))."', ";
   $query.= "data=".$data." where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res = Enviar($sock, $query);
 
-  // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+  // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
   marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'E');
   Desconectar($sock);
 
@@ -1577,7 +1577,7 @@ function EditarTituloExercicioDinamic($cod_curso, $cod_exercicio, $novo_nome, $c
             $texto - mensagem de feedback
    Saida: XML da fun√ß√£o Ajax
 */
-function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuario, $texto)
+function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuario, $feedback)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -1591,8 +1591,9 @@ function EditarEnunciadoDinamic($cod_curso, $cod_questao, $novo_nome, $cod_usuar
 
   //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  //$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
-
+  if($feedback != " "){
+	  $objResponse->addScriptCall("mostraFeedback", $feedback, 'true');
+  }
   // Imprime no div valores do formul√°rio
   $objResponse->addAssign("text_".$cod_questao, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
 
@@ -1618,12 +1619,12 @@ function EditarTextoExercicioDinamic($cod_curso, $cod_exercicio, $novo_texto, $c
   $sock=Conectar($cod_curso);
   $data = time();
   
-  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteraÁ„o)
+  // Atualizando tabela Exercicios_modelo, atualizando titulo e data (referente a alteraÔøΩÔøΩo)
   $query = "update Exercicios_modelo set texto='".VerificaStringQuery(trim(VerificaTexto($novo_texto)))."', ";
   $query.= "data=".$data." where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res=Enviar($sock, $query);
 
-  // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+  // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
   marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'E');
   Desconectar($sock);
 
@@ -1708,7 +1709,7 @@ function EntregaExercicio($sock, $cod_resolucao,$cod_usuario){
 	$query.= "  where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
 	Enviar($sock, $query);
 	
-	// Marca no log das resoluÁıes, na tabela Exercicio_resolucao_historico
+	// Marca no log das resoluÔøΩÔøΩes, na tabela Exercicio_resolucao_historico
     // o evento de ter entregue o exercicio
     marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao, 'S',$cod_usuario);
     return;	
@@ -1735,13 +1736,13 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   $sock=Conectar($cod_curso);
   $data = time();
   
-  // Alterando o status e a data (referente a modificaÁ„o feita = recuperada)
+  // Alterando o status e a data (referente a modificaÔøΩÔøΩo feita = recuperada)
   $query = "update Exercicios_modelo set data = ".$data." ";
   $query.= "where cod_exercicio = ".$cod_item;
   Enviar($sock,$query);
     
   
-  // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+  // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
   marcaLogExerciciosModeloHistorico($sock, $cod_item, $cod_usuario, 'N');
   Desconectar($sock);
   
@@ -1983,12 +1984,12 @@ function AlteraStatusExercicioInternoDinamic($cod_usuario, $cod_curso, $cod_exer
     $sock=Conectar($cod_curso);
     $data = time();
     
-    // Alterando o status e a data (referente a modificaÁ„o feita = recuperada)
+    // Alterando o status e a data (referente a modificaÔøΩÔøΩo feita = recuperada)
     $query = "update Exercicios_modelo set status = '".$status."', ";
     $query.= "data = ".$data." where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
-   	// Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+   	// Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
    	marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, $status);;
     Desconectar($sock);
 
@@ -2012,12 +2013,12 @@ function AlteraStatusExercicioDinamic($cod_usuario, $cod_curso, $cod_exercicio, 
     $sock=Conectar($cod_curso);
  	$data = time();
     
- 	// Alterando o status e a data (referente a modificaÁ„o feita = recuperada)
+ 	// Alterando o status e a data (referente a modificaÔøΩÔøΩo feita = recuperada)
     $query = "update Exercicios_modelo set status = '".$status."', ";
     $query.= "data = ".$data." where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
-  	// Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+  	// Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
   	marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, $status);
     Desconectar($sock);
  
@@ -2112,12 +2113,12 @@ function AdicionaQuestaoAoExercicio($cod_usuario, $cod_curso, $cod_exercicio, $c
     $query.= "(cod_exercicio,cod_questao,valor,status) values ".$values;
     Enviar($sock,$query);
     
-    // Alterando o status e a data (referente a modificaÁ„o feita = recuperada)
+    // Alterando o status e a data (referente a modificaÔøΩÔøΩo feita = recuperada)
     $query = "update Exercicios_modelo set data = ".$data." ";
     $query.= "where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
-    // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+    // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
     marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'I');
     Desconectar($sock);
 }
@@ -2185,12 +2186,12 @@ function ExluirQuestaoDoExercicioDinamic($cod_usuario, $cod_curso, $cod_exercici
     $query.= "and cod_questao = ".VerificaNumeroQuery($cod_questao);
     Enviar($sock,$query);
     
-    // Alterando o status e a data (referente a modificaÁ„o feita = recuperada)
+    // Alterando o status e a data (referente a modificaÔøΩÔøΩo feita = recuperada)
     $query = "update Exercicios_modelo set data = ".$data." ";
     $query.= "where cod_exercicio = ".$cod_exercicio;
     Enviar($sock,$query);
     
-    // Inserindo alteraÁ„o na tabela Exercicios_modelo_historico
+    // Inserindo alteraÔøΩÔøΩo na tabela Exercicios_modelo_historico
     marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'R');
     Desconectar($sock);
     
@@ -2236,7 +2237,7 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
     $query.= "values (".VerificaNumeroQuery($cod_exercicio).",".$unixTimeDisp.",".$unixTimeEntrega.",'".$tp_aplicacao."','".$disp_gabarito."','".$cod_avaliacao."')";
     Enviar($sock,$query);
     
-    // Atualiza o status e a data do modelo do exercÌcio em Exercicios_modelo
+    // Atualiza o status e a data do modelo do exercÔøΩcio em Exercicios_modelo
     $query = "update Exercicios_modelo set situacao = 'A', ";
     $query.= "data = ".$data." where cod_exercicio =".VerificaNumeroQuery($cod_exercicio);
     Enviar($sock,$query);
@@ -2467,7 +2468,7 @@ function EnviarLixeira($cod_curso, $cod_questao, $status)
 
 /* *********************************************************************
    EntregaCorrecao - Entrega a correcao do exercicio, isso setando o corrigida = 'S' e atualizando a nota final do exercicio
-   Entrada: $cod_curso - código do curso, para conectar ao banco de dados
+   Entrada: $cod_curso - cÔøΩdigo do curso, para conectar ao banco de dados
             $cod_resolucao - codigo da resolucao
 */
 function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
@@ -2496,7 +2497,7 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
   	$update = "UPDATE Exercicios_resolucao SET nota=".$soma.", corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
   	$res=Enviar($sock, $update);
 
-  	// Marca no log das resoluÁıes, na tabela Exercicio_resolucao_historico
+  	// Marca no log das resoluÔøΩÔøΩes, na tabela Exercicio_resolucao_historico
     // o evento de ter entregue o exercicio
     marcaLogExerciciosResolucaoHistorico($sock, $cod_resolucao, 'C');
       	
@@ -2521,49 +2522,49 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
 }
 
 /* *********************************************************************
-   EntregaCorrecaoExsObjetivos - Entrega a correção de todos os exercícios com questões
-   			apenas objetivas, com data após o limite de submissão.
-   Entrada: $cod_curso - código do curso, para conectar ao banco de dados.
-   Saída: True se teve resoluções entregues e False caso contrário.
+   EntregaCorrecaoExsObjetivos - Entrega a correÔøΩÔøΩo de todos os exercÔøΩcios com questÔøΩes
+   			apenas objetivas, com data apÔøΩs o limite de submissÔøΩo.
+   Entrada: $cod_curso - cÔøΩdigo do curso, para conectar ao banco de dados.
+   SaÔøΩda: True se teve resoluÔøΩÔøΩes entregues e False caso contrÔøΩrio.
 */
 function EntregaCorrecaoExsObjetivos($cod_curso)
 {
 	// Conecta com a banco do curso.
 	$sock = Conectar($cod_curso);
 	
-	// Pega todos os exercícios que podem ter seu gabarito liberado.
+	// Pega todos os exercÔøΩcios que podem ter seu gabarito liberado.
 	$query = "select cod_exercicio from Exercicios_aplicado ";
 	$query.= "where (dt_limite_submissao < ".time().") and ";
 	$query.= "(disp_gabarito = 'S')";
 	$res = Enviar($sock, $query);
 	
-	// Se não houver resultados, não há exercícios que possam ser entregues.
+	// Se nÔøΩo houver resultados, nÔøΩo hÔøΩ exercÔøΩcios que possam ser entregues.
 	if (RetornaNumLinhas($res) <= 0)
 		return false;
 		
 	// Exercicios que possam ter gabaritos disponibilizados
 	$array_cod_exercicios = RetornaArrayLinhas($res);
 		
-	// Nesse array, apenas estarão os exercícios que possam ser entregues
-	// e tenham apenas questões objetivas
+	// Nesse array, apenas estarÔøΩo os exercÔøΩcios que possam ser entregues
+	// e tenham apenas questÔøΩes objetivas
 	$ex_entregaveis = array();
-	$atual = -1;				// Atual posição do array criado		
+	$atual = -1;				// Atual posiÔøΩÔøΩo do array criado		
 	
-	// Pega todas as questões objetivas do banco.
+	// Pega todas as questÔøΩes objetivas do banco.
 	$query = "select cod_questao from Exercicios_questao ";
 	$query.= "where (tp_questao = 'O')";
 	$res = Enviar($sock, $query);
 	
-	// Se não houver resultados, não há questões objetivas no banco e
-	// portanto, não haverá exercícios a serem entregues.
+	// Se nÔøΩo houver resultados, nÔøΩo hÔøΩ questÔøΩes objetivas no banco e
+	// portanto, nÔøΩo haverÔøΩ exercÔøΩcios a serem entregues.
 	if (RetornaNumLinhas($res) <= 0)
 		return false;
 		
-	// Todas as questões objetivas do banco de dados.	
+	// Todas as questÔøΩes objetivas do banco de dados.	
 	$array_questoes_obj = RetornaArrayLinhas($res);
 	
-	// Seleciona, de todos os exercícios passíveis de serem entregues até agora
-	// quais possuem apenas questões objetivas e adiciona no array $ex_entregaveis	
+	// Seleciona, de todos os exercÔøΩcios passÔøΩveis de serem entregues atÔøΩ agora
+	// quais possuem apenas questÔøΩes objetivas e adiciona no array $ex_entregaveis	
 	for ($i = 0; $i < sizeof($array_cod_exercicios); $i++)
 	{
 		$query = "select cod_questao from Exercicios_modelo_questao ";
@@ -2574,8 +2575,8 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 		{
 			$array_cod_questoes = RetornaArrayLinhas($res);
 			
-			// Se alguma destas questoes não esta na lista de questões
-			// objetivas, esse exercicio não deve ser entregue
+			// Se alguma destas questoes nÔøΩo esta na lista de questÔøΩes
+			// objetivas, esse exercicio nÔøΩo deve ser entregue
 			for ($j = 0; $j < sizeof($array_cod_questoes); $j++)
 			{
 				$flag = false;
@@ -2591,7 +2592,7 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 					break;
 			}
 			
-			// Se a flag permaneceu true, todas as questões são objetivas
+			// Se a flag permaneceu true, todas as questÔøΩes sÔøΩo objetivas
 			// e podemos adicionar este exercicio ao array
 			if ($flag == true)
 			{
@@ -2602,7 +2603,7 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 		}
 	}
 	
-	// Pega todas as resolucoes ainda não entregues dos ex_entregaveis
+	// Pega todas as resolucoes ainda nÔøΩo entregues dos ex_entregaveis
 	$query = "select cod_resolucao from Exercicios_resolucao ";
 	$query.= "where (corrigida = 'N') and ( ";
 
@@ -2622,7 +2623,7 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 	for ($i = 0; $i < sizeof($array_cod_resolucoes); $i++)
 		EntregaCorrecao($sock, $cod_curso, $array_cod_resolucoes[$i]['cod_resolucao']);
 		
-	// Fim da função.
+	// Fim da funÔøΩÔøΩo.
 	Desconectar($sock);
 	return true;
 }
