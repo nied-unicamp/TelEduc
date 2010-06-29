@@ -80,7 +80,7 @@
     } 
 
     Desconectar($sock);
-    header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&tp_questao=".$tp_questao."&atualizacao=".$atualizacao);
+    header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&tp_questao=".$tp_questao."&acao=".$acao."&atualizacao=".$atualizacao);
   }
   
   if ($acao=="incluirQuestao"){
@@ -110,7 +110,7 @@
     } 
 
     Desconectar($sock);
-    header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio);
+    header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=".$acao."&atualizacao=true");
   }
   
   /* aÃ§Ã£o = Anexar Arquivo*/
@@ -161,10 +161,10 @@
 	
     if ($atualizacao == "true")
     {
-    	// Alterando o status e a data (referente a modificação feita = recuperada)
+    	// Alterando o status e a data (referente a modificaï¿½ï¿½o feita = recuperada)
 	    AtualizaExerciciosModelo($sock, $cod_exercicio);
 	    
-	    // Inserindo alteração na tabela Exercicios_modelo_historico
+	    // Inserindo alteraï¿½ï¿½o na tabela Exercicios_modelo_historico
 	    marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 'F');
     }
     
