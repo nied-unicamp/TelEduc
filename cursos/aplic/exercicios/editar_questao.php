@@ -89,6 +89,8 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
 //  $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
   $feedbackObject->addAction("anexar", 62, 61);
+  //Frase #204: Questao criada com sucesso!
+  $feedbackObject->addAction("criarQuestao", RetornaFraseDaLista($lista_frases, 204), 0);
   
   $questao = RetornaQuestao($sock,$cod_questao);
   $questao_diss = RetornaQuestaoDiss($sock,$cod_questao);
@@ -377,7 +379,8 @@
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        document.getElementById('text_'+id).innerHTML='';\n");
   echo("        if(id == ".$cod_questao.")\n");
-  echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",'',".$cod_usuario.", \"\");\n");
+  //Frase #205: Enunciado excluido com sucesso.
+  echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",'',".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 205)."\");\n");
   echo("        else{\n");
   echo("          cod = RetornaCodAlternativa(id);");
   echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",cod,'',".$cod_usuario.", \"\");\n");
@@ -436,7 +439,8 @@
   echo("      if (valor=='ok'){\n");
   echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
   echo("        if(codigo == ".$cod_questao.")\n");
-  echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",conteudo,".$cod_usuario.", \"\");\n");
+  //frase #200: Enunciado editado com sucesso!
+  echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",conteudo,".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 200)."\");\n");
   echo("        else{\n");
   echo("          cod = RetornaCodAlternativa(codigo);");
   echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,".$cod_usuario.", \"\");\n");
@@ -470,7 +474,7 @@
   echo("      var texto = textbox.value;\n");
   echo("      var select;\n");
   echo("	  if(texto==''){\n");
-  echo("			alert('Digite um nome para o t�pico');\n");
+  echo("			alert('Digite um nome para o t�pico');\n");
   echo("			textbox.focus();\n");
   echo("			return false;\n");
   echo("	  }\n");
