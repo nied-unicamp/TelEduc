@@ -189,7 +189,7 @@
   echo("      document.captureEvents(Event.MOUSEMOVE);\n");
   echo("    }\n\n");
   
-  echo("      document.onmousemouve = TrataMouse;\n\n");
+  echo("      document.onmousemove = TrataMouse;\n\n");
  
   echo("      function TrataMouse(e)\n");
   echo("    {\n");
