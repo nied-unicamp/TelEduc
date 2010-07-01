@@ -661,7 +661,17 @@
   echo("      span.setAttribute(\"id\",'spanCanc_'+cod);\n"); 
   echo("      span.setAttribute(\"class\",\"link\");\n");
   echo("      span.innerHTML = 'Cancelar';\n");
-  echo("      span.onclick= function(){ CancelaAlternativa(cod); };\n");
+  echo("      span.onclick= function(){ CancelaEdicaoAlternativa(cod, conteudo); };\n");
+  echo("      return span;\n");
+  echo("    }\n\n");
+  
+  echo("    function CriaSpanCancNovaAlternativa(cod)\n");
+  echo("    {\n");	
+  echo("      var span = document.createElement(\"span\");\n");
+  echo("      span.setAttribute(\"id\",'spanCanc_'+cod);\n"); 
+  echo("      span.setAttribute(\"class\",\"link\");\n");
+  echo("      span.innerHTML = 'Cancelar';\n");
+  echo("      span.onclick= function(){ CancelaAlternativaNovaAlternativa(cod); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
 
@@ -677,6 +687,7 @@
   echo("      return inputAlternativa;\n");
   echo("    }\n\n");
 
+  //funcao que cria campo de edicao ao editar uma alternativa
   echo("    function CriaCamposEdicao(conteudo,cod)\n");
   echo("    {\n");	
   echo("      var span;\n");
@@ -691,6 +702,24 @@
   echo("      span.appendChild(CriaSpanOk(cod));\n");
   echo("      span.appendChild(CriaSpanEspAlt(2));\n");
   echo("      span.appendChild(CriaSpanCanc(cod,conteudo));\n");
+  echo("    }\n\n");
+  
+  
+  //função que cria o campo de edicao quando o usuario quer adicionar nova alternativa
+  echo("    function CriaCamposEdicaoNovaAlternativa(conteudo,cod)\n");
+  echo("    {\n");	
+  echo("      var span;\n");
+  echo("      span = document.getElementById('span_'+cod);\n");
+  echo("      span.appendChild(CriaInputAlt(conteudo,cod));\n");
+  if($tp_questao == 'O')
+  {
+    echo("      span.appendChild(document.createTextNode(' Validade:'));\n");
+    echo("      span.appendChild(CriaSelectAlt(cod));\n");
+  }
+  echo("      span.appendChild(CriaSpanEspAlt(8));\n");
+  echo("      span.appendChild(CriaSpanOk(cod));\n");
+  echo("      span.appendChild(CriaSpanEspAlt(2));\n");
+  echo("      span.appendChild(CriaSpanCancNovaAlternativa(cod));\n");
   echo("    }\n\n");
 
   echo("    function CriaSpanEditarGabarito(cod)\n");
@@ -781,7 +810,7 @@
     echo("      trGab.appendChild(tdOp);\n");
     echo("      tbody.appendChild(trGab);\n");
   }
-  echo("      CriaCamposEdicao('',cod);\n");
+  echo("      CriaCamposEdicaoNovaAlternativa('',cod);\n");
   echo("      DesabilitarMudancaPosicaoAlt();\n");
   //echo("      IntercalaCorLinhaAlt();\n");
   echo("      cancelarElemento=document.getElementById('spanCanc_'+cod);\n");
@@ -802,7 +831,7 @@
   echo("        alert('".RetornaFraseDaLista($lista_frases, 183)."');\n");
   echo("    }\n\n");
   
-  echo("function CancelaAlternativa(cod){\n");
+  echo("function CancelaAlternativaNovaAlternativa(cod){\n");
   echo("	tr=document.getElementById('trAlt_'+cod);\n");
   echo("	if(tr!=null){\n");
   echo("		tr.parentNode.removeChild(tr);\n");
@@ -810,6 +839,15 @@
   echo("		HabilitarMudancaPosicaoAlt();");
   echo("	}\n");
   echo("}\n");
+  
+ // echo("function CancelaAlternativa(cod, conteudo){\n");
+//  echo("		tr=document.getElementById('trAlt_'+cod);\n");
+ // echo("		if(tr!=null){\n");
+ // echo("			tr.parentNode.removeChild(tr);\n");
+ // echo("			xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",cod,'".$tp_questao."');\n");
+ // echo("			HabilitarMudancaPosicaoAlt();");
+ // echo("		}\n");
+ // echo("}\n");
 
   echo("    function IntercalaCorLinhaAlt(){\n");
   echo("      var checks,i,corLinha,trAlt;\n");
@@ -957,7 +995,9 @@
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      DeletaCamposEdicao(span);\n");
   echo("      span.innerHTML = conteudo;\n");
+  echo("       xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
+  echo("	    cancelarElemento = null;\n");
   echo("    }\n\n");
 
   echo("    function FormaGabarito(){\n");
