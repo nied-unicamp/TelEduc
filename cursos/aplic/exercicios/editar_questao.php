@@ -1021,12 +1021,12 @@
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
     echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
-    echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.");\n");
     echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
     echo("		if(qtdAlternativas == 1){\n");
     echo("			xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",$cod_questao,'O');\n");
     echo("		}\n");
+    echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.");\n");
     echo("    }\n\n");
   }
   else
