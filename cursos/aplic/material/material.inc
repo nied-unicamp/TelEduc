@@ -2099,6 +2099,35 @@ function ExistemItensVisiveis($sock, $tabela, $cod_topico, $eformador)
 }
 
 
+
+/* *********************************************************************
+   VerificaAnexo - verifica se nome do anexo aprenseta acento ou chars ruins.
+   Entrada: $string - com o nome do anexo a ser verificado
+   Saida: 1 - nome do anexo est ok!
+   		  0 - nome do anexo apresenta acento ou chars ruins.
+*/
+function VerificaAnexo($str_anexo)
+{
+	$string = utf8_decode($str_anexo);
+	// Palavras acentuadas
+	$bad_chars = "ÁáÉéÍíÓóÚú";
+	$bad_chars.= "ÃãÕõ";
+	$bad_chars.= "ÀàÈèÌìÒòÙù";
+	$bad_chars.= "ÄäËëÏïÖöÜü";
+	$bad_chars.= "ÂâÊêÎîÔôÛû";
+
+	// Caracteres estranhos para nome de um arquivo anexo
+	$bad_chars.= "÷`!@#$%*()+={}[]\\\"';:?/,<>";
+	$str_res = strpbrk($string, $bad_chars);
+
+	// Se apresentar algum char de $bad_chars, str_res != ""
+	if (($str_res == "") || ($str_res == false))
+		return 1;
+	else
+		return 0;
+}
+
+
 /********* funções AJAX **********************/
 
 /**************************************************************************************************

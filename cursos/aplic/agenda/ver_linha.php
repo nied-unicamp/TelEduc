@@ -79,6 +79,7 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("criarAgenda", 96, 0);
   $feedbackObject->addAction("anexar", 51, 98);
+  $feedbackObject->addAction("nomeAnexo", 0, 109);
   $feedbackObject->addAction("descompactar", 99, 100);
   $feedbackObject->addAction("selecionar_entrada", 105, 0);
   $feedbackObject->addAction("retirar_entrada", 55, 0);

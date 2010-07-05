@@ -124,11 +124,24 @@
       header("Location:ver_editar.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
-  /* ação = Anexar Arquivo - origem = ver_linha.php */
+  /* ação = Arquivo - origem = ver_linha.php */
   if ($acao=='anexar'){
 
     $atualizacao = "true";
+    
+    // Analisa nome do arquivo
+    $nome_arquivo = $_FILES['input_files']['name'];
 
+    // Se possuir acentos ou outros caracteres problematicos
+    if (VerificaAnexo($nome_arquivo) == 0)
+    {
+    	// Nao realiza upload de arquivos com acentos
+    	$acao = "nomeAnexo";
+    	$atualizacao = "false";
+    	header("Location:ver_linha.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
+    	exit;
+    }
+    
     /* Verifica a existência do diretório a ser movido o arquivo */
     if (!file_exists($diretorio_arquivos."/".$cod_curso)) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso);
@@ -141,9 +154,6 @@
     }
 
     $dir=$diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item."/";
-
-    $nome_arquivo = $_FILES['input_files']['name'];
-    //$nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
 
     if (!RealizaUpload($input_files,$dir.$nome_arquivo))
     {

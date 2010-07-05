@@ -69,6 +69,19 @@
 
     $atualizacao="true";
 
+    // Analisa nome do arquivo
+    $nome_arquivo = $_FILES['input_files']['name'];
+
+    // Se possuir acentos ou outros caracteres problematicos
+    if (VerificaAnexo($nome_arquivo) == 0)
+    {
+    	// Nao realiza upload de arquivos com acentos
+    	$acao = "nomeAnexo";
+    	$atualizacao = "false";
+    	header("Location:ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&acao=".$acao."&atualizacao=".$atualizacao);
+    	exit;
+    }
+	
     /* Verifica a existência do diretório a ser movido o arquivo */
     if (!file_exists($diretorio_arquivos."/".$cod_curso)) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso);
@@ -85,10 +98,9 @@
 
     $dir=$diretorio_arquivos."/".$cod_curso."/portfolio/item/".$cod_item."/";
 
-    $nome_arquivo = $_FILES['input_files']['name'];
 	//converte o nome para UTF-8, pois o linux insere com essa codificação o arquivo 
 	//nas pasta de destino.
-	$nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
+	//$nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
     
     if (!RealizaUpload($input_files,$dir.$nome_arquivo))
     {

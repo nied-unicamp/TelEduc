@@ -87,6 +87,8 @@ $feedbackObject->addAction("mover", 191, 0);
 $feedbackObject->addAction("descompactar", 192, 193);
 $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
 $feedbackObject->addAction("moverarquivos", 201, 0);
+$feedbackObject->addAction("nomeAnexo", 0, 216);
+
 
 $eformador = EFormador($sock, $cod_curso, $cod_usuario);
 

@@ -90,11 +90,12 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
 
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
-  $feedbackObject->addAction("criarItem", 124, 0);
-  $feedbackObject->addAction("criarTopico", 127, 0);
-  $feedbackObject->addAction("anexar", 62, 61);
+  $feedbackObject->addAction("criarItem",	 124, 0);
+  $feedbackObject->addAction("criarTopico",  127, 0);
+  $feedbackObject->addAction("anexar",		 62, 61);
+  $feedbackObject->addAction("nomeAnexo",	 0, 150);
   $feedbackObject->addAction("descompactar", 125, 126);
-  $feedbackObject->addAction("moverItem", 142, 143);
+  $feedbackObject->addAction("moverItem",	 142, 143);
 
   Desconectar($sock);
 
@@ -917,7 +918,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
     echo("          for (i=0; i<checks.length; i++){\n");
     echo("            if(checks[i].checked){\n");
-    echo("              getNumber=checks[i].id.split(\"_\");\n");
+    echo("              getNumber=checks[i].id.split('_');\n");
     echo("              nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
     echo("              xajax_ExcluirArquivo('".$tabela."', getNumber[1], nomeArq, ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", '".RetornaFraseDaLista($lista_frases, 133)."');\n");
     //echo("              js_conta_arq--;\n");
