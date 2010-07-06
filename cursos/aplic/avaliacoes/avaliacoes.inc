@@ -1803,7 +1803,7 @@ TODO - Altrar chamadas
 function RetornaListaUsuariosAluno($cod_curso)
 {
 $sock = Conectar("");
-$query = "select Usuario.nome, Usuario_curso.cod_usuario from Usuario_curso inner join Usuario where (Usuario.cod_usuario = Usuario_curso.cod_usuario_global) AND (Usuario_curso.cod_curso = $cod_curso) AND (Usuario.cod_usuario > 0) AND (binary Usuario_curso.tipo_usuario='A')";
+$query = "select Usuario.nome, Usuario_curso.cod_usuario from Usuario_curso inner join Usuario where (Usuario.cod_usuario = Usuario_curso.cod_usuario_global) AND (Usuario_curso.cod_curso = $cod_curso) AND (Usuario.cod_usuario > 0) AND (binary Usuario_curso.tipo_usuario='A') order by Usuario.nome";
 $res=Enviar($sock,$query);
 $lista=RetornaArrayLinhas($res);
 
@@ -2791,7 +2791,7 @@ function RetornaDadosNotaExercicio($sock, $cod_avaliacao, $cod_aluno_grupo,$grup
   $res2 = Enviar($sock, $query2);
   $return = RetornaLinha($res2);
   
-  //$num = RetornaNumLinhas($res2);//Tá errado?
+  //$num = RetornaNumLinhas($res2);//Tï¿½ errado?
   $retorno['resolvido'] = 1;
   if($return['corrigida'] == 'S')
     $retorno['resolvido'] = 1;
