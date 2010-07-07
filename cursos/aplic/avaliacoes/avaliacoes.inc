@@ -1047,6 +1047,20 @@ if (count($lista)>0)
 }
 return $cont;
 }
+*/
+
+function PertenceAoGrupoAux($sock, $cod_usuario, $cod_grupo_portfolio)
+{
+  if ($cod_grupo_portfolio=="" || $cod_grupo_portfolio=="NULL")
+    return false;
+  $query="select GU.cod_usuario 'cod_usuario' from Grupos_usuario GU, Grupos G where GU.cod_grupo=".$cod_grupo_portfolio." and G.cod_grupo=".$cod_grupo_portfolio." and GU.cod_usuario=".$cod_usuario;
+  $res=Enviar($sock,$query);
+  if (RetornaNumLinhas($res)>0)
+    return true;
+  else
+    return false;
+}
+
 
 /* ********************************************************************************
 RetornaNumItensPortfolioAvaliacao -  Retorna o numero de itens postado pelo aluno ou grupo referentes a avaliacao
@@ -1060,7 +1074,7 @@ function RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_
 {
 if ($portfolio_grupo)
 {
- if (PertenceAoGrupo($sock,$cod_usuario, $cod))
+ if (PertenceAoGrupoAux($sock,$cod_usuario, $cod))
    $regra="";
  else if ($eformador)
    $regra="and (tipo_compartilhamento='T' or tipo_compartilhamento='F')";
@@ -4601,7 +4615,9 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
 function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grupo)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
+  
 
+  
   $cod_usuario=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");
@@ -4613,7 +4629,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
   $usr_formador=EFormador($sock,$cod_curso,$cod_usuario);
   $usr_aluno=EAluno($sock,$cod_curso,$cod_usuario);
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
-
+  
   $ferramenta=$dados['Ferramenta'];
   $cod_atividade=$dados['Cod_atividade'];
 
@@ -4624,7 +4640,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
     else
       $portfolio_grupo=0;
   }
-
+  
   if ($portfolio_grupo)
   {
     if($cod_grupo != '' && $cod_grupo != NaN)
@@ -4648,6 +4664,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
     if (RealizouAtividadeNoPortfolio($sock,$cod_avaliacao,$cod,$portfolio_grupo))
     {
       $num_participacoes=RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,$cod_aluno);
+      
       if($portfolio_grupo)
       {
         $script="window.open('../portfolio/ver_itens_aluno.php?cod_curso=".$cod_curso."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_avaliacao=".$cod_avaliacao."','ItensPortfolioParticipante','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');";
@@ -4659,6 +4676,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
     }
     else
       $script = "";
+      
   }
   else if ($ferramenta=='N')
   {

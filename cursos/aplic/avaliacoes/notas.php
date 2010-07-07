@@ -187,7 +187,7 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-          }//Exercício
+          }//Exercï¿½cio
           elseif($foiavaliado && $linha['Ferramenta']=='E'){
           	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -297,7 +297,7 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-         }//Exercício
+         }//Exercï¿½cio
           elseif($foiavaliado && $linha['Ferramenta']=='E'){
           	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -969,14 +969,14 @@
     echo("          if (norma != '') \n");
     echo("            document.getElementById('normaFinal').innerHTML=norma;\n");
     echo("          else \n");
-    echo("            document.getElementById('normaFinal').innerHTML='(naum definido)';\n");
+    echo("            document.getElementById('normaFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 228)."';\n");
     echo("        }else {\n");
     // 199 - Erro
     echo("          document.getElementById('expFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 199)."';\n");
     echo("          if (norma != '') \n");
     echo("            document.getElementById('normaFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 199)."';\n");
     echo("          else \n");
-    echo("            document.getElementById('normaFinal').innerHTML='(naum definido)';\n");
+    echo("            document.getElementById('normaFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 228)."';\n");
     echo("        }\n");
     echo("      }\n\n");
    
@@ -1406,7 +1406,7 @@ $sock = MudarDB($sock, $cod_curso);
               else //Estï¿½ compartilhada sï¿½ com formadores
                 echo("&nbsp;</td>\n");
             }
-          }//Exercício
+          }//Exercï¿½cio
           elseif($foiavaliado && $linha['Ferramenta']=='E'){
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
@@ -1554,7 +1554,7 @@ $sock = MudarDB($sock, $cod_curso);
               }
               else
                 echo($nota."</td>\n");
-            }//Exercício
+            }//Exercï¿½cio
           elseif($foiavaliado && $linha['Ferramenta']=='E'){
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
