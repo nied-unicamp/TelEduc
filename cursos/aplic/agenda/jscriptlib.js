@@ -299,14 +299,11 @@ function LimpaTexto(id){
 
 function ArquivoValido(path)
 {
-  var file=getfilename(path);
-  var n=file.length;
-  if (n==0) return (false);
-  for(i=0; i<=n; i++) {
-    if ((file.charAt(i)=="'") || (file.charAt(i)=="#") || (file.charAt(i)=="%") || (file.charAt(i)=="?") || (file.charAt(i)=="/")) {
-      return(false);
-    }
-  }    return(true);
+	var file=getfilename(path);
+	// Usando expressão regular para identificar caracteres inválidos
+	if ((file.length == 0) || (file.length != file.match(/^[A-Za-z0-9-\.\_]+/)[0].length))
+		return false;
+	return true;
 }
 
 function getfilename(path)
@@ -325,6 +322,7 @@ function EdicaoArq(i){
     document.formFiles.submit();
   }
   else {
+	alert(lista_frases.msg109);
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';

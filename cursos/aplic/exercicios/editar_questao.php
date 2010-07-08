@@ -1123,16 +1123,11 @@
 
   echo("    function ArquivoValido(file)\n");
   echo("    {\n");
-  echo("      var n=file.length;\n");
-  echo("      if (n==0)\n");
-  echo("        return (false);\n");
-  echo("      for(i=0; i<=n; i++) {\n");
-  echo("        if ((file.charAt(i)==\"'\")||(file.charAt(i)==\"#\")||(file.charAt(i)==\"%\")||(file.charAt(i)==\"?\")|| (file.charAt(i)==\"/\")) {\n");
-  echo("          return(false);\n");
-  echo("        }\n");
-  echo("      }\n");
-  echo("      return(true);\n");
-  echo("    }\n\n");
+  // Usando expressão regular para identificar caracteres inválidos
+  echo("	  if ((file.length == 0) || (file.length != file.match(/^[A-Za-z0-9-\.\_]+/)[0].length))\n");
+  echo("	    return false;\n");
+  echo("      return true;\n");		
+  echo("    }\n");
 
   echo("    function EdicaoArq(i, msg){\n");
   echo("      var nomeArq,td,subpasta;\n");
@@ -1142,6 +1137,7 @@
   echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",pastaRaiz+subpasta,nomeArq);\n");
   echo("      }\n");
   echo("      else {\n");
+  echo("		alert('".RetornaFraseDaLista($lista_frases, 206)."');\n");
   echo("        document.getElementById('input_files').style.visibility='hidden';\n");
   echo("        document.getElementById('input_files').value='';\n");
   echo("        document.getElementById('divArquivo').className='';\n");

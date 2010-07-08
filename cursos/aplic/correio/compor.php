@@ -160,6 +160,37 @@
   echo("        elementoDiv.removeChild(document.getElementById('input_file_'+numero));\n");
   echo("      }\n\n");
 
+  echo("    function getfilename(path)\n");
+  echo("    {\n");
+  echo("      var pieces,n,file;");
+  echo("      pieces=path.split('\'');\n");
+  echo("      n=pieces.length;\n");
+  echo("      file=pieces[n-1];\n");
+  echo("      pieces=file.split('/');\n");
+  echo("      n=pieces.length;\n");
+  echo("      file=pieces[n-1];\n");
+  echo("      return(file);\n");
+  echo("    }\n\n");
+
+  echo("    function ArquivoValido(file)\n");
+  echo("    {\n");
+  // Usando expressão regular para identificar caracteres inválidos
+  echo("	  if ((file.length == 0) || (file.length != file.match(/^[A-Za-z0-9-\.\_]+/)[0].length))\n");
+  echo("	    return false;\n");
+  echo("      return true;\n");		
+  echo("    }\n");
+
+  echo("    function EdicaoArq(id_name, id_num){\n");
+  echo("      var nomeArq,td,subpasta;\n");
+  echo("      nomeArq = getfilename(document.getElementById(id_name+id_num).value);\n");
+  echo("      if (ArquivoValido(nomeArq)){\n"); //OK
+  echo("      }\n");
+  echo("      else {\n");
+  echo("		alert('".RetornaFraseDaLista($lista_frases, 141)."');\n");
+  echo("		removeInputFile(id_num);\n");
+  echo("      }\n");
+  echo("    }\n\n");
+
   echo("      function addInputFile(){\n");
   echo("        var num = many_arqs;\n");
   echo("        elementoDiv = document.getElementById('arquivos');\n");
@@ -170,6 +201,7 @@
   echo("        inputFile.setAttribute(\"type\", \"file\");\n");
   echo("        inputFile.setAttribute(\"size\", \"40\");\n");
   echo("        inputFile.setAttribute(\"name\", \"input_files[]\");\n");
+  echo("        inputFile.onchange = function() { EdicaoArq('input_file_', +num); };\n");
   echo("        inputFile.setAttribute(\"id\", \"input_file_\"+many_arqs);\n");
   echo("        inputFile.setAttribute(\"style\", \"border:2px solid #9bc; margin-left:65px;\");\n\n");
   echo("        createSpace=document.createElement('span');\n");
