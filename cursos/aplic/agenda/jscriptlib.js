@@ -137,7 +137,7 @@ function WindowOpenVerURL(end)
 function EdicaoTexto(codigo, id, valor){
 
   if (valor=='ok'){
-      conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML
+      eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
       xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
     }
   else{
@@ -260,7 +260,7 @@ function AlteraTexto(id){
 	span.removeChild(iframe);
 	conteudo="";		
     }				
-    writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
+    writeRichTextOnJSButtons('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     startList();
     document.getElementById('text_'+id+'_text').focus();
     cancelarElemento=document.getElementById('CancelaEdita');

@@ -689,7 +689,7 @@ function RetornaArquivosVisiveis($lista_arq)
 }
 
 /* *********************************************************************
-   EditarTitulo - Edita o título do item dado, dinâmicamente
+   EditarTitulo - Edita o título do item dado, 
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_item - item ao qual o endereco estará associado
             $novo_nome - novo título do item
@@ -751,7 +751,7 @@ function VerificaTexto($texto){
 }		
 
 /* *********************************************************************
-   EditarTexto - Edita o texto do item dado, dinâmicamente
+   EditarTexto - Edita o texto do item dado, dinamicamente
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_item - item ao qual o endereco estará associado
             $novo_nome - novo texto do item
@@ -784,7 +784,7 @@ function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 }
 
 /* *********************************************************************
-   AcabaEdicaoDinamic - Marca no banco de dados o fim da edição do item dado, dinâmicamente
+   AcabaEdicaoDinamic - Marca no banco de dados o fim da edição do item dado, dinamicamente
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_item - item ao qual o endereco estará associado
             $cod_usuario - código do usuário que está utilizando
@@ -848,7 +848,7 @@ function AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, $acao){
 }
 
 /* *********************************************************************
-   AbreEdicao - Marca no banco de dados o início da edição do item dado, dinâmicamente
+   AbreEdicao - Marca no banco de dados o início da edição do item dado, dinamicamente
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $cod_item - item ao qual o endereco estará associado
             $cod_usuario - código do usuário que está utilizando  
