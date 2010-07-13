@@ -78,8 +78,8 @@
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   
-  // Se h‡ exerc’cios com apenas quest›es objetivas
-  // e data limite de entrega j‡ passou, entrega gabaritos.
+  // Se hï¿½ exercï¿½cios com apenas questï¿½es objetivas
+  // e data limite de entrega jï¿½ passou, entrega gabaritos.
   EntregaCorrecaoExsObjetivos($cod_curso);
   
   $sock = Conectar("");
@@ -162,7 +162,9 @@
     echo("      lay_aplicar = getLayer(\"layer_aplicar\");\n");
   }
   echo("      startList();\n");
-  echo("      ExibeMsgPagina(".$pagAtual.");\n");
+  if (count($lista_exercicios) > 0){
+  	echo("      ExibeMsgPagina(".$pagAtual.");\n");
+  }
   echo("    }\n\n");
 
   if (count($lista_exercicios) > 0){
@@ -505,7 +507,7 @@
     
     echo("    function CancelarAplicacao()\n");
     echo("    {\n");
-  	/* Frase #199 - Voce realmente deseja cancelar aplicação dos selecionados? */
+  	/* Frase #199 - Voce realmente deseja cancelar aplicaï¿½ï¿½o dos selecionados? */
   	echo("      if(confirm(\"".RetornaFraseDaLista($lista_frases, 199)."\"))\n");
   	echo("      {\n");
     echo("      	var i;\n");
