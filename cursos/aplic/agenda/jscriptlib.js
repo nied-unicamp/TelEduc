@@ -262,7 +262,7 @@ function AlteraTexto(id){
     }				
     writeRichTextOnJSButtons('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     startList();
-    document.getElementById('text_'+id+'_text').focus();
+    //document.getElementById('text_'+id+'_text').focus();
     cancelarElemento=document.getElementById('CancelaEdita');
     editaTexto++;
   }
