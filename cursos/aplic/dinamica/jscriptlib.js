@@ -54,7 +54,7 @@ function AjustePosMenuIE()
 function EdicaoTexto(codigo, id, valor){
 
   if (valor=='ok'){
-      conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML
+	  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
       xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg9);
   }
 
