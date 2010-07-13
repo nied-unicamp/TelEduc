@@ -1185,7 +1185,7 @@
   echo("          if(checks[i].checked){\n");
   echo("            getNumber=checks[i].id.split(\"_\");\n");
   echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
-  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,\"texto\", ".$cod_curso.",".$cod_usuario.",".$cod_questao.");\n");
+  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.",\"texto\");\n");
   echo("            arrayIdArq[j++] = getNumber[1];\n");
   echo("          }\n");
   echo("        }\n");
@@ -1903,8 +1903,7 @@
 	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
     // Adicionar Descricao
-	echo("                          <span> - Adicionar Descricao</span>\n");
-	echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	echo(                          "<span>".RetornaFraseDaLista($lista_frases,208)."</span>\n");echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 //	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
     echo("                          <input class=\"input\" type=\"file\" id=\"input_files\" name=\"input_files\" onchange=\"EdicaoArq(1);\" style=\"border:2px solid #9bc\" />\n");
 //	echo("                          &nbsp;&nbsp;\n");
