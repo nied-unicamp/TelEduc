@@ -213,8 +213,8 @@
   echo("        return(0);\n");
   echo("    }\n\n");
 
-  $icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
-  $icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+  $icone_correto = " <img src=\"../imgs/certo.png\" name=\"correta[ ]\" alt=\"resposta certa\" border=\"0\" /> ";
+  $icone_errado = " <img  src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
 
   echo("	function AtualizaIcones(alt,gabarito){\n
   			arrayAlt = alt.split('.');\n
@@ -613,10 +613,31 @@
   echo("      {\n");
   echo("        opt1.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
+  echo("        opt2.setAttribute(\"Onclick\",\"NumCerta();\");\n");
   echo("      select.appendChild(opt1);\n");
   echo("      select.appendChild(opt2);\n");
   echo("      return select;\n");
   echo("    }\n\n");
+  
+  echo("function NumCerta(){\n");
+  echo("num=0;\n");
+  echo("numcorreta=document.getElementsByName('correta[ ]');\n");
+  echo("for(i=1;i<=numcorreta.length;i++){\n");
+  echo("		num++;");
+  echo("}\n");
+  echo("if(num>=1){\n");
+  echo("	tr=document.getElementsByName('Alt[ ]');\n");
+  //frase 196 Ja existe uma alternativa correta. Deseja continuar?
+  echo("	if(!confirm('".RetornaFraseDaLista($lista_frases, 196)."')){\n");
+  echo("		CancelaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+  echo("	}\n");
+  echo("	else{\n");
+  echo("		ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+  echo("	}\n");
+  echo(" }\n");
+  echo("}\n");
+  
+  
 
   echo("    function CriaSpanEspAlt(qtd)\n");
   echo("    {\n");
@@ -780,6 +801,7 @@
   }
   echo("      tr = document.createElement(\"tr\");\n");
   echo("      tr.setAttribute(\"id\",'trAlt_'+cod);\n");
+  echo("	  tr.setAttribute(\"name\",'Alt[ ]')\n");
   echo("      td = document.createElement(\"td\");\n");
   echo("      td.className = 'itens';\n");
   echo("      td.setAttribute(\"colspan\",\"6\");\n");
@@ -1677,7 +1699,7 @@
           $texto = $linha_item['texto'];
           $cod_alternativa = $linha_item['cod_alternativa'];
 
-          echo("                  <tr id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
+          echo("                  <tr name=\"Alt[ ]\" id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
           echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span></td>\n");
           echo("                  </tr>\n");
 
