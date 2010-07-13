@@ -18,17 +18,22 @@ var encoding = "iso-8859-1";*/
 
 
 function writeRichTextOnJS(rte, html, width, height, buttons, readOnly, id, nobuttons) {
-	  var cod=id;
-      id='text_'+id;
-      
-	  var local = document.getElementById(id);
-	  var formTmp;
-	  style = "width:90%;height:100px;display:none;";
-	  formTmp = ('<div class="rteDiv">');
-	  formTmp += ('<textarea name="msg_corpo" style="'+style+'">'+html+'</textarea>');
-	  formTmp += ('</div>');
-      local.innerHTML = formTmp;
-      loadEditor('msg_corpo');
+	  if(buttons == true){
+		  writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, id, nobuttons);
+	  }
+	  else{
+		  var cod=id;
+	      id='text_'+id;
+	      
+		  var local = document.getElementById(id);
+		  var formTmp;
+		  style = "width:90%;height:100px;display:none;";
+		  formTmp = ('<div class="rteDiv">');
+		  formTmp += ('<textarea name="msg_corpo" style="'+style+'">'+html+'</textarea>');
+		  formTmp += ('</div>');
+	      local.innerHTML = formTmp;
+	      loadEditor('msg_corpo');
+	  }
       //CKEDITOR.replace('msg_corpo',{});
 	  //CKEDITOR.replace('msg_corpo',{});
         /*if(!typeof(nobuttons)){
@@ -164,7 +169,7 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
 	  style = "width:90%;height:100px;display:none;";
 	  formTmp = ('<div class="rteDiv">');
 	  formTmp += ('<textarea name="text_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
-	  formTmp += ('<input type="button" name="cancelar" id="CancelaEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar"><input type="button" id="OkEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="OK">');
+	  formTmp += ('<input type="button" id="OkEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="OK"><input type="button" name="cancelar" id="CancelaEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
 	  formTmp += ('</div>');
     local.innerHTML = formTmp;
     loadEditor('text_'+cod+'_text');

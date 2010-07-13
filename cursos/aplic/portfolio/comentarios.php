@@ -63,15 +63,6 @@
 
   
   /* 1 - Portffolio */
-  echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
-  echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n";
-  echo("    <script type=\"text/javascript\">\n");
-  echo("      <!--\n");
-              //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-  echo "      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n";
-  echo "      //-->\n";
-  echo "    </script>\n";
-
   echo("    <script type=\"text/javascript\">\n");
 
   echo("      function OpenWindowPerfil(id)\n");
