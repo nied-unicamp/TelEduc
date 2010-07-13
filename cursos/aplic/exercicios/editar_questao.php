@@ -629,7 +629,7 @@
   echo("	tr=document.getElementsByName('Alt[ ]');\n");
   //frase 196 Ja existe uma alternativa correta. Deseja continuar?
   echo("	if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
-  echo("		CancelaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+  echo("		CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
   echo("	}\n");
   echo("	else{\n");
   echo("		ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
