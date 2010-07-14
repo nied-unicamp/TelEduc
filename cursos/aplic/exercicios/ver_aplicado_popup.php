@@ -79,12 +79,6 @@ if($ehFormador || $VerificaCorrigida){
 /*********************************************************/
 /* in�io - JavaScript */
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n");
-//Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-echo("  </script>\n");
 
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
