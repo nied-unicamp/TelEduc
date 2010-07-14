@@ -1047,7 +1047,7 @@
   	echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
   	echo("          <input type=hidden name=cod_item value=\"\" />\n");
   	echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
-  	echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
+  	echo("          <input type=hidden name=texto id=texto value='".RetornaFraseDaLista($lista_frases,192)."'/>\n");
   	echo("          <ul class=ulPopup>\n");
   	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'E'); EscondeLayers();\">\n");
   	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
