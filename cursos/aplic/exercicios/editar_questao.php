@@ -116,15 +116,9 @@
   /* inï¿½io - JavaScript */
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("    <!--\n");
-  //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-  echo("    //-->\n");
-  echo("    </script>\n");
 
   echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
@@ -235,7 +229,9 @@
   echo("      tBody = document.getElementById('tBody');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
-  echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
+  if($tp_questao == 'O'){
+  	echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
+  }
   
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
@@ -397,29 +393,30 @@
   echo("    }\n\n");
 
   echo("    function AlteraTexto(id){\n");
-  echo("      if (editaTexto==-1 || editaTexto != id){\n");
+  //echo("      if (editaTexto==-1 || editaTexto != id){\n");
   echo("        CancelaTodos();\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
   echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
   echo("        startList();\n");
-  echo("        document.getElementById('text_'+id+'_text').focus();\n");
+  //echo("        document.getElementById('text_'+id+'_text').focus();\n");
   echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
   echo("        editaTexto = id;\n");
-  echo("      }\n");
+  //echo("      }\n");
   echo("    }\n\n");
   
   echo("    function AlteraGabarito(id){\n");
-  echo("      if (editaTexto==-1 || editaTexto != id){\n");
+  //echo("      if (editaTexto==-1 || editaTexto != id){\n");
   echo("        CancelaTodos();\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
   echo("        conteudo = document.getElementById('texto_'+id).innerHTML;\n");
+  //echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("        writeRichTextOnJS_gabarito('texto_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
   echo("        startList();\n");
-  echo("        document.getElementById('texto_'+id+'_text').focus();\n");
+  //echo("        document.getElementById('texto_'+id+'_text').focus();\n");
   echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
   echo("        editaTexto = id;\n");
-  echo("      }\n");
+  //echo("      }\n");
   echo("    }\n\n");
 
   echo("    function RetornaCodAlternativa(codigo)\n");
@@ -434,7 +431,8 @@
   echo("    function EdicaoTexto(codigo, id, valor){\n");
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
-  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  //echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("        if(codigo == ".$cod_questao.")\n");
   echo("          xajax_EditarEnunciadoDinamic(".$cod_curso.",".$cod_questao.",conteudo,".$cod_usuario.", \"\");\n");
   echo("        else{\n");
@@ -456,9 +454,10 @@
   echo("    function EdicaoTexto_gabarito(codigo, id, valor){\n");
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
-  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-  echo("          cod = RetornaCodAlternativa(codigo);");
-  echo("          xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",conteudo);\n");
+  //echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+  echo("        cod = RetornaCodAlternativa(codigo);");
+  echo("        xajax_EditarGabaritoQuestaoDissDinamic(".$cod_curso.",".$cod_questao.",conteudo);\n");
   echo("      }\n");
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
@@ -470,7 +469,7 @@
   echo("      var texto = textbox.value;\n");
   echo("      var select;\n");
   echo("	  if(texto==''){\n");
-  echo("			alert('Digite um nome para o tópico');\n");
+  echo("			alert('Digite um nome para o tï¿½pico');\n");
   echo("			textbox.focus();\n");
   echo("			return false;\n");
   echo("	  }\n");

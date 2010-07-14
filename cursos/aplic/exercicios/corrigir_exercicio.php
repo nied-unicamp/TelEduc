@@ -82,12 +82,8 @@ $ehFormador = EFormador($sock,$cod_curso,$cod_usuario);
 if($ehFormador){
 
 	echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-	echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-	echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-	echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n");
-	//Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-	echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-	echo("  </script>\n");
+	echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+    echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 	
 	echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 	
@@ -217,7 +213,7 @@ if($ehFormador){
 	echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
 	echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
 	echo("        startList();\n");
-	echo("        document.getElementById('text_'+id+'_text').focus();\n");
+	//echo("        document.getElementById('text_'+id+'_text').focus();\n");
 	echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
 	echo("        editaTexto = id;\n");
 	echo("      }\n");
@@ -227,7 +223,8 @@ if($ehFormador){
 	echo("      var cod;\n");
 	echo("      if (valor=='ok'){\n");
 	echo("        cod = codigo.split(\"_\");\n");
-	echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+	//echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+	echo("		  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
 	/* Frase #3 - Comentario feito com sucesso! */
 	echo("        xajax_EditarComentarioQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,".$cod_usuario.",\"".RetornaFraseDaLista($lista_frases, 1)."\");\n");
 	echo("      }\n");

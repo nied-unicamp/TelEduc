@@ -298,6 +298,41 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
 		}
 	}*/
 }
+
+function writeRichTextOnJSButtons_gabarito(rte, html, width, height, buttons, readOnly, id, nobuttons) {
+	  var cod=id;
+	  id='texto_'+id;
+	  
+	  var local = document.getElementById(id);
+	  var formTmp;
+	  style = "width:90%;height:100px;display:none;";
+	  formTmp = ('<div class="rteDiv">');
+	  formTmp += ('<textarea name="texto_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
+	  formTmp += ('<input type="button" id="OkEdita" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'ok\');" value="OK"><input type="button" name="cancelar" id="CancelaEdita" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
+	  formTmp += ('</div>');
+	  local.innerHTML = formTmp;
+	  loadEditor('texto_'+cod+'_text');
+
+}
+
+function writeRichTextOnJS_gabarito(rte, html, width, height, buttons, readOnly, id, nobuttons) {
+	  if(buttons == true){
+		  writeRichTextOnJSButtons_gabarito(rte, html, width, height, buttons, readOnly, id, nobuttons);
+	  }
+	  else{
+		  var cod=id;
+	      id='texto_'+id;
+	      
+		  var local = document.getElementById(id);
+		  var formTmp;
+		  style = "width:90%;height:100px;display:none;";
+		  formTmp = ('<div class="rteDiv">');
+		  formTmp += ('<textarea name="msg_corpo" style="'+style+'">'+html+'</textarea>');
+		  formTmp += ('</div>');
+	      local.innerHTML = formTmp;
+	      loadEditor('msg_corpo');
+	  }
+}
   
 function clearNewRTE(rte, id) {
   //id2 = 'text_'+id;
