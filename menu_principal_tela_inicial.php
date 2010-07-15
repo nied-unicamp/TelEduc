@@ -55,7 +55,7 @@
   echo("  </head>\n");
   echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"Iniciar();\" >\n");
   echo("    <a name=\"topo1\"></a>\n");
-  echo("    <h1><a href=\"exibe_cursos.php\" title=\"TelEduc\"><img src=\"../imgs/logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o a Dist&acirc;ncia\" /></a></h1>\n");
+  echo("    <h1><a href=\"../\" title=\"TelEduc\"><img src=\"../imgs/logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o a Dist&acirc;ncia\" /></a></h1>\n");
   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
   echo("      <tr>\n");
   echo("        <td></td>\n");
