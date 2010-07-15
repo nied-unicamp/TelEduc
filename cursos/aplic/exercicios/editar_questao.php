@@ -859,6 +859,7 @@
   echo("		tr.parentNode.removeChild(tr);\n");
   echo("		xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",cod,'".$tp_questao."');\n");
   echo("		HabilitarMudancaPosicaoAlt();");
+  echo("		qtdAlternativas--;\n");
   echo("	}\n");
   echo("}\n");
   
