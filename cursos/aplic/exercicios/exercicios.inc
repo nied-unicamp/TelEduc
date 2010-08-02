@@ -131,23 +131,31 @@ function marcaLogExerciciosModeloHistorico($sock, $cod_exercicio, $cod_usuario, 
 			$acao 			- Acao da edi��o, verifique na wiki todas as dispon�veis
    Saida:	Uma inser��o na tabela Exercicios_resolucao_historico
 */
-function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod_usuario="")
+function marcaLogExerciciosResolucaoHistorico($sock,$cod_resolucao,$acao,$cod="")
 {
-	if ($cod_usuario == "")
+	// Caso cod_usuario não passado por parametro
+	if ($cod == "")
 	{
-		$query = "select cod_usuario from Exercicios_resolucao ";
+		$query = "select cod_usuario, cod_grupo from Exercicios_resolucao ";
 		$query.= "where cod_resolucao = ".$cod_resolucao;
 		$res = Enviar($sock, $query);
 		$linha = RetornaLinha($res);
-		$cod_usuario = $linha['cod_usuario'];
+		if ($linha['cod_usuario'] != "")
+			$cod = $linha['cod_usuario'];
+		else 
+			$cod = $linha['cod_grupo'];
 	}
-	
-	$query = "insert into Exercicios_resolucao_historico ";
-    $query.= "(cod_resolucao,cod_usuario,data, acao) values ";
-    $query.= "(".$cod_resolucao.", ".$cod_usuario.",";
-    $query.= time().",'".$acao."') ";
-    $query.= "on duplicate key update data=".time();
-    Enviar($sock, $query);
+
+	// Marca log apenas se cod_usuario salvo
+	if ($cod!= "")
+	{
+		$query = "insert into Exercicios_resolucao_historico ";
+		$query.= "(cod_resolucao,cod_usuario,data, acao) values ";
+		$query.= "(".$cod_resolucao.", ".$cod.",";
+		$query.= time().",'".$acao."') ";
+		$query.= "on duplicate key update data=".time();
+		Enviar($sock, $query);
+	}
 }
 
 function RetornaUsuarioPorResolucao($sock, $cod_resolucao){
@@ -2497,17 +2505,17 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
   	$update = "UPDATE Exercicios_resolucao SET nota=".$soma.", corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
   	$res=Enviar($sock, $update);
 
-  	// Marca no log das resolu��es, na tabela Exercicio_resolucao_historico
-    // o evento de ter entregue o exercicio
-    marcaLogExerciciosResolucaoHistorico($sock, $cod_resolucao, 'C');
-      	
   	/* Pega info do exercicio por cod_resolucao */
   	$query = "select * FROM Exercicios_resolucao WHERE cod_resolucao =".$cod_resolucao;
    	$res = Enviar($sock, $query);
-    $exercicio = RetornaLinha($res);
+    	$exercicio = RetornaLinha($res);
     
-    $cod_avaliacao = RetornaCodAvaliacao($sock,$exercicio['cod_exercicio']);
+    	$cod_avaliacao = RetornaCodAvaliacao($sock,$exercicio['cod_exercicio']);
     
+  	// Marca no log das resolu��es, na tabela Exercicio_resolucao_historico
+    	// o evento de ter entregue o exercicio
+    	marcaLogExerciciosResolucaoHistorico($sock, $cod_resolucao, 'C');
+      	
   	/* Entrega da correcao para aplicacao Individual */
   	if (is_null($exercicio['cod_grupo'])){
    
