@@ -543,8 +543,9 @@ echo("      function TestaDatas()\n");
 	echo("    function ArquivoValido(path)\n");
 	echo("    {\n");
 	echo("      var file=getfilename(path);\n");
+	echo("		var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
 	// Usando expressão regular para identificar caracteres inválidos
-	echo("	    if ((file.length == 0) || (file.length != file.match(/^[A-Za-z0-9-\.\_]+/)[0].length))\n");
+	echo("		if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
 	echo("	      return false;\n");
 	echo("      return true;\n");		
 	echo("    }\n");

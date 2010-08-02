@@ -299,9 +299,11 @@ function LimpaTexto(id){
 
 function ArquivoValido(path)
 {
-	var file=getfilename(path);
+	var file = getfilename(path);
+	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
+
 	// Usando expressão regular para identificar caracteres inválidos
-	if ((file.length == 0) || (file.length != file.match(/^[A-Za-z0-9-\.\_]+/)[0].length))
+	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
 		return false;
 	return true;
 }

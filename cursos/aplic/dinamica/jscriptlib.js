@@ -100,17 +100,16 @@ function AlteraTexto(id){
   }				
 }
 
-  function ArquivoValido(path)
-  {
-    var file=getfilename(path);
-    var n=file.length;
-    if (n==0) return (false);
-    for(i=0; i<=n; i++) {
-      if ((file.charAt(i)=="'") || (file.charAt(i)=="#") || (file.charAt(i)=="%") || (file.charAt(i)=="?") || (file.charAt(i)=="/")) {
-        return(false);
-      }
-    }    return(true);
-  }
+function ArquivoValido(path)
+{
+	var file = getfilename(path);
+	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
+
+	// Usando expressão regular para identificar caracteres inválidos
+	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
+		return false;
+	return true;
+}
 
 function getfilename(path)
 {
