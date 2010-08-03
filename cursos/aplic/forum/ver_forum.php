@@ -242,10 +242,10 @@
     echo("        EscondeLayers();\n");
   }
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  /*if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
   {
-    echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
-  }
+    echo("        //writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
+  }*/
   echo("        ExibeMsgPagina(".$pag_atual.");\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
@@ -438,7 +438,7 @@
 
     echo("        document.getElementById('divNovaMsg').className=\"\";\n");
     echo("        document.getElementById('tdNovaMsg').appendChild(document.getElementById('divNovaMsg'));\n");
-    echo("		  writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
+    echo("		  writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
     echo("        document.getElementById('acao').value='nova_msg';\n");
     //echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
     echo("        document.formCompor.msg_titulo.focus();\n");
@@ -453,9 +453,8 @@
     echo("        document.getElementById('tdNovaMsg').style.background=\"#DCDCDC\";\n");
     echo("        document.getElementById('divNovaMsg').className=\"divHidden\";");
     echo("        document.formCompor.msg_titulo.value='';\n");
-    echo("		  	");
-    echo("        document.formCompor.cke_msg_corpo.value='';\n");
-    echo("alert(document.formCompor.cke_msg_corpo.value);");
+    //echo("        document.formCompor.cke_msg_corpo.value='';\n");
+    //echo("alert(document.formCompor.cke_msg_corpo.value);");
     echo("        clearNewRTE('msg_corpo', 'divRTE');\n");
     echo("        if (document.getElementById('spanRespondeMsg')){\n");
     echo("          tdElement = document.getElementById('spanRespondeMsg').parentNode;\n");
@@ -515,7 +514,7 @@
       echo("        tdElement.appendChild(newSpan);\n");
       echo("        tdElement.appendChild(document.getElementById('divNovaMsg'));\n");
       echo("        document.getElementById('divNovaMsg').className=\"\";\n");
-	  echo("		writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
+	  echo("		writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
 	  echo("        document.getElementById('acao').value = 'responde_mensagem';\n");
       echo("        document.getElementById('codRespondeMensagem').value = cod_msg;\n");
       echo("        document.getElementById('msg_titulo').value='Re: '+document.getElementById('titulo_'+cod_msg).innerHTML;\n");
