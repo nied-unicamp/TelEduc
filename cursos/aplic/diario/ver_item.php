@@ -370,6 +370,11 @@
 
   echo("                  <li><a href=\"comentarios.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."\">".RetornaFraseDaLista($lista_frases, 12)."</a></li>\n");
   
+  if ($dono_diario){
+  	/* 1 - Apagar (Ger) */
+    echo("                <li><span onclick=\"ApagarItem();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
+  }
+  
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -413,14 +418,14 @@
     echo("                    <td width=\"15%\" class=\"botao2\" align=\"center\">\n");
     echo("                      <ul>\n");
 
-    /* 38 - Renomear Anota��o */
-    echo("                        <li><span onClick=\"AlteraTitulo('".$cod_item."');\">".RetornaFraseDaLista($lista_frases_geral,19)."</span></li>\n");
+    /* 38 - Renomear titulo */
+    echo("                        <li><span onClick=\"AlteraTitulo('".$cod_item."');\">".RetornaFraseDaLista($lista_frases,38)."</span></li>\n");
     /* 65 - Editar texto */
     echo("                        <li><span onclick=\"AlteraTexto('".$cod_item."');\">".RetornaFraseDaLista($lista_frases,65)."</span></li>\n");
     /* 68 - Limpar texto */
     echo("                        <li><span onclick=\"LimpaTexto('".$cod_item."');\">".RetornaFraseDaLista($lista_frases,68)."</span></li>\n");
     /* 1 - Apagar (Ger) */
-    echo("                      <li><span onclick=\"ApagarItem();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
+    //echo("                      <li><span onclick=\"ApagarItem();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
 
   echo("                      </ul>\n");
   echo("                    </td>\n");

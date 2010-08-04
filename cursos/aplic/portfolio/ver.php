@@ -87,8 +87,6 @@ $feedbackObject->addAction("mover", 191, 0);
 $feedbackObject->addAction("descompactar", 192, 193);
 $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
 $feedbackObject->addAction("moverarquivos", 201, 0);
-$feedbackObject->addAction("nomeAnexo", 0, 216);
-
 
 $eformador = EFormador($sock, $cod_curso, $cod_usuario);
 
@@ -106,6 +104,9 @@ Desconectar($sock2);
 
 $sock = Conectar($cod_curso);
 $dir_item_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
+
+$linha_item = RetornaDadosDoItem($sock, $cod_item);
+
 echo ("    <script type=\"text/javascript\">");
 echo ("      function WindowOpenVer(id)\n");
 echo ("      {\n");
@@ -418,6 +419,12 @@ echo ("                  <li><span onclick=\"window.open('historico.php?cod_curs
 
 /* 112 - Comentários */
 echo ("                  <li><a href=\"comentarios.php?cod_curso=" . $cod_curso . "&amp;cod_item=" . $cod_item . "&amp;cod_topico_raiz=" . $cod_topico_raiz . "&amp;cod_usuario_portfolio=" . $cod_usuario_portfolio . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_grupo_portfolio=" . $cod_grupo_portfolio . "\">" . RetornaFraseDaLista($lista_frases, 112) . "</a></li>\n");
+if ($dono_portfolio) {
+	/*Frase #25: Mover*/
+	echo("					<li><span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . RetornaFraseDaLista($lista_frases_geral, 25) . "</span></li>\n");
+	/*Frase #1: Apagar*/
+	echo("                  <li><span onclick=\"CancelaTodos();ApagarItem();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+}
 echo ("                </ul>\n");
 echo ("              </td>\n");
 echo ("            </tr>\n");
@@ -444,7 +451,7 @@ if ($ferramenta_avaliacao) {
 
 echo ("                  </tr>\n");
 
-$linha_item = RetornaDadosDoItem($sock, $cod_item);
+//$linha_item = RetornaDadosDoItem($sock, $cod_item);
 
 $titulo = $linha_item['titulo'];
 
@@ -514,7 +521,7 @@ if ($linha_item['status'] == "E") {
 					$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
 					$editar = "<span onclick=\"AlteraTexto(" . $linha_item['cod_item'] . ");\">" . $editar . "</span>";
 					$limpar = "<span onclick=\"LimparTexto(" . $linha_item['cod_item'] . ");\">" . $limpar . "</span>";
-					$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
+					//$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
 				}
 			}
 			//else = não existe uma avaliação
@@ -524,7 +531,7 @@ if ($linha_item['status'] == "E") {
 				$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
 				$editar = "<span onclick=\"AlteraTexto(" . $linha_item['cod_item'] . ");\">" . $editar . "</span>";
 				$limpar = "<span onclick=\"LimparTexto(" . $linha_item['cod_item'] . ");\">" . $limpar . "</span>";
-				$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
+				//$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
 			}
 		}
 	}
@@ -543,7 +550,7 @@ else
 						$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
 						$editar = "<span onclick=\"AlteraTexto(" . $linha_item['cod_item'] . ");\">" . $editar . "</span>";
 						$limpar = "<span onclick=\"LimparTexto(" . $linha_item['cod_item'] . ");\">" . $limpar . "</span>";
-						$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
+						//$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
 					}
 				} else {
 					$titulo = "<span style=\"border:1pt;\" id=\"tit_" . $linha_item['cod_item'] . "\">" . $linha_item['titulo'] . "</span>";
@@ -552,7 +559,7 @@ else
 					$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
 					$editar = "<span onclick=\"AlteraTexto(" . $linha_item['cod_item'] . ");\">" . $editar . "</span>";
 					$limpar = "<span onclick=\"LimparTexto(" . $linha_item['cod_item'] . ");\">" . $limpar . "</span>";
-					$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
+					//$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
 				}
 			}
 		}
@@ -562,7 +569,7 @@ else
 		$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
 		$editar = "<span onclick=\"AlteraTexto(" . $linha_item['cod_item'] . ");\">" . $editar . "</span>";
 		$limpar = "<span onclick=\"LimparTexto(" . $linha_item['cod_item'] . ");\">" . $limpar . "</span>";
-		$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
+		//$mover = "<span onclick=\"js_cod_item=" . $linha_item['cod_item'] . ";MostraLayer(cod_mover,0,event);xajax_AbreEdicao('" . $cod_curso . "', '" . $cod_item . "', '" . $cod_usuario . "', '" . $cod_usuario_portfolio . "', '" . $cod_grupo_portfolio . "', '" . $cod_topico_ant . "');return(false);\">" . $mover . "</span>";
 	}
 
 echo ("                  <tr id='tr_" . $linha_item['cod_item'] . "'>\n");
@@ -575,9 +582,9 @@ if ($dono_portfolio) {
 		echo ("                        <li>" . $renomear . "</li>\n");
 		echo ("                        <li>" . $editar . "</li>\n");
 		echo ("                        <li>" . $limpar . "</li>\n");
-		echo ("                        <li>" . $mover . "</li>\n");
+		//echo ("                        <li>" . $mover . "</li>\n");
 		// G 1 - Apagar
-		echo ("                        <li><span onclick=\"CancelaTodos();ApagarItem();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+		//echo ("                        <li><span onclick=\"CancelaTodos();ApagarItem();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
 	}
 	echo ("                      </ul>\n");
 	echo ("                    </td>\n");

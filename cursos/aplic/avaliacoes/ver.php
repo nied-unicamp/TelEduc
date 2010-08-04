@@ -366,6 +366,10 @@
   echo("      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
     // G 209 - Salvar em Arquivo ou Imprimir
   echo("                 <li><span onclick=\"window.open('ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."&operacao=".$operacao."', 'Salva/Imprime' ,'width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases, 209)."</span></li>\n");
+  if ($usr_formador){
+  	//Frase #1: Apagar
+  	echo("                 <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
+  }
   echo("    </form>\n");
   
   if ($dados_avaliacao['Ferramenta'] == 'P')
@@ -499,7 +503,7 @@
       // ? - Editar Criterios
       echo("                        <li><span onClick=\"AlteraTexto('crt');\">Editar Criterios</span></li>\n");
       // G 1 - Apagar
-      echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
+     // echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
       echo("                      </ul>\n");
       echo("                    </td>\n");
   }

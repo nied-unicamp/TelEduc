@@ -79,7 +79,6 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("criarAgenda", 96, 0);
   $feedbackObject->addAction("anexar", 51, 98);
-  $feedbackObject->addAction("nomeAnexo", 0, 109);
   $feedbackObject->addAction("descompactar", 99, 100);
   $feedbackObject->addAction("selecionar_entrada", 105, 0);
   $feedbackObject->addAction("retirar_entrada", 55, 0);
@@ -240,6 +239,12 @@
   echo("              	<li><a href=\"".$caminho."\">".$frase."</a></li>\n");
   /*34 - Histórico */
   echo("              	<li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
+  if($origem == "ver_editar"){
+  	/*34 - Ativar */
+  	echo("              	<li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
+  	/*34 - Apagar */
+  	echo("              	<li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
+  }
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -312,13 +317,13 @@
       echo("                        <li>".$editar."</li>\n");
       echo("                        <li>".$limpar."</li>\n");
       /* Só pode apagar ou ativar agendas que estão na seção "Editar Agendas" ou que acabaram de ser criadas*/
-      if($origem == "ver_editar")
-      {	
+    /*  if($origem == "ver_editar")
+      {	*/
         /*24 - Ativar*/
-        echo("                        <li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
+       /* echo("                        <li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
         // G 1 - Apagar
         echo("                        <li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
-      }
+      }*/
       echo("                      </ul>\n");
       echo("                    </td>\n");
     }
