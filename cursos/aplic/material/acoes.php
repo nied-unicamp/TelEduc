@@ -109,7 +109,7 @@
     if (NaoExisteTop($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario))
     {
       $cod_topico=CriarTopico($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario);
-		AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+			AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
       Desconectar($sock);
       header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico."&acao=".$acao."&statusAcao=true");
 	  exit();
@@ -298,9 +298,9 @@
   	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
 	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
 
-	$sock = Conectar($cod_curso_destino);
+ 	$sock = MudarDB($sock, $cod_curso);
 	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
-	$sock = Conectar("");
+	$sock = MudarDB($sock, "");
 	
 	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
                       $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
