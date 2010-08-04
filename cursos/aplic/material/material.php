@@ -161,6 +161,7 @@
     /**************** ajax ****************/
 
     /* Fun��es JavaScript */
+    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
     echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");
     echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
     echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
@@ -522,6 +523,7 @@
     echo("\n");
   }//if = eh formador
   else{//n�o � formador
+  	echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
     echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
     echo("      function Iniciar(){\n");
     echo("        startList();\n");
@@ -594,7 +596,7 @@
               7: Nova Parada Obrigat�ria
         */
     echo("                    <li><span onclick=\"MostraLayer(cod_novoitem, 150, event); document.getElementById('nome_novo_item').focus();document.getElementById('nome_novo_item').value='';\">".RetornaFraseDaLista($lista_frases,8)."</span></li>\n");
-          /* 105 - 3: Importar Atividade
+		/* 105 - 3: Importar Atividade
                 4: Importar Material de Apoio
                 5: Importar Leitura
                 7: Importar Parada Obrigat�ria
@@ -619,7 +621,7 @@
 
   echo("              <tr>\n");
   echo("                <td valign=\"top\">\n");
-  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");  
+  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" id=\"tab_interna\" class=\"sortable tabInterna\">\n");  
 
   $lista_topicos=RetornaTopicosDoTopico($sock, $tabela, $cod_topico_raiz);
   $lista_itens=RetornaItensDoTopico($sock, $tabela, $cod_topico_raiz);
@@ -627,33 +629,33 @@
   echo("                    <tr class=\"head\">\n");
 
   if($eformador){
-    echo("                      <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
+    echo("                      <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
   }
-
   /* 12 - 3: Atividade
             4: Material de Apoio
             5: Leitura
             7: Parada Obrigatoria
     */
-  echo("                      <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,12)."</td>\n");
+
+  echo("                      <td class=\"alLeft\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,12)."</td>\n");
   /* 13 - Data */
-  echo("                      <td width=\"10%\">".RetornaFraseDaLista($lista_frases,13)."</td>\n");
+  echo("                      <td width=\"10%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,13)."</td>\n");
 
   if($eformador){
     /* 14 - Compartilhar */
-    echo("                      <td width=\"20%\">".RetornaFraseDaLista($lista_frases,14)."</td>\n");
+    echo("                      <td width=\"20%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,14)."</td>\n");
 
     if(($cod_ferramenta==3)&&($AcessoAvaliacao)){
       /* 90 - Avaliacao */
-      echo("                      <td width=\"10%\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
+      echo("                      <td width=\"10%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
     }
 
   }
 
   echo("                    </tr>\n");
 
-  echo("                  </table>\n");
-  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\" id=\"tab_interna\">\n");
+ // echo("                  </table>\n");
+ // echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\" id=\"tab_interna\">\n");
 
   $query = "";
 

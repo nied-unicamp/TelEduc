@@ -153,6 +153,7 @@
   } 
 
   /* Funções javascript */
+  echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
   echo("    <script type=\"text/javascript\">\n");
 
@@ -439,15 +440,15 @@ $cor_link2[$tela_avaliacao] = "</font>";
   echo("            </tr>\n");	
   echo("            <tr>\n");
   echo("	      <td valign=\"top\">\n");
-  echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+  echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
   echo("		  <tr class=\"head\">\n");
-  echo("                    <td width=\"66%\" align=left>$frase_avaliacoes</td>\n");
+  echo("                    <td width=\"66%\" align=left style=\"cursor:pointer\">$frase_avaliacoes</td>\n");
   /* 113 -Tipo da Avalia��o */
-  echo("	            <td width=\"14%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
+  echo("	            <td width=\"14%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
   /* 16 - Data de in�cio*/
-  echo("		    <td width=\"10%\" align=\"center\">".RetornaFraseDaLista($lista_frases,16)."</td>\n");
+  echo("		    <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,16)."</td>\n");
   /* 17 - Data de T�rmino */
-  echo("	            <td width=\"10%\" align=\"center\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
+  echo("	            <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
   echo("		  </tr>\n");
   if (count($lista_avaliacoes) > 0) 
   {
