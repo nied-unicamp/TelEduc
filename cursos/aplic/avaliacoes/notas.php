@@ -1085,7 +1085,8 @@
       echo("        return false;\n");
       echo("      }\n\n");
     }
-
+	/** TODO: Alterar textos abaixo, hardcoded **/
+	/* 'Ocultar Legenda' e 'Exibir Legenda' */
     echo("      function ExibirLegenda()\n");
     echo("      {\n");
     echo("        spanElement = document.getElementById('span_legenda');\n");
@@ -1202,6 +1203,8 @@
             'titulo' => $linha['Titulo'],
             // codigo do forum : F#
             'leg' => $leg,
+            //codigo de avaliacao
+            'cod_avaliacao' => $linha['Cod_avaliacao'],
             // O Periodo do Forum
             // 'data' => UnixTime2Data($linha['Data'])
             // 166 - de
@@ -1220,6 +1223,8 @@
             'titulo' => $linha['Titulo'],
             // o codigo: B# onde # eh um numero
             'leg' => $leg,
+            //codigo de avaliacao
+            'cod_avaliacao' => $linha['Cod_avaliacao'],
             // a data da sessao
             'data' => UnixTime2Data($linha['Data'])
         );
@@ -1251,6 +1256,8 @@
             'titulo' => $linha['Titulo'],
             // o codigo: B# onde # eh um numero
             'leg' => $leg,
+            //codigo de avaliacao
+            'cod_avaliacao' => $linha['Cod_avaliacao'],
             // a data da sessao
             'data' => RetornaFraseDaLista($lista_frases, 166)." ".
                       UnixTime2Data($linha['Data_inicio'])." ".
@@ -1266,6 +1273,8 @@
             'titulo' => $linha['Titulo'],
             // codigo da avaliacao: P#
             'leg' => $leg,
+            //codigo de avaliacao
+            'cod_avaliacao' => $linha['Cod_avaliacao'],
             // o periodo em que a atividade estava disponivel
             'data' => RetornaFraseDaLista($lista_frases, 166)." ".
                       UnixTime2Data($linha['Data_inicio'])." ".
@@ -1720,7 +1729,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avalicao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 146 - Sess�o de Batepapo
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 146)."</td>\n");
@@ -1737,7 +1746,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avaliacao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 145 - F�rum de discuss�o
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 145)."</td>\n");
@@ -1753,7 +1762,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avaliacao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 14 - Atividade no Portfolio
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 14)."</td>\n");
@@ -1768,7 +1777,7 @@ $sock = MudarDB($sock, $cod_curso);
         {
           echo("            <tr>\n");
           $leg=explode("\n",$linha_exercicio['leg']);
-          echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$linha_exercicio['leg']."</a></b> - ".$linha_exercicio['titulo']."</td>\n");
+          echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_exercicio['cod_avaliacao'].");'>".$linha_exercicio['leg']."</a></b> - ".$linha_exercicio['titulo']."</td>\n");
           echo("              <td bgcolor=\"#f1f1f1\">".$linha_exercicio['data']."</td>\n");
           // 175 - Atividade em Exerc�cios
           echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 175)."</td>\n");
