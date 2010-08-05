@@ -659,8 +659,7 @@
 
   echo("    function ArquivoValido(file)\n");
   echo("    {\n");
-  // Usando expressão regular para identificar caracteres inválidos
-  echo("		var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
+  // Usando expressão regular para identificar caracteres inválidos echo("		var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
   echo("		if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
   echo("		    return false;\n");
   echo("		return true;\n");		
@@ -1201,7 +1200,7 @@
   if($tela_formador)
   {
     $titulo="<span id=\"tit_".$exercicio['cod_exercicio']."\">".$exercicio['titulo']."</span>";
-    /* Frase #50 - Renomear */
+    /* Frase #50 - Renomear titulo*/
     $renomear="<span onclick=\"AlteraTitulo('".$exercicio['cod_exercicio']."');\" id=\"renomear_".$exercicio['cod_exercicio']."\">".RetornaFraseDaLista($lista_frases, 50)."</span>";
 		$texto="<span id=\"text_".$exercicio['cod_exercicio']."\">".$exercicio['texto']."</span>";
     /* Frase #51 - Editar texto */
@@ -1210,6 +1209,7 @@
     $limpar="<span onclick=\"LimparTexto(".$exercicio['cod_exercicio'].");\">".RetornaFraseDaLista($lista_frases, 52)."</span>";
     /* Frase #53 - Aplicar */
     $aplicar="<span onclick=\"MostraLayer(lay_aplicar,140,event);\">".RetornaFraseDaLista($lista_frases, 53)."</span>";
+	/*Apagar*/
     $apagar="<span onclick=\"ApagarExercicio();\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span>";
     /* Frase #54 - Reaplicar */
     $reaplicar="<span onclick=\"MostraLayer(lay_aplicar,140,event);\">".RetornaFraseDaLista($lista_frases, 54)."</span>";
@@ -1244,9 +1244,18 @@
   	echo("                <ul class=\"btAuxTabs\">\n");
   	/* Frase #5 - Voltar */
   	echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases,5)."</span></li>\n");
-    	/* Frase #56 - Historico */
-    	echo("              	<li><span onclick=\"window.open('historico_exercicio.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_exercicio=".$cod_exercicio."','".RetornaFraseDaLista($lista_frases, 56)."','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 56)."</span></li>\n");
-  	echo("                </ul>\n");
+    /* Frase #56 - Historico */
+    echo("              	<li><span onclick=\"window.open('historico_exercicio.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_exercicio=".$cod_exercicio."','".RetornaFraseDaLista($lista_frases, 56)."','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 56)."</span></li>\n");
+    if($exercicio['situacao'] == 'C'){
+    	echo("              <li>".$aplicar."</li>\n");
+    }
+    else
+	{
+      echo("                <li>".$reaplicar."</li>\n");
+	  echo("                <li>".$cancelar."</li>\n");
+	}
+	echo("                  <li>".$apagar."</li>\n");
+    echo("                </ul>\n");
   	echo("              </td>\n");
   	echo("            </tr>\n");
   	echo("            <tr>\n");
@@ -1258,36 +1267,47 @@
 	  echo("                      <td class=\"alLeft\" colspan=\"3\">".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
 	else
 	  echo("                      <td class=\"alLeft\" colspan=\"2\">Titulo</td>\n");
-    /* 70 - Opcoes (ger)*/
-	echo("                      <td width=\"20%\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
-	/* Frase #57 - Compartilhamento */
-	echo("                      <td width=\"20%\" colspan=\"2\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
+	
+	if($exercicio['situacao'] == 'C'){
+    	/* 70 - Opcoes (ger)*/
+		echo("                      <td width=\"20%\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
+		/* Frase #57 - Compartilhamento */
+		echo("                      <td width=\"20%\" colspan=\"2\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
+	}
+	else{
+		/* Frase #57 - Compartilhamento */
+		echo("                      <td width=\"20%\" colspan=\"3\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
+	}
 	echo("                    </tr>\n");
 	echo("                    <tr id='tr_".$exercicio['cod_exercicio']."'>\n");
 	if($exercicio['situacao'] == 'C')
 	  echo("                      <td class=\"itens\" colspan=\"3\">".$titulo."</td>\n");
 	else
 	  echo("                      <td class=\"itens\" colspan=\"2\">".$titulo."</td>\n");
-	echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-	echo("                        <ul>\n");
-	if($exercicio['situacao'] == 'C')
-	{
-	  echo("                          <li>".$renomear."</li>\n");
-	  echo("                          <li>".$limpar."</li>\n");
-	  echo("                          <li>".$editar."</li>\n");
-	  echo("                          <li>".$aplicar."</li>\n");
-	}
-	else
-	{
-      echo("                          <li>".$reaplicar."</li>\n");
-	  echo("                          <li>".$cancelar."</li>\n");
-	}
+	
+	if($exercicio['situacao'] == 'C'){
+		echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+		echo("                        <ul>\n");
+		echo("                          <li>".$renomear."</li>\n");
+		echo("                          <li>".$limpar."</li>\n");
+		echo("                          <li>".$editar."</li>\n");
+	  //echo("                          <li>".$aplicar."</li>\n");
+	
+	//else
+	//{
+    //  echo("                          <li>".$reaplicar."</li>\n");
+	//  echo("                          <li>".$cancelar."</li>\n");
+	//}
 	// G 1 - Apagar
-	echo("                          <li>".$apagar."</li>\n");
-	echo("                        </ul>\n");
-	echo("                      </td>\n");
-	echo("                      <td colspan=\"2\">".$compartilhamento."</td>\n");
-    echo("                    </tr>\n");
+	//echo("                          <li>".$apagar."</li>\n");
+		echo("                        </ul>\n");
+		echo("                      </td>\n");
+		echo("                      <td colspan=\"2\">".$compartilhamento."</td>\n");
+	}
+	else{
+		echo("                      <td colspan=\"3\">".$compartilhamento."</td>\n");
+	}
+	echo("                    </tr>\n");
 	echo("                    <tr class=\"head\">\n");
 	/* Frase #58 - Texto */
 	echo("                      <td class=\"center\" colspan=\"6\">".RetornaFraseDaLista($lista_frases, 58)."</td>\n");

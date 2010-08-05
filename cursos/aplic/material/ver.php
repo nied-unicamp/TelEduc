@@ -1105,6 +1105,14 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   /* 30 - Ver Outros Itens */
   echo("                  <li><a href=\"material.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$cod_topico_raiz."\">".RetornaFraseDaLista($lista_frases,30)."</a></li>\n");
 
+  if($eformador){
+  	/* 25 - Mover */
+  	echo("                  <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</a></li>\n");
+  
+  	/* 1 - Apagar */
+  	echo("                  <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</a></li>\n");
+  }
+  
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -1152,16 +1160,16 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   if($eformador) {
     echo("                    <td align=\"left\" width=\"19%\" valign=\"top\" class=\"botao2\">\n");
     echo("                      <ul>\n");
-    /* 146 - Renomear */
+    /* 146 - Renomear titulo */
     echo("                        <li><span onclick=\"AlteraTitulo(".$linha_item['cod_item'].")\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span></li>\n");
     /* 120 - Editar texto */
     echo("                        <li><span onclick=\"AlteraTexto(".$linha_item['cod_item'].")\">".RetornaFraseDaLista($lista_frases,120)."</span></li>\n");
     /* 121 - Limpar texto */
     echo ("                       <li><span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 121)."</span></li>\n");
     /* 25 - Mover (gen) */
-    echo("                        <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
+   // echo("                        <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
     /* 1 - Apagar (gen) */
-    echo("                        <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
+   // echo("                        <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
     echo("                      </ul>\n");
     echo("                    </td>\n");
   }
