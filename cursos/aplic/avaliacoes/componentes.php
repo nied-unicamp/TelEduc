@@ -74,8 +74,6 @@
   echo("    <meta name=\"copyright\" content=\"\" />\n");
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
   echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
-  echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n";
   echo("    <script type='text/javascript' src='../bibliotecas/dhtmllib.js'></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmlgoodies_calendar.js\"></script>\n");
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\" />\n");

@@ -4016,7 +4016,7 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
     }
     elseif(!strcmp($ferramenta,'E'))
     {
-      $query="update Exercicios_modelo set ".$campo."='".htmlentities($novo_nome)."' where cod_modelo=".$cod_atividade;
+      $query="update Exercicios_modelo set ".$campo."='".htmlentities($novo_nome)."' where cod_exercicio=".$cod_atividade;
     }
     elseif(!strcmp($ferramenta,'N'))
     {
