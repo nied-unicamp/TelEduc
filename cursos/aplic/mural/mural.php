@@ -129,11 +129,6 @@
   }
 
   if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
-    /*echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-    echo("    <script type=\"text/javascript\">\n");
-    echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-    echo("    </script>\n");*/
     echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
     echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   }

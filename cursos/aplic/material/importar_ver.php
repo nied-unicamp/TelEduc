@@ -157,9 +157,7 @@
     }
   }
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
 
   echo("      var cod_avaliacao=\"\";\n");
 

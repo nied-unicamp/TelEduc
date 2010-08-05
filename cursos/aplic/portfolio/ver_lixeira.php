@@ -85,7 +85,6 @@
 
 
   /* 1 - Portf?io */
-  echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
 
   echo("    <script type=\"text/javascript\">\n");
 

@@ -117,8 +117,6 @@ echo ("        return(false);\n");
 echo ("      }\n");
 echo ("</script>");
 
-//echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n";
-//echo "    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n";
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 echo ("    <script type=\"text/javascript\">\n");

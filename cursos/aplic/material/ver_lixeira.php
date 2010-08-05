@@ -113,9 +113,7 @@
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
 
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");
