@@ -173,6 +173,10 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
 	  formTmp += ('</div>');
     local.innerHTML = formTmp;
     loadEditor('text_'+cod+'_text');
+    CKEDITOR.on("instanceReady", function(event)
+    		{
+    			eval('CKEDITOR.instances.'+id+'_text'+'.focus();');
+    		});
     //CKEDITOR.replace('msg_corpo',{});
 	  //CKEDITOR.replace('msg_corpo',{});
       /*if(!typeof(nobuttons)){
@@ -312,6 +316,10 @@ function writeRichTextOnJSButtons_gabarito(rte, html, width, height, buttons, re
 	  formTmp += ('</div>');
 	  local.innerHTML = formTmp;
 	  loadEditor('texto_'+cod+'_text');
+	  CKEDITOR.on("instanceReady", function(event)
+	    		{
+	    			eval('CKEDITOR.instances.'+id+'_text'+'.focus();');
+	    		});
 
 }
 
