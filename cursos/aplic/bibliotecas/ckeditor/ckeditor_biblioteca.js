@@ -169,7 +169,7 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
 	  style = "width:90%;height:100px;display:none;";
 	  formTmp = ('<div class="rteDiv">');
 	  formTmp += ('<textarea name="text_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
-	  formTmp += ('<input type="button" id="OkEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="OK"><input type="button" name="cancelar" id="CancelaEdita" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
+	  formTmp += ('<input type="button" id="OkEdita" class="input" style="margin-bottom: 5px;margin-top:3px;margin-right:3px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="Ok"><input type="button" class="input" name="cancelar" id="CancelaEdita" style="margin-bottom: 5px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
 	  formTmp += ('</div>');
     local.innerHTML = formTmp;
     loadEditor('text_'+cod+'_text');
@@ -312,7 +312,7 @@ function writeRichTextOnJSButtons_gabarito(rte, html, width, height, buttons, re
 	  style = "width:90%;height:100px;display:none;";
 	  formTmp = ('<div class="rteDiv">');
 	  formTmp += ('<textarea name="texto_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
-	  formTmp += ('<input type="button" id="OkEdita" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'ok\');" value="OK"><input type="button" name="cancelar" id="CancelaEdita" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
+	  formTmp += ('<input type="button" id="OkEdita" class="input" style="margin-bottom: 5px;margin-top:3px;margin-right:3px;" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'ok\');" value="OK"><input type="button" name="cancelar" id="CancelaEdita" class="input" onclick="EdicaoTexto_gabarito(\''+cod+'\', \''+id+'\', \'canc\');" value="Cancelar">');
 	  formTmp += ('</div>');
 	  local.innerHTML = formTmp;
 	  loadEditor('texto_'+cod+'_text');
