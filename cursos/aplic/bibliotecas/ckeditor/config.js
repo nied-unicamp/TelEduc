@@ -14,6 +14,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbarCanCollapse = false;
 	config.toolbar = 'TelEduc';
 	config.disableNativeSpellChecker = true;
+	config.extraPlugins = "youtube";
 
 	
 	config.toolbar_TelEduc =
@@ -21,7 +22,7 @@ CKEDITOR.editorConfig = function( config )
 		 	['Save','NewPage','Preview'],['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		 	['Find','Replace','-','SelectAll','RemoveFormat'],
 		    ['Bold', 'Italic', 'Underline','Strike', 'Subscript','Superscript', '-', 'NumberedList', 'BulletedList'],
-		    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Image','SpecialChar'], '/',
+		    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Image','YouTube','SpecialChar'], '/',
 		    ['Styles','Format','Font','FontSize'], ['TextColor','BGColor'],
 		    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
 		    ['Link', 'Unlink'],
