@@ -68,13 +68,81 @@ $sock = Conectar($cod_curso);
 
   /* Funções JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
+
+  echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
+  echo("      var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  echo("      var Xpos, Ypos;\n");
+  echo("      var js_cod_item, js_cod_topico;\n");
+  echo("      var js_nome_topico;\n");
+  echo("      var js_tipo_item;\n");
+  echo("      var js_comp = new Array();\n\n");
+
+  echo("      if (isNav)\n");
+  echo("      {\n");
+  echo("        document.captureEvents(Event.MOUSEMOVE);\n");
+  echo("      }\n");
+  echo("      document.onmousemove = TrataMouse;\n\n");
+
+  echo("      function TrataMouse(e)\n");
+  echo("      {\n");
+  echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+  echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+  echo("      }\n");
+
+  echo("      function getPageScrollY()\n");
+	echo("      {\n");
+	echo("        if (isNav)\n");
+	echo("          return(window.pageYOffset);\n");
+	echo("        if (isIE){\n");
+	echo("          if(document.documentElement.scrollLeft>=0){\n");
+	echo("            return document.documentElement.scrollTop;\n");
+	echo("          }else if(document.body.scrollLeft>=0){\n");
+	echo("            return document.body.scrollTop;\n");
+	echo("          }else{\n");
+	echo("            return window.pageYOffset;\n");
+	echo("          }\n");
+	echo("        }\n");
+	echo("      }\n");
+
+  echo("      function AjustePosMenuIE()\n");
+  echo("      {\n");
+  echo("        if (isIE)\n");
+  echo("          return(getPageScrollY());\n");
+  echo("        else\n");
+  echo("          return(0);\n");
+  echo("      }\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
+  echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
   echo("      }\n\n");	
+
+  echo("      function EscondeLayers()\n");
+  echo("      {\n");
+  echo("        hideLayer(lay_nova_agenda);\n");
+  echo("      }\n");
+
+  echo("      function MostraLayer(cod_layer, ajuste)\n");
+  echo("      {\n");
+  echo("        EscondeLayers();\n");
+  echo("        moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
+  echo("        showLayer(cod_layer);\n");
+  echo("      }\n");
+  echo("      function EscondeLayer(cod_layer)\n");
+  echo("      {\n");
+  echo("        hideLayer(cod_layer);\n");
+  echo("      }\n");
+
+  echo("      function NovaAgenda()\n");
+  echo("      {\n");
+  echo("        MostraLayer(lay_nova_agenda, 0);\n");
+  echo("        document.form_nova_agenda.novo_titulo.value = '';\n");
+  echo("        document.getElementById(\"nome\").focus();\n");
+  echo("      }\n");
 
   echo("    </script>\n\n");
 
@@ -99,13 +167,15 @@ $sock = Conectar($cod_curso);
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");	
+  if($usr_formador)
+  {
+		echo("					<li><span OnClick='NovaAgenda();'>".RetornaFraseDaLista($lista_frases, 6)."</span></li>");
+
+    echo("              	<li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
+  }	
   /* Agenda Anteriores*/	
   echo("              	<li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 2)."</a></li>\n");
   /* Editar Agenda, caso seja formador*/
-  if($usr_formador)
-  {
-    echo("              	<li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
-  }	
 
   echo("                </ul>\n");	
   echo("              </td>\n");
@@ -200,6 +270,34 @@ $sock = Conectar($cod_curso);
   echo("            </tr>\n");
   echo("    	    </table>\n");	
   include("../tela2.php");
+
+  /* Cria a funcao JavaScript que testa o nome da nova agenda e o layer  */ 
+  /* nova_agenda, se estiver visualizando as agendas disponieis.         */
+    
+  /* Novo Item */
+  echo("    <div id=\"layer_nova_agenda\" class=popup>\n");
+  echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=int_popup>\n");
+  echo("        <form name=form_nova_agenda method=post action=acoes_linha.php onSubmit='return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));'>\n");
+  //echo("        ".RetornaSessionIDInput());
+  echo("          <div class=ulPopup>\n");    
+  /* 18 - Titulo: */
+  echo("            ".RetornaFraseDaLista($lista_frases,18)."<br />\n");
+  echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=150 /><br />\n");
+  echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("            <input type=hidden name=acao value=criarAgenda />\n");
+  echo("            <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("            <input type='hidden' name='origem' value=ver_editar />\n");
+  /* 18 - Ok (gen) */
+
+  echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+
+  /* 2 - Cancelar (gen) */
+  echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_nova_agenda);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("         </div>\n");
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n\n");
   echo("  </body>\n");			
   echo("</html>\n");	
   Desconectar($sock);
