@@ -564,6 +564,7 @@
   {
     echo("                else\n");
     echo("                {\n");
+	// Botão Apagar do Histórico do Desempenho do Participante
     echo("                  newSpan = document.createElement('span');\n");
     echo("                  newSpan.innerHTML=js_arrayCab[j];\n");
     echo("                  newSpan.className='link';\n");
@@ -605,14 +606,28 @@
   echo("              }\n");
   echo("              newTrJust = document.createElement('tr');\n");
   echo("              newTrJust.className = 'head01';\n");
+	//	Justificativa
   echo("              newTd = document.createElement('td');\n");
-  echo("              newTd.colSpan = 5;\n");
+  echo("              newTd.colSpan = 4;\n");
   echo("              newTd.align = 'left';\n");
   echo("              newTd.innerHTML='".RetornaFraseDaLista($lista_frases,163)."';\n"); 
   echo("              newTrJust.appendChild(newTd);\n");
+	// Botao de Resposta	
+  echo("              newTd = document.createElement('td');\n");
+  echo("              newTd.colSpan = 1;\n");
+  echo("              newTd.rowSpan = 2;\n");
+	echo("              newSpan = document.createElement('span');\n");
+	echo("              newSpan.innerHTML='Responder';\n"); /* TODO: HARDCODED -> Passar pro banco de dados */
+	echo("              newSpan.className='link';\n");
+  echo("							spam_id =  'comentar_'+codNota+'_'+i+'_'+codAluno+'_'+codGrupo;");
+	echo("              newSpan.setAttribute('id', spam_id);\n");
+	echo("              newSpan.onclick = function(){ respondeComentario(newTable, spam_id); };\n"); /* TODO: De chat function */
+	echo("							newTd.appendChild(newSpan);\n");
+  echo("              newTrJust.appendChild(newTd);\n");
+	// Justificativa do formador
   echo("              newTrJustMid = document.createElement('tr');\n");
   echo("              newTd = document.createElement('td');\n");
-  echo("              newTd.colSpan = 5;\n");
+  echo("              newTd.colSpan = 4;\n");
   echo("              newTd.align = 'left';\n");
   if($usr_formador)
     echo("              newTd.innerHTML=arrayConteudo[i][j];\n");
@@ -620,6 +635,7 @@
     echo("              newTd.innerHTML=arrayConteudo[i][4];\n");
   echo("              newTrJustMid.appendChild(newTd);\n");
   echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
+	// Adicionando itens a tabela
   echo("              newTable.appendChild(newTrCab);\n");
   echo("              newTable.appendChild(newTrMid);\n");
   echo("              newTable.appendChild(newTrJust);\n");
@@ -636,6 +652,43 @@
   echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
   echo("          }\n\n");
   echo("        }\n\n");
+
+echo("
+function respondeComentario(tr_pai, span_id) 
+{
+
+	// Cabeçalho: Nome+':'
+	cabecalhoTR = document.createElement('tr');
+	cabecalhoTR.className = 'head01';
+	infoTD = document.createElement('td');
+	infoTD.colSpan = 4;
+	infoTD.align = 'left';
+	infoTD.innerHTML = 'Victor Tozo:';
+	cabecalhoTR.appendChild(infoTD);
+
+	// Comentario + Data
+	whoChatTR = document.createElement('tr');
+	whoChatTR.className = 'altColor1';
+
+	// Comentario
+	chatTD = document.createElement('td');
+	chatTD.colSpan = 3;
+	chatTD.align = 'left';
+	chatTD.innerHTML = 'Poxa professora, me esforcei de mais pra ganhar essa nota !'; /* TODO: HARDCODED */
+	whoChatTR.appendChild(chatTD);
+
+	// Data
+	chatTD = document.createElement('td');
+	chatTD.colSpan = 1;
+	chatTD.align = 'center';
+	chatTD.innerHTML = 'Data: 19:55 20/08/2010'; /* TODO: HARDCODED */
+	whoChatTR.appendChild(chatTD);
+
+	// Encerra
+	tr_pai.appendChild(cabecalhoTR);
+	tr_pai.appendChild(whoChatTR);
+}
+");
 
   echo("        function AtualizaTr(id,codNota,nota,data,comp)\n");
   echo("        {\n");

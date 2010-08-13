@@ -4153,6 +4153,34 @@ function EditarTexto ($cod_curso, $cod_atividade, $novo_nome, $cod_usuario, $cod
 }
 
 /* *********************************************************************
+	AdicionaComentarioDinamic - Adiciona comentario feito pelo usuario.
+	TODO: Funcao nao terminada -> Falta adicionar chamada pro feedback com o
+	valor da mensagem para aparecer.
+*/
+function AdicionaComentarioDinamic($sock, $cod_avaliacao, $cod_usuario, $comentario)
+{
+	$objResponse = new xajaxResponse('ISO-8859-1');
+
+	// Seta comentario no banco de dados.
+	$query = "insert into Avaliacao_notas_comentarios ";
+	$query.= "(cod_avaliacao, cod_usuario, comentario, data) ";
+	$query.= "values (".$cod_avaliacao.", ".$cod_usuario;
+	$query.= ", '".$comentario."', ".time().")";
+	Enviar($sock, $query);
+
+	// Seta modificacao no historico das avaliacoes.
+	$query = "insert into Avaliacao_historicos ";
+	$query.= "(cod_avaliacao, cod_usuario, data, acao) ";
+	$query.= "values (".$cod_avaliacao.", ".$cod_usuario;
+	$query.= ", ".time().", K)";
+	Enviar($sock, $query);
+
+	// Retorno chamando feedback
+  $objResponse->addScript();
+
+  return $objResponse->getXML();
+}
+/* *********************************************************************
    RetornaFraseDinamic - Retorna lista de frases para uma variavel JavaScript, dinamicamente
    Entrada: $variavel - nome da variavel que vai receber as frases
 
