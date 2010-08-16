@@ -570,7 +570,7 @@ function NomeUsuario($sock,$cod_usuario, $cod_curso)
     return ("Visitante");
   $query="select U.nome
           from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = '".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso='".VerificaStringQuery($cod_curso)."')";
+          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = ".VerificaStringQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso).")";
 
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
