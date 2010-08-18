@@ -1,4 +1,5 @@
 <?php
+
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -47,7 +48,7 @@
   include("autenticacao.inc");
   
   $cod_ferramenta	=	8;
-  $sock	=	Conectar("");
+  $sock	= Conectar("");
 
   $lista_frases	=	RetornaListaDeFrases($sock,9);
 
