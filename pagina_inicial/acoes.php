@@ -47,7 +47,7 @@
   include("inicial.inc");
   include("autenticacao.inc");
   
-  $cod_ferramenta =	8;
+  $cod_ferramenta	=	8;
   $sock	= Conectar("");
 
   $lista_frases	=	RetornaListaDeFrases($sock,9);
