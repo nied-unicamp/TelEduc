@@ -39,15 +39,16 @@
 /*==========================================================
   ARQUIVO : administracao/index.php
   ========================================================== */
-
+	
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
-
+  
   VerificaAutenticacaoAdministracao();
-
+ 
   include("../topo_tela_inicial.php");
 
+    
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro 
@@ -69,6 +70,7 @@
   if (isset($cod_lingua) && $cod_lingua!="")
   {
     $cod_lingua_s=$cod_lingua;
+  
     for ($c=-5;$c<20;$c++)
       if (ListaDeFrasesEmMemoria($c))
         MemorizaListaDeFrases($sock, $c);

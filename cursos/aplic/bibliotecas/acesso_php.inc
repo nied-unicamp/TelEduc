@@ -249,7 +249,7 @@ function VerificaAutenticacao($cod_curso)
       }
       else //VerificaAcessoCurso($_SESSION['cod_usuario_s'], $cod_curso)
       {
-// Erro de lógica, condição verificada anteriormente      	
+// Erro de lï¿½gica, condiï¿½ï¿½o verificada anteriormente      	
 /*        if (!isset($_SESSION['login_usuario_s'])) //($num<1 || $linha[0]!=$senha)
         {
           //Desconectar($sock);
@@ -262,7 +262,7 @@ function VerificaAutenticacao($cod_curso)
           Desconectar($sock);
           exit;
         } */
-          /* Se o usuário efetuou o logout, requisita novamente as informaï¿½es para acesso. */
+          /* Se o usuï¿½rio efetuou o logout, requisita novamente as informaï¿½es para acesso. */
           if (isset($_SESSION['logout_flag_s']) && $_SESSION['logout_flag_s'] == 1)
           {
             $_SESSION['logout_flag_s'] = 0;
@@ -333,8 +333,8 @@ function VerificaAutenticacao($cod_curso)
 */
 function VerificaAutenticacaoAdministracao()
 {
-  $sock=Conectar("");
-
+   $sock=Conectar("");
+  	
   if (!isset($_SESSION['login_usuario_s']))
   {
     header("Location:../pagina_inicial/autenticacao.php");

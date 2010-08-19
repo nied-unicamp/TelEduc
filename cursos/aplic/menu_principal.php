@@ -22,6 +22,7 @@
   echo("        <td></td>\n");
   echo("        <td valign=\"top\">\n");
     
+  
   $tela_curso_ferramentas    = RetornaFerramentasCurso($sock);
   $tela_novidade_ferramentas = RetornaNovidadeFerramentas($sock,$cod_curso,$cod_usuario);
   $tela_marcar_ferramenta    = RetornaFerramentasMarcadas($sock);
@@ -104,7 +105,7 @@
   }
 
  /*Ajuda */
-  // 43 - Voltar ao início
+  // 43 - Voltar ao inï¿½cio
   $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,43);
   echo("            ".PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
   echo("            <li><img src=\"../imgs/icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");

@@ -104,7 +104,7 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
   $dbnamebase = $_SESSION['dbnamebase'];
 
   $cod_lingua=$_SESSION['cod_lingua_s'];
-
+       
   /* Se jï¿½estiver em memoria, vai direto... */
   if (isset($_SESSION['lista_frases_s'][$cod_ferramenta]) && count($_SESSION['lista_frases_s'][$cod_ferramenta])>0)
     return ($_SESSION['lista_frases_s'][$cod_ferramenta]); 
@@ -148,13 +148,13 @@ function RetornaFraseDaLista($textos, $cod_texto)
   		return(ConverteAspas2Html($textos[$cod_texto]));
   	else{
   		switch($_SESSION[cod_lingua_s]){
-  			case 1://Português
+  			case 1://Portuguï¿½s
   				return("Falta o texto");
   			case 2://Espanhol
   				return("Falta texto");
-  			case 3://Inglês
+  			case 3://Inglï¿½s
   				return("Missing Text");
-  			case 4://Português PT
+  			case 4://Portuguï¿½s PT
   				return("Falta o texto");
   		}
   	}

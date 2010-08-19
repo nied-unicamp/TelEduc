@@ -78,7 +78,9 @@
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
   $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
   $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock, $login) : $login;
-  $_SESSION['cod_lingua_s'] 		= $cod_lingua;
+  
+  //$_SESSION['cod_lingua_s'] 		= $cod_lingua;
+  
   $_SESSION['visitante_s'] 			= $cod_visitante_s;
   $_SESSION['visao_formador_s'] = 1;
   
@@ -98,7 +100,7 @@
     if($_SESSION['cod_usuario_global_s'] == -1)
     {
       Desconectar($sock);
-      header("Location: ../administracao/index.php?acao=logar&atualizacao=true");
+      header("Location: ../administracao/index.php?acao=logar&atualizacao=true&cod_lingua=".$_SESSION['cod_lingua_s']);
       exit;
     }
     else

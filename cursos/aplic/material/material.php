@@ -181,13 +181,7 @@
     echo("      if (isNav){\n");
     echo("        document.captureEvents(Event.MOUSEMOVE);\n");
     echo("      }\n");
-    echo("      document.onmousemove = TrataMouse;\n");
-
-    echo("      function TrataMouse(e){\n");
-    echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
-    echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
-    echo("      }\n");
-
+    
     echo("      function getPageScrollY()\n");
     echo("      {\n");
     echo("        if (isNav)\n");

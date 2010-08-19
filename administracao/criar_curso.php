@@ -43,6 +43,7 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
+  
 
   require_once("../xajax_0.2.4/xajax.inc.php");
   
@@ -326,7 +327,7 @@
   echo("                        <tr id=\"tr_sugs\" style=\"display:none;\">\n");
   echo("                          <td style=\"text-align:right;border:none;\">&nbsp;</td>\n");
   echo("                          <td style=\"text-align:left;border:none;\">\n");
-  echo("<div id=\"divSugs\" style=\"display:none;background-color:#FFF;position:absolute;border:1pt solid #EEE;padding:5px; margin-top:-22px;\" onmouseover=\"flagOnDivSugs=1;\" onmouseout=\"flagOnDivSugs=0;\">&nbsp;</div></td>\n");
+  echo("						  <div id=\"divSugs\" style=\"display:none;background-color:#FFF;position:absolute;border:1pt solid #EEE;padding:5px; margin-top:-22px;\" onmouseover=\"flagOnDivSugs=1;\" onmouseout=\"flagOnDivSugs=0;\">&nbsp;</div></td>\n");
   echo("                        </tr>\n");
 
   echo("                      </table>\n");

@@ -41,13 +41,14 @@
   ========================================================== */
 
   $sock=Conectar("");
-
+   	
   if (isset($cod_lin))
-    MudancaDeLingua($sock,$cod_lin);
+     MudancaDeLingua($sock,$cod_lin);
+       
   else if(!empty($_SESSION['login_usuario_s']))
   {
-    $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
-    MudancaDeLingua($sock,$cod_lin);
+  	$cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
+  	MudancaDeLingua($sock,$cod_lin);
   }
 
   $lista_frases=RetornaListaDeFrases($sock,-3);

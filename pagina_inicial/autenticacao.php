@@ -76,7 +76,7 @@
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 
-  // Esse $destino é utilizado como verificação para execução do
+  // Esse $destino ï¿½ utilizado como verificaï¿½ï¿½o para execuï¿½ï¿½o do
   // feedback hardcoded abaixo (com link na mensagem)
   if($destino == "inscricao")
   	echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
@@ -85,7 +85,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  // Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços
+  // Elimina os espaï¿½os para verificar se o titulo nao eh formado por apenas espaï¿½os
   // 181 - Por favor preencha o campo 'Login'.
   // 182 - Por favor preencha o campo \"Senha\".
   echo("      function TestaNome(form){\n");
@@ -140,6 +140,8 @@
   echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"acoes.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
   echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
   echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
+  echo("                          <input type=\"hidden\" name=\"cod_lingua\" value=\"".$_SESSION['cod_lingua_s']."\" />\n");
+  
   if(isset($tipo_curso))
     echo("                          <input type=\"hidden\" name=\"tipo_curso\" value=\"".$tipo_curso."\" />\n");
   if(isset($destino))
@@ -185,7 +187,7 @@
   // 93 - Autenticar meu login!
   echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
   
-  // 90 - Caso ainda não seja cadastrado,
+  // 90 - Caso ainda nï¿½o seja cadastrado,
   // 91 - Cadastre-se!
   echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 91, -2)."</a>");
   

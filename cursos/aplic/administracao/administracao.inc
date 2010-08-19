@@ -56,6 +56,52 @@ function RetConfig($sock,$item)
   return($linha['valor']);
 }
 
+function RetornaListaTodosLogins($sock)
+{
+
+  $query="select login,email,nome from Usuario where cod_usuario <> -1";
+  $res = Enviar($sock,$query);
+
+  return RetornaArrayLinhas($res);
+
+}
+
+function SugerirLoginDinamic($pal,$frase,$pos){
+	
+	$objResponse = new xajaxResponse('ISO-8859-1');
+    $sock = Conectar("");
+    $logins_usuarios = RetornaListaTodosLogins($sock);
+    Desconectar($sock);
+    $count=0;
+  	$hint="";
+  	for($i=0; $i<count($logins_usuarios) && $count < 10 && $logins_usuarios != ""; $i++){
+  		if($pal != "" && ($pal == substr($logins_usuarios[$i]['login'],0,strlen($pal)) || $pal == substr($logins_usuarios[$i]['email'],0,strlen($pal)))){
+  			$hint .= "<li><a href=\"#\" onclick=\"javascript:
+  			email=document.getElementsByName('email[]');
+  			email[$pos].value='".$logins_usuarios[$i]['email']."';
+  			nome=document.getElementsByName('nome[]');
+  			nome[$pos].value='".$logins_usuarios[$i]['nome']."';
+  			login=document.getElementsByName('login[]');
+  			login[$pos].value='".$logins_usuarios[$i]['login']."';
+  			document.getElementById('divSugs').style.display = 'none';
+  			EscondeLayer(cod_sugestao)\">".$logins_usuarios[$i]['email']."&nbsp;-&nbsp;(".$logins_usuarios[$i]['login'].")</a></li>";
+      		$count++;
+  		}
+ 	}
+	if($hint != ""){ 
+    	$hint = "<ul><li><i>".$frase."</i></li>".$hint."</ul>";
+    	$objResponse->addScript("document.getElementById('divSugs').style.display = '';");
+    	$objResponse->addAssign("divSugs", "innerHTML", $hint);
+  		$objResponse->addScriptCall("XajaxMostraLayer",$pos);
+   	}
+ 	else{
+    	$objResponse->addScriptCall('XajaxEscondeLayer');
+ 	}  	
+  	
+  	return $objResponse->getXML();
+ }
+
+
 /* **********************************************************************
    RetDiretorio - Retorna o Diretorio pedido
    Entrada: $item - item da tabela de diretorios a ser retornado
@@ -70,15 +116,15 @@ function RetDiretorio($sock,$item)
 }
 
 /*
-  GeraLogin- Retorna um login válido, apartir do email do usuário
-  Entrada: Email do usuário
-  Saída:   Login válido 	
+  GeraLogin- Retorna um login vï¿½lido, apartir do email do usuï¿½rio
+  Entrada: Email do usuï¿½rio
+  Saï¿½da:   Login vï¿½lido 	
  */
 function GeraLogin($sock,$email){
 		$novo_email=explode("@",$email);/*cria login apartir da primeira parte do email do usuario*/	
 		$novo_email=$novo_email[0];		/*pega a primeira parte do email*/	
 
-		/*abaixo verificamos se o login criado apartir do email do usuário ja existe*/
+		/*abaixo verificamos se o login criado apartir do email do usuï¿½rio ja existe*/
 		$logins=RetornaLoginsInscricao($sock);
 		$i=2;
 		$teste=$novo_email;
@@ -91,9 +137,9 @@ function GeraLogin($sock,$email){
 }
 
 /*
-  Retorna Login de um usuário apartir de um email fornecido
-  Entrada: email do usuário
-  Saída:   Login do usuário	
+  Retorna Login de um usuï¿½rio apartir de um email fornecido
+  Entrada: email do usuï¿½rio
+  Saï¿½da:   Login do usuï¿½rio	
 */
 function PegaLogin($sock,$email){
 	  $dbnamebase = $_SESSION['dbnamebase'];
@@ -421,7 +467,7 @@ function ExisteEmail($sock,$cod_curso,$email, $cod_usuario)
                                ['senha']
    Saida: $sock com a base do curso  (necessï¿½rio por causa do e-mail)
 */
-/*Retorna o codigo do usuario através do login caso ele exista*/
+/*Retorna o codigo do usuario atravï¿½s do login caso ele exista*/
 function RetornaCodigoUsuario($sock,$login){
 	
 		$dbnamebase = $_SESSION['dbnamebase'];
@@ -708,7 +754,7 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
 	        $num=count($lista_usuarios);
 
 	        
-	        /* começa a preparar ate onde pegaremos, ou seja, se for a ultima pagina vai ate o fim, caso contrario
+	        /* comeï¿½a a preparar ate onde pegaremos, ou seja, se for a ultima pagina vai ate o fim, caso contrario
             * pega vai ate um multiplo de 10
             */
 	             	
@@ -721,10 +767,10 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
 	        if(($num-$limite)< 0)
 	        	$limite=$num;
 	        	
-	        /*apaga todas as mensagens anteriores.Teremos 10 mensagens ou até terminar caso seja a ultima pagina*/
+	        /*apaga todas as mensagens anteriores.Teremos 10 mensagens ou atï¿½ terminar caso seja a ultima pagina*/
 	       	$objResponse->addScriptCall("ApagaPagina",'T');	
 	       	
-	       	/*colocamos na página o conteudo da respectiva pagina*/
+	       	/*colocamos na pï¿½gina o conteudo da respectiva pagina*/
 	       	$control=1;
 	        foreach($lista_usuarios as $cod_usuario_l => $linha){
 	        	if($control>=$i && $control<=$limite){
@@ -749,7 +795,7 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
             return $objResponse->getXML();
 	        
 }
-/*funcão responsavel por criar a paginação na primeira vez*/
+/*funcï¿½o responsavel por criar a paginaï¿½ï¿½o na primeira vez*/
 
 function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
 	    $objResponse = new xajaxResponse('ISO-8859-1');
@@ -761,8 +807,8 @@ function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
 		$numpagInt=(ceil($num/10));
 	    
 		
-//		/*caso exista mais que 5 páginas mostramos a primeira paginação com 5*/
-//		/*A variavel que controla o proximo é liberada, assim a navegação ainda existe para frente*/	
+//		/*caso exista mais que 5 pï¿½ginas mostramos a primeira paginaï¿½ï¿½o com 5*/
+//		/*A variavel que controla o proximo ï¿½ liberada, assim a navegaï¿½ï¿½o ainda existe para frente*/	
 		$prox="N";		
 		if($numpagInt>5){
 			$numpagInt=5;
@@ -776,7 +822,7 @@ function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
 		
 }
 
-/*funcão que controla a mudança no intervalo de paginacao*/
+/*funcï¿½o que controla a mudanï¿½a no intervalo de paginacao*/
 
 function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
 		$objResponse = new xajaxResponse('ISO-8859-1');

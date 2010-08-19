@@ -5,7 +5,7 @@
 
     Arquivo : pagina_inicial/exibe_todos_cursos.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -61,7 +61,7 @@
   
   /**********************************************************
     @TODO - Verificar necessidade do feedbackobject abaixo, 
-	só será utilizado se mudarmos o link para onde o usuário irá após logar
+	sï¿½ serï¿½ utilizado se mudarmos o link para onde o usuï¿½rio irï¿½ apï¿½s logar
 	*/
    
   // instanciar o objeto, passa a lista de frases por parametro
@@ -89,7 +89,7 @@
   $raiz_www = RetornaRaizWWW($sock);
 
 
-  /* Caso o usuário não tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
+  /* Caso o usuï¿½rio nï¿½o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
   if(!empty ($_SESSION['login_usuario_s'])){
   	if(!PreencheuDadosPessoais($sock))
   	{
@@ -174,7 +174,7 @@
 
   echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
-  /*192 - Não iniciados (recém-criados no servidor)*/
+  /*192 - Nï¿½o iniciados (recï¿½m-criados no servidor)*/
   echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,192)."</td>");
   echo("                  </tr>\n");
   echo("                  <tr class=\"head01\">\n");
@@ -187,7 +187,7 @@
   require("inicial.inc");
   $lista = RetornaCursosNaoIniciadosSemUsuario($sock);
 
-  /*Exibe cursos que ainda não começaram*/
+  /*Exibe cursos que ainda nï¿½o comeï¿½aram*/
   if (count($lista)>0 && $lista != "")
   {
   	foreach($lista as $cod => $linha)
@@ -217,12 +217,12 @@
         
         if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
         {
-          /* 54 - Inscrições */
+          /* 54 - Inscriï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else if(!$tem_acesso_curso)
         {
-          /* 53 - Informações */
+          /* 53 - Informaï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else
@@ -234,8 +234,8 @@
   else
   {
   	echo("                  <tr>\n");
-   /* 57 - Não há nenhum */
-   /* 195 - Curso não iniciado */	
+   /* 57 - Nï¿½o hï¿½ nenhum */
+   /* 195 - Curso nï¿½o iniciado */	
     echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,195)."</td>\n");
     echo("                  </tr>\n");
   }
@@ -283,12 +283,12 @@
         
         if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
         {
-          /* 54 - Inscrições */
+          /* 54 - Inscriï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else if(!$tem_acesso_curso)
         {
-          /* 53 - Informações */
+          /* 53 - Informaï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else
@@ -300,12 +300,12 @@
   else
   {
   	echo("                  <tr>\n");
-    /* 57 - Não há nenhum */	
+    /* 57 - Nï¿½o hï¿½ nenhum */	
   	/* 171 - Em andamento */
     echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,171)."</td>\n");
     echo("                  </tr>\n");
   }
-  /* 172 - Inscrições abertas */
+  /* 172 - Inscriï¿½ï¿½es abertas */
   echo("                  <tr class=\"head\">\n");
   echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,172)."</td>");
   echo("                  </tr>\n");
@@ -317,7 +317,7 @@
   echo("                  </tr>\n");
   
   $lista = RetornaCursosInscricaoSemUsuario($sock);
-  /*Exibe cursos com Inscrição em aberto*/
+  /*Exibe cursos com Inscriï¿½ï¿½o em aberto*/
   if (count($lista)>0 && $lista != "")
   {
     foreach($lista as $cod => $linha)
@@ -347,12 +347,12 @@
         
         if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
         {
-          /* 54 - Inscrições */
+          /* 54 - Inscriï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else if(!$tem_acesso_curso)
         {
-          /* 53 - Informações */
+          /* 53 - Informaï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else
@@ -364,8 +364,8 @@
   else
   {
   	echo("                  <tr>\n");
-    /* 57 - Não há nenhum */	
-  	/* 175 - curso com inscrição aberta */
+    /* 57 - Nï¿½o hï¿½ nenhum */	
+  	/* 175 - curso com inscriï¿½ï¿½o aberta */
     echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,57)." ".RetornaFraseDaLista($lista_frases,175)."</td>\n");
     echo("                  </tr>\n");
   }
@@ -414,12 +414,12 @@
         
         if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
         {
-          /* 54 - Inscrições */
+          /* 54 - Inscriï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else if(!$tem_acesso_curso)
         {
-          /* 53 - Informações */
+          /* 53 - Informaï¿½ï¿½es */
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         }
         else
@@ -431,7 +431,7 @@
   else
   {  
   	echo("                  <tr>\n");	
-  	/* 200 - Não há nenhum curso encerrado */	
+  	/* 200 - Nï¿½o hï¿½ nenhum curso encerrado */	
     echo("                    <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,200)."</td>\n");
     echo("                  </tr>\n");
   }
