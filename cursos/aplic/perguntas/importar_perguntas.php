@@ -84,11 +84,8 @@
     
 
   echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
   echo("<script language=JavaScript>\n\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-  
+
   echo("  img_icone = new Image();\n");
   echo("  img_icone.src = \"../figuras/assunto.gif\";\n\n");
   

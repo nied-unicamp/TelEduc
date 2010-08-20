@@ -160,7 +160,6 @@
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");
@@ -389,7 +388,9 @@ echo("      function TestaDatas()\n");
 
     echo("      function EdicaoTexto(codigo, id, valor){\n");
     echo("        if (valor=='ok'){\n");
-    echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+    //echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+    //echo("		      conteudo=CKEDITOR.instances.msg_corpo.getData();");
+    echo(" 			  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');\n");
     echo("            xajax_EditarTexto('".$tabela."', ".$cod_curso.", codigo, conteudo, ".$cod_usuario.");\n");
     echo("            mostraFeedback('".htmlentities(RetornaFraseDaLista($lista_frases, 54))."', true)\n");
     echo("          }\n");
@@ -522,7 +523,8 @@ echo("      function TestaDatas()\n");
     echo("          conteudo = document.getElementById('text_'+id).innerHTML;\n");
     echo("          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
     echo("          startList();\n");
-    echo("          document.getElementById('text_'+id+'_text').focus();\n");
+    echo("			document.getElementById('text_'+id).appendChild(newDiv);\n");
+    //echo("          document.getElementById('text_'+id+'_text').focus();\n");
     echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
     echo("          editaTexto++;\n");
     echo("        }\n");

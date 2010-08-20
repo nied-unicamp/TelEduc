@@ -51,11 +51,8 @@
   $lista_frases_adm=RetornaListaDeFrases($sock,-5);
 
   /* Inicio do JavaScript */
-  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/rte/richtext.js\"></script>\n");
-  echo("    <script type=\"text/javascript\">\n");
-  echo("      initRTE(\"../cursos/aplic/bibliotecas/rte/images/\", \"../cursos/aplic/bibliotecas/rte/\", \"../cursos/aplic/bibliotecas/rte/\", true);\n");
-  echo("    </script>\n");
+  echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\">\n");
 
   echo("      function verificar()\n");

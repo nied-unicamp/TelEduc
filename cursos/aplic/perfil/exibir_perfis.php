@@ -93,9 +93,8 @@ Programa Principal
   $eformador  = EFormador ($sock, $cod_curso, $cod_usuario);
   $econvidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
-  
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   
   /*
   ==================
@@ -107,8 +106,6 @@ Programa Principal
   echo("      var cod_curso='".$cod_curso."';\n");
   echo("      var cod_usuario='".$cod_usuario."';\n");
   echo("        var editando=-2;\n");
-  //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-  echo "        initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n";
   
   /*
   Funcao Open Window - Abre a janela que ira mostrar os perfis
@@ -156,24 +153,51 @@ Programa Principal
     echo("      }\n\n");
   }
   
+  /*echo("      function EditarPerfil(cod){\n");
+  echo("        if(editando!=-2) return;\n");
+  echo("        document.getElementById('orientacao').style.display=\"\";\n");
+  //echo("        conteudo = document.getElementById('msg_corpo').innerHTML;\n");
+  //echo("        writeRichTextOnJS('text_'+cod+'_text', conteudo, 520, 200, true, false, cod);\n");
+  echo("		CKEDITOR.replace('msg_corpo');\n");
+  echo("		document.getElementById('OKComent').style.display=\"\";\n ");
+  echo("		document.getElementById('cancComent').style.display=\"\";\n ");
+  
+  //echo("		if(document.getElementById('msg_corpo') != null){\n");
+  echo("			document.getElementById('msg_corpo').style.display=\"\";");
+  //echo("		}");
+  echo("        editando=cod;\n");
+  echo("      }\n");*/
+
   echo("      function EditarPerfil(cod){\n");
   echo("        if(editando!=-2) return;\n");
   echo("        document.getElementById('orientacao').style.display=\"\";\n");
+  //echo("        document.getElementById('text_'+cod).removeChild('p');\n");
   echo("        conteudo = document.getElementById('text_'+cod).innerHTML;\n");
   echo("        writeRichTextOnJS('text_'+cod+'_text', conteudo, 520, 200, true, false, cod);\n");
   echo("        editando=cod;\n");
   echo("      }\n");
-
+  
   echo("      function EdicaoTexto(codigo, id, valor){\n");
   echo("        if (valor=='ok'){\n");
-  echo("          conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-  echo("          xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
+  echo("			eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+  echo("        	xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
   echo("        }\n");
-  echo("        document.getElementById(id).innerHTML=conteudo;\n");
-  echo("        document.getElementById('orientacao').style.display=\"none\";\n");  
+  //echo("        document.getElementById('text_'+codigo).innerHTML= '$campo'+conteudo;\n");
+  //echo("        document.getElementById('text_'+codigo).innerHTML= conteudo+'$campo'+conteudo+'</textarea>';\n");
+  echo("		document.getElementById(id).innerHTML=conteudo;");
+  echo("        document.getElementById('orientacao').style.display=\"none\";\n");
   echo("        editando=-2;\n");
+  //echo("		document.getElementById(id).innerHTML=conteudo;");
+  //echo("		CKEDITOR.remove('cke_msg_corpo');");
   echo("      }\n\n");
 
+  /*echo("      function CancelarNovaMsg(cod){\n");
+  echo("		alert(cod);");
+  echo("        clearRTE(cod);\n");
+  echo("		document.getElementById('cke_'+cod+'_text').style.display=\"none\";");
+  echo("		document.getElementById('OKComent').style.display=\"none\";\n ");
+  echo("		document.getElementById('cancComent').style.display=\"none\";\n ");
+  echo("      }\n\n");*/
  
   echo("    </script>\n");
   
@@ -201,6 +225,7 @@ Programa Principal
   /* 29 - Exibir perfis */
   $cabecalho.=" - ".RetornaFraseDaLista($lista_frases,29)."</h4>";
   echo("          <br /><br />".$cabecalho);
+  /* ? - ocorreu um erro na sua solicitacao */
   echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicitacao</span></div>\n");
   echo("          </tr>\n");
   echo("          <tr>\n");
@@ -484,6 +509,7 @@ Programa Principal
       	echo("            <br />\n");
       }
       echo("            <div class=\"divRichText\" id=\"text_".$cod_usuario_ficha."\">\n");
+      							//echo($campo);
       if ($perfil_existe) /* se o perfil existe */
       {
         $perfil=$linha['perfil'];
@@ -494,7 +520,12 @@ Programa Principal
         /* 26 - O perfil de */ /* 27 - ainda n� est�dispon�el */
         echo("              ".RetornaFraseDaLista($lista_frases,26)." ".$nome." ".RetornaFraseDaLista($lista_frases,27)."\n");
       }
+      //echo("				</textarea>");
       echo("            </div>\n");
+      /* 18 - Ok */
+      //echo("            	<input type=\"button\" class=\"input\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" onclick=\"EdicaoTexto('".$cod_usuario_ficha."','msg_corpo', 'ok')\" style=\"display:none;margin-bottom:5px;\" />\n");
+      /* 2 - Cancelar */
+      //echo("            	<input type=\"button\" class=\"input\" id=\"cancComent\" onclick=\"EdicaoTexto('$cod_usuario_ficha','msg_corpo','canc')\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" style=\"display:none;margin-bottom:5px;\" />\n");
       if($_GET['imprimir'] == 0){
       	echo("            <br /><br />\n");
       }

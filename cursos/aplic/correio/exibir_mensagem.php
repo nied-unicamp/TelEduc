@@ -84,11 +84,6 @@
 
   ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
 
-  echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-  echo("    <script type=\"text/javascript\">\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-  echo("    </script>\n");
 
   if (! is_numeric ($cod_msg) || (!RemetenteMensagem($sock, $cod_msg, $cod_usuario) &&  !DestinatarioMensagem($sock, $cod_msg, $cod_usuario)))
   {

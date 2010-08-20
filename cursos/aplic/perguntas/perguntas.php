@@ -83,12 +83,12 @@
   /* Lista os assuntos do assunto raiz */
     $cod_assunto_pai = 1;
     
-  echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+  echo("<script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("<script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("<script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
+  
   echo("<script language=JavaScript>\n\n");
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
   
   echo("  img_icone = new Image();\n");
   echo("  img_icone.src = \"../figuras/assunto.gif\";\n\n");
@@ -596,7 +596,7 @@
     echo("          conteudo = document.getElementById('text_'+id).innerHTML;\n");
     echo("          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
 //    echo("          startList();\n");
-    echo("          document.getElementById('text_'+id+'_text').focus();\n");
+//    echo("          document.getElementById('text_'+id+'_text').focus();\n");
 ///    echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
 //    echo("          editaTexto++;\n");
 //    echo("        }\n");
@@ -604,7 +604,8 @@
 
     echo("      function EdicaoTexto(codigo, id, valor){\n");
     echo("        if (valor=='ok'){\n");
-    echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+    echo("			  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+    //echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
     echo("            xajax_EditarTexto('".$tabela."', ".$cod_curso.", codigo, conteudo, ".$cod_usuario.");\n");
     echo("            mostraFeedback('".htmlentities(RetornaFraseDaLista($lista_frases, 23))."', true)\n");
     echo("          }\n");

@@ -69,7 +69,7 @@ function AjustePosMenuIE()
 function EdicaoTexto(codigo, id, valor){
 
   if (valor=='ok'){
-      conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML
+	  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
       xajax_EditarTexto(cod_curso, cod_atividade, conteudo, cod_usuario, cod_avaliacao, id);
     }
   else{
@@ -183,7 +183,11 @@ function AlteraTexto(id){
 			
     writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     startList();
-    document.getElementById('text_'+id+'_text').focus();
+    //document.getElementById('text_'+id+'_text').focus();
+    CKEDITOR.on("instanceReady", function(event)
+    		{
+    			eval('CKEDITOR.instances.text_'+id+'_text'+'.focus();');
+    		});
     cancelarElemento=document.getElementById('CancelaEdita');
     editaTexto++;
   }				

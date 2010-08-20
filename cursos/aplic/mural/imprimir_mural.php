@@ -204,13 +204,6 @@
     $status = 'A';
   }
 
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-    echo("    <script type=\"text/javascript\">\n");
-    echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-    echo("    </script>\n");
-  }
   
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var pag_atual = ".$pag_atual.";\n\n");

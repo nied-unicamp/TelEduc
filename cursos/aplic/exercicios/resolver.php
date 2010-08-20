@@ -77,13 +77,9 @@ $disponivel = (time() < $aplicado['dt_limite_submissao']);
 /*********************************************************/
 /* inï¿½io - JavaScript */
 
-echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n");
-//Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-echo("  </script>\n");
+echo("    <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
@@ -228,9 +224,9 @@ if ($tela_formador){
 }
 //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
 echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
-echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
+echo("        writeRichTextOnJSButtons('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
 echo("        startList();\n");
-echo("        document.getElementById('text_'+id+'_text').focus();\n");
+//echo("        document.getElementById('text_'+id+'_text').focus();\n");
 echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
 echo("        editaTexto = id;\n");
 echo("      }\n");
@@ -242,7 +238,8 @@ if ($resolucao['corrigida'] == 'N'){
 	echo("      var cod;\n");
 	echo("      if (valor=='ok'){\n");
 	echo("        cod = codigo.split(\"_\");\n");
-	echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+	//echo("        conteudo = document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+	echo("        eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');\n");
 	echo("      }\n");
 	echo("      else{\n");
 	// Cancela Ediï¿½o
@@ -666,7 +663,7 @@ else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 	{
 		echo("<tr><td align='right'><input type='button' class='input' onclick=location.href='corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao."' value='".RetornaFraseDaLista($lista_frases, 190)."'></td></tr>");
 	}
-	else if($disponivel){//Permite enviar novamente a resolução
+	else if($disponivel){//Permite enviar novamente a resoluï¿½ï¿½o
 			/* Frase #189 - Entregar */
 		echo("								<form method='POST' action='acoes.php' onSubmit='return ConfirmaEntrega();'>");
 		echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");

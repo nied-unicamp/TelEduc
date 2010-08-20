@@ -95,15 +95,9 @@
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type='text/javascript' src='../bibliotecas/dhtmllib.js'></script>\n");
-  echo("    <script type=\"text/javascript\">\n");
-  echo("      <!--\n");
-  //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-  echo("        initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-  echo("      //-->\n");
-  echo("    </script>\n");
   echo("    <script type=\"text/javascript\">\n\n");	
   echo("      var cod_ferramenta='".$cod_ferramenta."';\n");
   echo("      var cod_item='".$cod_item."';\n");

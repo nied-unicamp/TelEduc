@@ -129,12 +129,10 @@
   }
 
   if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-    echo("    <script type=\"text/javascript\">\n");
-    echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-    echo("    </script>\n");
+    echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+    echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   }
+  
   
   
   echo("    <script type=\"text/javascript\">\n\n");
@@ -146,7 +144,6 @@
 		echo("  	window.open(\"imprimir_mural.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("}\n\n");
   echo("    </script>\n\n");
-  
   
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var pag_atual = ".$pag_atual.";\n\n");
@@ -644,7 +641,7 @@
       echo("        document.getElementById('tdNovaMsg').style.background=\"white\";\n");
       echo("        document.getElementById('divNovaMsg').className=\"\";\n");
       echo("        document.getElementById('acao').value='nova_msg';\n");
-      echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
+      //echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
       echo("        document.formCompor.msg_titulo.focus();\n");
       echo("      }\n\n");
       
@@ -669,7 +666,7 @@
       echo("        updateRTE('msg_corpo');\n");
       /* Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços */
       echo("        Msg_nome = form.msg_titulo.value;\n");
-      echo("        Msg_corpo = form.msg_corpo.value;\n");
+      echo("        Msg_corpo = form.cke_msg_corpo.value;\n");
       echo("        while (Msg_nome.search(\" \") != -1){\n");
       echo("          Msg_nome = Msg_nome.replace(/ /, \"\");\n");
       echo("        }\n");
@@ -754,9 +751,9 @@
       echo("                <table border=\"0\" width=\"100%\" cellspacing=\"0\" class=\"tabInterna\" style=\"border-collapse:collapse;\">\n");
       echo("                  <tr>   \n");
       if($existe_mensagem){
-        echo("                    <td id=\"tdNovaMsg\" align=\"left\" width=\"70%\" style=\"padding: 0 5px 0 5px;background-color:#DCDCDC;\">\n");
+        echo("                    <td id=\"tdNovaMsg\" align=\"left\" style=\"padding: 0 5px 0 5px;background-color:#DCDCDC;\">\n");
       }else{
-        echo("                    <td id=\"tdNovaMsg\" align=\"left\" width=\"70%\" style=\"padding: 0 5px 0 5px;\" style=\"padding:0;\">\n");
+        echo("                    <td id=\"tdNovaMsg\" align=\"left\" style=\"padding: 0 5px 0 5px;\" style=\"padding:0;\">\n");
       }
       echo("                      <div id=\"divNovaMsg\"><br />\n");
       echo("                        <form id=\"formCompor\" name=\"formCompor\" action=\"acoes.php?cod_curso=".$cod_curso."&amp;ordem=".$ordem."&amp;todas_abertas=".$todas_abertas."\" onsubmit=\"return(TestaNome(document.formCompor));\" method=\"post\" >\n");
@@ -765,8 +762,13 @@
       echo("                          <input type=\"text\" id=\"msg_titulo\" name=\"msg_titulo\" size=\"40\" maxlength=\"100\" value='".$msg_titulo."' style=\"border: 2px solid #9bc;\" /><br /><br />\n");
       /* 21 - Mensagem */
       echo("                          <b>".RetornaFraseDaLista($lista_frases,21)."</b><br />\n");
-      echo("                          <script type=\"text/javascript\">\n");
+      echo("							<textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>");
+      /*echo("                          <script type=\"text/javascript\">\n");
       echo("                            writeRichText('msg_corpo', '', 600, 200, true, false, 1);\n");
+      echo("                          </script>\n");*/
+      echo("                          <script type=\"text/javascript\">\n");
+      echo("							CKEDITOR.replace( 'msg_corpo',
+										    {		    });");
       echo("                          </script>\n");
       echo("                          <br />\n");
       echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"nova_msg\" />\n");

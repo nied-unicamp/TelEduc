@@ -188,12 +188,8 @@
 		echo("  	window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("}\n\n");
   echo("    </script>\n\n");
-  
-   echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-    echo("    <script type=\"text/javaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
-    echo("    <script type=\"text/javascript\">\n");
-    echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-    echo("    </script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var pag_atual = ".$pag_atual.";\n\n");
@@ -241,10 +237,10 @@
     echo("        EscondeLayers();\n");
   }
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  /*if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
   {
-    echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
-  }
+    echo("        //writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
+  }*/
   echo("        ExibeMsgPagina(".$pag_atual.");\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
@@ -428,18 +424,18 @@
   {
 
     echo("      function ComporMensagem(){\n");
-    echo("        if(!isIE){\n");
-    echo("          document.getElementById('divNovaMsg').className=\"\";\n");
-    echo("        }else{\n");
-    echo("          document.getElementById('trNovaMsg').style.display=\"\"; \n");
-    echo("        }\n");
+    //echo("        if(!isIE){\n");
+    //echo("          document.getElementById('divNovaMsg').className=\"\";\n");
+    //echo("        }else{\n");
+    //echo("          document.getElementById('trNovaMsg').style.display=\"\"; \n");
+    //echo("        }\n");
     echo("        document.getElementById('tdNovaMsg').style.background=\"#FFFFFF\";\n");
 
     echo("        document.getElementById('divNovaMsg').className=\"\";\n");
     echo("        document.getElementById('tdNovaMsg').appendChild(document.getElementById('divNovaMsg'));\n");
-    echo("		  writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
+    echo("		  writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
     echo("        document.getElementById('acao').value='nova_msg';\n");
-    echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
+    //echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
     echo("        document.formCompor.msg_titulo.focus();\n");
     echo("        if(respondendoMsg!=-1){\n");
     echo("          respondendoMsg=-1;\n");
@@ -452,20 +448,23 @@
     echo("        document.getElementById('tdNovaMsg').style.background=\"#DCDCDC\";\n");
     echo("        document.getElementById('divNovaMsg').className=\"divHidden\";");
     echo("        document.formCompor.msg_titulo.value='';\n");
-    echo("        document.formCompor.msg_corpo.value='';\n");
+    //echo("        document.formCompor.cke_msg_corpo.value='';\n");
+    //echo("alert(document.formCompor.cke_msg_corpo.value);");
     echo("        clearNewRTE('msg_corpo', 'divRTE');\n");
     echo("        if (document.getElementById('spanRespondeMsg')){\n");
     echo("          tdElement = document.getElementById('spanRespondeMsg').parentNode;\n");
     echo("          tdElement.removeChild(document.getElementById('spanRespondeMsg'));\n");
     echo("        }\n");
     echo("        respondendoMsg = -1;\n");
+    echo("		clearRTE('msg_corpo');");
     echo("      }\n\n");
 
     echo("      function TestaNome(form){\n");
     echo("        updateRTE('msg_corpo');\n");
     /* Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços */
     echo("        Msg_nome = form.msg_titulo.value;\n");
-    echo("        Msg_corpo = form.msg_corpo.value;\n");
+    echo("        Msg_corpo = CKEDITOR.instances.msg_corpo.getData();\n");
+    
     echo("        while (Msg_nome.search(\" \") != -1){\n");
     echo("          Msg_nome = Msg_nome.replace(/ /, \"\");\n");
     echo("        }\n");
@@ -507,13 +506,10 @@
       echo("        newSpan.setAttribute('id', 'spanRespondeMsg');\n");
       echo("        newSpan.setAttribute('name', 'span_resp_'+cod_msg);\n");    
       echo("        newSpan.innerHTML='<br /><br />';\n");
-
       echo("        tdElement.appendChild(newSpan);\n");
       echo("        tdElement.appendChild(document.getElementById('divNovaMsg'));\n");
       echo("        document.getElementById('divNovaMsg').className=\"\";\n");
-      
-	  echo("		writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
-      
+	  echo("		writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
 	  echo("        document.getElementById('acao').value = 'responde_mensagem';\n");
       echo("        document.getElementById('codRespondeMensagem').value = cod_msg;\n");
       echo("        document.getElementById('msg_titulo').value='Re: '+document.getElementById('titulo_'+cod_msg).innerHTML;\n");
@@ -833,10 +829,10 @@
     echo("                  <tr>\n");
 
     if ($total_mensagens > 0){
-      echo("                    <td id=\"tdNovaMsg\" align=\"left\"  style=\"padding: 0 5px 0 5px; background-color:#DCDCDC;\" width=\"70%\">\n");
+      echo("                    <td id=\"tdNovaMsg\" align=\"left\"  style=\"padding: 0 5px 0 5px; background-color:#DCDCDC;\">\n");
       echo("                    <div id=\"divNovaMsg\" class=\"divHidden\">\n");
     }else{
-      echo("                    <td id=\"tdNovaMsg\" align=\"left\" width=\"70%\" style=\"padding: 0 5px 0 5px;\">\n");
+      echo("                    <td id=\"tdNovaMsg\" align=\"left\" style=\"padding: 0 5px 0 5px;\">\n");
       echo("                      <div id=\"divNovaMsg\">\n");
     }
     
@@ -846,7 +842,9 @@
     echo("                          <input type=\"text\" id=\"msg_titulo\" name=\"msg_titulo\" size=40 maxlength=100 value='".$msg_titulo."' style=\"border: 2px solid #9bc;\" /><br /><br />\n");
     /* 14 - Mensagem */
     echo("                          <b>".RetornaFraseDaLista($lista_frases,14)."</b><br />\n");
-    echo("                          <div id=\"text_divRTE\"></div>\n");
+    echo("                          <div id=\"text_divRTE\">\n");
+    //echo("								<textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>\n");
+    echo("							</div>\n");
 
     echo("                          <br />\n");
     echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"nova_msg\" />\n");

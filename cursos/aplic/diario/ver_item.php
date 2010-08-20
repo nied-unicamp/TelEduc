@@ -96,10 +96,10 @@
   // verifica se eh dono do diario
   $dono_diario = VerificaDonoDiario ($sock, $cod_curso, $cod_usuario, $cod_propriet);
 
-  echo("  <script type=\"text/javascript\" src=../bibliotecas/rte/richtext.js></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 
   echo("  <script type=\"text/javascript\">\n\n");
-  echo("    initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
   echo("    var js_tabela = '".$tabela."';\n");
   echo("    var js_cod_item = ".$cod_item.";\n");
   echo("    var js_cod_usuario = ".$cod_usuario.";\n");
@@ -260,7 +260,7 @@
 
   echo("    function EdicaoTexto(codigo, id, valor){ \n");
   echo("      if (valor=='ok'){ \n");
-  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML \n");
+  echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("        xajax_EditarTexto(js_cod_curso, js_cod_item, conteudo, js_cod_usuario, '".RetornaFraseDaLista($lista_frases,27)."'); \n");
   echo("      } \n");
   echo("      else{ \n");

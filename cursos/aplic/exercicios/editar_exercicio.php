@@ -113,15 +113,9 @@
   /*********************************************************/
   /* in�io - JavaScript */
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("    <!--\n");
-  //Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML)
-  echo("      initRTE(\"../bibliotecas/rte/images/\", \"../bibliotecas/rte/\", \"../bibliotecas/rte/\", true);\n");
-  echo("    //-->\n");
-  echo("    </script>\n");
 
   echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
@@ -331,6 +325,7 @@
   echo("      if (editaTexto==-1 || editaTexto != id){\n");
   echo("        CancelaTodos();\n");
   //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  //echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
   echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
   echo("        startList();\n");
@@ -343,7 +338,8 @@
   echo("    function EdicaoTexto(codigo, id, valor){\n");
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
-  echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  //echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
+  echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("        xajax_EditarTextoExercicioDinamic(".$cod_curso.",".$cod_exercicio.",conteudo,".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 175)."\");\n");
   echo("      }\n");
   echo("      else{\n");
