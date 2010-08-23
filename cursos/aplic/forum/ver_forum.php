@@ -1055,6 +1055,10 @@
 
     }
   }else{
+  	echo("<script>");
+    echo("        	writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
+    echo("</script>");
+    
     echo("            <tr>\n");
     echo("              <td>\n");
     echo("                <table border=\"0\" width=\"100%\" cellspacing=\"0\" class=\"tabInterna\">\n");
