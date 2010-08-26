@@ -157,8 +157,8 @@
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/html2xhtml.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/rte/richtext.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
 
   echo("      function WindowOpenVerURL(end)\n");
@@ -521,10 +521,11 @@ echo("      function TestaDatas()\n");
 
     echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
     echo("          conteudo = document.getElementById('text_'+id).innerHTML;\n");
+    echo("			id_aux = id;");
+    echo(" 			newDiv = document.createElement('span');\n");
     echo("          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
     echo("          startList();\n");
     echo("			document.getElementById('text_'+id).appendChild(newDiv);\n");
-    //echo("          document.getElementById('text_'+id+'_text').focus();\n");
     echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
     echo("          editaTexto++;\n");
     echo("        }\n");
