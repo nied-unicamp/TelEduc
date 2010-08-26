@@ -203,7 +203,6 @@ echo ("	}\n");
 echo ("}\n");
 
 echo ("function FechaDivAvaliacoes(){\n");
-echo ("	document.getElementById('divAvaliacaoEdit').class = \"divHidden\";\n");
 echo ("	document.getElementById('divAvaliacaoEdit').className = \"divHidden\";\n");
 echo ("}\n");
 
