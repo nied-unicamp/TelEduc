@@ -68,7 +68,7 @@ $sock = Conectar($cod_curso);
 
   /* Funções JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
+//  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
