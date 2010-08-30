@@ -231,7 +231,7 @@
   echo("        var i;\n");
   echo("        var j=0;\n");
   echo("        var coordenador=false;\n"); //para verificar o checkbox do coordenador 
-  echo("        var cod_itens = document.getElementsByName('cod_usu[]');\n");
+  echo("        var cod_itens = getElementsByName_iefix('input','cod_usu[]');\n");
   echo("        var Cabecalho = document.getElementById('check_all');\n");
   echo("        for (i=0; i < cod_itens.length; i++){\n");
   echo("          if (cod_itens[i].checked){\n");
@@ -447,10 +447,10 @@
   echo("        return false;\n");
   echo("      }\n");
   
-  /*funcão responsavel por apagar os registros da pagina atual
+  /*funcï¿½o responsavel por apagar os registros da pagina atual
    * se flag==T apaga a pagina inteira
-   * caso contrario apaga apenas o navegador da paginação
-   * é necessario as vezes apagar so o navegador quando paginamos para frente ou para tras
+   * caso contrario apaga apenas o navegador da paginaï¿½ï¿½o
+   * ï¿½ necessario as vezes apagar so o navegador quando paginamos para frente ou para tras
   */
   
   echo("var qtdPag=1;\n");
@@ -458,34 +458,52 @@
   echo("var atual=1;\n");
   echo("var aux='T';\n");
   
+  
+	/**
+	 * Como no IE getElementsByName() nÃ£o funciona, usar a funcao abaixo. 
+	 */  
+	echo("function getElementsByName_iefix(tag, name) {\n");
+	echo("	var elem = document.getElementsByTagName(tag);\n");
+	echo("	var arr = new Array();\n");
+	echo("	for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+	echo("		var att = elem[i].getAttribute('name');\n");
+	echo("		if(att == name) {\n");
+	echo("			arr[iarr] = elem[i];\n");
+	echo("			iarr++;\n");
+	echo("		}\n");
+	echo("	}\n");
+	echo("	return arr;\n");
+	echo("}\n");
+
   echo("function ApagaPagina(flag)\n");
   echo("{\n");
-  echo("var	tr_ger=document.getElementsByName('germen');\n");
-  echo("var tam=tr_ger.length;\n");
+  echo("	var	tr_ger=getElementsByName_iefix('tr', 'germen');\n");
+  echo("	var tam=tr_ger.length;\n");
   echo("	naveg=document.getElementById('control');\n");
   echo("	naveg.parentNode.removeChild(naveg);\n");
-  echo("if(flag=='T'){\n");
-  echo("for(var i=1; i<tam; i++){\n");
-  echo("	ger=document.getElementById('ger');\n");
-  echo("	ger.parentNode.removeChild(ger);\n");
+  echo("	if(flag=='T'){\n");
+  echo("	for(var i=1; i<tam; i++){\n");
+  echo("		var ger=document.getElementById('ger');\n");
+  echo("		ger.parentNode.removeChild(ger);\n");
   echo("   }\n");
   echo(" }");
   echo("}\n");
   
   echo("function MarcaPaginaAtual(pagina){\n");
   echo("	var indice = document.getElementById(pagina);\n");
-  //echo("	var aTag = indice.getElementsByTagName('a');");
   echo("	indice.innerHTML = '<a style=\"color:black;\">[&nbsp;   a'+pagina+'&nbsp;]</a>';\n");
   echo("}\n");
   
   echo("function CriaElementoTab(nome,dtins,dados,cod,acao,port){\n");
-  echo("	var tab=document.getElementsByClassName('tabInterna');\n");
+  echo("	var tab=document.getElementById('tbgeren');\n");
+  echo("	var tbody=document.createElement('tbody');");
   echo("	var td_check=document.createElement('td');\n");
+  echo("	td_check.style.width='2%';");
   echo("	var check=document.createElement('input');\n");
   echo("	check.type=\"checkbox\";\n");
   echo("	check.setAttribute('name','cod_usu[]');\n");
   echo("	check.setAttribute('value',cod);\n");
-  echo("	check.onclick=\"VerificaCheck();\"\n"); 
+  echo("	check.onclick=new Function(\"VerificaCheck()\");\n"); 
   echo("	td_check.appendChild(check);\n");
   echo("	var td_nome=document.createElement('td');\n");
   echo("	td_nome.align=\"left\";\n");
@@ -502,7 +520,7 @@
   echo("	tr_ger.appendChild(td_data);\n");
   echo("	tr_ger.appendChild(td_dados);\n");
   
-  /*caso esteja em inscrições registradas precisamos criar o campo portifolio*/
+  /*caso esteja em inscriï¿½ï¿½es registradas precisamos criar o campo portifolio*/
   
   echo("	if(acao== 'R'){\n");
   echo("		var td_port=document.createElement('td');\n");
@@ -510,12 +528,14 @@
   echo("		td_port.id='status_port'+cod;\n");
   echo("		tr_ger.appendChild(td_port);\n");
   echo("	}\n");
-  echo("	tab[0].appendChild(tr_ger);\n");
+  echo("	tab.appendChild(tbody);");
+  echo("	tbody.appendChild(tr_ger);\n");
   echo("}\n");
   
-   /*função java script que controla paginacao-estou criando a paginação nova...depois de mudar o intervalo*/
+   /*funï¿½ï¿½o java script que controla paginacao-estou criando a paginaï¿½ï¿½o nova...depois de mudar o intervalo*/
   echo("function Paginacao(status){\n");
-  echo("	var tab=document.getElementsByClassName('tabInterna');\n");
+  echo("	var tab=document.getElementById('tbgeren');\n");
+  echo("	var tbody=document.createElement('tbody');\n");
   echo("	var td_pagina=document.createElement('td');\n");
   echo("	td_pagina.colSpan=\"5\";");
   echo("	td_pagina.align=\"right\";");
@@ -529,7 +549,7 @@
   echo("	var span_prox=document.createElement('span');\n");
   echo("	span_prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
   
-  /*verificando se a paginação para voltar esta liberada, ou seja se não é a primeira pagina*/
+  /*verificando se a paginaï¿½ï¿½o para voltar esta liberada, ou seja se nï¿½o ï¿½ a primeira pagina*/
  
   echo("if(status== 'BV'){\n");
   echo("		span_first.className=\"none\";\n");
@@ -600,7 +620,7 @@
   echo("		td_pagina.appendChild(td_span);\n");
   echo("	}\n");
   
-  /*verificando a paginação para frente*/
+  /*verificando a paginaï¿½ï¿½o para frente*/
     
   echo("    td_pagina.appendChild(span_prox);\n");
   echo("	td_pagina.appendChild(span_last);\n");
@@ -609,7 +629,9 @@
   echo("	tr_span.setAttribute('name','germen');\n"); 
   echo("	tr_span.id=\"control\";\n");
   echo("	tr_span.appendChild(td_pagina);\n");
-  echo("	tab[0].appendChild(tr_span);\n");
+  echo("	tbody.appendChild(tr_span);\n");
+  echo("	tab.appendChild(tbody);\n");
+  //echo("	tab.appendChild(tr_span);\n");
   
   echo("}\n");
     
@@ -623,19 +645,20 @@
   
   
      
-  /*inicial a paginação dinamica, criando os controladores de paginação*/
+  /*inicial a paginaï¿½ï¿½o dinamica, criando os controladores de paginaï¿½ï¿½o*/
   
   echo("function Inicial(limit,flag){\n");
   echo("if (limit>=1){\n");
   echo("	qtdPag=limit;\n");
   echo("	inicia=flag;\n");
-  echo("	var tab=document.getElementsByClassName('tabInterna');\n");
+  echo("	var tab=document.getElementById('tbgeren');\n");
+  echo("	var tbody=document.createElement('tbody');\n");
   echo("	var coluna=document.createElement('td');\n");
   echo("	coluna.colSpan=\"5\";\n");
   echo("	coluna.align=\"right\";");
  
   /*
-  * criando os span necessarios para a páginação, ir para o primeiro não é valido pois estamos na primeira
+  * criando os span necessarios para a pï¿½ginaï¿½ï¿½o, ir para o primeiro nï¿½o ï¿½ valido pois estamos na primeira
   * pagina.
   */
   
@@ -654,7 +677,7 @@
   echo("	first.onclick=\"none\";\n");
   echo("	ant.onclick=\"none\";\n");
   
-//  /*verificando se ainda existirão mais paginações*/
+//  /*verificando se ainda existirï¿½o mais paginaï¿½ï¿½es*/
    echo("if (flag=='L'){\n");
    echo("	prox.className=\"paginacao\";\n");
    echo("	prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
@@ -671,7 +694,7 @@
    echo("	aux= 'B';\n");	
    echo("}\n");
 //  
-//  /*paginando os indices iniciais, até 5, ou até o fim das mensagens*/
+//  /*paginando os indices iniciais, atï¿½ 5, ou atï¿½ o fim das mensagens*/
 //  
   echo("for(var i=1;i<=limit;i++){\n");
   echo("	var GerSpan=document.createElement('span');\n");
@@ -693,7 +716,8 @@
   echo("linha.setAttribute('name','germen');\n"); 
   echo("linha.id=\"control\";\n");
   echo("linha.appendChild(coluna);\n");
-  echo("tab[0].appendChild(linha);\n");
+  echo("tbody.appendChild(linha);\n");
+  echo("tab.appendChild(tbody);\n");
   echo("};\n");
   echo("}\n");
  
