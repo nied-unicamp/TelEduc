@@ -485,7 +485,7 @@
   echo("	check.type=\"checkbox\";\n");
   echo("	check.setAttribute('name','cod_usu[]');\n");
   echo("	check.setAttribute('value',cod);\n");
-  echo("	check.onclick=\"VerificaCheck();\"\n"); 
+  echo("	check.onclick=new Function(\"VerificaCheck()\");\n"); 
   echo("	td_check.appendChild(check);\n");
   echo("	var td_nome=document.createElement('td');\n");
   echo("	td_nome.align=\"left\";\n");
