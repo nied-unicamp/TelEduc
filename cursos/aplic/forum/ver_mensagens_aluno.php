@@ -825,18 +825,6 @@
         echo("                    <td width=\"25%\" id=\"td_close".$cod_msg."\">\n");
         echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">Fechar</span><br />\n");
 
-
-        /* Se o status do fórum for Ativo (permite leitura e escrita) e se o usu�io N� */
-        /* for um visitante, exibe um menu para compor mensagens.                        */
-        /* Se o status do f�um for G ou R (apenas os usu�ios permitidos postam), mas o */
-        /* usu�io n� for permitido, n� postam mensagens.                              */    
-        if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
-        {
-          if (($status_curso != 'E') || ($usr_formador))
-          {
-            echo("                      <span class=\"link\" id=\"responder_".$cod_msg."\" onclick=\"ResponderMsg(".$cod_msg.");\">Responder</span><br />\n");
-          }
-        }
         echo("                    </td>\n");
         echo("                  </tr>\n");
 
