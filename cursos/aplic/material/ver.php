@@ -224,8 +224,16 @@
     //echo("      }\n");
     //echo("      document.onmousemove = TrataMouse;\n\n");
     
-    echo("		document.addEventListener('mousemove', TrataMouse, false);\n"); 
+    //echo("		document.attachEvent('onmousemove', TrataMouse);\n"); 
 
+    /* Verificação do browser sendo usado */
+	echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
+	echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
+	echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
+	echo("			document.attachEvent('onmousemove', TrataMouse);\n");
+	echo("		}\n");
+    
+    
     echo("      function TrataMouse(e)\n");
     echo("      {\n");
     echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
@@ -377,7 +385,6 @@ echo("      function TestaDatas()\n");
     echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
     echo("          tipo_comp[1].innerHTML=imagem;\n");
     echo("        }\n");
-
     echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
     echo("      }\n");
 
@@ -1110,10 +1117,10 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
 
   if($eformador){
   	/* 25 - Mover */
-  	echo("                  <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</a></li>\n");
+  	echo("                  <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
   
   	/* 1 - Apagar */
-  	echo("                  <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</a></li>\n");
+  	echo("                  <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
   }
   
   echo("                </ul>\n");
