@@ -127,25 +127,18 @@ echo ("       {\n");
 echo ("         document.location='material.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
 echo ("       }\n\n");
 
-echo ("       function CheckAll()\n");
-echo ("       {\n");
-echo ("         var elem = document.frmImportar.elements;\n");
-echo ("         var nome_var1 = 'cod_topicos_import[]';\n");
-echo ("         var nome_var2 = 'cod_itens_import[]';\n");
-echo ("         var nome_var_all = 'select_all';\n");
-echo ("         var changed = false;\n\n");
-
-echo ("         var i=0;\n\n");
-
-echo ("         while (i < elem.length)\n");
-echo ("         {\n");
-echo ("           if (elem[i].name == nome_var_all)\n");
-echo ("             changed = elem[i].checked;\n");
-echo ("           else if ((elem[i].name == nome_var1) || (elem[i].name == nome_var2))\n");
-echo ("             elem[i].checked = changed;\n");
-echo ("           i++;\n");
-echo ("         }\n");
-echo ("       }\n\n");
+echo("		function CheckAll() {\n");
+echo("			var elem = document.frmImportar.elements;\n");	/* Pega todos os elemntos que estão no form 'frmImportar'. */
+echo("			var nome_var1 = 'cod_topicos_import[]';\n");
+echo("			var nome_var2 = 'cod_itens_import[]';\n");
+echo("			var checkAll = document.getElementById('select_all');\n");	/* Pega o checkBox que seleciona totos. */
+echo("			var changed = checkAll.checked;\n\n");
+echo("			for(var i = 0; i < elem.length; i++) {\n");
+echo("				if ((elem[i].name == nome_var1) || (elem[i].name == nome_var2)) {\n");
+echo("					elem[i].checked = changed;\n");	/* Seta o checkbox de acordo com o checkbox 'select_all' */
+echo("				}\n");
+echo("			}\n");
+echo("		}\n\n");
 
 echo ("       function MudarTopico(cod_topico){\n");
 echo ("         document.frmImportar.action = \"importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem."\";\n");
@@ -193,7 +186,7 @@ echo ("              <tr>\n");
 echo ("                <td>\n");
 echo ("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo ("                    <tr class=\"head\">\n");
-echo ("                      <td align=\"center\" width=\"20px\"><input type=\"checkbox\" name=\"select_all\" onClick=\"CheckAll()\"/></td>\n");
+echo ("                      <td align=\"center\" width=\"20px\"><input type=\"checkbox\" id='select_all' name=\"select_all\" onClick=\"CheckAll()\"/></td>\n");
 // 114 - "Assunto:
 echo ("                      <td class=\"alLeft\" colspan=\"3\">Assunto</td>\n");
 echo ("                    </tr>\n");
