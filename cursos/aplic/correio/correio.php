@@ -629,7 +629,7 @@
   echo("        }\n");
   /* 57 - Não há nenhuma mensagem selecionada !*/
   echo("        if(cont==0) {alert('".RetornaFraseDalista($lista_frases,57)."'); return;}\n");
-echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_curso=".$cod_curso."&arrayMsgs='+arrayMsgs,'mensagem','width=1800,height=900,top=100,left=100,scrollbars=yes,status=no,toolbar=no,menubar=no,resizable=no');\n");
+echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_curso=".$cod_curso."&modoVisualizacao=".$modoVisualizacao."&arrayMsgs='+arrayMsgs,'mensagem','width=1800,height=900,top=100,left=100,scrollbars=yes,status=no,toolbar=no,menubar=no,resizable=no');\n");
 
   echo("      }\n\n");
 

@@ -72,6 +72,8 @@
   }
   if($tem_arquivos) $tamY += 20;
 
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("<script type=\"text/javascript\">\n");
 
   /* ************************************
