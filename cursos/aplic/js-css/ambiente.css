@@ -209,7 +209,6 @@ input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cur
 
 .ulPopup li {
     display:table;
-    width:185px;
     padding:0;
     padding-top:3px;
     padding-bottom:3px;
