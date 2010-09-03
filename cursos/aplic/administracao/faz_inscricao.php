@@ -34,7 +34,7 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("<form><input class=\"input\" type=\"button\" value=".RetornaFraseDaLista($lista_frases_geral,23)." onclick=\"history.go(-1);\" /></form>\n");
 
     Desconectar($sock);
     exit();
@@ -81,21 +81,41 @@
   $email_existente = false;
 
   $contExist=0;
-  $loginEmail_existentes = null;
+  $login_existente = false;
 
   foreach($dados_preenchidos_s as $cod => $linha){
-    if (($logins[strtoupper($linha['login'])]==1) || ($emails[strtoupper($linha['email'])]==1)){
-      $loginEmail_existentes[$contExist]=$linha['linhaReg'];
-      $contExist++;
-      unset($dados_preenchidos_s[$cod]);
-    }
+  			if($emails[strtoupper($linha['email'])]==1){
+				$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);/*pega o login do usu�rio*/
+				$dados_preenchidos_s[$cod]['status_email']=1;	
+			}
+			else
+				$dados_preenchidos_s[$cod]['status_email']=0;
   }
-
   foreach($dados_preenchidos_s as $cod => $linha){
-    $linha['tipo_usuario']=$tipo_usuario;
-    $linha['senha']=GeraSenha();
-    $sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
-  }
+      		if ($logins[strtoupper($linha['login'])]==1 && $linha['status_email']==0){
+      			$dados_preenchidos_s[$cod]['status_login']=1;
+        		$dados_preenchidos_s[$cod]['novo_login']=GeraLogin($sock,$linha['email']);
+        		$dados_preenchidos_s[$cod]['senha']=GeraSenha();
+        		$dados_preenchidos_s[$cod]['tipo_usuario']=$tipo_usuario;
+        		$login_existente=true;
+      		}
+   }
+  foreach($dados_preenchidos_s as $cod => $linha){
+  		if($dados_preenchidos_s[$cod]['status_login']!=1){
+    			$linha['tipo_usuario']=$tipo_usuario;
+    			$linha['senha']=GeraSenha();
+  				if($linha['status_email']==1){
+        				$cadastrado=CadastradoCurso($sock,$linha['status_email'],$linha['login'],$cod_curso);
+        				if($cadastrado==false) 
+         					$sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);	
+        		}
+        				else
+        					$sock=CadastrarUsuario($sock,$cod_curso,$linha,$lista_frases,$cod_usuario);
+        
+      	}
+  	}	
+  
+  
 //     $dados_preenchidos_s = "";
 
     if($tipo_usuario == "z"){
@@ -104,7 +124,7 @@
     }else
       $dest = "gerenciamento.php";
 
-    if(($falhas != null) || ($loginEmail_existentes != null)){
+    if(($falhas != null) || ($login_existente != false)){
       /*
       ==================
       Fun��es JavaScript
@@ -155,29 +175,23 @@
       echo $cabecalho;
 
       /*Voltar*/
-      echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
+      echo("		 <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
 
       echo("          <div id=\"mudarFonte\">\n");
       echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
       echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
       echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
       echo("          </div>\n");
-
+      
       echo("          <!-- Tabelao -->\n");
-      echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
-
-      echo("            <tr>\n");
-      echo("              <td>\n");
-      echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-      echo("                  <tr class=\"head\">\n");
-      /* 20 - Notificar Novidades */
-      echo("                    <td>".RetornaFrasedaLista($lista_frases,20)."</td>\n");
-
-      echo("                    </td>\n");
-      echo("                  </tr>\n");
-      echo("                  <tr>\n");
-      echo("                  <td>\n");
+      echo("			  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
+      echo("			  <tr>\n");
+      echo("			  <td>\n");
+      echo("			  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
       if($falhas != null){
+      	echo("<tr>\n");
+      	echo("<td colspan=\"2\">\n");
+      
         if(count($falhas)==1) 
           echo("O registro contido na seguinte linha do arquivo <strong>".$nomeArq."</strong> n&atilde;o est&aacute; no formato correto:<br>");
         else
@@ -187,23 +201,34 @@
           else echo $falha;
         }
         echo "<br>";
-      } if($loginEmail_existentes != null){
-
-          if(count($loginEmail_existentes)==1) 
-            echo("O login ou email do registro contido na seguinte linha do arquivo <strong>".$nomeArq."</strong> j&aacute; est&aacute; cadastrado:<br>");
-          else
-            echo("Os logins ou emails dos registros contidos nas seguintes linhas do arquivo <strong>".$nomeArq."</strong> j&aacute; est&atilde;o cadastrados:<br>");
-          foreach($loginEmail_existentes as $cod => $existente){
-            if($cod != 0) echo " - ".$existente;
-            else echo $existente;
+        echo("</td>");
+        echo("</tr>");
+      } if($login_existente == true && $falhas == null){
+      	  echo("<tr class=\"head\">\n");	
+      	  echo("<td colspan=\"2\">".RetornaFraseDaLista($lista_frases,308)."<strong></td>");
+      	  echo("</tr>\n");
+          echo("<tr class=\"head\">\n");
+		  echo("<td>".RetornaFraseDaLista($lista_frases,309)."</td>\n");
+          echo("<td>".RetornaFraseDaLista($lista_frases,310)."</td>");
+          foreach($dados_preenchidos_s as $cod => $existente){
+          						if($existente['status_login']==1){
+          									echo("<tr>\n");
+          									echo("<td>".$existente['login']."</td>\n");
+          									echo("<td><input type=\"text\" value=".$existente['novo_login']." maxlength=\"20\" size=\"10\" name=\"login[]\" id=\"login\" class=\"input\"></td>\n");
+          									echo("</tr>\n");
+          									echo("\n");
+          						}						
+          						
           }
-          echo "<br>";
+         $_SESSION['login_existente']= $login_existente; 
+         $_SESSION['dados']=$dados_preenchidos_s; 
+         $_SESSION['lista_frases']=$lista_frases;
+          
       } 
+      echo("              </td>\n");
+      echo("              </tr>\n");
 
-      echo("                  </td>\n");
-      echo("                  </tr>\n");
-
-      echo("                </table>\n");
+      echo("              </table>\n");
       echo("              </td>\n");
       echo("            </tr>\n");
       echo("            <tr>\n");

@@ -43,6 +43,19 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("administracao.inc");
+  
+   if($_SESSION['login_existente']==true){
+   		$sock=Conectar($cod_curso);
+  		foreach ($_SESSION['dados'] as $cod => $linha){
+  			if($linha['status_login']==1){
+  				$linha['login']=$linha['novo_login'];
+  				$sock=CadastrarUsuario($sock,$cod_curso,$linha,$_SESSION['lista_frases'],$cod_usuario);
+  			}
+  			
+  		}
+  		Desconectar($sock);
+  		unset($_SESSION['login_existente']);
+   }
 
   require_once("../xajax_0.2.4/xajax.inc.php");
 
@@ -447,10 +460,10 @@
   echo("        return false;\n");
   echo("      }\n");
   
-  /*funcão responsavel por apagar os registros da pagina atual
+  /*funcï¿½o responsavel por apagar os registros da pagina atual
    * se flag==T apaga a pagina inteira
-   * caso contrario apaga apenas o navegador da paginação
-   * é necessario as vezes apagar so o navegador quando paginamos para frente ou para tras
+   * caso contrario apaga apenas o navegador da paginaï¿½ï¿½o
+   * ï¿½ necessario as vezes apagar so o navegador quando paginamos para frente ou para tras
   */
   
   echo("var qtdPag=1;\n");
@@ -502,7 +515,7 @@
   echo("	tr_ger.appendChild(td_data);\n");
   echo("	tr_ger.appendChild(td_dados);\n");
   
-  /*caso esteja em inscrições registradas precisamos criar o campo portifolio*/
+  /*caso esteja em inscriï¿½ï¿½es registradas precisamos criar o campo portifolio*/
   
   echo("	if(acao== 'R'){\n");
   echo("		var td_port=document.createElement('td');\n");
@@ -513,7 +526,7 @@
   echo("	tab[0].appendChild(tr_ger);\n");
   echo("}\n");
   
-   /*função java script que controla paginacao-estou criando a paginação nova...depois de mudar o intervalo*/
+   /*funï¿½ï¿½o java script que controla paginacao-estou criando a paginaï¿½ï¿½o nova...depois de mudar o intervalo*/
   echo("function Paginacao(status){\n");
   echo("	var tab=document.getElementsByClassName('tabInterna');\n");
   echo("	var td_pagina=document.createElement('td');\n");
@@ -529,7 +542,7 @@
   echo("	var span_prox=document.createElement('span');\n");
   echo("	span_prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
   
-  /*verificando se a paginação para voltar esta liberada, ou seja se não é a primeira pagina*/
+  /*verificando se a paginaï¿½ï¿½o para voltar esta liberada, ou seja se nï¿½o ï¿½ a primeira pagina*/
  
   echo("if(status== 'BV'){\n");
   echo("		span_first.className=\"none\";\n");
@@ -600,7 +613,7 @@
   echo("		td_pagina.appendChild(td_span);\n");
   echo("	}\n");
   
-  /*verificando a paginação para frente*/
+  /*verificando a paginaï¿½ï¿½o para frente*/
     
   echo("    td_pagina.appendChild(span_prox);\n");
   echo("	td_pagina.appendChild(span_last);\n");
@@ -623,7 +636,7 @@
   
   
      
-  /*inicial a paginação dinamica, criando os controladores de paginação*/
+  /*inicial a paginaï¿½ï¿½o dinamica, criando os controladores de paginaï¿½ï¿½o*/
   
   echo("function Inicial(limit,flag){\n");
   echo("if (limit>=1){\n");
@@ -635,7 +648,7 @@
   echo("	coluna.align=\"right\";");
  
   /*
-  * criando os span necessarios para a páginação, ir para o primeiro não é valido pois estamos na primeira
+  * criando os span necessarios para a pï¿½ginaï¿½ï¿½o, ir para o primeiro nï¿½o ï¿½ valido pois estamos na primeira
   * pagina.
   */
   
@@ -654,7 +667,7 @@
   echo("	first.onclick=\"none\";\n");
   echo("	ant.onclick=\"none\";\n");
   
-//  /*verificando se ainda existirão mais paginações*/
+//  /*verificando se ainda existirï¿½o mais paginaï¿½ï¿½es*/
    echo("if (flag=='L'){\n");
    echo("	prox.className=\"paginacao\";\n");
    echo("	prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
@@ -671,7 +684,7 @@
    echo("	aux= 'B';\n");	
    echo("}\n");
 //  
-//  /*paginando os indices iniciais, até 5, ou até o fim das mensagens*/
+//  /*paginando os indices iniciais, atï¿½ 5, ou atï¿½ o fim das mensagens*/
 //  
   echo("for(var i=1;i<=limit;i++){\n");
   echo("	var GerSpan=document.createElement('span');\n");
