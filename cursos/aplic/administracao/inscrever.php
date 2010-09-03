@@ -101,7 +101,7 @@
   echo("      }\n\n");
   
   echo("function Popula_campo(){\n");
-  $j=1; 
+  $j=0; 
   echo("var i=0;");
   echo("var nome=document.getElementsByName('nome[]');\n");
   echo("var email=document.getElementsByName('email[]');\n");
@@ -121,7 +121,7 @@
   			 $nome=$linha['nome'];
   	  		 $email=$linha['email'];
   		  	 $login=$linha['login'];
-  		  	 if($j<=5){
+  		  	 if($j<=4){
   		  	 		echo("nome[i].value=\"$nome\";\n");
   		  	 		echo("email[i].value=\"$email\";\n");
   		  	 		echo("login[i].value=\"$login\";\n");	
@@ -210,13 +210,13 @@
   echo("                return(false);\n");
   echo("              }\n");
   echo("            }\n");
-  echo("            if ((e.value!='') && (e.name=='nome[]'))\n");
-  echo("            {\n");
-  echo("                nome++;\n");
-  echo("            }\n");
   echo("            if ((e.value!='') && (e.name=='email[]'))\n");
   echo("            {\n");
   echo("                email++;\n");
+  echo("            }\n");
+  echo("            if ((e.value!='') && (e.name=='nome[]'))\n");
+  echo("            {\n");
+  echo("                nome++;\n");
   echo("            }\n");
   echo("            if ((e.value!='') && (e.name=='login[]'))\n");
   echo("            {\n");
@@ -483,9 +483,9 @@
     {
       echo("                  <tr>\n");
       echo("                    <td><b>".$i.".</b></td>\n");
-      echo("                    <td><input autocomplete=\"off\" class=\"input\" type=\"text\" id=\"email\" name=\"email[]\" size=\"30\" maxlength=\"127\" onkeyup=\"xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 520)."',$i);\" onblur=\"TesteBlur();\" ></td>\n");
-      echo("                    <td><input class=\"input\" type=\"text\" id=\"nome\" name=\"nome[]\" size=\"20\" maxlength=\"127\" value=\" \"></td>\n");
-      echo("                    <td id=\"login_$i\"><input class=\"input\" type=text id=\"login\" name=\"login[]\" size=\"10\" maxlength=\"20\" value=\" \"></td>\n");
+      echo("                    <td><input autocomplete=\"off\" class=\"input\" type=\"text\" id=\"email\" size=\"30\" maxlength=\"127\" onkeyup=\"xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 520)."',$i);\" onblur=\"TesteBlur();\" name=\"email[]\" ></td>\n");
+      echo("                    <td><input class=\"input\" type=\"text\" id=\"nome\" name=\"nome[]\" size=\"20\" maxlength=\"127\"></td>\n");
+      echo("                    <td id=\"login_$i\"><input class=\"input\" type=text id=\"login\" name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
       echo("                  </tr>\n");
     }
       echo("                  <tr id=\"addLogin\">\n");

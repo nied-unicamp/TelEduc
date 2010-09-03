@@ -228,7 +228,7 @@
     exit();
   }
   
-  echo("          <form name=\"inscreveArq\" action=faz_inscricao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario." onsubmit=return(verificaArquivo()) method=\"post\" enctype=\"multipart/form-data\">\n");
+  echo("      <form name=\"inscreveArq\" action=faz_inscricao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario." onsubmit=return(verificaArquivo()) method=\"post\" enctype=\"multipart/form-data\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
   echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
   echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=".$tipo_usuario.">\n");
