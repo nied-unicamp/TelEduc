@@ -88,27 +88,27 @@
     $dataAnt = UnixTime2DataHora($linha['data']);
   }
 
-?>
-<script type="text/javascript">
+
+
 /**
  * Funcao que tira o caminho do arquivo retornando soh o arquivo.
  */
-function getfilename(path) {
-	pieces=path.split('\\');
-	n=pieces.length;
-	file=pieces[n-1];
-	pieces=file.split('/');
-	n=pieces.length;
-	file=pieces[n-1];
-	return(file);
-} 
-</script>
-<?php
+
  
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\">\n\n");
   echo("    var selec = '".$_GET['selec']."';\n");
+
+  echo("      function getfilename(path) {\n");
+  echo("        var pieces=path.split('\\\\');\n");
+  echo("        var n=pieces.length;\n");
+  echo("        var file=pieces[n-1];\n");
+  echo("        pieces=file.split('/');\n");
+  echo("        n=pieces.length;\n");
+  echo("        file=pieces[n-1];\n");
+  echo("        return(file);\n");
+  echo("       }");
 
   echo("      function MarcaOuDesmarcaTodos(tipoUser){\n");
   echo("        var i;\n");
