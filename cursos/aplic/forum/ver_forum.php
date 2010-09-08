@@ -1027,7 +1027,7 @@
 
         echo("                  <tr style=\"display:none;\" id=\"tr_msg_".$cod_msg."\">");
         echo("                    <td width=\"5%\">&nbsp;</td>\n");
-        echo("                    <td style=\"width:50px\" colspan=".($status == 'D'?"2":"3")." id=\"td_msg_".$cod_msg."\" align=\"left\">\n");
+        echo("                    <td colspan=".($status == 'D'?"2":"3")." id=\"td_msg_".$cod_msg."\" align=\"left\">\n");
 
         echo("                      <div><b>Mensagem:</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
         echo("                      </div></td>\n");
