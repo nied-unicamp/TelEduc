@@ -88,6 +88,23 @@
     $dataAnt = UnixTime2DataHora($linha['data']);
   }
 
+?>
+<script type="text/javascript">
+/**
+ * Funcao que tira o caminho do arquivo retornando soh o arquivo.
+ */
+function getfilename(path) {
+	pieces=path.split('\\');
+	n=pieces.length;
+	file=pieces[n-1];
+	pieces=file.split('/');
+	n=pieces.length;
+	file=pieces[n-1];
+	return(file);
+} 
+</script>
+<?php
+ 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\">\n\n");
@@ -156,18 +173,6 @@
   echo("        elementoDiv.removeChild(document.getElementById('space_'+numero));\n");
   echo("        elementoDiv.removeChild(document.getElementById('input_file_'+numero));\n");
   echo("      }\n\n");
-
-  echo("    function getfilename(path)\n");
-  echo("    {\n");
-  echo("      var pieces,n,file;");
-  echo("      pieces=path.split('\'');\n");
-  echo("      n=pieces.length;\n");
-  echo("      file=pieces[n-1];\n");
-  echo("      pieces=file.split('/');\n");
-  echo("      n=pieces.length;\n");
-  echo("      file=pieces[n-1];\n");
-  echo("      return(file);\n");
-  echo("    }\n\n");
 
   echo("    function ArquivoValido(file)\n");
   echo("    {\n");
