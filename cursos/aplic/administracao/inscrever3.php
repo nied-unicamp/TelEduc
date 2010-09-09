@@ -190,7 +190,7 @@
   	}
   }
   
-  function IncluiUsuarioTabela(cod, nome, login, email,flag)
+  function IncluiUsuarioTabela(cod, nome, login, email, flag, i)
   {
   	tbody = document.getElementById('tabInterna').children[0];
   	tr = document.createElement('tr');
@@ -202,16 +202,19 @@
 		td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
 		td_nome.innerHTML = nome;
 	}
-	td_email.innerHTML = email;
+	
+	//Se o email estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.
+	td_email.innerHTML = (email=='')?'&nbsp;':email;
 	td_login.innerHTML = login;
 	if(flag == 'B'){
-		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuário já cadastrado no curso)</span>';
+		td_check.innerHTML = '&nbsp;';
+		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuï¿½rio jï¿½ cadastrado no curso)</span>';
 	}
 	tr.appendChild(td_check);
 	tr.appendChild(td_nome);
 	tr.appendChild(td_email);
 	tr.appendChild(td_login);
-	tr.setAttribute('name','user');
+	tr.setAttribute('id','user_'+i);	/* seta o id da linha para saber qual linha apagar. */
 	
   	tbody.appendChild(tr);
   }
@@ -235,7 +238,7 @@
   	
   	tr.setAttribute('id','controle_pag');
   	td.setAttribute('align','right');
-  	td.setAttribute('colspan','5');
+  	td.setAttribute('colSpan','5');
   	span1.setAttribute('id','paginacao_first');
   	span1.innerHTML = '<<';
   	span2.setAttribute('id','paginacao_back');
@@ -267,11 +270,15 @@
   {
   
   	tbody = document.getElementById('tabInterna').children[0];
-	users = document.getElementsByName('user');
-	var tam = users.length;
+	//users = document.getElementsByName('tr', 'user');
+	//var tam = users.length;
 
-	for (i = 0; i < tam; i++) 
-		tbody.removeChild(users[0]);
+
+	/* Apaga os usuarios da tabela. */
+	for (i = 0; document.getElementById('user_'+i) != null; i++) {
+		//tbody.removeChild(users[0]);
+		tbody.removeChild(document.getElementById('user_'+i));
+	} 
 
 	cp = document.getElementById('controle_pag');
 	tbody.removeChild(cp); 
@@ -459,7 +466,7 @@
   
   
   echo("                  		<tr class=\"head\">\n");
-  echo("                    		<td width='10px'></td>\n");
+  echo("                    		<td></td>\n");
   /* 15 - Nome */
   echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,15)."</b></td>\n");
   /* 52 - E-mail */

@@ -1082,9 +1082,10 @@ function ListaUsuariosPaginaDinamic($pagina, $tam_pagina, $cod_curso, $busca="")
 	
 	$objResponse->addScriptCall("RemovePaginaAntiga");
 	
+	$i=0;
 	foreach($lista as $user) {
 		$flag=RetornaStatusUsuarioCurso($sock,$cod_curso,$user['cod_usuario']);
-		$objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email'],$flag);
+		$objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email'],$flag, $i++);
 	}
 	
 	$objResponse->addScriptCall("IncluiControlePaginacao");
