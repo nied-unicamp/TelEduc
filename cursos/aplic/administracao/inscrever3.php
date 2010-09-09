@@ -200,7 +200,9 @@
 	td_email = document.createElement('td');
   	if(flag == 'L'){
 		td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
-		td_nome.innerHTML = nome;
+		//Se o nome estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.
+		td_nome.innerHTML = (nome=='')?'&nbsp;':nome;
+		//td_nome.innerHTML = nome;
 	}
 	
 	//Se o email estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.
