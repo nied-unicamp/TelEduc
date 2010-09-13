@@ -191,7 +191,7 @@ function RetornaDadosTodosUsuarios($sock,$cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.email, U.cod_usuario from ".$dbnamebase.".Usuario U, ".$dbnamebase.".Usuario_curso UC where UC.cod_curso = ".$cod_curso." and ((binary UC.tipo_usuario = 'A') or (binary UC.tipo_usuario = 'F') or (binary UC.tipo_usuario = 'Z'))";
+  $query="select U.email, U.cod_usuario from ".$dbnamebase.".Usuario U, ".$dbnamebase.".Usuario_curso UC where UC.cod_curso = ".$cod_curso." and U.cod_usuario = UC.cod_usuario_global and ((binary UC.tipo_usuario = 'A') or (binary UC.tipo_usuario = 'F') or (binary UC.tipo_usuario = 'Z'))";
   
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
