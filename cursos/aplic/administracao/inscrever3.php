@@ -210,7 +210,7 @@
 	td_login.innerHTML = login;
 	if(flag == 'B'){
 		td_check.innerHTML = '&nbsp;';
-		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usu�rio j� cadastrado no curso)</span>';
+		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuário já cadastrado no curso)</span>';	//TODO:Mensagem hard-coded. Colocar no BD.
 	}
 	tr.appendChild(td_check);
 	tr.appendChild(td_nome);
