@@ -161,11 +161,18 @@
   echo("      var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
   echo("      var Xpos, Ypos;\n");
 
-  echo("      if (isNav)\n");
-  echo("      {\n");
-  echo("        document.captureEvents(Event.MOUSEMOVE);\n");
-  echo("      }\n");
-  echo("      document.onmousemove = TrataMouse;\n\n");
+//  echo("      if (isNav)\n");
+//  echo("      {\n");
+//  echo("        document.captureEvents(Event.MOUSEMOVE);\n");
+//  echo("      }\n");
+//  echo("      document.onmousemove = TrataMouse;\n\n");
+  
+  /* Verificação do browser sendo usado */
+  echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
+  echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
+  echo("			document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("		}\n");
 
   echo("      function TrataMouse(e)\n");
   echo("      {\n");
@@ -524,8 +531,11 @@ $cor_link2[$tela_avaliacao] = "</font>";
 			break;
 	}
         echo("                  <tr>\n");
-	echo("                    <td colspan=4 align=center>" . $nao_existe . "</td>\n");
-        echo("                  </tr>\n");
+		echo("                    <td align=center>" . $nao_existe . "</td>\n");
+		echo("                    <td align=center>-</td>\n");
+		echo("                    <td align=center>-</td>\n");
+		echo("                    <td align=center>-</td>\n");
+		echo("                  </tr>\n");
   }
   echo("                </table>\n");
   echo("              </td>\n"); 
@@ -564,7 +574,7 @@ $cor_link2[$tela_avaliacao] = "</font>";
 //    echo("                  </select><br>\n");
     
     echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=hidden name=action value=criarAvaliacaoExt />\n");
+    echo("                  <input type=hidden name=acao value=criarAvaliacaoExt />\n");
     echo("                  <input type=hidden name=cod_usuario value=\"".$cod_usuario."\">\n");
     echo("                  <input type=hidden name=ferramenta value='".$linha['Ferramenta']."' />\n");
     echo("                  <input type=hidden name=tela_avaliacao value='".$tela_avaliacao."' />\n");

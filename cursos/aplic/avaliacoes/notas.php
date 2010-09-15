@@ -366,13 +366,13 @@
 
 /*************************************************************************************************************************/
 
-  echo("        function CriarSpanSimples(frase,class)\n");
+  echo("        function CriarSpanSimples(frase,classe)\n");
   echo("        {\n");
   echo("              newSpan = document.createElement('span');\n");
-  echo("              newSpan.setAttribute(\"class\",class);\n");
+  echo("              newSpan.setAttribute(\"class\",classe);\n");
   echo("              newSpan.innerHTML = frase;\n");
   echo("              return newSpan;\n");
-  echo("        }\n\n");
+  echo("        }\n");
 
   echo("        function AbrePerfilHisDes(id) \n");
   echo("        {\n");
@@ -740,14 +740,22 @@ function respondeComentario(tr_pai, span_id)
   }
 
 /***************************************************************************************************************************/
-    
-    echo("      if (isNav)\n");
-    echo("      {\n");
-    echo("        document.captureEvents(Event.MOUSEMOVE);\n");
-    echo("      }\n");
-    echo("      document.onmousemove = TrataMouse;\n\n");
 
-    echo("      function TrataMouse(e)\n");
+/* captureEvents esta deprecated. */
+//    echo("      if (isNav)\n");
+//    echo("      {\n");
+//    echo("        document.captureEvents(Event.MOUSEMOVE);\n");
+//    echo("      }\n");
+//    echo("      document.onmousemove = TrataMouse;\n\n");
+
+  	/* Verificação do browser sendo usado */
+  	echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
+  	echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
+  	echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
+  	echo("			document.attachEvent('onmousemove', TrataMouse);\n");
+  	echo("		}\n");
+  
+  	echo("      function TrataMouse(e)\n");
     echo("      {\n");
     echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
     echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
@@ -1222,7 +1230,7 @@ function respondeComentario(tr_pai, span_id)
     //Tabela com a lista de alunos do curso, com suas respectivas notas na avalia��o realizada
     
     echo("                <tr class=\"head\">\n");
-    echo("                  <td width=\"20%\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
+    echo("                  <td style=\"width:20%\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
 
     $cont_batepapo=1;
     $cont = 1;
@@ -1336,7 +1344,7 @@ function respondeComentario(tr_pai, span_id)
         );
       }
 
-      echo("                    <td align=center width=50>".$a1.$leg.$a2."</td>\n");
+      echo("                    <td style=\"width:50\">".$a1.$leg.$a2."</td>\n");
     }
 
     if($usr_formador)
@@ -1348,7 +1356,7 @@ function respondeComentario(tr_pai, span_id)
       $a1=$a2="";
 
     // 197 - M�dia Final
-    echo("                    <td width=100 align='center'>".$a1.RetornaFraseDaLista($lista_frases,197).$a2."</a></td>\n");
+    echo("                    <td style=\"width=100\" align='center'>".$a1.RetornaFraseDaLista($lista_frases,197).$a2."</a></td>\n");
     echo("                  </tr>\n");
 
     // 114 - Valor da Avalia��o

@@ -165,7 +165,7 @@
       echo("        if(confirm('".RetornaFraseDaLista($lista_frases,129).RetornaFraseDaLista($lista_frases,130)."'))\n");
       echo("        {\n");
       echo("          document.frmAvaliacao.action = 'acoes.php'; \n");
-      echo("          document.frmAvaliacao.action.value= 'excluirAvaliacao'; \n");
+      echo("          document.frmAvaliacao.acao.value= 'excluirAvaliacao'; \n");
       echo("          document.frmAvaliacao.submit();\n");
       echo("        }\n");
       echo("      }\n\n");
@@ -401,7 +401,7 @@
   // $tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
   echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
   echo("      <input type=hidden name=origem value=ver>\n");
-  echo("      <input type=hidden name=action value=null>\n"); 
+  echo("      <input type=hidden name=acao value=null>\n"); 
   echo("    </form>\n");
 
   $tipo = "";

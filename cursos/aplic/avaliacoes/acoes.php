@@ -74,7 +74,7 @@
 
   // acao da pagina "avaliacoes.php"
 
-if ($action == "criarAvaliacaoExt"){  
+if ($acao == "criarAvaliacaoExt"){  
   	  $cod_atividade = RetornaProximoCodigoExterna($sock,'N');
       $cod_avaliacao = IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'N', $tipo);
       AtualizaFerramentasNova($sock,22,'T');
@@ -84,7 +84,7 @@ if ($action == "criarAvaliacaoExt"){
       header("Location:ver.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacaoacao."&acao=criarAvaliacao&atualizacao=true");
 }
   // acao da pagina "ver.php"
-  if($action == "excluirAvaliacao")
+  if($acao == "excluirAvaliacao")
   {
     if (!ExcluiAvaliacao($sock, $cod_avaliacao,$cod_usuario))
     {

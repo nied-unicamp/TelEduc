@@ -4415,9 +4415,9 @@ function MudarCompartilhamentoDinamic($dadosForm,$novo_comp)
       MudarCompartilhamento($sock, $cod_nota, $tipo_comp);
 
   Desconectar($sock);
-  
+
   $objResponse->addScript("MudaSpanCompartilhamento('".$spanName."','".$novo_comp."','".$tipo_comp."',".$cod_nota.",".$cod_grupo.",".$cod_aluno.");");
-  
+
   /* Feedback é sempre bom né? */
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;

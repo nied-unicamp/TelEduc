@@ -485,24 +485,24 @@ echo("             else\n");
 echo("               return '';\n");
 echo("        }\n\n");
 
-echo("        function CriarSpanSimples(frase,class)\n");
+echo("        function CriarSpanSimples(frase,classe)\n");
 echo("        {\n");
 echo("              newSpan = document.createElement('span');\n");
-echo("              newSpan.setAttribute(\"class\",class);\n");
+echo("              newSpan.setAttribute(\"class\",classe);\n");
 echo("              newSpan.innerHTML = frase;\n");
 echo("              return newSpan;\n");
 echo("        }\n\n");
 
 if($usr_formador)
 {
-	echo("        function CriarInputText(name,id,size,class,value)\n");
+	echo("        function CriarInputText(name,id,size,classe,value)\n");
 	echo("        {\n");
 	echo("              newInput = document.createElement('input');\n");
 	echo("              newInput.setAttribute(\"type\",\"text\");\n");
 	echo("              newInput.setAttribute(\"name\",name);\n");
 	echo("              newInput.setAttribute(\"id\",id);\n");
 	echo("              newInput.setAttribute(\"size\",size);\n");
-	echo("              newInput.setAttribute(\"class\",class);\n");
+	echo("              newInput.setAttribute(\"class\",classe);\n");
 	echo("              newInput.setAttribute(\"value\",value);\n");
 	echo("              return newInput;\n");
 	echo("        }\n\n");
@@ -709,9 +709,26 @@ echo("          var brokenId = id.split(\"_\");\n");
 echo("          AbrePerfil(parseInt(brokenId[0]));\n");
 echo("        }\n");
 
+
+/**
+ * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
+ */  
+echo("		function getElementsByName_iefix(tag, name) {\n");
+echo("			var elem = document.getElementsByTagName(tag);\n");
+echo("			var arr = new Array();\n");
+echo("			for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+echo("				var att = elem[i].getAttribute('name');\n");
+echo("				if(att == name) {\n");
+echo("					arr[iarr] = elem[i];\n");
+echo("					iarr++;\n");
+echo("				}\n");
+echo("			}\n");
+echo("			return arr;\n");
+echo("		}\n");
+
 echo("        function MudaSpanCompartilhamento(spanName,novoComp,tipoComp,codNota,codGrupo,codAluno)\n");
 echo("        {\n");
-echo("          spanElements = document.getElementsByName(spanName);\n");
+echo("          spanElements = getElementsByName_iefix('span',spanName);\n");
 echo("          for(i=0;i<spanElements.length;i++)\n");
 echo("          {\n");
 echo("            spanElements[i].innerHTML = novoComp;\n");
@@ -919,12 +936,18 @@ if($usr_formador)
 	echo("          childElement = trElement.firstChild;\n");
 	echo("          while(childElement != null)\n");
 	echo("          {\n");
-	echo("            if(i == 5)\n");//nota
+//	echo("alert('i: '+i+' : childElement.firstChild: '+childElement.firstChild);");
+	echo("            if(i == 2 && isIE)\n");	//nota no IE
 	echo("              childElement.firstChild.innerHTML = nota;\n");
-	echo("            if(i == 7)\n");//data
+	echo("            if(i == 5 && !isIE)\n");	//nota no FF
+	echo("              childElement.firstChild.innerHTML = nota;\n");
+	
+	echo("            if(i == 3 && isIE)\n");	//data no IE
 	echo("              childElement.innerHTML = data;\n");
-	echo("            if(i == 9)\n");//Avaliar/Reavaliar
-	echo("            {\n");//Avaliar/Reavaliar
+	echo("            if(i == 7 && !isIE)\n");	//data no FF
+	echo("              childElement.innerHTML = data;\n");
+	
+	echo("            if(i == 4 && isIE) {\n");//Avaliar/Reavaliar no IE
 	echo("              if(codNota == -1)\n");
 	//65 - Avaliar
 	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
@@ -932,8 +955,20 @@ if($usr_formador)
 	//66 - Reavaliar
 	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
 	echo("            }\n");
-	echo("            if(i == 11)\n");//span compartilhamento
+	echo("            if(i == 9 && !isIE) {\n");//Avaliar/Reavaliar no FF
+	echo("              if(codNota == -1)\n");
+	//65 - Avaliar
+	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
+	echo("              else\n");
+	//66 - Reavaliar
+	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
+	echo("            }\n");
+	
+	echo("            if(i == 5 && isIE)\n");			//span compartilhamento no IE
 	echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
+	echo("            if(i == 11 && !isIE)\n");			//span compartilhamento no FF
+	echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
+	
 	echo("            childElement = childElement.nextSibling;\n");
 	echo("            i++;\n");
 	echo("          }\n");
