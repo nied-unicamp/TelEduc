@@ -262,9 +262,9 @@ function RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_
     $regra="and ER.compartilhada='T'";
     
   $consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
-             from Exercicios_resolucao ER 
+             from Exercicios_aplicado EA, Exercicios_resolucao ER 
              inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
-             where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio);
+             where ER.cod_usuario=".VerificaNumeroQuery($cod_usuario_exercicio)." AND EA.cod_exercicio = ER.cod_exercicio AND EA.dt_disponibilizacao < ".time();
   $res=Enviar($sock,$consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
@@ -292,10 +292,11 @@ function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_gr
   if (EFormadorComVisaoDeAluno($sock, $cod_curso, $cod_usuario))
     $regra="and ER.compartilhada='T'";
 
-  $consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
-             from Exercicios_resolucao ER 
+$consulta="select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada 
+             from Exercicios_aplicado EA, Exercicios_resolucao ER 
              inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio)
-             where ER.cod_grupo=".VerificaNumeroQuery($cod_grupo_exercicio)." ".$regra." ";
+             where ER.cod_grupo=".VerificaNumeroQuery($cod_grupo_exercicio)." ".$regra." AND EA.cod_exercicio = ER.cod_exercicio AND EA.dt_disponibilizacao < ".time();
+
   $res=Enviar($sock,$consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
