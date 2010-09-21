@@ -149,7 +149,7 @@ if (!isset($SalvarEmArquivo))
 		echo("          if (isNav)\n");
 		echo("            return(window.pageYOffset);\n");
 		echo("          if (isIE)\n");
-		echo("            return(document.body.scrollTop);\n");
+		echo("            return(document.documentElement.scrollTop);\n");
 		echo("        }\n");
 
 		echo("        function AjustePosMenuIE()\n");
@@ -399,6 +399,16 @@ echo("        {\n");
 echo("           window.open('../exercicios/correcao.php?cod_curso=".$cod_curso."&cod_dono=".$cod_usuario."&cod_modelo='+cod_modelo,'Corrigir','width=600,height=400,top=170,left=170,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
 echo("        }\n");
 
+/**
+ * Funcao para setar o style de um elemento.
+ */
+echo("		function setStyle(elemento, styleText){\n");
+echo("			if(elemento.style.setAttribute)\n");
+echo("				elemento.style.setAttribute(\"cssText\", styleText );\n");	//IE
+echo("			else\n");
+echo("				elemento.setAttribute(\"style\", styleText );\n");	//FF
+echo("		}\n");
+
 // retorna true se a nota contiver digitos estranhos
 // retorna false se a nota estiver no formato adequado
 echo("        function nota_com_digito_estranho(nota) {\n");
@@ -509,12 +519,16 @@ if($usr_formador)
 
 	echo("        function CriarInputRadio(name,id,tipoComp)\n");
 	echo("        {\n");
-	echo("              newInput = document.createElement('input');\n");
-	echo("              newInput.setAttribute(\"type\",\"radio\");\n");
-	echo("              newInput.setAttribute(\"name\",name);\n");
-	echo("              newInput.setAttribute(\"id\",id);\n");
-	echo("              newInput.setAttribute(\"value\",tipoComp);\n");
-	echo("              return newInput;\n");
+	echo("			try{\n"); 
+    echo("    				newInput = document.createElement('<input type=\"radio\" name=name />');\n");
+    echo("				}catch(err){\n"); 
+    echo(" 					newInput = document.createElement('input');\n");
+    echo("				}\n");
+    echo("			newInput.setAttribute(\"type\",'radio');\n");
+    echo("			newInput.setAttribute(\"name\",name);\n");
+	echo("			newInput.setAttribute(\"id\",id);\n");
+	echo("			newInput.setAttribute(\"value\",tipoComp);\n");
+	echo("			return newInput;\n");
 	echo("        }\n\n");
 
 	echo("        function CriarInputHidden(name,value)\n");
@@ -542,7 +556,8 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              newButton = document.createElement('input');\n");
 	echo("              newButton.setAttribute(\"type\",\"button\");\n");
-	echo("              newButton.setAttribute(\"class\",\"input\");\n");
+	//echo("              newButton.setAttribute(\"class\",\"input\");\n");
+	echo("				newButton.className=\"input\";\n");
 	// 11 - Enviar
 	echo("              newButton.setAttribute(\"value\",\"".RetornaFraseDaLista($lista_frases_geral, 11)."\");\n");
 	echo("              newButton.onclick = function(){ EnviarAvalicao(id,cod); };\n");
@@ -553,12 +568,14 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              newTr = document.createElement('tr');\n");
 	echo("              newTd1 = document.createElement('td');\n");
-	echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd1,\"border:0pt\");\n");
 	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
 	// 60 - Nota
 	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 60).":</b>';\n");
 	echo("              newTd2 = document.createElement('td');\n");
-	echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd2,\"border:0pt\");\n");
 	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
 	echo("              if(op == 1 || op == 2)\n");
 	echo("              {\n");
@@ -587,12 +604,14 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              newTr = document.createElement('tr');\n");
 	echo("              newTd1 = document.createElement('td');\n");
-	echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd1,\"border:0pt\");\n");
 	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
 	// 163 - Justificativa
 	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 163).":</b>';\n");
 	echo("              newTd2 = document.createElement('td');\n");
-	echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd2,\"border:0pt\");\n");
 	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
 	echo("              if(op == 1)\n");
 	echo("              {\n");
@@ -639,12 +658,14 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              newTr = document.createElement('tr');\n");
 	echo("              newTd1 = document.createElement('td');\n");
-	echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd1,\"border:0pt\");\n");
 	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
 	// 50 - Compartilhar
 	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 50).":</b>';\n");
 	echo("              newTd2 = document.createElement('td');\n");
-	echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd2,\"border:0pt\");\n");
 	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
 	echo("              newTd2.appendChild(CriarDivOpComp(id,op));\n");
 	echo("              newTr.appendChild(newTd1);\n");
@@ -656,11 +677,13 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              newTr = document.createElement('tr');\n");
 	echo("              newTd1 = document.createElement('td');\n");
-	echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd1,\"border:0pt\");\n");
 	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
 	echo("              newTd1.innerHTML = '&nbsp';\n");
 	echo("              newTd2 = document.createElement('td');\n");
-	echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+	echo("				setStyle(newTd2,\"border:0pt\");\n");
 	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
 	echo("              newTd2.appendChild(CriarBotaoEnviar(id,cod));\n");
 	echo("              newTr.appendChild(newTd1);\n");
@@ -670,12 +693,14 @@ if($usr_formador)
 
 	echo("        function CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod)\n");
 	echo("        {\n");
+	echo("				var tbody = document.createElement('tbody');\n");
 	echo("              newTable = document.createElement('table');\n");
-	echo("              newTable.appendChild(CriarTrNota(id,opNota,valueInputNota,codModelo));\n");
-	echo("              newTable.appendChild(CriarTrJustificativa(id,opJust));\n");
-	echo("              newTable.appendChild(CriarTrComp(id,opComp));\n");
+	echo("              tbody.appendChild(CriarTrNota(id,opNota,valueInputNota,codModelo));\n");
+	echo("              tbody.appendChild(CriarTrJustificativa(id,opJust));\n");
+	echo("              tbody.appendChild(CriarTrComp(id,opComp));\n");
 	echO("              if(opEnviar == 1)\n");
-	echo("                newTable.appendChild(CriarTrBotoes(id,cod));\n");
+	echo("                tbody.appendChild(CriarTrBotoes(id,cod));\n");
+	echo("				newTable.appendChild(tbody);");
 	echo("              return newTable;\n");
 	echo("        }\n\n");
 
@@ -690,7 +715,8 @@ if($usr_formador)
 	echo("            tableElement = trElement.parentNode;\n");
 	echo("            newTrConteiner = document.createElement('tr');\n");
 	echo("            newTrConteiner.setAttribute('id', id+'_avaliar');\n");
-	echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+	//echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+	echo("			  newTrConteiner.className=\"altColor0\";\n");
 	echo("            newTdConteiner = document.createElement('td');\n");
 	echo("            newTdConteiner.colSpan = 5;\n");
 	echo("            newTdConteiner.appendChild(CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod));\n");
@@ -801,7 +827,8 @@ echo("            trElement = trElement.nextSibling;\n");
 echo("            tableElement = trElement.parentNode;\n");
 echo("            newTrConteiner = document.createElement('tr');\n");
 echo("            newTrConteiner.setAttribute('id', id+'_hist');\n");
-echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+//echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+echo("			  newTrConteiner.className=\"altColor0\";\n");
 echo("            newTdConteiner = document.createElement('td');\n");
 if($usr_formador)
 echo("            newTdConteiner.colSpan = 5;\n");
@@ -816,6 +843,7 @@ echo("              codFormador = arrayConteudo[i][5];\n");
 echo("              codNota = arrayConteudo[i][6];\n");
 echo("              tipoComp = arrayConteudo[i][7];\n");
 echo("              newTable = document.createElement('table');\n");
+echo("				var tbody = document.createElement('tbody');\n");
 echo("              newTable.width = '100%';\n");
 echo("              newTable.setAttribute(\"id\", 'table_'+codNota+'_'+i);\n");
 echo("              newTable.setAttribute(\"cellpadding\", \"0\");\n");
@@ -855,7 +883,8 @@ echo("                newTrCab.appendChild(newTd);\n");
 echo("              }\n");
 echo("              newTrMid = document.createElement('tr');\n");
 echo("              newTrMid.setAttribute('id', 'tr_mid_'+i);\n");
-echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
+//echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
+echo("				newTrMid.className=\"altColor1\";");
 if($usr_formador)
 echo("              for(j=0;j<4;j++)\n");
 else
@@ -897,11 +926,13 @@ echo("              newTd.innerHTML=arrayConteudo[i][j];\n");
 else
 echo("              newTd.innerHTML=arrayConteudo[i][4];\n");
 echo("              newTrJustMid.appendChild(newTd);\n");
-echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
-echo("              newTable.appendChild(newTrCab);\n");
-echo("              newTable.appendChild(newTrMid);\n");
-echo("              newTable.appendChild(newTrJust);\n");
-echo("              newTable.appendChild(newTrJustMid);\n");
+//echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
+echo("				newTrJustMid.className=\"altColor1\";");
+echo("              tbody.appendChild(newTrCab);\n");
+echo("              tbody.appendChild(newTrMid);\n");
+echo("              tbody.appendChild(newTrJust);\n");
+echo("              tbody.appendChild(newTrJustMid);\n");
+echo("				newTable.appendChild(tbody);");
 echo("              newTdConteiner.appendChild(newTable);\n");
 echo("              newBr = document.createElement('br');\n");
 echo("              newTdConteiner.appendChild(newBr);\n");
@@ -925,7 +956,8 @@ if($usr_formador)
 	echo("        {\n");
 	echo("              SpanComp.innerHTML = RetornaFraseComp(comp);\n");
 	echo("              SpanComp.setAttribute(\"name\",'comp_'+codNota);\n");
-	echo("              SpanComp.setAttribute(\"class\",\"link\");\n");
+	//echo("              SpanComp.setAttribute(\"class\",\"link\");\n");
+	echo("				SpanComp.className=\"link\";\n");
 	echo("              SpanComp.onclick = function(){ js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(comp,'comp_'+codNota);MostraLayer(cod_comp,140); };\n");
 	echo("        }\n\n");
 
@@ -938,12 +970,12 @@ if($usr_formador)
 	echo("          {\n");
 //	echo("alert('i: '+i+' : childElement.firstChild: '+childElement.firstChild);");
 	echo("            if(i == 2 && isIE)\n");	//nota no IE
-	echo("              childElement.firstChild.innerHTML = nota;\n");
+	echo("              childElement.firstChild.innerHTML = nota+'&nbsp;';\n");
 	echo("            if(i == 5 && !isIE)\n");	//nota no FF
 	echo("              childElement.firstChild.innerHTML = nota;\n");
 	
 	echo("            if(i == 3 && isIE)\n");	//data no IE
-	echo("              childElement.innerHTML = data;\n");
+	echo("              childElement.innerHTML = data+'&nbsp;';\n");
 	echo("            if(i == 7 && !isIE)\n");	//data no FF
 	echo("              childElement.innerHTML = data;\n");
 	
@@ -1208,7 +1240,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 					// coluna de nota
 					echo("                    <td align=center>");
 					if ($usr_formador && !isset($SalvarEmArquivo))
-					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\"></span></td>\n");
+					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">&nbsp;</span></td>\n");
 					else
 					echo("&nbsp;</td>\n");
 
@@ -1243,7 +1275,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 							echo("&nbsp;</td>\n");
 						}
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp</span></td>\n");
 					}
 				}
 				else
@@ -1303,7 +1335,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 				//coluna de nota
 				echo("                    <td align=center>");
 				if ($usr_formador && !isset($SalvarEmArquivo))
-				echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\"></span></td>\n");
+				echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">&nbsp;</span></td>\n");
 				else
 				echo("&nbsp;</td>\n");
 
@@ -1337,7 +1369,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 						// coluna 'avaliar'
 						echo("                    <td align=center>&nbsp;</td>\n");
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbs</span></td>\n");
 					}
 				}
 			}
@@ -1479,7 +1511,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 							echo("&nbsp;</td>\n");
 						}
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp;</span></td>\n");
 					}
 				}
 				else
@@ -1577,7 +1609,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 						if($avaliacao_participante)
 						echo("                    <td align=center>&nbsp;</td>\n");
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp;</span></td>\n");
 					}
 				}
 			}
@@ -1751,9 +1783,9 @@ else
 					if($usr_formador && !isset($SalvarEmArquivo))
 					{
 						if (strcmp($dados['Ferramenta'],'P'))
-						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenho(".$cod.",'tr_users_".$cod."'));\"></span></td>\n");
+						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenho(".$cod.",'tr_users_".$cod."'));\">&nbsp;</span></td>\n");
 						else
-						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\"></span></td>\n");
+						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\">&nbsp;</span></td>\n");
 					}
 					else
 					echo("&nbsp;</td>\n");
@@ -1791,7 +1823,7 @@ else
 						echo("                    <td align=center>&nbsp;</td>\n");
 
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp;</span></td>\n");
 					}
 				}
 				else
@@ -1860,9 +1892,9 @@ else
 				if($usr_formador && !isset($SalvarEmArquivo))
 				{
 					if (strcmp($dados['Ferramenta'],'P'))
-					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenho(".$cod.",'tr_users_".$cod."'));\"></span></td>\n");
+					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenho(".$cod.",'tr_users_".$cod."'));\">&nbsp;</span></td>\n");
 					else
-					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\"></span></td>\n");
+					echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\">&nbsp;</span></td>\n");
 				}
 				else
 				echo("&nbsp;</td>\n");
@@ -1894,14 +1926,14 @@ else
 							echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
 						}
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp;</span></td>\n");
 					}
 					else
 					{
 						// coluna 'avaliar'
 						echo("                    <td align=center>&nbsp;</td>\n");
 						// coluna do compartilhamento
-						echo("                    <td align=center><span></span></td>\n");
+						echo("                    <td align=center><span>&nbsp;</span></td>\n");
 					}
 				}
 			}
@@ -2063,7 +2095,7 @@ else
 							echo("<span class=\"link\" onClick=return(HistoricodoDesempenho(".$cod.",'tr_formadores_".$cod."'));>");
 							else
 							echo("<span class=\"link\" onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_formadores_".$cod."'));>");
-							echo("</span></td>\n");
+							echo("&nbsp;</span></td>\n");
 						}
 						else
 						echo("&nbsp;</td>\n");
@@ -2104,7 +2136,7 @@ else
 								echo("&nbsp;</td>\n");
 							}
 							// coluna do compartilhamento
-							echo("                    <td align=center><span></span></td>\n");
+							echo("                    <td align=center><span>&nbsp;</span></td>\n");
 						}
 					}
 					else
@@ -2180,7 +2212,7 @@ else
 						echo("<span class=\"link\" onClick=return(HistoricodoDesempenho(".$cod.",'tr_formadores_".$cod."'));>");
 						else
 						echo("<span class=\"link\" onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_formadores_".$cod."'));>");
-						echo("</span></td>\n");
+						echo("&nbsp;</span></td>\n");
 					}
 					else
 					echo("&nbsp;</td>\n");
@@ -2220,7 +2252,7 @@ else
 							// coluna 'avaliar'
 							echo("                    <td align=center>&nbsp;</td>\n");
 							// coluna do compartilhamento
-							echo("                    <td align=center><span></span></td>\n");
+							echo("                    <td align=center><span>&nbsp;</span></td>\n");
 						}
 					}
 				}

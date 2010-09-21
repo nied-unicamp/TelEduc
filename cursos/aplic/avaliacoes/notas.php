@@ -470,7 +470,8 @@
   echo("        function CriarBotaoParticipacao(codCurso,codAvaliacao,codAluno,codGrupo) \n");
   echo("        {\n");
   echo("          newUl = document.createElement('ul');\n");
-  echo("          newUl.setAttribute(\"class\",\"btAuxTabs\");\n");
+  //echo("          newUl.setAttribute(\"class\",\"btAuxTabs\");\n");
+  echo("		  newUl.className=\"btAuxTabs\";");
   echo("          newLi = document.createElement('li');\n");
   // 49 - Participa��es
   echo("          newSpan = CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,49)."\",\"\");\n");
@@ -520,7 +521,8 @@
   echo("            tableElement = trElement.parentNode;\n");
   echo("            newTrConteiner = document.createElement('tr');\n");
   echo("            newTrConteiner.setAttribute('id', id+'_hist');\n");
-  echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+  //echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+  echo("			newTrConteiner.className=\"altColor0\";");
   echo("            newTdConteiner = document.createElement('td');\n");
   echo("            newTdConteiner.colSpan = js_colSpan;\n");
   echo("            newTdConteiner.appendChild(CriarBotaoParticipacao(".$cod_curso.",codAvaliacao,codAluno,codGrupo));\n");
@@ -537,6 +539,7 @@
   echo("              codNota = arrayConteudo[i][6];\n");
   echo("              tipoComp = arrayConteudo[i][7];\n");
   echo("              newTable = document.createElement('table');\n");
+  echo("			  var tbody = document.createElement('tbody');\n");
   echo("              newTable.width = '100%';\n");
   echo("              newTable.setAttribute(\"id\", 'table_'+codNota+'_'+i);\n");
   echo("              newTable.setAttribute(\"name\", 'table_'+codAvaliacao+'_'+codGrupo+'_'+i);\n");
@@ -577,7 +580,8 @@
   echo("                newTrCab.appendChild(newTd);\n");
   echo("              }\n");
   echo("              newTrMid = document.createElement('tr');\n");
-  echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
+  //echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
+  echo("			  newTrMid.className=\"altColor1\";");
   echo("              newTrMid.setAttribute('id', 'tr_mid_'+i);\n");
   if($usr_formador)
     echo("              for(j=0;j<4;j++)\n");
@@ -634,12 +638,19 @@
   else
     echo("              newTd.innerHTML=arrayConteudo[i][4];\n");
   echo("              newTrJustMid.appendChild(newTd);\n");
-  echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
+  //echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
+  echo("			  newTrJustMid.className=\"altColoro1\";");
 	// Adicionando itens a tabela
-  echo("              newTable.appendChild(newTrCab);\n");
-  echo("              newTable.appendChild(newTrMid);\n");
-  echo("              newTable.appendChild(newTrJust);\n");
-  echo("              newTable.appendChild(newTrJustMid);\n");
+//  echo("              newTable.appendChild(newTrCab);\n");
+//  echo("              newTable.appendChild(newTrMid);\n");
+//  echo("              newTable.appendChild(newTrJust);\n");
+//  echo("              newTable.appendChild(newTrJustMid);\n");
+//  echo("              newTdConteiner.appendChild(newTable);\n");
+  echo("              tbody.appendChild(newTrCab);\n");
+  echo("              tbody.appendChild(newTrMid);\n");
+  echo("              tbody.appendChild(newTrJust);\n");
+  echo("              tbody.appendChild(newTrJustMid);\n");
+  echo("			  newTable.appendChild(tbody);");
   echo("              newTdConteiner.appendChild(newTable);\n");
   echo("              newBr = document.createElement('br');\n");
   echo("              newTdConteiner.appendChild(newBr);\n");               
@@ -766,7 +777,7 @@ function respondeComentario(tr_pai, span_id)
     echo("        if (isNav)\n");
     echo("          return(window.pageYOffset);\n");
     echo("        if (isIE)\n");
-    echo("          return(document.body.scrollTop);\n");
+    echo("          return(document.documentElement.scrollTop);\n");
     echo("      }\n");
 
     echo("      function AjustePosMenuIE()\n");
@@ -781,22 +792,6 @@ function respondeComentario(tr_pai, span_id)
     echo("      {\n");
     echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
     echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
-    echo("      }\n");
-
-    echo("      function getPageScrollY()\n");
-    echo("      {\n");
-    echo("        if (isNav)\n");
-    echo("          return(window.pageYOffset);\n");
-    echo("        if (isIE)\n");
-    echo("          return(document.body.scrollTop);\n");
-    echo("      }\n");
-
-    echo("      function AjustePosMenuIE()\n");
-    echo("      {\n");
-    echo("        if (isIE)\n");
-    echo("          return(getPageScrollY());\n");
-    echo("        else\n");
-    echo("          return(0);\n");
     echo("      }\n");
 
     echo("      function startList() {\n");
