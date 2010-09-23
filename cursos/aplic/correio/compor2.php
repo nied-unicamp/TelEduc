@@ -225,7 +225,7 @@
     $msgCorpo = stripslashes($msgCorpo);
 
 
-    $remetente = NomeUsuario($sock, $cod_usuario);
+    $remetente = NomeUsuario($sock, $cod_usuario, $cod_curso);
     /* Obtem o nome do curso. */
     $nome_curso = NomeCurso($sock,$cod_curso);
 
