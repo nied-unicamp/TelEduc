@@ -118,7 +118,7 @@
   echo("    if (isNav)\n");
   echo("      return(window.pageYOffset);\n");
   echo("    if (isIE)\n");
-  echo("      return(document.body.scrollTop);\n");
+  echo("      return(document.documentElement.scrollTop);\n");
   echo("  }\n\n");
 
   
@@ -290,7 +290,7 @@
   echo("  function MostraLayer(cod_layer, obj)\n");
   echo("  {\n");
   echo("    EscondeLayers();\n");
-  echo("existelayer=true;");
+  echo("	existelayer=true;");
   /* Se o browser for Netscape alinhe com a link. */
   echo("    if ((isNav) && (versao<'5.0'))\n");
   echo("    {\n");	
@@ -299,9 +299,9 @@
   echo("      if (cod_layer == layer_estrutura)\n");
   echo("        moveLayerTo(cod_layer, obj.x + img_icone.height, obj.y + img_icone.height);\n");
   echo("      else\n");
-   echo("    {\n");
-  echo("        moveLayerTo(cod_layer, obj.x , obj.y + img_icone.height);\n");
-   echo("    }\n");
+  echo("    	{\n");
+  echo("        	moveLayerTo(cod_layer, obj.x , obj.y + img_icone.height);\n");
+  echo("    	}\n");
   echo("    }\n");
   echo("    else\n");
   echo("      moveLayerTo(cod_layer, Xpos, Ypos + AjustePosMenuIE());\n");
@@ -589,35 +589,17 @@
 	echo("      }\n");
 	
     echo("      function AlteraTexto(id){\n");
-    //    echo("        if (editaTexto==0){\n");
-//    echo("          CancelaTodos();\n");
-
-//    echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
-    echo("          conteudo = document.getElementById('text_'+id).innerHTML;\n");
+    echo("          var conteudo = document.getElementById('text_'+id).innerHTML;\n");
     echo("          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
-//    echo("          startList();\n");
-//    echo("          document.getElementById('text_'+id+'_text').focus();\n");
-///    echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
-//    echo("          editaTexto++;\n");
-//    echo("        }\n");
     echo("      }\n");
 
     echo("      function EdicaoTexto(codigo, id, valor){\n");
+    echo("		  eval('var conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
     echo("        if (valor=='ok'){\n");
-    echo("			  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
-    //echo("            conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
     echo("            xajax_EditarTexto('".$tabela."', ".$cod_curso.", codigo, conteudo, ".$cod_usuario.");\n");
     echo("            mostraFeedback('".htmlentities(RetornaFraseDaLista($lista_frases, 23))."', true)\n");
-    echo("          }\n");
-//    echo("        else{\n");
-//   echo("            //Cancela Edição\n");
-//    echo("            if (!cancelarTodos)\n");
-//    echo("              mostraFeedback('".htmlentities(RetornaFraseDaLista($lista_frases, 40))."', true)\n");
-//    echo("              xajax_AcabaEdicaoDinamic('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", 0);\n");
-//    echo("        }\n");
-    echo("        document.getElementById(id).innerHTML=conteudo;\n");
-//    echo("        editaTexto=0;\n");
-//    echo("        cancelarElemento=null;\n");
+    echo("        }\n");
+    echo("		  document.getElementById(id).innerHTML=conteudo;\n");
     echo("      }\n\n");    
     
 	echo("</script>\n\n");
@@ -694,7 +676,7 @@
         echo("      <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
 	  
 	  /* 2 - Inserir Assunto */
-      echo("      <li><span onClick=\"MostraLayer(layer_novo_assunto, this);document.getElementById('nome_novo_assunto').focus();document.getElementById('nome_novo_assunto').value='';\">".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
+      echo("      <li><span onClick=\"MostraLayer(layer_novo_assunto, this);document.getElementById('nome_novo_assunto').focus();document.getElementById('nome_novo_assunto').value=''; \">".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
  	  /* 25 - Editar Assunto */
       echo("      <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
       /* 63 - Importar Perguntas Frequentes*/
@@ -789,8 +771,12 @@
   echo("					</tr>");
   
   /* 67 - N�o h� nenhuma pergunta freq�ente. */
-  if((count($lista_assuntos) == 0) && ($cod_assunto_pai == 1))
-     echo("  <tr class=text> <td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
+  if((count($lista_assuntos) == 0) && ($cod_assunto_pai == 1)) {
+     echo("  <tr class=text>\n"); 
+     echo("  	<td>&nbsp;</td>\n");
+     echo("  	<td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td>\n");
+     echo("  </tr>\n");
+  }
 
   // Mostra os assuntos (pastas e sub-pastas)
   $contador = 0;
@@ -806,7 +792,7 @@
 	      /* Insere o nome do assunto truncado para acima de 40 caracteres e */
 	      /* cria um link para o menu.                                       */
 	    echo("        <td width=1%>\n");
-        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() \">");
+        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() />");
         echo("        </td>\n");
         
 	      echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=text href=# onClick=");
@@ -825,7 +811,7 @@
 	    echo("      <tr >\n");
         /* Coloca uma caixa de sele�ao para exibi�ao multipla de perguntas */
         echo("        <td  width=1%>\n");
-        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() \">");
+        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() />");
         echo("        </td>\n");
         
 		  /* Se for Formador oferece exibi�ao de op�oes. */
@@ -878,23 +864,17 @@
 			echo("      <tr>\n");
         	/* Coloca uma caixa de sele�ao para exibi�ao multipla de perguntas */
         	echo("        <td width=1%>\n");
-        	echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() \">");
+        	echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() />");
         	echo("        </td>\n");
-	
-        	// Insere a imagem associada aa pergunta 
-			//        echo("        <td class=wtfield width=1%><a class=text href=# onClick='Ver(");
-			//        echo($linha_pergunta['cod_pergunta'].");");
-			//        echo("return(false);'>");
-			//        echo("<img src=\"../figuras/inter.gif\" border=0></a>\n");
-			//        echo("        </td>\n");
-	        // e cria um link nela para o layer
-			//        echo("        <td class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;".$acao_link_abre.$linha_pergunta['cod_pergunta'].$acao_link_fecha.LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");
-        	echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a></td>\n");         
+        	echo("        <td colspan=3 class=alLeft>\n");
+        	echo("			<img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>\n");
+        	echo("		  </td>\n");         
         	echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
         	echo("      </tr>\n");
         	echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
         	echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
-        	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div></td>\n");
+        	echo("			<div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div>\n");
+        	echo("		  </td>\n");
 			//      	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
         
         	if ($tela_formador)
@@ -903,10 +883,6 @@
 	        	echo("             <ul>\n");
 	        	/* 9 - Editar */
 				echo("              <li><span onclick=\"AlteraTexto(".$linha_pergunta['cod_pergunta'].");\">".RetornaFraseDaLista($lista_frases_geral,9)."</span></li>\n");
-				/* 25 - Mover */
-				//     	echo("              <li><span onclick=MostraLayer(layer_estrutura_mover,".$linha_pergunta['cod_pergunta'].");>".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
-				/*1 - Apagar */
-				//        echo("              <li><span onclick='Apagar(".$linha_pergunta['cod_pergunta'].", 2);'>".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
 	        	echo("			   </ul>\n");
 				echo("          </td>\n");
 	       	}
@@ -917,6 +893,7 @@
 	else if (count($lista_assuntos) == 0)
     {
 		echo("      <tr >\n");
+	   	echo("		  <td></td>");
 		echo("        <td  colspan=3>\n");
 	   	/* 17 - N�o h� perguntas neste assunto. */
 	   	echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");

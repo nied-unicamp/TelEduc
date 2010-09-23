@@ -107,7 +107,7 @@
   echo("    if (isNav)\n");
   echo("      return(window.pageYOffset);\n");
   echo("    if (isIE)\n");
-  echo("      return(document.body.scrollTop);\n");
+  echo("      return(document.documentElement.scrollTop);\n");
   echo("  }\n\n");
 
   
@@ -351,7 +351,7 @@
     //echo("        if (editaTitulo==0){\n");
     //echo("          CancelaTodos();\n");
     //echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
-    echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+    echo("          var conteudo = document.getElementById('tit_'+id).innerHTML;\n");
     echo("          document.getElementById('tr_'+id).className=\"\";\n");
     echo("          document.getElementById('tit_'+id).innerHTML='';\n");
 
@@ -359,10 +359,19 @@
     echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
 
     echo("          createInput.setAttribute('type', 'text');\n");
-    echo("			if (id == 'Descricao')\n");
-    echo("          	createInput.setAttribute('style', 'border: 2px solid #9bc; width: 350px;');\n");
-    echo("			else");
-    echo("          	createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+    echo("			if (id == 'Descricao') {\n");
+    echo("				if(isIE) {\n");	//setar o style no IE
+    echo("          		createInput.style.setAttribute('cssText', 'border: 2px solid #9bc; width: 350px;');\n");
+    echo("				} else {\n");	//setar o style no FF
+    echo("          		createInput.setAttribute('style', 'border: 2px solid #9bc; width: 350px;');\n");
+    echo("				}\n");
+    echo("			} else {\n");
+    echo("				if(isIE) {\n");	//setar o style no IE
+    echo("          		createInput.style.setAttribute('cssText', 'border: 2px solid #9bc');\n");
+    echo("				} else {\n");	//setar o style no FF
+	echo("          		createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+    echo("				}\n");
+	echo("			}\n");
     echo("          createInput.setAttribute('id', 'tit_'+id+'_text');\n\n");
     echo("          createInput.setAttribute('value', conteudo);\n\n");
     //echo("          if (createInput.addEventListener){\n"); //not IE
