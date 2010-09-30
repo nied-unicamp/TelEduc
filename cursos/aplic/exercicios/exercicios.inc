@@ -2612,29 +2612,32 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 		}
 	}
 	
-	// Pega todas as resolucoes ainda n�o entregues dos ex_entregaveis
-	$query = "select cod_resolucao from Exercicios_resolucao ";
-	$query.= "where (corrigida = 'N') and ( ";
-
-	while ($atual >= 0)
-	{
-		$query.= "(cod_exercicio = ".$ex_entregaveis[$atual].") ";
-		if ($atual == 0)
-			$query.= ")";
-		else
-			$query.= "or ";
-			
-		$atual--;
-	}
+	/* Se existem questoes a serem entregues */
+	if ($atual >= 0){
+		// Pega todas as resolucoes ainda n�o entregues dos ex_entregaveis
+		$query = "select cod_resolucao from Exercicios_resolucao ";
+		$query.= "where (corrigida = 'N') and ( ";
 	
-	$res = Enviar($sock, $query);
-	$array_cod_resolucoes = RetornaArrayLinhas($res);
-	for ($i = 0; $i < sizeof($array_cod_resolucoes); $i++)
-		EntregaCorrecao($sock, $cod_curso, $array_cod_resolucoes[$i]['cod_resolucao']);
+		while ($atual >= 0)
+		{
+			$query.= "(cod_exercicio = ".$ex_entregaveis[$atual].") ";
+			if ($atual == 0)
+				$query.= ")";
+			else
+				$query.= "or ";
+				
+			$atual--;
+		}
 		
-	// Fim da fun��o.
-	Desconectar($sock);
-	return true;
+		$res = Enviar($sock, $query);
+		$array_cod_resolucoes = RetornaArrayLinhas($res);
+		for ($i = 0; $i < sizeof($array_cod_resolucoes); $i++)
+			EntregaCorrecao($sock, $cod_curso, $array_cod_resolucoes[$i]['cod_resolucao']);
+			
+		// Fim da fun��o.
+		Desconectar($sock);
+		return true;
+	}
 }
 
 /* *********************************************************************
