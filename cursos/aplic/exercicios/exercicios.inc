@@ -2151,7 +2151,7 @@ function AtribuiValorAQuestaoDinamic($cod_curso, $cod_exercicio, $cod_questao, $
 
 
     $objResponse->addAssign("valorQuestao_".$cod_questao, "innerHTML", $valor);
-    $objResponse->addAssign("totalValorQuestoes", "innerHTML", RetornaSomaValorQuestoes($sock,$cod_exercicio));
+    $objResponse->addAssign("totalValorQuestoes", "innerHTML", "<b>".RetornaSomaValorQuestoes($sock,$cod_exercicio)."</b>");
     Desconectar($sock);
 
     return $objResponse->getXML();

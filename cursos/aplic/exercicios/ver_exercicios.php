@@ -302,7 +302,7 @@ if(count($exercicios) > 0 && $exercicios != null)
 
 		$num_comentarios=RetornaNumComentariosExercicio($sock,$cod_usuario,$linha_item['cod_resolucao']);
 
-		$comentarios = "";
+		$comentarios = "&nbsp";
 		if ($num_comentarios['num_comentarios_alunos']>0)
 		$comentarios .= "<span class=\"cAluno\">(c)</span>";
 		if ($num_comentarios['num_comentarios_formadores']>0)
@@ -333,11 +333,11 @@ if(count($exercicios) > 0 && $exercicios != null)
 		/* O Redirecionamento:
 		 * 
 		 * Formador:
-		 * Se o Exercicio já estiver entregue, manda para a pagina de correcao (corrigir_exercicio)
+		 * Se o Exercicio jï¿½ estiver entregue, manda para a pagina de correcao (corrigir_exercicio)
 		 * 
 		 * Aluno:
 		 * Se o Exercicio ja estiver corrigido, manda para a pagina de gabarito/correcao (ver_gabarito)
-		 * Se o Exercicio não estiver nem entregue nem corrigido, manda para a pagina de resolucao (resolver)
+		 * Se o Exercicio nï¿½o estiver nem entregue nem corrigido, manda para a pagina de resolucao (resolver)
 		 * 
 		 */
 		

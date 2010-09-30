@@ -152,6 +152,34 @@
   echo("    var cod_comp;");
   echo("    var totalExercicios = ".count($lista_exercicios).";\n\n");
   
+  echo("	if (document.addEventListener) {\n");/* Caso do FireFox */
+  echo("		document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("	} else if (document.attachEvent){\n");/* Caso do IE */
+  echo("		document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("	}\n");
+  
+  echo("    function TrataMouse(e)\n");
+  echo("    {\n");
+  echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+  echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+  echo("    }\n\n");
+
+  echo("    function getPageScrollY()\n");
+  echo("    {\n");
+  echo("      if (isNav)\n");
+  echo("        return(window.pageYOffset);\n");
+  echo("      if (isIE)\n");
+  echo("        return(document.documentElement.scrollTop);\n");
+  echo("    }\n\n");
+
+  echo("    function AjustePosMenuIE()\n");
+  echo("    {\n");
+  echo("      if (isIE)\n");
+  echo("        return(getPageScrollY());\n");
+  echo("      else\n");
+  echo("        return(0);\n");
+  echo("    }\n\n");
+  
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");

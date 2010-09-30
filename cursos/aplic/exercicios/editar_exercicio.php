@@ -137,15 +137,15 @@
   echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var conteudoPasta = new Array();\n");
-  echo("    var cancelarTodos = 0;\n\n");
+  echo("    var cancelarTodos = 0;\n");
+  echo("	var conteudo;\n\n");
   
-  echo("    if (isNav)\n");
-  echo("    {\n");
-  echo("      document.captureEvents(Event.MOUSEMOVE);\n");
-  echo("    }\n\n");
+  echo("	if (document.addEventListener) {\n");/* Caso do FireFox */
+  echo("		document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("	} else if (document.attachEvent){\n");/* Caso do IE */
+  echo("		document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("	}\n");
   
-  echo("    document.onmousemove = TrataMouse;\n\n");
-
   echo("    function TrataMouse(e)\n");
   echo("    {\n");
   echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
@@ -157,7 +157,7 @@
   echo("      if (isNav)\n");
   echo("        return(window.pageYOffset);\n");
   echo("      if (isIE)\n");
-  echo("        return(document.body.scrollTop);\n");
+  echo("        return(document.documentElement.scrollTop);\n");
   echo("    }\n\n");
 
   echo("    function AjustePosMenuIE()\n");
@@ -205,18 +205,34 @@
   echo("    function CancelaTodos(){\n");
   echo("      EscondeLayers();\n");
   echo("      cancelarTodos=1;\n");
-  echo("      if(cancelarElemento) {\n"); 
+  echo("      if(cancelarElemento) {\n");
   echo("        cancelarElemento.onclick();\n");
   //echo("        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
   echo("      }\n");
   echo("      cancelarTodos=0;\n");
   echo("    }\n");
 
+  /**
+   * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
+   */
+  echo("function getElementsByName_iefix(tag, name) {\n");
+  echo("	var elem = document.getElementsByTagName(tag);\n");
+  echo("	var arr = new Array();\n");
+  echo("	for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+  echo("		var att = elem[i].getAttribute('name');\n");
+  echo("		if(att == name) {\n");
+  echo("			arr[iarr] = elem[i];\n");
+  echo("			iarr++;\n");
+  echo("		}\n");
+  echo("	}\n");
+  echo("	return arr;\n");
+  echo("}\n");
+
   echo("    function EdicaoTitulo(codigo, id, valor){\n");
   echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value!='')){\n");
-  echo("        conteudo = document.getElementById(id+'_text').value;\n");
+  echo("        var conteudo_novo = document.getElementById(id+'_text').value;\n");
   /* Frase #33 - Titulo alterado com sucesso. */
-  echo("        xajax_EditarTituloExercicioDinamic(".$cod_curso.", codigo, conteudo, ".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 33)."\");\n");
+  echo("        xajax_EditarTituloExercicioDinamic(".$cod_curso.", codigo, conteudo_novo, ".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 33)."\");\n");
   echo("      }else{\n");
   /* Frase #34 - O titulo nao pode ser vazio. */
   echo("      if ((valor=='ok')&&(document.getElementById(id+'_text').value==''))\n");
@@ -329,7 +345,7 @@
   echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
   echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);\n");
   echo("        startList();\n");
-  echo("        document.getElementById('text_'+id+'_text').focus();\n");
+  //echo("        document.getElementById('text_'+id+'_text').focus();\n");
   echo("        cancelarElemento=document.getElementById('CancelaEdita');\n");
   echo("        editaTexto = id;\n");
   echo("      }\n");
@@ -344,8 +360,6 @@
   echo("      }\n");
   echo("      else{\n");
   // Cancela Edi�o
-  //echo("        if (!cancelarTodos)\n");
-  //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
   echo("      }\n");
   echo("      document.getElementById(id).innerHTML=conteudo;\n");
   echo("      editaTexto=-1;\n");
@@ -386,7 +400,8 @@
   echo("    function VerificaCheck(){\n");
   echo("      var i;\n");
   echo("      var j=0;\n");
-  echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  //echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  echo("      var cod_itens=getElementsByName_iefix('input', 'chkQuestao');\n");
   echo("      var Cabecalho = document.getElementById('checkMenu');\n");
   echo("      EscondeLayers();\n");
   echo("      for (i=0; i < cod_itens.length; i++){\n");
@@ -413,7 +428,8 @@
   echo("      var e;\n");
   echo("      var i;\n");
   echo("      var CabMarcado = document.getElementById('checkMenu').checked;\n");
-  echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  //echo("      var cod_itens=document.getElementsByName('chkQuestao');\n");
+  echo("      var cod_itens=getElementsByName_iefix('input','chkQuestao');\n");
   echo("      for(i = 0; i < cod_itens.length; i++){\n");
   echo("        e = cod_itens[i];\n");
   echo("        e.checked = CabMarcado;\n");
@@ -446,7 +462,8 @@
   echo("      var i,j,questoes,getNumber,arrayIdQuestoes;\n");
   echo("      j=0;\n");
   echo("      arrayIdQuestoes = new Array();\n");
-  echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  //echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  echo("      questoes = getElementsByName_iefix('input', 'chkQuestao');\n");
   echo("      for (i=0; i < questoes.length; i++){\n");
   echo("        if (questoes[i].checked){\n");
   echo("          getNumber = questoes[i].id.split(\"_\");\n");
@@ -472,7 +489,8 @@
   
   echo("    function AtribuiValor(valor){\n");
   echo("      var i,questoes,getNumber;\n");
-  echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  //echo("      questoes = document.getElementsByName('chkQuestao');\n");
+  echo("      questoes = getElementsByName_iefix('input', 'chkQuestao');\n");
   echo("      for (i=0; i < questoes.length; i++){\n");
   echo("        if (questoes[i].checked){\n");
   echo("          getNumber = questoes[i].id.split(\"_\");\n");
@@ -523,7 +541,8 @@
   echo("      var e;\n");
   echo("      var i;\n");
   echo("      var CabMarcado = document.getElementById('checkMenuArq').checked;\n");
-  echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  //echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  echo("      var cod_itens=getElementsByName_iefix('input', 'chkArq');\n");
   echo("      for(i = 0; i < cod_itens.length; i++){\n");
   echo("        e = cod_itens[i];\n");
   echo("        e.checked = CabMarcado;\n");
@@ -535,7 +554,8 @@
   echo("      var i,getNumber,nomeArq;\n");
   echo("      var j=0;\n");
   echo("      var flag=0;\n");
-  echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  //echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  echo("      var cod_itens=getElementsByName_iefix('input', 'chkArq');\n");
   echo("      var Cabecalho = document.getElementById('checkMenuArq');\n");
   echo("      EscondeLayers();\n");
   echo("      for (i=0; i < cod_itens.length; i++){\n");
@@ -576,7 +596,8 @@
   
   echo("    function ApagarArq(){\n");
   echo("      var i,j,checks,getNumber,nomeArq,arrayIdArq,caminho;\n");
-  echo("      checks = document.getElementsByName('chkArq');\n");
+  //echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      checks = getElementsByName_iefix('input', 'chkArq');\n");
   echo("      arrayIdArq = new Array();\n");
   echo("      j = 0;\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
@@ -603,7 +624,8 @@
   echo("      var arqZip,subpasta,flag;\n");
   echo("      flag = 0;\n");
   echo("      subpasta = pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      checks = document.getElementsByName('chkArq');\n");
+  //echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      checks = getElementsByName_iefix('input', 'chkArq');\n");
   echo("      for (i=0; i<checks.length; i++){\n");
   echo("        if(checks[i].checked){\n");
   echo("          getNumber=checks[i].id.split(\"_\");\n");
@@ -624,7 +646,8 @@
   echo("    function Ocultar(){\n");
   echo("      var i,checks,getNumber,nomeArq,arrayArq,caminho;\n");
   echo("      arrayArq = new Array();\n");
-  echo("      checks = document.getElementsByName('chkArq');\n");
+  //echo("      checks = document.getElementsByName('chkArq');\n");
+  echo("      checks = getElementsByName_iefix('input', 'chkArq');\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
   /* Frase #41 - Voce realmente deseja ocultar o arquivo? Ele nao sera visivel para alunos. */
   echo("      if (confirm(\"".RetornaFraseDaLista($lista_frases, 41)."\")){\n");
@@ -644,7 +667,7 @@
   echo("    function getfilename(path)\n");
   echo("    {\n");
   echo("      var pieces,n,file;");
-  echo("      pieces=path.split('\'');\n");
+  echo("      var pieces=path.split('\\\\');\n");
   echo("      n=pieces.length;\n");
   echo("      file=pieces[n-1];\n");
   echo("      pieces=file.split('/');\n");
@@ -655,7 +678,8 @@
 
   echo("    function ArquivoValido(file)\n");
   echo("    {\n");
-  // Usando expressão regular para identificar caracteres inválidos echo("		var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
+  // Usando expressão regular para identificar caracteres inválidos 
+  echo("		var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
   echo("		if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
   echo("		    return false;\n");
   echo("		return true;\n");		
@@ -762,7 +786,8 @@
   echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"class\", \"link\");\n");
+  //echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
   echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
   echo("      span.setAttribute(\"nomeArq\",caminho);\n");
@@ -777,7 +802,8 @@
   echo("    function CriaSpanAbrirPasta(nome,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"class\", \"link\");\n");
+  //echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
   echo("      span.onclick = function(){ AbrePasta(caminho); }\n");
   echo("      span.innerHTML = nome;\n");
@@ -889,7 +915,7 @@
   echo("    {\n");
   echo("      var tr,arrayIdArq;\n");
   echo("      arrayIdArq = new Array();\n");
-  echo("      tr = document.getElementsByName(pastaAtual);\n");
+  echo("      tr = getElementsByName_iefix('tr',pastaAtual);\n");
   echo("      if(contaArq == 0 || tr.length == 0)\n");
   echo("        RemoveDiretorioVazio();\n");
   echo("      else\n");
@@ -1006,10 +1032,10 @@
   echo("      xajax_RetornaArquivosDiretorioDinamic(".$cod_curso.",".$cod_usuario.",caminho);\n");
   echo("    }\n\n");
   
-  echo("    function AplicarExercicio(cod)\n");
-  echo("    {\n");
-  echo("       MostraLayer(lay_aplicar,140,event);\n");
-  echo("    }\n\n");
+//  echo("    function AplicarExercicio(cod)\n");
+//  echo("    {\n");
+//  echo("       MostraLayer(lay_aplicar,140,event);\n");
+//  echo("    }\n\n");
   
   echo("    function  ExibirAgendamento(value)\n");
   echo("    {\n");
@@ -1117,10 +1143,10 @@
   echo("        if(document.getElementById(\"disponibilizacaoa\").checked)\n");
   echo("        {\n");
   echo("	      if(verifica_intervalos()){\n");
-  echo("          	dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
-  echo("          	hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
-  echo("          	min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
-  echo("          	horario_disp = hr_disp+':'+min_disp+':00';\n");
+  echo("          	var dt_disp = document.getElementById(\"dt_disponibilizacao\").value;\n");
+  echo("          	var hr_disp = document.getElementById(\"hora_disponibilizacao\").value;\n");
+  echo("          	var min_disp = document.getElementById(\"minuto_disponibilizacao\").value;\n");
+  echo("          	var horario_disp = hr_disp+':'+min_disp+':00';\n");
   echo("          }\n");
   echo("          else{\n");
   echo("            return 0;\n");
@@ -1131,15 +1157,15 @@
   echo("            dt_disp = \"".UnixTime2Data($data)."\";\n");
   echo("            horario_disp = \"".UnixTime2Hora($data)."\";\n");
   echo("        }\n");
-  echo("        limite_entrega = document.getElementById(\"limite_entrega\");\n");
-  echo("        dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
-  echo("        dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
-  echo("        hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
-  echo("        min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
-  echo("        horario_entrega = hr_entrega+':'+min_entrega+':00';\n");
-  echo("        tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
-  echo("        disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
-  echo("        avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
+  echo("        var limite_entrega = document.getElementById(\"limite_entrega\");\n");
+  echo("        var dt_disponibilizacao = document.getElementById(\"dt_disponibilizacao\");\n");
+  echo("        var dt_entrega = document.getElementById(\"limite_entrega\").value;\n");
+  echo("        var hr_entrega = document.getElementById(\"hora_limite_entrega\").value;\n");
+  echo("        var min_entrega = document.getElementById(\"minuto_limite_entrega\").value;\n");
+  echo("        var horario_entrega = hr_entrega+':'+min_entrega+':00';\n");
+  echo("        var tp_aplicacao = (document.getElementById(\"tp_aplicacaoi\").checked) ? 'I' : 'G';\n");
+  echo("        var disp_gabarito = (document.getElementById(\"disp_gabaritos\").checked) ? 'S' : 'N';\n");
+  echo("        var avaliacao = (document.getElementById(\"avaliacaos\").checked) ? 'S' : 'N';\n");
   echo("        if(document.getElementById(\"disponibilizacaoi\").checked)\n");
   echo("        {\n");
   echo("          if (ComparaDataHora(dt_disponibilizacao,RetornaHorarioDisponibilizacao(),limite_entrega,RetornaHorarioEntrega()) > 0 )\n");
@@ -1346,6 +1372,7 @@
         }
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
+        $topico = ($topico=="") ? "-" : $topico;
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
         $dificuldade = $linha_item['nivel'];
         $valor = "<span id=\"valorQuestao_".$linha_item['cod_questao']."\">".$linha_item['valor']."</span>";

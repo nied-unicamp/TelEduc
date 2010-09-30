@@ -50,8 +50,8 @@ function TableDnD() {
         document.onmousemove = function(ev){
         	
         	// Compatibilidade com os layers!
-        	Ypos = (isMinNS4) ? ev.pageY : ev.clientY;
-        	Xpos = (isMinNS4) ? ev.pageX : ev.clientX;
+        	Ypos = (isMinNS4) ? ev.pageY : event.clientY;
+        	Xpos = (isMinNS4) ? ev.pageX : event.clientX;
         	
         	
             if (self.dragObject) {

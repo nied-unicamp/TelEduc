@@ -91,6 +91,7 @@ echo("    var js_cod_item;\n");
 echo("    var js_comp = new Array();\n");
 echo("    var cod_comp;");
 echo("    var editaTexto = 0;\n");
+echo("	  var conteudo;\n");
 echo("    var cancelarElemento = null;\n");
 echo("    var cancelarTodos = 0;\n\n");
 
@@ -544,7 +545,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                    <td id='tdStatus_".$linha_item['cod_questao']."'>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
-		echo("                    <td style=\"width:50px\" colspan=\"5\" align=\"left\">\n");
+		echo("                    <td colspan=\"5\" align=\"left\">\n");
 		echo("                      <dl class=\"portlet\">\n");
 		/* Frase #17 - Enunciado */
 		echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 17)."</dt>\n");

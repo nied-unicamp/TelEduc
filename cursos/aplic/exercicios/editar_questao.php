@@ -140,7 +140,7 @@
   echo("    var cancelarElemento = null;\n");
   echo("    var contaArq = ".count($lista_arq).";\n");
   echo("    var gabaritosVisiveis = 0;\n");
-  echo("    var tBody;\n");
+  echo("    var tBody_alternativas;\n");
   echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var tableDnD;\n");
@@ -148,7 +148,9 @@
   echo("    var pastaRaiz = \"".$dir_questao_temp['link']."\";");
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var js_comp = new Array();\n");
-  echo("    var cancelarTodos = 0;\n\n");
+  echo("    var cancelarTodos = 0;\n");
+  echo("	var lay_novo_topico;");
+  echo("	var conteudo;\n\n");
 
   if ($tp_questao == 'O' && (count($alternativas)>0) && ($alternativas != null))
   {
@@ -178,14 +180,13 @@
     echo("\n");
   }
   
-  echo("    if (isNav)\n");
-  echo("    {\n");
-  echo("      document.captureEvents(Event.MOUSEMOVE);\n");
-  echo("    }\n\n");
-  
-  echo("      document.onmousemove = TrataMouse;\n\n");
- 
-  echo("      function TrataMouse(e)\n");
+  echo("	if (document.addEventListener) {\n");/* Caso do FireFox */
+  echo("		document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("	} else if (document.attachEvent){\n");/* Caso do IE */
+  echo("		document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("	}\n");
+
+  echo("    function TrataMouse(e)\n");
   echo("    {\n");
   echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
   echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
@@ -196,7 +197,7 @@
   echo("      if (isNav)\n");
   echo("        return(window.pageYOffset);\n");
   echo("      if (isIE)\n");
-  echo("        return(document.body.scrollTop);\n");
+  echo("        return(document.documentElement.scrollTop);\n");
   echo("    }\n\n");
 
   echo("    function AjustePosMenuIE()\n");
@@ -210,17 +211,19 @@
   $icone_correto = " <img src=\"../imgs/certo.png\" name=\"correta[ ]\" alt=\"resposta certa\" border=\"0\" /> ";
   $icone_errado = " <img  src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
 
-  echo("	function AtualizaIcones(alt,gabarito){\n
-  			arrayAlt = alt.split('.');\n
-  				for(i=0;i<gabarito.length;i++){\n
-  					if(gabarito[i] == 0){\n
-  						document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_errado."';\n
-  					}\n
-  					else\n
-  						document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_correto."';\n
-  				}\n
-  			}\n\n
-  ");
+  echo("	function AtualizaIcones(alt,gabarito){\n");
+  echo("		arrayAlt = alt.split('.');\n");
+  echo("		arrayGabarito = new Array();");
+  echo("		arrayGabarito = gabarito.split('');");
+  echo("		for(i=0;i<arrayGabarito.length;i++){\n");
+  echo("			if(arrayGabarito[i] == 0) {\n");
+  echo("				document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_errado."';\n");
+  echo("			} else {\n");
+  echo("				document.getElementById('div_'+arrayAlt[i]).innerHTML = '".$icone_correto."';\n");
+  echo("			}\n");
+  echo("		}\n");
+  echo("	}\n\n");
+
 	
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
@@ -228,7 +231,7 @@
   echo("      lay_novo_topico = getLayer('layer_novo_topico');\n");
   echo("      cod_comp = getLayer('comp');\n");
   echo("      tableDnD = new TableDnD();\n");
-  echo("      tBody = document.getElementById('tBody');\n");
+  echo("      tBody_alternativas = document.getElementById('tBody_alternativas');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
   if($tp_questao == 'O'){
@@ -236,6 +239,7 @@
   }
   
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+
   echo("    }\n\n");
 
   echo("    function WindowOpenVer(id)\n");
@@ -597,7 +601,8 @@
   echo("      var select,opt1,opt2,txt;\n");
   echo("      select = document.createElement(\"select\");\n");
   echo("      select.setAttribute(\"id\",'select_'+cod);\n");
-  echo("      select.setAttribute(\"class\",\"input\");\n");
+  //echo("      select.setAttribute(\"class\",\"input\");\n");
+  echo("	  select.className=\"input\";");
   echo("      opt1 = document.createElement(\"option\");\n");
   echo("      opt1.setAttribute(\"value\",\"0\");\n");
   echo("      opt1.innerHTML = 'Errada';\n");
@@ -669,7 +674,8 @@
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
   echo("      span.setAttribute(\"id\",'spanOk_'+cod);\n");
-  echo("      span.setAttribute(\"class\",\"link\");\n");
+  //echo("      span.setAttribute(\"class\",\"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.innerHTML = 'Ok';\n");
   echo("      span.onclick= function(){ ConfirmaEdicaoAlternativa(cod); };\n");
   echo("      return span;\n");
@@ -679,7 +685,8 @@
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
   echo("      span.setAttribute(\"id\",'spanCanc_'+cod);\n"); 
-  echo("      span.setAttribute(\"class\",\"link\");\n");
+  //echo("      span.setAttribute(\"class\",\"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.innerHTML = 'Cancelar';\n");
   echo("      span.onclick= function(){ CancelaEdicaoAlternativa(cod, conteudo); };\n");
   echo("      return span;\n");
@@ -689,7 +696,8 @@
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
   echo("      span.setAttribute(\"id\",'spanCanc_'+cod);\n"); 
-  echo("      span.setAttribute(\"class\",\"link\");\n");
+  //echo("      span.setAttribute(\"class\",\"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.innerHTML = 'Cancelar';\n");
   echo("      span.onclick= function(){ CancelaAlternativaNovaAlternativa(cod); };\n");
   echo("      return span;\n");
@@ -700,7 +708,8 @@
   echo("      var inputAlternativa = document.createElement(\"input\");\n");
   echo("      inputAlternativa.setAttribute(\"type\", \"text\");\n");
   echo("      inputAlternativa.setAttribute(\"value\",conteudo);\n");
-  echo("      inputAlternativa.setAttribute(\"class\",\"input\");\n");
+  //echo("      inputAlternativa.setAttribute(\"class\",\"input\");\n");
+  echo("	  inputAlternativa.className=\"input\";");
   echo("      inputAlternativa.setAttribute(\"id\",'textAlt_'+cod);\n");
   echo("      inputAlternativa.setAttribute(\"size\", \"46\");\n");
   echo("      inputAlternativa.setAttribute(\"maxlength\", \"255\");\n");
@@ -803,13 +812,13 @@
   echo("	  tr.setAttribute(\"name\",'Alt[ ]')\n");
   echo("      td = document.createElement(\"td\");\n");
   echo("      td.className = 'itens';\n");
-  echo("      td.setAttribute(\"colspan\",\"6\");\n");
+  echo("      td.setAttribute(\"colSpan\",\"6\");\n");
   echo("      td.appendChild(CriaCheckBoxAlt(cod));\n");
   echo("      td.appendChild(CriaSpanEspAlt(5));\n");
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
   echo("      td.appendChild(CriaSpanDiv(cod));\n");
   echo("      tr.appendChild(td);\n");
-  echo("      tBody.appendChild(tr);\n");
+  echo("      tBody_alternativas.appendChild(tr);\n");
   if($tp_questao == 'O'){
     echo("      AdicionaLinhaArrayGabEPosi(cod);\n");
     //echo("	    document.getElementById('textAlt_'+cod).focus();");
@@ -829,7 +838,7 @@
     echo("      tdOp.appendChild(CriaOpcoes(codigo));\n");
     echo("      trGab.appendChild(tdText);\n");
     echo("      trGab.appendChild(tdOp);\n");
-    echo("      tbody.appendChild(trGab);\n");
+    echo("      tBody_alternativas.appendChild(trGab);\n");
   }
   echo("      CriaCamposEdicaoNovaAlternativa('',cod);\n");
   echo("      DesabilitarMudancaPosicaoAlt();\n");
@@ -1073,13 +1082,16 @@
 
   echo("    function AtualizaTopico(cod)\n");
   echo("    {\n");
+  echo("	  if(cod==-1) {\n");
+  echo("		NovoTopico(1);\n");	//No caso de selecionar "Novo Topico"
+  echo("	  }\n");
   /* Frase #92 - Topico atualizado com sucesso. */
   echo("      xajax_AtualizarTopicoDinamic(".$cod_curso.",".$cod_questao.",cod,'".RetornaFraseDaLista($lista_frases, 92)."');\n");
   echo("    }\n\n");
 
   echo("    function NovoTopico(cod)\n");
   echo("    {\n");
-  echo("        MostraLayer(lay_novo_topico,0,50);\n");
+  echo("        MostraLayer(lay_novo_topico,30,10);\n");
   echo("        document.getElementById(\"nome\").value = '';\n");
   echo("        document.getElementById(\"nome\").focus();\n");
   echo("    }\n\n");
@@ -1134,7 +1146,7 @@
   echo("    function getfilename(path)\n");
   echo("    {\n");
   echo("      var pieces,n,file;");
-  echo("      pieces=path.split('\'');\n");
+  echo("      var pieces=path.split('\\\\');\n");
   echo("      n=pieces.length;\n");
   echo("      file=pieces[n-1];\n");
   echo("      pieces=file.split('/');\n");
@@ -1320,7 +1332,8 @@
   echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"class\", \"link\");\n");
+  //echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
   echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
   echo("      span.setAttribute(\"nomeArq\",caminho);\n");
@@ -1362,7 +1375,8 @@
   echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"class\", \"link\");\n");
+  //echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
   echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
   echo("      span.setAttribute(\"nomeArq\",caminho);\n");
@@ -1377,7 +1391,8 @@
   echo("    function CriaSpanAbrirPasta(nome,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"class\", \"link\");\n");
+  //echo("      span.setAttribute(\"class\", \"link\");\n");
+  echo("	  span.className=\"link\";");
   echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
   echo("      span.onclick = function(){ AbrePasta(caminho); }\n");
   echo("      span.innerHTML = nome;\n");
@@ -1466,7 +1481,7 @@
     
   echo("	function HabilitarMudancaPosicaoAlt()\n");
   echo("	{\n");
-  echo("      if(tBody) tableDnD.init(null,tBody,".$existeGabaritoDiss.");\n");
+  echo("      if(tBody_alternativas) tableDnD.init(null,tBody_alternativas,".$existeGabaritoDiss.");\n");
   echo("	}\n\n");
   
   echo("	function DesabilitarMudancaPosicaoAlt()\n");
@@ -1512,7 +1527,6 @@
   echo("          tipo_comp[1].innerHTML=imagem;\n");
   echo("        }\n");
   echo("      }\n\n");
-  
   echo("    </script>\n\n");
   $objAjax->printJavascript("../xajax_0.2.4/");
   /* fim - JavaScript */
@@ -1596,7 +1610,7 @@
         /* Frase #173 - Escolha um topico */
         echo("                          <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 173)."</option>\n");
         /*Frase #106*/
-        echo("							<option value=\"-1\"".$texto." onclick=\"NovoTopico(1);\">".RetornaFraseDaLista($lista_frases,95)."</option>\n");
+        echo("							<option value=\"-1\" >".RetornaFraseDaLista($lista_frases,95)."</option>\n");
         if ((count($topicos)>0)&&($topicos != null))
         {
           foreach ($topicos as $cod => $linha_item)
@@ -1691,7 +1705,7 @@
 	  /* Frase #18 - Alternativas */
 	  echo("                    <td class=\"center\" colspan=\"6\">".RetornaFraseDaLista($lista_frases, 18)."</td>\n");
 	  echo("                  </tr>\n");
-	  echo("					<tBody id=\"tBody\">");
+	  echo("					<tBody id=\"tBody_alternativas\">");
 
       if ((count($alternativas)>0)&&($alternativas != null))
       {

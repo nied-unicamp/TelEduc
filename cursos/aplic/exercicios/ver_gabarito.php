@@ -352,7 +352,7 @@ else
 $compartilhamento = RetornaFraseDaLista($lista_frases, 8);
 
 if($cod_usuario == $resolucao['cod_usuario'] || RetornaCodGrupoUsuario($sock,$cod_usuario) == $resolucao['cod_grupo'])
-$compartilhamento = "<span id=\"comp_".$resolucao['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$resolucao['cod_resolucao'].";AtualizaComp('".$resolucao['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+if($tela_formador) $compartilhamento = "<span id=\"comp_".$resolucao['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$resolucao['cod_resolucao'].";AtualizaComp('".$resolucao['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 
 $situacao = "";
 if($resolucao['submetida'] == 'S')
@@ -532,7 +532,7 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                    <td>".$status."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
-		echo("                    <td style=\"width:100px\" colspan=\"5\" align=\"left\">\n");
+		echo("                    <td colspan=\"5\" align=\"left\">\n");
 		echo("                      <dl class=\"portlet\">\n");
 		/* Frase #17 - Enunciado */
 		echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 17)."</dt>\n");
