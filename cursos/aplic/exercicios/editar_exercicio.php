@@ -856,8 +856,10 @@
   echo("      if(contaArq == 0)\n");
   echo("        RemoveDiretorioVazio();\n");
   echo("      novaTr = criaTrArq(numArq);\n");
-  echo("      tdChk = document.createElement(\"td\");\n");
-  echo("      tdChk.appendChild(CriaCheckBoxArq(numArq));\n");
+  if($exercicio['situacao'] == 'C') {
+	  echo("  tdChk = document.createElement(\"td\");\n");
+	  echo("  tdChk.appendChild(CriaCheckBoxArq(numArq));\n");
+  }
   echo("      tdNome = document.createElement(\"td\");\n");
   echo("      tdNome.colSpan = \"3\";\n");
   echo("	  tdNome.className = \"alLeft\";\n");
@@ -867,12 +869,19 @@
   echo("        tdNome.appendChild(criaSpanPasta(nomeArq,numArq,caminho));\n");
   echo("      if(status == '1')\n");
   echo("        tdNome.appendChild(criaSpanArqOculto());\n");
-  echo("      novaTr.appendChild(tdChk);\n");
+  if($exercicio['situacao'] == 'C') {
+  	echo("    novaTr.appendChild(tdChk);\n");
+  }
   echo("      novaTr.appendChild(tdNome);\n");
   echo("      novaTr.appendChild(criaTd(tamanho+\" Kb\",1));\n");
   echo("      novaTr.appendChild(criaTd(data,1));\n");
-  echo("      trRef = document.getElementById(\"optArq\");\n");
-  echo("      trRef.parentNode.insertBefore(novaTr,trRef);\n");
+  if($exercicio['situacao'] == 'C') {
+	  echo("  trRef = document.getElementById(\"optArq\");\n");
+	  echo("  trRef.parentNode.insertBefore(novaTr,trRef);\n");
+  } else {
+	  echo("  trRef = document.getElementById(\"headArquivo\");\n");
+	  echo("  trRef.parentNode.appendChild(novaTr);\n");
+  }
   echo("      contaArq++;\n");
   echo("    }\n\n");
   
@@ -934,8 +943,13 @@
   echo("	  trLoading = document.createElement(\"tr\");\n");
   echo("	  trLoading.setAttribute(\"id\",\"trLoadingPasta\");\n");
   echo("      trLoading.appendChild(criaTd(\"Abrindo a pasta requisitada,aguarde...\",\"6\"));\n");
-  echo("      trRef = document.getElementById(\"optArq\");\n");
-  echo("      trRef.parentNode.insertBefore(trLoading,trRef);\n");
+  if($exercicio['situacao'] == 'C') {
+	  echo("  trRef = document.getElementById(\"optArq\");\n");
+	  echo("  trRef.parentNode.insertBefore(trLoading,trRef);\n");
+  } else {
+	  echo("  trRef = document.getElementById(\"headArquivo\");\n");
+	  echo("  trRef.parentNode.appendChild(trLoading);\n");
+  }
   echo("    }\n\n");
   
   echo("    function RemoveMsgLoadingPasta()\n");
@@ -969,8 +983,13 @@
   //187 - Diretorio esta vazio.
   echo("	  td.appendChild(document.createTextNode('".RetornaFraseDaLista($lista_frases, 187)."'));\n");
   echo("	  tr.appendChild(td);\n");
-  echo("      trRef = document.getElementById(\"optArq\");\n");
-  echo("	  trRef.parentNode.insertBefore(tr,trRef);\n");
+  if($exercicio['situacao'] == 'C') {
+	  echo("  trRef = document.getElementById(\"optArq\");\n");
+	  echo("  trRef.parentNode.insertBefore(tr,trRef);\n");
+  } else {
+	  echo("  trRef = document.getElementById(\"headArquivo\");\n");
+	  echo("  trRef.parentNode.appendChild(tr);\n");
+  }
   echo("    }\n\n");
   
   echo("    function RemoveDiretorioVazio(){\n");
@@ -1026,7 +1045,9 @@
   echo("      var caminho;\n");
   echo("      caminho = pastaRaiz + pasta.split(\"Raiz/\")[1];\n");
   echo("      FechaPastaAtual();\n");
-  echo("      VerificaChkBoxArq();\n");
+  if($exercicio['situacao'] == "C") {
+  	echo("    VerificaChkBoxArq();\n");
+  }
   echo("      InsereMsgLoadingPasta();\n");
   echo("      pastaAtual = pasta;\n");
   echo("      xajax_RetornaArquivosDiretorioDinamic(".$cod_curso.",".$cod_usuario.",caminho);\n");
@@ -1436,7 +1457,7 @@
 	/* Frase #13 - Raiz */
 	echo("                    <td colspan=\"6\" class=\"alLeft\" id=\"caminhoPastas\"><span class=\"link\" onclick=\"AbrePasta('Raiz/');\"><img src=\"../imgs/pasta.gif\">".RetornaFraseDaLista($lista_frases, 13)."</span></td>\n");
 	echo("                  </tr>\n");
-    echo("                  <tr class=\"head01\">\n");
+    echo("                  <tr id=\"headArquivo\" class=\"head01\">\n");
 	if($exercicio['situacao'] == 'C')
       echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodosArq();\" /></td>\n");
   /* Frase #67 - Nome */
