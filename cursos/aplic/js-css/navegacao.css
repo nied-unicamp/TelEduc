@@ -32,8 +32,8 @@
 }
 
 #nav li.endLine, #nav li.endLineHover {
-	/*margin-bottom:6px;
-	border-bottom:1px solid #8f8f8f;*/
+	margin: 0px 2px;
+	border-bottom:1px solid #333333;
 	background:url(../imgs/bulletSeta.gif) no-repeat right;
 }
 
