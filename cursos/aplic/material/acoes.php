@@ -248,6 +248,8 @@
     }
 
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
+    
+  	header("Location:ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=descompactar&atualizacao=true");  
 
   }
   else if ($acao == "validarImportacao"){
