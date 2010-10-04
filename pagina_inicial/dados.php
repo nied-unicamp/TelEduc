@@ -222,7 +222,7 @@
   echo("    function trataEnvio()\n");
   echo("    {\n");
   //177 - Dados atualizados com sucesso!
-  //echo("      alert('".RetornaFraseDaLista($lista_frases,177)."');\n");
+  echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases,177)."', 'true');\n");
   if(isset($cod_curso))
     echo("      window.location = '../cursos/aplic/index.php?cod_curso=".$cod_curso."';\n");
   else if(!PreencheuDadosPessoais($sock))
