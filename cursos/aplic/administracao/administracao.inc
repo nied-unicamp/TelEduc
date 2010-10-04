@@ -363,6 +363,11 @@ function MarcaFerramentas($sock, $lista_ferramentas)
   }
   else
   {
+  	/* Limpa a lista de ferramentas destacadas */
+  	$query = "delete from Ferramentas_destaque";
+  	Enviar($sock, $query);
+  	
+  	/* Destaca ferramenta por ferramenta */
     for ($i = 0; (($i < $total) && ($res == true)); $i++)
     {
       $query = "insert into Ferramentas_destaque values (".$lista_ferramentas[$i].", ".$time.")";
