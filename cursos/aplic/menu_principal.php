@@ -163,9 +163,9 @@
         if ($tela_exibir)
         {
           @$tela_data=$tela_novidade_ferramentas[$tela_cod_ferr];
-          $tela_style= "style=\"\"";
+          $tela_style = "";
           if ((count($tela_marcar_ferramenta) > 0) && (@$tela_marcar_ferramenta[$tela_cod_ferr])){
-              $tela_style= "style=\"color:#d40000\"";
+              $tela_style = "Destacada ";
           }
   
           if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))

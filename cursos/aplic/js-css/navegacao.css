@@ -4,47 +4,43 @@
 #nav { margin-top:20px; margin-right:16px; }
 
 #nav li {
-	height:20px; width:175px;
-	color:#777777; font-weight:bold;
+	height:20px; 
+	width:175px;
+	color:#777777; 
+	font-weight:bold;
 	padding-top:2px;
-/* 	background:url(../imgs/navLine.gif) no-repeat right; */ 
+	padding-left: 2px;
 	border-bottom:1px dotted #8f8f8f;
 	background:url(../imgs/bulletSeta.gif) no-repeat right;
 }
 
-#nav li.menu1, #nav li.menu1Hover{
-	color: #4F7A95;
-}
-
-#nav li.selected, #nav a.selected{
-	background-color:#E3DDC7;
-	color:#000000;
-}
- #nav a.selected:hover{
-	color:#000000;
-}
-
-
-#nav li.SelectedEndLine, #nav li.SelectedEndLine {
-	margin-bottom:6px;
-	border-bottom:1px solid #8f8f8f;
-	background:url(../imgs/bulletSeta.gif) no-repeat right;
-}
-
-#nav li.endLine, #nav li.endLineHover {
-	margin: 0px 2px;
+#nav li.Divisa {
 	border-bottom:1px solid #333333;
-	background:url(../imgs/bulletSeta.gif) no-repeat right;
 }
 
-#nav li.topLine, #nav li.topLineHover {
-	border-top:1px solid #8f8f8f;
-	background:url(../imgs/navLine.gif) no-repeat bottom;
+#nav li.Selecionada {
+	background: #E3DDC7;
+	color: #000000;
 }
 
-#nav a { color:#777777; text-decoration:none; }
+#nav a.Selecionada, #nav a.Selecionada:hover {
+	color: #000000;
+}
+
+#nav a.Novidade {
+	padding-left: 0px;
+}
+
+#nav a.Destacada {
+	color: #CF1920;
+}
+
+#nav a { 
+	color:#777777; 
+	text-decoration:none; 
+	padding-left: 13px;
+}
 #nav a:hover { color:#4a74a9; }
-#nav a.actived { color:#4a74a9; }
 
 #nav3nivel { float:left; margin-top:18px; margin-bottom:28px; _margin-bottom:0px;}
 td>#nav3nivel {margin-bottom:-25px;}

@@ -449,125 +449,51 @@ if(!function_exists("RetornaGruposDoUsuario")){
   }
 }
 
-   /************************ Funcoes do Menu **************************/
-
+/************************ Funcoes do Menu **************************/
 function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_ferramenta,$cod_usuario){
-    if ($cod_ferr != $cod_ferramenta)
-      ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_usuario);
-    else{
-         $style2="ativo";
-	 ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style2,$cod_usuario);
-     }
-  }
-
-function ExibeLinkAux($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_usuario){
   
-	if ($data>$ultimo_acesso)
-      $novidade= "../imgs/estrelinha.gif";
-    else
-      $novidade="../imgs/estrela1.gif";
-    if($style == "ativo"){
-//    	echo("            <li style=\"background-color:#4388AE;\">\n");
-//    	echo("               <a style=\"color:#FFFFFF;\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
-    	echo("            <li class=\"selected\">\n");
-    	echo("               <a class=\"selected\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
-    }else{
-    // Ferramenta 17 - Estrutura de Ambiente
-    if ($cod_ferr==17){
-		if($style == "ativo")
-    		echo("            <li class=\"SelectedEndLine firstLine\">\n");
-		else
-    		echo("            <li class=\"endLine firstLine\">\n");
-    }
-    // Ferramenta 8 - Mural
-    // Ferramenta 11 - Correio
-    // Ferramenta 15 - Portf�lio
-    // Ferramenta 19 - Intermap
-    // Ferramenta 22 - Avalia��es
-    else if(! $convidado)  
-    {
-      if ($cod_ferr==8 ||$cod_ferr==11 || $cod_ferr==15 || $cod_ferr==19 || $cod_ferr==22)
-        echo("            <li class=\"endLine\">\n");
-      else 
-        echo("            <li>\n");
-    }
-    else if($convidado_passivo)
-    {
-      if ($cod_ferr==1 ||$cod_ferr==10 || $cod_ferr==13 || $cod_ferr==19)
-        echo("            <li class=\"endLine\">\n");
-      else 
-        echo("            <li>\n");
-    }
-    else if(!$convidado_ativo)
-    {
-      if ($cod_ferr==1)
-        echo("            <li class=\"endLine\">\n");
-      else 
-        echo("            <li>\n");
-    }
+	/* As ferramentas do TelEduc foram agrupadas de acordo com
+	 * sua funcionalidade. As ferramentas que estao na divisa precisam
+	 * colocar um traco a mais para representar a divisao. Sao estas:
+	 * Ferramenta 8 - Mural
+     * Ferramenta 11 - Correio
+     * Ferramenta 15 - Portfolio
+     * Ferramenta 17 - Estrutura do Ambiente
+     * Ferramenta 19 - Intermap
+     * Ferramenta 22 - Avaliacoes 
+     */
+    
+	/* Verifica se a ferramenta atual eh a que esta selecionada */
+	if ($cod_ferr == $cod_ferramenta)
+		$style .= "Selecionada ";
+	
+	/* Verifica se a ferramenta atual esta na divisa */
+    if ($cod_ferr==8 ||$cod_ferr==11 || $cod_ferr==15 || $cod_ferr==17 || $cod_ferr==19 || $cod_ferr==22)
+    	$style .= "Divisa ";
+    	
+    /* Verifica se ha novidades na ferramenta atual */
+    $novidades = ($data>$ultimo_acesso);
+    if ($novidades)
+    	$style .= "Novidade ";
 
-    echo("             <div>\n");
+   	echo("            <li class=\"".$style."\">\n");
+    echo("			  		<div>");
+      
     if ($cod_ferr==15)
-    	echo("               <a href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
+    	echo("               <a class=\"".$style."\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
     else 
-	echo("               <a href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
-    }
+		echo("               <a class=\"".$style."\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+		
+	/* Coloca estrela se houver novidade */
+	if ($novidades)
+		echo(" 				<img src='../imgs/estrelinha.gif' border=\"0\" alt=\"\" />");
   
-    echo(" <img src='".$novidade."' border=\"0\" alt=\"\" /> <b>".$nome_ferramenta."</b>");
+    echo("					".$nome_ferramenta."");
     echo("               </a>\n");
     echo("             </div>\n");
     echo("            </li>\n");
     
   }
-//   function ExibeLinkAux2($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$cod_usuario){
-//     if ($data>$ultimo_acesso)
-//       $novidade= "../estrelinha.gif";
-//     else
-//       $novidade="../estrela1.gif";
-//       
-//     // Ferramenta 17 - Estrutura de Ambiente
-//     if ($cod_ferr==17)
-//         echo("            <li class=\"endLine firstLine\">\n");
-// 
-//         
-//     // Ferramenta 8 - Mural
-//     // Ferramenta 11 - Correio
-//     // Ferramenta 15 - Portif�lio
-//     // Ferramenta 19 - Intermap
-//     // Ferramenta 22 - Avalia��es
-//     else if(!$convidado)  
-//     {
-//       if ($cod_ferr==8 ||$cod_ferr==11 || $cod_ferr==15 || $cod_ferr==19 || $cod_ferr==22)
-//         echo("            <li class=\"endLine\">\n");
-//       else 
-//         echo("            <li>\n");
-//     }
-//     else if($convidado_passivo)
-//     {
-//       if ($cod_ferr==1 ||$cod_ferr==10 || $cod_ferr==13 || $cod_ferr==19)
-//         echo("            <li class=\"endLine\">\n");
-//       else 
-//         echo("            <li>\n");
-//     }
-//     else if($convidado_ativo)
-//     {
-//       if ($cod_ferr==1)
-//         echo("            <li class=\"endLine\">\n");
-//       else 
-//         echo("            <li>\n");
-//     }
-//     echo("             <div>\n");
-// 
-//    if ($cod_ferr==15)
-//     	echo("               <a style=\"color:#2a6686;\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\">");	
-//     else 
-//         echo("               <a style=\"color:#2a6686;\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
-//     
-//     echo("<img src=\"".$novidade."\" border=\"0\" alt=\"\" /> <b>".$nome_ferramenta."</b>\n");
-//     echo("               </a>\n");
-//     echo("             </div>\n");
-//     echo("            </li>\n");
-//   }
 
 /********************************************************************
   Fun�ao RetornaNomeCodCursoUsuario - Retorna os codigos e os nomes dos cursos dos quais o usuario tem acesso

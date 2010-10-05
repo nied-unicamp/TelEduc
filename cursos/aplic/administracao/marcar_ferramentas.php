@@ -137,7 +137,7 @@
     exit();
   }  
 
-/*Forms*/
+  /*Forms*/
   echo("    <form name=\"frmMarcar\" method=\"post\" action=\"acoes.php\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
   echo("      <input type=\"hidden\" name=\"time\" value=".time().">\n");
