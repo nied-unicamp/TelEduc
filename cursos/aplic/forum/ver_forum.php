@@ -790,12 +790,12 @@
   /* Se o status do f�um for G ou R (apenas os usu�ios permitidos postam), mas o */
   /* usu�io n� for permitido, n� postam mensagens.                              */
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  
+  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
+  //if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
   {
-
     if (($status_curso != 'E') || ($usr_formador))
     {
-
       /* 12 - Compor nova mensagem */
       echo("                  <li><span onclick='ComporMensagem();'>".RetornaFraseDaLista($lista_frases, 12)."</span></li>\n");
     }
