@@ -2891,82 +2891,62 @@ function AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, $acao)
             $cod_curso - codigo do curso
             $cod_item - codigo do item
             $cod_usuario - codigo do usuario
-            $msg_erro - mensagem de erro, caso ocorra
+            $cod_ferramenta - codigo da ferramenta
+            $cod_topico_raiz - codigo do topico pai
+            $tabela - codigo da tabela no BD(Atividade, Apoio, Leitura, Obrigatoria)
    Saida: XML da função Ajax
 *****************************************************************************/
-function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usuario, $msg_erro, $cod_ferramenta, $cod_topico_raiz){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usuario, $cod_ferramenta, $cod_topico_raiz, $tabela){
+	$objResponse = new xajaxResponse('ISO-8859-1');
 
-  // Se a origem ou destino forem vazios retorna false
-  if (($origem == "") || ($destino == ""))
-    return $objResponse->getXML();
+	// Se a origem ou destino forem vazios retorna false
+	if (($origem == "") || ($destino == ""))
+	return $objResponse->getXML();
 
-  // Vari?el de retorno da fun?o
-  $flag = true;
+	// Resolve o caminho da origem ('realpath' testa tambem se o arquivo existe).
+	$origem = realpath($origem);
+	if ($origem == false){
+		$objResponse->addScript("EscondeLayers();");
+		$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
+		return $objResponse->getXML();
+	}
 
-  // Resolve o caminho da origem ('realpath' testa tamb? se o arquivo
-  // existe).
-  $origem = realpath($origem);
-  if ($origem == false){
-    $objResponse->addScript("EscondeLayers();");
-    $objResponse->addAlert($msg_erro);
-    return $objResponse->getXML();
-  }
+	// Se retornar mais que um elemento (ou seja, pelo menos
+	// um que n? seja o pr?rio arquivo ou pasta a ser movida)
+	// ent? os movemos.
+	//$total = count($conteudo);		//Codigo sem sentido.
 
-  // Se retornar mais que um elemento (ou seja, pelo menos
-  // um que n? seja o pr?rio arquivo ou pasta a ser movida)
-  // ent? os movemos.
-  $total = count($conteudo);
+	$nome_arquivo = basename($origem);
 
-      $nome_arquivo = basename($origem);
+	$dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
 
-      $dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
+	if (ExisteArquivo($dest)){
+		AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
+		$objResponse->addScript("EscondeLayers();");
+		$objResponse->addScript("window.location='material.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta.";");
+		return $objResponse->getXML();
+	}
 
-      if (ExisteArquivo($dest)){
-        AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
-        $objResponse->addScript("EscondeLayers();");
-        $objResponse->addScript("window.location='material.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta.";");
-        return $objResponse->getXML();
-      }
+	// O teste aqui tambem eh necessario para ver se 'RemoveArquivo'
+	// nao retornou false.
+	$stat = RetornaStatusArquivo($conteudo);
+	if ( !copy($origem, $dest) || !AlteraStatusArquivo($dest, $stat) || !RemoveArquivo($origem) ) {
+		$objResponse->addScript("EscondeLayers()");
+		$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
+		return $objResponse->getXML();
+	}
 
-      // O teste aqui tamb? ?necess?io para ver se 'RemoveArquivo'
-      // n? retornou false.
-      if ($flag)
-      {
-        $stat = RetornaStatusArquivo($conteudo);
-        if (copy($origem, $dest))
-        {
-          if (AlteraStatusArquivo($dest, $stat))
-          {
-            if (!RemoveArquivo($origem)){
-              $objResponse->addScript("EscondeLayers()");;
-              $objResponse->addAlert($msg_erro);
-              return $objResponse->getXML();
-            }
-          }
-          else{
-            $objResponse->addScript("EscondeLayers();");
-              $objResponse->addAlert($msg_erro);
-            return $objResponse->getXML();
-          }
-        }
-        else{
-          $objResponse->addScript("EscondeLayers();");
-          $objResponse->addAlert($msg_erro);
-          return $objResponse->getXML();
-        }
-      }
+	clearstatcache();
 
-  clearstatcache();
+	if (is_dir($origem))
+		$flag = RemoveDiretorio($origem)?'true':'false';
+	else
+		$flag = 'true';
 
-  if (is_dir($origem))
-    $flag = RemoveDiretorio($origem);
+	AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScript("window.location='ver.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio;");
-
-  AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
-
-  return $objResponse->getXML();
+	$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=".$flag);
+	return $objResponse->getXML();
 }
 
 

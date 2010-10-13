@@ -96,6 +96,7 @@
   $feedbackObject->addAction("nomeAnexo",	 0, 150);
   $feedbackObject->addAction("descompactar", 125, 126);
   $feedbackObject->addAction("moverItem",	 142, 143);
+  $feedbackObject->addAction("moverArquivo",	 142, 143);
 
   Desconectar($sock);
 
@@ -1006,7 +1007,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("            IdArquivo = 'nomeArq_'+numeroArq[1];\n");
     echo("            caminhoOrigem = document.getElementById(IdArquivo).getAttribute('nomeArq');\n");
     echo("            xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
-    echo("            xajax_MoverArquivosDinamic(caminhoOrigem, caminhoDestino, ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", 'frase para colocar', ".$cod_ferramenta.", ".$cod_topico_raiz.",'".$tabela."');\n");
+    echo("            xajax_MoverArquivosDinamic(caminhoOrigem, caminhoDestino, ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_ferramenta.", ".$cod_topico_raiz.",'".$tabela."');\n");
     echo("          }\n");
     echo("        }\n");
     echo("      }\n\n");
