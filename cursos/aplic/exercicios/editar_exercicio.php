@@ -595,10 +595,10 @@
   echo("    }\n\n");
   
   echo("    function ApagarArq(){\n");
-  echo("      var i,j,checks,getNumber,nomeArq,arrayIdArq,caminho;\n");
+  echo("      var i,j,checks,getNumber,nomeArq,caminho;\n");
   //echo("      checks = document.getElementsByName('chkArq');\n");
   echo("      checks = getElementsByName_iefix('input', 'chkArq');\n");
-  echo("      arrayIdArq = new Array();\n");
+  //echo("      arrayIdArq = new Array();\n");
   echo("      j = 0;\n");
   echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
   /* Frase #39 - Voce realmente deseja apagar o arquivo? */
@@ -609,11 +609,12 @@
   echo("            getNumber=checks[i].id.split(\"_\");\n");
   echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
   /* Frase #43 - Arquivo apagado com sucesso. */
-  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 43)."\");\n");
-  echo("            arrayIdArq[j++] = getNumber[1];\n");
+  echo("            xajax_ExcluiArquivoDinamic(getNumber[1],caminho+nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 43)."\");\n");
+  //echo("            arrayIdArq[j++] = getNumber[1];\n");
+  echo("			contaArq--");
   echo("          }\n");
   echo("        }\n");
-  echo("        DeletaLinhaArq(arrayIdArq,j);\n");
+  //echo("        DeletaLinhaArq(arrayIdArq,j);\n");
   echo("        if(contaArq == 0)\n");
   echo("          InsereDiretorioVazio();\n");
   echo("        VerificaChkBoxArq();\n");
@@ -1431,7 +1432,7 @@
       echo("                  </tr>\n");
     }
     
-    if($exercicio['situacao'] == C)
+    if($exercicio['situacao'] == 'C')
 	{
 	  echo("                  <tr id=\"optQuestoes\">\n");
 	  echo("                    <td align=\"left\" colspan=\"6\">\n");
@@ -1514,7 +1515,7 @@
 		  // pasta
 		  $imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
 		  $linha_arq['Arquivo'] = $linha_arq['Diretorio'];
-		  $tag_abre = "<span class=\"link\" id=\"nomeArq_".($cod+1)."\" onclick=\"AbrePasta('Raiz/'+'".$linha_arq['Arquivo']."'+'/');\">\n";
+		  $tag_abre = "<span class=\"link\" id=\"nomeArq_".($cod+1)."\" onclick=\"AbrePasta('Raiz/'+'".$linha_arq['Arquivo']."'+'/');\">";
 		  $tag_fecha = "</span>";
         }
         

@@ -1736,29 +1736,40 @@ function EntregaExercicio($sock, $cod_resolucao,$cod_usuario){
 */
 function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $texto){
   //obs: cod_item = cod_exercicio
+  
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+  
   $arq=htmlspecialchars_decode($arq);
   
-  RemoveDiretorio($arq);
+  if(RemoveDiretorio($arq)) {	/* Se nao ocorreu nenhum erro ao remover o diretorio */
+	$sock=Conectar($cod_curso);
+	$data = time();
   
-  $sock=Conectar($cod_curso);
-  $data = time();
-  
-  // Alterando o status e a data (referente a modifica��o feita = recuperada)
-  $query = "update Exercicios_modelo set data = ".$data." ";
-  $query.= "where cod_exercicio = ".$cod_item;
-  Enviar($sock,$query);
+	// Alterando o status e a data (referente a modifica��o feita = recuperada)
+	$query = "update Exercicios_modelo set data = ".$data." ";
+	$query.= "where cod_exercicio = ".$cod_item;
+	Enviar($sock,$query);
     
   
-  // Inserindo altera��o na tabela Exercicios_modelo_historico
-  marcaLogExerciciosModeloHistorico($sock, $cod_item, $cod_usuario, 'N');
-  Desconectar($sock);
-  
-  //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+	// Inserindo altera��o na tabela Exercicios_modelo_historico
+	marcaLogExerciciosModeloHistorico($sock, $cod_item, $cod_usuario, 'N');
+	Desconectar($sock);
+	
+	$atualizacao = 'true';
+	$objResponse->addRemove('trArq_'.$numero);
+	
+	//AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+  } else {						/* Se ocorreu algum erro ao remover o diretorio */
+  	$atualizacao = 'false';
+  	/* Frase #209 - Erro ao apagar arquivo. */
+	$sock=Conectar("");
+	$texto = RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 209);
+	Desconectar($sock);
+  }
 
+  $objResponse->addScriptCall("mostraFeedback", $texto, $atualizacao);
+	
   return $objResponse->getXML();
-  
 }
 
 /***********************************************************************
@@ -1780,7 +1791,7 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
   $tamanho = round((filesize($caminho) / 1024), 2);
   $data = filemtime($caminho);
   
-  if($tamanho > 0)
+  if($tamanho >= 0)
   {
   	$objResponse->addScript("InsereLinhaArq('".$nomeArq."',".$tamanho.",".$arqNum.",'".$caminho."','".unixTime2DataHora($data)."','arquivo');");
   }
@@ -1872,28 +1883,53 @@ function VerificaExistenciaArquivoDinamic($cod_curso, $cod_item, $cod_usuario, $
 */
 function DescompactarArquivoDinamic($pasta, $nomeArq){
 
+  $sock=Conectar("");
+	
   $objResponse = new xajaxResponse('ISO-8859-1');
   
   $data = time();
   
   $caminho = $pasta.$nomeArq;
   $diretorio_antes = RetornaArrayDiretorioSimples($pasta);
-  DescompactarArquivoZip($caminho,$pasta);
-  RemoveArquivo($caminho);
-  $diretorio_depois = RetornaArrayDiretorioSimples($pasta);
   
-  foreach ($diretorio_depois as $cod => $linha)
-  {
-  	foreach ($diretorio_antes as $cod1 => $linha1)
+  $flag = DescompactarArquivoZip($caminho,$pasta);
+  
+  if($flag) {				/* Se conseguiu descompactar o arquivo */
+  	
+  	RemoveArquivo($caminho);
+
+  	$diretorio_depois = RetornaArrayDiretorioSimples($pasta);
+
+  	foreach ($diretorio_depois as $cod => $linha)
   	{
-  	  if($linha['Diretorio'] == "" && $linha['Arquivo'] == $linha1['Arquivo'])
-  	  	break;
-  	  else if($linha['Diretorio'] == $linha1['Diretorio'])
-  	  	break;
+  		foreach ($diretorio_antes as $cod1 => $linha1)
+  		{
+  			if($linha['Diretorio'] == "" && $linha['Arquivo'] == $linha1['Arquivo'])
+  			break;
+  			else if($linha['Diretorio'] == $linha1['Diretorio'])
+  			break;
+  		}
+
+  		ModificaDataArquivo($linha['Caminho'],$data);
   	}
-  	  	
-  	ModificaDataArquivo($linha['Caminho'],$data);
+
+  	/* Frase #210 - Arquivo descompactado com sucesso. */
+	$texto = RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 210);
+  	$atualizacao = "true";
+  
+  } else {				/* Se nao conseguiu descompactar o arquivo */
+
+  	/* Frase #211 - Erro ao descompactar arquivo. */
+  	$texto = RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 211);
+  	$atualizacao = "false";
+  	
   }
+
+  Desconectar($sock);
+
+  $objResponse->addScriptCall("mostraFeedback", $texto, $atualizacao);
+  	
+  return $objResponse->getXML();
 }
 
 /**********************************************************************
