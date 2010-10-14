@@ -102,7 +102,7 @@ function RetornaForuns($sock,$ordem,$cod_usuario)
 
          $query = "select distinct F.nome, F.cod_forum, F.status, F.data from Forum as F left join Forum_permissoes as FP on FP.cod_forum=F.cod_forum where F.status = 'A' or F.status = 'L' or F.status = 'R' or (F.status = 'G' and FP.cod_forum=F.cod_forum and FP.cod_permitido='".$cod_usuario."' and FP.tipo='U')";
         foreach($grupos as $cod => $g_linha)
-          $query .= " and (F.status = 'G' and FP.cod_permitido='".$g_linha."' and FP.tipo='G')";
+          $query .= " or (F.status = 'G' and FP.cod_permitido='".$g_linha[$cod]."' and FP.tipo='G')";
         $query .= " order by ";  
   }	
 
@@ -1567,19 +1567,19 @@ function VerificaPermissao($sock, $cod_usuario, $forum_permissoes)
   if (((is_array($forum_permissoes)) && (array_search($array_search_usuario, $forum_permissoes)!==false)) || (ECoordenador($sock,$cod_curso,$cod_usuario)) ){
     return true;
   }else{
-
+  	 
      //se n�, verifica-se se algum grupo do qual ele faz parte est�na lista
      $permitido = false;
-     $grupos=RetornaGruposUsuario($sock,$cod_usuario); 
-     //foreach($grupos as $g){
+     $grupos=RetornaGruposUsuario($sock,$cod_usuario);
+
      for ($g = 0; $g<sizeof($grupos); $g++){
-        $array_search_grupo = array(0 => $cod_usuario, 'cod_permitido' => $grupos[$g], 1=>'G', 'tipo'=>'G');
+        $array_search_grupo = array(0 => $grupos[$g][0], 'cod_permitido' => $grupos[$g][0], 1=>'G', 'tipo'=>'G');
         if ((is_array($forum_permissoes)) && (array_search($array_search_grupo, $forum_permissoes)!==false)){
           return true;
         }
       }
   }
-
+  
   return false;
 }
 
