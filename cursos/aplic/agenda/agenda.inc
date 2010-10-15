@@ -106,7 +106,7 @@ function RetornaAgenda($sock,$cod_item)
 */
 function RetornaItensListaAgendas ($sock)
 {
-  $consulta="select * from Agenda_itens where situacao='N' order by situacao,data";
+  $consulta="select * from Agenda_itens where situacao='N' OR situacao='A' order by situacao,data";
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);

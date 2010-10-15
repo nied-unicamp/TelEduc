@@ -300,8 +300,8 @@
   echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
   echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases,7)."</td>\n");		
-  /*92 - Situacao*/
-  echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases,92)."</td>\n");
+  /*110 - Situacao*/
+  echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases,110)."</td>\n");
   echo("                  </tr>\n");
 
   /*Conteudo*/
@@ -346,6 +346,11 @@
           $situacao="<span class=\"link\" onclick=\"window.open('em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases,43)."</span>";
           $titulo=$linha_item['titulo'];
         }
+      } else if ($linha_item['situacao'] == "A"){
+      	
+      	/* 23 - Ativada */
+      	$situacao = RetornaFraseDaLista($lista_frases, 23);
+      	$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
       }
       else
       {
