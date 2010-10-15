@@ -628,7 +628,7 @@ function ApagarItem(){
   CancelaTodos();
 
   if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
-        window.location='../agenda/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem';
+        window.location='../agenda/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem&origem='+origem;
   }
 }
 

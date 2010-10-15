@@ -92,7 +92,7 @@
     ApagarItem($sock,$cod_item,$cod_curso,$cod_usuario,$diretorio_arquivos,$diretorio_temp);
 
     Desconectar($sock);
-    header("Location:ver_editar.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
+    header("Location:".$origem.".php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
   /* ação = Apagar item(s) selecionados - origem = ver_editar.php */
