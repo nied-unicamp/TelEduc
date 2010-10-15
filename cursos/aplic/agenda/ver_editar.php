@@ -424,6 +424,7 @@
   echo("      <input type=hidden name=cod_item id=cod_item value=\"\" />\n");
   echo("      <input type=hidden name=acao id=\"acao_form\" value=\"\" />\n");
   echo("      <input type=hidden name=cod_itens id=cod_itens_form value=\"\" />\n");
+  echo("	  <input type=hidden name=origem value=ver_editar");
   echo("    </form>\n");
     
   echo("  </body>\n");			

@@ -49,15 +49,75 @@
   $cod_pagina_ajuda=5;
 
   include("../topo_tela.php");
+  
+  $feedbackObject =  new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+
+  $feedbackObject->addAction("apagarSelecionados", 101, 0);
+
 
   $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 
   /* Fun��es JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
+  
+  echo("      function VerificaCheck(){\n");
+  echo("        var i;\n");
+  echo("        var j=0;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        var Cabecalho = document.getElementById('checkMenu');\n");
+  echo("        array_itens = new Array();\n");
+  echo("        for (i=0; i<cod_itens.length; i++){\n");
+  echo("          if (cod_itens[i].checked){\n");
+  echo("            var item = cod_itens[i].id.split('_');\n");
+  echo("            array_itens[j]=item[1];\n");
+  echo("            j++;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        if ((j)==(cod_itens.length)) Cabecalho.checked=true;\n");
+  echo("        else Cabecalho.checked=false;\n");
+  echo("        if((j)>0){\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(); };\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+  echo("      function CheckTodos(){\n");
+  echo("        var e;\n");
+  echo("        var i;\n");
+  echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        for(i = 0; i < cod_itens.length; i++){\n");
+  echo("          e = cod_itens[i];\n");
+  echo("          e.checked = CabMarcado;\n");
+  echo("        }\n");
+  echo("        VerificaCheck();\n");
+  echo("      }\n\n");
+
+  echo("      function ExcluirSelecionados(){\n");
+  echo("        if (TemCertezaApagar()){\n");
+  echo("          document.getElementById('cod_itens_form').value=array_itens;\n");
+  echo("          document.form_dados.action='acoes_linha.php';\n");
+  echo("          document.form_dados.method='POST';\n");
+  echo("          document.getElementById('acao_form').value='apagarSelecionados';\n");
+  echo("          document.form_dados.submit();\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
+  echo("      function TemCertezaApagar()\n");
+  echo("      {\n");
+  /* 29 - Voc� tem certeza de que deseja apagar esta agenda? */
+  /* 30 - (n�o haver� como recuper�-la) */
+  echo("              return(confirm(\"".RetornaFraseDaLista($lista_frases,29)."\\n".RetornaFraseDaLista($lista_frases,30)."\"));\n");
+  echo("      }\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
+  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
   echo("      }\n\n");
 
@@ -96,6 +156,7 @@
   /* Tabela Interna */	
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
+  echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
   /*1 - Agenda */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
   /*7 - Data */
@@ -132,6 +193,7 @@
 
       $icone="<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
       echo("                  <tr>\n");
+      echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkItem\" id=\"itm_".$linha_item['cod_item']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_item']."\" /></td>\n");
       echo("                    <td align=\"left\">".$icone.$titulo."</td>\n");
       echo("                    <td align=\"center\">".$marcaib.$data.$marcafb."</td>\n");
       echo("                  </tr>\n");
@@ -146,12 +208,26 @@
   }
   /*Fim tabela interna*/		
   echo("                </table>\n");
-    
+  
+  /* 68 - Excluir Selecionados (ger)*/ 
+  echo("                <ul>\n");
+  echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
+  echo("                </ul>\n");
+
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("    	  </table>\n");
   include("../tela2.php");	
+
+  echo("    <form name=\"form_dados\" action=\"\" id=\"form_dados\">\n");
+  echo("      <input type=hidden name=cod_curso id=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("      <input type=hidden name=cod_item id=cod_item value=\"\" />\n");
+  echo("      <input type=hidden name=acao id=\"acao_form\" value=\"\" />\n");
+  echo("      <input type=hidden name=cod_itens id=cod_itens_form value=\"\" />\n");
+  echo("	  <input type=hidden name=origem value=ver_anteriores");  
+  echo("    </form>\n");
+
   echo("  </body>\n");			
   echo("</html>\n");	
   Desconectar($sock);

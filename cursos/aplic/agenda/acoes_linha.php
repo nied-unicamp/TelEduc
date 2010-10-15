@@ -111,7 +111,7 @@
     }
  
     Desconectar($sock);
-    header("Location:ver_editar.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
+    header("Location:".$origem.".php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
   /* ação = Ativar agenda - origem = ver_editar.php */
