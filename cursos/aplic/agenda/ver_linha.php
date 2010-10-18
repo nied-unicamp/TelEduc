@@ -238,9 +238,9 @@
   if($origem == "ver_editar"){
   	/*34 - Ativar */
   	echo("              	<li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
-  	/*34 - Apagar */
-  	echo("              	<li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
   }
+  /*34 - Apagar */
+  echo("              	<li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

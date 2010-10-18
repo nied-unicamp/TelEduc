@@ -54,6 +54,7 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
 
   $feedbackObject->addAction("apagarSelecionados", 101, 0);
+  $feedbackObject->addAction("apagarItem", 101, 0);
 
 
   $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
