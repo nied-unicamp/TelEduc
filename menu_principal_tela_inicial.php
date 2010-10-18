@@ -60,32 +60,45 @@
   echo("      <tr>\n");
   echo("        <td></td>\n");
   echo("        <td valign=\"top\" id=\"topo\"><!--NAVEGACAO NIVEL 3-->\n");
+  
+  /* Menu superior: Equipe Login/Logout 
+   * Ferramenta: -3
+   * cod_texto=10: Equipe
+   * cod_texto=57: Login
+   * cod_texto=161: Logout
+   * */
   echo("          <ul id=\"nav3nivel\">\n");
-  echo("            <li class=\"visoes\"><a href=\"".$link."equipe.php\">".RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
-  //?? - 157 Login
+  echo("            <map title=\"Menu superior\">\n");
+  echo("              <li class=\"visoes\"><a href=\"".$link."equipe.php\">".RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
   if(empty($_SESSION['login_usuario_s']))
-    echo("            <li class=\"visoes\"><a href=\"autenticacao.php\">Login</a></li>\n");
-  // ?? - 161 Logout
+    echo("              <li class=\"visoes\"><a href=\"autenticacao.php\">Login</a></li>\n");
   else
-    echo("            <li class=\"visoes\"><a href=\"../cursos/aplic/logout.php\">Logout</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"../cursos/aplic/logout.php\">Logout</a></li>\n");
+  echo("            </map>\n");
+  echo("          </ul>\n");
 
-  /*Se nao estiver logado, deixa links para mudar lingua do ambiente*/
+  /* Menu de Idiomas 
+   * Se nao estiver logado, deixa links para mudar lingua do ambiente 
+   */
   if(empty($_SESSION['login_usuario_s']))
   {
-    /* Linguas */
+    echo("          <map title=\"Menu de idiomas\"><ul id=\"nav3nivel\" style=\"position: fixed; right: 17px;\">\n");
     $lista=ListaLinguas($sock);
     foreach($lista as $cod_lin => $lingua)
     {
       $lingua_pais=LinguaLocal($sock,$cod_lin);	
       echo("            <li>&nbsp;&nbsp;&nbsp;<img src=\"../imgs/bandeira_".$cod_lin.".png\"style=\"vertical-align:text-bottom;\" />&nbsp;&nbsp;<a href=\"".$pag_atual."?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."&amp;cod_lin=".$cod_lin."\">".$lingua_pais."</a></li>\n");  
     }
+    echo("          </ul></map>\n");
   }
-  
-
+  /* FIM nav3nivel */
   echo("          </ul>\n");
-  /* 17 - Administra��o */
-  /* 18 - �rea Restrita */
-  //Se nao estiver logado ou se for admtele, permite link para a administracao
+  
+  /* Area Restrita
+   * Se nao estiver logado ou se for admtele, permite link para a administracao
+   * cod_texto=17: Administracao 
+   * cod_texto=18: Area Restrita 
+   * */
   if($_SESSION['cod_usuario_global_s'] == -1)
     echo("          <a href=\"../administracao/index.php\" title=\"".RetornaFraseDaLista($lista_frases,17)." (".RetornaFraseDaLista($lista_frases,18).")\"><img src=\"../cursos/aplic/imgs/btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
   echo("          <h3>TelEduc</h3>\n");

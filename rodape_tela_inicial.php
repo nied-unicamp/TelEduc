@@ -48,18 +48,23 @@
   echo("        <td valign=\"bottom\" id=\"rodape\"> ");
   /*	Para fins de SEO existe um random que alterna o alt e title da imagem do teleduc  */
   if(rand(1,2) == 1){
-  	echo("			<a href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc - Ensino à distância\" title=\"TelEduc - Ensino à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>\n");
+  	echo("			<a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Ensino à distância\" title=\"TelEduc - Ensino à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
   }
   else{
-  	echo("			<a href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc - Educação à distância\" title=\"TelEduc - Educação à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>\n");
+  	echo("			<a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Educação à distância\" title=\"TelEduc - Educação à distância\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
   }
-  echo("			<a href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" alt=\"nied\" border=\"0\" style=\"margin-right: 8px; margin-bottom: 6px;\" /></a><a href=\"http://www.ic.unicamp.br\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right: 6px; margin-bottom: -2px;\" /></a><a href=\"http://www.unicamp.br\" title=\"Unicamp\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" style=\"margin-bottom: 2px;\"border=\"0\" /></a>\n");
+  /*Logo do Nied*/
+  echo("			<a tabindex=\"2\" href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" acronym title=\"Nucleo de Informatica Aplicada a Educação\" alt=\"nied\" border=\"0\" style=\"margin-right: 8px; margin-bottom: 6px;\" /></a>&nbsp;|&nbsp;");
+  /* Logo do IC*/
+  echo("		    <a tabindex=\"3\" href=\"http://www.ic.unicamp.br\" title=\"Instituto de Computa&ccedil;&atilde;o\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right: 6px; margin-bottom: -2px;\" /></a>&nbsp;|&nbsp;");
+  /* Logo da Unicamp */
+  echo("		    <a tabindex=\"4\" href=\"http://www.unicamp.br\" title=\"Unicamp\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" style=\"margin-bottom: 2px;\"border=\"0\" /></a>\n");
   echo("		</td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
   echo("        <td valign=\"bottom\">");
   echo("		</td>\n");
-  echo("        <td valign=\"bottom\" id=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+  echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\">2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 

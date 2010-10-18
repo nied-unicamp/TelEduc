@@ -51,6 +51,9 @@
   	MudancaDeLingua($sock,$cod_lin);
   }
 
+  /*$abv_lingua variavel utilizada para determinar o atributo lang do HTML*/
+  $abv_lingua = AbreviaturaLingua($cod_lin);
+  
   $lista_frases=RetornaListaDeFrases($sock,-3);
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
@@ -67,7 +70,7 @@
 
   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
   echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-  echo("<html lang=\"pt\">\n");
+  echo("<html lang=\"$abv_lingua\">\n");
   echo("  <head>\n");
   echo("    <title>TelEduc</title>\n");
   echo("    <meta name=\"robots\" content=\"follow,index\" />\n");

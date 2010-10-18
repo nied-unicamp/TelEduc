@@ -49,7 +49,7 @@
   if(!isset($todas_abertas))
     $todas_abertas="";
   if(!isset($login))
-    $login="";
+    $login="login";
   if(!isset($erro_autenticacao))
     $erro_autenticacao="";
 
@@ -121,9 +121,9 @@
 
   // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
-  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../cursos/aplic/imgs/btFont1.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../cursos/aplic/imgs/btFont2.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
+  echo("           <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../cursos/aplic/imgs/btFont1.gif\"/></a>\n");
+  echo("           <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../cursos/aplic/imgs/btFont2.gif\"/></a>\n");
+  echo("           <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
@@ -137,6 +137,9 @@
   echo("                  </tr>   \n");
   echo("                  <tr id=\"caixaAutenticacao\">   \n");
   echo("                    <td align=\"center\">\n");
+  /*
+   * === Formulario de Autenticacao (login) ===
+   */
   echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"acoes.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
   echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
   echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
@@ -145,43 +148,51 @@
   if(isset($tipo_curso))
     echo("                          <input type=\"hidden\" name=\"tipo_curso\" value=\"".$tipo_curso."\" />\n");
   if(isset($destino))
-    echo("                          <input type=\"hidden\" name=\"destino\" value=\"".$destino."\" />\n");
-  /* 215 Login / Email */			
+    echo("                          <input type=\"hidden\" name=\"destino\" value=\"".$destino."\" />\n");			
+  
   echo("                          <table>\n");
+  /* Login
+   * Frase cod_texto=215 e cod_ferramenta=-3: Login / Email 
+   */
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">\n");
   echo("                          	    <b>".RetornaFraseDaLista($lista_frases,215)."</b>\n");
   echo("                          	  </td>\n");
   echo("                          	  <td style=\"border:none\">\n");
-  echo("                          	    <input type=\"text\" id=\"login\" name=\"login\" size=\"20\" maxlength=\"100\" value='".$login."' style=\"border: 2px solid #9bc;\" />\n");
+  echo("                          	    <input type=\"text\" id=\"login\" name=\"login\" size=\"20\" maxlength=\"100\" tabindex=\"11\" value='".$login."' style=\"border: 2px solid #9bc;\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
-  // 158 Senha
+  /* Senha
+   * Frase cod_texto=158 e cod_ferramenta=-3: Senha
+   */
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">\n");
   echo("                          	    <b>".RetornaFraseDaLista($lista_frases,158)."</b>\n");
   echo("                          	  </td>\n");
   echo("                          	  <td style=\"border:none\">\n");
-  echo("                                    <input type=\"password\" id=\"senha\" name=\"senha\" size=\"20\" maxlength=\"100\" style=\"border: 2px solid #9bc;\" />\n");
+  echo("                                    <input type=\"password\" id=\"senha\" name=\"senha\" size=\"20\" maxlength=\"100\" tabindex=\"12\" value=\"senha\" style=\"border: 2px solid #9bc;\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
+  /* Botao Ok do formulario de login
+   * Frase cod_texto=18 e cod_ferramenta=-3: ?
+   */
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
   echo("                          	  <td style=\"border:none\">\n");
-  // 18 - Ok
-  echo("                          <br /><input type=\"submit\" class=\"input\" id=\"OKLogin\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao OK Login\" tabindex=\"13\" onfocus value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
   echo("                          </table>\n");
   echo("                        </form>\n");
+  /*=== FIM - Formulario de Autenticacao (login) ===*/
   
   // 67 - Se esqueceu seu login, siga o link:
   // 68 - Esqueci meu login!
-  echo ("                    <br/>".RetornaFrase($sock, 67, -2)." <a href='esqueci_login.php'>".RetornaFrase($sock, 68, -2)."</a><br/>");
+  echo ("                    <br/>".RetornaFrase($sock, 67, -2)." <a href='esqueci_login.php' tabindex=\"14\">".RetornaFrase($sock, 68, -2)."</a><br/>");
   
   // 24 - Caso tenha esquecido sua senha siga o link:
   // 23 - Esqueci minha senha!
-  echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".RetornaFrase($sock, 23, -2)."</a><br/>");
+  echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php' tabindex=\"15\">".RetornaFrase($sock, 23, -2)."</a><br/>");
   
   // 92 - Se seu cadastro ainda nao foi autenticado, siga o link:
   // 93 - Autenticar meu login!

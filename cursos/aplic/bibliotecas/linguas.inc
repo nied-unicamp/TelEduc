@@ -263,6 +263,36 @@ function MudancaDeLingua($sock, $cod_lingua)
 
 }
 
+/* ************************************************************************
+   AbreviaturaLingua - Dado o codigo da lingua, retorna a abreviatura da lingua, conforme abaixo (ISO693):
+      1 = "pt"
+      2 = "es"
+      3 = "en"
+      4 = "pt"
+   Por padr‹o, o codigo da lingua eh "pt".
+   Entrada: $cod_lingua - codigo da lingua a ser consultada
+   Saida: string
+*/
+function AbreviaturaLingua($cod_lingua){
+	$abreviatura = "pt";
+	switch ($cod_lingua){
+		case '1':
+			$abreviatura = "pt";
+		break;
+		case '2':
+			$abreviatura = "es";
+		break;
+		case '3':
+			$abreviatura = "en";
+		break;
+		case '4':
+			$abreviatura = "pt";
+		break;	
+	}
+	return $abreviatura;
+}
+
+
   if (!ListaDeFrasesEmMemoria(-4) || !ListaDeFrasesEmMemoria(-3) || !ListaDeFrasesEmMemoria(-2) || !ListaDeFrasesEmMemoria(-1)
  || !ListaDeFrasesEmMemoria(0))
   {
