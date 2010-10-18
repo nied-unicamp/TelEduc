@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/avaliacoes/exibir_historico_desempenho.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -110,7 +110,7 @@
 
 
   echo("<html>\n");
- /* 1 - Avaliações*/
+ /* 1 - Avaliaï¿½ï¿½es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
   if (!isset($SalvarEmArquivo))
@@ -125,7 +125,7 @@
     include "avaliacoes.css";
     echo("  </style>\n");
   }
-   /* Funções JavaScript */
+   /* Funï¿½ï¿½es JavaScript */
   echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("<script language=JavaScript>\n");
   echo("var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
@@ -257,7 +257,7 @@
     echo("  return false;\n");
     echo("}\n");
 
-    /* Função JvaScript para chamar página para salvar em arquivo. */
+    /* Funï¿½ï¿½o JvaScript para chamar pï¿½gina para salvar em arquivo. */
     echo("      function SalvarHistoricoDesempenho()\n");
     echo("      {\n");
     echo("        document.frmHist.action = \"salvar_exibir_historico_desempenho.php?".RetornaSessionID());
@@ -273,14 +273,14 @@
     echo("    }\n");
     echo("    else\n");
     echo("    {\n");
-    /* 51- Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
+    /* 51- Infelizmente nï¿½o foi possï¿½vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
     echo("      alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
     echo("    }\n");
     echo("  }\n");
 
     echo("function TemCertezaApagar() {\n");
-    /* 86 - Você tem certeza de que deseja apagar a avaliação desse participante? */
-    /* 87 - (a avaliação selecionada será apagada definitivamente) */
+    /* 86 - Vocï¿½ tem certeza de que deseja apagar a avaliaï¿½ï¿½o desse participante? */
+    /* 87 - (a avaliaï¿½ï¿½o selecionada serï¿½ apagada definitivamente) */
     echo("  return(confirm(\"".RetornaFraseDaLista($lista_frases,86)."\\n (".RetornaFraseDaLista($lista_frases,87).")\"));\n");
     echo("}\n");
 
@@ -293,9 +293,9 @@
   else
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
 
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   $cabecalho = "  <b class=titulo> ".RetornaFraseDaLista($lista_frases,1)."</b>";
-  /* 88 - Histórico do Desempenho dos Participantes*/
+  /* 88 - Histï¿½rico do Desempenho dos Participantes*/
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,88)."</b>";
   echo(PreparaCabecalho($cod_curso,$cabecalho,22,16));
 
@@ -306,17 +306,17 @@
 
   if (!strcmp($dados['Ferramenta'],'F')) //Avaliacao no Forum
   {
-    echo("    <font class=text>Fórum:</font>\n");
+    echo("    <font class=text>Fï¿½rum:</font>\n");
     echo("    <font class=text> ".$titulo."</font>");
   }
   elseif (!strcmp($dados['Ferramenta'],'B')) //Avaliacao no Bate-Papo
   {
-    echo("    <font class=text>Assunto da Sessão:</font>\n");
+    echo("    <font class=text>Assunto da Sessï¿½o:</font>\n");
     echo("    <font class=text> ".$titulo."</font>");
   }
   else //Avaliacao no portfolio
   {
-  /* 14 - Atividade no Portfólio*/
+  /* 14 - Atividade no Portfï¿½lio*/
     echo("    <font class=text>".RetornaFraseDaLista($lista_frases,14).":</font>\n");
     echo("    <font class=text> ".$titulo."</font><br>");
     /* 20 - Tipo da Atividade*/
@@ -336,7 +336,7 @@
 
 
   if (!isset($SalvarEmArquivo))
-  /* 46- Ver objetivos/critérios da avaliação */
+  /* 46- Ver objetivos/critï¿½rios da avaliaï¿½ï¿½o */
     echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
 
 
@@ -363,7 +363,7 @@
       /* 89 - Nenhum grupo selecionado! */
       echo("<font class=text><b>".RetornaFraseDaLista($lista_frases,89)."</b></font>");
       echo("<br>");
-      /* 92 - Selecione o grupo de quem você deseja ver o histórico de desempenho clicando sobre o nome do mesmo, ou selecionando vários grupos através das caixas de seleção e pressionando o botão "Mostrar Selecionados." */
+      /* 92 - Selecione o grupo de quem vocï¿½ deseja ver o histï¿½rico de desempenho clicando sobre o nome do mesmo, ou selecionando vï¿½rios grupos atravï¿½s das caixas de seleï¿½ï¿½o e pressionando o botï¿½o "Mostrar Selecionados." */
       echo("<font class=text>".RetornaFraseDaLista($lista_frases,92)."</font>\n");
       /* G 13 - Fechar */
       echo("  <form>\n");
@@ -392,7 +392,7 @@
 
         $cod=$cod_grupo_ficha;
 
-        /* 49 - Participações:*/
+        /* 49 - Participaï¿½ï¿½es:*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,49).": </font>");
 
         if (RealizouAtividadeNoPortfolio($sock,$cod_avaliacao,$cod,$portfolio_grupo))
@@ -410,7 +410,7 @@
         if(!$foiavaliado)
         {
           $cod_aluno=RetornaCodAlunoMaisNotasnoGrupo($sock,$cod_avaliacao,$cod_grupo_ficha);
-          /* 93 - Este grupo ainda não foi avaliado nesta atividade! */
+          /* 93 - Este grupo ainda nï¿½o foi avaliado nesta atividade! */
           echo("<font class=text>".RetornaFraseDaLista($lista_frases,93)."</font>");
           echo("<br>");
         }
@@ -441,7 +441,7 @@
                 $podevernota=1;
               elseif (!strcmp($linha['tipo_compartilhamento'],'F'))
                 $podevernota=0;
-              elseif (!strcmp($linha['tipo_compartilhamento'],'G'))     //é portfolio de grupo e nota compartilhada so com o grupo avaliado
+              elseif (!strcmp($linha['tipo_compartilhamento'],'G'))     //ï¿½ portfolio de grupo e nota compartilhada so com o grupo avaliado
               {
                 $cod_grupo_usuario=RetornaCodGrupoPortfolio($sock,$cod_usuario);         //retorna o codigo do grupo do usuario que esta acessando
                 if ($cod_grupo_usuario==$cod_grupo)    //O usuario pertence ao grupo que foi avaliado
@@ -452,7 +452,7 @@
             }
             else
             {
-            /* 94 - Usuário sem acesso...*/
+            /* 94 - Usuï¿½rio sem acesso...*/
               echo (RetornaFraseDaLista($lista_frases,94));
             }
             if ($podevernota==1)
@@ -477,7 +477,7 @@
               echo("<b>".RetornaFraseDaLista($lista_frases,60)." ".$cont."</b></font>\n");
               echo("    </td>\n");
               echo("    <td align=center width=20%>\n");
-              /* 61 - Data da Avaliação */
+              /* 61 - Data da Avaliaï¿½ï¿½o */
               echo("       <font class=colorfield>");
               echo("<b>".RetornaFraseDaLista($lista_frases,61)."</b></font>\n");
               echo("    </td>\n");
@@ -510,7 +510,7 @@
               echo("  </tr>\n");
               echo("</table><br>");
               echo("    <font class=text>\n");
-              /* 67 - Comentário*/
+              /* 67 - Comentï¿½rio*/
               echo("<b>".RetornaFraseDaLista($lista_frases,67).":</b> ".$linha['comentario']."</font><br>\n");
               $formador=NomeUsuario($sock,$linha['cod_formador']);
               echo("    <font class=text>\n");
@@ -520,7 +520,7 @@
           }
           if ($cont==0)
           {
-            /* 93 - Este grupo ainda não foi avaliado nesta atividade! */
+            /* 93 - Este grupo ainda nï¿½o foi avaliado nesta atividade! */
             echo("<font class=text>".RetornaFraseDaLista($lista_frases,93)."</font>");
             echo("<br>");
           }
@@ -568,7 +568,7 @@
       /* 96 - Nenhuma pessoa selecionada! */
       echo("<font class=text><b>".RetornaFraseDaLista($lista_frases,96)."</b></font>");
       echo("<br>");
-      /* 91 - Selecione o participante de quem você deseja ver o histórico de desempenho clicando sobre o nome do mesmo, ou selecionando vários participantes através das caixas de seleção e pressionando o botão "Mostrar Selecionados." */
+      /* 91 - Selecione o participante de quem vocï¿½ deseja ver o histï¿½rico de desempenho clicando sobre o nome do mesmo, ou selecionando vï¿½rios participantes atravï¿½s das caixas de seleï¿½ï¿½o e pressionando o botï¿½o "Mostrar Selecionados." */
       echo("<font class=text>".RetornaFraseDaLista($lista_frases,91)."</font>\n");
       /* G 13 - Fechar */
       echo("  <form>\n");
@@ -588,7 +588,7 @@
         if (BatePapoExiste($sock,$dados['Cod_atividade']))
         {
           $batepaponaoexiste=0;
-          $lista_usuarios=RetornaUsuarios($sock);
+          $lista_usuarios=RetornaUsuarios($sock,$cod_curso);
           $lista_sessoes=RetornaCodSessao($sock,$dados['Cod_atividade']);
           foreach($lista_sessoes as $cod => $linha)
           {
@@ -619,7 +619,7 @@
 
         $cod=$cod_aluno_ficha;
 
-        /* 49 - Participações:*/
+        /* 49 - Participaï¿½ï¿½es:*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,49).": </font>");
 
         if (!strcmp($dados['Ferramenta'],'B'))
@@ -675,7 +675,7 @@
         $foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$cod_aluno_ficha);
         if(!$foiavaliado)
         {
-          /* 98 - Este participante ainda não foi avaliado nesta atividade! */
+          /* 98 - Este participante ainda nï¿½o foi avaliado nesta atividade! */
           echo("<font class=text>".RetornaFraseDaLista($lista_frases,98)."</font>");
           echo("<br>");
         }
@@ -696,7 +696,7 @@
                 $podevernota=0;
               elseif (!strcmp($linha['tipo_compartilhamento'],'A'))     //nota compartilhada so com o aluno avaliado
               {
-                if ($cod_usuario==$cod_aluno_ficha)    //O usuario é o aluno que foi avaliado
+                if ($cod_usuario==$cod_aluno_ficha)    //O usuario ï¿½ o aluno que foi avaliado
                   $podevernota=1;
                 else                   //outro aluno nao pode ver
                   $podevernota=0;
@@ -704,7 +704,7 @@
             }
             else
             {
-              echo ("usuário sem acesso....");
+              echo ("usuï¿½rio sem acesso....");
             }
             if ($podevernota==1)
             {
@@ -725,7 +725,7 @@
               echo("<b>".RetornaFraseDaLista($lista_frases,60)." ".$cont."</b></font>\n");
               echo("    </td>\n");
               echo("    <td align=center width=20%>\n");
-              /* 61 - Data da Avaliação */
+              /* 61 - Data da Avaliaï¿½ï¿½o */
               echo("       <font class=colorfield>");
               echo("<b>".RetornaFraseDaLista($lista_frases,61)."</b></font>\n");
               echo("    </td>\n");
@@ -758,7 +758,7 @@
               }
               echo("  </tr></table><br>\n");
               echo("    <font class=text>\n");
-              /* 67 - Comentário*/
+              /* 67 - Comentï¿½rio*/
               echo("<b>".RetornaFraseDaLista($lista_frases,67).":</b> ".$linha['comentario']."</font>\n");
               echo("  <br>\n");
               $formador=NomeUsuario($sock,$linha['cod_formador']);
@@ -768,7 +768,7 @@
           }
           if ($cont==0)
           {
-            /* 98 - Este participante ainda não foi avaliado nesta atividade! */
+            /* 98 - Este participante ainda nï¿½o foi avaliado nesta atividade! */
             echo("<font class=text>".RetornaFraseDaLista($lista_frases,98)."</font>");
             echo("<br>");
           }

@@ -569,11 +569,11 @@ function RetornaAtividade($sock,$cod_atividade)
 /* *********************************************************************
    RetornaUsuarios - Retorna lista de usuarios
    Entrada: $sock - sock de conexao
-            $ordenacao - parametro de ordenacao
+            $cod_curso - codigo do curso
    Saida:   array [$cod_usuario]= nome do usuario
 
 */
-function RetornaUsuarios($sock)
+function RetornaUsuarios($sock, $cod_curso)
 {
 	
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -4736,7 +4736,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
   {
     if (BatePapoExiste($sock,$cod_atividade))
     {
-      $lista_usuarios=RetornaUsuarios($sock);
+      $lista_usuarios=RetornaUsuarios($sock,$cod_curso);
       $lista_sessoes=RetornaCodSessao($sock,$cod_atividade);
       foreach($lista_sessoes as $cod => $linha)
       {

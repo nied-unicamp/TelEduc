@@ -557,10 +557,10 @@ function AjustaNome($nome_usuario)
 /* *********************************************************************
    NomeUsuario - Retorna o nome do usuario
    Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-             $cod_usuario - C�igo do usu�io a buscar a informa�o                        
+             $cod_usuario - C�igo do usu�io a buscar a informa�o
+             $cod_curso - Codigo do curso                        
    Saida: nome
 */
-/* FIXME - BUG */
 function NomeUsuario($sock,$cod_usuario, $cod_curso)
 {
    // 2Session

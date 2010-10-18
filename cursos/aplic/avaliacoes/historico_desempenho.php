@@ -576,7 +576,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
      
     if (BatePapoExiste($sock,$cod_atividade))
     {
-      $lista_usuarios=RetornaUsuarios($sock);
+      $lista_usuarios=RetornaUsuarios($sock,$cod_curso);
       $lista_sessoes=RetornaCodSessao($sock,$cod_atividade);
       foreach($lista_sessoes as $cod => $linha)
       {

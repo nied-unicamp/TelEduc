@@ -236,7 +236,7 @@
       }
       else
       {
-        echo($linha." ('".NomeUsuario($sock,$cod)."')\n");
+        echo($linha." ('".NomeUsuario($sock,$cod,$cod_curso)."')\n");
       }
       echo("          </td>\n");
       echo("        </tr>\n");

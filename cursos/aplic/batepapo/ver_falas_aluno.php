@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/batepapo/ver_falas_aluno.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -83,7 +83,7 @@
   echo("    }\n");
   echo("    else\n");
   echo("    {\n");
-  /* 45- Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
+  /* 45- Infelizmente nï¿½o foi possï¿½vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
   echo("      alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
   echo("    }\n");
   echo("  }\n");
@@ -94,7 +94,7 @@
   echo("  window_handle.focus();\n");
   echo("  }\n");
 
-   /* Função JvaScript para chamar página para salvar em arquivo. */
+   /* Funï¿½ï¿½o JvaScript para chamar pï¿½gina para salvar em arquivo. */
   echo("      function SalvarMensagensAluno()\n");
   echo("      {\n");
   echo("        document.frmMsg.action = \"salvar_falas_aluno.php?".RetornaSessionID());
@@ -152,8 +152,8 @@
 //     echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 //   }
 
-  /* 27 - Ver Sessões Realizadas */
-  echo("        <li><span title=\"Ver Sessões Realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases,27)."</span></li>\n");
+  /* 27 - Ver Sessï¿½es Realizadas */
+  echo("        <li><span title=\"Ver Sessï¿½es Realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases,27)."</span></li>\n");
 
   if (!isset($SalvarEmArquivo))
   {
@@ -175,7 +175,7 @@
   /* <!----------------- Tabela Interna -----------------> */
   echo("      <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("        <tr class=\"head\">\n");
-  /* 40 - Assunto da Sessão */
+  /* 40 - Assunto da Sessï¿½o */
   echo("          <td>".RetornaFraseDaLista($lista_frases,40)."</td>\n");
   /*93 - Participante */
   echo("          <td>".RetornaFraseDaLista($lista_frases,93)."</td>\n");
@@ -187,10 +187,10 @@
 
   echo("          <td>".$assunto."</td>\n");
 
-  $nome_aluno=NomeUsuario($sock, $cod_aluno);
+  $nome_aluno=NomeUsuario($sock, $cod_aluno, $cod_curso);
 
   if (!isset($SalvarEmArquivo))
-    echo("          <td><a onClick=return(OpenWindowLink(".$cod_aluno."));>".$nome_aluno."</a></td>\n");
+    echo("          <td><a href=# onClick=return(OpenWindowLink(".$cod_aluno."));>".$nome_aluno."</a></td>\n");
   else
     echo("          <td>".$nome_aluno."</td>\n");
 
@@ -206,18 +206,14 @@
       echo("          <td>\n");
       echo("<font class=textsmall>(".Unixtime2Hora($linha['Data']).")</font>\n");
       if ($cod_usuario == $linha['cod_usuario'])
-      {
-        print "<font class=text color=#007700>";
-      }
-      if ($cod_usuario == $linha['cod_usuario_r'])
-      {
-        print "<font class=text color=#000099>";
-      }
+        echo("<font class=text color=#007700>");
+      else if ($cod_usuario == $linha['cod_usuario_r'])
+        echo("<font class=text color=#000099>");
       else
-        print "<font class=text>";
+        echo("<font class=text>");
       echo("<b>".$linha['Apelido']."</b> ".RetornaFraseDaLista($lista_frases,$linha['cod_texto_fala'])." ");
-      if ($linha['cod_texto_fala']>8) /* Não é entrada ou saída... */
-        echo("<b>".$linha['Apelido']."</b>: ".$linha['Mensagem']);
+      if ($linha['cod_texto_fala']>8) /* Nï¿½o ï¿½ entrada ou saï¿½da... */
+        echo("<b>".$linha['ApelidoR']."</b>: ".$linha['Mensagem']);
       echo("</font>\n");
 
       echo("          </td>\n");

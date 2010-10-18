@@ -1086,9 +1086,8 @@ if (!strcmp($dados['Ferramenta'],'B'))
 {
 	if (BatePapoExiste($sock,$dados['Cod_atividade']))
 	{
-		 
 		$batepaponaoexiste=0;
-		$lista_usuarios=RetornaUsuarios($sock);
+		$lista_usuarios=RetornaUsuarios($sock,$cod_curso);
 		$lista_sessoes=RetornaCodSessao($sock,$dados['Cod_atividade']);
 
 		foreach ($lista_sessoes as $cod => $linha)
