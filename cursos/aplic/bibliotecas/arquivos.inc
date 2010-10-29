@@ -890,7 +890,7 @@ function CompareRetornaArrayDiretorio($ar1, $ar2)
 function RetornaArrayDiretorio($diretorio)
 {
 
-  if (!ExisteArquivo($diretorio))
+  if (ExisteArquivo($diretorio) == false)
     return (array());
 
   $diretorio = rtrim($diretorio, DIRECTORY_SEPARATOR);
@@ -901,8 +901,8 @@ function RetornaArrayDiretorio($diretorio)
   // Inicializamos a fila
   $dirs = array();
   // Inserimos o primeiro elemento na fila
-  array_push($dirs, $diretorio);
-
+  array_push($dirs, $diretorio); 
+  
   // Enquanto houver diret�rios na fila procure
   // pelos arquivos
   while (count($dirs) > 0)
@@ -977,7 +977,6 @@ function RetornaArrayDiretorio($diretorio)
       }
     }
   }
-
   if (count($lista) > 0)
     uasort ($lista, 'CompareRetornaArrayDiretorio');
   return ($lista);

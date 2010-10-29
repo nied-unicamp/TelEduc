@@ -1128,58 +1128,58 @@ function InsereMsgCD($sock,$cod_msg,$cod_usuario_receptor,$cod_usuario_emissor){
 
 /* *************************************************************************
   CriaArquivoSendmail - cria arquivo para envio do e-mail.
-  Entrada: $host - hostname do servidor, usado no dom�nio do remetente
+  Entrada: $host - hostname do servidor, usado no dominio do remetente
            $cod_msg - codigo da msg, usado para cifrar a mensagem
            $arq_sendmail - caminho onde ser� gravado o arquivo do sendmail
            $corpo - corpo da mensagem
            $formato - formato do corpo da mensagem: html ou texto
            $anexos - array []['Caminho'] - caminho do arquivo anexado
                            []['Arquivo'] - nome do arquivo anexado
-  Saida:   true se bem sucedido, do contr�rio, false.
+  Saida:   true se bem sucedido, do contrario, false.
 */
 function CriaArquivoSendmail($informacoes, $cod_msg, $arq_sendmail, $corpo, $formato, $anexos)
 {
   $retval = true;
 
-  /* Cria uma chave de identifica��o �nica (boundary) para separar os */
-  /* diversos conte�dos.                                              */
+  /* Cria uma chave de identificacao Unica (boundary) para separar os   */
+  /* diversos conteudos.                                                */
   $horario = time();
   $boundary = "_-----_".$cod_msg."A".(crypt($horario."X", "CAS"))."B".$cod_msg;
 
-  /* Cria o arquivo de configura��o do sendmail.                      */
+  /* Cria o arquivo de configuracao do sendmail.                        */
   
   if ($fh=fopen($arq_sendmail,"w"))
   { 
-    /* Obt�m as configura��es referente �s aspas, desabilita o recurso */
-    /* e no final da execu��o o restaura.                              */
+    /* Obtem as configuracoes referente as aspas, desabilita o recurso */
+    /* e no final da execucao o restaura.                              */
     $mqr_status = get_magic_quotes_runtime();
     set_magic_quotes_runtime(0);
 
-    /* Grava o cabe�alho da mensagem. */
+    /* Grava o cabecalho da mensagem. */
     fputs($fh, "From: \"".$informacoes['nome']."\" <".$informacoes['remetente']."@".$informacoes['host'].">\n");
 
     fputs($fh, "Subject: "."TelEduc: \"".$informacoes['nome_curso']."\" - ".$informacoes['nome_ferramenta']."\n");
     fputs($fh, "Mime-Version: 1.0"."\n");
     fputs($fh, "Content-Type: multipart/mixed; boundary=\"".$boundary."\"\n");
 
-    // CABE�ALHOS PARA O CORPO DA MENSAGEM.
-    /* grava o separador de conte�do. */
+    // CABECALHOS PARA O CORPO DA MENSAGEM.
+    /* grava o separador de conteudo. */
     fputs($fh, "--".$boundary."\n");
     fputs($fh, "Content-Type: text/html; charset=iso-8859-1; name=\"bdy.html\"\n");
     fputs($fh, "Content-Disposition: inline; filename=\"bdy.html\"\n");
     fputs($fh, "Content-Transfer-Encoding: 7bit\n\n");
-    /* Atente para as duas linhas que separam os cabe�alhos do conte�do. */
+    /* Atente para as duas linhas que separam os cabecalhos do conteudo. */
 
     /* Grava o texto do corpo da mensagem. */
     fputs($fh, $corpo."\n\n");
 
-    /* Obt�m o total de anexos, se houver. */
+    /* Obtem o total de anexos, se houver. */
     $numanexos = count($anexos);
     for ($i = 0; $i < $numanexos; $i++)
     {
-      /* Para cada anexo obt�m a extens�o em min�sculas e utiliza a fun��o */
+      /* Para cada anexo obtem a extensao em minusculas e utiliza a funcao */
       /* mime_lookup (autor: Paul Southworth) para obter o tipo mime do    */
-      /* arquivo. Caso a fun��o retorne nula, utiliza por padr�o o tipo    */
+      /* arquivo. Caso a funcao retorne nula, utiliza por padrao o tipo    */
       /* application/octet-stream.                                         */
       $ext = strtolower(substr(strrchr($anexos[$i]['Arquivo'], "."), 1));
       $fullmimetype = mime_lookup($ext);
@@ -1756,7 +1756,14 @@ function UsuarioRepetido($listaDestinatarios, $codUser, $cod){
   return false;
 }
 
-
+/* ************************************************************************
+ * AnexarArquivos - Copia os arquivos anexos para o diretorio $dir_arq
+ * Entrada: $dir_curso: [dir_arq]/[cod_curso]/
+ * 			$dir_arq: [dir_arq]/[cod_curso]/correio/[cod_msg]/
+ * 			$arquivosAnexos: array com os arquivos novos a serem anexados (via input)
+ * 			$chkArqAnexo: array com todos arquivos anexos redirecionados 
+ * 				(com o caminho completo ate ele)
+ * */
 function AnexarArquivos($dir_curso, $dir_arq, $arquivosAnexos, $chkArqAnexo){
   if (!ExisteArquivo($dir_curso))
     CriaDiretorio($dir_curso);
@@ -1768,48 +1775,46 @@ function AnexarArquivos($dir_curso, $dir_arq, $arquivosAnexos, $chkArqAnexo){
     CriaDiretorio($dir_arq);
   }
 
-  $contArq = 0;
-  /*if($chkArqAnexo > 0)
+  /* Caso tenha arquivo anexo redirecionado (via checkbox chkArqAnexo)
+   * faz uma copia do arquivo para a pasta da nova mensagem  */
+  if($chkArqAnexo > 0)
     for($contArq = 0; $contArq < count($chkArqAnexo); $contArq++)
       CopiaArquivo($chkArqAnexo[$contArq], $dir_arq);
-*/
-  $contArq = 0;
 
-  if(count($arquivosAnexos['name']) > 0)
-    for($contArq = 0; $contArq < count($arquivosAnexos['name']); $contArq++){
-      //$arquivosAnexos['name'][$contArq] = RetiraEspacoEAcentos($arquivosAnexos['name'][$contArq]);
-      $arquivosAnexos['name'][$contArq] = mb_convert_encoding($arquivosAnexos['name'][$contArq], "UTF-8", "ISO-8859-1");
-      
-    $destino = $dir_arq."/".$arquivosAnexos['name'][$contArq];   
-    $num = 0;	
-    $destinoAux = $destino;   
-      
-    $flag=true;  
-    while($flag){
-	  	if(ExisteArquivo($destinoAux)){	  		
-	  	  $num++;  		
-		  $destinoAux = explode("/", $destino);
-		  $tamCamArq = count($destinoAux);
-		  
-		  $nomeArq = $destinoAux[$tamCamArq-1];
-		  
-		  $nomeArq = explode(".", $nomeArq);
-		  $nomeArq[0] .= "(".$num.")";
-		  $nomeArq = implode(".", $nomeArq);
-		  $destinoAux[$tamCamArq-1] = $nomeArq;
-		  
-		  $destinoAux=implode("/",$destinoAux);
-	
-		  $flag= true;
-	  	}else{
-	  	  $destino = $destinoAux;
-	  	  $flag=false;
-	  	}
-      
-    }       
-    move_uploaded_file($arquivosAnexos['tmp_name'][$contArq], $destino);
-    chmod($dir_arq."/".$arquivosAnexos['name'][$contArq],0644);
+  /* Novos arquivos anexados (via input) */
+  if(count($arquivosAnexos['name']) > 0){
+  	for($contArq = 0; $contArq < count($arquivosAnexos['name']); $contArq++){
+      	$arquivosAnexos['name'][$contArq] = mb_convert_encoding($arquivosAnexos['name'][$contArq], "UTF-8", "ISO-8859-1");
+      	$destino = $dir_arq."/".$arquivosAnexos['name'][$contArq];   
+    	$num = 0;	
+    	$destinoAux = $destino;   
+        $flag=true;  
+	    while($flag){
+		  	if(ExisteArquivo($destinoAux)){	  		
+		  	  $num++;  		
+			  $destinoAux = explode("/", $destino);
+			  $tamCamArq = count($destinoAux);
+			  
+			  $nomeArq = $destinoAux[$tamCamArq-1];
+			  
+			  $nomeArq = explode(".", $nomeArq);
+			  $nomeArq[0] .= "(".$num.")";
+			  $nomeArq = implode(".", $nomeArq);
+			  $destinoAux[$tamCamArq-1] = $nomeArq;
+			  
+			  $destinoAux=implode("/",$destinoAux);
+		
+			  $flag= true;
+		  	}else{
+		  	  $destino = $destinoAux;
+		  	  $flag=false;
+		  	}
+      }       
+      move_uploaded_file($arquivosAnexos['tmp_name'][$contArq], $destino);
+      chmod($dir_arq."/".$arquivosAnexos['name'][$contArq],0644);
     }
+  }
+    
 }
 
 function UpgradeUsuarioRepetido($listaDestinatarios, $codUser, $cod_msg, $cod){

@@ -40,14 +40,14 @@
   ARQUIVO : cursos/aplic/correio/compor2.php
   ========================================================== */
 
-/* C�digo principal */
+/* Codigo principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
 
   include("correio.inc");
 
-  /* mime_lookup utiliza a fun��o RetornaDiretorio declarada em */
+  /* mime_lookup utiliza a funcao RetornaDiretorio declarada em */
   /* correio.inc                                                */
   include("mime_lookup.inc");
 
@@ -62,8 +62,8 @@
   $chkA       = $_POST['chkA'];
   $chkG       = $_POST['chkG'];
   $chkC       = $_POST['chkC'];
-  $chkArqAnexo = $_POST['chkArqAnexo'];
-  $arquivosAnexos = $_FILES['input_files'];
+  $chkArqAnexo = $_POST['chkArqAnexo']; //Arquivos ja anexados (checkbox)
+  $arquivosAnexos = $_FILES['input_files']; //Arquivos adicionados para anexo
   $nomesArquivosAnexos = $_POST['input_files'];
   $msgExterna = $_POST['msgExterna'];
 
@@ -76,16 +76,17 @@
   $diretorio_arq=RetornaDiretorio($sock,'Arquivos');
   $dir_curso=$diretorio_arq."/".$cod_curso;
 
+  /* Caso o tenha optado por Enviar copia para email externo */
   if ($msgExterna == 1){
 
-    /* Obt�m o hostname para ser colocado no dom�nio do rementente da mensagem */
+    /* Obtem o hostname para ser colocado no dominio do rementente da mensagem */
     /* do sendmail: remetente@host.                                            */
     $host = RetornaConfig($sock, "host");
     $raiz_www = RetornaDiretorio($sock, "raiz_www");
 
-    // $endere�o ser� utilizado para o rodap� do e-mail que notifica o
-    // usu�rio de que ele dever� responder a mensagem a partir da ferramenta
-    // Correio do TelEduc (endere�o para acesso direto ao TelEduc).
+    // $endereco sera utilizado para o rodape do e-mail que notifica o
+    // usuario de que ele devera responder a mensagem a partir da ferramenta
+    // Correio do TelEduc (endereco para acesso direto ao TelEduc).
     $endereco = $host.$raiz_www;
 
     $diretorio_temp=RetornaDiretorio($sock,'ArquivosWeb');
@@ -175,12 +176,15 @@
   }
 
   InsereMsgCorreioListaDestinos($sock, $codMsg, $destsCorreio, $contDest, $cod_usuario, $listaCod, $cod_curso);
-
+	
+  /* Se existem arquivos enviados via $_FILES (novos arquivos anexos)
+   * ou se existem arquivos anexos redirecionados (chkArqAnexo),
+   * anexa tais arquivos */
   if((is_array($_FILES) && (count($_FILES) != 0)) || ($_FILES != NULL) || ($chkArqAnexo != NULL)){
     AnexarArquivos($dir_curso, $dirArq, $arquivosAnexos, $chkArqAnexo);
   }
 
-/* Se o usuário selecionou a opção de envio para e-mail externo. */
+/* Se o usuario selecionou a opcao de envio para e-mail externo. */
   if (($userFormador) && ($msgExterna == 1)){
 
     if (ExisteArquivo($dirArq)){
@@ -199,11 +203,11 @@
     $mnomes = implode(',', $vetorNomeAux);
     $memail = implode(',', $vetorMailAux);
 
-    /* Obt�m os arquivos contidos na pasta. */
+    /* Obtem os arquivos contidos na pasta. */
 
     $lista_arq=RetornaArrayDiretorio($dir_temp);
 
-    /* Cria uma lista de arquivos v�lidos. */
+    /* Cria uma lista de arquivos validos. */
     if (count($lista_arq) > 0){
       $j = 0;
       foreach($lista_arq as $cod => $linha){

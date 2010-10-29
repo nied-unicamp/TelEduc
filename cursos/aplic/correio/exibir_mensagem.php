@@ -339,28 +339,29 @@
   echo("                    </td>\n");
   echo("                  </tr>\n");
 
-  /*tratamento de arquivos anexos*/
+  /* Arquivos anexos: 
+   * Se existem arquivos anexos (existe link pro arquivo no dir_temp)
+   * Mostra o link pros anexos no fim da mensagem */
   if($tem_arquivos){
     echo("                  <tr>\n"); 
     echo("                    <td class=\"alLeft\" colspan=\"2\">\n");
     /* 100 - Arquivos anexos */
     echo("                      <b>". RetornaFraseDaLista($lista_frases,100).":</b>\n");
     $listaArq = RetornaArrayDiretorio($dir_temp);
-
     if(count($listaArq) > 0){
-
-    foreach($listaArq as $cod => $linha){
-        $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
-        if($cod == 0){       	
-          echo("                      <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
-        }else{
-          echo("                      | <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
-        }
-      }
+		foreach($listaArq as $cod => $linha){
+	        $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
+	        if($cod == 0){       	
+	          echo("                      <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
+	        }else{
+	          echo("                      | <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
+	        }
+      	}
     }
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }
+  
   echo("                </table>\n");//fim da tabela tabelaMostraMensagem
 
   echo("              </td>\n");

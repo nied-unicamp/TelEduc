@@ -40,6 +40,15 @@
   ARQUIVO : cursos/aplic/correio/compor.php
   ========================================================== */
 
+/* =========================================================
+ * Flags definidas:
+ * Variavel $acao:
+ * $acao = NULL: compor nova mensagem
+ * $acao = 1: Responder
+ * $acao = 2: Responder para todos os destinatarios
+ * $acao = 3: Redirecionar
+   =========================================================*/
+
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("correio.inc");
@@ -78,7 +87,7 @@
 
   $codMsgAnt = $_GET['cod_msg_ant'];
   $acao = $_GET['acao'];
-
+  
   if($codMsgAnt){
     $linha=RetornaInfosMensagem($sock,$codMsgAnt);
     $codUsuarioAutorAnt = $linha['cod_usuario'];
@@ -89,17 +98,17 @@
   }
 
 
-
-/**
- * Funcao que tira o caminho do arquivo retornando soh o arquivo.
- */
-
- 
+/* **************** inicio funcoes javascript ***************************** */
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\">\n\n");
   echo("    var selec = '".$_GET['selec']."';\n");
 
+  /* ************************************************************************
+   * getfilename -  tira o caminho do arquivo retornando soh o arquivo
+   * Entrada: path - caminho do arquivo
+   * Saida: file - nome do arquivo
+   */
   echo("      function getfilename(path) {\n");
   echo("        var pieces=path.split('\\\\');\n");
   echo("        var n=pieces.length;\n");
@@ -110,6 +119,9 @@
   echo("        return(file);\n");
   echo("       }");
 
+  /* ************************************************************************
+   * MarcaOuDesmarcaTodos - 
+   */
   echo("      function MarcaOuDesmarcaTodos(tipoUser){\n");
   echo("        var i;\n");
   echo("        var flag;\n");
@@ -176,56 +188,76 @@
 
   echo("    function ArquivoValido(file)\n");
   echo("    {\n");
-  // Usando expressão regular para identificar caracteres inválidos
+ 			 /* Usando expressao regular para identificar caracteres invalidos */
   echo("			var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
   echo("			if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
   echo("				return false;\n");
   echo("      return true;\n");		
   echo("    }\n");
 
+  /* ************************************************************************
+   * EdicaoArq - funcao chamada ao selecionar um arq anexo
+   *       		 Remove o arquivo selecionado caso o mesmo seja invalido e da um alert
+   * Entrada:
+   * 	id_name: input_fie_
+   * 	id_num: num de identificacao do arquivo anexo (0,1,2,...)
+   * 
+   * Frase 141 (ferramenta 11):
+   */
   echo("    function EdicaoArq(id_name, id_num){\n");
-  echo("      var nomeArq,td,subpasta;\n");
-  echo("      nomeArq = getfilename(document.getElementById(id_name+id_num).value);\n");
-  echo("      if (ArquivoValido(nomeArq)){\n"); //OK
-  echo("      }\n");
-  echo("      else {\n");
+  echo("	  var num = id_num+'';\n"); 
+  echo("      var nomeArq = getfilename(document.getElementById(id_name+num).value);\n");
+  echo("      if (ArquivoValido(nomeArq) == false){\n");
   echo("		alert('".RetornaFraseDaLista($lista_frases, 141)."');\n");
   echo("		removeInputFile(id_num);\n");
   echo("      }\n");
   echo("    }\n\n");
 
+  /* ************************************************************************
+   * addInputFile - Cria os elementos de anexar arquivos (input) e remove o link "Anexar Arquivo"
+   * 			    Chamada ao clicar no link "Anexar Arquivo"
+   */
   echo("      function addInputFile(){\n");
   echo("        var num = many_arqs;\n");
   echo("        elementoDiv = document.getElementById('arquivos');\n");
   echo("        while(elementoDiv.lastChild.tagName!=\"IMG\")\n");
-  echo("          elementoDiv.removeChild(elementoDiv.lastChild);\n");
-  echo("        elementoDiv.removeChild(elementoDiv.lastChild);\n");
+  echo("          elementoDiv.removeChild(elementoDiv.lastChild);\n"); //remove "anexar arquivo"
+  echo("        elementoDiv.removeChild(elementoDiv.lastChild);\n"); // remove o clipes
+  				/* inputFile: caixa de selecao do arquivo anexo*/
   echo("        inputFile=document.createElement('input');\n");
   echo("        inputFile.setAttribute(\"type\", \"file\");\n");
   echo("        inputFile.setAttribute(\"size\", \"40\");\n");
   echo("        inputFile.setAttribute(\"name\", \"input_files[]\");\n");
-  echo("        inputFile.onchange = function() { EdicaoArq('input_file_', +num); };\n");
+  echo("        inputFile.onchange = function() { EdicaoArq('input_file_', num); };\n");
   echo("        inputFile.setAttribute(\"id\", \"input_file_\"+many_arqs);\n");
   echo("        inputFile.setAttribute(\"style\", \"border:2px solid #9bc; margin-left:65px;\");\n\n");
+  				/* Espaco */
   echo("        createSpace=document.createElement('span');\n");
   echo("        createSpace.setAttribute(\"id\", \"space_\"+many_arqs);\n");
   echo("        createSpace.innerHTML=\"&nbsp;&nbsp;&nbsp;\"\n");
+  				/* Span: botao Remover arquivo anexo
+   				* Frase 132 (ferramenta 11): Remover */
   echo("        createSpan = document.createElement('span');\n");
   echo("        createSpan.onclick = function() { removeInputFile(num); };\n");
   echo("        createSpan.setAttribute(\"id\", \"remover_arquivo_\"+many_arqs);\n");
   echo("        createSpan.className=\"link\";\n");
   echo("        createSpan.innerHTML=\"".RetornaFraseDaLista($lista_frases,132)."\";\n\n");
+  				/* Pula linha*/
   echo("        createBr = document.createElement('br');\n");
   echo("        createBr.setAttribute(\"id\", \"br_\"+many_arqs);\n\n");
+  				/* Imgaem do clips*/
   echo("        createImg = document.createElement('img');\n");
   echo("        createImg.setAttribute(\"src\", \"../imgs/paperclip.gif\");\n");
   echo("        createImg.setAttribute(\"border\", \"0\");\n");
   echo("        createImg.setAttribute(\"style\", \"margin-left:65px;\");\n\n");
+				/* Link Anexar Arquivo
+				* Frase 85 (ferramenta 11): Anexar arquivo */
   echo("        createSpan2 = document.createElement('span');\n");
   echo("        createSpan2.className=\"link\";\n");
   echo("        createSpan2.onclick = function (){ addInputFile(); };\n");
-  echo("        createSpan2.setAttribute(\"id\", \"anexar_arquivo\");\n");
+  echo("        createSpan2.setAttribute(\"id\", \"anexar_arquivo\");\n"); //removi sem querer?!
   echo("        createSpan2.innerHTML=\"".RetornaFraseDaLista($lista_frases,85)."\";\n\n");
+  				/* Adiciona novos elementos como ultimos filhos (no final): */
   echo("        elementoDiv.appendChild(inputFile);\n");
   echo("        elementoDiv.appendChild(createSpace);\n");
   echo("        elementoDiv.appendChild(createSpan);\n");
@@ -235,13 +267,20 @@
   echo("        many_arqs++;\n");
   echo("      }\n\n");
 
-
+  /* ************************************************************************
+   * submitForm - Verifica se o campo assunto e destinatarios estao ok,
+   * 				remove os campos dos arquivos anexos.
+   */
   echo("      function submitForm(){\n");
+ 				/* Se o assunto esta vazio, avisa ao usuario
+   				* Frase 43 (ferramenta 11): Voce n�o informou o assunto da correspondencia. */
   echo("        if(document.getElementById('assunto').value.replace(\" \", \"\")  == ''){\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases,43)."');\n");
   echo("          document.getElementById('assunto').focus();\n");
   echo("          return false;\n");
   echo("        }\n");
+ 				/* Verifica se ha algum destinatario selecionado, caso contrario, informa ao usuario
+   				* Frase 45 (ferramenta 11): Voce nao informou quem devera receber a correspondencia. */
   echo("        destOk = false;\n");
   echo("        tiposUsers = new Array();\n");
   echo("        tiposUsers = {0:'F', 1:'A', 2:'C', 3:'G'};\n");
@@ -255,6 +294,13 @@
   echo("          alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
   echo("          return false;\n");
   echo("        }\n");
+				/* Arquivos anexos:
+				 * Para cada arquivo em anexo diferente de vazio
+				 * Remove respectivamente os componentes:
+				 * 1. espaco o botao "Browse" e "Remover"
+				 * 2. link "Remover"
+				 * 3. o enter
+				 * 4. a caixa com o end do arquivo e o botao "Browse" */ 
   echo("        element=document.getElementsByName('input_files[]');\n");
   echo("        for (i=0; i<element.length; i++){\n");
   echo("          if((element[i].value)==\"\"){\n");
@@ -265,11 +311,13 @@
   echo("            i--;\n");
   echo("          }\n");
   echo("        }\n");
-  echo("        updateRTE('msg_corpo')\n");
+  /**/
+  echo("        updateRTE('msg_corpo');\n");
   echo("        return true;\n");
   echo("      }\n");
 
-  //Ao responder mensagem existe a possibilidade de Cancelar a resposta
+  /* Se trata-se da resposta de uma mensagem ou de redirecionamento, exite a opcao de CancelarMensagem
+   * voltando para a tela da mensagem anterior */
   if(isset($acao) && (($acao==1) || ($acao==2) || ($acao==3))){
     echo("      function CancelarMensagem(){\n");
     if(isset($_GET['selec'])){
@@ -295,7 +343,8 @@
   echo("      }\n");
 
   echo("    </script>\n");
-
+/* ******************** fim das funcoes javasript************************** */
+  
   echo("  </head>\n");
   echo("  <body onload=\"Iniciar();\"><br />\n");
   echo("    <table width=\"670\" border=0>\n");
@@ -371,10 +420,11 @@
 
   echo("                        <div id=\"arquivos\">\n");
 
+  // Redirecionar
   if ($acao==3){ 
     Desconectar($sock);
     $sock=Conectar("");
-    $diretorio_arq=RetornaDiretorio($sock,'Arquivos');
+    $diretorio_arq=RetornaDiretorio($sock,'Arquivos'); //SELECT `diretorio` FROM `Diretorio` WHERE `item`='Arquivos'
     $dir_arq_ant=$diretorio_arq."/".$cod_curso."/correio/".$cod_msg_ant."/";
     $dir_arq=$diretorio_arq."/".$cod_curso."/correio/".$cod_msg;
     $lista_arq=RetornaArrayDiretorio($dir_arq_ant);
@@ -382,12 +432,16 @@
     $sock=Conectar($cod_curso);
   }
 
+	/* Caso a mensagem seja uma resposta ou um redirecionamento, mostra os arquivos ja anexados na msgm anterior
+	 * 	$dir_arq_ant = diretorio onde estao os arquivos anexados na msgm anterior
+	 * 	$dir_arq_ant = [diretorio_onde_ficam_os_arquivos]/[cod_curso]/correio/[cod_msg_ant]/
+	 * 	$listaArq = array com os arquivos anexados na mensagem anterior*/
     $listaArq = RetornaArrayDiretorio($dir_arq_ant);
     if(count($listaArq) > 0){
-    $countArq = 0;
-    foreach($listaArq as $cod => $linha){
+    	$countArq = 0;
+    	foreach($listaArq as $cod => $linha){
           echo("                      <input type=\"checkbox\" id=\"chkArqAnexo\" name=\"chkArqAnexo[]\" value=".$linha['Caminho']." checked=\"checked\" style=\"margin-left:65px;\" /><a   href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=blank> ".$linha['Arquivo']." </a><br />\n");
-      }
+      	}
     }
 
   /*95 - Anexar Arquivo */

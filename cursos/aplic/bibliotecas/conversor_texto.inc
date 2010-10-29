@@ -356,9 +356,9 @@ function VerificaStringQuery($string)
 }
 
 /* *********************************************************************
-   VerificaNumeroQuery - Verifica se uma variavel contém mesmo um valor numérico
-   Entrada: $num - variável a ser verificada
-   Saida: Retorna a própria variavel se a mesma contiver um valor numérico; "" caso contrário.
+   VerificaNumeroQuery - Verifica se uma variavel contem mesmo um valor numerico
+   Entrada: $num - variavel a ser verificada
+   Saida: Retorna a propria variavel se a mesma contiver um valor numerico; "" caso contrario.
  */
 function VerificaNumeroQuery($num)
 {

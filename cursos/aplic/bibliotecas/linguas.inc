@@ -105,10 +105,13 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
 
   $cod_lingua=$_SESSION['cod_lingua_s'];
        
-  /* Se j�estiver em memoria, vai direto... */
+  /* Se ja estiver em memoria, vai direto... */
   if (isset($_SESSION['lista_frases_s'][$cod_ferramenta]) && count($_SESSION['lista_frases_s'][$cod_ferramenta])>0)
     return ($_SESSION['lista_frases_s'][$cod_ferramenta]); 
-
+  
+  /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)*/
+  if (is_null($cod_lingua))
+  	$cod_lingua = 1;
   $query = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
   $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
   $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta)." ";
@@ -215,6 +218,9 @@ function MemorizaListaDeFrases($sock, $cod_ferramenta)
 
   $cod_lingua=$_SESSION['cod_lingua_s'];
 
+  /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)*/
+  if (is_null($cod_lingua))
+  	$cod_lingua = 1;
   $query = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
   $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
   $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta)." ";
