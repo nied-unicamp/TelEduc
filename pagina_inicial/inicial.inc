@@ -555,7 +555,7 @@ function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
         //87 - Confirma√ß√£o de cadastro TelEduc
         
         $assunto = RetornaFraseDaLista($lista_frases_email, 87);
-        $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://$host$raiz_www/pagina_inicial/confirmacao.php?u=$cod_usuario&s=$sequencia</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+        $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a src='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
                  
         // 115 - NAO_RESPONDA
         $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
@@ -1009,12 +1009,14 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 	    // 89 - Caso contr·rio, favor desconsiderar esta mensagem.
 	    // 78 - Atenciosamente
 	    // 03 - Ambiente de AdministraÁ„o do TelEduc
-	    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p>";
-	    $mensagem.= "<p>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?";
-	    $mensagem.= "u=".$dados_usuario['cod_usuario']."&s=".$sequencia."</p>";
-	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 89)."</p>";
-	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 78).",</p>";
-	    $mensagem.= "<p>".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+	    
+	    $mensagem  = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p>";
+	    $mensagem .= "<p>";
+	    $mensagem .= "<a src='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."</a>";
+	    $mensagem .= "</p>";
+	    $mensagem .= "<p>".RetornaFraseDaLista($lista_frases_email, 89)."</p>";
+	    $mensagem .= "<p>".RetornaFraseDaLista($lista_frases_email, 78).",</p>";
+	    $mensagem .= "<p>".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
 	    
 	    // 115 - NAO_RESPONDA
 	    $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
@@ -1108,7 +1110,7 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     //87 - Confirma√ß√£o de cadastro TelEduc
     $assunto = RetornaFraseDaLista($lista_frases_email, 87);
     
-    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p>http://$host$raiz_www/pagina_inicial/confirmacao.php?u=$cod_usuario&s=$sequencia</p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a src='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
     
     /*
     // 74 - Bem-Vindo ao TelEduc!

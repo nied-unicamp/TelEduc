@@ -578,9 +578,6 @@ function CadastrarUsuario($sock,$cod_curso,$dados, $lista_frases, $cod_usuario)
   /* 68 - e sua senha �*/
   $mensagem.=RetornaFraseDaLista($lista_frases,68)." <big><em><strong>".$dados['senha']."</strong></em></big></p>\n";
 
-  /* 249 - Esse login e senha são únicos para todos cursos em que for escrito no endereço  */
-  $mensagem.="<p>".RetornaFraseDaLista($lista_frases,249)."<a href=\"http://".$host.$raiz_www."\">http://".$host.$raiz_www."</a></p>\n";
-
   /* 252 - Para acessar o curso basta ir ao endereço  */
   $mensagem.="<p>".RetornaFraseDaLista($lista_frases,252)."<br />\n";
 
