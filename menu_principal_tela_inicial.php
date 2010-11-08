@@ -82,7 +82,7 @@
    */
   if(empty($_SESSION['login_usuario_s']))
   {
-    echo("          <map title=\"Menu de idiomas\"><ul id=\"nav3nivel\" style=\"position: fixed; right: 17px;\">\n");
+    echo("          <map title=\"Menu de idiomas\"><ul id=\"nav3nivel\" class=\"PosicaoBandeiras\">\n");
     $lista=ListaLinguas($sock);
     foreach($lista as $cod_lin => $lingua)
     {
