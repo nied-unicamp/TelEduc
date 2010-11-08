@@ -146,6 +146,9 @@ span.avaliada {color:red;font-weight:bold;}
 input.link { cursor:pointer; color:#2a6686; width:70px;}
 input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
 
+input.valorExemplo {border:2px solid #99BBCC; color:Gray; font-style:italic;}
+input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204);}
+
 #mudarFonte { position:absolute; top:133px; *top:160px; _top:133px; right:18px; _right:6px; }
 
 #mudarFonte a { color:#3f6aa0; font-weight:bold; text-decoration:underline; }
