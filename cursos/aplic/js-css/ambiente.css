@@ -95,6 +95,10 @@ PADDING-TOP: 2px;
 /* border: 1px solid; */
             }
 
+ul.PosicaoBandeiras{
+position:absolute;
+right:17px;
+}
 
 /* -------------------------------------------
 	ESTRUTURA
