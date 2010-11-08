@@ -9,6 +9,7 @@ include 'instalacao.inc';
 
 session_start("instalacao_teleduc4");
 
+$console = "";
 $content = "";
 if (!isset($_POST['etapa'])){
 	$etapa = 0;
@@ -16,50 +17,72 @@ if (!isset($_POST['etapa'])){
 	$etapa = $_POST['etapa'];
 }
 
+/* Monta o console com as mensagens de acordo com as etapas concluidas */
+if ($etapa > 1){
+	$console .= "<p class=feedbackp>A diretiva register_globals está habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O módulo php-mysql está instalado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+}
+if ($etapa > 2){
+	$console .= "<p class=feedbackp>O banco de dados foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O banco de dados foi inicializado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O arquivo de configuração teleduc.inc foi criado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+}
+	
+if ($etapa > 3){
+	$console .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+}	
+	
+
 if ($etapa == 0){
 	$content_header = "Bem-Vindo à Instalação do TelEduc4!";
 
-	$content .= "<p>Bem vindo à instalação do ambiente TelEduc4!</p>";
 	$content .= "<p>Recomendamos a leitura do manual de instalação(link) antes de começar.</p>";
 	$content .= "<p>Nele estão cobertos todos os tipos de instalação possíveis para o ambiente.</p>";
 	$content .= "<p>Nas próximas etapas serão pedidas informações à respeito do servidor onde está sendo instalado o ambiente.</p>";
-	$content .= "<p>O uso do navegador Mozilla Firefox (link) é recomendado para a instalação e o uso do TelEduc4.</p>";
+	
 	$content .= "<br /><br />";
+	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<input class='form' type=hidden name=etapa value='1'/><br />";
 	$content .= "<input type=submit value='Instalar o TelEduc' class='form'/><br />";
+	$content .= "</div>";
 
 } else if ($etapa == 1){
 
 	/* Erro na Instalacao */
 	if (!VerificaRegisterGlobals()){
 
-		$content_header = "Erro na Instalação: A diretiva register_globals está desativada.";
+		$content_header = "Não foi possível continuar com a instalação.";
+		
+		$console .= "<p class=feedbackp>A diretiva register_globals está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
-		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita que a diretiva register_globals esteja ligada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita que a diretiva register_globals esteja ligada.</p>";
 		$content .= "<p>Para isso, edite o arquivo de configuração do php (/etc/php.ini normalmente) e mude para:</p>";
 		$content .= "<p>register_globals = On</p>";
 
 		$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, contate o seu host sobre</p>";
 		$content .= "<p>a possibilidade da alteração da diretiva register_globals.</p>";
 		
+		$content .= "<div class=formulario>";
 		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 		$content .= "<input type='button' value='Tentar Novamente' class='form' onClick='history.go(0)'>";
+		$content .= "</div>";
 		include 'template_instalacao.php';
 		exit();
 
 	} else {
 		
-		$content .= "<p class=feedbackp>A diretiva register_globals está habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+		$console .= "<p class=feedbackp>A diretiva register_globals está habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 		
 	}
 
 	/* Erro na Instalacao */
 	if (!VerificaPHPMysql()){
 
-		$content_header = "Erro na Instalação: Módulo php-mysql não encontrado.";
+		$content_header = "Não foi possível continuar com a instalação.";
 		
-		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita do módulo php-mysql. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		$console .= "<p class=feedbackp>O módulo php-mysql não foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		
 		$content .= "<p>A instalação pode ser feita através da linha de comando:</p>";
 
 		$content .= "<p>yum install php-mysql # No caso do Fedora ou</p>";
@@ -67,18 +90,20 @@ if ($etapa == 0){
 
 		$content .= "<p>Ou a ação equivalente na distribuição utilizada no servidor.</p>";
 		
-		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente class='form' onClick='history.go(0)'>";
+		$content .= "<div class=formulario>";
+		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'><br />";
+		$content .= "<input type='button' value='Tentar Novamente' class='form' onClick='history.go(0)'>";
+		$content .= "</div>";
 		include 'template_instalacao.php';
 		exit();
 
 	} else {
 		
-		$content .= "<p class=feedbackp>O modulo php-mysql está instalado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+		$console .= "<p class=feedbackp>O módulo php-mysql está instalado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	
 	}
 	
-	$content_header = "Etapa 1 de 4 - Banco de Dados e Arquivo de Configuração";
+	$content_header = "Banco de Dados e Arquivo de Configuração <span class=etapa>Etapa 1 de 4</span>";
 
 	$content .= "<p>O TelEduc 4 utiliza um banco de dados principal para manter as configurações, dados dos cursos e dos usuáios, e</p>";
 	$content .= "<p>também um banco de dados para cada curso. O nome dos bancos de dados para os curso é composto da seguinte maneira:</p>";
@@ -89,6 +114,7 @@ if ($etapa == 0){
 	$content .= "<p>estão corretas antes de colocar o ambiente em produção.</p>";
 	
 	$content .= "<br /><br />";
+	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<label class='form' for=dbname>Nome do Banco de Dados Principal</label>";
 	$content .= "<input class='form' size=25 type=text name=dbname value='".(isset($_SESSION['dbname']) ? $_SESSION['dbname'] : 'TelEduc4')."'/><br />";
@@ -105,6 +131,7 @@ if ($etapa == 0){
 	$content .= "<input class='form' type=hidden name=etapa value='2'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
+	$content .= "</div>";
 
 } else if ($etapa == 2){
 	
@@ -120,15 +147,21 @@ if ($etapa == 0){
 
 		/* Erro na Instalacao */
 		if (!CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
-			$content_header = "Erro: Não foi possível criar o banco de dados principal.";
 			
-			$content .= "<p>Não foi possível criar o banco de dados principal. Verifique o nome de usuário e senha do banco de dados. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			$content_header = "Não foi possível continuar com a instalação.";
+		
+			$console .= "<p class=feedbackp>Não foi possível criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			
+			$content .= "<p>Não foi possível criar o banco de dados principal. Verifique o nome de usuário e senha do banco de dados.</p>";
 			$content .= "<p>Em caso de instalação com banco de dados remoto, verifique se não há algum firewall impedindo a conexão,</p>";
 			$content .= "<p>e se foi dada a permissão correta para a conexão remota. O erro exibido pelo MySQL foi:</p>";
-			$content .= "<p>".mysql_error()."</p>";
+			$content .= "<pre>".mysql_error()."</pre>";
 			
+			$content .= "<div class=formulario>";
 			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
+			$content .= "</div>";
+			
 			include 'template_instalacao.php';
 			exit();
 		} else {
@@ -138,11 +171,11 @@ if ($etapa == 0){
 		}
 	}
 	
-	$content .= "<p class=feedbackp>O banco de dados foi criado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O banco de dados foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	InicializaBD($sock);
 	
-	$content .= "<p class=feedbackp>O banco de dados foi inicializado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O banco de dados foi inicializado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	
 
 	if (!VerificaExistenciaArq("../cursos/aplic/bibliotecas/teleduc.inc")){
@@ -150,15 +183,20 @@ if ($etapa == 0){
 
 		/* Erro na Instalacao */
 		if ($conteudo !== true){
-			$content_header = "Erro: Não foi possível criar o teleduc.inc";
+			
+			$content_header = "Não foi possível continuar com a instalação.";
+		
+			$console .= "<p class=feedbackp>Não foi possível criar o arquivo de configuração. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
 			$content .= "<p>Não foi possível criar o arquivo de configuração teleduc.inc <img src='../cursos/aplic/imgs/errado.png'></p>";
 			$content .= "<p>Corrija as permissões do diretório cursos/aplic/bibliotecas ou então crie manualmente</p>";
 			$content .= "<p>o arquivo teleduc.inc na pasta cursos/aplic/bibliotecas com o seguinte conteúdo:</p>";
 			
+			$content .= "<div class=formulario>";
 			$content .= "<textarea cols='70' rows='15'>".str_replace(";",";\n",$conteudo)."</textarea>";
 			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
+			$content .= "</div>";
 			include 'template_instalacao.php';
 			exit();
 		}
@@ -166,9 +204,9 @@ if ($etapa == 0){
 	
 	
 	
-	$content .= "<p class=feedbackp>O arquivo de configuração teleduc.inc foi criado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>O arquivo de configuração teleduc.inc foi criado. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
-	$content_header = "Etapa 2 de 4 - Host e Diretórios";
+	$content_header = "Servidor e Diretórios <span class=etapa>Etapa 2 de 4</span>";
 
 	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do teleduc,</p>";
 	$content .= "<p>que podem ser verificados no próprio endereço: http://nome-do-servidor/caminho/do/teleduc/instalacao</p>";
@@ -178,6 +216,7 @@ if ($etapa == 0){
 	$content .= "<p>para o correio externo dos usuários.</p>";
 
 	$content .= "<br /><br />";
+	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<label class='form' for=host>Servidor do TelEduc</label>";
 	$content .= "<input type=text size=25 class='form' name=host value='".$_SERVER['SERVER_NAME']."'/><br />";
@@ -190,10 +229,11 @@ if ($etapa == 0){
 	$content .= "<input type=hidden name=etapa value='3'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
+	$content .= "</div>";
 
 } else if ($etapa == 3){
 
-	$content_header = "Etapa 3 de 4 - Administrador do Ambiente";
+	$content_header = "Administrador do Ambiente <span class=etapa>Etapa 3 de 4</span>";
 
 	/*
 	 2a Etapa:
@@ -206,13 +246,14 @@ if ($etapa == 0){
 
 	RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail);
 	
-	$content .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	$content .= "<p>A conta do Administrador do Ambiente (nome de usuário: admtele) será utilizada para gerenciar a abertura</p>";
 	$content .= "<p>de cursos e o ambiente em geral. O Administrador tem acesso irrestrito a todos</p>";
 	$content .= "<p>os cursos, pode inscrever e remover usuários do Ambiente entre outras funcionalidades.</p>";
 
 	$content .= "<br /><br />";
+	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<label class='form' for=admtele_nome>Nome do Administrador do Ambiente</label>";
 	$content .= "<input type=text size=25 class='form' name=admtele_nome value='Nome Sobrenome'/><br />";
@@ -223,6 +264,7 @@ if ($etapa == 0){
 	$content .= "<input type=hidden name=etapa value='4'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
+	$content .= "</div>"; 
 
 
 
@@ -238,10 +280,10 @@ if ($etapa == 0){
 
 	RegistraDadosAdmtele($sock, $admtele_nome, $admtele_email, $admtele_senha);
 	
-	$content .= "<p class=feedbackp>As configurações do administrador do sistema (admtele) foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>As configurações do administrador do sistema (admtele) foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	
-	$content_header = "Etapa 4 de 4 - Fim da Instalação";
+	$content_header = "Fim da Instalação <span class=etapa>Etapa 4 de 4</span>";
 	
 	$content .= "<br /><br />";
 	$content .= "<p>OK terminou, só falta gravar as coisas no cron</p>";

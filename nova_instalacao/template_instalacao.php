@@ -11,6 +11,10 @@
 		<div class="content-header">
 			<p><?php echo $content_header;?></p>
 		</div>
+		<div class="console">
+			<p id="console-header"><?php echo($console == "" ? "O progresso da instalação será exibido aqui." : "Progresso da Instalação"); ?></p>
+			<?php echo $console;?>
+		</div>
 		<div class="content">
 			<p><?php echo $content;?></p>
 		</div>

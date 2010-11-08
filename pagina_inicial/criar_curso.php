@@ -456,11 +456,11 @@
    	 }
   $instituicao=RetornaDadosIntituicao($sock);
 
-  if ($curso_form == "nao"){
+  if ($curso_form != "sim"){
   		   echo("                  <tr class=\"head\">\n");
     	   /* 58 - Se voc� deseja utilizar o ambiente TelEduc para realizar um curso a dist�ncia, entre em contato com os respons�veis pelo ambiente. */
     	   /* 59 - O curso ser� realizado com a autoriza��o destes e ser� hospedado no servidor do(a) */
-    	   echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases, 58).RetornaFraseDaLista($lista_frases,59)." ".$instituicao['nome']."</td>\n");
+    	   echo("                    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases, 58)."<br />".RetornaFraseDaLista($lista_frases,59)." ".$instituicao['nome']."</td>\n");
     	   echo("                  </tr>\n");
            $lista=RetornaContatos($sock);
     	   echo("                  <tr class=\"head01\">\n");

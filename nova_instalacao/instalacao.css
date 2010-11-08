@@ -7,7 +7,11 @@ body {
 	background: url("../cursos/aplic/imgs/fdoBody.gif") repeat-x;
 	font-family: Arial,Verdana,Trebuchet MS;
 	font-size: 1em;
-}		
+}	
+
+span.etapa {
+	float: right;
+}	
 
 #logo {
 	float: left;
@@ -29,7 +33,7 @@ h1 {
 }
 
 .container {
-	width: 800px;
+	width: 1010px;
 	margin-left: 10px;
 	
 }
@@ -43,9 +47,28 @@ h1 {
 	margin:0 auto;
 	position:relative;
 	top:30px;
-	width:791px;
-	padding: 5px;
+	width:590px;
+	padding: 10px;
 	border: 5px solid #DCDCDC;
+}
+
+.console {
+	background-color:#F9F9FF;
+	border:2px solid #658CBC;
+	color:#454545;
+	float:right;
+	height:auto;
+	left:3px;
+	margin:0 28px 0 auto;
+	padding:5px;
+	position:relative;
+	top:31px;
+	width:337px;
+}
+
+#console-header {
+	text-align: center;
+	margin-bottom: 3px;
 }
 
 .content-header {
@@ -57,7 +80,7 @@ h1 {
 	margin:0 auto;
 	position:relative;
 	top:20px;
-	width:801px;
+	width:973px;
 	padding: 5px;
 	font-weight: bold;
 }
@@ -84,7 +107,7 @@ h1 {
 
 input.form{
 	text-align: left;
-	margin: 0px 10px 10px 320px;
+	margin: 0px 10px 10px 310px;
 	border:2px solid #99BBCC;
 	padding: 3px;
 	font-size: 0.9em;
@@ -99,7 +122,7 @@ input.formtn{
 }
 
 label {
-	width:310px;
+	width:300px;
 	text-align: right;
 	position: absolute;
 }
