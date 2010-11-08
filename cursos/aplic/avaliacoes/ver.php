@@ -60,9 +60,6 @@
 
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
-
-
-  
   
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;

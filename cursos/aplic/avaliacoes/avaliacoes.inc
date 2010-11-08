@@ -3931,23 +3931,23 @@ function EditarTitulo($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
   
   if(!strcmp($ferramenta,'B'))
   {
-    $query="update Batepapo_assuntos set titulo='".htmlentities($novo_nome)."' where cod_assunto=".$cod_atividade;
+    $query="update Batepapo_assuntos set titulo='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
   }
   elseif(!strcmp($ferramenta,'F'))
   {
-    $query="update Forum set titulo='".htmlentities($novo_nome)."' where cod_forum=".$cod_atividade;
+    $query="update Forum set titulo='".VerificaStringQuery($novo_nome)."' where cod_forum=".$cod_atividade;
   }
   elseif(!strcmp($ferramenta,'E'))
   {
-    $query="update Exercicios_modelo set titulo='".htmlentities($novo_nome)."' where cod_exercicio=".$cod_atividade;
+    $query="update Exercicios_modelo set titulo='".VerificaStringQuery($novo_nome)."' where cod_exercicio=".$cod_atividade;
   }
   elseif(!strcmp($ferramenta,'N'))
   {
-    $query="update Avaliacao_externa set titulo='".htmlentities($novo_nome)."' where codigo=".$cod_atividade;
+    $query="update Avaliacao_externa set titulo='".VerificaStringQuery($novo_nome)."' where codigo=".$cod_atividade;
   }   
   else
   {
-    $query="update Atividade_itens set titulo='".htmlentities($novo_nome)."' where cod_item=".$cod_atividade;
+    $query="update Atividade_itens set titulo='".VerificaStringQuery($novo_nome)."' where cod_item=".$cod_atividade;
   }
   
   $res=Enviar($sock, $query);
@@ -3956,7 +3956,7 @@ function EditarTitulo($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
 
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_atividade, "className", "novoitem");
-  $objResponse->addAssign("tit_".$cod_atividade, "innerHTML", htmlentities($novo_nome));
+  $objResponse->addAssign("tit_".$cod_atividade, "innerHTML", VerificaStringQuery($novo_nome));
   $objResponse->addAssign("tit_".$cod_atividade, "className", "linkTexto");
   $objResponse->addEvent("tit_".$cod_atividade, "onClick", "AlteraTitulo('".$cod_atividade."');");
 
@@ -4021,30 +4021,30 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
     /*Atualiza o titulo*/
     if(!strcmp($ferramenta,'B'))
     {
-      $query="update Batepapo_assuntos set ".$campo."='".htmlentities($novo_nome)."' where cod_assunto=".$cod_atividade;
+      $query="update Batepapo_assuntos set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
     }
     elseif(!strcmp($ferramenta,'F'))
     {
     	if ($campo == 'titulo') $campo = 'nome';
-      $query="update Forum set ".$campo."='".htmlentities($novo_nome)."' where cod_forum=".$cod_atividade;
+      $query="update Forum set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_forum=".$cod_atividade;
     }
     elseif(!strcmp($ferramenta,'E'))
     {
-      $query="update Exercicios_modelo set ".$campo."='".htmlentities($novo_nome)."' where cod_exercicio=".$cod_atividade;
+      $query="update Exercicios_modelo set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_exercicio=".$cod_atividade;
     }
     elseif(!strcmp($ferramenta,'N'))
     {
-      $query="update Avaliacao_externa set ".$campo."='".htmlentities($novo_nome)."' where codigo=".$cod_atividade;
+      $query="update Avaliacao_externa set ".$campo."='".VerificaStringQuery($novo_nome)."' where codigo=".$cod_atividade;
     }   
     else
     {
-      $query="update Atividade_itens set ".$campo."='".htmlentities($novo_nome)."' where cod_item=".$cod_atividade;
+      $query="update Atividade_itens set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_item=".$cod_atividade;
     }
   }
   else
   {
     /*Atualiza a nota*/
-    $query="update Avaliacao set valor='".htmlentities($novo_nome)."' where cod_avaliacao=".$cod_avaliacao;
+    $query="update Avaliacao set valor='".VerificaStringQuery($novo_nome)."' where cod_avaliacao=".$cod_avaliacao;
     
     /* Feedback é sempre bom né? */
     $cod_ferramenta = 22;
@@ -4060,7 +4060,7 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
 
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_atividade, "className", "novoitem");
-  $objResponse->addAssign($tag."_".$cod_atividade, "innerHTML", htmlentities($novo_nome));
+  $objResponse->addAssign($tag."_".$cod_atividade, "innerHTML", VerificaStringQuery($novo_nome));
   $objResponse->addAssign($tag."_".$cod_atividade, "className", "linkTexto");
   $objResponse->addEvent($tag."_".$cod_atividade, "onClick", "AlteraCampo('".$tag."','".$cod_atividade."');");
 
@@ -4114,10 +4114,7 @@ function EditarTexto ($cod_curso, $cod_atividade, $novo_nome, $cod_usuario, $cod
 
   $cod_lingua = (int) $_SESSION['cod_lingua_s']; /* Utilizado pra pegar a frase do feedback */
   
-  $novo_nome=ConverteAspas2BarraAspas($novo_nome);
-
-  $novo_nome=EliminaScript($novo_nome);
-  $novo_nome=LimpaConteudo($novo_nome);
+  $novo_nome = VerificaStringQuery($novo_nome);
 
   /*Atualiza objetivos*/
   if($id == "text_obj"){
