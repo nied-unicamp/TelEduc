@@ -104,22 +104,7 @@
   }
 
   
-  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-  echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-  echo("<html lang=\"pt\">\n");
-  echo("  <head>\n");
-  echo("    <title>TelEduc</title>\n");
-  echo("    <meta name=\"robots\" content=\"follow,index\" />\n");
-  echo("    <meta name=\"description\" content=\"\" />\n");
-  echo("    <meta name=\"keywords\" content=\"\" />\n");
-  echo("    <meta name=\"owner\" content=\"\" />\n");
-  echo("    <meta name=\"copyright\" content=\"\" />\n");
-  echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
-  echo("    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />\n");
-  echo("    <link href=\"../cursos/aplic/js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/js-css/jscript.js\"></script>\n");
-  echo("    <link href=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/js-css/dhtmlgoodies_calendar.js\"></script>\n");
+  include("../topo_tela_inicial.php");
   
   echo("    <script type=\"text/javascript\">\n\n");
 

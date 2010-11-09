@@ -60,6 +60,17 @@ function AdmiteVisitante($sock,$cod_curso)
     return false;
 }
 
+/* RetornaCSSInline - Dado um array de arquivos css, retorna seu conteudo inline */
+function RetornaCSSInline($estilos_css){
+	$inline = "";
+	
+	foreach($estilos_css as $css){
+		$inline .= file_get_contents($css);
+	}
+	
+	return $inline;
+}
+
 /* *********************************************************************
    RetornaListaFerramentas - Retorna a lista de ferramentas
    Entrada: $sock - BASE EXTERNA

@@ -42,8 +42,12 @@
   
   /* Rodap� */
   echo("      <tr>\n");
-  echo("        <td valign=\"bottom\" height=\"80\">");
-  echo("		</td>\n");
+  
+  if(!$SalvarEmArquivo){
+	  echo("        <td valign=\"bottom\" height=\"80\">");
+	  echo("		</td>\n");
+  }
+  
   echo("        <td valign=\"bottom\" id=\"rodape\"> ");
   /*	Para fins de SEO existe um random que alterna o alt e title da imagem do teleduc  */
   if(rand(1,2) == 1){
@@ -56,9 +60,13 @@
   echo("		</td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td valign=\"bottom\">");
-  echo("		</td>\n");
-  echo("        <td valign=\"bottom\" id=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+  
+  if(!$SalvarEmArquivo){
+	  echo("        <td valign=\"bottom\">");
+	  echo("		</td>\n");
+  }
+  
+  echo("       <td valign=\"bottom\" id=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 
