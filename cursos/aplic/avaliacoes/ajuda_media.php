@@ -76,7 +76,7 @@
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
   echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
   
-  if (isset($SalvarEmArquivo))
+  if ($SalvarEmArquivo)
   {
     echo("    <style>\n");
     include "../teleduc.css";

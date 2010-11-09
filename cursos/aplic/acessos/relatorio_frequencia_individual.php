@@ -69,8 +69,6 @@
   $lista_ferramentas=$tela_lista_ferramentas;
   $ordem_ferramentas=$tela_ordem_ferramentas;
 
-
-  $SalvarEmArquivo = isset($SalvarEmArquivo);
   if (!$SalvarEmArquivo)
   {
   	echo("    <script type=\"text/javascript\">\n");

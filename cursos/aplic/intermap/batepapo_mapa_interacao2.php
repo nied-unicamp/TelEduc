@@ -120,7 +120,7 @@
     /* 14 - Imprimir (geral) */
     echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       /* 22 - Salvar Em Arquivo */
       echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
@@ -141,7 +141,7 @@
 
   if ($apresentacao=="tabela")
   {
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       // 78 - Visualizar:
       echo("          <td width=30%>".RetornaFraseDaLista($lista_frases,78)."</td>\n");
@@ -171,7 +171,7 @@
 
   if ($apresentacao=="tabela")
   {
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       echo("          <td>\n");
       $checked="";

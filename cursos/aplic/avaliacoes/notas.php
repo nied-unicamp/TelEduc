@@ -78,7 +78,7 @@
   echo("    <script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
 
-  if (isset($SalvarEmArquivo))
+  if ($SalvarEmArquivo)
   {
     echo("  <style>\n");
     include "../teleduc.css";
@@ -1244,7 +1244,7 @@
 
     foreach ($lista_avaliacoes as $cod => $linha)
     {
-      if (! isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         $a1 = "<a href=# onClick='AdicionarLegenda(\"".$linha['Ferramenta'].$cont++."\",".$linha['Cod_avaliacao'].");')>";
         $a2 = "</a>";
@@ -1387,7 +1387,7 @@ $sock = MudarDB($sock, $cod_curso);
         
         echo("                  <tr id=\"tr_aluno_".$cod."\">\n");
         echo("                    <td align=left>"."&nbsp;&nbsp;");
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
           echo("<a href=# onClick=return(AbrePerfil(".$cod."));>".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
@@ -1429,7 +1429,7 @@ $sock = MudarDB($sock, $cod_curso);
               $marcaib="";
               $marcafb="";
               echo("                    <td align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
                   echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1445,7 +1445,7 @@ $sock = MudarDB($sock, $cod_curso);
               echo("                    <td align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
                     echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1459,7 +1459,7 @@ $sock = MudarDB($sock, $cod_curso);
               }
               elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
                     echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1486,7 +1486,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              $marcaib="";
 	              $marcafb="";
 	              echo("                    <td align=center>");
-	              if (!isset($SalvarEmArquivo))
+	              if (!$SalvarEmArquivo)
 	              {
 	                if (strcmp($linha['Ferramenta'],'P'))
 	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1502,7 +1502,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              echo("                    <td align=center>");
 	              if (!strcmp($tipo_compartilhamento,'T'))
 	              {
-	                if (!isset($SalvarEmArquivo))
+	                if (!$SalvarEmArquivo)
 	                {
 	                  if (strcmp($linha['Ferramenta'],'P'))
 	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1516,7 +1516,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              }
 	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
 	              {
-	                if (!isset($SalvarEmArquivo))
+	                if (!$SalvarEmArquivo)
 	                {
 	                  if (strcmp($linha['Ferramenta'],'P'))
 	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1567,7 +1567,7 @@ $sock = MudarDB($sock, $cod_curso);
         {
           echo("                  <tr id=\"tr_formador_".$cod."\">\n");
           echo("                    <td align=left>"."&nbsp;&nbsp;");
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
             echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
           else
             echo($nome."</td>\n");
@@ -1611,7 +1611,7 @@ $sock = MudarDB($sock, $cod_curso);
               $marcaib="";
               $marcafb="";
               echo("                    <td  align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
                   echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));>");
@@ -1634,7 +1634,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              $marcaib="";
 	              $marcafb="";
 	              echo("                    <td align=center>");
-	              if (!isset($SalvarEmArquivo))
+	              if (!$SalvarEmArquivo)
 	              {
 	                if (strcmp($linha['Ferramenta'],'P'))
 	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1650,7 +1650,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              echo("                    <td align=center>");
 	              if (!strcmp($tipo_compartilhamento,'T'))
 	              {
-	                if (!isset($SalvarEmArquivo))
+	                if (!$SalvarEmArquivo)
 	                {
 	                  if (strcmp($linha['Ferramenta'],'P'))
 	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1664,7 +1664,7 @@ $sock = MudarDB($sock, $cod_curso);
 	              }
 	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
 	              {
-	                if (!isset($SalvarEmArquivo))
+	                if (!$SalvarEmArquivo)
 	                {
 	                  if (strcmp($linha['Ferramenta'],'P'))
 	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
@@ -1880,7 +1880,7 @@ $sock = MudarDB($sock, $cod_curso);
   }
   echo("          </form>\n");
 
-  if (($usr_formador) && (!isset($SalvarEmArquivo)))
+  if (($usr_formador) && (!$SalvarEmArquivo))
   {
     /* Altera Expressao */
     $sock = MudarDB($sock, $cod_curso);

@@ -74,7 +74,7 @@
   ==================
   */
 
-   if (!isset($SalvarEmArquivo))
+   if (!$SalvarEmArquivo)
   {
     echo("    <script type=\"text/javascript\">\n");
 

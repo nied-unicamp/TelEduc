@@ -66,9 +66,6 @@
   include("../topo_tela.php");
   $cod_ferramenta = $_GET['cod_ferramenta_relatorio'];
 
-
-
-  $SalvarEmArquivo = isset($SalvarEmArquivo);
   if (!$SalvarEmArquivo)
   {
   	echo("    <script type=\"text/javascript\">\n");

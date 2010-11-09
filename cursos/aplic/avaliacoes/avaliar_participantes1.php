@@ -130,7 +130,7 @@
   echo("      var cod_avaliacao='".$cod_avaliacao."';\n");
   echo("      var tela_avaliacao='".$tela_avaliacao."';\n");
 
-  if (isset($SalvarEmArquivo))
+  if ($SalvarEmArquivo)
   {
     echo("<style>\n");
     include("../teleduc.css");

@@ -166,7 +166,7 @@
 
   echo("  </script>\n");
   
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("    <script type=\"text/javascript\">\n");
 
@@ -223,7 +223,7 @@
   echo("      <tr>\n");
   echo("        <td valign=\"top\" colspan=\"3\">\n");
   
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("          <form name=\"ajuda1\" method=\"post\" action=\"\">\n");
     echo("            <ul class=\"btAuxTabs\">\n");
@@ -351,7 +351,7 @@
   echo("      <tr>\n");
   
   echo("        <td valign=\"bottom\" colspan=\"3\">\n");
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("          <form name=\"ajuda2\" method=\"post\" action=\"\">\n");
     echo("            ".RetornaSessionIDInput());

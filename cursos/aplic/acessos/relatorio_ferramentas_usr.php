@@ -62,7 +62,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
   
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("      function ImprimirRelatorio()\n");
     echo("      {\n");
@@ -107,7 +107,7 @@
   echo("      <tr>\n");
   echo("        <td colspan=3 valign=\"top\">\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
     echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
@@ -163,7 +163,7 @@
   $infos_user = RetornaInfosUsuario($sock,$cod_curso, $usuario);
 
   $lista_acessos = RetornaAcessosFerramentasUsuario($sock,$usuario,$hora_iniUT,$hora_fimUT);
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     $link_perfil_abre = "<span class=\"link\" onClick=return(AbrePerfil(".$usuario."));>";
     $link_perfil_fecha= "</span>";

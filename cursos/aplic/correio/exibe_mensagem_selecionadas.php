@@ -297,7 +297,7 @@
     }
     foreach ($listaDest as $k)
     {
-      if (isset ($SalvarEmArquivo) || (false == $k ['status']) ){
+      if ($SalvarEmArquivo || (false == $k ['status']) ){
         // Salvar em arquivo ou destinatario eh 'todos <alguma coisa>' ==> Sem link
         $link_abre  = "<font class=text>";
         $link_fecha = "</font>";

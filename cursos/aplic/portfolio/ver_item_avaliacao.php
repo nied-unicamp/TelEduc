@@ -216,7 +216,7 @@
 
   echo("    <form name=frmItens method=post>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
       /* 50 - Salvar em Arquivo (geral) */
       echo("  <li><span onClick='SalvarItemAvaliacao();'>".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");

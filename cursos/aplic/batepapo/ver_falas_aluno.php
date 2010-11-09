@@ -146,7 +146,7 @@
 
   echo("      <ul class=\"btAuxTabs\">\n");
 
-//   if (!isset($SalvarEmArquivo))
+//   if (!$SalvarEmArquivo)
 //   {
 //     /* 13 - Fechar (ger) */
 //     echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
@@ -155,7 +155,7 @@
   /* 27 - Ver Sess�es Realizadas */
   echo("        <li><span title=\"Ver Sess�es Realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases,27)."</span></li>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
     echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarMensagensAluno();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
@@ -189,7 +189,7 @@
 
   $nome_aluno=NomeUsuario($sock, $cod_aluno, $cod_curso);
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
     echo("          <td><a href=# onClick=return(OpenWindowLink(".$cod_aluno."));>".$nome_aluno."</a></td>\n");
   else
     echo("          <td>".$nome_aluno."</td>\n");

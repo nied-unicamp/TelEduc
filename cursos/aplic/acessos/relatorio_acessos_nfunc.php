@@ -73,7 +73,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
@@ -116,7 +116,7 @@
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td>\n");
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("                <form action=\"salvar_arquivo.php\" method=\"get\" name=\"formSalvar\">\n");
     echo("                  <input type=hidden name=cod_curso value=".$cod_curso." />\n");
@@ -232,7 +232,7 @@
 
       /* nome do usuario*/
       echo("                    <td>");
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         $link_abre="                      <span class=\"link\" onClick=\"AbrePerfil(".$cod.");\">";
         $link_fecha="</span>";

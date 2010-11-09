@@ -52,7 +52,7 @@
 
   echo("    <script type=\"text/javascript\">\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
@@ -132,7 +132,7 @@
   echo("      <tr>\n");
   echo("        <td valign=\"top\">\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
     echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
@@ -198,7 +198,7 @@
     if ($opcao == 1 || $opcao == 2)
     {
       $infos_user=RetornaInfosUsuario($sock,$cod_curso,$usuario);
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         $link_perfil_abre ="<span class=\"link\" onClick=\"AbrePerfil(".$usuario.");\">";
         $link_perfil_fecha="</span>";
@@ -267,7 +267,7 @@
           {
             // mostrar dia
             $dia_tmp = UnixTime2Data($linha_acesso['data']);
-            if (!isset($SalvarEmArquivo) && $cod_ferramenta == -1)
+            if (!$SalvarEmArquivo && $cod_ferramenta == -1)
             {
               $link_abre ="<span class=\"link\" onClick=\"AbreDiaUsuario(".$usuario.",'".$linha_acesso['data']."');\">";
               $link_fecha="</span>";
@@ -286,7 +286,7 @@
           echo("              </td>\n");
           echo("              <td>\n");
           // mostrar horario
-          if (!isset($SalvarEmArquivo) && $cod_ferramenta == -1)
+          if (!$SalvarEmArquivo && $cod_ferramenta == -1)
           {
             $link_abre ="<span class=\"link\" onClick=\"AbrePeriodoUsuario(".$usuario.",'".$acessos_usuarioUT[$c]['data']."','".$acessos_usuarioUT[$c + 1]['data']."');\">";
             $link_fecha="</span>";
@@ -376,7 +376,7 @@
           echo("                ".UnixTime2Hora($linha_acesso['data'])."\n");
           echo("              </td>\n");
           // mostrar usuario
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
           {
             $link_perfil_abre ="<span class=\"link\" onClick=AbrePerfil(".$cod_usuario.");\">";
             $link_perfil_fecha="</span>";
@@ -443,7 +443,7 @@
 
     $lista_nomes=RetornaUsuarios($sock,"nome",$cod_curso);
 
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       $link_grupo_abre ="<span class=\"link\" onClick=\"AbreGrupo(".$cod_grupo.");\">";
       $link_grupo_fecha="</span>";
@@ -499,7 +499,7 @@
           {
             $dia_tmp = UnixTime2Data($dataUT);
             // mostrar data
-            if (!isset($SalvarEmArquivo) && $cod_ferramenta == -1)
+            if (!$SalvarEmArquivo && $cod_ferramenta == -1)
             {
               $link_abre ="<span class=\"link\" onClick=\"AbreDiaGrupo(".$cod_grupo.",".$cod_usuario.",'".$dataUT."');\">";
               $link_fecha="</span>";
@@ -518,7 +518,7 @@
           echo("              </td>\n");
           // mostrar horario
           echo("              <td>\n");
-          if (!isset($SalvarEmArquivo) && $cod_ferramenta == -1){
+          if (!$SalvarEmArquivo && $cod_ferramenta == -1){
             $link_abre ="<span class=\"link\" onClick=\"AbrePeriodoGrupo(".$cod_grupo.",".$cod_usuario.",".$dataUT.");\">";
             $link_fecha="</span>";
 
@@ -529,7 +529,7 @@
           echo("                ".$link_abre.UnixTime2Hora($dataUT).$link_fecha."\n");
           echo("              </td>\n");
           // mostrar usuario
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
           {
             $link_perfil_abre ="<span class=\"link\" onClick=\"AbrePerfil(".$cod_usuario.");\">";
             $link_perfil_fecha="</span>";

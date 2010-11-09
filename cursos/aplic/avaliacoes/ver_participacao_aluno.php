@@ -62,7 +62,7 @@
   /* 1 - Avalia��es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -111,7 +111,7 @@
   /* 19 - Valor */
   echo("<font class=text>".RetornaFraseDaLista($lista_frases,19).": ".$dados['Valor']."</font><br><br>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   /* 46 - Ver objetivos/crit�rios da avalia��o */
     echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&VeioDePortfolio=1&VeioDaAtividade=1','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
 
@@ -121,7 +121,7 @@
   {
     $cod_grupo_portfolio=RetornaCodGrupo($sock,$cod_item);
     $nome=NomeGrupo($sock,$cod_grupo_portfolio);
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       echo("<p>\n");
       /* 142 - Para visualizar os itens postados pelo grupo, clique sobre o n�mero de participa��es.*/
@@ -133,7 +133,7 @@
   {
     $cod_aluno=RetornaCodUsuarioPortfolio($sock,$cod_item);
     $nome=NomeUsuario($sock,$cod_aluno);
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       echo("<p>\n");
       /* 143 - Para visualizar os itens postados pelo participante, clique sobre o n�mero de participa��es.*/
@@ -215,14 +215,14 @@
 
   if (!$portfolio_grupo)
   {
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
       echo("<a class=text href=# onClick=return(AbrePerfil(".$cod_aluno.")); class=text>".$nome."</a></td>\n");
     else
       echo("<font class=text>".$nome."</font></td>\n");
   }
   else
   {
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
       echo("<a class=text href=# onClick=return(AbreJanelaComponentes(".$cod_grupo_portfolio.")); class=text>".$nome."</a></td>\n");
     else
       echo("<font class=text>".$nome."</font></td>\n");
@@ -241,7 +241,7 @@
   if (RealizouAtividadeNoPortfolio($sock,$cod_avaliacao,$cod,$portfolio_grupo))
   {
      $num_itens=RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,$cod_aluno);
-     if (!isset($SalvarEmArquivo))
+     if (!$SalvarEmArquivo)
      {
        if($portfolio_grupo)
            echo("      <td class=text align=center><a href=# onClick=return(RetornaItensGrupo(".$cod_grupo_portfolio."));>".$num_itens."</a></td>\n");
@@ -264,7 +264,7 @@
    echo("    <form name=frmpart method=post>\n");
 
     echo("      <div align=right>\n");
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       /* 50 - Salvar em Arquivo (geral) */
       echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarVerParticipacao();'>\n");
@@ -276,7 +276,7 @@
     echo("<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
 
     /* 23 - Fechar (gen) */
-               if (!isset($SalvarEmArquivo))
+               if (!$SalvarEmArquivo)
     echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onClick=self.close()>\n");
     echo("      </div>\n");
     echo("      <br>\n");
