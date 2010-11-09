@@ -170,12 +170,12 @@ $sock = Conectar($cod_curso);
   if($usr_formador)
   {
 		echo("					<li><span OnClick='NovaAgenda();'>".RetornaFraseDaLista($lista_frases, 6)."</span></li>");
-
+    /* 3 - Editar Agenda*/
     echo("              	<li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
   }	
-  /* Agenda Anteriores*/	
+  /* 2- Agenda Anteriores*/	
   echo("              	<li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 2)."</a></li>\n");
-  /* Editar Agenda, caso seja formador*/
+  
 
   echo("                </ul>\n");	
   echo("              </td>\n");
