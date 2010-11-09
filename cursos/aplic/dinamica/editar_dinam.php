@@ -427,13 +427,11 @@
     echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
     echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
     echo("                          <span class=\"destaque\">".RetornaFraseDaLista ($lista_frases_geral, 26)."</span>\n");
+    /* 12: Pressione o bot‹o abaixo para selecionar o arquivo a ser anexado. */
+    /* 13: (arquivos .ZIP podem ser enviados e descompactados posteriormente) */
     echo("                          <span> - ".RetornaFraseDaLista ($lista_frases, 12).RetornaFraseDaLista ($lista_frases, 13)."</span>\n");
     echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-    echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" style=\"border:2px solid #9bc\" />\n");
-    echo("                          &nbsp;&nbsp;\n");
-    echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 18)."</span>\n");
-    echo("                          &nbsp;&nbsp;\n");
-    echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">".RetornaFraseDaLista ($lista_frases_geral, 2)."</span>\n");
+    echo("                          <input type=\"file\" style=\"border: 2px solid rgb(153, 187, 204); visibility: visible;\" onchange=\"EdicaoArq(1);\" name=\"input_files\" id=\"input_files\">\n");
     echo("                        </div>\n");
                                     /* 26 - Anexar arquivos (ger) */
     echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">".RetornaFraseDaLista($lista_frases_geral,26)."</span></div>\n");
