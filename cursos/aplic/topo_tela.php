@@ -133,6 +133,7 @@
    */
   if ($SalvarEmArquivo) {
   	
+  	array_push($estilos_css, "../js-css/salvaremarquivo.css");
   	echo("<style>".RetornaCSSInline($estilos_css)."</style>");
   	
   } else {

@@ -46,7 +46,7 @@ include($bibliotecas."geral.inc");
 include("avaliacoes.inc");
 
 require_once("../xajax_0.2.4/xajax.inc.php");
- 
+
 //Estancia o objeto XAJAX
 $objAjax = new xajax();
 //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
@@ -93,7 +93,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
 $cod_aluno_grupo = $cod_aluno;
 else
 $cod_aluno_grupo = $cod_grupo;
- 
+
 
 /* Fun��es JavaScript */
 if (!$SalvarEmArquivo)
@@ -379,638 +379,639 @@ if (!$SalvarEmArquivo)
 		echo("          return(false);\n");
 		echo("} \n");
 	}
-}
 
-echo("        function ImprimirRelatorio()\n");
-echo("        {\n");
-echo("          if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
-echo("          {\n");
-echo("            self.print();\n");
-echo("          }\n");
-echo("          else\n");
-echo("          {\n");
-// 51 - Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir.
-echo("            alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
-echo("          }\n");
-echo("        }\n");
 
-echo("        function Corrigir(cod_modelo)\n");
-echo("        {\n");
-echo("           window.open('../exercicios/correcao.php?cod_curso=".$cod_curso."&cod_dono=".$cod_usuario."&cod_modelo='+cod_modelo,'Corrigir','width=600,height=400,top=170,left=170,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-echo("        }\n");
-
-/**
- * Funcao para setar o style de um elemento.
- */
-echo("		function setStyle(elemento, styleText){\n");
-echo("			if(elemento.style.setAttribute)\n");
-echo("				elemento.style.setAttribute(\"cssText\", styleText );\n");	//IE
-echo("			else\n");
-echo("				elemento.setAttribute(\"style\", styleText );\n");	//FF
-echo("		}\n");
-
-// retorna true se a nota contiver digitos estranhos
-// retorna false se a nota estiver no formato adequado
-echo("        function nota_com_digito_estranho(nota) {\n");
-echo("          re_com_virgula = /^[0-9]+(\.|,)?[0-9]+\$/; \n"); // nota com decimal
-echo("          re_somente_numeros = /^[0-9]+\$/; \n"); // somente numeros
-echo("          if (nota == '' || re_com_virgula.test(nota) || re_somente_numeros.test(nota) ) { \n");
-echo("            return false;\n");
-echo("          } else {\n");
-echo("            return true;\n");
-echo("          }\n");
-echo("        }\n");
-
-echo("        function VerificaCampos(nota,compartilhamento) \n");
-echo("        { \n");
-// echo("  var comp = document.avaliado.compartilhamento.value; \n");
-echo("          if (nota == '') { \n");
-// 40 - O campo nota n�o pode ser vazio
-echo("            alert('".RetornaFraseDaLista($lista_frases,40)."'); \n");
-echo("            return false; \n");
-echo("          } \n");
-echo("          if (nota_com_digito_estranho(nota)) { \n");
-// 5 - Voc� digitou caracteres estranhos nesta nota.
-// 6 - Use apenas d�gitos de 0 a 9 e o ponto ( . ) ou a v�rgula ( , ) para o campo valor (exemplo: 7.5). \n");
-// 7 - Por favor retorne e corrija.
-echo("             alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."'); \n");
-echo("            return(false); \n");
-echo("          } \n");
-// verificamos se a nota tem virgula, se tiver, convertemos para ponto
-echo("          nota = nota.replace(/\,/, '.'); \n");
-echo("          if (nota > ".$dados['Valor'].") { \n");
-// 169 - O valor m�nimo para a nota �      
-echo("            alert('".RetornaFraseDaLista($lista_frases, 169)." ".$dados['Valor']."'); \n");
-echo("            return(false); \n");
-echo("          } \n");
-// 24 - A nota n�o pode ser negativa
-echo("          if (nota < 0) { \n");
-echo("            alert('".RetornaFraseDaLista($lista_frases,24)."'); \n");
-echo("            return false; \n");
-echo("          }  \n");
-echo("          if ( ! (compartilhamento == 'T'    \n");
-echo("            || compartilhamento == 'F' \n");
-echo("            || compartilhamento == 'G' \n");
-echo("            || compartilhamento == 'A')\n");
-echo("            ) { \n");
-// 42 - Voce n�o selecionou o modo de compartilhamento !
-echo("            alert('".RetornaFraseDaLista($lista_frases, 42)."'); \n");
-echo("            return false; \n");
-echo("          } \n");
-echo("\n");
-echo("          return true; \n");
-echo("        } \n");
-
-echo("        function EnviarAvalicao(id,cod)\n");
-echo("        {\n");
-echo("          var i;");
-echo("          var nota = document.getElementById(id+'_avaliar_nota').value;");
-echo("          var just = document.getElementById(id+'_avaliar_just').value;");
-echo("          var comp = '';");
-echo("          compRadio = document.getElementsByName(id+'_avaliar_comp');");
-echo("          for(i=0;i<3;i++)\n");
-echo("          {\n");
-echo("            if(compRadio[i].checked == true)\n");
-echo("            comp = compRadio[i].value;\n");
-echo("          }\n");
-echo("          if(VerificaCampos(nota,comp))");
-echo("            xajax_RegistrarAvaliacaoDinamic(".$cod_curso.",".$cod_avaliacao.",cod,'','',nota,just,comp,id);");
-echo("        }\n");
-
-echo("        function RetornaFraseComp(comp)\n");
-echo("        {\n");
-echo("             if(comp == 'T')\n");
-// 51 - Totalmente Compartilhado
-echo("               return '".RetornaFraseDaLista($lista_frases,51)."'\n");
-echo("             else if(comp == 'F')\n");
-// 52 - Compartilhado com Formadores
-echo("               return '".RetornaFraseDaLista($lista_frases,52)."'\n");
-echo("             else if(comp == 'G')\n");
-// 53 - Compartilhado com Formadores e Com o Grupo
-echo("               return '".RetornaFraseDaLista($lista_frases,53)."'\n");
-echo("             else if(comp == 'A')\n");
-// 54 - Compartilhado com Formadores e Com o Participante
-echo("               return '".RetornaFraseDaLista($lista_frases,54)."'\n");
-echo("             else\n");
-echo("               return '';\n");
-echo("        }\n\n");
-
-echo("        function CriarSpanSimples(frase,classe)\n");
-echo("        {\n");
-echo("              newSpan = document.createElement('span');\n");
-echo("              newSpan.setAttribute(\"class\",classe);\n");
-echo("              newSpan.innerHTML = frase;\n");
-echo("              return newSpan;\n");
-echo("        }\n\n");
-
-if($usr_formador)
-{
-	echo("        function CriarInputText(name,id,size,classe,value)\n");
+	echo("        function ImprimirRelatorio()\n");
 	echo("        {\n");
-	echo("              newInput = document.createElement('input');\n");
-	echo("              newInput.setAttribute(\"type\",\"text\");\n");
-	echo("              newInput.setAttribute(\"name\",name);\n");
-	echo("              newInput.setAttribute(\"id\",id);\n");
-	echo("              newInput.setAttribute(\"size\",size);\n");
-	echo("              newInput.setAttribute(\"class\",classe);\n");
-	echo("              newInput.setAttribute(\"value\",value);\n");
-	echo("              return newInput;\n");
-	echo("        }\n\n");
+	echo("          if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
+	echo("          {\n");
+	echo("            self.print();\n");
+	echo("          }\n");
+	echo("          else\n");
+	echo("          {\n");
+	// 51 - Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir.
+	echo("            alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
+	echo("          }\n");
+	echo("        }\n");
 
-	echo("        function CriarInputRadio(name,id,tipoComp)\n");
+	echo("        function Corrigir(cod_modelo)\n");
 	echo("        {\n");
-	echo("			try{\n"); 
-    echo("    				newInput = document.createElement('<input type=\"radio\" name=name />');\n");
-    echo("				}catch(err){\n"); 
-    echo(" 					newInput = document.createElement('input');\n");
-    echo("				}\n");
-    echo("			newInput.setAttribute(\"type\",'radio');\n");
-    echo("			newInput.setAttribute(\"name\",name);\n");
-	echo("			newInput.setAttribute(\"id\",id);\n");
-	echo("			newInput.setAttribute(\"value\",tipoComp);\n");
-	echo("			return newInput;\n");
-	echo("        }\n\n");
+	echo("           window.open('../exercicios/correcao.php?cod_curso=".$cod_curso."&cod_dono=".$cod_usuario."&cod_modelo='+cod_modelo,'Corrigir','width=600,height=400,top=170,left=170,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+	echo("        }\n");
 
-	echo("        function CriarInputHidden(name,value)\n");
-	echo("        {\n");
-	echo("              newInput = document.createElement('input');\n");
-	echo("              newInput.setAttribute(\"type\",\"hidden\");\n");
-	echo("              newInput.setAttribute(\"name\",name);\n");
-	echo("              newInput.setAttribute(\"id\",name);\n");
-	echo("              newInput.setAttribute(\"value\",value);\n");
-	echo("              return newInput;\n");
-	echo("        }\n\n");
+	/**
+	 * Funcao para setar o style de um elemento.
+	 */
+	echo("		function setStyle(elemento, styleText){\n");
+	echo("			if(elemento.style.setAttribute)\n");
+	echo("				elemento.style.setAttribute(\"cssText\", styleText );\n");	//IE
+	echo("			else\n");
+	echo("				elemento.setAttribute(\"style\", styleText );\n");	//FF
+	echo("		}\n");
 
-	echo("        function CriarTextArea(name,id,rows,cols)\n");
-	echo("        {\n");
-	echo("              newTextArea = document.createElement('textarea');\n");
-	echo("              newTextArea.setAttribute(\"name\",name);\n");
-	echo("              newTextArea.setAttribute(\"id\",id);\n");
-	echo("              newTextArea.setAttribute(\"rows\",rows);\n");
-	echo("              newTextArea.setAttribute(\"cols\",cols);\n");
-	echo("              newTextArea.setAttribute(\"style\",\"border: 2px solid #9bc;\");\n");
-	echo("              return newTextArea;\n");
-	echo("        }\n\n");
+	// retorna true se a nota contiver digitos estranhos
+	// retorna false se a nota estiver no formato adequado
+	echo("        function nota_com_digito_estranho(nota) {\n");
+	echo("          re_com_virgula = /^[0-9]+(\.|,)?[0-9]+\$/; \n"); // nota com decimal
+	echo("          re_somente_numeros = /^[0-9]+\$/; \n"); // somente numeros
+	echo("          if (nota == '' || re_com_virgula.test(nota) || re_somente_numeros.test(nota) ) { \n");
+	echo("            return false;\n");
+	echo("          } else {\n");
+	echo("            return true;\n");
+	echo("          }\n");
+	echo("        }\n");
 
-	echo("        function CriarBotaoEnviar(id,cod)\n");
-	echo("        {\n");
-	echo("              newButton = document.createElement('input');\n");
-	echo("              newButton.setAttribute(\"type\",\"button\");\n");
-	//echo("              newButton.setAttribute(\"class\",\"input\");\n");
-	echo("				newButton.className=\"input\";\n");
-	// 11 - Enviar
-	echo("              newButton.setAttribute(\"value\",\"".RetornaFraseDaLista($lista_frases_geral, 11)."\");\n");
-	echo("              newButton.onclick = function(){ EnviarAvalicao(id,cod); };\n");
-	echo("              return newButton;\n");
-	echo("        }\n\n");
+	echo("        function VerificaCampos(nota,compartilhamento) \n");
+	echo("        { \n");
+	// echo("  var comp = document.avaliado.compartilhamento.value; \n");
+	echo("          if (nota == '') { \n");
+	// 40 - O campo nota n�o pode ser vazio
+	echo("            alert('".RetornaFraseDaLista($lista_frases,40)."'); \n");
+	echo("            return false; \n");
+	echo("          } \n");
+	echo("          if (nota_com_digito_estranho(nota)) { \n");
+	// 5 - Voc� digitou caracteres estranhos nesta nota.
+	// 6 - Use apenas d�gitos de 0 a 9 e o ponto ( . ) ou a v�rgula ( , ) para o campo valor (exemplo: 7.5). \n");
+	// 7 - Por favor retorne e corrija.
+	echo("             alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."'); \n");
+	echo("            return(false); \n");
+	echo("          } \n");
+	// verificamos se a nota tem virgula, se tiver, convertemos para ponto
+	echo("          nota = nota.replace(/\,/, '.'); \n");
+	echo("          if (nota > ".$dados['Valor'].") { \n");
+	// 169 - O valor m�nimo para a nota �
+	echo("            alert('".RetornaFraseDaLista($lista_frases, 169)." ".$dados['Valor']."'); \n");
+	echo("            return(false); \n");
+	echo("          } \n");
+	// 24 - A nota n�o pode ser negativa
+	echo("          if (nota < 0) { \n");
+	echo("            alert('".RetornaFraseDaLista($lista_frases,24)."'); \n");
+	echo("            return false; \n");
+	echo("          }  \n");
+	echo("          if ( ! (compartilhamento == 'T'    \n");
+	echo("            || compartilhamento == 'F' \n");
+	echo("            || compartilhamento == 'G' \n");
+	echo("            || compartilhamento == 'A')\n");
+	echo("            ) { \n");
+	// 42 - Voce n�o selecionou o modo de compartilhamento !
+	echo("            alert('".RetornaFraseDaLista($lista_frases, 42)."'); \n");
+	echo("            return false; \n");
+	echo("          } \n");
+	echo("\n");
+	echo("          return true; \n");
+	echo("        } \n");
 
-	echo("        function CriarTrNota(id,op,valueInput,codModelo)\n");
+	echo("        function EnviarAvalicao(id,cod)\n");
 	echo("        {\n");
-	echo("              newTr = document.createElement('tr');\n");
-	echo("              newTd1 = document.createElement('td');\n");
-	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd1,\"border:0pt\");\n");
-	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
-	// 60 - Nota
-	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 60).":</b>';\n");
-	echo("              newTd2 = document.createElement('td');\n");
-	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd2,\"border:0pt\");\n");
-	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
-	echo("              if(op == 1 || op == 2)\n");
-	echo("              {\n");
-	echo("                newTd2.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases, 179)."',\"\"));\n");
-	echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_nota',0))\n");
-	echo("                if(op == 2)\n");
-	echo("                {\n");
-	echo("                  newSpan = CriarSpanSimples('  ".RetornaFraseDaLista($lista_frases, 180)."',\"link\");\n");
-	echo("                  newSpan.onclick = function(){ Corrigir(codModelo); };\n");
-	echo("                  newTd2.appendChild(newSpan);\n");
-	echo("                }\n");
-	echo("              }\n");
-	echo("              if(op == 3)\n");
-	echo("              {\n");
-	echo("                newTd2.appendChild(CriarSpanSimples(valueInput,\"\"));\n");
-	echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_nota',valueInput));\n");
-	echo("              }\n");
-	echo("              if(op == 4)\n");
-	echo("                newTd2.appendChild(CriarInputText(id+'_avaliar_nota',id+'_avaliar_nota',\"5\",\"input\",\"\"));\n");
-	echo("              newTr.appendChild(newTd1);\n");
-	echo("              newTr.appendChild(newTd2);\n");
-	echo("              return newTr;\n");
-	echo("        }\n\n");
+	echo("          var i;");
+	echo("          var nota = document.getElementById(id+'_avaliar_nota').value;");
+	echo("          var just = document.getElementById(id+'_avaliar_just').value;");
+	echo("          var comp = '';");
+	echo("          compRadio = document.getElementsByName(id+'_avaliar_comp');");
+	echo("          for(i=0;i<3;i++)\n");
+	echo("          {\n");
+	echo("            if(compRadio[i].checked == true)\n");
+	echo("            comp = compRadio[i].value;\n");
+	echo("          }\n");
+	echo("          if(VerificaCampos(nota,comp))");
+	echo("            xajax_RegistrarAvaliacaoDinamic(".$cod_curso.",".$cod_avaliacao.",cod,'','',nota,just,comp,id);");
+	echo("        }\n");
 
-	echo("        function CriarTrJustificativa(id,op)\n");
+	echo("        function RetornaFraseComp(comp)\n");
 	echo("        {\n");
-	echo("              newTr = document.createElement('tr');\n");
-	echo("              newTd1 = document.createElement('td');\n");
-	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd1,\"border:0pt\");\n");
-	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
-	// 163 - Justificativa
-	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 163).":</b>';\n");
-	echo("              newTd2 = document.createElement('td');\n");
-	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd2,\"border:0pt\");\n");
-	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
-	echo("              if(op == 1)\n");
-	echo("              {\n");
-	echo("                newTd2.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases, 179)."',\"\"));\n");
-	echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_just',\"\"));\n");
-	echo("              }\n");
-	echo("              if(op == 2)\n");
-	echo("                newTd2.appendChild(CriarTextArea(id+'_avaliar_just',id+'_avaliar_just',\"5\",\"60\"));\n");
-	echo("              newTr.appendChild(newTd1);\n");
-	echo("              newTr.appendChild(newTd2);\n");
-	echo("              return newTr;\n");
-	echo("        }\n\n");
-
-	echo("        function CriarDivOpComp(id,op)\n");
-	echo("        {\n");
-	echo("              newDiv = document.createElement('div');\n");
-	echo("              if(op == 1)\n");
-	echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','T'));\n");
+	echo("             if(comp == 'T')\n");
 	// 51 - Totalmente Compartilhado
-	echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,51)."\",\"\"));\n");
-	echo("              newDiv.appendChild(document.createElement('br'));\n");
-	echo("              if(op == 1)\n");
-	echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','F'));\n");
+	echo("               return '".RetornaFraseDaLista($lista_frases,51)."'\n");
+	echo("             else if(comp == 'F')\n");
 	// 52 - Compartilhado com Formadores
-	echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,52)."\",\"\"));\n");
-	echo("              newDiv.appendChild(document.createElement('br'));\n");
-	echo("              if(op == 1)\n");
-	if(($portfolio_grupo)||($exercicio_grupo))
+	echo("               return '".RetornaFraseDaLista($lista_frases,52)."'\n");
+	echo("             else if(comp == 'G')\n");
+	// 53 - Compartilhado com Formadores e Com o Grupo
+	echo("               return '".RetornaFraseDaLista($lista_frases,53)."'\n");
+	echo("             else if(comp == 'A')\n");
+	// 54 - Compartilhado com Formadores e Com o Participante
+	echo("               return '".RetornaFraseDaLista($lista_frases,54)."'\n");
+	echo("             else\n");
+	echo("               return '';\n");
+	echo("        }\n\n");
+
+	echo("        function CriarSpanSimples(frase,classe)\n");
+	echo("        {\n");
+	echo("              newSpan = document.createElement('span');\n");
+	echo("              newSpan.setAttribute(\"class\",classe);\n");
+	echo("              newSpan.innerHTML = frase;\n");
+	echo("              return newSpan;\n");
+	echo("        }\n\n");
+
+	if($usr_formador)
 	{
-		echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','G'));\n");
-		// 53 - Compartilhado com Formadores e Com o Grupo
-		echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,53)."\",\"\"));\n");
+		echo("        function CriarInputText(name,id,size,classe,value)\n");
+		echo("        {\n");
+		echo("              newInput = document.createElement('input');\n");
+		echo("              newInput.setAttribute(\"type\",\"text\");\n");
+		echo("              newInput.setAttribute(\"name\",name);\n");
+		echo("              newInput.setAttribute(\"id\",id);\n");
+		echo("              newInput.setAttribute(\"size\",size);\n");
+		echo("              newInput.setAttribute(\"class\",classe);\n");
+		echo("              newInput.setAttribute(\"value\",value);\n");
+		echo("              return newInput;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarInputRadio(name,id,tipoComp)\n");
+		echo("        {\n");
+		echo("			try{\n");
+		echo("    				newInput = document.createElement('<input type=\"radio\" name=name />');\n");
+		echo("				}catch(err){\n");
+		echo(" 					newInput = document.createElement('input');\n");
+		echo("				}\n");
+		echo("			newInput.setAttribute(\"type\",'radio');\n");
+		echo("			newInput.setAttribute(\"name\",name);\n");
+		echo("			newInput.setAttribute(\"id\",id);\n");
+		echo("			newInput.setAttribute(\"value\",tipoComp);\n");
+		echo("			return newInput;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarInputHidden(name,value)\n");
+		echo("        {\n");
+		echo("              newInput = document.createElement('input');\n");
+		echo("              newInput.setAttribute(\"type\",\"hidden\");\n");
+		echo("              newInput.setAttribute(\"name\",name);\n");
+		echo("              newInput.setAttribute(\"id\",name);\n");
+		echo("              newInput.setAttribute(\"value\",value);\n");
+		echo("              return newInput;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTextArea(name,id,rows,cols)\n");
+		echo("        {\n");
+		echo("              newTextArea = document.createElement('textarea');\n");
+		echo("              newTextArea.setAttribute(\"name\",name);\n");
+		echo("              newTextArea.setAttribute(\"id\",id);\n");
+		echo("              newTextArea.setAttribute(\"rows\",rows);\n");
+		echo("              newTextArea.setAttribute(\"cols\",cols);\n");
+		echo("              newTextArea.setAttribute(\"style\",\"border: 2px solid #9bc;\");\n");
+		echo("              return newTextArea;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarBotaoEnviar(id,cod)\n");
+		echo("        {\n");
+		echo("              newButton = document.createElement('input');\n");
+		echo("              newButton.setAttribute(\"type\",\"button\");\n");
+		//echo("              newButton.setAttribute(\"class\",\"input\");\n");
+		echo("				newButton.className=\"input\";\n");
+		// 11 - Enviar
+		echo("              newButton.setAttribute(\"value\",\"".RetornaFraseDaLista($lista_frases_geral, 11)."\");\n");
+		echo("              newButton.onclick = function(){ EnviarAvalicao(id,cod); };\n");
+		echo("              return newButton;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTrNota(id,op,valueInput,codModelo)\n");
+		echo("        {\n");
+		echo("              newTr = document.createElement('tr');\n");
+		echo("              newTd1 = document.createElement('td');\n");
+		//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd1,\"border:0pt\");\n");
+		echo("              newTd1.setAttribute(\"align\",\"right\");\n");
+		// 60 - Nota
+		echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 60).":</b>';\n");
+		echo("              newTd2 = document.createElement('td');\n");
+		//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd2,\"border:0pt\");\n");
+		echo("              newTd2.setAttribute(\"align\",\"left\");\n");
+		echo("              if(op == 1 || op == 2)\n");
+		echo("              {\n");
+		echo("                newTd2.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases, 179)."',\"\"));\n");
+		echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_nota',0))\n");
+		echo("                if(op == 2)\n");
+		echo("                {\n");
+		echo("                  newSpan = CriarSpanSimples('  ".RetornaFraseDaLista($lista_frases, 180)."',\"link\");\n");
+		echo("                  newSpan.onclick = function(){ Corrigir(codModelo); };\n");
+		echo("                  newTd2.appendChild(newSpan);\n");
+		echo("                }\n");
+		echo("              }\n");
+		echo("              if(op == 3)\n");
+		echo("              {\n");
+		echo("                newTd2.appendChild(CriarSpanSimples(valueInput,\"\"));\n");
+		echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_nota',valueInput));\n");
+		echo("              }\n");
+		echo("              if(op == 4)\n");
+		echo("                newTd2.appendChild(CriarInputText(id+'_avaliar_nota',id+'_avaliar_nota',\"5\",\"input\",\"\"));\n");
+		echo("              newTr.appendChild(newTd1);\n");
+		echo("              newTr.appendChild(newTd2);\n");
+		echo("              return newTr;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTrJustificativa(id,op)\n");
+		echo("        {\n");
+		echo("              newTr = document.createElement('tr');\n");
+		echo("              newTd1 = document.createElement('td');\n");
+		//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd1,\"border:0pt\");\n");
+		echo("              newTd1.setAttribute(\"align\",\"right\");\n");
+		// 163 - Justificativa
+		echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 163).":</b>';\n");
+		echo("              newTd2 = document.createElement('td');\n");
+		//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd2,\"border:0pt\");\n");
+		echo("              newTd2.setAttribute(\"align\",\"left\");\n");
+		echo("              if(op == 1)\n");
+		echo("              {\n");
+		echo("                newTd2.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases, 179)."',\"\"));\n");
+		echo("                newTd2.appendChild(CriarInputHidden(id+'_avaliar_just',\"\"));\n");
+		echo("              }\n");
+		echo("              if(op == 2)\n");
+		echo("                newTd2.appendChild(CriarTextArea(id+'_avaliar_just',id+'_avaliar_just',\"5\",\"60\"));\n");
+		echo("              newTr.appendChild(newTd1);\n");
+		echo("              newTr.appendChild(newTd2);\n");
+		echo("              return newTr;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarDivOpComp(id,op)\n");
+		echo("        {\n");
+		echo("              newDiv = document.createElement('div');\n");
+		echo("              if(op == 1)\n");
+		echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','T'));\n");
+		// 51 - Totalmente Compartilhado
+		echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,51)."\",\"\"));\n");
+		echo("              newDiv.appendChild(document.createElement('br'));\n");
+		echo("              if(op == 1)\n");
+		echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','F'));\n");
+		// 52 - Compartilhado com Formadores
+		echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,52)."\",\"\"));\n");
+		echo("              newDiv.appendChild(document.createElement('br'));\n");
+		echo("              if(op == 1)\n");
+		if(($portfolio_grupo)||($exercicio_grupo))
+		{
+			echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','G'));\n");
+			// 53 - Compartilhado com Formadores e Com o Grupo
+			echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,53)."\",\"\"));\n");
+		}
+		else
+		{
+			echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','A'));\n");
+			// 54 - Compartilhado com Formadores e Com o Participante
+			echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,54)."\",\"\"));\n");
+		}
+		echo("              return newDiv;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTrComp(id,op)\n");
+		echo("        {\n");
+		echo("              newTr = document.createElement('tr');\n");
+		echo("              newTd1 = document.createElement('td');\n");
+		//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd1,\"border:0pt\");\n");
+		echo("              newTd1.setAttribute(\"align\",\"right\");\n");
+		// 50 - Compartilhar
+		echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 50).":</b>';\n");
+		echo("              newTd2 = document.createElement('td');\n");
+		//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd2,\"border:0pt\");\n");
+		echo("              newTd2.setAttribute(\"align\",\"left\");\n");
+		echo("              newTd2.appendChild(CriarDivOpComp(id,op));\n");
+		echo("              newTr.appendChild(newTd1);\n");
+		echo("              newTr.appendChild(newTd2);\n");
+		echo("              return newTr;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTrBotoes(id,cod)\n");
+		echo("        {\n");
+		echo("              newTr = document.createElement('tr');\n");
+		echo("              newTd1 = document.createElement('td');\n");
+		//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd1,\"border:0pt\");\n");
+		echo("              newTd1.setAttribute(\"align\",\"right\");\n");
+		echo("              newTd1.innerHTML = '&nbsp';\n");
+		echo("              newTd2 = document.createElement('td');\n");
+		//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
+		echo("				setStyle(newTd2,\"border:0pt\");\n");
+		echo("              newTd2.setAttribute(\"align\",\"left\");\n");
+		echo("              newTd2.appendChild(CriarBotaoEnviar(id,cod));\n");
+		echo("              newTr.appendChild(newTd1);\n");
+		echo("              newTr.appendChild(newTd2);\n");
+		echo("              return newTr;\n");
+		echo("        }\n\n");
+
+		echo("        function CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod)\n");
+		echo("        {\n");
+		echo("				var tbody = document.createElement('tbody');\n");
+		echo("              newTable = document.createElement('table');\n");
+		echo("              tbody.appendChild(CriarTrNota(id,opNota,valueInputNota,codModelo));\n");
+		echo("              tbody.appendChild(CriarTrJustificativa(id,opJust));\n");
+		echo("              tbody.appendChild(CriarTrComp(id,opComp));\n");
+		echO("              if(opEnviar == 1)\n");
+		echo("                tbody.appendChild(CriarTrBotoes(id,cod));\n");
+		echo("				newTable.appendChild(tbody);");
+		echo("              return newTable;\n");
+		echo("        }\n\n");
+
+		echo("        function HabilitaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod)\n");
+		echo("        {\n");
+		echo("          if(document.getElementById(id+'_hist') != null)\n");
+		echo("            DesabilitaTr(id+'_hist');\n");
+		echo("          if(document.getElementById(id+'_avaliar') == null)\n");
+		echo("          {\n");
+		echo("            trElement = document.getElementById(id);\n");
+		echo("            trElement = trElement.nextSibling;\n");
+		echo("            tableElement = trElement.parentNode;\n");
+		echo("            newTrConteiner = document.createElement('tr');\n");
+		echo("            newTrConteiner.setAttribute('id', id+'_avaliar');\n");
+		//echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
+		echo("			  newTrConteiner.className=\"altColor0\";\n");
+		echo("            newTdConteiner = document.createElement('td');\n");
+		echo("            newTdConteiner.colSpan = 5;\n");
+		echo("            newTdConteiner.appendChild(CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod));\n");
+		echo("            newBr = document.createElement('br');\n");
+		echo("            newTdConteiner.appendChild(newBr);\n");
+		echo("            newTrConteiner.appendChild(newTdConteiner);\n");
+		echo("            newTrConteiner.appendChild(CriarTdFechar(id+'_avaliar'));\n");
+		echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
+		echo("          }\n");
+		echo("        }\n");
 	}
-	else
+
+	echo("        function AbrePerfilHisDes(id) \n");
+	echo("        {\n");
+	echo("          var brokenId = id.split(\"_\");\n");
+	echo("          AbrePerfil(parseInt(brokenId[0]));\n");
+	echo("        }\n");
+
+
+	/**
+	 * Como no IE getElementsByName() não funciona, usar a funcao abaixo.
+	 */
+	echo("		function getElementsByName_iefix(tag, name) {\n");
+	echo("			var elem = document.getElementsByTagName(tag);\n");
+	echo("			var arr = new Array();\n");
+	echo("			for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+	echo("				var att = elem[i].getAttribute('name');\n");
+	echo("				if(att == name) {\n");
+	echo("					arr[iarr] = elem[i];\n");
+	echo("					iarr++;\n");
+	echo("				}\n");
+	echo("			}\n");
+	echo("			return arr;\n");
+	echo("		}\n");
+
+	echo("        function MudaSpanCompartilhamento(spanName,novoComp,tipoComp,codNota,codGrupo,codAluno)\n");
+	echo("        {\n");
+	echo("          spanElements = getElementsByName_iefix('span',spanName);\n");
+	echo("          for(i=0;i<spanElements.length;i++)\n");
+	echo("          {\n");
+	echo("            spanElements[i].innerHTML = novoComp;\n");
+	echo("            spanElements[i].onclick = function() { js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(tipoComp,spanName);MostraLayer(cod_comp,100); }\n");
+	echo("          }\n");
+	echo("        }\n");
+
+	if($usr_formador)
 	{
-		echo("                newDiv.appendChild(CriarInputRadio(id+'_avaliar_comp',id+'_avaliar_comp','A'));\n");
-		// 54 - Compartilhado com Formadores e Com o Participante
-		echo("              newDiv.appendChild(CriarSpanSimples(\"".RetornaFraseDaLista($lista_frases,54)."\",\"\"));\n");
+		echo("        function MudaCompartilhamentoHisDes(id) \n");
+		echo("        {\n");
+		echo("          var brokenId = id.split(\"_\");\n");
+		echo("          js_cod_nota = parseInt(brokenId[1]);\n");
+		echo("          js_cod_aluno = parseInt(brokenId[3]);\n");
+		echo("          js_cod_grupo = brokenId[4];\n");
+		echo("          spanName = 'comp_'+js_cod_nota;\n");
+		echo("          AtualizaComp(brokenId[2],spanName);\n");
+		echo("          MostraLayer(cod_comp,140);\n");
+		echo("        }\n");
+
+		echo("        function ApagarHisDes(id,trPaiId) \n");
+		echo("        {\n");
+		echo("          var brokenId,codNota,i,codAluno,codGrupo;\n");
+		echo("          if(confirm(\"".RetornaFraseDaLista($lista_frases,86)."\\n ".RetornaFraseDaLista($lista_frases,87)."\"))\n");
+		echo("          {\n");
+		echo("            brokenId = id.split(\"_\");\n");
+		echo("            codNota = parseInt(brokenId[0]);\n");
+		echo("            i = parseInt(brokenId[1]);\n");
+		echo("            codAluno = parseInt(brokenId[2]);\n");
+		echo("            codGrupo = parseInt(brokenId[3]);\n");
+		echo("            xajax_ApagarAvalicaoDinamic(".$cod_curso.",".$cod_avaliacao.",codNota,codAluno,codGrupo,".$portfolio_grupo_js.",trPaiId);");
+		echo("            tableElement = document.getElementById('table_'+codNota+'_'+i);\n");
+		echo("            tdElement = tableElement.parentNode;\n");
+		echo("            tdElement.removeChild(tableElement.nextSibling);\n");//remove <br>
+		echo("            tdElement.removeChild(tableElement);\n");
+		echo("          }\n");
+		echo("        }\n");
 	}
-	echo("              return newDiv;\n");
-	echo("        }\n\n");
 
-	echo("        function CriarTrComp(id,op)\n");
+	echo("        function CriarDivCabecalhoHistoricoDesempenho() \n");
 	echo("        {\n");
-	echo("              newTr = document.createElement('tr');\n");
-	echo("              newTd1 = document.createElement('td');\n");
-	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd1,\"border:0pt\");\n");
-	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
-	// 50 - Compartilhar
-	echo("              newTd1.innerHTML = '<b>".RetornaFraseDaLista($lista_frases, 50).":</b>';\n");
-	echo("              newTd2 = document.createElement('td');\n");
-	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd2,\"border:0pt\");\n");
-	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
-	echo("              newTd2.appendChild(CriarDivOpComp(id,op));\n");
-	echo("              newTr.appendChild(newTd1);\n");
-	echo("              newTr.appendChild(newTd2);\n");
-	echo("              return newTr;\n");
-	echo("        }\n\n");
+	echo("          newDivCab = document.createElement('div');\n");
+	echo("          newDivCab.align = 'left';\n");
+	// 103 - Hist�rico do Desempenho do Participante
+	echo("          newDivCab.innerHTML = '<b>".RetornaFraseDaLista($lista_frases,103)."</b>';\n");
+	echo("          return newDivCab;\n");
+	echo("        }\n");
 
-	echo("        function CriarTrBotoes(id,cod)\n");
+	echo("        function CriarTdFechar(id) \n");
 	echo("        {\n");
-	echo("              newTr = document.createElement('tr');\n");
-	echo("              newTd1 = document.createElement('td');\n");
-	//echo("              newTd1.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd1,\"border:0pt\");\n");
-	echo("              newTd1.setAttribute(\"align\",\"right\");\n");
-	echo("              newTd1.innerHTML = '&nbsp';\n");
-	echo("              newTd2 = document.createElement('td');\n");
-	//echo("              newTd2.setAttribute(\"style\",\"border:0pt;\");\n");
-	echo("				setStyle(newTd2,\"border:0pt\");\n");
-	echo("              newTd2.setAttribute(\"align\",\"left\");\n");
-	echo("              newTd2.appendChild(CriarBotaoEnviar(id,cod));\n");
-	echo("              newTr.appendChild(newTd1);\n");
-	echo("              newTr.appendChild(newTd2);\n");
-	echo("              return newTr;\n");
-	echo("        }\n\n");
+	echo("          newTd = document.createElement('td');\n");
+	echo("          newSpan = document.createElement('span');\n");
+	// 13 - Fechar (ger)
+	echo("          newSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,13)."';\n");
+	echo("          newSpan.className='link';\n");
+	echo("          newSpan.onclick = function(){ DesabilitaTr(id); };\n");
+	echo("          newTd.appendChild(newSpan);\n");
+	echo("          return newTd;\n");
+	echo("        }\n");
 
-	echo("        function CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod)\n");
+	echo("        function HabilitaHistorico(arrayConteudo,tamTabela,id)\n");
 	echo("        {\n");
-	echo("				var tbody = document.createElement('tbody');\n");
-	echo("              newTable = document.createElement('table');\n");
-	echo("              tbody.appendChild(CriarTrNota(id,opNota,valueInputNota,codModelo));\n");
-	echo("              tbody.appendChild(CriarTrJustificativa(id,opJust));\n");
-	echo("              tbody.appendChild(CriarTrComp(id,opComp));\n");
-	echO("              if(opEnviar == 1)\n");
-	echo("                tbody.appendChild(CriarTrBotoes(id,cod));\n");
-	echo("				newTable.appendChild(tbody);");
-	echo("              return newTable;\n");
-	echo("        }\n\n");
-
-	echo("        function HabilitaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod)\n");
-	echo("        {\n");
-	echo("          if(document.getElementById(id+'_hist') != null)\n");
-	echo("            DesabilitaTr(id+'_hist');\n");
-	echo("          if(document.getElementById(id+'_avaliar') == null)\n");
+	echo("          var i,j,codNota,codFormador,tipoComp;\n");
+	echo("          if(document.getElementById(id+'_avaliar') != null)\n");
+	echo("            DesabilitaTr(id+'_avaliar');\n");
+	echo("          if(document.getElementById(id+'_hist') == null)\n");
 	echo("          {\n");
 	echo("            trElement = document.getElementById(id);\n");
 	echo("            trElement = trElement.nextSibling;\n");
 	echo("            tableElement = trElement.parentNode;\n");
 	echo("            newTrConteiner = document.createElement('tr');\n");
-	echo("            newTrConteiner.setAttribute('id', id+'_avaliar');\n");
+	echo("            newTrConteiner.setAttribute('id', id+'_hist');\n");
 	//echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
 	echo("			  newTrConteiner.className=\"altColor0\";\n");
 	echo("            newTdConteiner = document.createElement('td');\n");
+	if($usr_formador)
 	echo("            newTdConteiner.colSpan = 5;\n");
-	echo("            newTdConteiner.appendChild(CriarTabelaAvaliar(id,opNota,opJust,opComp,valueInputNota,codModelo,opEnviar,cod));\n");
+	else
+	echo("            newTdConteiner.colSpan = 3;\n");
+	echo("            newTdConteiner.appendChild(CriarDivCabecalhoHistoricoDesempenho());\n");
 	echo("            newBr = document.createElement('br');\n");
 	echo("            newTdConteiner.appendChild(newBr);\n");
-	echo("            newTrConteiner.appendChild(newTdConteiner);\n");
-	echo("            newTrConteiner.appendChild(CriarTdFechar(id+'_avaliar'));\n");
-	echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
-	echo("          }\n");
-	echo("        }\n");
-}
-
-echo("        function AbrePerfilHisDes(id) \n");
-echo("        {\n");
-echo("          var brokenId = id.split(\"_\");\n");
-echo("          AbrePerfil(parseInt(brokenId[0]));\n");
-echo("        }\n");
-
-
-/**
- * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
- */  
-echo("		function getElementsByName_iefix(tag, name) {\n");
-echo("			var elem = document.getElementsByTagName(tag);\n");
-echo("			var arr = new Array();\n");
-echo("			for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
-echo("				var att = elem[i].getAttribute('name');\n");
-echo("				if(att == name) {\n");
-echo("					arr[iarr] = elem[i];\n");
-echo("					iarr++;\n");
-echo("				}\n");
-echo("			}\n");
-echo("			return arr;\n");
-echo("		}\n");
-
-echo("        function MudaSpanCompartilhamento(spanName,novoComp,tipoComp,codNota,codGrupo,codAluno)\n");
-echo("        {\n");
-echo("          spanElements = getElementsByName_iefix('span',spanName);\n");
-echo("          for(i=0;i<spanElements.length;i++)\n");
-echo("          {\n");
-echo("            spanElements[i].innerHTML = novoComp;\n");
-echo("            spanElements[i].onclick = function() { js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(tipoComp,spanName);MostraLayer(cod_comp,100); }\n");
-echo("          }\n");
-echo("        }\n");
-
-if($usr_formador)
-{
-	echo("        function MudaCompartilhamentoHisDes(id) \n");
-	echo("        {\n");
-	echo("          var brokenId = id.split(\"_\");\n");
-	echo("          js_cod_nota = parseInt(brokenId[1]);\n");
-	echo("          js_cod_aluno = parseInt(brokenId[3]);\n");
-	echo("          js_cod_grupo = brokenId[4];\n");
-	echo("          spanName = 'comp_'+js_cod_nota;\n");
-	echo("          AtualizaComp(brokenId[2],spanName);\n");
-	echo("          MostraLayer(cod_comp,140);\n");
-	echo("        }\n");
-
-	echo("        function ApagarHisDes(id,trPaiId) \n");
-	echo("        {\n");
-	echo("          var brokenId,codNota,i,codAluno,codGrupo;\n");
-	echo("          if(confirm(\"".RetornaFraseDaLista($lista_frases,86)."\\n ".RetornaFraseDaLista($lista_frases,87)."\"))\n");
-	echo("          {\n");
-	echo("            brokenId = id.split(\"_\");\n");
-	echo("            codNota = parseInt(brokenId[0]);\n");
-	echo("            i = parseInt(brokenId[1]);\n");
-	echo("            codAluno = parseInt(brokenId[2]);\n");
-	echo("            codGrupo = parseInt(brokenId[3]);\n");
-	echo("            xajax_ApagarAvalicaoDinamic(".$cod_curso.",".$cod_avaliacao.",codNota,codAluno,codGrupo,".$portfolio_grupo_js.",trPaiId);");
-	echo("            tableElement = document.getElementById('table_'+codNota+'_'+i);\n");
-	echo("            tdElement = tableElement.parentNode;\n");
-	echo("            tdElement.removeChild(tableElement.nextSibling);\n");//remove <br>
-	echo("            tdElement.removeChild(tableElement);\n");
-	echo("          }\n");
-	echo("        }\n");
-}
-
-echo("        function CriarDivCabecalhoHistoricoDesempenho() \n");
-echo("        {\n");
-echo("          newDivCab = document.createElement('div');\n");
-echo("          newDivCab.align = 'left';\n");
-// 103 - Hist�rico do Desempenho do Participante
-echo("          newDivCab.innerHTML = '<b>".RetornaFraseDaLista($lista_frases,103)."</b>';\n");
-echo("          return newDivCab;\n");
-echo("        }\n");
-
-echo("        function CriarTdFechar(id) \n");
-echo("        {\n");
-echo("          newTd = document.createElement('td');\n");
-echo("          newSpan = document.createElement('span');\n");
-// 13 - Fechar (ger)
-echo("          newSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,13)."';\n");
-echo("          newSpan.className='link';\n");
-echo("          newSpan.onclick = function(){ DesabilitaTr(id); };\n");
-echo("          newTd.appendChild(newSpan);\n");
-echo("          return newTd;\n");
-echo("        }\n");
-
-echo("        function HabilitaHistorico(arrayConteudo,tamTabela,id)\n");
-echo("        {\n");
-echo("          var i,j,codNota,codFormador,tipoComp;\n");
-echo("          if(document.getElementById(id+'_avaliar') != null)\n");
-echo("            DesabilitaTr(id+'_avaliar');\n");
-echo("          if(document.getElementById(id+'_hist') == null)\n");
-echo("          {\n");
-echo("            trElement = document.getElementById(id);\n");
-echo("            trElement = trElement.nextSibling;\n");
-echo("            tableElement = trElement.parentNode;\n");
-echo("            newTrConteiner = document.createElement('tr');\n");
-echo("            newTrConteiner.setAttribute('id', id+'_hist');\n");
-//echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
-echo("			  newTrConteiner.className=\"altColor0\";\n");
-echo("            newTdConteiner = document.createElement('td');\n");
-if($usr_formador)
-echo("            newTdConteiner.colSpan = 5;\n");
-else
-echo("            newTdConteiner.colSpan = 3;\n");
-echo("            newTdConteiner.appendChild(CriarDivCabecalhoHistoricoDesempenho());\n");
-echo("            newBr = document.createElement('br');\n");
-echo("            newTdConteiner.appendChild(newBr);\n");
-echo("            for(i=0;i<tamTabela;i++)\n");
-echo("            {\n");
-echo("              codFormador = arrayConteudo[i][5];\n");
-echo("              codNota = arrayConteudo[i][6];\n");
-echo("              tipoComp = arrayConteudo[i][7];\n");
-echo("              newTable = document.createElement('table');\n");
-echo("				var tbody = document.createElement('tbody');\n");
-echo("              newTable.width = '100%';\n");
-echo("              newTable.setAttribute(\"id\", 'table_'+codNota+'_'+i);\n");
-echo("              newTable.setAttribute(\"cellpadding\", \"0\");\n");
-echo("              newTable.setAttribute(\"cellspacing\",\"0\");\n");
-echo("              newTrCab = document.createElement('tr');\n");
-echo("              newTrCab.className = 'head01';\n");
-echo("              newTrCab.setAttribute('id', 'tr_cab_'+i);\n");
-if($usr_formador)
-echo("              for(j=0;j<5;j++)\n");
-else
-echo("              for(j=0;j<3;j++)\n");
-echo("              {\n");
-echo("                newTd = document.createElement('td');\n");
-echo("                if(j == 3)\n");// Compartilhamento
-echo("                  newTd.width = '20%';\n");
-if($usr_formador)
-{
-	echo("                else if( j == 4)\n");
-	echo("                  newTd.width = '10%';\n");
-	echo("                if(j != 4)\n  ");
-}
-echo("                  newTd.innerHTML=js_arrayCab[j];\n");
-if($usr_formador)
-{
-	echo("                else\n");
+	echo("            for(i=0;i<tamTabela;i++)\n");
+	echo("            {\n");
+	echo("              codFormador = arrayConteudo[i][5];\n");
+	echo("              codNota = arrayConteudo[i][6];\n");
+	echo("              tipoComp = arrayConteudo[i][7];\n");
+	echo("              newTable = document.createElement('table');\n");
+	echo("				var tbody = document.createElement('tbody');\n");
+	echo("              newTable.width = '100%';\n");
+	echo("              newTable.setAttribute(\"id\", 'table_'+codNota+'_'+i);\n");
+	echo("              newTable.setAttribute(\"cellpadding\", \"0\");\n");
+	echo("              newTable.setAttribute(\"cellspacing\",\"0\");\n");
+	echo("              newTrCab = document.createElement('tr');\n");
+	echo("              newTrCab.className = 'head01';\n");
+	echo("              newTrCab.setAttribute('id', 'tr_cab_'+i);\n");
+	if($usr_formador)
+	echo("              for(j=0;j<5;j++)\n");
+	else
+	echo("              for(j=0;j<3;j++)\n");
+	echo("              {\n");
+	echo("                newTd = document.createElement('td');\n");
+	echo("                if(j == 3)\n");// Compartilhamento
+	echo("                  newTd.width = '20%';\n");
+	if($usr_formador)
+	{
+		echo("                else if( j == 4)\n");
+		echo("                  newTd.width = '10%';\n");
+		echo("                if(j != 4)\n  ");
+	}
+	echo("                  newTd.innerHTML=js_arrayCab[j];\n");
+	if($usr_formador)
+	{
+		echo("                else\n");
+		echo("                {\n");
+		echo("                  newSpan = document.createElement('span');\n");
+		echo("                  newSpan.innerHTML=js_arrayCab[j];\n");
+		echo("                  newSpan.className='link';\n");
+		echo("                  newSpan.setAttribute(\"id\", codNota+'_'+i+'_'+js_cod_aluno+'_'+js_cod_grupo);\n");
+		echo("                  newSpan.onclick = function(){ ApagarHisDes(this.id,id); };\n");
+		echo("                  newTd.rowSpan = 2;\n");
+		echo("                  newTd.appendChild(newSpan);\n");
+		echo("                }\n");
+	}
+	echo("                newTrCab.appendChild(newTd);\n");
+	echo("              }\n");
+	echo("              newTrMid = document.createElement('tr');\n");
+	echo("              newTrMid.setAttribute('id', 'tr_mid_'+i);\n");
+	//echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
+	echo("				newTrMid.className=\"altColor1\";");
+	if($usr_formador)
+	echo("              for(j=0;j<4;j++)\n");
+	else
+	echo("              for(j=0;j<3;j++)\n");
+	echo("              {\n");
+	echo("                newTd = document.createElement('td');\n");
+	echo("                if(j == 2 || j == 3)\n");
 	echo("                {\n");
 	echo("                  newSpan = document.createElement('span');\n");
-	echo("                  newSpan.innerHTML=js_arrayCab[j];\n");
+	echo("                  newSpan.innerHTML=arrayConteudo[i][j];\n");
 	echo("                  newSpan.className='link';\n");
-	echo("                  newSpan.setAttribute(\"id\", codNota+'_'+i+'_'+js_cod_aluno+'_'+js_cod_grupo);\n");
-	echo("                  newSpan.onclick = function(){ ApagarHisDes(this.id,id); };\n");
-	echo("                  newTd.rowSpan = 2;\n");
-	echo("                  newTd.appendChild(newSpan);\n");
+	echo("                  newSpan.setAttribute(\"id\", codFormador+'_'+codNota+'_'+tipoComp+'_'+js_cod_aluno+'_'+js_cod_grupo+'_'+j);\n");
+	echo("                  if(j == 2)\n");
+	echo("                    newSpan.onclick = function(){ AbrePerfilHisDes(this.id); };\n");
+	echo("                  else\n");
+	echo("                  {\n");
+	echo("                    newSpan.setAttribute(\"name\",'comp_'+codNota);\n");
+	echo("                    newSpan.onclick = function(){ MudaCompartilhamentoHisDes(this.id); };\n");
+	echo("                  }\n");
+	echo("                newTd.appendChild(newSpan);\n");
 	echo("                }\n");
-}
-echo("                newTrCab.appendChild(newTd);\n");
-echo("              }\n");
-echo("              newTrMid = document.createElement('tr');\n");
-echo("              newTrMid.setAttribute('id', 'tr_mid_'+i);\n");
-//echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
-echo("				newTrMid.className=\"altColor1\";");
-if($usr_formador)
-echo("              for(j=0;j<4;j++)\n");
-else
-echo("              for(j=0;j<3;j++)\n");
-echo("              {\n");
-echo("                newTd = document.createElement('td');\n");
-echo("                if(j == 2 || j == 3)\n");
-echo("                {\n");
-echo("                  newSpan = document.createElement('span');\n");
-echo("                  newSpan.innerHTML=arrayConteudo[i][j];\n");
-echo("                  newSpan.className='link';\n");
-echo("                  newSpan.setAttribute(\"id\", codFormador+'_'+codNota+'_'+tipoComp+'_'+js_cod_aluno+'_'+js_cod_grupo+'_'+j);\n");
-echo("                  if(j == 2)\n");
-echo("                    newSpan.onclick = function(){ AbrePerfilHisDes(this.id); };\n");
-echo("                  else\n");
-echo("                  {\n");
-echo("                    newSpan.setAttribute(\"name\",'comp_'+codNota);\n");
-echo("                    newSpan.onclick = function(){ MudaCompartilhamentoHisDes(this.id); };\n");
-echo("                  }\n");
-echo("                newTd.appendChild(newSpan);\n");
-echo("                }\n");
-echo("                else\n");
-echo("                  newTd.innerHTML=arrayConteudo[i][j];\n");
-echo("                newTrMid.appendChild(newTd);\n");
-echo("              }\n");
-echo("              newTrJust = document.createElement('tr');\n");
-echo("              newTrJust.className = 'head01';\n");
-echo("              newTd = document.createElement('td');\n");
-echo("              newTd.colSpan = 5;\n");
-echo("              newTd.align = 'left';\n");
-echo("              newTd.innerHTML='".RetornaFraseDaLista($lista_frases,163)."';\n");
-echo("              newTrJust.appendChild(newTd);\n");
-echo("              newTrJustMid = document.createElement('tr');\n");
-echo("              newTd = document.createElement('td');\n");
-echo("              newTd.colSpan = 5;\n");
-echo("              newTd.align = 'left';\n");
-if($usr_formador)
-echo("              newTd.innerHTML=arrayConteudo[i][j];\n");
-else
-echo("              newTd.innerHTML=arrayConteudo[i][4];\n");
-echo("              newTrJustMid.appendChild(newTd);\n");
-//echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
-echo("				newTrJustMid.className=\"altColor1\";");
-echo("              tbody.appendChild(newTrCab);\n");
-echo("              tbody.appendChild(newTrMid);\n");
-echo("              tbody.appendChild(newTrJust);\n");
-echo("              tbody.appendChild(newTrJustMid);\n");
-echo("				newTable.appendChild(tbody);");
-echo("              newTdConteiner.appendChild(newTable);\n");
-echo("              newBr = document.createElement('br');\n");
-echo("              newTdConteiner.appendChild(newBr);\n");
-echo("            }\n");
-echo("            newTrConteiner.appendChild(newTdConteiner);\n");
-echo("            newTrConteiner.appendChild(CriarTdFechar(id+'_hist'));\n");
-echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
-echo("          }\n\n");
-echo("        }\n\n");
-
-echo("        function DesabilitaTr(id)\n");
-echo("        {\n");
-echo("          trElement = document.getElementById(id);\n");
-echo("          tableElement = trElement.parentNode;\n");
-echo("          tableElement.removeChild(trElement);\n");
-echo("        }\n\n");
-
-if($usr_formador)
-{
-	echo("        function MudaSpanComp(SpanComp,codNota,comp,codAluno,codGrupo)\n");
-	echo("        {\n");
-	echo("              SpanComp.innerHTML = RetornaFraseComp(comp);\n");
-	echo("              SpanComp.setAttribute(\"name\",'comp_'+codNota);\n");
-	//echo("              SpanComp.setAttribute(\"class\",\"link\");\n");
-	echo("				SpanComp.className=\"link\";\n");
-	echo("              SpanComp.onclick = function(){ js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(comp,'comp_'+codNota);MostraLayer(cod_comp,140); };\n");
+	echo("                else\n");
+	echo("                  newTd.innerHTML=arrayConteudo[i][j];\n");
+	echo("                newTrMid.appendChild(newTd);\n");
+	echo("              }\n");
+	echo("              newTrJust = document.createElement('tr');\n");
+	echo("              newTrJust.className = 'head01';\n");
+	echo("              newTd = document.createElement('td');\n");
+	echo("              newTd.colSpan = 5;\n");
+	echo("              newTd.align = 'left';\n");
+	echo("              newTd.innerHTML='".RetornaFraseDaLista($lista_frases,163)."';\n");
+	echo("              newTrJust.appendChild(newTd);\n");
+	echo("              newTrJustMid = document.createElement('tr');\n");
+	echo("              newTd = document.createElement('td');\n");
+	echo("              newTd.colSpan = 5;\n");
+	echo("              newTd.align = 'left';\n");
+	if($usr_formador)
+	echo("              newTd.innerHTML=arrayConteudo[i][j];\n");
+	else
+	echo("              newTd.innerHTML=arrayConteudo[i][4];\n");
+	echo("              newTrJustMid.appendChild(newTd);\n");
+	//echo("              newTrJustMid.setAttribute(\"class\", \"altColor1\");\n");
+	echo("				newTrJustMid.className=\"altColor1\";");
+	echo("              tbody.appendChild(newTrCab);\n");
+	echo("              tbody.appendChild(newTrMid);\n");
+	echo("              tbody.appendChild(newTrJust);\n");
+	echo("              tbody.appendChild(newTrJustMid);\n");
+	echo("				newTable.appendChild(tbody);");
+	echo("              newTdConteiner.appendChild(newTable);\n");
+	echo("              newBr = document.createElement('br');\n");
+	echo("              newTdConteiner.appendChild(newBr);\n");
+	echo("            }\n");
+	echo("            newTrConteiner.appendChild(newTdConteiner);\n");
+	echo("            newTrConteiner.appendChild(CriarTdFechar(id+'_hist'));\n");
+	echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
+	echo("          }\n\n");
 	echo("        }\n\n");
 
-	echo("        function AtualizaTr(id,codNota,nota,data,comp,codAluno,codGrupo)\n");
+	echo("        function DesabilitaTr(id)\n");
 	echo("        {\n");
-	echo("          var i=0;\n");
 	echo("          trElement = document.getElementById(id);\n");
-	echo("          childElement = trElement.firstChild;\n");
-	echo("          while(childElement != null)\n");
-	echo("          {\n");
-//	echo("alert('i: '+i+' : childElement.firstChild: '+childElement.firstChild);");
-	echo("            if(i == 2 && isIE)\n");	//nota no IE
-	echo("              childElement.firstChild.innerHTML = nota+'&nbsp;';\n");
-	echo("            if(i == 5 && !isIE)\n");	//nota no FF
-	echo("              childElement.firstChild.innerHTML = nota;\n");
-	
-	echo("            if(i == 3 && isIE)\n");	//data no IE
-	echo("              childElement.innerHTML = data+'&nbsp;';\n");
-	echo("            if(i == 7 && !isIE)\n");	//data no FF
-	echo("              childElement.innerHTML = data;\n");
-	
-	echo("            if(i == 4 && isIE) {\n");//Avaliar/Reavaliar no IE
-	echo("              if(codNota == -1)\n");
-	//65 - Avaliar
-	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
-	echo("              else\n");
-	//66 - Reavaliar
-	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
-	echo("            }\n");
-	echo("            if(i == 9 && !isIE) {\n");//Avaliar/Reavaliar no FF
-	echo("              if(codNota == -1)\n");
-	//65 - Avaliar
-	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
-	echo("              else\n");
-	//66 - Reavaliar
-	echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
-	echo("            }\n");
-	
-	echo("            if(i == 5 && isIE)\n");			//span compartilhamento no IE
-	echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
-	echo("            if(i == 11 && !isIE)\n");			//span compartilhamento no FF
-	echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
-	
-	echo("            childElement = childElement.nextSibling;\n");
-	echo("            i++;\n");
-	echo("          }\n");
+	echo("          tableElement = trElement.parentNode;\n");
+	echo("          tableElement.removeChild(trElement);\n");
 	echo("        }\n\n");
+
+	if($usr_formador)
+	{
+		echo("        function MudaSpanComp(SpanComp,codNota,comp,codAluno,codGrupo)\n");
+		echo("        {\n");
+		echo("              SpanComp.innerHTML = RetornaFraseComp(comp);\n");
+		echo("              SpanComp.setAttribute(\"name\",'comp_'+codNota);\n");
+		//echo("              SpanComp.setAttribute(\"class\",\"link\");\n");
+		echo("				SpanComp.className=\"link\";\n");
+		echo("              SpanComp.onclick = function(){ js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(comp,'comp_'+codNota);MostraLayer(cod_comp,140); };\n");
+		echo("        }\n\n");
+
+		echo("        function AtualizaTr(id,codNota,nota,data,comp,codAluno,codGrupo)\n");
+		echo("        {\n");
+		echo("          var i=0;\n");
+		echo("          trElement = document.getElementById(id);\n");
+		echo("          childElement = trElement.firstChild;\n");
+		echo("          while(childElement != null)\n");
+		echo("          {\n");
+		//	echo("alert('i: '+i+' : childElement.firstChild: '+childElement.firstChild);");
+		echo("            if(i == 2 && isIE)\n");	//nota no IE
+		echo("              childElement.firstChild.innerHTML = nota+'&nbsp;';\n");
+		echo("            if(i == 5 && !isIE)\n");	//nota no FF
+		echo("              childElement.firstChild.innerHTML = nota;\n");
+
+		echo("            if(i == 3 && isIE)\n");	//data no IE
+		echo("              childElement.innerHTML = data+'&nbsp;';\n");
+		echo("            if(i == 7 && !isIE)\n");	//data no FF
+		echo("              childElement.innerHTML = data;\n");
+
+		echo("            if(i == 4 && isIE) {\n");//Avaliar/Reavaliar no IE
+		echo("              if(codNota == -1)\n");
+		//65 - Avaliar
+		echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
+		echo("              else\n");
+		//66 - Reavaliar
+		echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
+		echo("            }\n");
+		echo("            if(i == 9 && !isIE) {\n");//Avaliar/Reavaliar no FF
+		echo("              if(codNota == -1)\n");
+		//65 - Avaliar
+		echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
+		echo("              else\n");
+		//66 - Reavaliar
+		echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
+		echo("            }\n");
+
+		echo("            if(i == 5 && isIE)\n");			//span compartilhamento no IE
+		echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
+		echo("            if(i == 11 && !isIE)\n");			//span compartilhamento no FF
+		echo("              MudaSpanComp(childElement.firstChild,codNota,comp,codAluno,codGrupo);\n");
+
+		echo("            childElement = childElement.nextSibling;\n");
+		echo("            i++;\n");
+		echo("          }\n");
+		echo("        }\n\n");
+	}
+
+	echo("    </script>\n\n");
 }
 
-echo("    </script>\n\n");
-echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
+if (!$SalvarEmArquivo) $objAjax->printJavascript("../xajax_0.2.4/");
 
-$objAjax->printJavascript("../xajax_0.2.4/");
 include("../menu_principal.php");
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">");
 
@@ -1287,7 +1288,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">");
 
 						echo($nota."</span></td>\n");
-						 
+							
 					}
 					else
 					echo($nota."</td>\n");
@@ -1523,10 +1524,10 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">");
 
 						/*if($dados['Ferramenta']=='E')
-						echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
-						else*/
+						 echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
+						 else*/
 						echo($nota."</span></td>\n");
-						 
+							
 					}
 					else
 					echo($nota."</td>\n");
@@ -1838,8 +1839,8 @@ else
 						echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_users_".$cod."'));\">");
 
 						/*if($dados['Ferramenta']=='E')
-						echo($nota."<font><sup>*C</sup></font></span></td>\n");
-						else*/
+						 echo($nota."<font><sup>*C</sup></font></span></td>\n");
+						 else*/
 						echo($nota."</span></td>\n");
 					}
 					else
@@ -2060,7 +2061,7 @@ else
 						echo("                    <td align=center>"."0"."</td>\n");
 					}
 				}
-				 
+					
 				if ($foiavaliado /*&& $dados['Ferramenta']!='E'*/)
 				{
 					$dados_nota=RetornaDadosNota($sock, $cod, $cod_avaliacao,$cod_usuario,$usr_formador);
@@ -2150,10 +2151,10 @@ else
 							else
 							echo("<span class=\"link\" onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",'tr_formadores_".$cod."'));>");
 							/*if($dados['Ferramenta']=='E')
-							echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
-							else*/
+							 echo($nota."<font class=text><sup>*C</sup></font></span></td>\n");
+							 else*/
 							echo($nota."</span></td>\n");
-							 
+
 						}
 						else
 						echo($nota."</td>\n");

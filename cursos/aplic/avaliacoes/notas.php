@@ -75,17 +75,7 @@
     $exp = $media['norma'];
   }
 
-  echo("    <script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
-  echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
-
-  if ($SalvarEmArquivo)
-  {
-    echo("  <style>\n");
-    include "../teleduc.css";
-    include "avaliacoes.css";
-    echo("  </style>\n");
-  }
-  else
+  if (!$SalvarEmArquivo)
   {
     /* Fun��es JavaScript */
     echo("    <script language=JavaScript>\n");
@@ -1168,7 +1158,7 @@
   echo("    </script>\n");
   echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
 	
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  if (!$SalvarEmArquivo) $objAjax->printJavascript("../xajax_0.2.4/");
 
   echo("    <form name=frmAvaliacao method=get>\n");
   echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");

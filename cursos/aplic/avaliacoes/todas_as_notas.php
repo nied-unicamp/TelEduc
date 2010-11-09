@@ -63,20 +63,6 @@
   /* 1 - Avaliações  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  if (!$SalvarEmArquivo)
-  {
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
-    echo("\n");
-  }
-  else
-  {
-    echo("  <style>\n");
-    include "../teleduc.css";
-    include "avaliacoes.css";
-    echo("  </style>\n");
-  }
-
   /* Funções JavaScript */
   echo("<script language=JavaScript>\n");
 
