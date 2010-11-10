@@ -48,6 +48,7 @@
 - Tipo de questão (tp_questao):
 
   - 'O' - Questao Objetiva
+  - 'M' - Multipla Escolha
   - 'D' - Questao Dissertativa
 
 - Status de um Exercicio e/ou de uma Questao (status):
@@ -660,6 +661,23 @@ function RetornaGabaritoQuestaoObj($sock, $cod_questao)
   $consulta="select gabarito from Exercicios_questao_obj where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock, $consulta);
   $linha=RetornaLinha($res);
+
+  if($linha['gabarito'] != '') return($linha['gabarito']);
+  else return false;
+}
+
+/* *********************************************************************
+   RetornaGabaritoQuestaoMult - Retorna o gabarito de uma questao multipla escolha
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+   Saida: gabarito da questao
+*/
+function RetornaGabaritoQuestaoMult($sock, $cod_questao)
+{
+  $consulta="select gabarito from Exercicios_questao_mult where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
+  $linha=RetornaLinha($res);
+  
   if($linha['gabarito'] != '') return($linha['gabarito']);
   else return false;
 }
@@ -1056,6 +1074,9 @@ function CancelaResolucaoDoExercicio($sock,$cod_exercicio)
   $consulta = "delete from Exercicios_resolucao_questao_obj where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
   
+  $consulta = "delete from Exercicios_resolucao_questao_mult where cod_resolucao = ".$linha['cod_resolucao'];
+  $res = Enviar($sock, $consulta);
+  
   $consulta = "delete from Exercicios_resolucao_questao_diss where cod_resolucao = ".$linha['cod_resolucao'];
   $res = Enviar($sock, $consulta);
   
@@ -1078,6 +1099,8 @@ function RetornaRespostaQuestao($sock,$cod_resolucao,$cod_questao,$tp_questao)
 
   if($tp_questao == 'O')
     $consulta = "select resposta from Exercicios_resolucao_questao_obj where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
+  else if($tp_questao == 'M')
+  	$consulta = "select resposta from Exercicios_resolucao_questao_mult where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
   else if($tp_questao == 'D')
     $consulta = "select resposta from Exercicios_resolucao_questao_diss where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
       
@@ -1325,6 +1348,32 @@ function EditarAlternativaObjDinamic($cod_curso, $cod_questao, $cod_alternativa,
 }
 
 /* *********************************************************************
+   EditarAlternativaMultDinamic - Salva no banco as altera��es feitas na alternativa de uma questao multipla escolha
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+			$cod_alternativa - codifo da alternativa
+			$textoAlt - texto da alternativa
+			$gabarito - gabarito da questao
+   Saida: XML da função Ajax
+*/
+function EditarAlternativaMultDinamic($cod_curso, $cod_questao, $cod_alternativa, $textoAlt, $gabarito)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $sock=Conectar($cod_curso);
+
+  $consulta="update Exercicios_questao_alternativa set texto='".VerificaStringQuery($textoAlt)."' where cod_alternativa=".VerificaNumeroQuery($cod_alternativa);
+  $res=Enviar($sock, $consulta);
+
+  $consulta="update Exercicios_questao_mult set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
+  
+  Desconectar($sock);
+  
+  return $objResponse->getXML();
+}
+
+/* *********************************************************************
    EditarAlternativaDissDinamic - Salva no banco as alterações feitas na alterntiva de uma questao dissertativa
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
@@ -1342,6 +1391,23 @@ function EditarAlternativaDissDinamic($cod_curso, $cod_questao, $cod_alternativa
   Desconectar($sock);
 
   return $objResponse->getXML();
+}
+/***********************************************************************
+		MudaTipoQuestaoDinamic - Muda o tipo de uma questao dinamicamente
+		Entrada: $sock - BASE DO CURSO
+				 $cod_curso - codigo do curso ao qual pertence a questao
+            	 $cod_usuario - codigo do usuario que criou a questao
+            	 $cod_questao - codigo da questao
+            	 $novo_tipo - novo tipo da questao	
+ 		Saida: XML da função Ajax
+*/
+function MudaTipoQuestaoDinamic($cod_curso,$cod_usuario,$cod_questao,$novo_tipo){
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	$sock=Conectar($cod_curso);
+	$query="update Exercicios_questao set tp_questao='".VerificaStringQuery($novo_tipo)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+	$res=Enviar($sock,$query);
+	Desconectar($sock);
+	return $objResponse->getXML();
 }
 
 /* *********************************************************************
@@ -1364,28 +1430,26 @@ function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_que
   $linha=RetornaLinha($res);
 
   $posicao = $linha[0]+1;
-  
+
   $consulta="insert into Exercicios_questao_alternativa (cod_questao,posicao_item) values (".VerificaNumeroQuery($cod_questao).",".$posicao.")";
   $res=Enviar($sock, $consulta);
 
- 
   $cod_alternativa = mysql_insert_id();
 
-if($tp_questao == 'O')
-  {
-    $gabarito = RetornaGabaritoQuestaoObj($sock, $cod_questao).'0'; 
-	$consulta="insert into Exercicios_questao_obj (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'O') ON duplicate KEY UPDATE gabarito='".VerificaStringQuery($gabarito)."'";
-
-    
+  if($tp_questao == 'O') {
+  	$gabarito = RetornaGabaritoQuestaoObj($sock, $cod_questao).'0';
+  	$consulta="insert into Exercicios_questao_obj (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'O') ON duplicate KEY UPDATE gabarito='".VerificaStringQuery($gabarito)."'";
   	$res=Enviar($sock, $consulta);
-    $cod = $cod_alternativa;
-
-  }
-  else if($tp_questao == 'D')
-  {
-    $consulta="insert into Exercicios_questao_diss (cod_questao,cod_alternativa) values (".VerificaNumeroQuery($cod_questao).",".VerificaNumeroQuery($cod_alternativa).")";
-    $res=Enviar($sock, $consulta);
-    $cod = $cod_questao.$cod_alternativa;
+  	$cod = $cod_alternativa;
+  } elseif ($tp_questao == 'M') {
+  	$gabarito = RetornaGabaritoQuestaoMult($sock, $cod_questao).'0';
+  	$consulta="insert into Exercicios_questao_mult (cod_questao,gabarito,tipo) values (".$cod_questao.",0,'M') ON duplicate KEY UPDATE gabarito='".VerificaStringQuery($gabarito)."'";
+  	$res=Enviar($sock, $consulta);
+  	$cod = $cod_alternativa;
+  } else {
+  	$consulta="insert into Exercicios_questao_diss (cod_questao,cod_alternativa) values (".VerificaNumeroQuery($cod_questao).",".VerificaNumeroQuery($cod_alternativa).")";
+  	$res=Enviar($sock, $consulta);
+  	$cod = $cod_questao.$cod_alternativa;
   }
 
   $consulta="insert into Exercicios_questao_historico values (".VerificaNumeroQuery($cod_questao).", ".VerificaNumeroQuery($cod_usuario).", ".time().", 'A')";
@@ -1705,6 +1769,27 @@ function EditarGabaritoQuestaoObjDinamic($cod_curso, $cod_questao, $gabarito)
   return $objResponse->getXML();
 }
 
+/* *********************************************************************
+   EditarGabaritoQuestaoMultDinamic - Salva no banco as alteracoes feitas no gabarito de uma de uma questao 
+                                      multipla escolha
+   Entrada: $sock - BASE DO CURSO
+            $cod_questao - codigo da questao
+			$gabarito - gabarito da questao
+   Saida: XML da função Ajax
+*/
+function EditarGabaritoQuestaoMultDinamic($cod_curso, $cod_questao, $gabarito)
+{
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  $sock=Conectar($cod_curso);
+
+  $consulta="update Exercicios_questao_mult set gabarito='".VerificaStringQuery($gabarito)."' where cod_questao=".VerificaNumeroQuery($cod_questao);
+  $res=Enviar($sock, $consulta);
+
+  Desconectar($sock);
+
+  return $objResponse->getXML();
+}
 
 /* *********************************************************************
    EntregaExercicio
@@ -1991,11 +2076,11 @@ function AtualizaPosicoesDasAlternativasDinamic($cod_curso, $cod_usuario, $lista
     $vetor = split('_', $linha);
     $query = "update Exercicios_questao_alternativa set posicao_item = ".($cod+1)." where cod_alternativa=".$vetor[1];
     Enviar($sock, $query);
-    if($tp_questao == 'O')
+    if($tp_questao == 'O' || $tp_questao == 'M')
     	$string = $string.$vetor[1].",";
   }
   
-  if($tp_questao == 'O')
+  if($tp_questao == 'O' || $tp_questao == 'M')
     $objResponse->addScript("AtualizarMudancaPosicoes(\"".$string."\");");
 
   LiberaSemaforo($sock, "Exercicios");
@@ -2355,13 +2440,20 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     $sock=Conectar($cod_curso);
     if($tp_questao == 'O'){
       $query = "insert into Exercicios_resolucao_questao_obj (cod_questao,cod_resolucao,resposta) values (".$cod_questao.",".$cod_resolucao.",'".$resposta."') on duplicate key update resposta = '".$resposta."'";
-    } else if($tp_questao == 'D'){
+    } elseif($tp_questao == 'M'){
+      $query = "insert into Exercicios_resolucao_questao_mult (cod_questao,cod_resolucao,resposta) values (".$cod_questao.",".$cod_resolucao.",'".$resposta."') on duplicate key update resposta = '".$resposta."'";
+    } elseif($tp_questao == 'D'){
       $query = "insert into Exercicios_resolucao_questao_diss (cod_questao,cod_resolucao,resposta) values (".$cod_questao.",".$cod_resolucao.",'".$resposta."') on duplicate key update resposta = '".$resposta."'";
     }
+
     Enviar($sock,$query);
     Desconectar($sock);
     
-    AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta);
+    if($tp_questao == 'O'){
+    	AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta);
+    } elseif($tp_questao == 'M'){
+    	AtualizaNotaDinamicaMult($cod_curso, $cod_questao, $cod_resolucao, $resposta);
+    }
     
     /* ? - Respondida */
     $objResponse->addAssign('tdStatus_'.$cod_questao, "innerHTML", "Respondida");
@@ -2370,7 +2462,7 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     return $objResponse->getXML();
 }
 
-/* AtualizaNotaDinamica - Atualiza a nota do participante.
+/* AtualizaNotaDinamicaObj - Atualiza a nota do participante.
  * 			Entrada: $cod_curso - codigo do curso para conectar ao banco de dados.
  * 					 $cod_questao - codigo da questão.
  * 					 $cod_resolucao - codigo da resolução
@@ -2387,7 +2479,36 @@ function AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta
     $res=Enviar($sock, $consulta);
     $linha=RetornaLinha($res);
     
-    $consulta = "select gabarito from Exercicios_questao_obj where cod_questao=".$cod_questao;
+	$gabarito = RetornaGabaritoQuestaoObj($sock, $cod_questao);
+	
+    if($resposta == $gabarito)
+		$valor = $linha['valor'];
+	else $valor = 0;
+
+	$consulta ="update Exercicios_resolucao_questao_obj set nota=".$valor." where cod_resolucao=".$cod_resolucao." and cod_questao=".$cod_questao;
+	Enviar($sock, $consulta);
+	Desconectar($sock);
+
+}
+
+/* AtualizaNotaDinamicaMult - Atualiza a nota do participante.
+ * 			Entrada: $cod_curso - codigo do curso para conectar ao banco de dados.
+ * 					 $cod_questao - codigo da questão.
+ * 					 $cod_resolucao - codigo da resolução
+ * 	                 $resposta - resposta do participando na questao
+ */
+
+function AtualizaNotaDinamicaMult($cod_curso,$cod_questao,$cod_resolucao,$resposta)
+{
+	$sock=Conectar($cod_curso);
+
+	$resolucao = RetornaResolucao($sock,$cod_resolucao);
+	
+	$consulta="select valor from Exercicios_modelo_questao where cod_questao=".$cod_questao." and cod_exercicio=".$resolucao['cod_exercicio'];	
+    $res=Enviar($sock, $consulta);
+    $linha=RetornaLinha($res);
+    
+    $consulta = "select gabarito from Exercicios_questao_mult where cod_questao=".$cod_questao;
     $res=Enviar($sock, $consulta);
     $gabarito=RetornaLinha($res);
 
@@ -2395,7 +2516,7 @@ function AtualizaNotaDinamicObj($cod_curso,$cod_questao,$cod_resolucao,$resposta
 		$valor = $linha['valor'];
 	else $valor = 0;
 
-	$consulta ="update Exercicios_resolucao_questao_obj set nota=".$valor." where cod_resolucao=".$cod_resolucao." and cod_questao=".$cod_questao;
+	$consulta ="update Exercicios_resolucao_questao_mult set nota=".$valor." where cod_resolucao=".$cod_resolucao." and cod_questao=".$cod_questao;
 	Enviar($sock, $consulta);
 	Desconectar($sock);
 
@@ -2436,6 +2557,11 @@ function VerificaEntregaDinamic($cod_curso, $cod_resolucao)
 	if(RetornaLinha($res))
 		$flag=0;
 
+	$consulta = "select * from Exercicios_resolucao_questao_mult where cod_resolucao=".$cod_resolucao." and isnull(nota)";
+	$res=Enviar($sock,$consulta);
+	if(RetornaLinha($res))
+		$flag=0;
+		
 	$objResponse->addScript("VerificaEntrega(".$cod_curso.",".$cod_resolucao.",".$flag.");");
 		
     return $objResponse->getXML();
@@ -2517,26 +2643,9 @@ function EnviarLixeira($cod_curso, $cod_questao, $status)
             $cod_resolucao - codigo da resolucao
 */
 function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
-{ 
-  	/* Calcula o total de nota das questoes dissertativas */
-  	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
-  	$res = Enviar($sock, $nota_final1);
-  	$nota1 = RetornaLinha($res);
-  	
-  	/* Calcula o total de nota das questoes objetivas */
-  	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
-  	$res = Enviar($sock, $nota_final2);
-  	$nota2 = RetornaLinha($res);
-  	
-  	/* Calcula a soma total */
-  	if(is_null($nota1['soma']))
-  		$soma = $nota2['soma'];
-  	else if(is_null($nota2['soma']))
-  		$soma = $nota1['soma'];
-  	else
-  		$soma = $nota1['soma'] + $nota2['soma'];
-  		
-  	if(is_null($soma)) $soma = 0;
+{
+	/* Pega a nota total */ 
+	$soma = RetornaNotaFinal($sock, $cod_curso, $cod_resolucao);
 	
   	/* Salva a nota total e entrega a resolucao do exercicio */
   	$update = "UPDATE Exercicios_resolucao SET nota=".$soma.", corrigida='S' WHERE cod_resolucao =".$cod_resolucao;
@@ -2567,12 +2676,12 @@ function EntregaCorrecao($sock, $cod_curso, $cod_resolucao)
 }
 
 /* *********************************************************************
-   EntregaCorrecaoExsObjetivos - Entrega a corre��o de todos os exerc�cios com quest�es
-   			apenas objetivas, com data ap�s o limite de submiss�o.
+   EntregaCorrecaoExsObjetivosEMultiplaEscolha - Entrega a corre��o de todos os exerc�cios com quest�es
+   			apenas objetivas ou multipla escolha, com data ap�s o limite de submiss�o.
    Entrada: $cod_curso - c�digo do curso, para conectar ao banco de dados.
    Sa�da: True se teve resolu��es entregues e False caso contr�rio.
 */
-function EntregaCorrecaoExsObjetivos($cod_curso)
+function EntregaCorrecaoExsObjetivosEMultiplaEscolha($cod_curso)
 {
 	// Conecta com a banco do curso.
 	$sock = Conectar($cod_curso);
@@ -2591,13 +2700,14 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 	$array_cod_exercicios = RetornaArrayLinhas($res);
 		
 	// Nesse array, apenas estar�o os exerc�cios que possam ser entregues
-	// e tenham apenas quest�es objetivas
+	// e tenham apenas quest�es objetivas ou multipla escolha
 	$ex_entregaveis = array();
 	$atual = -1;				// Atual posi��o do array criado		
 	
-	// Pega todas as quest�es objetivas do banco.
+	// Pega todas as quest�es objetivas e de multipla escolha do banco.
 	$query = "select cod_questao from Exercicios_questao ";
-	$query.= "where (tp_questao = 'O')";
+	$query.= "where (tp_questao = 'O') or ";
+	$query.= "where (tp_questao = 'M')";
 	$res = Enviar($sock, $query);
 	
 	// Se n�o houver resultados, n�o h� quest�es objetivas no banco e
@@ -2605,11 +2715,12 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 	if (RetornaNumLinhas($res) <= 0)
 		return false;
 		
-	// Todas as quest�es objetivas do banco de dados.	
-	$array_questoes_obj = RetornaArrayLinhas($res);
+	// Todas as quest�es objetivas e de multipla escolha do banco de dados.	
+	//$array_questoes_obj = RetornaArrayLinhas($res);
+	$array_questoes = RetornaArrayLinhas($res);
 	
 	// Seleciona, de todos os exerc�cios pass�veis de serem entregues at� agora
-	// quais possuem apenas quest�es objetivas e adiciona no array $ex_entregaveis	
+	// quais possuem apenas quest�es objetivas ou de multipla escolha e adiciona no array $ex_entregaveis	
 	for ($i = 0; $i < sizeof($array_cod_exercicios); $i++)
 	{
 		$query = "select cod_questao from Exercicios_modelo_questao ";
@@ -2626,9 +2737,9 @@ function EntregaCorrecaoExsObjetivos($cod_curso)
 			{
 				$flag = false;
 				$k = 0;
-				while (($k < sizeof($array_questoes_obj)) && ($flag == false))
+				while (($k < sizeof($array_questoes)) && ($flag == false))
 				{
-					if ($array_cod_questoes[$j]['cod_questao'] == $array_questoes_obj[$k]['cod_questao'])
+					if ($array_cod_questoes[$j]['cod_questao'] == $array_questoes[$k]['cod_questao'])
 						$flag = true;
 					$k++;
 				}
@@ -2704,6 +2815,16 @@ function PegaNotaObjetiva($cod_questao, $cod_curso, $cod_resolucao)
 	return $linha['nota'];
 }
 
+function PegaNotaMultEscolha($cod_questao, $cod_curso, $cod_resolucao)
+{
+	$sock=Conectar($cod_curso);
+  	$consulta = "select nota from Exercicios_resolucao_questao_mult where cod_resolucao = ".$cod_resolucao." and cod_questao = ".$cod_questao;
+  	$res = Enviar($sock, $consulta);
+  	$linha = RetornaLinha($res);
+	return $linha['nota'];
+}
+
+
 function VerificaQuestaoDissertativa($cod_questao, $cod_curso, $cod_resolucao)
 {
 	$sock=Conectar($cod_curso);
@@ -2776,9 +2897,11 @@ function VerificaNotas($cod_exercicio,$cod_curso){
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
 			$cod_curso - codigo do curso
+			$tp_questao - O: objetiva
+						- M: Multipla Escolha
    Saida: XML da fun��o Ajax
 */
-function AtualizaIconesDinamic($cod_questao,$cod_curso){
+function AtualizaIconesDinamic($cod_questao,$cod_curso,$tp_questao){
 	$sock=Conectar($cod_curso);
 	$objResponse = new xajaxResponse('ISO-8859-1');
 	
@@ -2791,9 +2914,15 @@ function AtualizaIconesDinamic($cod_questao,$cod_curso){
 		else
 			$alt = $alternativas[$i]['cod_alternativa'];
 	}
-	$gabarito = RetornaGabaritoQuestaoObj($sock,$cod_questao);
-	$objResponse->addScriptCall("AtualizaIcones",$alt,$gabarito);
 	
+  	if($tp_questao == 'O') {
+		$gabarito = RetornaGabaritoQuestaoObj($sock,$cod_questao);
+	} elseif ($tp_questao == 'M') {
+		$gabarito = RetornaGabaritoQuestaoMult($sock, $cod_questao);
+	}
+	$objResponse->addScriptCall("AtualizaIcones",$alt,$gabarito);
+	//$objResponse->addScriptCall("CarregaNumCerta");
+	//$objResponse->addScriptCall("MudaCabecalho");
   	Desconectar($sock);
 
   	return $objResponse->getXML();

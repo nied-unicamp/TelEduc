@@ -315,7 +315,7 @@ if($ehFormador){
 	
 	/* Frase #1 - Exercicios */
 	/* Frase #4 - Corrigir Exercicio */
-	$frase = RetornaFraseDaLista($lista_frases, 3)." - ".RetornaFraseDaLista($lista_frases, 4);
+	$frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 4);
 	echo("          <h4>".$frase."</h4>\n");
 	
 	if($resolucao['cod_grupo'] != null)
@@ -471,7 +471,13 @@ if($ehFormador){
 				$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
 				$corrigida = true;
 				$nota = PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
-				$respostaCorreta = RespostaQuestao($cod_curso,$linha_item['cod_questao']);
+				$respostaCorreta = RetornaGabaritoQuestaoObj($sock,$linha_item['cod_questao']);
+			}
+			elseif ($linha_item['tp_questao'] == 'M'){
+				$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
+				$corrigida = true;
+				$nota = PegaNotaMultEscolha($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+				$respostaCorreta = RetornaGabaritoQuestaoMult($sock,$linha_item['cod_questao']);
 			}
 			else{
 				$itens=VerificaQuestaoDissertativa($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
@@ -497,6 +503,7 @@ if($ehFormador){
 			/* Mostra os icones de certo ou errado de acordo com a avaliacao */
 			$acertou = ($nota == $valor);
 			
+			
 			if(!$corrigida){
 				echo("                    <td align=left colspan=5>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
 			} else if(!$acertou && $corrigida){
@@ -508,6 +515,9 @@ if($ehFormador){
 			
 			if($linha_item['tp_questao'] == 'O') {
 				echo("                    <td id=\"NotaObj_".$linha_item['cod_questao']."\">".$nota."</td>\n");
+			}
+			elseif ($linha_item['tp_questao'] == 'M') {
+				echo("                    <td id=\"NotaMult_".$linha_item['cod_questao']."\">".$nota."</td>\n");
 			}
 			else {
 				echo("                    <td id=\"NotaDiss_".$linha_item['cod_questao']."\">".$nota."</td>\n");
@@ -568,7 +578,7 @@ if($ehFormador){
 				echo("                          </dd>\n");
 			}
 	
-			if($linha_item['tp_questao'] == 'O')
+			if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M')
 			{
 				/* Desabilita a radiobox, se ja foi entregue o ex. */
 				$estado = "";
@@ -589,7 +599,12 @@ if($ehFormador){
 								echo($icone_correto);
 							else
 								echo($icone_vazio);
-							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+								
+							if($linha_item['tp_questao'] == 'O') {	/* Se for questao objetiva, coloca radio */
+								echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+							} else {								/* Senao, eh questao multipla escolha, coloca checkbox */
+								echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+							}
 							echo("                            <br />\n");
 						}
 						else{
@@ -597,12 +612,21 @@ if($ehFormador){
 								echo($icone_correto);
 							else 
 								echo($icone_errado);
-							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+								
+							if($linha_item['tp_questao'] == 'O') {	/* Se for questao objetiva, coloca radio */
+								echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+							} else {								/* Senao, eh questao multipla escolha, coloca checkbox */
+								echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+							}
 							echo("                            <br />\n");
 						}
 					}
 					else{
-						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						if($linha_item['tp_questao'] == 'O') {	/* Se for questao objetiva, coloca radio */
+							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						} else {								/* Senao, eh questao multipla escolha, coloca checkbox */
+							echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						}
 						echo("                            <br />\n");
 					}
 				}

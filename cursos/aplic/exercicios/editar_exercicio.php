@@ -1382,21 +1382,33 @@
 	echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 15)."</td>\n");
 	echo("                  </tr>\n");
 	
-	
     if ((count($lista_questoes)>0)&&($lista_questoes != null))
     {
       foreach ($lista_questoes as $cod => $linha_item)
       {
-        if($linha_item['tp_questao'] == 'O'){
+        if($linha_item['tp_questao'] == 'O')
+        	/* Frase #159 - Objetiva */
         	$tipo = RetornaFraseDaLista($lista_frases, 159);
-        } elseif($linha_item['tp_questao'] == 'D'){
+        elseif($linha_item['tp_questao'] == 'D')
+        	/* Frase #160 - Dissertativa */
         	$tipo = RetornaFraseDaLista($lista_frases, 160);
-        }
+        else 
+        	/* Frase #212 - Multipla escolha */
+        	$tipo = RetornaFraseDaLista($lista_frases, 212);
+        
         $titulo = $linha_item['titulo'];
         $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
         $topico = ($topico=="") ? "-" : $topico;
         $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-        $dificuldade = $linha_item['nivel'];
+        if($linha_item['nivel'] == 'D')
+        	/* Frase #100 - Dificil */
+        	$dificuldade = RetornaFraseDaLista($lista_frases,100);
+        elseif($linha_item['nivel'] == 'M')
+        	/* Frase #101 - Medio */	
+        	$dificuldade = RetornaFraseDaLista($lista_frases,101);
+        else
+        	/* Frase #102 - Facil */
+        	$dificuldade = RetornaFraseDaLista($lista_frases,102); 	
         $valor = "<span id=\"valorQuestao_".$linha_item['cod_questao']."\">".$linha_item['valor']."</span>";
         
         echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");

@@ -509,7 +509,7 @@ if($visualizar == "Q")
 	/* *********************************************************************
 	 Filtrar - filtra as questoes de acordo com a escolha do ususario (topico da questao, tipo da questao e dificuldade)
 	 Entrada: 	topico = Topico escolhido no filtro ('T'caso seja selcionado Todos ou STRING do tipo de questao)
-	 		  	tp_questao = Tipo de questao escolhida no filtro: 'T'(Todos), 'O'(Objetivas) ou 'D'(Dissertativas) 
+	 		  	tp_questao = Tipo de questao escolhida no filtro: 'T'(Todos), 'O'(Objetivas), 'M'(Multipla Escolha) ou 'D'(Dissertativas) 
 	 			dificuldade = Dificuldade escolhida no filtro: 'T'(Todos), 'F'(Facil), 'M'(Medio), 'D'(Dificil)
 	 			stringNiveisQuestoes = string com a dificuldade/nivel de todas as questoes
 	 */
@@ -763,11 +763,13 @@ if ($tela_formador)
 			else $style = "display:none";
 
 			$data = "<span id=\"data_".$linha_item['cod_questao']."\">".UnixTime2Data($linha_item['data'])."</span>";
-			if($linha_item['tp_questao'] == 'O'){
+			if($linha_item['tp_questao'] == 'O')
 				$tipo = RetornaFraseDaLista($lista_frases, 159);
-			} elseif($linha_item['tp_questao'] == 'D'){
+			elseif($linha_item['tp_questao'] == 'M')	//Adicionado tipo de questao Multipla Escolha
+				$tipo = RetornaFraseDaLista($lista_frases, 212);	
+			elseif($linha_item['tp_questao'] == 'D')
 				$tipo = RetornaFraseDaLista($lista_frases, 160);
-			}
+				
 			$titulo = $linha_item['titulo'];
 			$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 			$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
@@ -946,6 +948,9 @@ if($tela_formador && $visualizar == "Q")
 	echo("            <select class=\"input\" name=\"tp_questao\">");
 	/* Frase #159 - Objetiva */
 	echo("              <option value=\"O\" selected>".RetornaFraseDaLista($lista_frases, 159)."</option>");
+	/* Frase #212 - Multipla escolha */
+	echo("              <option value=\"M\">".RetornaFraseDaLista($lista_frases, 212)."</option>");
+	
 	/* Frase #160 - Dissertativa */
 	echo("              <option value=\"D\">".RetornaFraseDaLista($lista_frases, 160)."</option>");
 	echo("            </select><br /><br />");
@@ -1021,6 +1026,8 @@ if($tela_formador && $visualizar == "Q")
 	echo("              <option value=\"T\" selected>".RetornaFraseDaLista($lista_frases, 162)."</option>");
 	/* Frase #159 - Objetiva */
 	echo("              <option value=\"O\">".RetornaFraseDaLista($lista_frases, 159)."</option>");
+	/* Frase #212 - Multipla escolha */
+	echo("              <option value=\"M\">".RetornaFraseDaLista($lista_frases, 212)."</option>");
 	/* Frase #160 - Dissertativa */
 	echo("              <option value=\"D\">".RetornaFraseDaLista($lista_frases, 160)."</option>");
 	echo("            </select><br /><br />");

@@ -53,6 +53,7 @@
   $objAjax->registerFunction("RetornaFraseDinamic");
   $objAjax->registerFunction("RetornaFraseGeralDinamic");
   $objAjax->registerFunction("EditarAlternativaObjDinamic");
+  $objAjax->registerFunction("EditarAlternativaMultDinamic");
   $objAjax->registerFunction("EditarAlternativaDissDinamic");
   $objAjax->registerFunction("CriarAlternativaDinamic");
   $objAjax->registerFunction("ApagarAlternativaDinamic");
@@ -62,6 +63,7 @@
   $objAjax->registerFunction("EditarTituloQuestaoDinamic");
   $objAjax->registerFunction("EditarEnunciadoDinamic");
   $objAjax->registerFunction("EditarGabaritoQuestaoDissDinamic");
+  $objAjax->registerFunction("EditarGabaritoQuestaoMultDinamic");
   $objAjax->registerFunction("EditarGabaritoQuestaoObjDinamic");
   $objAjax->registerFunction("ExcluiArquivoDinamic");
   $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
@@ -69,6 +71,7 @@
   $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
   $objAjax->registerFunction("AtualizaIconesDinamic");
+  $objAjax->registerFunction("MudaTipoQuestaoDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -81,7 +84,7 @@
   $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
   $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
   Desconectar($sock);
-
+  
   include("../topo_tela.php");
   
   // instanciar o objeto, passa a lista de frases por parametro
@@ -101,21 +104,28 @@
   $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
 
-  if($tp_questao == 'O')
-  {
+  if($tp_questao == 'O') {
     $gabaritoObj = RetornaGabaritoQuestaoObj($sock, $cod_questao);
     $existeGabaritoDiss = 0;
-  }
-  else
-  {
+  } elseif ($tp_questao == 'M') {
+    $gabaritoObj = RetornaGabaritoQuestaoMult($sock, $cod_questao);
+    $existeGabaritoDiss = 0;
+  } else {
     $gabaritoObj = null;
     $existeGabaritoDiss = 1;
   }
-    
-    
+  
+  if($tp_questao == 'O')
+		$tipo_tit = RetornaFraseDaLista($lista_frases, 159);
+  elseif($tp_questao == 'D')
+		$tipo_tit = RetornaFraseDaLista($lista_frases, 160);
+  else
+		$tipo_tit=RetornaFraseDaLista($lista_frases, 212);
 
+		
+		
   /*********************************************************/
-  /* in�io - JavaScript */
+  /* inicio - JavaScript */
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
@@ -123,12 +133,15 @@
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
 
   echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
-
-  if($tp_questao == 'O')
-  {
+   	
+  if($tp_questao == 'O' || $tp_questao == 'M'){
   	echo("    var posiAlt = new Array();\n");
   	echo("    var gabarito = new Array();\n\n");
-  }
+  }	
+   	
+  	
+  
+  
   
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
@@ -152,13 +165,13 @@
   echo("	var lay_novo_topico;");
   echo("	var conteudo;\n\n");
 
-  if ($tp_questao == 'O' && (count($alternativas)>0) && ($alternativas != null))
-  {
-    $qtdAlternativas = 0;
-    foreach ($alternativas as $cod => $linha_item)
+  if ( ($tp_questao == 'O' || $tp_questao == 'M') && (count($alternativas)>0) && ($alternativas != null))
     {
-      echo("    posiAlt[".$qtdAlternativas."] = ".$linha_item['cod_alternativa'].";\n");
-      $qtdAlternativas++;
+    	$qtdAlternativas = 0;
+    	foreach ($alternativas as $cod => $linha_item)
+    {
+      	echo("    posiAlt[".$qtdAlternativas."] = ".$linha_item['cod_alternativa'].";\n");
+      	$qtdAlternativas++;
     }
     echo("\n");
   }
@@ -207,12 +220,60 @@
   echo("      else\n");
   echo("        return(0);\n");
   echo("    }\n\n");
-
-  $icone_correto = " <img src=\"../imgs/certo.png\" name=\"correta[ ]\" alt=\"resposta certa\" border=\"0\" /> ";
+  
+  //echo("var	  num = 0;\n");
+  echo("var   resposta=\"\";\n");
+  
+  $icone_correto = " <img src=\"../imgs/certo.png\" name=\"correta[ ]\"	alt=\"resposta certa\" border=\"0\" /> ";
   $icone_errado = " <img  src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+     
+  //funcao que carrega o numero de questões corretas
+  echo("function CarregaNumCerta(){\n");
+  echo("	var Alt=\"\";\n");
+  echo("	var divCorreta=\"\";\n");
+  echo("	var Resp=\"\";\n");
+  echo("	Alt=document.getElementsByName('Alt[ ]');\n");
+  echo("	for(var i=0;i<Alt.length;i++){\n");
+  echo("		div=Alt[i].id.split('_');\n");
+  echo("		divCorreta=document.getElementById('div_'+div[1]);\n");
+  echo("		Resp=divCorreta.childNodes[1].alt;\n");
+  echo("		if(Resp=='resposta correta')\n");
+  echo("			num++;\n");
+  echo("	}\n");
+  echo("}\n");
+  
+  echo("	function NumCerta(){\n");
+  echo("		var num=0;\n");
+  echo("		var numcorreta=document.getElementsByName('correta[ ]');\n");
+  echo("		for(var i=1;i<=numcorreta.length;i++){\n");
+  echo("			num++;");
+  echo("		}\n");
+  echo("		if(num>=1){\n");
+  echo("			tr=document.getElementsByName('Alt[ ]');\n");
+ //frase 207 Ja existe uma alternativa correta. Deseja continuar?
+ echo("				if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
+ echo("					CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("				}\n");
+ echo("				else{\n");
+ echo("				ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("				}\n");
+ echo(" 		}\n");
+ echo("		}\n");
+    	
+  echo("function MudaCabecalho(){\n");
+  echo("	tituloPrinc=document.getElementById('tituloPrinc');\n");
+  echo("		if(num<=1){\n");
+  echo("			tituloPrinc.innerHTML = '".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, 99)." ".RetornaFraseDaLista($lista_frases, 159)."';\n");
+  echo("				xajax_MudaTipoQuestaoDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",'O');\n");
+  echo("		}\n");
+  echo("		else{\n");
+  echo("			tituloPrinc.innerHTML = '".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, 99)." ".RetornaFraseDaLista($lista_frases, 212)."';\n");
+  echo("			xajax_MudaTipoQuestaoDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",'M');\n");
+  echo("		}\n");
+  echo("}\n");
 
   echo("	function AtualizaIcones(alt,gabarito){\n");
-  echo("		arrayAlt = alt.split('.');\n");
+  echo("		var arrayAlt = alt.split('.');\n");
   echo("		arrayGabarito = new Array();");
   echo("		arrayGabarito = gabarito.split('');");
   echo("		for(i=0;i<arrayGabarito.length;i++){\n");
@@ -223,8 +284,7 @@
   echo("			}\n");
   echo("		}\n");
   echo("	}\n\n");
-
-	
+    
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
@@ -234,14 +294,13 @@
   echo("      tBody_alternativas = document.getElementById('tBody_alternativas');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("      startList();\n");
-  if($tp_questao == 'O'){
-  	echo("      xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
+  if($tp_questao == 'O' || $tp_questao == 'M'){
+  	echo("     xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."','".$tp_questao."');\n");
   }
-  
+    
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-
   echo("    }\n\n");
-
+  
   echo("    function WindowOpenVer(id)\n");
   echo("    {\n");
   echo("      window.open(\"" . $dir_questao_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
@@ -477,7 +536,8 @@
   echo("      var texto = textbox.value;\n");
   echo("      var select;\n");
   echo("	  if(texto==''){\n");
-  echo("			alert('Digite um nome para o t�pico');\n");
+  /* Frase #213 - Digite um nome para o tópico*/
+  echo("			alert('".RetornaFraseDaLista($lista_frases, 89)."');\n");
   echo("			textbox.focus();\n");
   echo("			return false;\n");
   echo("	  }\n");
@@ -617,31 +677,12 @@
   echo("      {\n");
   echo("        opt1.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
-  echo("        opt2.setAttribute(\"Onclick\",\"NumCerta();\");\n");
+  if($tp_questao=='O')
+  		echo("        opt2.setAttribute(\"Onclick\",\"NumCerta();\");\n");
   echo("      select.appendChild(opt1);\n");
   echo("      select.appendChild(opt2);\n");
   echo("      return select;\n");
   echo("    }\n\n");
-  
-  echo("function NumCerta(){\n");
-  echo("num=0;\n");
-  echo("numcorreta=document.getElementsByName('correta[ ]');\n");
-  echo("for(i=1;i<=numcorreta.length;i++){\n");
-  echo("		num++;");
-  echo("}\n");
-  echo("if(num>=1){\n");
-  echo("	tr=document.getElementsByName('Alt[ ]');\n");
-  //frase 196 Ja existe uma alternativa correta. Deseja continuar?
-  echo("	if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
-  echo("		CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
-  echo("	}\n");
-  echo("	else{\n");
-  echo("		ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
-  echo("	}\n");
-  echo(" }\n");
-  echo("}\n");
-  
-  
 
   echo("    function CriaSpanEspAlt(qtd)\n");
   echo("    {\n");
@@ -722,7 +763,7 @@
   echo("      var span;\n");
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      span.appendChild(CriaInputAlt(conteudo,cod));\n");
-  if($tp_questao == 'O')
+  if($tp_questao == 'O' || $tp_questao == 'M')
   {
     echo("      span.appendChild(document.createTextNode(' Validade:'));\n");
     echo("      span.appendChild(CriaSelectAlt(cod));\n");
@@ -740,7 +781,7 @@
   echo("      var span;\n");
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      span.appendChild(CriaInputAlt(conteudo,cod));\n");
-  if($tp_questao == 'O')
+  if($tp_questao == 'O' || $tp_questao == 'M')
   {
     echo("      span.appendChild(document.createTextNode(' Validade:'));\n");
     echo("      span.appendChild(CriaSelectAlt(cod));\n");
@@ -800,7 +841,7 @@
   echo("    }\n\n");
 
   echo("    function AdicionarAlternativa(cod)\n");
-  echo("    {\n");	
+  echo("    {\n");
   echo("      var tr,td,trGab,tdText,tdOp,codigo;\n");
   if($tp_questao == 'D')
   {
@@ -818,9 +859,10 @@
   echo("      td.appendChild(CriaSpanAlt(cod));\n");
   echo("      td.appendChild(CriaSpanDiv(cod));\n");
   echo("      tr.appendChild(td);\n");
-  echo("      tBody_alternativas.appendChild(tr);\n");
-  if($tp_questao == 'O'){
-    echo("      AdicionaLinhaArrayGabEPosi(cod);\n");
+  //echo("      tBody_alternativas.appendChild(tr);\n");
+  if($tp_questao == 'O' || $tp_questao == 'M'){
+  	echo("      AdicionaLinhaArrayGabEPosi(cod);\n");
+  	echo("      tBody_alternativas.appendChild(tr);\n");
     //echo("	    document.getElementById('textAlt_'+cod).focus();");
   }
   else if($tp_questao == 'D')
@@ -844,7 +886,7 @@
   echo("      DesabilitarMudancaPosicaoAlt();\n");
   //echo("      IntercalaCorLinhaAlt();\n");
   echo("      cancelarElemento=document.getElementById('spanCanc_'+cod);\n");
-  if($tp_questao == 'O')
+  if($tp_questao == 'O' || $tp_questao == 'M')
   	echo("	    document.getElementById('textAlt_'+cod).focus();");
   echo("      qtdAlternativas++;\n");
   echo("    }\n\n");
@@ -896,6 +938,7 @@
 
   echo("    function ApagarAlternativa(){\n");
   echo("      var checks,i,j,deleteArray;\n");
+  //echo("	  var filhodiv = new Array();");
   echo("	  j = 0;\n");
   echo("      checks = document.getElementsByName('chkAlt');\n");
   echo("	  deleteArray = new Array();\n");
@@ -905,15 +948,18 @@
   echo("          if(checks[i].checked){\n");
   echo("            getNumber=checks[i].id.split('_');\n");
   echo("            deleteArray[j++] = getNumber[1];\n");
-  if($tp_questao == 'O')
-    echo("            AtualizaArrayGabEPosi(getNumber[1]);\n");
+  if($tp_questao == 'O' || $tp_questao == 'M')  
+  	echo("          AtualizaArrayGabEPosi(getNumber[1]);\n");
   echo("            xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",getNumber[1],'".$tp_questao."');\n");
   echo("            qtdAlternativas--;\n");
   echo("          }\n");
   echo("        }\n");
   echo("		DeletarLinhasAlternativa(deleteArray,j);\n");
-  echo("        xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",FormaGabarito());\n");
-  //echo("        IntercalaCorLinhaAlt();\n");
+  if($tp_questao == 'O') {
+  	echo("      xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",FormaGabarito());\n");
+  } elseif ($tp_questao == 'M') {
+  	echo("      xajax_EditarGabaritoQuestaoMultDinamic(".$cod_curso.",".$cod_questao.",FormaGabarito());\n");
+  }
   echo("        VerificaChkBoxAlt(0);\n");
   echo("      }\n");
   echo("    }\n\n");
@@ -927,6 +973,9 @@
   echo("        if(checks[i].checked){\n");
   echo("          getNumber=checks[i].id.split('_');\n");
   echo("          spanAlt = document.getElementById('span_'+getNumber[1]);\n");
+  //echo("		  div=document.getElementById('div_'+getNumber[1]);\n");
+  //if($tp_questao == 'O')
+  //			echo("resposta=div.childNodes[1].alt;\n");
   echo("          if(spanAlt.firstChild == null || spanAlt.firstChild.innerHTML != ''){\n");
   echo("            conteudo = spanAlt.innerHTML;\n");
   echo("            spanAlt.innerHTML = '';\n");
@@ -1012,7 +1061,10 @@
   echo("      var stringGabarito;\n");
   echo("	  AtualizaPosicoesGabEPosi(string);\n");
   echo("      stringGabarito = FormaGabarito();\n");
-  echo("      xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",stringGabarito);\n");
+  if($tp_questao=='O')
+  	echo("      xajax_EditarGabaritoQuestaoObjDinamic(".$cod_curso.",".$cod_questao.",stringGabarito);\n");
+  elseif (tp_questao=='M')
+  	echo("      xajax_EditarGabaritoQuestaoMultDinamic(".$cod_curso.",".$cod_questao.",stringGabarito);\n");
   echo("    }\n\n");
 
   echo("    function DeletaCamposEdicao(elemento){\n");
@@ -1026,7 +1078,7 @@
   echo("      span = document.getElementById('span_'+cod);\n");
   echo("      DeletaCamposEdicao(span);\n");
   echo("      span.innerHTML = conteudo;\n");
-  echo("       xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."');\n");
+  echo("       xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."','".$tp_questao."');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("	    cancelarElemento = null;\n");
   echo("    }\n\n");
@@ -1040,7 +1092,7 @@
   echo("      return stringGabarito;\n");
   echo("    }\n\n");
   
-  if($tp_questao == 'O')
+  if($tp_questao == 'O' || $tp_questao == 'M')
   {
     echo("    function ConfirmaEdicaoAlternativa(cod){\n");
     echo("      var span,conteudo,posi,stringGabarito;\n");
@@ -1048,16 +1100,26 @@
     echo("      conteudo = document.getElementById('textAlt_'+cod).value;\n");
     echo("      posi = RetornaPosiAlternativa(cod);\n");
     echo("      gabarito[posi] = document.getElementById('select_'+cod).value;\n");
+//    if($tp_questao == 'O'){
+//    		echo("		if(document.getElementById('select_'+cod).value=='0' && resposta=='resposta certa')\n");
+//    		echo("			num--;\n");
+//    		echo("		resposta=\"\";\n");
+//    }
     echo("      stringGabarito = FormaGabarito();\n");
     echo("      DeletaCamposEdicao(span);\n");
     echo("      span.innerHTML = conteudo;\n");
-    echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
+    if($tp_questao == 'O') {
+    	echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
+    } elseif ($tp_questao == 'M') {
+    	echo("      xajax_EditarAlternativaMultDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
+    }
     echo("		HabilitarMudancaPosicaoAlt();\n");
     echo("	    cancelarElemento = null;\n");
-    echo("		if(qtdAlternativas == 1){\n");
-    echo("			xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",$cod_questao,'O');\n");
-    echo("		}\n");
-    echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.");\n");
+    //Voltar aqui!!
+    //echo("		if(qtdAlternativas == 1){\n");
+    //echo("			xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",$cod_questao,'O');\n");
+    //echo("		}\n");
+    echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.",'".$tp_questao."');\n");
     echo("    }\n\n");
   }
   else
@@ -1554,15 +1616,16 @@
     /* Frase #98 - Limpar gabarito */
 	$limpar_gabarito="<span onClick=\"LimparGabarito(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 98)."</span>";
 
-  	if($tp_questao == 'O'){
-		$tipo_tit = RetornaFraseDaLista($lista_frases, 159);
-	} elseif($tp_questao == 'D'){
-		$tipo_tit = RetornaFraseDaLista($lista_frases, 160);
-	}
-	
+  		
 	/* Frase #1 - Exercicios */
-	/* Frase #99 - Editar Questao */
-	echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 99)." $tipo_tit</h4>\n");
+	/* Frase #99 - Editar Questao Objetiva */
+	if($tp_questao == 'O') {
+		echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 99)."</h4>\n");
+	} elseif ($tp_questao == 'M') {
+		/* Frase #1 - Exercicios */
+		/* Frase #214 - Editar Questao Multipla Escolha */
+		echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 214)."</h4>\n");
+	}
 	
   	/* Frase #5 - Voltar */
   	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");
@@ -1699,7 +1762,7 @@
 	  echo("                    </tr>\n");
 	}
 
-	if($tp_questao == "O")
+	if($tp_questao == "O" || $tp_questao == 'M')
 	{
 	  echo("                  <tr class=\"head\">\n");
 	  /* Frase #18 - Alternativas */
