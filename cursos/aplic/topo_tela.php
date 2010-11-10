@@ -94,7 +94,9 @@
   // especifica que tipo de convidado eh
   $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
   $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
-
+  
+  $SalvarEmArquivo = (!isset($SalvarEmArquivo) || $SalvarEmArquivo != 1) ? 0 : 1;
+  
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
@@ -116,8 +118,32 @@
   echo("    <meta name=\"copyright\" content=\"TelEduc\">\n");
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n");
   echo("    <link rel=\"shortcut icon\" href=\"../../../favicon.ico\" />\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\">\n");
-  echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
-  echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmlgoodies_calendar.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
+  
+  $estilos_css = array(	"../js-css/ambiente.css",
+  						"../js-css/navegacao.css",
+  						"../js-css/tabelas.css",
+  						"../js-css/dhtmlgoodies_calendar.css");
+  
+  $codigos_js = array(	"../bibliotecas/dhtmllib.js",
+  						"../js-css/dhtmlgoodies_calendar.js",
+  						"../js-css/jscript.js");
+  
+  /* Se estamos salvando a pagina em um arquivo, manter o css inline e sem javascript.
+   * Caso contrario podemos servi-los normalmente sob a forma de links.
+   */
+  if ($SalvarEmArquivo) {
+  	
+  	array_push($estilos_css, "../js-css/salvaremarquivo.css");
+  	echo("<style>".RetornaCSSInline($estilos_css)."</style>");
+  	
+  } else {
+  	
+  	foreach ($estilos_css as $css){
+  		echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
+  	}
+  	
+  	foreach ($codigos_js as $js){
+  		echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
+  	}
+  	
+  }

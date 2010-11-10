@@ -65,7 +65,7 @@
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -278,7 +278,7 @@
     echo("<font class=text>".RetornaFraseDaLista($lista_frases,58).": ".$dados['Valor']."</font><br>\n");
 
     echo("<p>\n");
-     if (!isset($SalvarEmArquivo))
+     if (!$SalvarEmArquivo)
     // 46 - Ver objetivos/crit�rios da avalia��o
     echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n"); */
 
@@ -361,7 +361,7 @@
     echo("</script>\n");
 
     /*
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         if (!strcmp($dados['Ferramenta'],'F'))
         {
@@ -427,7 +427,7 @@
           $i = ($i + 1) % 2;
 
           echo("      <td class=text>");
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
             echo("<a class=text href=# onClick=return(AbreJanelaComponentes(".$cod."));>".$nome."</a></td>");
           else
             echo($nome."</td>\n");
@@ -436,7 +436,7 @@
           if ($num_itens > 0)
           {
             echo("      <td class=text align=center>");
-            if (!isset($SalvarEmArquivo))
+            if (!$SalvarEmArquivo)
               echo("      <a href=# onClick=return(RetornaItensGrupo(".$cod."));>".$num_itens."</a></td>\n");
             else
               echo($num_itens."</td>\n");
@@ -480,7 +480,7 @@
           $i = ($i + 1) % 2;
 
           echo("      <td class=text>");
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
             echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
           else
             echo($nome."</td>\n");
@@ -494,7 +494,7 @@
               else
               {
                 echo("      <td class=text align=center>");
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                   echo("      <a href=# onClick=return(RetornaFalasAluno(".$cod."));>".(int)$msgs_total[$cod]."</a></td>\n");
                 else
                   echo((int)$msgs_total[$cod]."</td>\n");
@@ -512,7 +512,7 @@
             {
               $num_mensagens=RetornaNumMsgsParticipantesForum($sock,$dados['Cod_atividade'],$cod);
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 echo("      <a href=# onClick=return(RetornaMensagensAluno(".$cod."));>".$num_mensagens."</a></td>\n");
               else
                 echo($num_mensagens."</td>\n");
@@ -529,7 +529,7 @@
             {
               $num_itens=RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,$cod);
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 echo("      <a href=# onClick=return(RetornaItensAluno(".$cod."));>".$num_itens."</a></td>\n");
               else
                 echo($num_itens."</td>\n");
@@ -568,7 +568,7 @@
           $i = ($i + 1) % 2;
 
           echo("      <td class=text>");
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
             echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
           else
             echo($nome."</td>\n");
@@ -582,7 +582,7 @@
               else
               {
                 echo("      <td class=text align=center>");
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                   echo("      <a href=# onClick=return(RetornaFalasAluno(".$cod."));>".(int)$msgs_total[$cod]."</a></td>\n");
                 else
                   echo((int)$msgs_total[$cod]."</td>\n");
@@ -601,7 +601,7 @@
             {
               $num_mensagens   =RetornaNumMsgsParticipantesForum($sock,$dados['Cod_atividade'],$cod);
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 echo("      <a href=# onClick=return(RetornaMensagensAluno(".$cod."));>".$num_mensagens."</a></td>\n");
               else
                 echo($num_mensagens."</td>\n");
@@ -618,7 +618,7 @@
             {
               $num_itens=RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,$cod);
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 echo("      <a href=# onClick=return(RetornaItensAluno(".$cod."));>".$num_itens."</a></td>\n");
               else
                 echo($num_itens."</td>\n");
@@ -638,7 +638,7 @@
     echo("    <form name=frmMsg method=post>\n");
 
     echo("      <div align=right>\n");
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       /* 50 - Salvar em Arquivo (geral) */
       echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarParticipacao();'>\n");
@@ -649,7 +649,7 @@
     echo("<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
 
     /*
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         if ($VeioDaAtividade)
         // 13 - Fechar (ger)

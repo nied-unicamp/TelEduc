@@ -259,7 +259,7 @@
     echo(RetornaFraseDaLista($lista_frases,58).": ".$linha['Valor']."<br>\n");
 
     echo("<p>\n");
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     /* 46 - Ver objetivos/critérios da avaliação */
       echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
 

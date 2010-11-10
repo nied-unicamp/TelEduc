@@ -158,7 +158,7 @@
   echo("      <input type=hidden name=cod_sessao value=".$cod_sessao." />\n");
   echo("      </form>\n");
 
-  if ((!isset($SalvarEmArquivo)) && ($e_formador) && ($status=='A') && ($AcessoAvaliacao))
+  if ((!$SalvarEmArquivo) && ($e_formador) && ($status=='A') && ($AcessoAvaliacao))
   {
     // 5 - (Sess�o n�o agendada)
     if (strcmp($assunto, RetornaFraseDaLista($lista_frases,5)) != 0)
@@ -181,7 +181,7 @@
   }
 
   echo("      <ul class=\"btAuxTabs\">\n");
-   if (!isset($SalvarEmArquivo))
+   if (!$SalvarEmArquivo)
   {
   /* 13 - Fechar (Ger) */
     echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral, 13)."</span></li>\n");

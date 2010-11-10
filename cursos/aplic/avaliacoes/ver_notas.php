@@ -82,7 +82,7 @@
   /* 1 - Avaliações  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -475,7 +475,7 @@
         $i = ($i + 1) % 2;
 
         echo("      <td class=text>");
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
           echo("<a class=text href=# onClick=return(AbreJanelaComponentes(".$cod_grupo."));>".$nome."</a></td>");
         else
           echo($nome."</td>\n");
@@ -507,7 +507,7 @@
             if ($nota=='')
             {
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 echo("      <a href=# onClick=return(AvaliarAlunoPortfolio(".$cod."));>"."[Avaliar]"."</a>");
               }
@@ -523,14 +523,14 @@
               $marcaib="";
               $marcafb="";
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo."));>".$nota."</a>\n");
               }
               else
                 echo($nota);
               echo("</td>\n");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 $compartilhamento=$marcaib."<a class=text href=# onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$tipo_compartilhamento."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>".$marcafb;
               echo("      <td class=text align=center>".$compartilhamento);
               echo("</td>\n");
@@ -545,7 +545,7 @@
               echo("      <td class=text align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod."));>");
                   echo($nota."</a></td>\n");
@@ -558,7 +558,7 @@
                 $cod_grupo_usuario=RetornaCodGrupoPortfolio($sock,$cod_usuario);         //retorna o codigo do grupo do usuario que esta acessando
                 if ($cod_grupo_usuario==$cod_grupo)    //O usuario pertence ao grupo que foi avaliado
                 {
-                  if (!isset($SalvarEmArquivo))
+                  if (!$SalvarEmArquivo)
                     echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod."));>".$nota."</a></td>\n");
                   else
                     echo($nota."</td>\n");
@@ -574,7 +574,7 @@
         else // nenhuma nota foi atribuida
         {
           $cod=RetornaCodAlunodoGrupo($sock,$cod_avaliacao,$cod_grupo);
-          if (($usr_formador)  && (!isset($SalvarEmArquivo)))
+          if (($usr_formador)  && (!$SalvarEmArquivo))
           {
             if (!strcmp($dados['Ferramenta'],'P'))
             {
@@ -590,7 +590,7 @@
             echo("      <td class=text align=center>");
             echo("&nbsp;</td>\n");
           }
-          elseif (($usr_formador)  && (isset($SalvarEmArquivo)))
+          elseif (($usr_formador)  && ($SalvarEmArquivo))
           {
             echo("      <td class=text align=center>");
             echo("&nbsp;</td>\n");
@@ -644,7 +644,7 @@
         $i = ($i + 1) % 2;
 
         echo("      <td class=text>");
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
           echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
@@ -671,7 +671,7 @@
             if ($nota=='')
             {
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 if (strcmp($dados['Ferramenta'],'P'))
                   {
@@ -695,7 +695,7 @@
               $marcaib="";
               $marcafb="";
               echo("      <td class=text align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 if (strcmp($dados['Ferramenta'],'P'))
                   echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -705,7 +705,7 @@
               }
               else
                 echo($nota."</td>\n");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
                 $compartilhamento=$marcaib."<a class=text href=# onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$tipo_compartilhamento."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>".$marcafb;
               echo("      <td class=text align=center>".$compartilhamento);
               echo("</td>\n");
@@ -720,7 +720,7 @@
               echo("      <td class=text align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($dados['Ferramenta'],'P'))
                     echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -733,7 +733,7 @@
               }
               elseif ((!strcmp($tipo_compartilhamento,'A')) && ($cod_usuario==$cod))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($dados['Ferramenta'],'P'))
                     echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -751,7 +751,7 @@
         }
         else // nenhuma nota foi atribuida
         {
-          if (($usr_formador)  && (!isset($SalvarEmArquivo)))
+          if (($usr_formador)  && (!$SalvarEmArquivo))
           {
             if (strcmp($dados['Ferramenta'],'P'))
              {
@@ -766,7 +766,7 @@
             echo("      <td class=text align=center>");
             echo("&nbsp;</td>\n");
           }
-          elseif (($usr_formador)  && (isset($SalvarEmArquivo)))
+          elseif (($usr_formador)  && ($SalvarEmArquivo))
           {
             echo("      <td class=text align=center>");
             echo("&nbsp;</td>\n");
@@ -819,7 +819,7 @@
           $i = ($i + 1) % 2;
 
           echo("      <td class=text>");
-          if (!isset($SalvarEmArquivo))
+          if (!$SalvarEmArquivo)
             echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
           else
             echo($nome."</td>\n");
@@ -848,7 +848,7 @@
               if ($nota=='')
               {
                 echo("      <td class=text align=center>");
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($dados['Ferramenta'],'P'))
                    {
@@ -871,7 +871,7 @@
                 $marcaib="";
                 $marcafb="";
                 echo("      <td class=text align=center>");
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($dados['Ferramenta'],'P'))
                     echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -881,7 +881,7 @@
                 }
                 else
                   echo($nota."</td>\n");
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                   $compartilhamento=$marcaib."<a class=text href=# onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$tipo_compartilhamento."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>".$marcafb;
                 echo("      <td class=text align=center>".$compartilhamento);
                 echo("</td>\n");
@@ -896,7 +896,7 @@
                 echo("      <td class=text align=center>");
                 if (!strcmp($tipo_compartilhamento,'T'))
                 {
-                  if (!isset($SalvarEmArquivo))
+                  if (!$SalvarEmArquivo)
                   {
                     if (strcmp($dados['Ferramenta'],'P'))
                       echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -909,7 +909,7 @@
                 }
                 elseif ((!strcmp($tipo_compartilhamento,'A')) && ($cod_usuario==$cod))
                 {
-                  if (!isset($SalvarEmArquivo))
+                  if (!$SalvarEmArquivo)
                   {
                     if (strcmp($dados['Ferramenta'],'P'))
                       echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod."));>");
@@ -927,7 +927,7 @@
           }
           else // nenhuma nota foi atribuida
           {
-            if (($usr_formador)  && (!isset($SalvarEmArquivo)))
+            if (($usr_formador)  && (!$SalvarEmArquivo))
             {
               if (strcmp($dados['Ferramenta'],'P'))
                {
@@ -942,7 +942,7 @@
               echo("      <td class=text align=center>");
               echo("&nbsp;</td>\n");
             }
-            elseif (($usr_formador)  && (isset($SalvarEmArquivo)))
+            elseif (($usr_formador)  && ($SalvarEmArquivo))
             {
               echo("      <td class=text align=center>");
               echo("&nbsp;</td>\n");
@@ -958,7 +958,7 @@
     }
   }
 
-  if (($usr_formador) && (!isset($SalvarEmArquivo)))
+  if (($usr_formador) && (!$SalvarEmArquivo))
   {
     /* Mudar Compartilhamento */
     echo("<div id=comp class=block visibility=hidden onContextMenu=\"return(false);\">\n");
@@ -1029,7 +1029,7 @@
   echo("    <form name=frmMsg action=".$origem.".php?".RetornaSessionID()." method=post>\n");
 
   echo("      <div align=right>\n");
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
     echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarVerNotas();'>\n");
@@ -1040,7 +1040,7 @@
   /* 14 - Imprimir */
   echo("<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     if ($VeioDaAtividade)
     /* 13 - Fechar (ger) */

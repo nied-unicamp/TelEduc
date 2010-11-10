@@ -78,7 +78,7 @@
 
   echo("<html>\n");
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  if (isset($SalvarEmArquivo))
+  if ($SalvarEmArquivo)
   {
     echo("<style>\n");
     include("../teleduc.css");

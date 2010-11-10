@@ -63,20 +63,6 @@
   /* 1 - Avaliações  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  if (!isset($SalvarEmArquivo))
-  {
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
-    echo("\n");
-  }
-  else
-  {
-    echo("  <style>\n");
-    include "../teleduc.css";
-    include "avaliacoes.css";
-    echo("  </style>\n");
-  }
-
   /* Funções JavaScript */
   echo("<script language=JavaScript>\n");
 
@@ -140,7 +126,7 @@
 
   echo("<br>");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("<table border=0 width=100%>\n");
     echo("  <tr class=menu>\n");
@@ -155,7 +141,7 @@
     echo("<br>\n");
   }
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("<p>\n");
     /* 111 - Para visualizar os objetivos/critérios de uma avaliação, clique sobre o valor da mesma.*/
@@ -209,7 +195,7 @@
     foreach ($lista_avaliacoes as $cod => $linha)
     {
       echo("    <td class=b1field width=50 align=center>\n");
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
         echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$linha['Cod_avaliacao']."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".$linha['Valor']."</a>\n");
       else
         echo($linha['Valor']."\n");
@@ -240,7 +226,7 @@
         $i = ($i + 1) % 2;
 
         echo("      <td class=text>");
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
           echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
@@ -261,7 +247,7 @@
               $marcaib="";
               $marcafb="";
               echo("      <td class=".$field." align=center>");
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
                   echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
@@ -277,7 +263,7 @@
               echo("      <td class=".$field." align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
                     echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
@@ -290,7 +276,7 @@
               }
               elseif ((!strcmp($tipo_compartilhamento,'A')) && ($cod_usuario==$cod))
               {
-                if (!isset($SalvarEmArquivo))
+                if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
                     echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
@@ -331,7 +317,7 @@
         $i = ($i + 1) % 2;
 
         echo("      <td class=text>");
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
           echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
@@ -354,7 +340,7 @@
             $marcaib="";
             $marcafb="";
             echo("      <td class=".$field." align=center>");
-            if (!isset($SalvarEmArquivo))
+            if (!$SalvarEmArquivo)
             {
               if (strcmp($linha['Ferramenta'],'P'))
                 echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
@@ -384,7 +370,7 @@
   echo("    <form name=frmMsg method=post>\n");
 
   echo("      <div align=right>\n");
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
     echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarTodasNotas();'>\n");

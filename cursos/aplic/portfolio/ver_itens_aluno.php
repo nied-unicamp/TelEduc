@@ -232,7 +232,7 @@
     echo("  <li><span onClick=ImprimirRelatorio();>".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
   /* 13 - Fechar (ger) */
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   echo("  <li><span onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   
   echo("</td></tr>");
@@ -325,7 +325,7 @@ echo("    </form>\n");
             CancelaEdicao($sock, $linha_item['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp);
 
             $compartilhamento=$marcaib.$compartilhamento.$marcafb;
-            if (!isset($SalvarEmArquivo))
+            if (!$SalvarEmArquivo)
             {
               $titulo=$marcaib."<a href=# onClick='VerItem(".$linha_item['cod_item'].");return false;'><img src=./figuras/".$arquivo." border=0>".$linha_item['titulo']."</a>".$marcafb;
             }
@@ -348,7 +348,7 @@ echo("    </form>\n");
           {
 
               $compartilhamento=$marcaib.$compartilhamento.$marcafb;
-              if (!isset($SalvarEmArquivo))
+              if (!$SalvarEmArquivo)
               {
                 $titulo=$marcaib."<a href=# onClick='VerItem(".$linha_item['cod_item'].");return false;'><img src=./figuras/".$arquivo." border=0>".$linha_item['titulo']."</a>".$marcafb;
               }

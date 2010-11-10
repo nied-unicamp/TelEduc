@@ -62,7 +62,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
@@ -99,7 +99,7 @@
   echo("            <tr>\n");
   echo("              <td colspan=3 valign=\"top\">\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("                <form action=salvar_arquivo.php method=get>\n");
     echo("                  <input type=hidden name=cod_curso value=".$cod_curso." />\n");
@@ -150,7 +150,7 @@
   $lista_acessos = RetornaAcessosFerramentasGrupo($sock,$usuario,$hora_iniUT,$dia_inteiro);
 
   // nome do grupo
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     $link_abre ="<span class=\"link\" onClick=\"AbreGrupo(".$cod_grupo.");\">";
     $link_fecha="</span>";
@@ -185,7 +185,7 @@
   foreach ($usuarios_grupo as $cod_usuario => $tmp)
   {
     $linha_usuario=$lista_usuarios[$cod_usuario];
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       $link_perfil_abre = "<span class=\"link\" onClick=\"AbrePerfil(".$cod_usuario.");\">";
       $link_perfil_fecha= "</span>";

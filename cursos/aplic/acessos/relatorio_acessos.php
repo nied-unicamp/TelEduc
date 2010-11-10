@@ -56,7 +56,7 @@
 
   echo("    </script>\n");
   
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
     echo("    <script type=\"text/javascript\">\n");
@@ -127,7 +127,7 @@
     echo("      <tr>\n");
     echo("        <td valign=\"top\">\n");
 
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
     {
       echo("          <form action=salvar_arquivo.php method=get name=\"formSalvar\">\n");
       echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
@@ -223,7 +223,7 @@
 
       /* nome do usuario*/
       echo("              <td>");
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         $link_abre="<span class=\"link\" onClick=\"AbrePerfil(".$cod.");\">";
         $link_fecha="</span>";

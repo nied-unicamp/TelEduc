@@ -116,7 +116,7 @@
   /* 1 - Avalia��es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -416,7 +416,7 @@
      }
   }
   
-  if (! isset($SalvarEmArquivo))
+  if (! $SalvarEmArquivo)
   {
     echo(" <p>\n");
     echo("  <table cellpadding=0 cellspacing=0 border=0  style=\"width: 100%;\" class=colorfield>\n");
@@ -443,7 +443,7 @@
   echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
   echo("    </tr>\n");
   echo("    <tr>\n");
-  $img = !isset($SalvarEmArquivo) ? "<img src=../figuras/avaliacao.gif border=0>" : "&nbsp;&nbsp;";
+  $img = !$SalvarEmArquivo ? "<img src=../figuras/avaliacao.gif border=0>" : "&nbsp;&nbsp;";
   echo("      <td width=1%>".$img."</td>\n");
   echo("      <td class=text align=left>&nbsp;&nbsp;".$titulo."</td>\n");
   // echo("      <td class=text align=left>&nbsp;&nbsp;".$ferramenta."</td>\n");
@@ -484,7 +484,7 @@
     /*
       // 47 - Participante:
       echo("<font class=text>".RetornaFraseDaLista($lista_frases,47).": </font>"); */
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
       $nome = "<a class=text href=# onClick=return(AbrePerfil(".$cod_aluno.")); class=text>".$nome."</a>";
     else
       $nome = "<font class=text>".$nome."</font>";
@@ -494,7 +494,7 @@
     /*
       // 48 - Grupo
       echo("<font class=text>".RetornaFraseDaLista($lista_frases,48).": </font>");  */
-    if (!isset($SalvarEmArquivo))
+    if (!$SalvarEmArquivo)
       $nome = "<a class=text href=# onClick=return(AbreJanelaComponentes(".$cod_grupo_portfolio."));>".$nome."</a>";
     else
       $nome = "<font class=text>".$nome."</font>";
@@ -510,7 +510,7 @@
     if (RealizouAtividadeNoPortfolio($sock,$cod_avaliacao,$cod,$portfolio_grupo))
     {
       $num_participacoes=RetornaNumItensPortfolioAvaliacao($sock,$cod,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,$cod_aluno);
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         if($portfolio_grupo)
         {
@@ -551,7 +551,7 @@
     if ($modelo!=0)
     {
 $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes'";
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
       {
         if($portfolio_grupo)
         {
@@ -595,7 +595,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
       }
       else
       {
-        if (!isset($SalvarEmArquivo))
+        if (!$SalvarEmArquivo)
         {
           $num_participacoes =
           "<a class=text href=# onClick=\"window.open('../batepapo/ver_falas_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_assunto=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
@@ -619,7 +619,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
     if (ParticipouDoForum($sock,$cod_aluno,$cod_atividade))
     {
       $num_participacoes=RetornaNumMsgsParticipantesForum($sock,$cod_atividade,$cod_aluno);
-      if (!isset($SalvarEmArquivo))
+      if (!$SalvarEmArquivo)
         //echo("        <a class=text href=# onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>\n");
         $num_participacoes="<a class=text href=# onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>";
       else
@@ -769,7 +769,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
             echo("    <td align=center width=40%><font class=colorfield><b>".RetornaFraseDaLista($lista_frases,50)."</b></font></td>\n");
             $num_colunas ++;
 
-            if (!isset($SalvarEmArquivo))
+            if (!$SalvarEmArquivo)
             {
               // 1 - Apagar (gen)
               echo("    <td align=center width=20%><a class=colorfield href=# onClick=return(Apagar(".$linha['cod_nota']."));>".RetornaFraseDaLista($lista_frases_geral,1)."</a></td>\n");
@@ -778,7 +778,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
           }
           echo("  </tr>\n");
 
-          if (! isset($SalvarEmArquivo))
+          if (! $SalvarEmArquivo)
           {
             $link_perfil1 = "<a href=# onClick='AbrePerfil(".$linha['cod_formador']."); return false;'>";
             $link_perfil2 = "</a>";
@@ -801,13 +801,13 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 	          echo("    <td align=center class=".$array_cores[$cor]."><font class=text>".$link_perfil1.NomeUsuario($sock,$linha['cod_formador']).$link_perfil2."</font></td>\n");
           if ($usr_formador)
           {
-            if (!isset($SalvarEmArquivo))
+            if (!$SalvarEmArquivo)
               $compartilhamento="<a class=text href=# onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$linha['tipo_compartilhamento']."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>";
             else
               $compartilhamento = "<font class=text>".$compartilhamento."</font>";
             echo("    <td align=center class=".$array_cores[$cor].">".$compartilhamento."</td>\n");
 
-             if (!isset($SalvarEmArquivo))
+             if (!$SalvarEmArquivo)
                echo("    <td align=center class=".$array_cores[$cor].">&nbsp;</td>\n");
           }
           echo("  </tr>\n");
@@ -853,7 +853,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   }
 
   // Layer para Mudar Compartilhamento
-  if (($usr_formador) && (!isset($SalvarEmArquivo)))
+  if (($usr_formador) && (!$SalvarEmArquivo))
   {
     echo("<div id=comp class=block visibility=hidden onContextMenu=\"return(false);\">\n");
     echo("<form method=post name=form_comp action=historico_desempenho.php>\n");
@@ -929,7 +929,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   echo("    <form name=frmHist method=post>\n");
   echo("      <div align=right>\n");
   /*
-    if (($usr_formador) && (!isset($SalvarEmArquivo)))
+    if (($usr_formador) && (!$SalvarEmArquivo))
     {
       if (!strcmp($ferramenta,'P'))
       {
@@ -946,7 +946,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 
     } */
 
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
     echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarHistoricoDesempenho();'>\n");
@@ -963,7 +963,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
 
   // 13 - Fechar (ger)
-  if (!isset($SalvarEmArquivo))
+  if (!$SalvarEmArquivo)
     echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onClick='window.opener.location.reload(); self.close();')>\n");
 
   echo("      </div>\n");
