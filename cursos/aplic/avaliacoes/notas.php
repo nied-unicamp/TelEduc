@@ -1747,9 +1747,10 @@ $sock = MudarDB($sock, $cod_curso);
     || (is_array($legenda_exercicio) && count($legenda_exercicio) > 0)
     || (is_array($legenda_avaliacao_externa) && count($legenda_avaliacao_externa)>0));
 
+  $mostraLegenda = ($SalvarEmArquivo) ? 'table' : 'none';  
   if ($apresentar_legenda)
   {
-    echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display:none;\">\n");
+    echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display: ".$mostraLegenda.";\">\n");
     echo("            <tr>\n");
     /*116 - Legenda */
     echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,116)."</b></td>\n");
@@ -1852,7 +1853,7 @@ $sock = MudarDB($sock, $cod_curso);
     echo("          </table>\n");
   } else {
 	/* Nenhuma avaliacao, portanto não há legenda. */
-  	echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display:none;\">\n");
+  	echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display:".$mostraLegenda.";\">\n");
   	echo("            <tr>\n");
     /*116 - Legenda */
     echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,116)."</b></td>\n");
