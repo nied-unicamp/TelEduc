@@ -3931,11 +3931,11 @@ function EditarTitulo($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
   
   if(!strcmp($ferramenta,'B'))
   {
-    $query="update Batepapo_assuntos set titulo='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
+    $query="update Batepapo_assuntos set assunto='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
   }
   elseif(!strcmp($ferramenta,'F'))
   {
-    $query="update Forum set titulo='".VerificaStringQuery($novo_nome)."' where cod_forum=".$cod_atividade;
+    $query="update Forum set nome='".VerificaStringQuery($novo_nome)."' where cod_forum=".$cod_atividade;
   }
   elseif(!strcmp($ferramenta,'E'))
   {
@@ -4021,6 +4021,7 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
     /*Atualiza o titulo*/
     if(!strcmp($ferramenta,'B'))
     {
+      if ($campo == 'titulo') $campo = 'assunto';
       $query="update Batepapo_assuntos set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
     }
     elseif(!strcmp($ferramenta,'F'))
