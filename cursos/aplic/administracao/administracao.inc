@@ -629,7 +629,9 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
 
   $data_inscricao = time();
 
+
   $cod_usuario_prox = RetornaProximoCodigoUsuarioCurso($sock,$cod_curso);
+  $dados['cod_usuario_global'] = RetornaCodigoUsuarioGlobalPorEmail($sock, $dados['email']);
   $query="insert into ".$dbnamebase.".Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values ('".$dados['cod_usuario_global']."','".$cod_usuario_prox."','".$cod_curso."','".$dados['tipo_usuario']."',".$data_inscricao.")";
   Enviar($sock,$query);
 

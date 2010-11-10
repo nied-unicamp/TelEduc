@@ -606,6 +606,19 @@ function RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso)
   return ($cod_usuario_global);
 }
 
+function RetornaCodigoUsuarioGlobalPorEmail($sock, $email)
+{
+   // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario WHERE email = '".VerificaStringQuery($email)."'";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  $cod_usuario_global=$linha[0];
+ 
+  return ($cod_usuario_global);
+}
+
 /* *********************************************************************
    RetornaCodigoUsuarioCurso - Retorna codugo local do usuario no curso
    Entradas: $sock - Sock aberto para a base
