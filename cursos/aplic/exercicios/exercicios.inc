@@ -2706,8 +2706,7 @@ function EntregaCorrecaoExsObjetivosEMultiplaEscolha($cod_curso)
 	
 	// Pega todas as quest�es objetivas e de multipla escolha do banco.
 	$query = "select cod_questao from Exercicios_questao ";
-	$query.= "where (tp_questao = 'O') or ";
-	$query.= "where (tp_questao = 'M')";
+	$query.= "where (tp_questao = 'O') or (tp_questao = 'M')";
 	$res = Enviar($sock, $query);
 	
 	// Se n�o houver resultados, n�o h� quest�es objetivas no banco e
