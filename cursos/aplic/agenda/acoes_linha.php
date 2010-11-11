@@ -121,7 +121,7 @@
       AtivarAgenda($sock, $cod_item, $cod_usuario);
 
       Desconectar($sock);
-      header("Location:ver_editar.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
+      header("Location:agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario);
   }
 
   /* ação = Arquivo - origem = ver_linha.php */
