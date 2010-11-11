@@ -180,22 +180,23 @@
   /* Página Principal */
 
   /* 1 - Agenda */
-  $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1);
+  /* 111 - Editar Agenda*/
+  $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,111)."</h4>"; 
 
-  if(($origem == "ver_editar"))
-  {
-    /*2 - Editar Agendas*/
-    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,3)."</h4>"; 
-  }
-  else if($origem == "ver_anteriores")
-  {
-    /*3 - Editar Agendas*/ 
-    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,2)."</h4>"; 
-  }
-  else
-  {
-    $cabecalho = "".$cabecalho."</h4>";
-  }
+//  if(($origem == "ver_editar"))
+//  {
+//    /*2 - Agendas Futuras*/
+//    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,3)."</h4>"; 
+//  }
+//  else if($origem == "ver_anteriores")
+//  {
+//    /*2 - Agendas Anteriores*/ 
+//    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,2)."</h4>"; 
+//  }
+//  else
+//  {
+//    $cabecalho = "".$cabecalho."</h4>";
+//  }
   echo($cabecalho);
 
   // 3 A's - Muda o Tamanho da fonte
@@ -218,8 +219,8 @@
     /*33 - Voltar para Agenda Anteriores*/
     $frase = RetornaFraseDaLista($lista_frases,33);
   else if($origem == "ver_editar")
-    /*32 - Voltar para Editar Agenda*/
-    $frase = RetornaFraseDaLista($lista_frases, 32);
+    /*3 - Agendas Futuras*/
+    $frase = RetornaFraseDaLista($lista_frases, 3);
   else
     /*8 - Voltar para Agenda Atual*/
     $frase = RetornaFraseDaLista($lista_frases, 8);
