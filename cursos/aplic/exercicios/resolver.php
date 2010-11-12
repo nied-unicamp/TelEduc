@@ -127,11 +127,28 @@ echo("    }\n\n");
 /* Iniciliza os layers. */
 echo("    function Iniciar()\n");
 echo("    {\n");
+echo("			SetaEstadoAlternativas();\n");
 if ($tela_formador){
 	echo("      cod_comp = getLayer(\"comp\");\n");
 	echo("      startList();\n");
 }
 echo("    }\n\n");
+
+/*
+ * Funcao que eh chamada ao carregar a pagina. Ela forca a setar o checkbox/radio ou nao.
+ */
+echo("	  function SetaEstadoAlternativas() {\n");
+foreach ($questoes as $questao){	/* Itera nas questoes do exercicio. */
+	echo("	var alternativas = document.getElementsByName('resposta_'+".$questao['cod_questao'].");\n");	/* Para cada questao, pega as alternativas */
+	echo("	for(var i=0; i<alternativas.length; i++) {\n");
+	echo("		if(alternativas[i].id=='checked') {\n");	/* Se o id da alternativa for 'checked', seta o radio/checkbox para checked. */
+	echo("			alternativas[i].checked=true;\n");
+	echo("		} else {\n");
+	echo("			alternativas[i].checked=false;\n");
+	echo("		}\n");
+	echo("	}\n");
+}
+echo("	  }\n");
 
 echo("    function WindowOpenVer(id)\n");
 echo("    {\n");
@@ -254,45 +271,48 @@ if ($resolucao['corrigida'] == 'N'){
 	echo("    }\n\n");
 }
 
-
-/* Salva a resposta da questao no banco de dados, se for uma questao objetiva
- * a funcao converte para a reposta tipo "00010".
+/*
+ * Funcao que chama um xajax para gravar as resposta no BD.
  */
+echo("		function SalvaRespostaQuestao(cod_questao, resposta, tipo_questao){\n");
 /* Frase #171 - Resposta gravada */
-echo("				function SalvaRespostaQuestao(cod_questao, resposta, tipo_questao){
-								xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",tipo_questao);\n");
-echo("      	}");
+echo("			xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",tipo_questao);\n");
+echo("      }\n");
 
-echo("				function SalvaRespostaQuestaoDiss(cod_questao){
-								var resposta = document.getElementById('text_".$cod_resolucao."_'+cod_questao).innerHTML;
-								SalvaRespostaQuestao(cod_questao, resposta, 'D');
-}");
+/*
+ * Salva a resposta da questao discurssiva.
+ */
+echo("		function SalvaRespostaQuestaoDiss(cod_questao){\n");
+echo("			var resposta = document.getElementById('text_".$cod_resolucao."_'+cod_questao).innerHTML;\n");
+echo("			SalvaRespostaQuestao(cod_questao, resposta, 'D');\n");
+echo("      }\n");
 
-echo("				function SalvaRespostaQuestaoObj(cod_questao){
-								var alternativas = document.getElementsByName('resposta_'+cod_questao);
-								var resposta = '';
-								
-								for(i=0;i<alternativas.length;i++){\n
-										if(alternativas[i].checked)\n
-											resposta = resposta + \"1\";\n
-										else\n
-											resposta = resposta + \"0\";\n
-								}
-								
-								SalvaRespostaQuestao(cod_questao, resposta, 'O');
-}");
+/* 
+ * Salva a resposta da questao objetiva ou multipla escolha. Converte a reposta para o tipo "00010".
+ */
+echo("		function SalvaRespostaQuestaoObjMult(cod_questao, tp_questao) {\n");
+echo("			var alternativas = document.getElementsByName('resposta_'+cod_questao);\n");
+echo("			var resposta = '';\n");
+echo("			for(var i=0;i<alternativas.length;i++){\n");
+echo("				if(alternativas[i].checked)\n");
+echo("					resposta = resposta + \"1\";\n");
+echo("				else\n");
+echo("					resposta = resposta + \"0\";\n");
+echo("			}\n");
+echo("			SalvaRespostaQuestao(cod_questao, resposta, tp_questao);\n");
+echo("      }\n");
 
-echo("				function SalvaTodasRespostas(){");
+echo("		function SalvaTodasRespostas(){");
 foreach ($questoes as $questao){
 	if ($questao['tp_questao'] == "D"){
-		echo("SalvaRespostaQuestaoDiss(".$questao['cod_questao'].");");
-	} elseif ($questao['tp_questao'] == "O"){
-		echo("SalvaRespostaQuestaoObj(".$questao['cod_questao'].");");
+		echo("	SalvaRespostaQuestaoDiss(".$questao['cod_questao'].");");
+	} elseif ($questao['tp_questao'] == "O" || $questao['tp_questao'] == "M"){
+		echo("	SalvaRespostaQuestaoObjMult(".$questao['cod_questao'].", '".$questao['tp_questao']."');");
 	}
 }
 /* Frase #164 - Todas as respostas foram salvas com sucesso. */
 echo("			mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 164)."\", \"true\");");
-echo("}");
+echo("		}");
 
 echo("    function CancelaTodos(){\n");
 echo("      EscondeLayers();\n");
@@ -506,7 +526,10 @@ if ((count($questoes)>0)&&($questoes != null))
 			$tipo = RetornaFraseDaLista($lista_frases, 159);
 		} elseif($linha_item['tp_questao'] == 'D'){
 			$tipo = RetornaFraseDaLista($lista_frases, 160);
+		} elseif($linha_item['tp_questao'] == 'M') {
+			$tipo = RetornaFraseDaLista($lista_frases, 212);
 		}
+		
 		$titulo = $linha_item['titulo'];
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		$valor = $linha_item['valor'];
@@ -514,6 +537,11 @@ if ((count($questoes)>0)&&($questoes != null))
 		{
 			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
 			$nota=PegaNotaObjetiva($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
+		}
+		elseif ($linha_item['tp_questao'] == 'M')
+		{
+			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
+			$nota=PegaNotaMultEscolha($linha_item['cod_questao'], $cod_curso, $resolucao['cod_resolucao']);
 		}
 		else
 		{
@@ -523,9 +551,10 @@ if ((count($questoes)>0)&&($questoes != null))
 				$nota=$itens[0];	
 			}	
 		}
+		
 		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
-		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);	
+		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 		
 		/* Frase #166 - Nao respondida */
 		/* Frase #167 - Respondida */
@@ -596,31 +625,35 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                          </dd>\n");
 		}
 
-		if($linha_item['tp_questao'] == 'O')
+		if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M')
 		{
 			/* Desabilita a radiobox, se ja foi entregue o ex. */
 			$estado = "";
 			if (!($disponivel && $resolucao['corrigida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo))))
-			
 			$estado = "disabled";
 
 			/* Frase #18 - Alternativas */
 			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 18)."</dt>\n");
 			echo("                          <dd class=\"portletItem\">\n");
+
 			foreach ($alternativas as $cod => $linha_alt)
 			{
 				if($resposta != null && $resposta[$cod] == "1")
-				$selected = "checked";
-				else
-				$selected = "";
-
-				echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+					$selected = "checked";
+				else 
+					$selected = "not_checked";
+				
+				if($linha_item['tp_questao'] == 'O') {	/* Se for questao objetiva, coloca radio */
+					echo("                            <input  type=\"radio\" size=\"2\" id=".$selected." name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." >&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+				} else {								/* Senao, eh questao multipla escolha, coloca checkbox */
+					echo("                            <input  type=\"checkbox\" size=\"2\" id=".$selected." name=\"resposta_".$linha_item['cod_questao']."\" ".$estado." >&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+				}
 				echo("                            <br />\n");
 			}
 			echo("                          </dd>\n");
 			
 			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
-				echo("													<dd class='portletFooter'><span class='link' onClick='SalvaRespostaQuestaoObj(".$linha_item['cod_questao'].");'>Salvar Resposta</dd>");
+				echo("													<dd class='portletFooter'><span class='link' onClick=\"SalvaRespostaQuestaoObjMult(".$linha_item['cod_questao'].", '".$linha_item['tp_questao']."');\">Salvar Resposta</dd>");
 			}
 		}
 		else if($linha_item['tp_questao'] == 'D')

@@ -45,7 +45,8 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
-
+  include("ver_gabarito.inc");
+  
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");

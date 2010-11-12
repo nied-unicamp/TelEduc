@@ -40,10 +40,10 @@
   ARQUIVO : cursos/aplic/exercicios/ver_gabarito.inc
   ========================================================== */
 /***********************************************************************
-   VerificaResolucaoO - Verifica se a questão ja possui uma resolucao, ou seja, foi corrigido pelo formador 
-   Entrada: $cod_usuario - código do usuario
-            $cod_curso - código do curso
-            $cod_resolucao - código da resolucao do exercicio
+   VerificaResolucaoO - Verifica se a questï¿½o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
+   Entrada: $cod_usuario - cï¿½digo do usuario
+            $cod_curso - cï¿½digo do curso
+            $cod_resolucao - cï¿½digo da resolucao do exercicio
    Saida: a nota caso o exercicio tenha sido corrigido, "" caso contrario           
 */
 function VerificaResolucaoO($cod_curso,$cod_questao,$cod_resolucao)
@@ -61,10 +61,31 @@ function VerificaResolucaoO($cod_curso,$cod_questao,$cod_resolucao)
 }
 
 /***********************************************************************
-   VerificaResolucaoD - Verifica se a questão ja possui uma resolucao, ou seja, foi corrigido pelo formador 
-   Entrada: $cod_usuario - código do usuario
-   			$cod_curso - código do curso
-            $cod_resolucao - código da resolucao do exercicio
+   VerificaResolucaoM - Verifica se a questï¿½o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
+   Entrada: $cod_usuario - cï¿½digo do usuario
+            $cod_curso - cï¿½digo do curso
+            $cod_resolucao - cï¿½digo da resolucao do exercicio
+   Saida: a nota caso o exercicio tenha sido corrigido, "" caso contrario           
+*/
+function VerificaResolucaoM($cod_curso,$cod_questao,$cod_resolucao)
+{
+  $sock=Conectar($cod_curso);
+  $consulta = "select nota from Exercicios_resolucao_questao_mult where cod_resolucao = ".$cod_resolucao." and cod_questao=".$cod_questao;
+  $res = Enviar($sock, $consulta);
+  $linha = RetornaLinha($res);
+  //Desconectar($sock);
+  
+  if($linha != NULL)
+  	return $linha['nota'];
+  else
+    return "";
+}
+
+/***********************************************************************
+   VerificaResolucaoD - Verifica se a questï¿½o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
+   Entrada: $cod_usuario - cï¿½digo do usuario
+   			$cod_curso - cï¿½digo do curso
+            $cod_resolucao - cï¿½digo da resolucao do exercicio
    Saida: a nota caso o exercicio tenha sido corrigido, "" caso contrario           
 */
 function VerificaResolucaoD($cod_curso,$cod_questao,$cod_resolucao)
@@ -83,10 +104,10 @@ function VerificaResolucaoD($cod_curso,$cod_questao,$cod_resolucao)
 }
 
 /***********************************************************************
-   VerificaComentario - Verifica se o exercicio dissertativo possui comentário
-   Entrada: $cod_usuario - código do usuario
-   			$cod_curso - código do curso
-            $cod_resolucao - código da resolucao do exercicio
+   VerificaComentario - Verifica se o exercicio dissertativo possui comentï¿½rio
+   Entrada: $cod_usuario - cï¿½digo do usuario
+   			$cod_curso - cï¿½digo do curso
+            $cod_resolucao - cï¿½digo da resolucao do exercicio
    Saida: string caso o exercicio tenha sido comentado, false caso contrario           
 */
 function VerificaComentario($cod_curso,$cod_questao,$cod_resolucao)
@@ -105,9 +126,9 @@ function VerificaComentario($cod_curso,$cod_questao,$cod_resolucao)
 
 /***********************************************************************
    VerificaGabaritoD - Verifica se o exercicio dissertativo possui gabarito
-   Entrada: $cod_questao - código da questão
-            $cod_resolucao - código da resolucao do exercicio
-            $cod_curso - código do curso
+   Entrada: $cod_questao - cï¿½digo da questï¿½o
+            $cod_resolucao - cï¿½digo da resolucao do exercicio
+            $cod_curso - cï¿½digo do curso
             
    Saida: string caso o exercicio tenha gabarito, false caso contrario           
 */
@@ -126,9 +147,9 @@ function VerificaGabaritoD($cod_curso,$cod_questao)
 }
 
 /***********************************************************************
-   RespostaQuestao - Entrega a string de resposta da questão
-   Entrada: $cod_questao - código da questão
-   			$cod_curso - código do curso
+   RespostaQuestao - Entrega a string de resposta da questï¿½o
+   Entrada: $cod_questao - cï¿½digo da questï¿½o
+   			$cod_curso - cï¿½digo do curso
    Saida: string de resposta caso o exercicio tenha gabarito, false caso contrario           
 */
 function RespostaQuestao($cod_curso,$cod_questao)
@@ -142,8 +163,15 @@ function RespostaQuestao($cod_curso,$cod_questao)
 	return false;
 }
 
+/**
+ * Funcao que calcula e retorna a nota final.
+ * @param $sock Conexao com o BD
+ * @param $cod_curso Codigo do curso
+ * @param $cod_resolucao Codigo da resolucao
+ * @return $soma a soma total de todas as questoes de um exercicio.
+ */
 function RetornaNotaFinal($sock, $cod_curso, $cod_resolucao){
-	/* Calcula o total de nota das questoes dissertativas */
+  	/* Calcula o total de nota das questoes dissertativas */
   	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
   	$res = Enviar($sock, $nota_final1);
   	$nota1 = RetornaLinha($res);
@@ -152,15 +180,22 @@ function RetornaNotaFinal($sock, $cod_curso, $cod_resolucao){
   	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
   	$res = Enviar($sock, $nota_final2);
   	$nota2 = RetornaLinha($res);
+
+  	/* Calcula o total de nota das questoes multipla escolha */
+  	$nota_final3 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_mult WHERE cod_resolucao =".$cod_resolucao;
+  	$res = Enviar($sock, $nota_final3);
+  	$nota3 = RetornaLinha($res);
   	
-  	/* Calcula a soma total */
-  	if(is_null($nota1['soma']))
-  		$soma = $nota2['soma'];
-  	else if(is_null($nota2['soma']))
-  		$soma = $nota1['soma'];
-  	else
-  		$soma = $nota1['soma'] + $nota2['soma'];
-	return $soma;
+	if(is_null($nota1['soma']))
+		$nota1['soma'] = 0;
+	if(is_null($nota2['soma']))
+		$nota2['soma'] = 0;
+	if(is_null($nota3['soma']))
+		$nota3['soma'] = 0;
+		
+	$soma = $nota1['soma'] + $nota2['soma'] + $nota3['soma'];
+  	
+  	return $soma;
 }
 
 ?>

@@ -80,7 +80,7 @@
   
   // Se h� exerc�cios com apenas quest�es objetivas
   // e data limite de entrega j� passou, entrega gabaritos.
-  EntregaCorrecaoExsObjetivos($cod_curso);
+  EntregaCorrecaoExsObjetivosEMultiplaEscolha($cod_curso);
   
   $sock = Conectar("");
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);

@@ -467,6 +467,8 @@ if ((count($questoes)>0)&&($questoes != null))
 		$tipo = $linha_item['tp_questao'];
 		if($tipo == 'O'){
 			$tipo_ext = RetornaFraseDaLista($lista_frases, 159);
+		} elseif ($tipo == 'M') {
+			$tipo_ext = RetornaFraseDaLista($lista_frases, 212);
 		} elseif($tipo == 'D'){
 			$tipo_ext = RetornaFraseDaLista($lista_frases, 160);
 		}
@@ -474,7 +476,10 @@ if ((count($questoes)>0)&&($questoes != null))
 		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
 		if($tipo == 'O'){
 			$nota = VerificaResolucaoO($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-			$respostaCorreta = RespostaQuestao($cod_curso,$linha_item['cod_questao']);
+			$respostaCorreta = RetornaGabaritoQuestaoObj($sock,$linha_item['cod_questao']);
+		} elseif ($tipo == 'M') {
+			$nota = VerificaResolucaoM($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
+			$respostaCorreta = RetornaGabaritoQuestaoMult($sock,$linha_item['cod_questao']);
 		}
 		else if($tipo == 'D')
 			$nota = VerificaResolucaoD($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
@@ -482,7 +487,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			$nota = "";
 
 		$valor = $linha_item['valor'];
-		if($linha_item['tp_questao'] == 'O'){
+		if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M'){
 			//$sock2 = Conectar($cod_curso);
 			//$alternativas = RetornaAlternativas($sock2,$linha_item['cod_questao']);
 			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
@@ -504,12 +509,12 @@ if ((count($questoes)>0)&&($questoes != null))
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span>");
 		/* Se existir nota e for diferente do valor*/
-		if($linha_item['tp_questao'] == 'O' && $nota != $valor && $nota != ""){
+		if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota != $valor && $nota != ""){
 			echo($icone_errado."</td>\n");
 			echo("                <td>".$nota."</td>\n");
 		}
 		/* Se existir nota e for igual ao valor*/
-		else if($linha_item['tp_questao'] == 'O' && $nota == $valor && $nota != ""){
+		else if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota == $valor && $nota != ""){
 			echo($icone_correto."</td>\n");
 			echo("                <td>".$nota."</td>\n");
 		}
@@ -583,7 +588,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                          </dd>\n");
 		}
 
-		if($linha_item['tp_questao'] == 'O')
+		if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M')
 		{
 			/* Frase #18 - Alternativas */
 			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 18)."</dt>\n");
@@ -600,7 +605,10 @@ if ((count($questoes)>0)&&($questoes != null))
 							echo($icone_correto);
 						else
 							echo($icone_vazio);
-						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						if($linha_item['tp_questao'] == 'O')
+							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						if($linha_item['tp_questao'] == 'M')
+							echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 						echo("                            <br />\n");
 					}
 					else{
@@ -608,12 +616,18 @@ if ((count($questoes)>0)&&($questoes != null))
 							echo($icone_correto);
 						else 
 							echo($icone_errado);
-						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						if($linha_item['tp_questao'] == 'O')
+							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+						if($linha_item['tp_questao'] == 'M')
+							echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 						echo("                            <br />\n");
 					}
 				}
 				else{
-					echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+					if($linha_item['tp_questao'] == 'O')
+						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+					if($linha_item['tp_questao'] == 'M')
+						echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
 					echo("                            <br />\n");
 				}
 			}

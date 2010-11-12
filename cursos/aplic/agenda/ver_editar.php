@@ -207,8 +207,8 @@
 
   echo("      function TemCertezaAtivar()\n");
   echo("      {\n");
-  /* 57 - Tem certeza que deseja ativar esta agenda? */
-  /* 58 - (Uma vez ativada, nï¿½o haverï¿½ como desativï¿½-la) */
+  /* 57 - Tem certeza que deseja publicar esta agenda? */
+  /* 58 - (Uma vez publicada ela substituir‡ a Agenda Atual) */
   echo("        return(confirm(\"".RetornaFraseDaLista($lista_frases,57)."\\n".RetornaFraseDaLista($lista_frases,58)."\"));\n");
   echo("      }\n");
 
@@ -348,7 +348,7 @@
         }
       } else if ($linha_item['situacao'] == "A"){
       	
-      	/* 23 - Ativada */
+      	/* 23 - Em publicacao */
       	$situacao = RetornaFraseDaLista($lista_frases, 23);
       	$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
       }

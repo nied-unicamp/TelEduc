@@ -149,8 +149,8 @@ $sock = Conectar($cod_curso);
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  /* 1 - Agenda */
-  echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)."</h4>");
+  /* 1 - Agenda Atual*/
+  echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 23)."</h4>");
 
   // 3 A's - Muda o Tamanho da fonte
   echo("<div id=\"mudarFonte\">\n");

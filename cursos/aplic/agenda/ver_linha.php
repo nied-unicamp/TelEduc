@@ -177,24 +177,22 @@
     }
   }
 
-  /* PÃ¡gina Principal */
+  /* Pagina Principal */
 
-  /* 1 - Agenda */
-  $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1);
-
-  if(($origem == "ver_editar"))
+  /* Se foi clicado no nome da agenda vindo da pagina de Agendas Anteriores, entao apenas mostra a agenda. Sendo assim ela nao eh editavel. 
+   * Assim, o titulo da pagina eh: "Agenda - Agendas Anteriores"
+   * 
+   * Se n‹o, foi clicado em determinada agenda e ela aparece editavel. Neste caso, o titulo da pagina eh: "Agenda - Editar Agenda"
+   */
+  if($origem == "ver_anteriores")
   {
-    /*2 - Editar Agendas*/
-    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,3)."</h4>"; 
-  }
-  else if($origem == "ver_anteriores")
-  {
-    /*3 - Editar Agendas*/ 
-    $cabecalho = "".$cabecalho." - ".RetornaFraseDaLista($lista_frases,2)."</h4>"; 
-  }
-  else
-  {
-    $cabecalho = "".$cabecalho."</h4>";
+  	/* 1 - Agenda */
+    /*2 - Agendas Anteriores*/ 
+    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,2)."</h4>"; 
+  } else {
+  	/* 1 - Agenda */
+  	/* 111 - Editar Agenda*/
+    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,111)."</h4>"; 
   }
   echo($cabecalho);
 
@@ -218,8 +216,8 @@
     /*33 - Voltar para Agenda Anteriores*/
     $frase = RetornaFraseDaLista($lista_frases,33);
   else if($origem == "ver_editar")
-    /*32 - Voltar para Editar Agenda*/
-    $frase = RetornaFraseDaLista($lista_frases, 32);
+    /*3 - Agendas Futuras*/
+    $frase = RetornaFraseDaLista($lista_frases, 3);
   else
     /*8 - Voltar para Agenda Atual*/
     $frase = RetornaFraseDaLista($lista_frases, 8);
