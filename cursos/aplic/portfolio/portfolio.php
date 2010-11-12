@@ -681,19 +681,25 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
 
   /* 82 - Itens */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,82)."</td>\n");
-  /* 9 - Data */
-  echo("                    <td width=\"70\" align=\"center\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
-  /* 119 - Compartilharmento */
-  echo("                    <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,119)."</td>\n");
-  /* 112 - Coment?ios */
-  echo("                    <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,112)."</td>\n");
-
+  
   // se a ferramenta Avaliacoes estiver ativada, a tabela com os itens e pastas do portfolio tem 6 colunas, senao sao 5
   if ($ferramenta_avaliacao)
   {
     /* 139 - Avalia?o */
     echo("                    <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,139)."</td>\n");
   }
+  
+  /* 112 - Coment?ios */
+  echo("                    <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,112)."</td>\n");
+  
+   /* 9 - Data */
+  echo("                    <td width=\"70\" align=\"center\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
+  
+  /* 119 - Compartilharmento */
+  echo("                    <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,119)."</td>\n");
+
+
+
 
   echo("                  </tr>\n");
 
@@ -789,8 +795,11 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
         else $itens="";
 
         echo($titulo_topico.$itens."</td>");
-        echo("<td width=\"70\" align=\"center\"><span>".$data."</span></td>");
-        echo("<td width=\"110\">&nbsp;</td>");
+
+        // Esta eh a coluna de avaliacoes
+        if ($ferramenta_avaliacao){
+          echo("<td width=\"110\">&nbsp;</td>");
+        }
         echo("<td width=\"110\" align=\"center\">&nbsp;");
           if ($num_comentarios['num_comentarios_alunos']>0)
             echo("<span class=\"cAluno\">(c)</span>");
@@ -801,11 +810,9 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
           if ($num_comentarios['data_comentarios']>$data_acesso)
             echo("<span class=\"cNovo\">*</span>");
         echo("</td>");
+                echo("<td width=\"70\" align=\"center\"><span>".$data."</span></td>");
+        echo("<td width=\"110\">&nbsp;</td>");
 
-        // Esta eh a coluna de avaliacoes
-        if ($ferramenta_avaliacao){
-          echo("<td width=\"110\">&nbsp;</td>");
-        }
         echo("</tr>");
       }
       // é item...
@@ -941,27 +948,9 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
           $icone = "<img alt=\"\" src=\"../imgs/".$arquivo."\" border=\"0\" />";
 
           echo("<td class=\"itens\">".$icone." ".$titulo."</td>");
-          echo("<td width=\"70\"><span id=\"data_".$linha['cod_item']."\">".$data."</span></td>");
-          echo("<td width=\"110\"><span>".$compartilhamento."</span></td>");
 
-          echo("<td width=\"110\">&nbsp;");
-
-          if ($linha['num_comentarios_alunos']>0){
-            echo("<span class=\"cAluno\">(c)</span>");
-          }
-          if ($linha['num_comentarios_formadores']>0){
-            echo("<span class=\"cForm\">(c)</span>");
-          }
-          if ($linha['num_comentarios_usuario']>0){
-            echo("<span class=\"cMim\">(c)</span>");
-          }
-          if ($linha['data_comentarios']>$data_acesso){
-            echo("<span class=\"cNovo\">*</span>");
-          }   
-          echo("</td>");
-
-          // 35 - Sim
-		  $Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaFraseDaLista($lista_frases_geral, 35) . "</span>";
+        // 35 - Sim
+		  $Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaTituloAvaliacaoDoItem($sock, $linha['cod_item']) . "</span>";
           if ($ferramenta_avaliacao)
           {
             echo("<td width=\"110\" align=\"center\"><span>");
@@ -997,6 +986,24 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
             echo("</td>");
           }
         }
+        
+          echo("<td width=\"110\">&nbsp;");
+
+          if ($linha['num_comentarios_alunos']>0){
+            echo("<span class=\"cAluno\">(c)</span>");
+          }
+          if ($linha['num_comentarios_formadores']>0){
+            echo("<span class=\"cForm\">(c)</span>");
+          }
+          if ($linha['num_comentarios_usuario']>0){
+            echo("<span class=\"cMim\">(c)</span>");
+          }
+          if ($linha['data_comentarios']>$data_acesso){
+            echo("<span class=\"cNovo\">*</span>");
+          }   
+          echo("</td>");
+		echo("<td width=\"70\"><span id=\"data_".$linha['cod_item']."\">".$data."</span></td>");
+        echo("<td width=\"110\"><span>".$compartilhamento."</span></td>");
         echo("</tr>");
       } //fecha foreach
     }

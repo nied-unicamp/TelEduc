@@ -3872,6 +3872,25 @@ function RetornaFraseGeralDinamic($variavel){
   return $objResponse->getXML();
 }
 
+function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
+	$query = "select cod_avaliacao from Portfolio_itens_avaliacao where cod_item =".$cod_item;
+	$res = Enviar($sock, $query);
+	$linha = RetornaLinha($res);
+	
+	if(!$linha[0]) return '';
+	
+	$query="select cod_atividade from Avaliacao where cod_avaliacao=".$linha[0];
+	$res=Enviar($sock,$query);
+	$linha2=RetornaLinha($res);
+	
+	$query="select titulo from Atividade_itens where cod_item=".$linha2[0];
+	$res = Enviar($sock, $query);
+	$linha3 = RetornaLinha($res);
+	
+	
+	return $linha3[0];
+}
+
 /* *********************************************************************
    AssociaAvaliacaoDinamic - Associa uma avaliacao ao item, dinamicamente
    Entrada: $cod_curso - codigo do curso
