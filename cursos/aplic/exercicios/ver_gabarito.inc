@@ -163,39 +163,5 @@ function RespostaQuestao($cod_curso,$cod_questao)
 	return false;
 }
 
-/**
- * Funcao que calcula e retorna a nota final.
- * @param $sock Conexao com o BD
- * @param $cod_curso Codigo do curso
- * @param $cod_resolucao Codigo da resolucao
- * @return $soma a soma total de todas as questoes de um exercicio.
- */
-function RetornaNotaFinal($sock, $cod_curso, $cod_resolucao){
-  	/* Calcula o total de nota das questoes dissertativas */
-  	$nota_final1 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_diss WHERE cod_resolucao =".$cod_resolucao;
-  	$res = Enviar($sock, $nota_final1);
-  	$nota1 = RetornaLinha($res);
-  	
-  	/* Calcula o total de nota das questoes objetivas */
-  	$nota_final2 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_obj WHERE cod_resolucao =".$cod_resolucao;
-  	$res = Enviar($sock, $nota_final2);
-  	$nota2 = RetornaLinha($res);
-
-  	/* Calcula o total de nota das questoes multipla escolha */
-  	$nota_final3 = "SELECT sum( nota ) as soma FROM Exercicios_resolucao_questao_mult WHERE cod_resolucao =".$cod_resolucao;
-  	$res = Enviar($sock, $nota_final3);
-  	$nota3 = RetornaLinha($res);
-  	
-	if(is_null($nota1['soma']))
-		$nota1['soma'] = 0;
-	if(is_null($nota2['soma']))
-		$nota2['soma'] = 0;
-	if(is_null($nota3['soma']))
-		$nota3['soma'] = 0;
-		
-	$soma = $nota1['soma'] + $nota2['soma'] + $nota3['soma'];
-  	
-  	return $soma;
-}
 
 ?>

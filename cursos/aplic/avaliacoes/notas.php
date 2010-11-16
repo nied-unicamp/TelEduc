@@ -66,13 +66,13 @@
   $sock = MudarDB($sock, $cod_curso);
   $media=RetornaInformacoesMedia($sock);
   $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
-  $med = "";
-  $exp = "";
+  $expressao = "";
+  $norma = "";
   
   if(count($lista_avaliacoes) > 0)
   {
-    $med = $media['expressao'];
-    $exp = $media['norma'];
+    $expressao = $media['expressao'];	//Expressao
+    $norma = $media['norma'];			//Norma
   }
 
   if (!$SalvarEmArquivo)
@@ -89,6 +89,9 @@
     $cont_exercicio=1;
     
     if (count($lista_avaliacoes) > 0) {
+    	/* Itera na lista de avaliacoes para criar as siglas das avaliacoes
+    	 * Exemplo: B1v, B2v, E1v
+    	 */
        foreach($lista_avaliacoes as $index => $avaliacao) {
           if (!strcmp($avaliacao['Ferramenta'], 'B')) {
              $cont=$cont_batepapo;
@@ -107,7 +110,11 @@
              $cont_av_ext++;
           }
                               
-          echo("      var ".$avaliacao['Ferramenta'].$cont."v = new Array();\n");
+          echo("      var ".$avaliacao['Ferramenta'].$cont."v = new Array();\n");	/* Cria um array para cada avaliacao. */
+          
+          //Coloca a primeira linha(cabecalho) das avaliacoes
+          echo("     ".$avaliacao['Ferramenta'].$cont."v[0] = ".$avaliacao['Valor'].";\n");
+          
        }
     }
 
@@ -117,10 +124,9 @@
     $cont_cod_usr=0;
     echo("      var codv = new Array();\n");
     
-    if (count($lista_users)>0)
-    {
-      foreach($lista_users as $cod => $nome)
-      {
+    if (count($lista_users)>0) {
+    	/* Itera na lista de usuarios do curso. */
+      foreach($lista_users as $cod => $nome) {
         echo("      codv[$cont_cod_usr] = ".$cod.";\n");
         $cont_cod_usr++;
         $cont_batepapo=1;
@@ -128,31 +134,26 @@
         $cont_portfolio=1;
         $cont_av_ext=1;
         $cont_exercicio=1;
-        foreach ($lista_avaliacoes as $cont => $linha)
-        {
+        /* Para cada usuario, volta a iterar na lista de avaliacoes para pegar a nota de cada usuario. */
+        foreach ($lista_avaliacoes as $cont => $linha) {
           /*******************************************/
           /*******Pega dados do exercicio*************/
           $grupo=(($linha['tipo']=='G') && (($linha['Ferramenta']=='E') || ($linha['Ferramenta']=='N')));
-          if ($grupo)  
-          {
+          if ($grupo) {
              $codigo=RetornaCodGrupoPortfolioAvaliacao($sock,$cod,$linha['Cod_avaliacao']);
-             if ($codigo)
+             if ($codigo) {
                 $foiavaliado=GrupoFoiAvaliado($sock,$linha['Cod_avaliacao'],$codigo);
-             else
-             {
+             } else {
                 $grupo=0;
                 $codigo=$cod; 
-             }                   
-          } 
-          else
-          {  
+             }
+          } else {
              $codigo=$cod;
              $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
           }
+          
           //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
-
-          if ($foiavaliado && $linha['Ferramenta']!='E')  
-          {
+          if ($foiavaliado && $linha['Ferramenta']!='E') {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
@@ -177,8 +178,7 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-          }//Exerc�cio
-          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+          } elseif($foiavaliado && $linha['Ferramenta']=='E') {	//Exercicios
           	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
@@ -188,10 +188,9 @@
             $cont_exercicio++;
             
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
-          }
-          else // nenhuma nota foi atribuida
-             if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))  
-             {
+            
+          } else { // nenhuma nota foi atribuida
+             if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B') ) {
                if (!strcmp($linha['Ferramenta'], 'B')) {
                   $contador=$cont_batepapo;
                   $cont_batepapo++;
@@ -208,61 +207,51 @@
                   $contador=$cont_av_ext;
                   $cont_av_ext++;
                }
-
-               echo("     ".$linha['Ferramenta'].$contador."v[".$j."] = 0.00;\n");
+               
+               echo("     ".$linha['Ferramenta'].$contador."v[".$j."] = 0.00;\n");	/* Se nao tem nota atribuida, deixa zero. */
 
              }
-             if ($j == 1) {
-               echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
-             }
+          }
+          
         }
         $j++;
       }
     }
-    if ($usr_formador)
-    {
+    
+    if ($usr_formador) {
       $lista_users=RetornaListaUsuariosFormador($cod_curso);
-      $sock = MudarDB($sock, $cod_curso); 
-      foreach($lista_users as $cod => $nome)
-      {
+      $sock = MudarDB($sock, $cod_curso);
+      /* Itera na lista de usuarios do curso. */ 
+      foreach($lista_users as $cod => $nome) {
         echo("      codv[$cont_cod_usr] = ".$cod.";\n");
+        
         $cont_cod_usr++;
-                        
         $cont_batepapo=1;
         $cont_forum=1;
         $cont_portfolio=1;
         $cont_av_ext=1;
         $cont_exercicio=1;
-
         
-        
-        foreach ($lista_avaliacoes as $cont => $linha)
-        {
+        /* Volta a iterar na lista de avaliacoes de cada usuario. */
+        foreach ($lista_avaliacoes as $cont => $linha) {
            $grupo=(($linha['tipo']=='G') && (($linha['Ferramenta']=='E') || ($linha['Ferramenta']=='N')));
            //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $cod, $grupo);
              
-           if ($grupo)
-           {
+           if ($grupo) {
               $codigo=RetornaCodGrupoPortfolioAvaliacao($sock,$cod,$linha['Cod_avaliacao']);
-              if ($codigo)
+              if ($codigo) {
                  $foiavaliado=GrupoFoiAvaliado($sock,$linha['Cod_avaliacao'],$codigo);
-              else
-              {
+              } else {
                  $codigo=$cod;
                  $grupo=0;
               }
-                
-            }
-            else
-            {
+           } else {
                $codigo=$cod;
                $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
-                 
-            }  
+		   }  
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
                                                        
-         if ( $foiavaliado && $linha['Ferramenta']!='E' )
-         {
+         if ( $foiavaliado && $linha['Ferramenta']!='E' ) {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
@@ -287,8 +276,7 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-         }//Exerc�cio
-          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+         } elseif($foiavaliado && $linha['Ferramenta']=='E') {//Exerc�cio
           	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
@@ -298,10 +286,9 @@
             $cont_exercicio++;
             
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
-          }
-         else { // nenhuma nota foi atribuida
-            if ($linha['Ferramenta']=='E' && ($linha['Data_termino']<=time()) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B'))
-            {
+            
+          } else { // nenhuma nota foi atribuida
+            if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B')) {
               if (!strcmp($linha['Ferramenta'], 'B')) {
                 $contador=$cont_batepapo;
                 $cont_batepapo++;
@@ -324,14 +311,15 @@
             }
          }
         
-         if ($j == 1) { 
-           echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
-         }
+//         if ($j == 1) { 
+//			echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
+//         }
         
-        }
+        }//Fim: foreach ($lista_avaliacoes as $cont => $linha)
         $j++;
-      }
+      }//Fim: foreach($lista_users as $cod => $nome)
     }
+    
     $j--;
     /* Fim da parte redundante */
 
@@ -816,7 +804,7 @@
     echo("      {\n");
     echo("        lay_muda_expressao = getLayer('layer_muda_expressao');\n");
     echo("        cod_comp = getLayer(\"comp\");\n");
-    echo("        LoopAvaliarExpressao(".$j.",'".$med."','".$exp."');\n");
+    echo("        LoopAvaliarExpressao(".$j.",'".$expressao."','".$norma."');\n");
     echo("        startList();\n");
     echo("      }\n");
     
@@ -957,11 +945,14 @@
           } 
 
           echo("        var ".$avaliacao['Ferramenta'].$cont." = ".$avaliacao['Ferramenta'].$cont."v[i];\n");
+          //echo("		alert('ferramenta.cont: '+'".$avaliacao['Ferramenta'].$cont."');");
        }
     }
+    //echo("			alert('AvaliarExpressao-expressao: '+expressao);");
     echo("        try {\n");
     echo("          if (expressao != '') {\n");
     echo("            var nota=eval(expressao);\n");
+    //echo("				alert('AvaliarExpressao-nota: '+nota);");
     echo("          } else { return; }\n");
     echo("        } catch (e){\n");
     echo("          if (i == 0) {\n");
