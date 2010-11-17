@@ -439,7 +439,7 @@ echo ("                    <td width=\"10%\" align=\"center\">" . RetornaFraseDa
 // se a ferramenta Avaliacoes estiver ativada, a tabela com os itens e pastas do portfolio tem 6 colunas, senao sao 5
 if ($ferramenta_avaliacao) {
 	/* 139 - Avaliação */
-	echo ("                    <td width=\"8%\" align=\"center\">" . RetornaFraseDaLista($lista_frases, 139) . "</td>\n");
+	echo ("                    <td width=\"12%\" align=\"center\">" . RetornaFraseDaLista($lista_frases, 139) . "</td>\n");
 }
 
 echo ("                  </tr>\n");
@@ -585,7 +585,7 @@ if ($dono_portfolio) {
 
 echo ("                    <td align=\"center\">" . $compartilhamentospan . "</td>\n");
 
-$Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaFraseDaLista($lista_frases_geral, 35) . "</span>";
+$Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaTituloAvaliacaoDoItem($sock, $linha_item['cod_item']) . "</span>";
 
 if ($ferramenta_avaliacao) {
 	echo ("                    <td align=\"center\">");
