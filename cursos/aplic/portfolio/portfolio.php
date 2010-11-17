@@ -159,6 +159,12 @@
   echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+id,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("        return(false);\n");
   echo("      }\n");
+  
+  	echo ("      function WindowOpenAvalia(id)\n");
+	echo ("      {\n");
+	echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+	echo ("        return(false);\n");
+	echo ("      }\n");
 
   }else{
     
