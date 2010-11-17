@@ -100,7 +100,7 @@ else $pagAtual = min($pagAtual, $totalPag);
 /*********************************************************/
 /* in�cio - JavaScript */
 if($totalQuestoes){
-	echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+	echo("  <script type=\"text/javascript\" src=\"../js-css/sorttablePaginado.js\"></script>\n");
 }
 echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
 echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
@@ -266,9 +266,12 @@ echo("        document.getElementById('paginacao_last').innerHTML = \"&gt;&gt;\"
 echo("        ControlaSelecao();\n");
 echo("      }\n\n");
 
-echo("      function ExibeMsgOrdenadas(){\n");
-echo("        var t;");
-echo("        AplicaFiltro();\n");
+echo("      function AuxiliaPaginacao(){\n");
+echo("        var topico = document.getElementById('topico').value;");
+echo("        var tp_questao = document.getElementById('tp_questao').value;");
+echo("        var dificuldade = document.getElementById('dificuldade').value;");
+echo("        var stringNiveisQuestoes = '';");
+echo("        AplicaFiltro(topico,tp_questao, dificuldade, stringNiveisQuestoes);\n"); 
 echo("        AtualizaEstadoPaginacao(pagAtual);\n");
 /* Frase #143 - Questoes ordenadas. */
 echo("        mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 143)."\",true);\n");

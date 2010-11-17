@@ -137,7 +137,7 @@
   $objAjax->setCharEncoding('ISO-8859-1');
 
   if($totalMsg){
-    echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+    echo("    <script type=\"text/javascript\" src=\"../js-css/sorttablePaginado.js\"></script>\n");
   }
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var pagAtual = ".$pagAtual.";\n");
@@ -279,7 +279,7 @@
   echo("        document.getElementById('paginacao_last').innerHTML = \"&gt;&gt;\";\n");
   echo("      }\n");
 
-  echo("      function ExibeMsgOrdenadas(){\n");
+  echo("      function AuxiliaPaginacao(){\n");
   echo("        var i = 0;\n");
   echo("        document.frmSelecao.cabecalho.checked=false;\n");
   echo("        tabela = document.getElementById('tabelaMsgs');\n");

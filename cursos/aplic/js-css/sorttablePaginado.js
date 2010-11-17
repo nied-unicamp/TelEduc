@@ -103,6 +103,8 @@ sorttable = {
             sortrevind.id = "sorttable_sortrevind";
             sortrevind.innerHTML = stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25B4;';
             this.appendChild(sortrevind);
+            AuxiliaPaginacao();
+            
             return;
           }
           if (this.className.search(/\bsorttable_sorted_reverse\b/) != -1) {
@@ -116,7 +118,8 @@ sorttable = {
             sortfwdind.id = "sorttable_sortfwdind";
             sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
             this.appendChild(sortfwdind);
-      
+            AuxiliaPaginacao();
+            
             return;
           }
           
@@ -162,6 +165,9 @@ sorttable = {
 	        }
 	        
 	        delete row_array;
+	        
+	        AuxiliaPaginacao();
+            
 	      });
 	    }
     }
