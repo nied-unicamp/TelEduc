@@ -267,6 +267,11 @@
         	echo("                  </tr>\n");
         
     		}
+  		} else {
+			echo("                  <tr>\n");
+      		/* Frase #118 - Nao ha nenhum exericio */
+     		echo("                    <td colspan=\"7\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
+    		echo("                  </tr>\n");
   		}
 	}
 	
@@ -289,15 +294,13 @@
         	echo("                  </tr>\n");
         
     		}
+  		}  else {
+			echo("                  <tr>\n");
+      		/* Frase #118 - Nao ha nenhum exericio */
+     		echo("                    <td colspan=\"7\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
+    		echo("                  </tr>\n");
   		}
 	}
-    else
-  {
-      echo("                  <tr>\n");
-      /* Frase #118 - Nao ha nenhum exericio */
-      echo("                    <td colspan=\"7\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
-      echo("                  </tr>\n");
-  }
 
 	echo("                </table>\n");
 	echo("              </td>\n");
