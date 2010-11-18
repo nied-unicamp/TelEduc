@@ -42,6 +42,7 @@
 
   $bibliotecas = "../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
+  include("inicial.inc");
   include("autenticacao.inc");
 
   if(!isset($ordem))

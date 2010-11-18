@@ -40,7 +40,7 @@
   ARQUIVO : pagina_inicial/rodape_tela_inicial.php
   ========================================================== */
   
-  /* Rodap� */
+  /* Rodape */
 
   echo("      <tr>\n");
   echo("        <td valign=\"bottom\" height=\"80\">");
@@ -64,7 +64,10 @@
   echo("      <tr>\n");
   echo("        <td valign=\"bottom\">");
   echo("		</td>\n");
-  echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\">2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
+  /* Versao Servidor Todos os direitos reservados...*/
+  $versao = RetornaConfiguracao($sock,'versao');
+  $host = RetornaConfiguracao($sock,'host');
+  echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\"> Vers&atilde;o: ".$versao." Servidor: ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 
