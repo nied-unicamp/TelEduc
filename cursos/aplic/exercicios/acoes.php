@@ -66,7 +66,7 @@
   $dir_name = "exercicios";
   //$dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
-  /* ação = Criar Nova Questao - origem = questoes.php */
+  /* acao = Criar Nova Questao - origem = questoes.php */
   if ($acao=="criarQuestao")
   {
     $atualizacao = "true";

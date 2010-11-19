@@ -43,7 +43,7 @@
 
 /***********************************************************************
 
-                              Observações
+                              Observacoes
 
 - Tipo de questão (tp_questao):
 
@@ -1884,7 +1884,9 @@ function ExibeArquivoAnexadoDinamic($cod_curso, $cod_questao, $cod_usuario, $arq
   {
     $objResponse->addRemove('arq_'.$arqNum);
     $objResponse->addScript("LimpaBarraArq();");
-  	$objResponse->addScriptCall("mostraFeedback", "Erro ao anexar arquivo.", 'false');
+    /*215- Erro ao anexar arquivo*/
+    $texto= RetornaFraseDaLista($lista_frases, 215);
+  	$objResponse->addScriptCall("mostraFeedback", $texto, 'false');
   }
   
   return $objResponse->getXML();
@@ -2455,8 +2457,9 @@ function AtualizaRespostaDoUsuarioDinamic($cod_curso, $cod_resolucao, $cod_quest
     	AtualizaNotaDinamicaMult($cod_curso, $cod_questao, $cod_resolucao, $resposta);
     }
     
-    /* ? - Respondida */
-    $objResponse->addAssign('tdStatus_'.$cod_questao, "innerHTML", "Respondida");
+    /* Frase #167 - Respondida */
+    $frase = RetornaFraseDaLista($lista_frases, 167);
+    $objResponse->addAssign('tdStatus_'.$cod_questao, "innerHTML",  $frase);
     $objResponse->addScript("mostraFeedback(\"".$texto."\",true);");
     
     return $objResponse->getXML();

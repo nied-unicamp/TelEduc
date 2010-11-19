@@ -667,7 +667,7 @@ if($ehFormador){
 	}
 	
 	echo("                </table>\n");
-		/* ? - Entregar */				
+						
 	//echo("								<form method='POST'  onsubmit='VerificaEntrega(".$cod_curso.", ".$cod_resolucao.",'')'>");
 	//echo("								<input type='hidden' name='acao' value='entregarCorrecao'/>");
 	//echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");

@@ -111,7 +111,7 @@ echo("    var js_comp = new Array();\n");
 echo("    var pagAtual = ".$pagAtual.";\n");
 echo("    var totalQuestoes = ".$totalQuestoes.";\n");
 echo("    var totalPag = ".$totalPag.";\n");
-echo("	var questoesPorPag = ".$questoesPorPag.";\n");
+echo("	  var questoesPorPag = ".$questoesPorPag.";\n");
 echo("    var topico = 'T';\n");
 echo("    var tp_questao = 'T';\n");
 echo("    var dificuldade = 'T';\n");
@@ -303,7 +303,7 @@ echo("        var i=0;\n");
 echo("        var j=0;\n");
 echo("        var jPag=0;\n");
 if($visualizar == 'Q')
-echo("        EscondeLayers();\n");
+	echo("        EscondeLayers();\n");
 echo("        var cabecalho = document.getElementById('checkMenu');\n");
 echo("        var elementos = document.getElementsByName('cod_questao[]')\n");
 echo("        var inicio = ((pagAtual-1)*".$questoesPorPag.");\n");
@@ -494,7 +494,7 @@ if($visualizar == "Q")
 	 			dificuldade = Dificuldade escolhida no filtro: 'T'(Todos), 'F'(Facil), 'M'(Medio), 'D'(Dificil)
 	 			stringNiveisQuestoes = string com a dificuldade/nivel de todas as questoes
 	 */
-	echo("    function AplicaFiltro(topico,tp_questao, dificuldade, stringNiveisQuestoes){\n"); //*acrescentei parametros
+	echo("    function AplicaFiltro(topico,tp_questao, dificuldade, stringNiveisQuestoes){\n"); 
 	echo("      var i,j,questoes,getNumber,arrayExcluidas;\n");
 	echo("      j=0;\n");
 	echo("      arrayExcluidas = new Array();\n");
@@ -519,7 +519,8 @@ if($visualizar == "Q")
 	echo("    function Filtrar(topico,tp_questao,dificuldade,stringNiveisQuestoes){\n");
 	echo("      AplicaFiltro(topico,tp_questao,dificuldade,stringNiveisQuestoes);\n");
 	echo("      AtualizaEstadoPaginacao(1);\n");
-	echo("      mostraFeedback(\"Questoes filtradas.\",true);\n");
+	/*216- Quest›es Filtradas*/
+	echo("      mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 216)."\",true);\n");
 	echo("    }\n\n");
 }
 
@@ -589,28 +590,28 @@ echo("    	AtualizaEstadoPaginacao(pagAtual)\n");
 echo("}\n");
 
 echo("    function TratarSelecionados(op){\n");
-echo("	  var checks,deleteArray,j;\n");
+echo("	    var checks,deleteArray,j;\n");
 echo("      checks = document.getElementsByName('cod_questao[]');\n");
-echo("	  deletaArray = new Array();\n");
+echo("	    deletaArray = new Array();\n");
 echo("      j=0;\n");
 echo("      if(Confirma(op)){\n");
 //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
 echo("        for (i=0; i<checks.length; i++){\n");
-echo("        if(checks[i].checked){\n");
-echo("          getNumber=checks[i].id.split(\"_\");\n");
-echo("          xajax_AlteraStatusQuestaoDinamic(".$cod_curso.",getNumber[1],op);\n");
-echo("          deletaArray[j++] = getNumber[1];\n");
-echo("		  totalQuestoes--;");
+echo("          if(checks[i].checked){\n");
+echo("            getNumber=checks[i].id.split(\"_\");\n");
+echo("            xajax_AlteraStatusQuestaoDinamic(".$cod_curso.",getNumber[1],op);\n");
+echo("            deletaArray[j++] = getNumber[1];\n");
+echo("		      totalQuestoes--;");
 echo("          }\n");
 echo("        }\n");
-echo("		DeletarLinhas(deletaArray,j);\n");
-echo("		if(totalQuestoes > 0)\n");
+echo("		  DeletarLinhas(deletaArray,j);\n");
+echo("		  if(totalQuestoes > 0)\n");
 echo("          IntercalaCorLinha();\n");
-echo("		else\n");
+echo("		  else\n");
 echo("          InsereLinhaVazia();\n");
 echo("        VerificaPaginacao();\n");
 echo("        ControlaSelecao();\n");
-echo("		mostraFeedback(RetornaTexto(op),true);\n");
+echo("		  mostraFeedback(RetornaTexto(op),true);\n");
 echo("      }\n");
 echo("    }\n\n");
 
@@ -701,10 +702,10 @@ if ($tela_formador)
 		/* Frase #59 - Questoes */
 		echo("                ".RetornaFraseDaLista($lista_frases, 59)." ");
 		echo("(<span id=\"primQuestaoIndex\"></span>");
-		/* ? - a             */
-		echo(" a&nbsp;");
-		/* ? - de            */
-		echo("<span id=\"ultQuestaoIndex\"></span> de ");
+		/* Frase #221 - a             */
+		echo(" ".RetornaFraseDaLista($lista_frases, 221)."&nbsp;");
+		/* Frase #222 - de             */
+		echo("<span id=\"ultQuestaoIndex\"></span> ".RetornaFraseDaLista($lista_frases, 222)." ");
 		echo("<span id=\"totalQuestoes\">".($totalQuestoes)."</span>)\n");
 		echo("              </td>\n");
 		echo("            </tr>\n");

@@ -210,8 +210,8 @@ echo("          resposta = resposta + \"1\";\n");
 echo("        else\n");
 echo("          resposta = resposta + \"0\";\n");
 echo("      }\n");
-/*? - Resposta gravada*/
-echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"Resposta gravada.\",\"O\");\n");
+/*Frase #171 - Resposta gravada*/
+echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",\"O\");\n");
 echo("    }\n");
 
 echo("    function AlteraTexto(id){\n");
@@ -234,7 +234,8 @@ echo("      var cod;\n");
 echo("      if (valor=='ok'){\n");
 echo("        cod = codigo.split(\"_\");\n");
 echo("        conteudo=document.getElementById(id+'_text').contentWindow.document.body.innerHTML;\n");
-echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"Texto\");\n");
+/* Frase #58 - Texto */
+echo("        xajax_EditarRespostaQuestaoDissDinamic(".$cod_curso.",cod[0],cod[1],conteudo,\"".RetornaFraseDaLista($lista_frases, 58)."\");\n");  
 echo("      }\n");
 echo("      else{\n");
 // Cancela Edi�o
@@ -318,9 +319,9 @@ if($resolucao['cod_grupo'] != null)
 	$cod = $resolucao['cod_grupo'];
 }
 
-/* ? - Voltar */
+/* Texto #5 - Voltar */
 //echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>Voltar</a></li>\n");
-/* ? - Historico */
+/* Texto #56 - Historico */
 //echo("                  <li><a href=''>Historico</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -672,7 +673,7 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N')
-/* ? - Entregar */
+/* TODO: pegar frase do BD: Entregar */
 //echo("                <div align=\"right\"><input type=\"button\" class=\"input\" value='Entregar'></div>\n");
 echo("              </td>\n");
 echo("            </tr>\n");

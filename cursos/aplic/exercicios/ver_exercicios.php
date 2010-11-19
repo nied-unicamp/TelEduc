@@ -252,7 +252,6 @@ if($eformador)
   	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 }
 
-/* ? - Ver resoluo */
 //echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resoluo</a></li>\n");
 
 echo("                </ul>\n");
@@ -371,19 +370,19 @@ else
 
 echo("                </table>\n");
 
-/* ?? - Comentario de Aluno */
-/* ?? - Comentario de Formador */
-/* ?? - Comentario postados por mim */
-echo("                <span class=\"cAluno\">(c)</span> Comentario de Aluno - \n");
-echo("                <span class=\"cForm\">(c)</span> Comentario de Formador - \n");
+/* Frase #223 - Comentario de Aluno */
+/* Frase #224 - Comentario de Formador */
+echo("                <span class=\"cAluno\">(c)</span> ".RetornaFraseDaLista($lista_frases, 223)." - \n");
+echo("                <span class=\"cForm\">(c)</span> ".RetornaFraseDaLista($lista_frases, 224)." - \n");
 
 if(!EVisitante($sock,$cod_curso,$cod_usuario))
-echo("                <span class=\"cMim\">(c)</span> Comentario postados por mim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+/* Frase #225 - Comentarios postados por mim */
+echo("                <span class=\"cMim\">(c)</span> ".RetornaFraseDaLista($lista_frases, 225)."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 
-/* ?? - Corrigido */
-echo("                <span class=\"avaliado\">(a)</span> Corrigido - \n");
-/* ?? - Entregue */
-echo("                <span class=\"entregue\">(e)</span> Entregue\n");
+/* Frase #226 - Corrigido */
+echo("                <span class=\"avaliado\">(a)</span> ".RetornaFraseDaLista($lista_frases, 226)." - \n");
+/* Frase #227 - Entregue */
+echo("                <span class=\"entregue\">(e)</span> ".RetornaFraseDaLista($lista_frases, 227)."\n");
 
 echo("              </td>\n");
 echo("            </tr>\n");

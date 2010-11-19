@@ -914,7 +914,14 @@
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++indexArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
   /* Frase #44 - Arquivo anexado com sucesso */
   echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases, 44)."',true);}\n");
-  echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n");
+  /* 219 - "Arquivo"
+   * 217 - "ja existe"
+   * 218 - "Deseja sobrescrevê-lo?"*/
+  echo("	  texto1 = ".RetornaFraseDaLista($lista_frases, 219).";\n");
+  echo("	  texto2 = ".RetornaFraseDaLista($lista_frases, 217).";\n");
+  echo("	  texto3 = ".RetornaFraseDaLista($lista_frases, 218).";\n");
+  echo("	  if(flag == 1 && confirm(texto1+' '+nomeArq+' '+texto2+'.'+' '+texto3))\n");
+  //echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n"); 
   echo("      {\n");
   echo("		EncontraArquivoEApaga(nomeArq);\n");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++indexArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_exercicio.",".$cod_usuario.");\n");
@@ -943,7 +950,9 @@
   echo("      var trLoading,trRef;\n");
   echo("	  trLoading = document.createElement(\"tr\");\n");
   echo("	  trLoading.setAttribute(\"id\",\"trLoadingPasta\");\n");
-  echo("      trLoading.appendChild(criaTd(\"Abrindo a pasta requisitada,aguarde...\",\"6\"));\n");
+  //220 - Abrindo a pasta requisitada,aguarde...
+  echo("      texto = ".RetornaFraseDaLista($lista_frases, 220)."\n");
+  echo("      trLoading.appendChild(criaTd(texto,\"6\"));\n"); //TODO
   if($exercicio['situacao'] == 'C') {
 	  echo("  trRef = document.getElementById(\"optArq\");\n");
 	  echo("  trRef.parentNode.insertBefore(trLoading,trRef);\n");
@@ -1572,7 +1581,7 @@
 	  echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 	  echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 	  echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
-	  // ?? - 
+	  /* Frase #195 - Pressione o botão abaixo para selecionar o arquivo a ser anexado.(arquivos .ZIP podem ser enviados e descompactados posteriormente) */ 
 	  echo("                          <span> - " . RetornaFraseDaLista($lista_frases, 195) . "</span>\n");
 	  echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 	  echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\" onchange=\"EdicaoArq(1)\">\n");

@@ -320,7 +320,6 @@ if($resolucao['cod_grupo'] != null)
 
 /* Frase #5 - Voltar */
 echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=".$visualizar."&cod=".$cod."'>".RetornaFraseDaLista($lista_frases, 5)."</a></li>\n");
-/* ? - Historico */
 //echo("                  <li><a href=''>Historico</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -680,7 +679,6 @@ if ((count($questoes)>0)&&($questoes != null))
 }
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N')
-/* ? - Entregar */
 //echo("                <div align=\"right\"><input type=\"button\" class=\"input\" value='Entregar'></div>\n");
 echo("              </td>\n");
 echo("            </tr>\n");

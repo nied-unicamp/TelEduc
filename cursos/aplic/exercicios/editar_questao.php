@@ -237,7 +237,7 @@
   echo("		div=Alt[i].id.split('_');\n");
   echo("		divCorreta=document.getElementById('div_'+div[1]);\n");
   echo("		Resp=divCorreta.childNodes[1].alt;\n");
-  echo("		if(Resp=='resposta correta')\n");
+  echo("		if(Resp=='resposta correta')\n"); 
   echo("			num++;\n");
   echo("	}\n");
   echo("}\n");
@@ -537,7 +537,7 @@
   echo("      var select;\n");
   echo("	  if(texto==''){\n");
   /* Frase #213 - Digite um nome para o t√≥pico*/
-  echo("			alert('".RetornaFraseDaLista($lista_frases, 89)."');\n");
+  echo("			alert('".RetornaFraseDaLista($lista_frases, 213)."');\n");
   echo("			textbox.focus();\n");
   echo("			return false;\n");
   echo("	  }\n");
@@ -1307,8 +1307,8 @@
   echo("      tr.setAttribute(\"id\",\"diretorioVazio\");\n");
   echo("	  td = document.createElement(\"td\");\n");
   echo("	  td.colSpan = \"6\";\n");
-  //?
-  echo("	  td.appendChild(document.createTextNode('Diretorio esta vazio.'));\n");
+  /* Texto #187 - Diretorio esta vazio.*/
+  echo("	  td.appendChild(document.createTextNode(\"".RetornaFraseDaLista($lista_frases, 187)."\"));\n");
   echo("	  tr.appendChild(td);\n");
   echo("      trRef = document.getElementById(\"optArq\");\n");
   echo("	  trRef.parentNode.insertBefore(tr,trRef);\n");
@@ -1532,9 +1532,15 @@
   echo("      document.formFiles.subpasta.value = subpasta;\n");
   echo("	  if((flag == 0))");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
-  //185 -Arquivo anexado com sucesso.
-  echo("        mostraFeedback('Arquivo anexado com sucesso.',true);\n");
-  echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))");
+  /* 44- "Arquivo anexado com sucesso."*/
+  echo("        mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 44)."\",true);\n");
+  /* 219 - "Arquivo"
+   * 217 - "ja existe"
+   * 218 - "Deseja sobrescrevê-lo?"*/
+  echo("	  texto1 = ".RetornaFraseDaLista($lista_frases, 219).";\n");
+  echo("	  texto2 = ".RetornaFraseDaLista($lista_frases, 217).";\n");
+  echo("	  texto3 = ".RetornaFraseDaLista($lista_frases, 218).";\n");
+  echo("	  if(flag == 1 && confirm(texto1+' '+nomeArq+' '+texto2+'.'+' '+texto3))\n");
   echo("      {");
   echo("		EncontraArquivoEApaga(nomeArq);\n");
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");

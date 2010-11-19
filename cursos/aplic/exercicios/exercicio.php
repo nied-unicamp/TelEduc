@@ -235,7 +235,6 @@
       }
       else if($visualizar == "G")
       {
-        // ? - do grupo
         /* Frase #115 - do grupo */
         $aux = RetornaFraseDaLista($lista_frases, 115);
       }
@@ -243,9 +242,9 @@
     
 	/* Frase #1 - Exercicios */
 	echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases, 1).$aux."</td>\n");
-  /* Frase #116 - Exercicios nao entregues */
+    /* Frase #116 - Exercicios nao entregues */
 	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 116)."</td>\n");
-  /* Frase #117 - Exercicios nao corrigidos */
+    /* Frase #117 - Exercicios nao corrigidos */
 	echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 117)."</td>\n");
 	echo("                  </tr>\n");
 
@@ -323,16 +322,16 @@
   	echo("      <div class=int_popup>\n");
   	echo("        <div class=ulPopup>\n");    
   	/* Frase #119 - Agrupar por: */
-  	echo("            Agrupar por:<br />\n");
+  	echo("            ".RetornaFraseDaLista($lista_frases, 119)."<br />\n"); //TODO: colocar frase no BD
   	echo("            <select class=\"input\" id=\"agrupamento\">");
   	if($visualizar == "I")
   	/*180 - Aluno*/
-  	  echo("              <option value=\"A\" selected>Aluno</option>");
+  	  echo("              <option value=\"A\" selected>".RetornaFraseDaLista($lista_frases, 180)."</option>"); //TODO: colocar frase no BD
   	else if($visualizar == "G")
   	/*179 - Grupo*/
-  	  echo("              <option value=\"G\" selected>Grupo</option>");
+  	  echo("              <option value=\"G\" selected>".RetornaFraseDaLista($lista_frases, 179)."</option>"); //TODO: colocar frase no BD
   	/* 178 - Titulo do Exercicio*/
-  	echo("              <option value=\"T\">Titulo do Exercicio</option>");
+  	echo("              <option value=\"T\">".RetornaFraseDaLista($lista_frases, 178)."</option>"); //TODO: colocar frase no BD
   	echo("            </select><br /><br />");
   	/* 18 - Ok (gen) */
   	echo("            <input type=\"button\" id=\"ok_agrupar\" class=\"input\" onClick=\"MudaAgrupamento(document.getElementById('agrupamento').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");

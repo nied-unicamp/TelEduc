@@ -878,10 +878,10 @@
       /* Frase #1 - Exercicios     */
       echo("                ".RetornaFraseDaLista($lista_frases, 1)." ");
       echo("(<span id=\"primQuestaoIndex\"></span>");
-      /* ? - a             */
-      echo(" a&nbsp;");
-      /* ? - de            */
-      echo("<span id=\"ultQuestaoIndex\"></span> de ");
+      /* Frase #221 - a             */
+      echo(" ".RetornaFraseDaLista($lista_frases, 221)."&nbsp;");
+      /* Frase #222 - de            */
+      echo("<span id=\"ultQuestaoIndex\"></span> ".RetornaFraseDaLista($lista_frases, 222)." ");
       echo("<span id=\"totalExercicios\">".($totalExercicios)."</span>)\n");
       echo("              </td>\n");
       echo("            </tr>\n");
