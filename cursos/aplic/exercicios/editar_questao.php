@@ -1537,9 +1537,9 @@
   /* 219 - "Arquivo"
    * 217 - "ja existe"
    * 218 - "Deseja sobrescrevê-lo?"*/
-  echo("	  texto1 = ".RetornaFraseDaLista($lista_frases, 219).";\n");
-  echo("	  texto2 = ".RetornaFraseDaLista($lista_frases, 217).";\n");
-  echo("	  texto3 = ".RetornaFraseDaLista($lista_frases, 218).";\n");
+  echo("	  texto1 = \"".RetornaFraseDaLista($lista_frases, 219)."\";\n");
+  echo("	  texto2 = \"".RetornaFraseDaLista($lista_frases, 217)."\";\n");
+  echo("	  texto3 = \"".RetornaFraseDaLista($lista_frases, 218)."\";\n");
   echo("	  if(flag == 1 && confirm(texto1+' '+nomeArq+' '+texto2+'.'+' '+texto3))\n");
   echo("      {");
   echo("		EncontraArquivoEApaga(nomeArq);\n");

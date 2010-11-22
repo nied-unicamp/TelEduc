@@ -917,9 +917,9 @@
   /* 219 - "Arquivo"
    * 217 - "ja existe"
    * 218 - "Deseja sobrescrevê-lo?"*/
-  echo("	  texto1 = ".RetornaFraseDaLista($lista_frases, 219).";\n");
-  echo("	  texto2 = ".RetornaFraseDaLista($lista_frases, 217).";\n");
-  echo("	  texto3 = ".RetornaFraseDaLista($lista_frases, 218).";\n");
+  echo("	  texto1 = \"".RetornaFraseDaLista($lista_frases, 219)."\";\n");
+  echo("	  texto2 = \"".RetornaFraseDaLista($lista_frases, 217)."\";\n");
+  echo("	  texto3 = \"".RetornaFraseDaLista($lista_frases, 218)."\";\n");
   echo("	  if(flag == 1 && confirm(texto1+' '+nomeArq+' '+texto2+'.'+' '+texto3))\n");
   //echo("	  if(flag == 1 && confirm('Arquivo '+nomeArq+' ja existe. Deseja sobrescreve-lo?'))\n"); 
   echo("      {\n");
@@ -951,7 +951,7 @@
   echo("	  trLoading = document.createElement(\"tr\");\n");
   echo("	  trLoading.setAttribute(\"id\",\"trLoadingPasta\");\n");
   //220 - Abrindo a pasta requisitada,aguarde...
-  echo("      texto = ".RetornaFraseDaLista($lista_frases, 220)."\n");
+  echo("      texto = \"".RetornaFraseDaLista($lista_frases, 220)."\"\n");
   echo("      trLoading.appendChild(criaTd(texto,\"6\"));\n"); //TODO
   if($exercicio['situacao'] == 'C') {
 	  echo("  trRef = document.getElementById(\"optArq\");\n");
