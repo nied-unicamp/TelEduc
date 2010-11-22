@@ -13,6 +13,18 @@ span.etapa {
 	float: right;
 }	
 
+a {
+	color:#3F6AA0;
+	font-weight:bold;
+	text-decoration:none;
+}
+pre {
+	background-color:#EEEEEE;
+	border:2px solid #888888;
+	margin-top: 5px;
+	padding:5px;
+}
+
 #logo {
 	float: left;
 	display: block;

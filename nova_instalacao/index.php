@@ -36,11 +36,10 @@ if ($etapa > 3){
 if ($etapa == 0){
 	$content_header = "Bem-Vindo à Instalação do TelEduc4!";
 
-	$content .= "<p>Recomendamos a leitura do manual de instalação(link) antes de começar.</p>";
-	$content .= "<p>Nele estão cobertos todos os tipos de instalação possíveis para o ambiente.</p>";
-	$content .= "<p>Nas próximas etapas serão pedidas informações à respeito do servidor onde está sendo instalado o ambiente.</p>";
+	$content .= "<p>Leia atentamente as instruções contidas em cada passo da instalação.</p>";
+	$content .= "<p>Em caso de dúvida, consulte o nosso <a href=#>Guia de Instalação.</a></p>";
 	
-	$content .= "<br /><br />";
+	$content .= "<br />";
 	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<input class='form' type=hidden name=etapa value='1'/><br />";
@@ -105,20 +104,20 @@ if ($etapa == 0){
 	
 	$content_header = "Banco de Dados e Arquivo de Configuração <span class=etapa>Etapa 1 de 4</span>";
 
-	$content .= "<p>O TelEduc 4 utiliza um banco de dados principal para manter as configurações, dados dos cursos e dos usuáios, e</p>";
-	$content .= "<p>também um banco de dados para cada curso. O nome dos bancos de dados para os curso é composto da seguinte maneira:</p>";
-	$content .= "<p>BancoDeDadosCurso+Cod_Curso, por exemplo, TelEduc4Curso1 seria o banco de dados do curso 1.</p>";
+	$content .= "<p>O TelEduc utiliza as seguintes banco de dados:</p>";
+	$content .= "<p style='margin-top:10px'>&nbsp;&nbsp;<b>Banco Geral</b> que contém configurações e informações do ambiente.</p>";
+	$content .= "<p>&nbsp;&nbsp;<b>Banco do Curso X</b> que contém as informações do curso com o código X.</p>";
+	$content .= "<br />";
 
-	$content .= "<p>Para poder acessar os bancos de dados, é necessário que o ambiente grave estas configurações em um arquivo:</p>";
-	$content .= "<p>cursos/aplic/bibliotecas/teleduc.inc, que será criado a seguir. Certifique-se que as permissões desse arquivo</p>";
-	$content .= "<p>estão corretas antes de colocar o ambiente em produção.</p>";
+	$content .= "<p>As informações para acesso aos bancos de dados serão gravadas a seguir em:</p>";
+	$content .= "<pre>teleduc4/cursos/aplic/bibliotecas/teleduc.inc</pre>";
 	
 	$content .= "<br /><br />";
 	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<label class='form' for=dbname>Nome do Banco de Dados Principal</label>";
+	$content .= "<label class='form' for=dbname>Banco Geral</label>";
 	$content .= "<input class='form' size=25 type=text name=dbname value='".(isset($_SESSION['dbname']) ? $_SESSION['dbname'] : 'TelEduc4')."'/><br />";
-	$content .= "<label class='form' for=dbnamecurso>Prefixo dos Bancos de Dados dos Cursos</label>";
+	$content .= "<label class='form' for=dbnamecurso>Prefixo da Banco do Curso</label>";
 	$content .= "<input class='form' size=25 type=text name=dbnamecurso value='".(isset($_SESSION['dbnamecurso']) ? $_SESSION['dbnamecurso'] : 'TelEduc4Curso_')."'/><br />";
 	$content .= "<label class='form' for=dbuser>Usuario do MySQL</label>";
 	$content .= "<input class='form' size=25 type=text name=dbuser value='".(isset($_SESSION['dbuser']) ? $_SESSION['dbuser'] : 'usuario')."'/><br />";
@@ -152,9 +151,9 @@ if ($etapa == 0){
 		
 			$console .= "<p class=feedbackp>Não foi possível criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
-			$content .= "<p>Não foi possível criar o banco de dados principal. Verifique o nome de usuário e senha do banco de dados.</p>";
-			$content .= "<p>Em caso de instalação com banco de dados remoto, verifique se não há algum firewall impedindo a conexão,</p>";
-			$content .= "<p>e se foi dada a permissão correta para a conexão remota. O erro exibido pelo MySQL foi:</p>";
+			$content .= "<p>Não foi possível criar o banco de dados principal. </p><br /><p>Verifique o nome de usuário e senha do banco de dados.</p><br />";
+			$content .= "<p>Em caso de instalação com banco de dados remoto, verifique se não há algum firewall impedindo a conexão, ";
+			$content .= "e se foi dada a permissão correta para a conexão remota. </p><br /><p>O erro exibido pelo MySQL foi:</p>";
 			$content .= "<pre>".mysql_error()."</pre>";
 			
 			$content .= "<div class=formulario>";
@@ -208,22 +207,21 @@ if ($etapa == 0){
 
 	$content_header = "Servidor e Diretórios <span class=etapa>Etapa 2 de 4</span>";
 
-	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do teleduc,</p>";
-	$content .= "<p>que podem ser verificados no próprio endereço: http://nome-do-servidor/caminho/do/teleduc/instalacao</p>";
-	$content .= "<p>O TelEduc precisa de uma pasta para armazenar os arquivos dos usuários, certifique-se de</p>";
-	$content .= "<p>que o servidor web tem as permissões necessárias para escrever nessa pasta.</p>";
-	$content .= "<p>O caminho para o executável do sendmail é que permite que o TelEduc envie emails</p>";
-	$content .= "<p>para o correio externo dos usuários.</p>";
+	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do TelEduc,</p>";
+	$content .= "<p>que podem ser verificados dentro do navegador utilizando sua barra de endereços: </p><pre>http://nome-do-servidor/caminho/do/teleduc/instalacao</pre><br/>";
+	$content .= "<p>É necessário uma pasta para armazenar os arquivos dos usuários, certifique-se de";
+	$content .= " que o servidor web tem as permissões necessárias para escrever nessa pasta.</p><br />";
+	$content .= "<p>O caminho para o executável do sendmail é necessário para o envio de emails.</p>";
 
 	$content .= "<br /><br />";
 	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<label class='form' for=host>Servidor do TelEduc</label>";
+	$content .= "<label class='form' for=host>Nome do Servidor</label>";
 	$content .= "<input type=text size=25 class='form' name=host value='".$_SERVER['SERVER_NAME']."'/><br />";
 	$content .= "<label class='form' for=www>Caminho do TelEduc</label>";
 	$content .= "<input type=text size=25 class='form' name=www value='".str_replace("nova_instalacao/index.php", "", $_SERVER['PHP_SELF'])."'/><br />";
-	$content .= "<label class='form' for=arquivos>Pasta dos Arquivos</label>";
-	$content .= "<input type=text size=25 class='form' name=arquivos value='/home/arquivos'/><br />";
+	$content .= "<label class='form' for=arquivos>Arquivos de Usuário</label>";
+	$content .= "<input type=text size=25 class='form' name=arquivos value='/home/teleduc4/arquivos'/><br />";
 	$content .= "<label class='form' for=sendmail>Caminho do Sendmail</label>";
 	$content .= "<input type=text size=25 class='form' name=sendmail value='/usr/sbin/sendmail'/><br />";
 	$content .= "<input type=hidden name=etapa value='3'/><br />";
@@ -248,18 +246,17 @@ if ($etapa == 0){
 	
 	$console .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
-	$content .= "<p>A conta do Administrador do Ambiente (nome de usuário: admtele) será utilizada para gerenciar a abertura</p>";
-	$content .= "<p>de cursos e o ambiente em geral. O Administrador tem acesso irrestrito a todos</p>";
-	$content .= "<p>os cursos, pode inscrever e remover usuários do Ambiente entre outras funcionalidades.</p>";
+	$content .= "<p>O TelEduc utiliza o usuário <a>admtele</a> para acesso à administração do ambiente.</p>";
+	$content .= "<p>Preencha os campos abaixo com os dados do administrador do ambiente.</p>";
 
 	$content .= "<br /><br />";
 	$content .= "<div class=formulario>";
 	$content .= "<form method='POST' action='index.php'>";
-	$content .= "<label class='form' for=admtele_nome>Nome do Administrador do Ambiente</label>";
+	$content .= "<label class='form' for=admtele_nome>Nome</label>";
 	$content .= "<input type=text size=25 class='form' name=admtele_nome value='Nome Sobrenome'/><br />";
-	$content .= "<label class='form' for=admtele_email>E-Mail do Administrador do Ambiente</label>";
+	$content .= "<label class='form' for=admtele_email>E-Mail</label>";
 	$content .= "<input type=text size=25 class='form' name=admtele_email value='nome@email.com'/><br />";
-	$content .= "<label class='form' for=admtele_senha>Senha do Administrador do Ambiente</label>";
+	$content .= "<label class='form' for=admtele_senha>Senha</label>";
 	$content .= "<input type=password size=25 class='form' name=admtele_senha value='AA2.FEIabj1C6'/><br />";
 	$content .= "<input type=hidden name=etapa value='4'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
@@ -280,15 +277,20 @@ if ($etapa == 0){
 
 	RegistraDadosAdmtele($sock, $admtele_nome, $admtele_email, $admtele_senha);
 	
-	$console .= "<p class=feedbackp>As configurações do administrador do sistema (admtele) foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class=feedbackp>As dados do administrador do ambiente foram salvos. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	
 	$content_header = "Fim da Instalação <span class=etapa>Etapa 4 de 4</span>";
 	
-	$content .= "<br /><br />";
-	$content .= "<p>OK terminou, só falta gravar as coisas no cron</p>";
-	$content .= "<p>Dicas apache e php</p>";
-	$content .= "<p>botao pra entrar no teleduc e indicacoes pra apagar o nova_instalacao</p>";
+	$content .= "<a><p style='text-align: center'>O TelEduc foi instalado e está pronto para uso!</p></a><br />";
+	$content .= "<p>Recomendamos a remoção da pasta de instalação por questões de segurança.</p><br/>";
+	$content .= "<p>Habilite a notificação de novidades via email adicionando ao crontab:</p>";
+	$content .= "<pre style='overflow: scroll'>0 17 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=1
+0 9 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=2
+0 18 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=2</pre><br />";
+	
+	$content .= "<input type=submit value='Entrar' onClick=\"document.location='../'\" class='form'/><br />";
+
 
 }
 
