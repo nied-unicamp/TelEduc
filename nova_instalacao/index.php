@@ -55,12 +55,12 @@ if ($etapa == 0){
 		
 		$console .= "<p class=feedbackp>A diretiva register_globals está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
-		$content .= "<p>Para o funcionamento correto, o TelEduc4 necessita que a diretiva register_globals esteja ligada.</p>";
-		$content .= "<p>Para isso, edite o arquivo de configuração do php (/etc/php.ini normalmente) e mude para:</p>";
-		$content .= "<p>register_globals = On</p>";
+		$content .= "<p>A diretiva register_globals deveria estar ligada.</p><br />";
+		$content .= "<p>Para isso, edite o arquivo de configuração do PHP conforme a seguir:</p>";
+		$content .= "<pre>/etc/php.ini\n\nregister_globals = On</pre><br />";
 
-		$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, contate o seu host sobre</p>";
-		$content .= "<p>a possibilidade da alteração da diretiva register_globals.</p>";
+		$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, entre em 
+						contato com a sua hospedagem para pedir alteração da diretiva register_globals.</p><br/>";
 		
 		$content .= "<div class=formulario>";
 		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
@@ -82,12 +82,14 @@ if ($etapa == 0){
 		
 		$console .= "<p class=feedbackp>O módulo php-mysql não foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
 		
-		$content .= "<p>A instalação pode ser feita através da linha de comando:</p>";
+		$content .= "<p>O módulo php-mysql não foi encontrado.</p><br />";
 
-		$content .= "<p>yum install php-mysql # No caso do Fedora ou</p>";
-		$content .= "<p>apt-get install php5-mysql # No caso do Debian</p>";
+		$content .= "<p>A instalação desse módulo deve ser feita de acordo com a distribuição utilizada.</p> 
+					 <p>Nas distribuições mais populares, é possível utilizar os seguintes comandos: </p><br />";
 
-		$content .= "<p>Ou a ação equivalente na distribuição utilizada no servidor.</p>";
+		$content .= "<pre style='margin-bottom: 8px'># Fedora e CentOS\nyum install php-mysql</pre>";
+		$content .= "<pre># Debian e Ubuntu\napt-get install php5-mysql</pre><br/>";
+
 		
 		$content .= "<div class=formulario>";
 		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'><br />";
@@ -104,7 +106,7 @@ if ($etapa == 0){
 	
 	$content_header = "Banco de Dados e Arquivo de Configuração <span class=etapa>Etapa 1 de 4</span>";
 
-	$content .= "<p>O TelEduc utiliza as seguintes banco de dados:</p>";
+	$content .= "<p>O TelEduc utiliza os seguintes bancos de dados:</p>";
 	$content .= "<p style='margin-top:10px'>&nbsp;&nbsp;<b>Banco Geral</b> que contém configurações e informações do ambiente.</p>";
 	$content .= "<p>&nbsp;&nbsp;<b>Banco do Curso X</b> que contém as informações do curso com o código X.</p>";
 	$content .= "<br />";
@@ -117,7 +119,7 @@ if ($etapa == 0){
 	$content .= "<form method='POST' action='index.php'>";
 	$content .= "<label class='form' for=dbname>Banco Geral</label>";
 	$content .= "<input class='form' size=25 type=text name=dbname value='".(isset($_SESSION['dbname']) ? $_SESSION['dbname'] : 'TelEduc4')."'/><br />";
-	$content .= "<label class='form' for=dbnamecurso>Prefixo da Banco do Curso</label>";
+	$content .= "<label class='form' for=dbnamecurso>Prefixo do Banco do Curso</label>";
 	$content .= "<input class='form' size=25 type=text name=dbnamecurso value='".(isset($_SESSION['dbnamecurso']) ? $_SESSION['dbnamecurso'] : 'TelEduc4Curso_')."'/><br />";
 	$content .= "<label class='form' for=dbuser>Usuario do MySQL</label>";
 	$content .= "<input class='form' size=25 type=text name=dbuser value='".(isset($_SESSION['dbuser']) ? $_SESSION['dbuser'] : 'usuario')."'/><br />";
@@ -152,8 +154,8 @@ if ($etapa == 0){
 			$console .= "<p class=feedbackp>Não foi possível criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
 			$content .= "<p>Não foi possível criar o banco de dados principal. </p><br /><p>Verifique o nome de usuário e senha do banco de dados.</p><br />";
-			$content .= "<p>Em caso de instalação com banco de dados remoto, verifique se não há algum firewall impedindo a conexão, ";
-			$content .= "e se foi dada a permissão correta para a conexão remota. </p><br /><p>O erro exibido pelo MySQL foi:</p>";
+			$content .= "<p>Em caso de instalação em banco de dados remoto, verifique se não há algum firewall impedindo a conexão ";
+			$content .= "e se foi dada a permissão para a conexão remota. </p><br /><p>O erro exibido pelo MySQL foi:</p>";
 			$content .= "<pre>".mysql_error()."</pre>";
 			
 			$content .= "<div class=formulario>";
@@ -187,12 +189,11 @@ if ($etapa == 0){
 		
 			$console .= "<p class=feedbackp>Não foi possível criar o arquivo de configuração. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
-			$content .= "<p>Não foi possível criar o arquivo de configuração teleduc.inc <img src='../cursos/aplic/imgs/errado.png'></p>";
-			$content .= "<p>Corrija as permissões do diretório cursos/aplic/bibliotecas ou então crie manualmente</p>";
-			$content .= "<p>o arquivo teleduc.inc na pasta cursos/aplic/bibliotecas com o seguinte conteúdo:</p>";
+			$content .= "<p>O usuário não possui as permissões para criar o arquivo de configuração.</p><br/>";
+			$content .= "<p>Crie o arquivo <b>teleduc.inc</b> em <b>../cursos/aplic/bibliotecas/</b> com o conteúdo:</p>";
 			
 			$content .= "<div class=formulario>";
-			$content .= "<textarea cols='70' rows='15'>".str_replace(";",";\n",$conteudo)."</textarea>";
+			$content .= "<pre>".htmlentities(str_replace(";",";\n",$conteudo))."</pre><br />";
 			$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
 			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick='history.go(0)'>";
 			$content .= "</div>";

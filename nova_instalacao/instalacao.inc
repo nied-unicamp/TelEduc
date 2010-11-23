@@ -89,7 +89,9 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	
 	$fp = fopen('../cursos/aplic/bibliotecas/teleduc.inc', 'w');
 	
-	if (!fwrite($fp, $conf)){
+	if(!$fp){
+		return($conf);
+	} else if (!fwrite($fp, $conf)){
 		fclose($fp);
 		return($conf);
 	} else {

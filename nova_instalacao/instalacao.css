@@ -23,6 +23,7 @@ pre {
 	border:2px solid #888888;
 	margin-top: 5px;
 	padding:5px;
+	overflow: auto;
 }
 
 #logo {
