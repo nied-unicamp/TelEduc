@@ -11,10 +11,12 @@ session_start("instalacao_teleduc4");
 
 $console = "";
 $content = "";
-if (!isset($_POST['etapa'])){
-	$etapa = 0;
-} else {
+if (isset($_GET['etapa'])){
+	$etapa = $_GET['etapa'];
+} else if (isset($_POST['etapa'])){
 	$etapa = $_POST['etapa'];
+} else {
+	$etapa = 0;
 }
 
 /* Monta o console com as mensagens de acordo com as etapas concluidas */
@@ -240,6 +242,27 @@ if ($etapa == 0){
 	 Executar: Escolher pasta para arquivos (?), adivinhar host e caminho pela url.
 	 Configurar os demais diretorios, (rever necessidade de alguns deles). */
 
+	if (!TestaAnexoArquivos($arquivos) && $bypass_anexo != 1){
+			
+		$content_header = "Não foi possível continuar com a instalação.";
+	
+		$console .= "<p class=feedbackp>Não foi possível escrever na pasta de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+		
+		$content .= "<p>O servidor não tem permissão para escrever na pasta de arquivos de usuário.</p><br />";
+		$content .= "<p>Isso impedirá o ambiente de fazer o upload de arquivos.</p><br />";
+		$content .= "<p>Verifique se a pasta existe e se as permissões estão corretas: <pre>".$arquivos."</pre></p><br />";
+		
+		$content .= "<div class=formulario>";
+		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+		$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick=document.location='index.php?etapa=2'>";
+		$content .= "<input type='button' value='Pular Verificação' class='form' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+		$content .= "</div>";
+		include 'template_instalacao.php';
+		exit();
+	} else {
+		$console .= "<p class=feedbackp>É possível escrever na pasta de arquivos. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	}
+	
 	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
 	mysql_select_db($dbname, $sock);
 
@@ -247,7 +270,7 @@ if ($etapa == 0){
 	
 	$console .= "<p class=feedbackp>As configurações de diretorio foram salvas. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
-	$content .= "<p>O TelEduc utiliza o usuário <a>admtele</a> para acesso à administração do ambiente.</p>";
+	$content .= "<p>O TelEduc utiliza o usuário <b>admtele</b> para acesso à administração do ambiente.</p>";
 	$content .= "<p>Preencha os campos abaixo com os dados do administrador do ambiente.</p>";
 
 	$content .= "<br /><br />";
@@ -283,7 +306,7 @@ if ($etapa == 0){
 	
 	$content_header = "Fim da Instalação <span class=etapa>Etapa 4 de 4</span>";
 	
-	$content .= "<a><p style='text-align: center'>O TelEduc foi instalado e está pronto para uso!</p></a><br />";
+	$content .= "<b><p style='text-align: center; font-size: 20px;'>O TelEduc foi instalado e está pronto para uso!</p></b><br />";
 	$content .= "<p>Recomendamos a remoção da pasta de instalação por questões de segurança.</p><br/>";
 	$content .= "<p>Habilite a notificação de novidades via email adicionando ao crontab:</p>";
 	$content .= "<pre style='overflow: scroll'>0 17 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=1

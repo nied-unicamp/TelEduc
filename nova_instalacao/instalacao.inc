@@ -39,12 +39,22 @@ function CriaBasePrincipal($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
 }
 
 /* ************************************************************************
-   InicializaBD - Insere os dados do banco de dados principal
+   InicializaBD - Insere os dados no banco de dados principal
    Entrada: $sock - Conexão com o banco de dados principal
-   Saida: booleano
+   Saida: void
 */
 function InicializaBD($sock){
-	$arq = "base_geral.table";
+	InsereArqBD($sock, "base_geral.table");
+	InsereArqBD($sock, "base_textos.table");
+}
+
+/* ************************************************************************
+   InsereArqBD - Dado um arquivo de dump do mysql, insere-o no banco do sock, linha por linha
+   Entrada: $sock - Conexão com o banco de dados principal
+   			$arq - Arquivo com o dump de mysql
+   Saida: void
+*/
+function InsereArqBD($sock, $arq){
 	$handle = fopen ($arq, "r");
 	$conteudo = fread ($handle, filesize ($arq));
 	fclose ($handle);
@@ -57,7 +67,7 @@ function InicializaBD($sock){
 }
 
 /* ************************************************************************
-   CriaTelEducConf - Cria o teleduc.conf para guardar as informacoes do bd
+   CriaTelEducInc - Cria o teleduc.inc para guardar as informacoes do bd
    Entrada: $dbname - Nome do Banco
    			$dbnamecurso - Prefixo do Nome dos Bancos dos Cursos
    			$dbuser - Usuario
@@ -100,12 +110,21 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 	}
 }
 
-function LeTelEducInc(){
-	$arquivo = "../cursos/aplic/bibliotecas/teleduc.inc";
-	$fp = fopen($arquivo, "r");
-	$teleducinc = fread($fp, filesize($arquivo));
-	return $teleducinc;
+/* ************************************************************************
+   TestaAnexoArquivos - Tenta simular um upload na pasta, para evitar que reclamem que nao ta anexando.
+   Entrada: $arquivos - /home/arquivos/
+   Saida: true ou false
+*/
+function TestaAnexoArquivos($arquivos){
 	
+	$fp = fopen($arquivos.'/teste.txt', 'w');
+	$teste = "... testando pasta de arquivos. EOF";
+	
+	if($fp && fwrite($fp, $teste) && fclose($fp)){
+		return(true);
+	} else {
+		return(false);
+	}
 }
 
 /* ************************************************************************
