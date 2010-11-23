@@ -253,9 +253,9 @@ if ($etapa == 0){
 		$content .= "<p>Verifique se a pasta existe e se as permissões estão corretas: <pre>".$arquivos."</pre></p><br />";
 		
 		$content .= "<div class=formulario>";
-		$content .= "<input type='button' value='Voltar' class='form' onClick='history.go(-1)'>";
+		$content .= "<input type='button' value='Voltar' style='margin-left: 130px;' class='form' onClick='history.go(-1)'>";
 		$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick=document.location='index.php?etapa=2'>";
-		$content .= "<input type='button' value='Pular Verificação' class='form' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+		$content .= "<input type='button' value='Pular Verificação' class='formtn' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
 		$content .= "</div>";
 		include 'template_instalacao.php';
 		exit();
