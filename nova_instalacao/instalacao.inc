@@ -111,19 +111,42 @@ function CriaTelEducInc($dbname, $dbnamecurso, $dbuser, $dbpwd, $dbhost, $dbport
 }
 
 /* ************************************************************************
+   CriaLinkSimbolico - Cria link simbolico
+   Entrada: $origem - diret�rio de origem
+            $destino - caminho e nome do link
+   Saida: true - Se tudo ok, false - se ocorreu algum erro
+*/
+function CriaLinkSimbolico($origem,$destino)
+{
+  return(symlink($origem, $destino));
+}
+
+/* ************************************************************************
    TestaAnexoArquivos - Tenta simular um upload na pasta, para evitar que reclamem que nao ta anexando.
    Entrada: $arquivos - /home/arquivos/
-   Saida: true ou false
+   Saida: 0 - Anexou e linkou, sucesso.
+         -1 - Nao conseguiu anexar.
+         -2 - Nao conseguiu linkar.
 */
 function TestaAnexoArquivos($arquivos){
 	
 	$fp = fopen($arquivos.'/teste.txt', 'w');
 	$teste = "... testando pasta de arquivos. EOF";
 	
+	/* Anexa e depois faz link para a pasta diretorio/ */
 	if($fp && fwrite($fp, $teste) && fclose($fp)){
-		return(true);
+		if(is_link('../cursos/diretorio/123.txt')){
+			return(0); 
+		}
+		
+		if(symlink($arquivos.'/teste.txt', '../cursos/diretorio/123.txt')){
+			return(0);
+		} else {
+			return(-2);
+		}
+		
 	} else {
-		return(false);
+		return(-1);
 	}
 }
 
@@ -156,6 +179,8 @@ function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
    Saida: booleano
 */
 function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
+	
+	/* O que foi pego no formulario, caminho, host, pasta arquivos e sendmail */
 	$sql = "REPLACE Config values ('host', '".$host."')";
 	mysql_query($sql, $sock);
 	$sql = "REPLACE Diretorio values ('raiz_www', '".$www."')";
@@ -164,8 +189,16 @@ function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
 	mysql_query($sql, $sock);
 	$sql = "REPLACE Diretorio values ('sendmail', '".$sendmail."')";
 	mysql_query($sql, $sock);
+	
+	/* Somente as ferramentas fazem anexos, portanto a pasta diretorio pode ser fixa */
+	$sql = "REPLACE Diretorio values ('ArquivosWeb', '../../diretorio')";
+	mysql_query($sql, $sock);
+	
+	/* Nova versao: */
 	$sql = "REPLACE Config values ('versao', '4.2.2')";
 	mysql_query($sql, $sock);
+	
+	/* Formulario para abertura de cursos */
 	$sql = "REPLACE Config values ('curso_form', 'nao')";
 	mysql_query($sql, $sock);
 	$sql = "REPLACE Config values ('normas', ' ')";

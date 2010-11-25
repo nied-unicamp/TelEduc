@@ -25,7 +25,7 @@ if (isset($_GET['etapa'])){
 if ($etapa > 0){
 	session_start("instalacao_teleduc4");
 } else {
-	session_destroy;
+	//session_destroy;
 }
 
 /* Monta o console com as mensagens de acordo com as etapas concluidas */
@@ -148,12 +148,12 @@ if ($etapa == 0){
 } else if ($etapa == 2){
 	
 	/* Salva na sessao a informacao do banco de dados */
-	$_SESSION['dbname'] = $_POST['dbname'];
-	$_SESSION['dbnamecurso'] = $_POST['dbnamecurso'];
-	$_SESSION['dbuser']  = $_POST['dbuser'];
-	$_SESSION['dbpwd'] = $_POST['dbpwd'];
-	$_SESSION['dbhost'] = $_POST['dbhost'];
-	$_SESSION['dbport'] = $_POST['dbport'];
+	$_SESSION['dbname'] 		= (isset($_POST['dbname']) 		? $_POST['dbname'] 		: $_SESSION['dbname']);
+	$_SESSION['dbnamecurso'] 	= (isset($_POST['dbnamecurso']) ? $_POST['dbnamecurso'] : $_SESSION['dbnamecurso']);
+	$_SESSION['dbuser'] 		= (isset($_POST['dbuser']) 		? $_POST['dbuser'] 		: $_SESSION['dbuser']);
+	$_SESSION['dbpwd'] 			= (isset($_POST['dbpwd']) 		? $_POST['dbpwd'] 		: $_SESSION['dbpwd']);
+	$_SESSION['dbhost']			= (isset($_POST['dbhost']) 		? $_POST['dbhost'] 		: $_SESSION['dbhost']);
+	$_SESSION['dbport'] 		= (isset($_POST['dbport']) 		? $_POST['dbport'] 		: $_SESSION['dbport']);
 
 	if (!$sock = VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport)){
 
@@ -220,7 +220,7 @@ if ($etapa == 0){
 	$content_header = "Servidor e Diretórios <span class=etapa>Etapa 2 de 4</span>";
 
 	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do TelEduc,</p>";
-	$content .= "<p>que podem ser verificados dentro do navegador utilizando sua barra de endereços: </p><pre>http://nome-do-servidor/caminho/do/teleduc/instalacao</pre><br/>";
+	$content .= "<p>que podem ser verificados dentro do navegador utilizando sua barra de endereços: </p><pre>http://nome.do.servidor/caminho/do/teleduc/instalacao</pre><br/>";
 	$content .= "<p>É necessário uma pasta para armazenar os arquivos dos usuários, certifique-se de";
 	$content .= " que o servidor web tem as permissões necessárias para escrever nessa pasta.</p><br />";
 	$content .= "<p>O caminho para o executável do sendmail é necessário para o envio de emails.</p>";
@@ -245,31 +245,57 @@ if ($etapa == 0){
 
 	$content_header = "Administrador do Ambiente <span class=etapa>Etapa 3 de 4</span>";
 
+	$_SESSION['arquivos'] = (isset($_POST['arquivos']) ? $_POST['arquivos'] : $_SESSION['arquivos']);
 	/*
 	 2a Etapa:
 	 Pré-Req: 1a Etapa
 	 Executar: Escolher pasta para arquivos (?), adivinhar host e caminho pela url.
 	 Configurar os demais diretorios, (rever necessidade de alguns deles). */
+	
+	/* 
+	 $erroAnexar:
+	  0  Deu tudo certo. 
+	 -1  Nao conseguiu anexar.
+     -2  Nao conseguiu linkar. */
 
-	if (!TestaAnexoArquivos($arquivos) && $bypass_anexo != 1){
+	if (($erroAnexar = TestaAnexoArquivos($arquivos)) < 0 && $bypass_anexo != 1){
 			
 		$content_header = "Não foi possível continuar com a instalação.";
 	
-		$console .= "<p class=feedbackp>Não foi possível escrever na pasta de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
-		
-		$content .= "<p>O servidor não tem permissão para escrever na pasta de arquivos de usuário.</p><br />";
-		$content .= "<p>Isso impedirá o ambiente de fazer o upload de arquivos.</p><br />";
-		$content .= "<p>Verifique se a pasta existe e se as permissões estão corretas: <pre>".$arquivos."</pre></p><br />";
-		
-		$content .= "<div class=formulario>";
-		$content .= "<input type='button' value='Voltar' style='margin-left: 130px;' class='form' onClick='history.go(-1)'>";
-		$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick=document.location='index.php?etapa=2'>";
-		$content .= "<input type='button' value='Pular Verificação' class='formtn' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
-		$content .= "</div>";
-		include 'template_instalacao.php';
-		exit();
+		if ($erroAnexar == -1){
+			/* Nao conseguiu anexar. */
+			$console .= "<p class=feedbackp>Não foi possível escrever na pasta de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			
+			$content .= "<p>O servidor não tem permissão para escrever na pasta de arquivos de usuário.</p><br />";
+			$content .= "<p>Isso impedirá o ambiente de fazer o upload de arquivos.</p><br />";
+			$content .= "<p>Verifique se a pasta existe e se as permissões estão corretas: <pre>".$arquivos."</pre></p><br />";
+			
+			$content .= "<div class=formulario>";
+			$content .= "<input type='button' value='Voltar' style='margin-left: 130px;' class='form' onClick='history.go(-1)'>";
+			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick=document.location='index.php?etapa=3'>";
+			$content .= "<input type='button' value='Pular Verificação' class='formtn' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+			$content .= "</div>";
+			include 'template_instalacao.php';
+			exit();
+		} else {
+			/* Nao conseguiu linkar */
+			$console .= "<p class=feedbackp>Não foi possível fazer links para a pasta de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			
+			$content .= "<p>Não foi possível fazer links da pasta temporária para a de arquivos de usuário.</p><br />";
+			$content .= "<p>O upload de arquivos é feito para uma pasta não acessível pela web com o objetivo de proteger os arquivos de acessos não autorizados. Quando um usuário autenticado tenta acessar um dos aos anexos, é feito um link da pasta temporária para a pasta de arquivos.</p><br />";
+			$content .= "<p>Verifique se a pasta existe e se as permissões estão corretas: <pre>teleduc4/cursos/diretorio</pre></p><br />";
+			
+			$content .= "<div class=formulario>";
+			$content .= "<input type='button' value='Voltar' style='margin-left: 130px;' class='form' onClick='history.go(-1)'>";
+			$content .= "<input type='button' value='Tentar Novamente' class='formtn' onClick=document.location='index.php?etapa=3'>";
+			$content .= "<input type='button' value='Pular Verificação' class='formtn' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+			$content .= "</div>";
+			include 'template_instalacao.php';
+			exit();
+		}
 	} else {
 		$console .= "<p class=feedbackp>É possível escrever na pasta de arquivos. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+		$console .= "<p class=feedbackp>É possível fazer links para a pasta de arquivos. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	}
 	
 	$sock = mysql_connect($dbhost.":".$dbport, $dbuser, $dbpwd);
@@ -290,7 +316,7 @@ if ($etapa == 0){
 	$content .= "<label class='form' for=admtele_email>E-Mail</label>";
 	$content .= "<input type=text size=25 class='form' name=admtele_email value='nome@email.com'/><br />";
 	$content .= "<label class='form' for=admtele_senha>Senha</label>";
-	$content .= "<input type=password size=25 class='form' name=admtele_senha value='AA2.FEIabj1C6'/><br />";
+	$content .= "<input type=password size=25 class='form' name=admtele_senha value='admtele'/><br />";
 	$content .= "<input type=hidden name=etapa value='4'/><br />";
 	$content .= "<input type=submit value='Prosseguir' class='form'/><br />";
 	$content .= "</form>";
