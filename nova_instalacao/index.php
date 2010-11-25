@@ -7,7 +7,7 @@ include 'instalacao.inc';
  * etapas sera feito atraves de uma variavel e posts para a mesma
  * pagina. */
 
-session_start("instalacao_teleduc4");
+
 
 $console = "";
 $content = "";
@@ -17,6 +17,15 @@ if (isset($_GET['etapa'])){
 	$etapa = $_POST['etapa'];
 } else {
 	$etapa = 0;
+}
+
+/* Caso a instalação seja interrompida por fechar o browser ou algo
+ * do genero, destruimos a sessao para evitar que o cache atrapalhe.
+ */
+if ($etapa > 0){
+	session_start("instalacao_teleduc4");
+} else {
+	session_destroy;
 }
 
 /* Monta o console com as mensagens de acordo com as etapas concluidas */

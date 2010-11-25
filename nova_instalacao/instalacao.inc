@@ -158,12 +158,24 @@ function VerificaExistenciaBD($dbname, $dbuser, $dbpwd, $dbhost, $dbport){
 function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
 	$sql = "REPLACE Config values ('host', '".$host."')";
 	mysql_query($sql, $sock);
-	$sql2 = "REPLACE Diretorio values ('raiz_www', '".$www."')";
-	mysql_query($sql2, $sock);
-	$sql3 = "REPLACE Diretorio values ('Arquivos', '".$arquivos."')";
-	mysql_query($sql3, $sock);
-	$sql4 = "REPLACE Diretorio values ('sendmail', '".$sendmail."')";
-	mysql_query($sql4, $sock);
+	$sql = "REPLACE Diretorio values ('raiz_www', '".$www."')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Diretorio values ('Arquivos', '".$arquivos."')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Diretorio values ('sendmail', '".$sendmail."')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Config values ('versao', '4.2.2')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Config values ('curso_form', 'nao')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Config values ('normas', ' ')";
+	mysql_query($sql, $sock);
+	
+	/* Resquicios da instalacao antiga, mantendo por compatibilidade, apenas. */
+	$sql = "REPLACE Config values ('extrator', 'nao')";
+	mysql_query($sql, $sock);
+	$sql = "REPLACE Config values ('listarext', 'sim')";
+	mysql_query($sql, $sock);
 }
 
 /* ************************************************************************
