@@ -66,7 +66,7 @@ $sock = Conectar($cod_curso);
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  /* Funções JavaScript */
+  /* Funï¿½ï¿½es JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
 //  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
@@ -143,7 +143,26 @@ $sock = Conectar($cod_curso);
   echo("        document.form_nova_agenda.novo_titulo.value = '';\n");
   echo("        document.getElementById(\"nome\").focus();\n");
   echo("      }\n");
-
+  
+  echo("      function VerificaNovoTitulo(textbox, aspas) {\n");
+  echo("        var texto=textbox.value;\n");
+  echo("        if (texto==''){\n");
+  echo("          // se nome for vazio, nao pode\n");
+                  /* 15 - O titulo nao pode ser vazio. */
+  echo("          alert(\"".RetornaFraseDaLista($lista_frases,15)."\");\n");
+  echo("          textbox.focus();\n");
+  echo("          return false;\n");
+  echo("        }\n");
+  echo("        // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0\n");
+  echo("        else if ((texto.indexOf(\"\\\\\")>=0 || texto.indexOf(\"\\\"\")>=0 || texto.indexOf(\"'\")>=0 || texto.indexOf(\">\")>=0 || texto.indexOf(\"<\")>=0)&&(!aspas)) {\n");
+                /* 16 - O tï¿½tulo nï¿½o pode conter \\. */
+  echo("           alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases,16)))."\");\n");
+  echo("          textbox.value='';\n");
+  echo("          textbox.focus();\n");
+  echo("          return false;\n");
+  echo("        }\n");
+  echo("        return true;\n");
+  echo("      }\n\n");	
   echo("    </script>\n\n");
 
   include("../menu_principal.php");
@@ -167,8 +186,10 @@ $sock = Conectar($cod_curso);
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");	
+  
   if($usr_formador)
   {
+  	/* 6 - Nova Agenda*/
 		echo("					<li><span OnClick='NovaAgenda();'>".RetornaFraseDaLista($lista_frases, 6)."</span></li>");
     /* 3 - Editar Agenda*/
     echo("              	<li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
