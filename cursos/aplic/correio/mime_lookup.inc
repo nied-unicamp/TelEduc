@@ -39,9 +39,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /* where's your mime.types file? */
 
-$sock = Conectar("");
-$mt_f = RetornaDiretorio($sock, 'mimetypes');
-Desconectar($sock);
+$mt_f = 'mime.types';
 
 /* build an array keyed on the file ext */
 
