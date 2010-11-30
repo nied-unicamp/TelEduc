@@ -245,23 +245,23 @@
   echo("	}\n");
   echo("}\n");
   
-  echo("	function NumCerta(){\n");
-  //echo("		alert('NumCerta');");
-  echo("		var num=0;\n");
-  echo("		var numcorreta=document.getElementsByName('correta[ ]');\n");
-  echo("		for(var i=1;i<=numcorreta.length;i++){\n");
-  echo("			num++;");
-  echo("		}\n");
-  //echo("		alert(num);");
-  echo("		if(num>=1){\n");
-  echo("			tr=document.getElementsByName('Alt[ ]');\n");
+  echo("	function NumCerta(option_value){\n");
+  echo("		if(option_value==1) {\n");	/* Se a opcao for outra alternativa correta */
+  echo("			var num=0;\n");
+  echo("			var numcorreta=document.getElementsByName('correta[ ]');\n");
+  echo("			for(var i=1;i<=numcorreta.length;i++){\n");
+  echo("				num++;");
+  echo("			}\n");
+  echo("			if(num>=1){\n");
+  echo("				tr=document.getElementsByName('Alt[ ]');\n");
  //frase 207 Ja existe uma alternativa correta. Deseja continuar?
- echo("				if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
- echo("					CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("				}\n");
- echo("				else{\n");
- echo("				ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("				}\n");
+ echo("					if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
+ echo("						CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("					}\n");
+ echo("					else{\n");
+ echo("						ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("					}\n");
+ echo(" 			}\n");
  echo(" 		}\n");
  echo("		}\n");
     	
@@ -668,6 +668,9 @@
   echo("      var select,opt1,opt2,txt;\n");
   echo("      select = document.createElement(\"select\");\n");
   echo("      select.setAttribute(\"id\",'select_'+cod);\n");
+  if($tp_questao=='O') {
+  	echo("	  select.setAttribute(\"onchange\",\"NumCerta(this.value);\");\n");
+  }
   //echo("      select.setAttribute(\"class\",\"input\");\n");
   echo("	  select.className=\"input\";");
   echo("      opt1 = document.createElement(\"option\");\n");
@@ -684,8 +687,6 @@
   echo("      {\n");
   echo("        opt1.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
-  if($tp_questao=='O')
-  		echo("        opt2.setAttribute(\"Onclick\",\"NumCerta();\");\n");
   echo("      select.appendChild(opt1);\n");
   echo("      select.appendChild(opt2);\n");
   echo("      return select;\n");
