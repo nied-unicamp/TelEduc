@@ -519,7 +519,7 @@ if($visualizar == "Q")
 	echo("    function Filtrar(topico,tp_questao,dificuldade,stringNiveisQuestoes){\n");
 	echo("      AplicaFiltro(topico,tp_questao,dificuldade,stringNiveisQuestoes);\n");
 	echo("      AtualizaEstadoPaginacao(1);\n");
-	/*216- Quest›es Filtradas*/
+	/*216- Questï¿½es Filtradas*/
 	echo("      mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 216)."\",true);\n");
 	echo("    }\n\n");
 }
@@ -758,6 +758,7 @@ if ($tela_formador)
 			*/
 			$dadosQuestao = RetornaQuestao($sock,$linha_item['cod_questao']);
 			$stringNiveisQuestoes =  $stringNiveisQuestoes.$dadosQuestao['nivel'];
+			$aplicada = QuestaoAplicada($sock, $linha_item["cod_questao"]);	/* Verifica se a questao foi aplicada. */
 			
 			if($numQuestoesPag == $questoesPorPag){
 				$numPagina++;
@@ -786,21 +787,32 @@ if ($tela_formador)
 			$compartilhamento = RetornaFraseDaLista($lista_frases, 8);
 
 			if($cod_usuario == $linha_item['cod_usuario'])
-			$compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+			$link_compartilhamento = "<span id=\"comp_".$linha_item['cod_questao']."\" class=\"link\" onclick=\"js_cod_item='".$linha_item['cod_questao']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 			if($cod_usuario == $linha_item['cod_usuario'] || $linha_item['tipo_compartilhamento'] == "F"){
 				echo("                  <tr class=\"altColor".($cod%2)."\" id=\"trQuestao_".$linha_item['cod_questao']."\" style=\"".$style."\">\n");
 				echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"cod_questao[]\" id=\"itm_".$linha_item['cod_questao']."\" onclick=\"ControlaSelecao();\" value=\"".$linha_item['cod_questao']."\" /></td>\n");
 
 				if($visualizar == "Q")
-				echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."\">".$titulo."</a></td>\n");
+					/* Se a visualizacao for de questoes, nao passa o parametro lixeira pelo post. */
+					$lixeira = "";
 				else
-				echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."&lixeira=ok\">".$titulo."</a></td>\n");
+					/* Caso contrario, passa como parametro pelo post. */
+					$lixeira = "&lixeira=ok";
+
+				if($aplicada) {	//Se a questao foi aplicada, coloca aviso na frente do titulo e tira o link de compartilhamento
+					$texto_aplicada=RetornaFraseDaLista($lista_frases, 228);	/* Frase #228 - (Questao aplicada) */
+					$link_compartilhamento="<span id=\"comp_".$linha_item['cod_questao']."\">".$compartilhamento."</span>";
+				} else {
+					$texto_aplicada = "";
+				}
+					
+				echo("                    <td align=left>".$icone."<a href=\"editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$linha_item['cod_questao']."&tp_questao=".$linha_item['tp_questao']."".$lixeira."\">".$titulo."&nbsp;".$texto_aplicada."</a></td>\n");
 				echo("                    <td>".$data."</td>\n");
 				echo("                    <td id=\"topico_".$linha_item['cod_questao']."\">".$topico."</td>\n");
 				if($visualizar == "Q")
 				{
 					echo("                    <td id=\"tipo_".$linha_item['cod_questao']."\">".$tipo."</td>\n");
-					echo("                    <td>".$compartilhamento."</td>\n");
+					echo("                    <td>".$link_compartilhamento."</td>\n");
 				}
 				echo("                  </tr>\n");
 			}

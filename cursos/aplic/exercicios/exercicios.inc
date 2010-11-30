@@ -2965,5 +2965,41 @@ function RetornaNotaFinal($sock, $cod_curso, $cod_resolucao){
   	return $soma;
 }
 
+/**
+ * Funcao que verifica se uma dada questao esta associada a um exercicio aplicado
+ * @param $cod_questao codigo da questao
+ * @return boolean true se a questao esta associada a um exercicio aplicado, false caso contrario.
+ */
+function QuestaoAplicada($sock, $cod_questao) {
+	$lista_exercicios_aplicados = RetornaExerciciosAplicados($sock);	/* Pega a lista de exercicios aplicados. */
+
+	foreach ($lista_exercicios_aplicados as $cod => $linha_item_exercicio) {	/* Itera na lista de exercicios aplicados */
+		/* Pega a lista de questoes de um exercicio*/
+		$lista_questao = RetornaQuestoesExercicio($sock, $linha_item_exercicio["cod_exercicio"]);
+		foreach ($lista_questao as $cod => $linha_item_questao) {	/* Itera na lista de questoes do exercicio */
+			if($linha_item_questao["cod_questao"]==$cod_questao) {	/* Se o codigo da questao for o mesmo passado no parametro */
+				return true;										/* ela esta aplicada. */
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ * Funcao que busca no BD o nome do topico de uma questao.
+ * @param $sock Base do curso
+ * @param $cod_questao codigo da questao que se quer o nome do topico
+ * @return nome do topico
+ */
+function RetornaTopicoQuestao($sock,$cod_questao) {
+	/* Pega o codigo do topico da questao. */
+	$query="select cod_topico from Exercicios_questao where cod_questao=".VerificaNumeroQuery($cod_questao);
+	$res = Enviar($sock, $query);
+	$linha = RetornaLinha($res);
+
+	$topico = RetornaNomeTopico($sock,$linha['cod_topico']);	/* Pega o nome do topico. */
+	
+	return ($topico);
+}
 
 ?>
