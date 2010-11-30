@@ -454,8 +454,25 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (geral)*/
   echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
-  echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">Cadastrar por Arquivo"./*RetornaFraseDaLista($lista_frases_geral,2).*/"</a></li>\n");
-  echo("                  <li><a href=\"inscrever3.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">Usu&aacute;rios j&aacute; cadastrados"./*RetornaFraseDaLista($lista_frases_geral,2).*/"</a></li>\n");
+    /* 82 - Cadastrar por Arquivo*/
+  
+  echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,82)."</a></li>\n");
+    /* Botão de Gerenciamento de usuário*/
+  if ($tipo_usuario=="F")
+  {
+    /* 87 - Gerenciamento de formadores */
+	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,87)."</a></li>\n");
+  }
+  else if ($tipo_usuario == 'z')
+  {
+    // 85 - Gerenciamento de Convidados
+	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
+  }
+  else if ($tipo_usuario == 'A')
+  {
+    /* 86 - Gerenciamento de Alunos */
+	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,86)."</a></li>\n");
+  }
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

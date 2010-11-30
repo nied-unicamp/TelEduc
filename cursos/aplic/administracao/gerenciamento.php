@@ -72,8 +72,6 @@
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
    
-
-
   switch($acao){
     case 'N':
       $cod_pagina_ajuda = 8;

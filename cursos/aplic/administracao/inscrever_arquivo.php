@@ -296,8 +296,6 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (geral)*/
   echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
-  echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">Cadastrar por Arquivo"./*RetornaFraseDaLista($lista_frases_geral,2).*/"</a></li>\n");
-  echo("                  <li><a href=\"inscrever3.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">Usu&aacute;rios j&aacute; cadastrados"./*RetornaFraseDaLista($lista_frases_geral,2).*/"</a></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -305,8 +303,8 @@
   echo("              <td>\n");
   echo("                <table  cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head alLeft\">\n");
-  /* 58 - Preencha os dados abaixo para cadastr�-los. */
-  echo("                    <td colspan=\"4\">Escolha um arquivo CSV com registros dos usu&aacute;rios a serem inscritos no formato \"nome, email, login\" :</td>\n");
+  /* 84 - Escolha um arquivo CSV com registros dos usuários a serem inscritos no formato "nome, email, login" : */
+  echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases_geral,84)."</td>\n");
   echo("                  <tr>\n");
   echo("                  <tr class=\"alLeft\">\n");
   echo("                    <td>\n");

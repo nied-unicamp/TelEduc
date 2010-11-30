@@ -66,7 +66,6 @@
     $cod_pagina_ajuda = 7;
     break;
   }
-
   include("../topo_tela.php");
   include("../menu_principal.php");
 
