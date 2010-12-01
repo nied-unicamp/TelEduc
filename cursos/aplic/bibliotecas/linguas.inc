@@ -150,7 +150,7 @@ function RetornaFraseDaLista($textos, $cod_texto)
 	if(ConverteAspas2Html($textos[$cod_texto]) != "")
   		return(ConverteAspas2Html($textos[$cod_texto]));
   	else{
-  		switch($_SESSION[cod_lingua_s]){
+  		switch($_SESSION['cod_lingua_s']){
   			case 1://Portuguï¿½s
   				return("Falta o texto");
   			case 2://Espanhol
@@ -275,7 +275,7 @@ function MudancaDeLingua($sock, $cod_lingua)
       2 = "es"
       3 = "en"
       4 = "pt"
-   Por padr‹o, o codigo da lingua eh "pt".
+   Por padrï¿½o, o codigo da lingua eh "pt".
    Entrada: $cod_lingua - codigo da lingua a ser consultada
    Saida: string
 */
