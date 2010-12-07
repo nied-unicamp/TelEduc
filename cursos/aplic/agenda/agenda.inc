@@ -145,7 +145,7 @@ function RetornaItensHistorico($sock)
 */
 function IniciaCriacao ($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titulo, $texto)
 {
-  if(trim($diretorio_temp) == "" || $cod_curso == "" )
+  if(trim($diretorio_temp) == "" || $cod_curso == "")
     return -1; //tah certo isso?!
 
 
@@ -753,21 +753,21 @@ function VerificaTexto($texto){
 /* *********************************************************************
    VerificaAnexo - verifica se nome do anexo aprenseta acento ou chars ruins.
    Entrada: $string - com o nome do anexo a ser verificado
-   Saida: 1 - nome do anexo est‡ ok!
+   Saida: 1 - nome do anexo estï¿½ ok!
    		  0 - nome do anexo apresenta acento ou chars ruins.
 */
 function VerificaAnexo($str_anexo)
 {
 	$string = utf8_decode($str_anexo);
 	// Palavras acentuadas
-	$bad_chars = "ÁáÉéÍíÓóÚú";
-	$bad_chars.= "ÃãÕõ";
-	$bad_chars.= "ÀàÈèÌìÒòÙù";
-	$bad_chars.= "ÄäËëÏïÖöÜü";
-	$bad_chars.= "ÂâÊêÎîÔôÛû";
+	$bad_chars = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	$bad_chars.= "ï¿½ï¿½ï¿½ï¿½";
+	$bad_chars.= "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	$bad_chars.= "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	$bad_chars.= "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 
 	// Caracteres estranhos para nome de um arquivo anexo
-	$bad_chars.= "÷`!@#$%*()+={}[]\\\"';:?/,<>";
+	$bad_chars.= "ï¿½`!@#$%*()+={}[]\\\"';:?/,<>";
 	$str_res = strpbrk($string, $bad_chars);
 
 	// Se apresentar algum char de $bad_chars, str_res != ""
@@ -891,9 +891,10 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario,$origem){
   $data = time();
 
   $sock=Conectar($cod_curso);
-  
+  //Retorna os dados da agenda - Array: cod_item,cod_usuario,  titulo, texto, situacao,
+  //data, data_ativo, data_inativo, status, inicio_edicao.
   $linha=RetornaAgenda($sock, $cod_item);
-
+  //Retorna a ultima ocorrencia do historico de um item dado - cod_item, cod_usuario, data, acao	
   $linha_historico=RetornaUltimaPosicaoHistorico($sock, $cod_item);
 
   if (($linha['status']=="E")&&($cod_usuario !=$linha_historico['cod_usuario'])){

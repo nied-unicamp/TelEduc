@@ -83,9 +83,7 @@ function EdicaoTexto(codigo, id, valor){
 }
 
 var controle=0;
-
 function EdicaoCampo(id, tag, valor){
-
   if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value!="")&&(VerificaNota(tag,document.getElementById(tag+'_'+id+'_text').value))){
     conteudo = document.getElementById(tag+'_'+id+'_text').value;
     xajax_EditarCampo(cod_curso, conteudo, cod_usuario, ferramenta, cod_atividade, cod_avaliacao, tag);
@@ -95,22 +93,30 @@ function EdicaoCampo(id, tag, valor){
       alert(lista_frases.msg15);
 	
     document.getElementById(tag+'_'+id).innerHTML=conteudo;
-    document.getElementById(tag+'_'+id).className='linkTexto';
     
-    if(navigator.appName.match("Opera")){
+
+  		document.getElementById(tag+'_'+id).className='';
+
+    
+  /*if(navigator.appName.match("Opera")){
       document.getElementById(tag+'_'+id).onclick = AlteraCampo(tag,id);
     }else{
       document.getElementById(tag+'_'+id).onclick = function(){ AlteraCampo(tag,id); };
-    }
-    document.getElementById(tag+'_'+id)
+    }*/
+    
+    document.getElementById(tag+'_'+id);
     //Cancela Edição
-    if (!cancelarTodos)
+    if (!cancelarTodos){
       xajax_AcabaEdicaoDinamic(cod_curso, cod_avaliacao, cod_usuario, 0);
+  	}
   }
   editaTitulo=0;
   cancelarElemento=null;
 }
 
+//Chama a Funcao AbreEdicao para saber aonde tem que alterar no BD
+//E abre o campo para ser editado.
+//cria os links Ok E Cancelar
 function AlteraCampo(tag,id){
   if (editaTitulo==0){
     id_aux = id;
@@ -125,8 +131,10 @@ function AlteraCampo(tag,id){
 
     createInput = document.createElement('input');
     document.getElementById(tag+'_'+id).innerHTML='';
-    document.getElementById(tag+'_'+id).onclick=function(){ };
+    //document.getElementById(tag+'_'+id).onclick=function(){ };
+    document.getElementById(tag+'_'+id).setAttribute('onclick', '');
 
+    //cria o campo para digitar o campo
     createInput.setAttribute('type', 'text');
     createInput.setAttribute('style', 'border: 2px solid #9bc');
     createInput.setAttribute('id', tag+'_'+id+'_text');

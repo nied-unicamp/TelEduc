@@ -414,32 +414,36 @@ echo("      function TestaDatas()\n");
     echo("      }\n\n");
 
     echo("      var controle=0;\n\n");
-
+	// recebe o id, o id do elemento ex: tit_id, e o tipo: ok ou canc
     echo("      function EdicaoTitulo(codigo, id, valor){\n");
     echo("        var novoNome = document.getElementById(id+'_text').value\n");
-    echo("        if ((valor=='ok')&&(document.getElementById(id+'_text').value!=\"\")){\n");
+    
+    echo("        if ((valor=='ok')&&(document.getElementById(id+'_text').value!='')){\n");
     echo("          if( !(novoNome.indexOf(\"\\\\\")>=0 || novoNome.indexOf(\"\\\"\")>=0 || novoNome.indexOf(\"'\")>=0 || novoNome.indexOf(\">\")>=0 || novoNome.indexOf(\"<\")>=0) ) {\n");
-//     echo("          conteudo = document.getElementById(id+'_text').value;\n");
+   
+ //   echo("          conteudo = document.getElementById(id+'_text').value;\n");
     echo("            xajax_EditarTitulo('".$tabela."', ".$cod_curso.", codigo, novoNome, ".$cod_usuario.", '".RetornaFraseDaLista($lista_frases,136)."');\n");
+    echo("				document.getElementById(id+'_text').value=novoNome;");
     echo("          }else{\n");
-    /* 77 - O titulo do item nao pode conter \\\", \\\', < ou >. */
+    // 77 - O titulo do item nao pode conter \\\", \\\', < ou >. 
     echo("            alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases,77)))."\");\n");
-    echo("            document.getElementById(id+'_text').value = conteudo\n");
+    echo("            document.getElementById(id+'_text').value = novoNome\n");
     echo("            document.getElementById(id+'_text').focus();\n");
     echo("            return false;\n");
     echo("          }\n");
+    
     echo("        }else{\n");
-    /* 36 - O titulo nao pode ser vazio. */
-    echo("          if ((valor=='ok')&&(document.getElementById(id+'_text').value==\"\"))\n");
+    /* 76 - O titulo nao pode ser vazio. */
+    echo("          if ((valor=='ok')&&(document.getElementById(id+'_text').value==''))	\n");
     echo("            alert('".RetornaFraseDaLista($lista_frases,76)."');\n");
 
     echo("          document.getElementById(id).innerHTML=conteudo;\n");
-
-    echo("          if(navigator.appName.match(\"Opera\")){\n");
-    echo("            document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
-    echo("          }else{\n");
-    echo("            document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };\n");
-    echo("          }\n\n");
+	
+//    echo("          if(navigator.appName.match('Opera')){\n");
+//    echo("            document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
+//    echo("          }else{\n");
+//    echo("            document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };\n");
+//    echo("          }\n\n");
 
     echo("          //Cancela Edição\n");
     echo("          if (!cancelarTodos)\n");
@@ -472,13 +476,17 @@ echo("      function TestaDatas()\n");
     echo("        var id_aux = id;\n");
     echo("        if (editaTitulo==0){\n");
     echo("          CancelaTodos();\n");
+    
     echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
+    
     echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
-    echo("          document.getElementById('tr_'+id).className=\"\";\n");
-    echo("          document.getElementById('tit_'+id).innerHTML='';\n");
-
-    echo("          createInput = document.createElement('input');\n");    
-    echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
+    echo("          document.getElementById('tr_'+id).className='';\n");
+	echo("          document.getElementById('tit_'+id).className='';\n");
+	
+    echo("          createInput = document.createElement('input');\n");   
+    echo("          document.getElementById('tit_'+id).innerHTML='';\n"); 
+ //   echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
+    //echo("			document.getElementById('renomear_'+id).setAttribute('onclick', '');\n");
 
     echo("          createInput.setAttribute('type', 'text');\n");
     echo("          createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
@@ -508,7 +516,7 @@ echo("      function TestaDatas()\n");
     echo("          espaco = document.createElement('span');\n");
     echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
     echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
-
+    
     echo("          createSpan = document.createElement('span');\n");
     echo("          createSpan.className='link';\n");
     echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
@@ -516,6 +524,11 @@ echo("      function TestaDatas()\n");
     echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,2)."';\n");
     echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
 
+    echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+    echo("          espaco = document.createElement('span');\n");
+    echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+    echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
+ 
     echo("          startList();\n");
     echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
     echo("          document.getElementById('tit_'+id+'_text').select();\n");
@@ -1160,40 +1173,44 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
 
   $compartilhamento="<span id=\"comp_".$linha_item['cod_item']."\" class=\"link\" onclick=\"js_cod_pagina=2;js_cod_item='".$linha_item['cod_item']."';AtualizaComp('".$linha_item['tipo_compartilhamento']."');MostraLayer(cod_comp,140);\">".$compartilhamento."</span>";
 
-  echo("                  <tr id=\"tr_".$linha_item['cod_item']."\">\n");
-  echo("                    <td class=\"itens\">\n");
+	$titulo=$linha_item['titulo'];
 
-  $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
-
-
-  echo($titulo);
-
+	
   if($eformador) {
-    echo("                    <td align=\"left\" width=\"19%\" valign=\"top\" class=\"botao2\">\n");
-    echo("                      <ul>\n");
-    /* 146 - Renomear titulo */
-    echo("                        <li><span onclick=\"AlteraTitulo(".$linha_item['cod_item'].")\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span></li>\n");
-    /* 120 - Editar texto */
-    echo("                        <li><span onclick=\"AlteraTexto(".$linha_item['cod_item'].")\">".RetornaFraseDaLista($lista_frases,120)."</span></li>\n");
-    /* 121 - Limpar texto */
-    echo ("                       <li><span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 121)."</span></li>\n");
-    /* 25 - Mover (gen) */
-   // echo("                        <li><span onclick=\"js_tipo_item='item';MostraLayer(cod_mover,0);return(false);\">".RetornaFraseDaLista($lista_frases_geral,25)."</span></li>\n");
-    /* 1 - Apagar (gen) */
-   // echo("                        <li><span onclick=\"ApagarMaterial();\">".RetornaFraseDaLista($lista_frases_geral,1)."</span></li>\n");
-    echo("                      </ul>\n");
-    echo("                    </td>\n");
+	$titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
+	/* 146 - Renomear titulo */
+	$renomear="<span onclick=\"AlteraTitulo(".$linha_item['cod_item'].")\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista($lista_frases,146)."</span>";
+  	/* 120 - Editar texto */
+	$editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].")\">".RetornaFraseDaLista($lista_frases,120)."</span>";
+	/* 121 - Limpar texto */
+	$limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 121)."</span>";
+  }
+	
+  echo("                  <tr id='tr_".$linha_item['cod_item']."'>\n");
+  echo("                    <td class=\"itens\">".$titulo."</td>\n");
+  
+  if($eformador) {	
+  	
+      echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+      echo("                      <ul>\n");
+      echo("                        <li>".$renomear."</li>\n");
+      echo("                        <li>".$editar."</li>\n");
+      echo("                        <li>".$limpar."</li>\n");
+      echo("                      </ul>\n");
+      echo("                    </td>\n");
+    
   }
   
   echo("                    <td align=\"center\">\n");
   echo("                      <span id=data_".$linha_item['cod_item'].">".UnixTime2DataHora($linha_item['data'])."</span>\n");
-  echo("                    </td>\n");
 
+  echo("                    </td>\n");
+  
   if($eformador){
     echo("                    <td align=\"center\">".$compartilhamento."</td>\n");
   }
 
-  echo("                  </tr>\n");
+  echo("                   </tr>\n");
   if (($eformador) || ($linha_item['texto']!=""))
   {
     echo("                  <tr class=\"head\">\n");

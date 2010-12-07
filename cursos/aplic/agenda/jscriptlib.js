@@ -23,6 +23,8 @@ var valor_radios = new Array();
 xajax_RetornaFraseDinamic('lista_frases');
 xajax_RetornaFraseGeralDinamic('lista_frases_geral');
 
+
+
 if (isNav)
 {
   document.captureEvents(Event.MOUSEMOVE);
@@ -153,16 +155,19 @@ function EdicaoTexto(codigo, id, valor){
 var controle=0;
 
 function EdicaoTitulo(codigo, id, valor){
-
-  if ((valor=='ok')&&(document.getElementById(id+'_text').value!="")){
-    conteudo = document.getElementById(id+'_text').value;
-    xajax_EditarTitulo(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg103);
+	//se o título não é vazio
+  if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
+    novoconteudo = document.getElementById(id+'_text').value;
+    //Edita o título do item dado, dinâmicamente
+    xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
+    
+    //else - se o título for vazio.
   }else{
     /* 15 - O titulo nao pode ser vazio. */
-    if ((valor=='ok')&&(document.getElementById(id+'_text').value==""))	
+    if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
       alert(lista_frases.msg15);
 	
-    document.getElementById(id).innerHTML=conteudo;
+    document.getElementById(id).innerHTML=novoconteudo;
     
     if(navigator.appName.match("Opera")){
       document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);
@@ -192,8 +197,10 @@ function AlteraTitulo(id){
 
     createInput = document.createElement('input');
     document.getElementById('tit_'+id).innerHTML='';
-    document.getElementById('renomear_'+id).onclick=function(){ };
-
+    //document.getElementById('renomear_'+id).onclick=function (){ };
+    document.getElementById('renomear_'+id).setAttribute('onclick', '');
+    
+    //cria o Input para o Título
     createInput.setAttribute('type', 'text');
     createInput.setAttribute('style', 'border: 2px solid #9bc');
     createInput.setAttribute('id', 'tit_'+id+'_text');
@@ -202,7 +209,7 @@ function AlteraTitulo(id){
     } else if (createInput.attachEvent){ //IE
       createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
     }
-
+    
     document.getElementById('tit_'+id).appendChild(createInput);
     xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');
 
@@ -212,6 +219,7 @@ function AlteraTitulo(id){
     espaco.innerHTML='&nbsp;&nbsp;'
     document.getElementById('tit_'+id).appendChild(espaco);
 
+    //cria o elemento Ok e add na pagina;
     createSpan = document.createElement('span');
     createSpan.className='link';
     createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
@@ -224,6 +232,7 @@ function AlteraTitulo(id){
     espaco.innerHTML='&nbsp;&nbsp;'
     document.getElementById('tit_'+id).appendChild(espaco);
 
+    //cria o elemento 'cancela' e add na pag;
     createSpan = document.createElement('span');
     createSpan.className='link';
     createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };

@@ -54,7 +54,7 @@
   else
     $cod_pagina_ajuda=3;
   
-  
+
   include("../topo_tela.php");
   
   $feedbackObject =  new FeedbackObject($lista_frases);

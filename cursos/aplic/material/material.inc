@@ -2388,12 +2388,12 @@ function EditarTitulo ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario,
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
   $objResponse->addAssign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
-  $objResponse->addAssign("tit_".$cod_item, "className", "linkTexto");
-  $objResponse->addEvent("tit_".$cod_item, "onClick", "AlteraTitulo('".$cod_item."');");
+  //$objResponse->addAssign("tit_".$cod_item, "className", "linkTexto");
+ // $objResponse->addEvent("tit_".$cod_item, "onClick", "AlteraTitulo('".$cod_item."');");
   $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2DataHora($data));
 
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
-	if($texto!='')
+  if($texto!='')
   	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();

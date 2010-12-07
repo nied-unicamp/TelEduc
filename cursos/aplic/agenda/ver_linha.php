@@ -182,7 +182,7 @@
   /* Se foi clicado no nome da agenda vindo da pagina de Agendas Anteriores, entao apenas mostra a agenda. Sendo assim ela nao eh editavel. 
    * Assim, o titulo da pagina eh: "Agenda - Agendas Anteriores"
    * 
-   * Se n�o, foi clicado em determinada agenda e ela aparece editavel. Neste caso, o titulo da pagina eh: "Agenda - Editar Agenda"
+   * Se n�o, foi clicado em determinada agenda e ela aparece editavel. Neste caso, o titulo da pagina eh: "Agenda - Editar Agenda"
    */
   if($origem == "ver_anteriores")
   {
@@ -264,7 +264,7 @@
 
   /* (ger) 9 - Editar */
   $editar=RetornaFraseDaLista ($lista_frases_geral, 9);
-
+  
   if ($linha_item['status']=="E")
   {
 
@@ -276,6 +276,7 @@
       if($usr_formador)
       {
         $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
+        // 106 - Renomear Título
         $renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\">".RetornaFraseDaLista ($lista_frases, 106)."</span>";
       /* 91 - Editar texto */
         $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 91)."</span>";
@@ -290,6 +291,7 @@
     if($usr_formador)
     {
       $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
+      // 106 - Renomear Título
       $renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\" id=\"renomear_".$linha_item['cod_item']."\">".RetornaFraseDaLista ($lista_frases, 106)."</span>";
       /* 91 - Editar texto */
       $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".RetornaFraseDaLista ($lista_frases, 91)."</span>";

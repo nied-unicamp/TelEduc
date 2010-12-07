@@ -58,6 +58,7 @@
   $objAjax->registerFunction("AbreEdicao");
   $objAjax->registerFunction("AcabaEdicaoDinamic");
 
+
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -458,11 +459,13 @@
     $criterios=$dados_avaliacao['Criterios'];
 
   $titulo = RetornaTituloAvaliacao($sock, $dados_avaliacao['Ferramenta'], $dados_avaliacao['Cod_atividade']);
-  if($usr_formador)
-    $titulo="<span id=\"tit_".$dados_avaliacao['Cod_atividade']."\" class=\"linkTexto\" onclick=\"AlteraCampo('tit','".$dados_avaliacao['Cod_atividade']."');\">".$titulo."</span>";
-  $valor = FormataNota($dados_avaliacao['Valor']);
-  if($usr_formador)
-    $valor="<span id=\"valor_".$dados_avaliacao['Cod_atividade']."\" class=\"linkTexto\" onclick=\"AlteraCampo('valor','".$dados_avaliacao['Cod_atividade']."');\">".$valor."</span>";
+  if($usr_formador){
+    $titulo="<span id=\"tit_".$dados_avaliacao['Cod_atividade']."\" class=\"\" onclick=\"\">".$titulo."</span>";
+  }
+    $valor = FormataNota($dados_avaliacao['Valor']);
+  if($usr_formador){
+    $valor="<span id=\"valor_".$dados_avaliacao['Cod_atividade']."\" class=\"\" onclick='');\">".$valor."</span>";
+  }
   $obj = "<span id=\"text_obj\">".AjustaParagrafo($objetivos)."</span>";
   $crt = "<span id=\"text_crt\">".AjustaParagrafo($criterios)."</span>";
   $data_inicio = UnixTime2Data($dados_avaliacao['Data_inicio']);
@@ -484,15 +487,24 @@
   echo("                  </tr>\n");
   echo("                  <tr id='tr_".$dados_avaliacao['Cod_atividade']."'>\n");
   echo("                    <td align=left rowspan=\"3\">".$titulo."</td>\n");
+  
   if($usr_formador)
   {
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
       echo("                      <ul>\n");
-      // ? - Editar Objetivos
-      echo("                        <li><span onClick=\"AlteraTexto('obj');\">Editar Objetivos</span></li>\n");
+     // ? - Renomear Título TODO: frases
+      echo(  $titulo="<li><span onclick=\"AlteraCampo('tit',".$dados_avaliacao['Cod_atividade'].");\">Renomear Titulo</span></li>");
+           
       // ? - Editar Criterios
       echo("                        <li><span onClick=\"AlteraTexto('crt');\">Editar Criterios</span></li>\n");
-      // G 1 - Apagar
+
+      // ? - Editar Objetivos
+      echo("                        <li><span onClick=\"AlteraTexto('obj');\">Editar Objetivos</span></li>\n");
+      
+      // ? - Editar Valor TODO: frases
+      echo(  "<li><span onclick=\"AlteraCampo('valor',".$dados_avaliacao['Cod_atividade'].");\">Editar Valor</span></li>");
+      
+   // G 1 - Apagar
      // echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
       echo("                      </ul>\n");
       echo("                    </td>\n");

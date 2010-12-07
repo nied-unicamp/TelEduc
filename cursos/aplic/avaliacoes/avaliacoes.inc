@@ -156,6 +156,7 @@ function RetornaAvaliacoes($sock,$usr_formador)
   }
   return $retorno;
 }
+	
 
 /* *********************************************************************
    RetornaAvaliacoesAtuais - Retorna array com as avaliacoes atuais
@@ -4062,8 +4063,8 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_atividade, "className", "novoitem");
   $objResponse->addAssign($tag."_".$cod_atividade, "innerHTML", VerificaStringQuery($novo_nome));
-  $objResponse->addAssign($tag."_".$cod_atividade, "className", "linkTexto");
-  $objResponse->addEvent($tag."_".$cod_atividade, "onClick", "AlteraCampo('".$tag."','".$cod_atividade."');");
+  //$objResponse->addAssign($tag."_".$cod_atividade, "className", "linkTexto");
+  //$objResponse->addEvent($tag."_".$cod_atividade, "onClick", "AlteraCampo('".$tag."','".$cod_atividade."');");
 
   AcabaEdicaoDinamic($cod_curso, $cod_avaliacao, $cod_usuario, 1);
 
@@ -4295,7 +4296,7 @@ function AbreEdicao($cod_curso, $cod_avaliacao, $cod_usuario, $tela_avaliacao){
   $sock=Conectar($cod_curso);
   
   $linha=RetornaStatusAvaliacao($sock, "Avaliacao", $cod_avaliacao);
-
+  
   $linha_historico=RetornaUltimaPosicaoHistoricoAvaliacao($sock, "Avaliacao", $cod_avaliacao);
 
   if (($linha['status']=="E")&&($cod_usuario!=$linha_historico['cod_usuario'])){
