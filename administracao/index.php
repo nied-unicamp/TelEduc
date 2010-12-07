@@ -146,8 +146,8 @@
 
   /* X - Dados de Curso */                        /* Y - Categorias */
   echo("<tr class=\"head\">\n");
-  echo("<td>Dados do Curso</td>\n");
-  echo("<td>Categorias</td>\n");
+  echo("<td>Dados do Curso</td>\n");	//TODO:Frase Hardcoded
+  echo("<td>Categorias</td>\n");		//TODO:Frase Hardcoded
   echo("</tr>\n");
   echo("<tr><td>\n");
   echo("<ul>\n");
@@ -179,7 +179,7 @@
   echo("</ul>\n");
   echo("</td></tr>\n");
 
-  echo("<tr class=\"head\"><td>Reenvio</td><td>Configurar</td></tr>\n");
+  echo("<tr class=\"head\"><td>Reenvio</td><td>Configurar</td></tr>\n");	//TODO:Frase Hardcoded
 
   echo("<tr><td>\n");
   echo("<ul>\n");
@@ -218,7 +218,20 @@
   PreparaBoldLink(RetornaFraseDaLista($lista_frases,171),"\"../ajuda/index.php\"","");
 
   echo("</ul>\n");
-  echo("</td></tr></table>\n");
+  echo("</td></tr>\n");
+  
+  echo("<tr class=\"head\">\n");
+  echo("	<td>Gerenciamento</td>\n");	//TODO:Frase Hardcoded
+  echo("</tr>\n");
+  echo("<tr>\n");
+  echo("	<td>\n");
+  echo("		<ul>\n");
+					PreparaBoldLink("Gerenciamento de Usuarios","\"inscrever3.php\"","");
+  echo("		</ul>\n");
+  echo("	</td>\n");
+  echo("</tr>\n");
+
+  echo("</table>\n");
 
   /* 12 - Voltar a p�gina inicial */
   echo("<div align=\"right\">\n");
@@ -233,3 +246,4 @@
   echo("</html>\n");
   Desconectar($sock);
 ?>
+
