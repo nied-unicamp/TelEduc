@@ -94,6 +94,9 @@
   $feedbackObject->addAction("anexar", 62, 61);
   //Frase #204: Questao criada com sucesso!
   $feedbackObject->addAction("criarQuestao", RetornaFraseDaLista($lista_frases, 204), 0);
+
+  /* Se a questao esta em um exercicio que ja foi aplicado, volta para a pagina de questoes e exibe feedback. */
+  $aplicada = QuestaoAplicada($sock, $cod_questao);
   
   $questao = RetornaQuestao($sock,$cod_questao);
   $questao_diss = RetornaQuestaoDiss($sock,$cod_questao);
@@ -242,21 +245,23 @@
   echo("	}\n");
   echo("}\n");
   
-  echo("	function NumCerta(){\n");
-  echo("		var num=0;\n");
-  echo("		var numcorreta=document.getElementsByName('correta[ ]');\n");
-  echo("		for(var i=1;i<=numcorreta.length;i++){\n");
-  echo("			num++;");
-  echo("		}\n");
-  echo("		if(num>=1){\n");
-  echo("			tr=document.getElementsByName('Alt[ ]');\n");
+  echo("	function NumCerta(option_value){\n");
+  echo("		if(option_value==1) {\n");	/* Se a opcao for outra alternativa correta */
+  echo("			var num=0;\n");
+  echo("			var numcorreta=document.getElementsByName('correta[ ]');\n");
+  echo("			for(var i=1;i<=numcorreta.length;i++){\n");
+  echo("				num++;");
+  echo("			}\n");
+  echo("			if(num>=1){\n");
+  echo("				tr=document.getElementsByName('Alt[ ]');\n");
  //frase 207 Ja existe uma alternativa correta. Deseja continuar?
- echo("				if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
- echo("					CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("				}\n");
- echo("				else{\n");
- echo("				ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("				}\n");
+ echo("					if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
+ echo("						CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("					}\n");
+ echo("					else{\n");
+ echo("						ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+ echo("					}\n");
+ echo(" 			}\n");
  echo(" 		}\n");
  echo("		}\n");
     	
@@ -292,7 +297,9 @@
   echo("      cod_comp = getLayer('comp');\n");
   echo("      tableDnD = new TableDnD();\n");
   echo("      tBody_alternativas = document.getElementById('tBody_alternativas');\n");
-  echo("	  HabilitarMudancaPosicaoAlt();\n");
+  if(!$aplicada) {	/* Se a questao foi aplicada, nao habilitar mudanca de posicao das alternativas. */
+  	echo("	  HabilitarMudancaPosicaoAlt();\n");
+  }
   echo("      startList();\n");
   if($tp_questao == 'O' || $tp_questao == 'M'){
   	echo("     xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."','".$tp_questao."');\n");
@@ -661,6 +668,9 @@
   echo("      var select,opt1,opt2,txt;\n");
   echo("      select = document.createElement(\"select\");\n");
   echo("      select.setAttribute(\"id\",'select_'+cod);\n");
+  if($tp_questao=='O') {
+  	echo("	  select.setAttribute(\"onchange\",\"NumCerta(this.value);\");\n");
+  }
   //echo("      select.setAttribute(\"class\",\"input\");\n");
   echo("	  select.className=\"input\";");
   echo("      opt1 = document.createElement(\"option\");\n");
@@ -677,8 +687,6 @@
   echo("      {\n");
   echo("        opt1.setAttribute(\"selected\",\"selected\");\n");
   echo("      }\n");
-  if($tp_questao=='O')
-  		echo("        opt2.setAttribute(\"Onclick\",\"NumCerta();\");\n");
   echo("      select.appendChild(opt1);\n");
   echo("      select.appendChild(opt2);\n");
   echo("      return select;\n");
@@ -1536,7 +1544,7 @@
   echo("        mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 44)."\",true);\n");
   /* 219 - "Arquivo"
    * 217 - "ja existe"
-   * 218 - "Deseja sobrescrevê-lo?"*/
+   * 218 - "Deseja sobrescrevÔøΩ-lo?"*/
   echo("	  texto1 = \"".RetornaFraseDaLista($lista_frases, 219)."\";\n");
   echo("	  texto2 = \"".RetornaFraseDaLista($lista_frases, 217)."\";\n");
   echo("	  texto3 = \"".RetornaFraseDaLista($lista_frases, 218)."\";\n");
@@ -1602,11 +1610,16 @@
 
   include("../menu_principal.php");
 
+  if($aplicada)
+  	$titulo_aplicada=RetornaFraseDaLista($lista_frases, 228);	/* Frase #228 - (Questao aplicada) */
+  else
+  	$titulo_aplicada="";
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if ($tela_formador)
   {
-    $titulo="<span id=\"tit_".$questao['cod_questao']."\">".$questao['titulo']."</span>";
+    $titulo="<span id=\"tit_".$questao['cod_questao']."\">".$questao['titulo']."&nbsp;".$titulo_aplicada."</span>";
     /* Frase #50 - Renomear */
     $renomear="<span onclick=\"AlteraTitulo('".$questao['cod_questao']."');\" id=\"renomear_".$questao['cod_questao']."\">".RetornaFraseDaLista($lista_frases, 50)."</span>";
 		$enunciado="<span id=\"text_".$questao['cod_questao']."\">".$questao['enunciado']."</span>";
@@ -1622,16 +1635,17 @@
     /* Frase #98 - Limpar gabarito */
 	$limpar_gabarito="<span onClick=\"LimparGabarito(".$questao['cod_questao'].");\">".RetornaFraseDaLista($lista_frases, 98)."</span>";
 
-  		
-	/* Frase #1 - Exercicios */
-	/* Frase #99 - Editar Questao Objetiva */
-	if($tp_questao == 'O') {
-		echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 99)."</h4>\n");
-	} elseif ($tp_questao == 'M') {
-		/* Frase #1 - Exercicios */
-		/* Frase #214 - Editar Questao Multipla Escolha */
-		echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 214)."</h4>\n");
-	}
+
+	if($aplicada)
+		$cabecalho=RetornaFraseDaLista($lista_frases, 59);	/* Frase #59 - Questoes */
+	elseif($tp_questao == 'O')
+		$cabecalho=RetornaFraseDaLista($lista_frases, 99);	/* Frase #99 - Editar Questao Objetiva */
+	elseif($tp_questao == 'M')
+		$cabecalho=RetornaFraseDaLista($lista_frases, 214);	/* Frase #214 - Editar Questao Multipla Escolha */
+	elseif($tp_questao == 'D')
+		$cabecalho=RetornaFraseDaLista($lista_frases, 229);	/* Frase #229 - Editar Questao Dissertativa */
+		
+	echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".$cabecalho."</h4>\n");
 	
   	/* Frase #5 - Voltar */
   	echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span><br /><br />\n");
@@ -1667,78 +1681,108 @@
 	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 61)."</td>\n");
   /* Frase #62 - Dificuldade */
 	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 62)."</td>\n");
-  /* 70 - Opcoes (ger)*/
-	echo("                      <td width=\"15%\">" . RetornaFraseDaLista($lista_frases_geral, 70) . "</td>\n");
+	if(!$aplicada) {
+	  	/* 70 - Opcoes (ger)*/
+		echo("                      <td width=\"15%\">" . RetornaFraseDaLista($lista_frases_geral, 70) . "</td>\n");
+	}
 	/* Frase #57 - Compartilhamento */
 	echo("                      <td width=\"15%\">".RetornaFraseDaLista($lista_frases, 57)."</td>\n");
 	echo("                    </tr>\n");
+
+	/* Comeca a popular os dados na tabela. */
 	echo("                    <tr id='tr_".$questao['cod_questao']."'>\n");
 	echo("                      <td class=\"itens\">".$titulo."</td>\n");
-        echo("                      <td>\n");
-        echo("                        <select id=\"selectTopico\" class=\"input\" onChange=\"AtualizaTopico(this.value);\">");
-        /* Frase #173 - Escolha um topico */
-        echo("                          <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 173)."</option>\n");
-        /*Frase #106*/
-        echo("							<option value=\"-1\" >".RetornaFraseDaLista($lista_frases,95)."</option>\n");
-        if ((count($topicos)>0)&&($topicos != null))
-        {
-          foreach ($topicos as $cod => $linha_item)
-          {
-            $topico = $linha_item['topico'];
-            $cod_topico = $linha_item['cod_topico'];
-            if($cod_topico == $questao['cod_topico'])
-              $texto = "selected";
-            else
-              $texto = "";
-              
-            echo("                          <option value=\"".$cod_topico."\" ".$texto.">".$topico."</option>\n");
-          }
-        }
-        echo("                        </select>\n");
-        echo("                      </td>\n");
-        echo("                      <td>\n");
-        if($questao['nivel'] == 'D') $dificil = "checked='true'";
-        else $dificil = "";
-        if($questao['nivel'] == 'M') $medio = "checked='true'";
-        else $medio = "";
-        if($questao['nivel'] == 'F') $facil = "checked='true'";
-        else $facil = "";
-
-        /* Frase #100 - Dificil */
-        echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('D');\" ".$dificil." />".RetornaFraseDaLista($lista_frases, 100)."<br />\n");
-        /* Frase #101 - Medio */
-        echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('M');\" ".$medio." />".RetornaFraseDaLista($lista_frases, 101)."<br />\n");
-        /* Frase #102 - Facil */
-        echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('F');\" ".$facil." />".RetornaFraseDaLista($lista_frases, 102)."<br />\n");
-        echo("                      </td>\n");
-	echo("                      <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-	echo("                        <ul>\n");
-	echo("                          <li>".$renomear."</li>\n");
-	echo("                          <li>".$editar."</li>\n");
-	echo("                          <li>".$limpar."</li>\n");
+	echo("                      <td>\n");
+	if(!$aplicada) {
+		echo("                      <select id=\"selectTopico\" class=\"input\" onChange=\"AtualizaTopico(this.value);\">");
+		/* Frase #173 - Escolha um topico */
+		echo("                        <option value=\"0\" ".$texto.">".RetornaFraseDaLista($lista_frases, 173)."</option>\n");
+		/*Frase #106*/
+		echo("						  <option value=\"-1\" >".RetornaFraseDaLista($lista_frases,95)."</option>\n");
+		if ((count($topicos)>0)&&($topicos != null))
+		{
+			foreach ($topicos as $cod => $linha_item)
+			{
+				$topico = $linha_item['topico'];
+				$cod_topico = $linha_item['cod_topico'];
+				if($cod_topico == $questao['cod_topico'])
+				$texto = "selected";
+				else
+				$texto = "";
 	
-	if($tp_questao == 'D')
-    {
-	  echo("                          <li>".$editar_gabarito."</li>\n");
-	  echo("                          <li>".$limpar_gabarito."</li>\n");
-    }
-    echo("                          <li>".$novo_topico."</li>\n");
-	// G 1 - Apagar
-	echo("                          <li><span onclick=\"ApagarQuestao();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
-	echo("                        </ul>\n");
+				echo("                <option value=\"".$cod_topico."\" ".$texto.">".$topico."</option>\n");
+			}
+		}
+		echo("                      </select>\n");
+	} else {
+		/* Pega o nome topico da questao */
+		echo(RetornaTopicoQuestao($sock,$cod_questao));
+	}
 	echo("                      </td>\n");
+	echo("                      <td>\n");
+	
+	if($questao['nivel'] == 'D') {
+		$dificil = "checked='true'";
+		$nivel_texto = RetornaFraseDaLista($lista_frases, 100);	/* Frase #100 - Dificil */
+	} else {
+		$dificil = "";
+	}
+	if($questao['nivel'] == 'M') {
+		$medio = "checked='true'";
+		$nivel_texto = RetornaFraseDaLista($lista_frases, 101);	/* Frase #101 - Medio */
+	} else {
+		$medio = "";
+	}
+	if($questao['nivel'] == 'F') {
+		$facil = "checked='true'";
+		$nivel_texto = RetornaFraseDaLista($lista_frases, 102);	/* Frase #102 - Facil */
+	} else {
+		$facil = "";
+	}
+	
+	if(!$aplicada) {
+		/* Frase #100 - Dificil */
+		echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('D');\" ".$dificil." />".RetornaFraseDaLista($lista_frases, 100)."<br />\n");
+		/* Frase #101 - Medio */
+		echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('M');\" ".$medio." />".RetornaFraseDaLista($lista_frases, 101)."<br />\n");
+		/* Frase #102 - Facil */
+		echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('F');\" ".$facil." />".RetornaFraseDaLista($lista_frases, 102)."<br />\n");
+	} else {
+		echo($nivel_texto);	/* Nivel da questao */
+	}
+	echo("                      </td>\n");
+	if(!$aplicada) {
+		echo("                  <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+		echo("                    <ul>\n");
+		echo("                      <li>".$renomear."</li>\n");
+		echo("                      <li>".$editar."</li>\n");
+		echo("                      <li>".$limpar."</li>\n");
+			
+		if($tp_questao == 'D')
+		{
+			echo("                    <li>".$editar_gabarito."</li>\n");
+			echo("                    <li>".$limpar_gabarito."</li>\n");
+		}
+		echo("                      <li>".$novo_topico."</li>\n");
+		// G 1 - Apagar
+		echo("                      <li><span onclick=\"ApagarQuestao();\">" . RetornaFraseDaLista($lista_frases_geral, 1) . "</span></li>\n");
+		echo("                    </ul>\n");
+		echo("                  </td>\n");
+	}
 
-		/* Frase #6 - Compartilhado com Formadores */
-    if($questao['tipo_compartilhamento'] == "F")
-      $compartilhamento = RetornaFraseDaLista($lista_frases, 6);
-    /* Frase #8 - Nao compartilhado */
-    else
-      $compartilhamento = RetornaFraseDaLista($lista_frases, 8);
-      
-    if($cod_usuario == $questao['cod_usuario'])
-      $compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,0);return(false);\">".$compartilhamento."</span>";
-      
-    echo("					    <td>".$compartilhamento."</td>");      
+	/* Frase #6 - Compartilhado com Formadores */
+	if($questao['tipo_compartilhamento'] == "F")
+	$compartilhamento = RetornaFraseDaLista($lista_frases, 6);
+	/* Frase #8 - Nao compartilhado */
+	else
+	$compartilhamento = RetornaFraseDaLista($lista_frases, 8);
+
+	if(!$aplicada) {
+		if($cod_usuario == $questao['cod_usuario'])
+		$compartilhamento = "<span id=\"comp_".$cod_questao."\" class=\"link\" onclick=\"js_cod_item='".$cod_questao."';AtualizaComp('".$questao['tipo_compartilhamento']."');MostraLayer(cod_comp,140,0);return(false);\">".$compartilhamento."</span>";
+	}
+
+	echo("					    <td>".$compartilhamento."</td>");
       
     echo("                    </tr>\n");
 	
@@ -1768,6 +1812,7 @@
 	  echo("                    </tr>\n");
 	}
 
+
 	if($tp_questao == "O" || $tp_questao == 'M')
 	{
 	  echo("                  <tr class=\"head\">\n");
@@ -1775,16 +1820,20 @@
 	  echo("                    <td class=\"center\" colspan=\"6\">".RetornaFraseDaLista($lista_frases, 18)."</td>\n");
 	  echo("                  </tr>\n");
 	  echo("					<tBody id=\"tBody_alternativas\">");
-
-      if ((count($alternativas)>0)&&($alternativas != null))
-      {
+	   
+	  if ((count($alternativas)>0)&&($alternativas != null))
+	  {
         foreach ($alternativas as $cod => $linha_item)
         {
           $texto = $linha_item['texto'];
           $cod_alternativa = $linha_item['cod_alternativa'];
-
           echo("                  <tr name=\"Alt[ ]\" id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
-          echo("                    <td class=\"itens\" colspan=\"6\"><input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span></td>\n");
+          echo("                    <td class=\"itens\" colspan=\"6\">\n");
+          if(!$aplicada) {
+		  	echo(" 						<input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+          }
+          echo("						<span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span>");
+		  echo(" 					</td>\n");
           echo("                  </tr>\n");
 
           if($tp_questao == 'D')
@@ -1808,25 +1857,27 @@
         
       echo("					</tBody>");
       
-      echo("                  <tr id=\"optAlt\">\n");
-	  echo("                    <td align=\"left\" colspan=\"6\">\n");
-	  echo("                      <ul>\n");
-	  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
-	  /* Frase #71 - Apagar */
-	  echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
-	  /* Frase #104 - Editar */
-	  echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">".RetornaFraseDaLista($lista_frases, 104)."</span></li>\n");
-      /*if($tp_questao == 'D')
-        echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); */
-	  echo("                      </ul>\n");
-	  echo("                    </td>\n");
-	  echo("                  </tr>\n");
-      echo("                  <tr id=\"trAddAlt\">\n");
-  	  echo("                    <td align=\"left\" colspan=\"6\">\n");
-    /* Frase #105 - Adicionar Alternativa */
-	  echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) ".RetornaFraseDaLista($lista_frases, 105)."</span></div>\n");
-      echo("                    </td>\n");
-	  echo("                  </tr>\n");
+	  if(!$aplicada) {
+	      echo("                  <tr id=\"optAlt\">\n");
+		  echo("                    <td align=\"left\" colspan=\"6\">\n");
+		  echo("                      <ul>\n");
+		  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
+		  /* Frase #71 - Apagar */
+		  echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
+		  /* Frase #104 - Editar */
+		  echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">".RetornaFraseDaLista($lista_frases, 104)."</span></li>\n");
+	      /*if($tp_questao == 'D')
+	        echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); */
+		  echo("                      </ul>\n");
+		  echo("                    </td>\n");
+		  echo("                  </tr>\n");
+	      echo("                  <tr id=\"trAddAlt\">\n");
+	  	  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	      /* Frase #105 - Adicionar Alternativa */
+		  echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) ".RetornaFraseDaLista($lista_frases, 105)."</span></div>\n");
+	      echo("                    </td>\n");
+		  echo("                  </tr>\n");
+	  }
 	}
     echo("                  <tr class=\"head\">\n");
 	/* Frase #12 - Arquivos */
@@ -1913,7 +1964,9 @@
 
 							echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
 
-							echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
+							if(!$aplicada) {
+								echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
+							}
 
 							echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
 
@@ -1963,44 +2016,46 @@
 	}
 	echo ("                    </td>\n");
 	echo ("                  </tr>\n");
-  echo("                  <tr id=\"optArq\">\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <ul>\n");
-	echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
-	/* Frase #71 - Apagar */
-	echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
-	/* Frase #73 - Ocultar */
-  echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases, 73)."</span></li>\n");
-	echo("                      </ul>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr>\n");
-	echo("                    <td align=\"left\" colspan=\"6\">\n");
-	echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
-	echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-	echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_questao."\" />\n");
-	echo("                        <input type=\"hidden\" name=\"pasta\" value=\"questao\" />\n");
-    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
-    echo("                        <input type=\"hidden\" name=\"subpasta\" value=\"\" />\n");
-    
-	echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
-	echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
-	echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
-    // Adicionar Descricao
-	echo(                          "<span>".RetornaFraseDaLista($lista_frases,208)."</span>\n");echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-//	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
-    echo("                          <input class=\"input\" type=\"file\" id=\"input_files\" name=\"input_files\" onchange=\"EdicaoArq(1);\" style=\"border:2px solid #9bc\" />\n");
-//	echo("                          &nbsp;&nbsp;\n");
-//	echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
-//	echo("                          &nbsp;&nbsp;\n");
-//	echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
-	echo("                        </div>\n");
-    echo("                        <div id=\"divAnexando\" class=\"divHidden\"></div>");
-	/* 26 - Anexar arquivos (ger) */
-	echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
-	echo("                      </form>\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
+	if(!$aplicada) {
+		echo("                   <tr id=\"optArq\">\n");
+		echo("                     <td align=\"left\" colspan=\"6\">\n");
+		echo("                       <ul>\n");
+		echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
+		/* Frase #71 - Apagar */
+		echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
+		/* Frase #73 - Ocultar */
+  		echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases, 73)."</span></li>\n");
+	  	echo("                       </ul>\n");
+		echo("                     </td>\n");
+		echo("                   </tr>\n");
+		echo("                  <tr>\n");
+		echo("                    <td align=\"left\" colspan=\"6\">\n");
+		echo("                      <form name=\"formFiles\" id=\"formFiles\" enctype=\"multipart/form-data\" method=\"post\" action=\"acoes.php\">\n");
+		echo("                        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+		echo("                        <input type=\"hidden\" name=\"cod_questao\" value=\"".$cod_questao."\" />\n");
+		echo("                        <input type=\"hidden\" name=\"pasta\" value=\"questao\" />\n");
+	    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
+	    echo("                        <input type=\"hidden\" name=\"subpasta\" value=\"\" />\n");
+	    
+		echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
+		echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
+		echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
+	    // Adicionar Descricao
+		echo(                          "<span>".RetornaFraseDaLista($lista_frases,208)."</span>\n");echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	//	echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" class=\"input\">\n");
+	    echo("                          <input class=\"input\" type=\"file\" id=\"input_files\" name=\"input_files\" onchange=\"EdicaoArq(1);\" style=\"border:2px solid #9bc\" />\n");
+	//	echo("                          &nbsp;&nbsp;\n");
+	//	echo("                          <span onclick=\"EdicaoArq(1);\" id=\"OKFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 18) . "</span>\n");
+	//	echo("                          &nbsp;&nbsp;\n");
+	//	echo("                          <span onclick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">" . RetornaFraseDaLista($lista_frases_geral, 2) . "</span>\n");
+		echo("                        </div>\n");
+		echo("                        <div id=\"divAnexando\" class=\"divHidden\"></div>");
+		/* 26 - Anexar arquivos (ger) */
+		echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" /> <span class=\"link\" id =\"insertFile\" onclick=\"AcrescentarBarraFile(1);\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span></div>\n");
+		echo("                      </form>\n");
+		echo("                    </td>\n");
+		echo("                  </tr>\n");
+	}
 	echo("                </table>\n");
 	echo("              </td>\n");
   	echo("            </tr>\n");

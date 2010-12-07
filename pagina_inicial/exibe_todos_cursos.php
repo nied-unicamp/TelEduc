@@ -170,7 +170,8 @@
 
   require("inicial.inc");
   $lista = RetornaCursosNaoIniciadosSemUsuario($sock);
-
+  $hoje=time();
+  
   /*Exibe cursos que ainda n�o come�aram*/
   if (count($lista)>0 && $lista != "")
   {

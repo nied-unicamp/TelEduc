@@ -62,15 +62,19 @@
   
   $visualizar = $_GET['visualizar'];
   if(!isset($visualizar))
-  	$visualizar = "E";
+  $visualizar = "E";
 
-  if($visualizar == "L") $defColspan = "colspan=\"4\"";
+  if($visualizar == "L") {
+  	$defColspan = "colspan=\"4\"";
+  } else {
+  	$defColspan="";
+  }
 
   if($visualizar == "L"){
   	$cod_pagina_ajuda=5;
   }
   else{
-	  $cod_pagina_ajuda=1;
+  	$cod_pagina_ajuda=1;
   }
 
   $data_atual = time();
@@ -897,7 +901,7 @@
 	echo("                  <tr class=\"head\">\n");
     echo("                    <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"MarcaOuDesmarcaTodos(pagAtual);\" /></td>\n");
 	/* Frase #13 - Titulo */
-	echo("                    <td class=\"alLeft\" style=\"cursor:pointer\" $defColspan>".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
+	echo("                    <td class=\"alLeft\" ".$defColspan." style=\"cursor:pointer\" >".RetornaFraseDaLista($lista_frases, 13)."</td>\n");
   /* Frase #69 - Data */
 	echo("                    <td width=\"10%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 69)."</td>\n");
 	if($visualizar == "E")
@@ -920,9 +924,10 @@
       {
       	$disponibilizacao = "-";
         $entrega = "-";
+        $dados_aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
+        
         if($linha_item['situacao'] == 'A')
         {
-        	$dados_aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
         	$disponibilizacao = UnixTime2DataHora($dados_aplicado['dt_disponibilizacao']);
         	$entrega = UnixTime2DataHora($dados_aplicado['dt_limite_submissao']);
         }
@@ -945,7 +950,7 @@
         if($cod_usuario == $linha_item['cod_usuario'] || $linha_item['tipo_compartilhamento'] == "F"){
           echo("                  <tr id=\"trExercicio_".$linha_item['cod_exercicio']."\">\n");
           echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkExercicio\" id=\"itm_".$linha_item['cod_exercicio']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_exercicio']."\" /></td>\n");
-          echo("                    <td $defColspan align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
+          echo("                    <td ".$defColspan." align=\"left\">".$icone."<a href=\"editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$linha_item['cod_exercicio']."\">".$titulo."</a></td>\n");
           echo("                    <td id=\"data_".$linha_item['cod_exercicio']."\">".$data."</td>\n");
           if($visualizar == "E")
           {

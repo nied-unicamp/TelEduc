@@ -34,7 +34,6 @@
 
 ------------------------------------------------------------------------------
 -->
-@todo ApagaAssuntoDinamic
 */
 
 /*==========================================================
@@ -75,7 +74,7 @@
     $usr_formador = false;
 
   $cod_assunto = $cod_assunto_pai;
-
+  
   echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("<script language=JavaScript>\n\n");
   
@@ -86,6 +85,8 @@
   echo("  var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("  var versao = (navigator.appVersion.substring(0,3));\n");
   echo("  var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  echo("  var nome_antigo = '';\n");
+  echo("  var descricao_antigo = '';\n");
 
   echo("  if (isNav)\n");
   echo("  {\n");
@@ -322,9 +323,12 @@
 //    echo ("     }\n\n");
 
     echo("		function EdicaoTitulo(id, b, state){
-    				if (state == 'canc'){
-    					/* TODO - Pegar o titulo velho! */
-    					document.getElementById(b).innerHTML = document.getElementById(b).childNodes[0].value;
+    				if (state == 'canc') {
+    					if(id == 'Assunto') {	//Se for edicao do nome do assunto
+    						document.getElementById(b).innerHTML = nome_antigo;
+    					} else if(id == 'Descricao') {	//Se for edicao da descricao do assunto
+    						document.getElementById(b).innerHTML = descricao_antigo;
+    					}
     					document.getElementById('renomear_'+id).onclick=function(){ AlteraTitulo(id) };
     				} else {
     					xajax_AlteraDadosAssuntoDinamic(id, document.getElementById(b).childNodes[0].value, $cod_assunto);
@@ -341,17 +345,24 @@
     				} 
     			}");
     			
-    echo("		function LimpaTitulo(id){
-    				xajax_AlteraDadosAssuntoDinamic('Descricao', '', $cod_assunto);
-    			}");
+    echo("		function LimpaTitulo(id){\n");
+    echo("			xajax_AlteraDadosAssuntoDinamic('Descricao', '', $cod_assunto);\n");
+    echo("			document.getElementById('tit_Descricao').innerHTML=''\n");
+    echo("		}\n");
   	
     
   	echo("      function AlteraTitulo(id){\n");
-    echo("        var id_aux = id;\n");
+    echo("			var id_aux = id;\n");
     //echo("        if (editaTitulo==0){\n");
     //echo("          CancelaTodos();\n");
     //echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
-    echo("          var conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+    echo("			var conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+    echo("			if(id=='Descricao') {\n");
+    echo("          	descricao_antigo = conteudo;\n");
+    echo("			} else if(id=='Assunto'){\n");
+    echo("          	nome_antigo = conteudo;\n");
+    echo("			}\n");
+    
     echo("          document.getElementById('tr_'+id).className=\"\";\n");
     echo("          document.getElementById('tit_'+id).innerHTML='';\n");
 
@@ -539,14 +550,14 @@
   echo("    </font></span>\n");
   echo("  \n");
 
-  /* Obtem os dados do assunto atual.                            */
+  /* Obtem os dados do assunto atual. */
   $dados_assunto = RetornaAssunto($sock, $cod_assunto);
   $nome = $dados_assunto['nome'];
   $descricao = $dados_assunto['descricao'];
   $data = $dados_assunto['data'];
   $cod_assunto = $dados_assunto['cod_assunto'];
   $cod_assunto_pai = $dados_assunto['cod_assunto_pai'];
-
+  
   /* Se a descri�ao NAO for vazia ou composta por apenas espa�os */
   /* entao a exibe.                                              */
   //if (EliminaEspacos($descricao) != "")
