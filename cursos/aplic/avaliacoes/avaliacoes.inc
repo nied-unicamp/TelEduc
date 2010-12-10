@@ -4179,38 +4179,30 @@ function AdicionaComentarioDinamic($sock, $cod_avaliacao, $cod_usuario, $comenta
 
   return $objResponse->getXML();
 }
+
 /* *********************************************************************
-   RetornaFraseDinamic - Retorna lista de frases para uma variavel JavaScript, dinamicamente
-   Entrada: $variavel - nome da variavel que vai receber as frases
+   AlertaFraseFerramenta - Pega a frase no BD e gera um alert com tal frase
+   Entrada: $cod_texto - codigo da frase no BD
+   			$cod_ferramenta - codigo da ferramenta
 
-   Saida: XML da função Ajax
+   Saida: XML da funcao Ajax que exibe o alert
 */
-function RetornaFraseDinamic($variavel){
-
+function AlertaFraseFerramenta($cod_texto,$cod_ferramenta){
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+	
   $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,22);
-
+  $msg=RetornaFrase($sock, $cod_texto, $cod_ferramenta);
   Desconectar($sock);
 
-  $retorno="{\n";
-
-  foreach ($lista_frases as $cod => $linha){
-    if ($cod>1) $retorno.=", ";
-    $retorno.="\"msg".$cod."\":\"".$linha."\" ";
-  }
+  $objResponse->addScript("alert('".$msg."');");
   
-  $retorno.="\n}";
-
-  $objResponse->addScript($variavel." = ".$retorno.";");
-
   return $objResponse->getXML();
+  
 }
 
+
 /* *********************************************************************
-   RetornaFraseDinamic - Retorna lista de frases 'geral' para uma variavel JavaScript, dinamicamente
+   RetornaFraseGeralDinamic - Retorna lista de frases 'geral' para uma variavel JavaScript, dinamicamente
    Entrada: $variavel - nome da variavel que vai receber as frases
 
    Saida: XML da função Ajax
@@ -4220,9 +4212,9 @@ function RetornaFraseGeralDinamic($variavel){
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $sock=Conectar("");
-
+  
   $lista_frases=RetornaListaDeFrases($sock,-1);
-
+    
   Desconectar($sock);
 
   $retorno="{\n";

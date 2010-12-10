@@ -8,10 +8,9 @@ var conteudo="";
 var input=0;
 var cancelarElemento=null;
 var cancelarTodos=0;
-var lista_frases;
 var lista_frases_geral;
-xajax_RetornaFraseDinamic('lista_frases');
 xajax_RetornaFraseGeralDinamic('lista_frases_geral');
+
 
 function startList() {
   if (document.all && document.getElementById) {
@@ -88,17 +87,16 @@ function EdicaoCampo(id, tag, valor){
     conteudo = document.getElementById(tag+'_'+id+'_text').value;
     xajax_EditarCampo(cod_curso, conteudo, cod_usuario, ferramenta, cod_atividade, cod_avaliacao, tag);
   }else{
-    /* 15 - O titulo nao pode ser vazio. */
-    if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value==""))	
-      alert(lista_frases.msg15);
-	
-    document.getElementById(tag+'_'+id).innerHTML=conteudo;
+    /* frase #229 - O campo n‹o pode ser vazio. */
+    if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value=="")){
+    	xajax_AlertaFraseFerramenta(229,22);
+    }
     
-
-  		document.getElementById(tag+'_'+id).className='';
+  	document.getElementById(tag+'_'+id).innerHTML=conteudo;
+    document.getElementById(tag+'_'+id).className='';
 
     
-  /*if(navigator.appName.match("Opera")){
+    /*if(navigator.appName.match("Opera")){
       document.getElementById(tag+'_'+id).onclick = AlteraCampo(tag,id);
     }else{
       document.getElementById(tag+'_'+id).onclick = function(){ AlteraCampo(tag,id); };
@@ -119,6 +117,7 @@ function EdicaoCampo(id, tag, valor){
 //cria os links Ok E Cancelar
 function AlteraCampo(tag,id){
   if (editaTitulo==0){
+	 
     id_aux = id;
     tag_aux = tag;  
     CancelaTodos();
@@ -152,7 +151,7 @@ function AlteraCampo(tag,id){
 
     createSpan = document.createElement('span');
     createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoCampo(id, tag, 'ok'); };
+    createSpan.onclick= function(){ EdicaoCampo(id, tag, 'ok'); }; //TODO
     createSpan.setAttribute('id', 'OkEdita');
     createSpan.innerHTML = lista_frases_geral.msg_ger18;
     document.getElementById(tag+'_'+id).appendChild(createSpan);

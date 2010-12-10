@@ -53,7 +53,6 @@
   $objAjax->registerFunction("EditarCampo");
   $objAjax->registerFunction("AlterarPeriodoDinamic");
   $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("RetornaFraseDinamic");
   $objAjax->registerFunction("RetornaFraseGeralDinamic");
   $objAjax->registerFunction("AbreEdicao");
   $objAjax->registerFunction("AcabaEdicaoDinamic");

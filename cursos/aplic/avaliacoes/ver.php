@@ -53,11 +53,11 @@
   $objAjax->registerFunction("EditarCampo");
   $objAjax->registerFunction("AlterarPeriodoDinamic");
   $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("RetornaFraseDinamic");
   $objAjax->registerFunction("RetornaFraseGeralDinamic");
   $objAjax->registerFunction("AbreEdicao");
   $objAjax->registerFunction("AcabaEdicaoDinamic");
-
+  $objAjax->registerFunction("AlertaFraseFerramenta");
+ 
 
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
@@ -251,7 +251,7 @@
   echo ("         {\n");
   echo ("             tecla = evento.keyCode;\n");
   echo ("         }\n\n");
-  echo ("         if ( tecla == 13 )\n");
+  echo ("         if ( tecla == 13 )\n"); //13 = enter
   echo ("         {\n");
   echo ("             EdicaoCampo(id, tag, 'ok');\n");
   echo ("         }\n\n");
