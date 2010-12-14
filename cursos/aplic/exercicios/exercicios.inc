@@ -654,7 +654,7 @@ function RetornaAlternativas($sock,$cod_questao)
    RetornaGabaritoQuestaoObj - Retorna o gabarito de uma questao objetiva
    Entrada: $sock - BASE DO CURSO
             $cod_questao - codigo da questao
-   Saida: gabarito da questao
+   Saida: gabarito da questao TODO:
 */
 function RetornaGabaritoQuestaoObj($sock, $cod_questao)
 {
@@ -1422,8 +1422,9 @@ function MudaTipoQuestaoDinamic($cod_curso,$cod_usuario,$cod_questao,$novo_tipo)
 function CriarAlternativaDinamic($cod_curso, $cod_usuario, $cod_questao, $tp_questao)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
-
+//TODO
   $sock=Conectar($cod_curso);
+
 
   $consulta="select max(posicao_item) from Exercicios_questao_alternativa where cod_questao=".VerificaNumeroQuery($cod_questao);
   $res=Enviar($sock, $consulta);

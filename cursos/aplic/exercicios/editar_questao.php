@@ -392,6 +392,7 @@
   echo("      conteudo = document.getElementById('tit_'+id).innerHTML;\n");
   echo("      document.getElementById('tit_'+id).className='';\n");
   echo("      document.getElementById('tr_'+id).className='';\n");
+  //cria o input
   echo("      createInput = document.createElement('input');\n");
   echo("      document.getElementById('tit_'+id).innerHTML='';\n");
   echo("      document.getElementById('tit_'+id).onclick=function(){ };\n");
@@ -791,6 +792,7 @@
   echo("      span.appendChild(CriaInputAlt(conteudo,cod));\n");
   if($tp_questao == 'O' || $tp_questao == 'M')
   {
+  	echo("      span.appendChild(CriaSpanEspAlt(2));\n");
     echo("      span.appendChild(document.createTextNode(' Validade:'));\n");
     echo("      span.appendChild(CriaSelectAlt(cod));\n");
   }
@@ -799,6 +801,8 @@
   echo("      span.appendChild(CriaSpanEspAlt(2));\n");
   echo("      span.appendChild(CriaSpanCancNovaAlternativa(cod));\n");
   echo("    }\n\n");
+  
+  
 
   echo("    function CriaSpanEditarGabarito(cod)\n");
   echo("    {\n");	
@@ -847,7 +851,7 @@
   echo("      ul.appendChild(li);\n");
   echo("      return ul;\n");
   echo("    }\n\n");
-
+//TODO:
   echo("    function AdicionarAlternativa(cod)\n");
   echo("    {\n");
   echo("      var tr,td,trGab,tdText,tdOp,codigo;\n");
@@ -899,15 +903,20 @@
   echo("      qtdAlternativas++;\n");
   echo("    }\n\n");
   
+  
+  
   echo("    function NovaAlternativa()\n");
   echo("    {\n");
   echo("      if(qtdAlternativas < 10)\n");
   echo("      {");
   echo("        CancelaTodos();\n");
   echo("        xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",'".$tp_questao."');\n");
+  //oculta o campo de Adicionar Nova Alternativa
+  echo("		document.getElementById('trAddAlt').className = 'divHidden';");
   echo("	  }");
   echo("      else\n");
-  //184 - Uma questao pode conter no maximo 10 alternativas.
+  //184 - Uma questao pode conter no maximo 10 alternativas. TODO:
+  
   echo("        alert('".RetornaFraseDaLista($lista_frases, 183)."');\n");
   echo("    }\n\n");
   
@@ -918,6 +927,7 @@
   echo("		xajax_ApagarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",".$cod_questao.",cod,'".$tp_questao."');\n");
   echo("		HabilitarMudancaPosicaoAlt();");
   echo("		qtdAlternativas--;\n");
+  echo("		document.getElementById('trAddAlt').className = '';");
   echo("	}\n");
   echo("}\n");
   
@@ -969,6 +979,7 @@
   	echo("      xajax_EditarGabaritoQuestaoMultDinamic(".$cod_curso.",".$cod_questao.",FormaGabarito());\n");
   }
   echo("        VerificaChkBoxAlt(0);\n");
+  echo("		document.getElementById('trAddAlt').className = '';");
   echo("      }\n");
   echo("    }\n\n");
 
@@ -1089,6 +1100,7 @@
   echo("       xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."','".$tp_questao."');\n");
   echo("	  HabilitarMudancaPosicaoAlt();\n");
   echo("	    cancelarElemento = null;\n");
+  echo("		document.getElementById('trAddAlt').className = '';");
   echo("    }\n\n");
 
   echo("    function FormaGabarito(){\n");
@@ -1128,6 +1140,7 @@
     //echo("			xajax_CriarAlternativaDinamic(".$cod_curso.",".$cod_usuario.",$cod_questao,'O');\n");
     //echo("		}\n");
     echo("      xajax_AtualizaIconesDinamic(".$cod_questao.",".$cod_curso.",'".$tp_questao."');\n");
+    echo("		document.getElementById('trAddAlt').className = '';");
     echo("    }\n\n");
   }
   else
@@ -1859,21 +1872,23 @@
       
 	  if(!$aplicada) {
 	      echo("                  <tr id=\"optAlt\">\n");
-		  echo("                    <td align=\"left\" colspan=\"6\">\n");
+	      echo("                    <td align=\"left\" colspan=\"6\">\n");
 		  echo("                      <ul>\n");
+		  
 		  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
-		  /* Frase #71 - Apagar */
+		  // Frase #71 - Apagar 
 		  echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
-		  /* Frase #104 - Editar */
+		  // Frase #104 - Editar 
 		  echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">".RetornaFraseDaLista($lista_frases, 104)."</span></li>\n");
-	      /*if($tp_questao == 'D')
-	        echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); */
+	      
+	      //if($tp_questao == 'D')
+	       // echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); 
 		  echo("                      </ul>\n");
 		  echo("                    </td>\n");
 		  echo("                  </tr>\n");
 	      echo("                  <tr id=\"trAddAlt\">\n");
 	  	  echo("                    <td align=\"left\" colspan=\"6\">\n");
-	      /* Frase #105 - Adicionar Alternativa */
+	      /* Frase #105 - Adicionar Alternativa TODO:isj*/
 		  echo("                      <div id=\"divAddAlt\"><span class=\"link\" id=\"insertAlt\" onclick=\"NovaAlternativa();\">(+) ".RetornaFraseDaLista($lista_frases, 105)."</span></div>\n");
 	      echo("                    </td>\n");
 		  echo("                  </tr>\n");
