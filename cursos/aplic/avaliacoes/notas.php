@@ -190,7 +190,7 @@
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
             
           } else { // nenhuma nota foi atribuida
-             if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B') ) {
+             //if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B') ) {
                if (!strcmp($linha['Ferramenta'], 'B')) {
                   $contador=$cont_batepapo;
                   $cont_batepapo++;
@@ -210,7 +210,7 @@
                
                echo("     ".$linha['Ferramenta'].$contador."v[".$j."] = 0.00;\n");	/* Se nao tem nota atribuida, deixa zero. */
 
-             }
+             //}
           }
           
         }
@@ -288,7 +288,7 @@
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
             
           } else { // nenhuma nota foi atribuida
-            if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B')) {
+            //if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B')) {
               if (!strcmp($linha['Ferramenta'], 'B')) {
                 $contador=$cont_batepapo;
                 $cont_batepapo++;
@@ -308,7 +308,7 @@
 
               echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = 0.00;\n");
 
-            }
+            //}
          }
         
 //         if ($j == 1) { 
