@@ -704,7 +704,9 @@ function CriarBaseDoCurso($nome_curso,$num_alunos,$cod_pasta,$nome_coordenador,$
     $lines = explode(";", $content);
 
     foreach ($lines as $sql){
-      Enviar($sock, $sql);
+	  if (trim($sql) != ""){
+		  Enviar($sock, $sql);
+	  }
     }
  
   }
