@@ -698,27 +698,15 @@ function CriarBaseDoCurso($nome_curso,$num_alunos,$cod_pasta,$nome_coordenador,$
 
   $sock = Conectar($cod_curso);
 
- if ($fh=fopen("base_curso/Base_Vazia.table","r"))
+  if ($fh=fopen("base_curso/Base_Vazia.table","r"))
   {
-    $comando="";
-    while (!feof($fh))
-    {
-      $linha=fgets($fh,1024);
-      if ($linha[0]!="#")
-      {
-        $linha=eregi_replace("\n"," ",$linha);
-        $linha=trim($linha);
-        $comando .= $linha;
+    $content = fread($fh, filesize("base_curso/Base_Vazia.table"));
+    $lines = explode(";", $content);
 
-        if (eregi(";",$linha))
-        {
-          $comando=eregi_replace(";"," ",$comando);
-          $comando=trim($comando);
-          Enviar($sock,$comando);
-          $comando ="";
-        }
-      }
+    foreach ($lines as $sql){
+      Enviar($sock, $sql);
     }
+ 
   }
 
   fclose($fh);
