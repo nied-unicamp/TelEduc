@@ -101,7 +101,8 @@ function VerificaLoginSenha ($login, $senha)
 	$senha_db = $linha['senha'] ;
   }
   
-  return (($num < 1) || ($senha_db != $senha_crypt) || ($confirmacao != "") ? 0 : $cod_usuario);
+  //return (($num < 1) || ($senha_db != $senha_crypt) || ($confirmacao != "") ? 0 : $cod_usuario);
+  return (($num < 1) || ($senha_db != $senha_crypt) ? 0 : $cod_usuario);
 }
 
 /* *********************************************************************

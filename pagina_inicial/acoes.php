@@ -70,17 +70,24 @@
   $cod_usuario = VerificaLoginSenha($login, $_POST['senha']);
   if ($cod_usuario == 0)
   {
-    Desconectar($sock);
-    header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
-    exit;
-  }  
+  	Desconectar($sock);
+  	header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+  	exit;
+  }
+
+  /* Verifica se o usuario jah confirmou o email */
+  if(!VerificaConfirmacaoEmail($login)) {
+  	Desconectar($sock);
+  	header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroConfirmacao&atualizacao=false");
+  	exit;
+  }
   
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
   $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
   $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock, $login) : $login;
-  
+
   //$_SESSION['cod_lingua_s'] 		= $cod_lingua;
-  
+
   $_SESSION['visitante_s'] 			= $cod_visitante_s;
   $_SESSION['visao_formador_s'] = 1;
   
