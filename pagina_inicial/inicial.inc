@@ -964,7 +964,7 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 	$sock = Conectar("");
 	$lista_frases_email 	= RetornaListaDeFrases($sock,-2);
   $lista_frases_correio = RetornaListaDeFrases($sock,11);
-	$flag = "";	/* Inicialmente, não há flag ativiada */
+	$flag = "";	/* Inicialmente, nï¿½o hï¿½ flag ativiada */
 	
   $query 	= "select diretorio from Diretorio where item='raiz_www'";
   $res		= Enviar($sock,$query);
@@ -992,7 +992,7 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 	{
 		if ($dados_usuario["confirmacao"] != "")
 		{
-			// Gera uma nova sequencia de confirmação para o usuário
+			// Gera uma nova sequencia de confirmaï¿½ï¿½o para o usuï¿½rio
 			$sequencia = GeraChave(20);
 	
 			// Atualiza no BD, essa nova chave do usuario
@@ -1000,15 +1000,15 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 	    $query.= "where (cod_usuario = ".$dados_usuario['cod_usuario'].")";
 	    $res	 = Enviar($sock,$query);
 	       
-	    // 87 - Confirmação de cadastro TelEduc
+	    // 87 - Confirmaï¿½ï¿½o de cadastro TelEduc
 	    $assunto = RetornaFraseDaLista($lista_frases_email, 87);
 	    
-	    // 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail
-	    //  clicando no link abaixo. Após isso, sua inscrição será efetuada com sucesso. 
-	    //  Você receberá neste e-mail a sua identificação e senha, e poderá acessar o ambiente normalmente.
-	    // 89 - Caso contrário, favor desconsiderar esta mensagem.
+	    // 88 - Se vocï¿½ se cadastrou no ambiente TelEduc, favor confirmar seu e-mail
+	    //  clicando no link abaixo. Apï¿½s isso, sua inscriï¿½ï¿½o serï¿½ efetuada com sucesso. 
+	    //  Vocï¿½ receberï¿½ neste e-mail a sua identificaï¿½ï¿½o e senha, e poderï¿½ acessar o ambiente normalmente.
+	    // 89 - Caso contrï¿½rio, favor desconsiderar esta mensagem.
 	    // 78 - Atenciosamente
-	    // 03 - Ambiente de Administração do TelEduc
+	    // 03 - Ambiente de Administraï¿½ï¿½o do TelEduc
 	    
 	    $mensagem  = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p>";
 	    $mensagem .= "<p>";
@@ -1022,16 +1022,16 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 	    $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
 	    $mensagem_html = MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $dados_usuario['nome']);
 	    MandaMsg($remetente, $dados_usuario['email'], $assunto, $mensagem_html, '');
-	    $flag = 0; /* Email com autenticação enviada */
+	    $flag = 0; /* Email com autenticaï¿½ï¿½o enviada */
 		}
 		else
 		{
-			$flag = 2; /* usuario já fez a confirmação */
+			$flag = 2; /* usuario jï¿½ fez a confirmaï¿½ï¿½o */
 		}
 	}
 	else
 	{
-		$flag = 1;	/* Usuario não encontrado */
+		$flag = 1;	/* Usuario nï¿½o encontrado */
 	}
 		
 	Desconectar($sock);
@@ -1110,7 +1110,7 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     //87 - ConfirmaÃ§Ã£o de cadastro TelEduc
     $assunto = RetornaFraseDaLista($lista_frases_email, 87);
     
-    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a src='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$dados_usuario['cod_usuario']."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a src='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
     
     /*
     // 74 - Bem-Vindo ao TelEduc!
@@ -1354,16 +1354,16 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
     // 140 - Segue abaixo o seu login e senha conforme solicitado para o curso
     $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
     $mensagem.="<br />";
-    // 67 - Seu login é 
+    // 67 - Seu login ï¿½ 
     $mensagem.="<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
-    // 68 - e sua senha é 
+    // 68 - e sua senha ï¿½ 
     $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
     $mensagem.="<br />";
     // 139 - Atenciosamente,
     $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,139)."\n";
     $mensagem.="<br />";
     $mensagem.=$usuario_adm['nome']."\n\n"; 
-    // Administração TelEduc
+    // Administraï¿½ï¿½o TelEduc
 
 
     // 115 - NAO_RESPONDA
