@@ -127,6 +127,7 @@ function EdicaoArq(i){
     document.formFiles.submit();
   }
   else {
+	alert(lista_frases.msg57);
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
