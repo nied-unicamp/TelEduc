@@ -337,10 +337,10 @@
   echo("              <td>\n");
   echo("                <table cellpadding=\"0\" cellspacing=\"0\"  class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">");
-  /* 68 - Componente */
-  echo("                    <td>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases,68)."</td>\n");
-  /* 1 - Grupos */
-  echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases,1)."&nbsp;&nbsp;</td>\n");
+  /* 82 - Lista de integrantes */
+  echo("                    <td>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases,82)."</td>\n");
+  /* 83 - Número de grupos */
+  echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases,83)."&nbsp;&nbsp;</td>\n");
   /* 70 Ver Perfil */
   echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
   echo("                  </tr>\n");
@@ -402,15 +402,15 @@
   echo("          <input type=\"hidden\" name=\"nova_configuracao\" id=\"nova_relevancia\" value=\"\" />\n");
   echo("        </form>\n");
   echo("        <ul class=\"ulPopup\">\n");
-  /* 47 - Grupos em formação */
+  /* 79 - Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'A'); EscondeLayers();\">\n");
   echo("            <span class=\"check\" id=\"configuracao_A\"></span>\n");
-  echo("            <span>".RetornaFraseDaLista($lista_frases, 47)."</span>\n");
+  echo("            <span>".RetornaFraseDaLista($lista_frases, 79)."</span>\n");
   echo("          </li>\n");
-  /* 48 - Grupos já formados */
+  /* 80 - Não Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'T'); EscondeLayers();\">\n");
   echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");      
-  echo("            <span>".RetornaFraseDaLista($lista_frases, 48)."</span>\n");
+  echo("            <span>".RetornaFraseDaLista($lista_frases, 80)."</span>\n");
   echo("          </li>\n");
   echo("        </ul>\n");
   echo("      </div>\n");

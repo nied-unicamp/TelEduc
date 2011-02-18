@@ -256,7 +256,7 @@
   echo("            spans[k].onclick();\n");
   echo("          }\n");
   echo("        }\n");
-  echo("        document.getElementById('componentes_grupos').innerHTML = '".RetornaFraseDaLista($lista_frases,3)."';\n");
+  echo("        document.getElementById('componentes_grupos').innerHTML = '".RetornaFraseDaLista($lista_frases,78)."';\n");
   echo("        document.getElementById('componentes_grupos').onclick = function(){ AbreListaGrupos(); };\n");
   echo("        NGruposAbertos = 0;\n");
   echo("      }\n\n");
@@ -624,7 +624,7 @@
   }
 
   /* 4 - Grupos dos Componentes */
-  echo("                  <li><a href=\"componentes.php?cod_curso=".$cod_curso."\" >".RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
+  echo("                  <li><a href=\"componentes.php?cod_curso=".$cod_curso."\" >".RetornaFraseDaLista($lista_frases,81)."</a></li>\n");
 
   if(!EVisitante($sock,$cod_curso,$cod_usuario))
   {
@@ -665,10 +665,10 @@
   echo("              <td>\n");
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">");
-  /* 7 - Grupo */
-  echo("                    <td>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases,7)."</td>\n");
-  /* 8 - Componentes */
-  echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases,8)."&nbsp;&nbsp;</td>\n");
+  /* 76 - Lista de Grupos */
+  echo("                    <td>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases,76)."</td>\n");
+  /* 77 - Número de Integrantes */
+  echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases,77)."&nbsp;&nbsp;</td>\n");
   /* 70 (ger) - Opções */
   if (!$bool_grupos_fechados)
       echo("                    <td width=\"10%\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
@@ -715,8 +715,8 @@
   echo("                  </tr>\n");
   echo("                </table>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
-  /* 3 - Componentes dos Grupos */
-  echo("                  <li><span id=\"componentes_grupos\" onclick=\"AbreListaGrupos();\" >".RetornaFraseDaLista($lista_frases,3)."</span></li>\n");
+  /* 78 - Detalhar Todos */
+  echo("                  <li><span id=\"componentes_grupos\" onclick=\"AbreListaGrupos();\" >".RetornaFraseDaLista($lista_frases,78)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -734,15 +734,15 @@
   echo("          <input type=\"hidden\" name=\"nova_configuracao\" id=\"nova_relevancia\" value=\"\" />\n");
   echo("        </form>\n");
   echo("        <ul class=\"ulPopup\">\n");
-  /* 47 - Grupos em formação */
+  /* 79 - Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'A'); EscondeLayers();\">\n");
   echo("            <span class=\"check\" id=\"configuracao_A\"></span>\n");
-  echo("            <span>".RetornaFraseDaLista($lista_frases, 47)."</span>\n");
+  echo("            <span>".RetornaFraseDaLista($lista_frases, 79)."</span>\n");
   echo("          </li>\n");
-  /* 48 - Grupos já formados */
+  /* 80 - Não Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'T'); EscondeLayers();\">\n");
   echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");      
-  echo("            <span>".RetornaFraseDaLista($lista_frases, 48)."</span>\n");
+  echo("            <span>".RetornaFraseDaLista($lista_frases, 80)."</span>\n");
   echo("          </li>\n");
   echo("        </ul>\n");
   echo("      </div>\n");

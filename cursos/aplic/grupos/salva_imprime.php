@@ -103,7 +103,7 @@
         echo("          <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
         echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
-	echo("    <h4 style=\"margin-top:10px;\">".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,3)."</h4><br />\n");
+	echo("    <h4 style=\"margin-top:10px;\">".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,78)."</h4><br />\n");
 	echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 	echo("    <tr>\n");
   	echo("      <td valign=\"top\">\n");
