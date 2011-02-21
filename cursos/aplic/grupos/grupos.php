@@ -95,9 +95,9 @@
   echo("      arrayMostraGrupo[1]='".RetornaFraseDaLista($lista_frases,19)."';\n");
   echo("      arrayMostraGrupo[2]='Incluir Componentes';\n");
   echo("      arrayMostraGrupo[3]='Excluir Selecionados';\n");
-  /* 31 - Não há Componentes neste grupo.*/
+  /* 31 - Não há integrantes neste grupo.*/
   echo("      arrayMostraGrupo[4]='".RetornaFraseDaLista($lista_frases,31)."';\n");
-  /* 12 - Componentes do grupo: */
+  /* 12 - Integrantes do grupo: */
   echo("      arrayMostraGrupo[5] = '".RetornaFraseDaLista($lista_frases, 12)."';\n");
   echo("      var janelaIncluir;\n");
   echo("      var novaJanela;\n");
@@ -242,7 +242,7 @@
   echo("		  }");
   echo("          }\n");
   echo("        }\n");
-  /* 66 - Ocultar Componentes  */
+  /* 66 - Ocultar Todos  */
   echo("        document.getElementById('componentes_grupos').innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
   echo("        document.getElementById('componentes_grupos').onclick = function(){ FechaListaGrupos(); };\n");
   echo("        NGruposAbertos = NGrupos;\n");
@@ -530,7 +530,7 @@
   echo("  if(aberto == 0) NGruposAbertos++;\n");
 
   echo("  if ((NGrupos - NGruposAbertos) == 0){\n");
-  /* 66 - Ocultar Componentes */
+  /* 66 - Ocultar Todos */
   echo("    document.getElementById('componentes_grupos').innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
   echo("    document.getElementById('componentes_grupos').onclick = function(){ FechaListaGrupos(); };\n");
   echo("  }\n");
@@ -583,13 +583,13 @@
 
   if ($bool_grupos_fechados)
   {
-    /* 48 - Grupos já formados */
-    $tmp=RetornaFraseDaLista($lista_frases,48);
+    /* 80 - Não permitir alteração */
+    $tmp=RetornaFraseDaLista($lista_frases,80);
   }
   else
   {
-    /* 47 - Grupos em formação */
-    $tmp=RetornaFraseDaLista($lista_frases,47);
+    /* 79 - Permitir alteração */
+    $tmp=RetornaFraseDaLista($lista_frases,79);
   }
 
   echo(" - ".$tmp."</h4>\n");
@@ -653,7 +653,7 @@
       /* 46 - Configurar Grupos */
       echo("                  <li><span onclick=\"Configurar(event);\">".RetornaFraseDaLista($lista_frases,46)."</span></li >");
       /*  Salvar/Imprimir */
-      echo("                  <li><span onClick=\"SalvaImprime();\">".RetornaFraseDaLista($lista_frases,72)."</span></li>\n");
+     // echo("                  <li><span onClick=\"SalvaImprime();\">".RetornaFraseDaLista($lista_frases,72)."</span></li>\n");
       
     }
   }
@@ -717,6 +717,8 @@
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 78 - Detalhar Todos */
   echo("                  <li><span id=\"componentes_grupos\" onclick=\"AbreListaGrupos();\" >".RetornaFraseDaLista($lista_frases,78)."</span></li>\n");
+  /*  Salvar/Imprimir */
+  echo("                  <li><span onClick=\"SalvaImprime();\">".RetornaFraseDaLista($lista_frases,72)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

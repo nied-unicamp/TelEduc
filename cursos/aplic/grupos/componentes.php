@@ -216,7 +216,7 @@
   echo("        newTd.setAttribute('id', 'td_usuario_'+cod_usuario);\n");
   echo("        newSpan = document.createElement('span');\n");
   echo("        newSpan.setAttribute('id', 'span_usuario_'+cod_usuario);\n");
-  echo("        newSpan.innerHTML='".RetornaFraseDaLista($lista_frases, 69).":';\n");
+  echo("        newSpan.innerHTML='".RetornaFraseDaLista($lista_frases, 1).":';\n");
   echo("        newSpan.style.fontWeight='bold';\n");
   echo("        newBR = document.createElement('br');\n");
   echo("        newSpan.appendChild(newBR);\n");
@@ -288,13 +288,13 @@
   
   if ($bool_grupos_fechados)
   {
-    /* 48 - Grupos já formados */
-    $tmp=RetornaFraseDaLista($lista_frases,48);
+    /* 80 - Não permitir alteração */
+    $tmp=RetornaFraseDaLista($lista_frases,80);
   }
   else
   {
-    /* 47 - Grupos em formação */
-    $tmp=RetornaFraseDaLista($lista_frases,47);
+    /* 79 - Permitir alteração */
+    $tmp=RetornaFraseDaLista($lista_frases,79);
   }
 
   echo(" - ".$tmp."</h4>\n");
