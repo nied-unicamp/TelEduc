@@ -144,25 +144,37 @@
     header("Location:editar_dinam.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
   } else if ($acao == "validarImportacao"){
  	$sock = MudarDB($sock, "");	
- 	
+
  	$array = explode(";", $cod_curso_todos);
+	
+ 	
+ 	
+ 	
+ 	
   	$tipo_curso_origem = $array[0]; 
   	$cod_curso_origem = $array[1];
-
-  	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
-  	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
-  	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
-  	$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+  	$tipo_curso = $_GET['tipo_curso'];
+  	$cod_categoria = $_GET['cod_categoria'];
+  	//var_dump($lista_frases);
   	
-  	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
-  		$_SESSION['flag_curso_compartilhado'] = TRUE;
-  		header("Location:importar_dinamica.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
-  	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
-  		$_SESSION['flag_curso_compartilhado'] = FALSE;
-  		header("Location:importar_dinamica.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
-  	} else {
-  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
-  	}
+	if($cod_curso_origem != NULL){ 
+  		$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
+  		$_SESSION['cod_curso_origem'] = $cod_curso_origem;
+  		$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
+  		$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+  	
+  		if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+  			$_SESSION['flag_curso_compartilhado'] = TRUE;
+  			header("Location:importar_dinamica.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+  		} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
+  			$_SESSION['flag_curso_compartilhado'] = FALSE;
+  			header("Location:importar_dinamica.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+  		} else {
+  			header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+  		}
+	}else{
+		header("Location:importar_curso.php?cod_curso=".$cod_curso."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_categoria=".$cod_categoria."&acao_imp=FalhaImportacao&atualizacao=false");
+	}
   	
   } else if ($acao == "importarItem"){
   	

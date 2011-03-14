@@ -55,6 +55,9 @@ $objMaterial->registerFunction("AlterarPeriodoDinamic");
 // Manda o xajax executar os pedidos acima.
 $objMaterial->processRequests();
 
+
+
+
 // **************** VARI�VEIS DE ENTRADA ****************
 //    c�digo do curso
 if (isset ($_GET['cod_curso']))
@@ -68,10 +71,14 @@ if (isset ($_POST['cod_categoria']))
 else
 	$cod_categoria = "NULL";
 
-if (isset ($_POST['tipo_curso']))
-	$tipo_curso = $_POST['tipo_curso'];
+if (isset ($_GET['tipo_curso']))
+	$tipo_curso = $_GET['tipo_curso'];
 else
-	$tipo_curso = 'A';
+	if (isset ($_POST['tipo_curso']))
+		$tipo_curso = $_POST['tipo_curso'];
+	else
+		$tipo_curso = 'A';
+	
 
 if ($tipo_curso == 'E') {
 	// Inicializa as datas para um per�odo de um semestre anterior
@@ -98,6 +105,9 @@ $cod_ferramenta = 16;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 1;
 include ("../topo_tela.php");
+
+$feedbackObject =  new FeedbackObject($lista_frases);
+$feedbackObject->addAction("FalhaImportacao", 0, 58);
 
 /* Verifica se o usuario eh formador. */
 $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
@@ -153,6 +163,7 @@ if ($tipo_curso == 'E') {
 echo ("        function Iniciar()\n");
 echo ("        {\n");
 echo ("          startList();\n");
+				 $feedbackObject->returnFeedback($_GET['acao_imp'], $_GET['atualizacao']);
 echo ("        }\n\n");
 
 echo ("      function Voltar()\n");
@@ -386,14 +397,18 @@ if ('E' == $tipo_curso) {
 	echo ("                      </form>");
 	echo ("                    </td>\n");
 }
-
+//var_dump($cod_topico_raiz);
 echo ("                <form name=\"frmImpMaterial\" method=\"get\" action=\"acoes_linha.php\" />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
 echo ("                        <input type=\"hidden\" name=\"tipo_curso\" value='" . $tipo_curso . "' />\n");
 echo ("                        <input type=\"hidden\" id=getme name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
-echo ("                  <input type=hidden name=tipo_curso value='" . $tipo_curso . "' />\n");
+
+//var_dump($cod_curso);
+//var_dump($tipo_curso);
+//var_dump($cod_topico_raiz);
+//var_dump($cod_ferramenta);
 
 if ('E' == $tipo_curso) {
 	echo ("                  <input type=\"hidden\" name=\"data_inicio\" value='" . $data_inicio . "' />\n");
@@ -453,6 +468,9 @@ echo ("                    </td>\n");
 echo ("                    <td>\n");
 /* 36 - Importar dinamica */
 echo ("                      <input type=\"submit\" class=\"input\" style=\"width:150px;\" value=\"" . RetornaFraseDaLista($lista_frases, 36) . "\" />\n");
+
+
+
 echo ("                    </td>\n");
 echo ("                  </tr>\n");
 echo ("                </table>\n");

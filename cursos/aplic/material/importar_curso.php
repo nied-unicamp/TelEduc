@@ -309,7 +309,6 @@ if ('E' == $tipo_curso) {
 }
 // 44(biblioteca) - Categorias
 echo ("                    <td align=\"center\" width=\"15%\"><b>" . RetornaFraseDaLista($lista_frases_biblioteca, 44) . "</b></td>\n");
-
 switch ($tipo_curso) {
 	// 109 - Cursos em andamento com "material" compartilhado
 	case 'A' :
