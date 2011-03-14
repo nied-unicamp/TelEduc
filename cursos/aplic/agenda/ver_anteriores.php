@@ -92,6 +92,9 @@
   echo("        var i;\n");
   echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
   echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("		if (cod_itens.length == 0){\n");
+  echo("		  return;\n");
+  echo("		}\n");
   echo("        for(i = 0; i < cod_itens.length; i++){\n");
   echo("          e = cod_itens[i];\n");
   echo("          e.checked = CabMarcado;\n");
