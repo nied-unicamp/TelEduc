@@ -173,7 +173,7 @@
   			header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
   		}
 	}else{
-		header("Location:importar_curso.php?cod_curso=".$cod_curso."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_categoria=".$cod_categoria."&acao_imp=FalhaImportacao&atualizacao=false");
+		header("Location:importar_curso.php?cod_curso=".$cod_curso."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_categoria=".$cod_categoria."&acao_feedback=FalhaImportacao&atualizacao=false");
 	}
   	
   } else if ($acao == "importarItem"){

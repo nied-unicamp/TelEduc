@@ -66,10 +66,13 @@ else
 	if (!isset ($_GET['cod_curso']))
 		$cod_curso = $_POST['cod_curso'];
 //    c�digo da categoria do curso
-if (isset ($_POST['cod_categoria']))
-	$cod_categoria = $_POST['cod_categoria'];
+if (isset ($_GET['cod_categoria']))
+	$cod_categoria = $_GET['cod_categoria'];
 else
-	$cod_categoria = "NULL";
+	if (isset ($_POST['cod_categoria']))
+		$cod_categoria = $_POST['cod_categoria'];
+	else
+		$cod_categoria = "NULL";
 
 if (isset ($_GET['tipo_curso']))
 	$tipo_curso = $_GET['tipo_curso'];
@@ -163,7 +166,7 @@ if ($tipo_curso == 'E') {
 echo ("        function Iniciar()\n");
 echo ("        {\n");
 echo ("          startList();\n");
-				 $feedbackObject->returnFeedback($_GET['acao_imp'], $_GET['atualizacao']);
+				 $feedbackObject->returnFeedback($_GET['acao_feedback'], $_GET['atualizacao']);
 echo ("        }\n\n");
 
 echo ("      function Voltar()\n");
@@ -234,8 +237,14 @@ echo ("        }\n\n");
 
 echo ("        function mudarCategoria()\n");
 echo ("        {\n");
-echo ("          document.frmImpMaterial.action = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
-echo ("          document.frmImpMaterial.submit();\n");
+
+echo ("        document.frmImpMaterial.action = 'importar_curso.php';\n");
+echo ("        document.frmImpMaterial.cod_curso.value = " . $cod_curso . ";\n");
+echo ("        document.frmImpMaterial.tipo_curso.value = '" . $tipo_curso . "';\n");
+echo ("        document.frmImpMaterial.submit();\n");
+
+//echo ("          document.frmImpMaterial.action = 'importar_curso.php?cod_curso=" . $cod_curso . "&cod_usuario=" . $cod_usuario . "&cod_ferramenta=" . $cod_ferramenta . "';\n");
+//echo ("          document.frmImpMaterial.submit();\n");
 echo ("        }\n\n");
 
 echo ("      </script>\n\n");
@@ -419,20 +428,23 @@ echo ("                    <td align=\"center\">\n");
 
 $categorias = RetornaCategoriasCursos($sock, $tipo_curso, $cod_ferramenta);
 
+
 // Monta Select com as categorias de cursos
-echo ("                      <select name=\"cod_categoria\" class=\"input\" onchange='");
+echo ("                      <select name=\"cod_categoria\" class=\"input\" onChange='");
 echo ((($tipo_curso == 'E') ? "CopiaPeriodo();" : "") . "mudarCategoria();'>\n");
 
 if (count($categorias) > 0) {
 	foreach ($categorias as $idx => $cod) {
 		echo ("                        <option value=" . $cod["cod_pasta"]);
-		echo ((($cod["cod_pasta"] == $cod_categoria) ? " selected=\"selected\"" : ""));
+		//echo ((($cod["cod_pasta"] == $cod_categoria) ? " selected=\"selected\"" : ""));
+		echo ((($cod["cod_pasta"] == $cod_categoria) ? " selected" : ""));
 		echo (">" . $cod["pasta"] . "</option> \n");
 	}
 }
 
 // 45(biblioteca) - Cursos Gerais
-echo ("                        <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected=\"selected\"" : "") . ">" . RetornaFraseDaLista($lista_frases_biblioteca, 45) . "</option> \n");
+//echo ("                        <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected=\"selected\"" : "") . ">" . RetornaFraseDaLista($lista_frases_biblioteca, 45) . "</option> \n");
+echo ("                          <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected" : "") . ">" . RetornaFraseDaLista($lista_frases_biblioteca, 45) . "</option> \n");
 echo ("                      </select>\n");
 echo ("                    </td>\n");
 echo ("                    <td align=\"center\">\n");
