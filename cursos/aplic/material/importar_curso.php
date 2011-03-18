@@ -61,6 +61,8 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
 $feedbackObject->addAction("validarImportacao", 0, 88);
+$feedbackObject->addAction("FalhaImportacao", 0, 151);
+
 
 
 // **************** VARIAVEIS DE ENTRADA ****************
@@ -135,6 +137,7 @@ switch ($cod_ferramenta) {
 
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 6;
+
 
 echo ("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n\n");
 if ($tipo_curso == 'E') {
@@ -236,7 +239,7 @@ echo ("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
 echo ("      function Iniciar()\n");
 echo ("      {\n");
 echo ("        startList();\n");
-$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+$feedbackObject->returnFeedback($_GET['acao_feedback'], $_GET['atualizacao']);
 echo ("      }\n\n");
 echo ("    </script>\n");
 
@@ -396,7 +399,6 @@ echo ("                      <td align=\"center\">\n");
 
 echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_curso\" value='" . $cod_curso . "' />\n");
-echo ("                        <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"cod_topico_raiz\" value='" . $cod_topico_raiz . "' />\n");
 echo ("                        <input type=\"hidden\" name=\"acao\" value=\"validarImportacao\" />\n");
 echo ("                        <input type=\"hidden\" name=\"tipo_curso\" value='" . $tipo_curso . "' />\n");

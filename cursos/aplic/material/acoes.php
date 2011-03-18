@@ -259,6 +259,9 @@
   	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
   	$cod_curso_origem = $cod_cursos[1];
   	
+  	$tipo_curso = $_GET['tipo_curso'];
+  	$cod_categoria = $_GET['cod_categoria'];
+  	
   	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
   	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
   	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
@@ -274,11 +277,11 @@
 	  		$_SESSION['flag_curso_compartilhado'] = FALSE;
 	  		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem);
 	  	} else {
-	  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+	  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."&acao_feedback=".$acao."&atualizacao=false");
 	  	}
   	}
   	else
-  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."");
+  		header("Location:importar_curso.php?cod_ferramenta=".$cod_ferramenta."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_categoria=".$cod_categoria."&acao_feedback=FalhaImportacao&atualizacao=false");
   	
   }else if ($acao == "importarItem"){
   	
