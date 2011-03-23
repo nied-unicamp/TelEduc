@@ -51,7 +51,21 @@
   $cod_ferramenta_ajuda = $cod_ferramenta;
  
   $cod_pagina_ajuda=1;
+  
+  $tipo_usuario="A";
 
+  require_once("../xajax_0.2.4/xajax.inc.php");
+
+  // Estancia o objeto XAJAX
+  $objMaterial = new xajax();
+  // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xaja
+  $objMaterial->registerFunction("IniciaPaginacaoDinamic");
+  $objMaterial->registerFunction("MudaDinamic");
+  $objMaterial->registerFunction("PaginacaoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objMaterial->processRequests();
+
+  
   include("../topo_tela.php");
   
   // instanciar o objeto, passa a lista de frases por parametro
@@ -59,14 +73,28 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("enviouOrientacao", 50, 51);
 
+  /* variavel de ordenacao da lista de alunos. Ex: ordenar por nome */
+  if (!isset($ordem))
+  {
+    $ordem="nome";
+  }
+  
 
   /* Funções javascript */
+  $objMaterial->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\">\n");
-  echo(" 	  var imprimir_perfil = 0;");//vari�vel global 
+  /* <Variaveis globais> */
+  echo(" 	  var imprimir_perfil = 0;\n");
+  echo("	  var qtdPag=1;\n");
+  echo("	  var intervalo=1;\n");
+  echo("	  var atual=1;\n");
+  echo("	  var aux='T';\n");
+  /* </ Variaveis globais> */
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
+  echo("	    xajax_IniciaPaginacaoDinamic(".$cod_curso.",'".$tipo_usuario."','".$ordem."');\n");
   echo("      }\n\n");
   
   /* *****************************************************************
@@ -267,8 +295,237 @@
   echo("		  	li.className = 'menuUp';\n");
   echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = '';}\n");   
   echo("      }\n\n");
+  
+  /********************************************************************
+   * Funcao Inicial
+   * Inicia a paginacao dinamica criando os controladores de paginacao
+   ********************************************************************/
+  echo("function Inicial(limit,flag) {\n");
+  echo("	if (limit>=1) {\n");
+  echo("		qtdPag=limit;\n");
+  echo("		var inicia=flag;\n");
+  echo("		var tab=document.getElementById('tabelaInterna');\n");
+  echo("		var tbody=tab.lastChild;\n");
+  echo("		var controle=document.getElementById('controle_aluno');\n");
+  echo("		var coluna=document.createElement('td');\n");
+  echo("		coluna.colSpan=\"5\";\n");
+  echo("		coluna.align=\"right\";");
+  /* Criando os span necessarios para a paginacao, ir para o primeiro nao eh valido pois estamos na primeira pagina. */
+  echo("		var first=document.createElement('span');\n");
+  echo("		first.innerHTML=\"<<&nbsp;&nbsp;\";\n");
+  echo("		coluna.appendChild(first);\n");
+  echo("		var ant=document.createElement('span');\n");
+  echo("		ant.innerHTML=\"<&nbsp;&nbsp;\";\n");
+  echo("		coluna.appendChild(ant);\n");
+  echo("		var prox=document.createElement('span');\n");
+  echo("		prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
+  echo("		var last=document.createElement('span');\n");
+  echo("		last.innerHTML=\"&nbsp;&nbsp;>>\";\n");
+  echo("		first.className=\"none\";\n");
+  echo("		ant.className=\"none\";\n");
+  echo("		first.onclick=\"none\";\n");
+  echo("		ant.onclick=\"none\";\n");
+  /* Verificando se ainda existirao mais paginacoes */
+  echo("		if (flag=='L') {\n");
+  echo("			prox.className=\"paginacao\";\n");
+  echo("			prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("			last.className=\"paginacao\";\n");
+  echo("			last.onclick=function(){xajax_MudaDinamic(intervalo,'L',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("			aux='BV';\n");
+  echo("		} else {\n");
+  echo("			prox.className=\"none\";\n");
+  echo("			last.className=\"none\";\n");
+  echo("			prox.onclick=\"none\";\n");
+  echo("			last.onclick=\"none\";\n");
+  echo("			aux= 'B';\n");
+  echo("		}\n");
+  /* Paginando os indices iniciais, ate 5, ou ate o fim das mensagens */
+  echo("		for(var i=1;i<=limit;i++) {\n");
+  echo("			var GerSpan=document.createElement('span');\n");
+  echo("			GerSpan.id=i;\n");
+  echo("			if (atual==i) {\n");
+  echo("				GerSpan.className=\"paginaAtual\";\n");
+  echo("				GerSpan.onclick=\"none\";");
+  echo("			} else {\n");
+  echo("			GerSpan.className=\"paginacao\";\n");
+  echo("			GerSpan.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');}\n");
+  echo("			}\n");
+  echo("			GerSpan.innerHTML='<a>[&nbsp;'+i+'&nbsp;]</a>';\n");
+  echo("			coluna.appendChild(GerSpan);\n");
+  echo("		}\n");
+  echo("		coluna.appendChild(prox);\n");
+  echo("		coluna.appendChild(last);\n");
+  echo("		var linha=document.createElement('tr');\n");
+  echo("		linha.setAttribute('name','germen');\n");
+  echo("		linha.id=\"control\";\n");
+  echo("		linha.appendChild(coluna);\n");
+  echo("		tbody.insertBefore(linha,controle);\n");
+  echo("	}\n");
+  echo("}\n");
 
-    echo("    </script>\n");
+
+  /********************************************************************************************** 
+   * Paginacao
+   * Funcao que controla paginacao - estou criando a paginacao nova...depois de mudar o intervalo 
+   **********************************************************************************************/
+  echo("function Paginacao(status) {\n");
+  echo("	var tab=document.getElementById('tabelaInterna');\n");
+  echo("	var tbody=document.createElement('tbody');\n");
+  echo("	var td_pagina=document.createElement('td');\n");
+  echo("	td_pagina.colSpan=\"5\";");
+  echo("	td_pagina.align=\"right\";");
+  echo("	var span_first=document.createElement('span');\n");
+  echo("	span_first.innerHTML=\"<<&nbsp;&nbsp;\";\n");
+  echo("	var span_ant=document.createElement('span');\n");
+  echo("	span_ant.innerHTML=\"<&nbsp;&nbsp;\";\n");
+  echo("	var span_last=document.createElement('span');\n");
+  echo("	span_last.innerHTML=\"&nbsp;&nbsp;>>\";\n");
+  echo("	var span_prox=document.createElement('span');\n");
+  echo("	span_prox.innerHTML=\"&nbsp;&nbsp;>\";\n");
+  /* Verificando se a paginacao para voltar esta liberada, ou seja se nao eh a primeira pagina */
+  echo("	if(status== 'BV') {\n");
+  echo("		span_first.className=\"none\";\n");
+  echo("		span_first.onclick=\"none\";\n");
+  echo("		span_ant.className=\"none\";\n");
+  echo("		span_ant.onclick=\"none\";\n");
+  echo("		span_last.className=\"paginacao\";\n");
+  echo("		span_last.onclick=function(){xajax_MudaDinamic(intervalo,'L',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_prox.className=\"paginacao\";\n");
+  echo("		span_prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		aux='BV';\n");
+  echo("	}\n");
+  echo("	if(status== 'LV' || status== 'LF') {\n");
+  echo("		span_first.className=\"paginacao\";\n");
+  echo("		span_first.onclick=function(){xajax_MudaDinamic(intervalo,'PR',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_ant.className=\"paginacao\";\n");
+  echo("		span_ant.onclick=function(){xajax_MudaDinamic(intervalo,'A',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_last.className=\"paginacao\";\n");
+  echo("		span_last.onclick=function(){xajax_MudaDinamic(intervalo,'L',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_prox.className=\"paginacao\";\n");
+  echo("		span_prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		aux='LF';\n");
+  echo("	}\n");
+  echo("	if(status== 'BF') {\n");
+  echo("		span_first.className=\"paginacao\";\n");
+  echo("		span_first.onclick=function(){xajax_MudaDinamic(intervalo,'PR',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_ant.className=\"paginacao\";\n");
+  echo("		span_ant.onclick=function(){xajax_MudaDinamic(intervalo,'A',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
+  echo("		span_last.className=\"none\";\n");
+  echo("		span_last.onclick=\"none\";\n");
+  echo("		span_prox.className=\"none\";\n");
+  echo("		span_prox.onclick=\"none\";\n");
+  echo("		aux='BF';\n");
+  echo("	}");
+  echo("	if(status== 'B') {\n");
+  echo("  		span_first.className=\"none\";\n");
+  echo("		span_first.onclick=\"none\";\n");
+  echo("		span_ant.className=\"none\";\n");
+  echo("		span_ant.onclick=\"none\";\n");
+  echo("		span_last.className=\"none\";\n");
+  echo("		span_last.onclick=\"none\";\n");
+  echo("		span_prox.className=\"none\";\n");
+  echo("		span_prox.onclick=\"none\";\n");
+  echo("		aux='B';\n");
+  echo("	}");
+  echo("	td_pagina.appendChild(span_first);\n");
+  echo("	td_pagina.appendChild(span_ant);\n");
+  /* Criando os indices */
+  echo("	for(var i=1;i<=qtdPag;i++) {\n");
+  echo("		var td_span=document.createElement('span');\n");
+  echo("		ind=(parseInt(i))+(parseInt(intervalo))-1;\n");
+  echo("		if (ind==atual) {\n");
+  echo("			td_span.className=\"paginaAtual\";\n");
+  echo("			td_span.onclick=\"none\";\n");
+  echo("		} else {\n");
+  echo("			td_span.className=\"paginacao\";\n");
+  echo("			td_span.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,".$cod_curso.",'".$tipo_usuario."','".$ordem."','".$acao."','".$ativado."','".$desativado."');}\n");
+  echo("		}\n");
+  echo("		td_span.id=ind;\n");
+  echo("		td_span.innerHTML='<a>[&nbsp;'+ind+'&nbsp;]</a>';\n");
+  echo("		td_pagina.appendChild(td_span);\n");
+  echo("	}\n");
+  /* Verificando a paginacao para frente */
+  echo("    td_pagina.appendChild(span_prox);\n");
+  echo("	td_pagina.appendChild(span_last);\n");
+  echo("	var tr_span=document.createElement('tr');\n");
+  echo("	tr_span.setAttribute('name','germen');\n");
+  echo("	tr_span.id=\"control\";\n");
+  echo("	tr_span.appendChild(td_pagina);\n");
+  echo("	tbody.appendChild(tr_span);\n");
+  echo("	tab.appendChild(tbody);\n");
+  echo("}\n");
+
+
+  echo("function MudaIntervalo(aux) {\n");
+  echo("	intervalo=aux;\n");
+  echo("}\n");
+
+  echo("function ApagaPagina(flag) {\n");
+  echo("	var	tr_ger=getElementsByName_iefix('tr', 'germen');\n");
+  echo("	var tam=tr_ger.length;\n");
+  echo("	var naveg=document.getElementById('control');\n");
+  echo("	naveg.parentNode.removeChild(naveg);\n");
+  echo("	if(flag=='T') {\n");
+  echo("		for(var i=1; i<tam; i++){\n");
+  echo("			var ger=document.getElementById('ger');\n");
+  echo("			ger.parentNode.removeChild(ger);\n");
+  echo("		}\n");
+  echo("	}");
+  echo("}\n");
+
+  echo("function CriaElementoTab(nome,dtins,dados,cod,acao,port) {\n");
+  echo("	var tab=document.getElementById('tabelaInterna');\n");
+  echo("	var tbody=document.createElement('tbody');");
+  echo("	var td_check=document.createElement('td');\n");
+  echo("	td_check.style.width='2%';");
+  echo("	var check=document.createElement('input');\n");
+  echo("	check.type=\"checkbox\";\n");
+  echo("	check.setAttribute('name','cod_usu[]');\n");
+  echo("	check.setAttribute('value',cod);\n");
+  echo("	check.onclick=new Function(\"VerificaCheck()\");\n");
+  echo("	td_check.appendChild(check);\n");
+  echo("	var td_nome=document.createElement('td');\n");
+  echo("	td_nome.align=\"left\";\n");
+  echo("	td_nome.innerHTML=nome;\n");
+  echo("	var td_data=document.createElement('td');\n");
+  echo("	td_data.innerHTML=dtins;\n");
+  echo("	var td_dados=document.createElement('td');\n");
+  echo("	td_dados.innerHTML=\"<a href=gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=\"+cod+\"\>".RetornaFraseDaLista($lista_frases,79)."</a>\";\n");
+  echo("	var tr_ger=document.createElement('tr');\n");
+  echo("	tr_ger.setAttribute('name','germen');\n");
+  echo("	tr_ger.id=\"ger\";\n");
+  echo("	tr_ger.appendChild(td_check);\n");
+  echo("	tr_ger.appendChild(td_nome);\n");
+  echo("	tr_ger.appendChild(td_data);\n");
+  echo("	tr_ger.appendChild(td_dados);\n");
+  /* Caso esteja em inscricoes registradas precisamos criar o campo portifolio */
+  echo("	if(acao== 'R'){\n");
+  echo("		var td_port=document.createElement('td');\n");
+  echo("		td_port.innerHTML=port;\n");
+  echo("		td_port.id='status_port'+cod;\n");
+  echo("		tr_ger.appendChild(td_port);\n");
+  echo("	}\n");
+  echo("	tab.appendChild(tbody);");
+  echo("	tbody.appendChild(tr_ger);\n");
+  echo("}\n");
+
+  /********************************************************************
+   * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
+   ********************************************************************/
+  echo("function getElementsByName_iefix(tag, name) {\n");
+  echo("	var elem = document.getElementsByTagName(tag);\n");
+  echo("	var arr = new Array();\n");
+  echo("	for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+  echo("		var att = elem[i].getAttribute('name');\n");
+  echo("		if(att == name) {\n");
+  echo("			arr[iarr] = elem[i];\n");
+  echo("			iarr++;\n");
+  echo("		}\n");
+  echo("	}\n");
+  echo("	return arr;\n");
+  echo("}\n");
+
+  echo("    </script>\n");
 
   include("../menu_principal.php");
 
@@ -324,6 +581,22 @@
 
   $lista = ListaUsuario($sock,"A",$cod_curso);
 
+  /* Sistema de Paginacao */
+  $num=count($lista);
+  /* Numero de mensagens exibidas por pagina.*/
+  $msg_por_pag=10;
+  /* Calcula o numero de paginas geradas.*/
+  $total_pag = ceil($num / $msg_por_pag);
+
+  /* Se a pagina atual nao estiver setada entao, por padrao, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a pagina eh maior que o total de paginas, se for */
+  /* atribui o valor de $total_pag  a $pag_atual.                                    */
+  if ((!isset($pag_atual))or($pag_atual=='')or($pag_atual==0)) {
+  	$pag_atual =  1;
+  } else {
+  	$pag_atual = min($pag_atual, $total_pag);
+  }
+
 
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
@@ -375,9 +648,9 @@
       $num_usuario++;
     }
     
-    echo("                    <tr>\n");
+    echo("                    <tr id=\"controle_aluno\">\n");
     echo("                      <td colspan=\"3\">\n");
-    echo("                        <ul >\n");
+    echo("                        <ul>\n");
     echo("                          <li id=\"MostrarSelAlunos\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
     echo("                            <span id=\"MostrarSelAlunosB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
@@ -749,9 +1022,9 @@
   echo("            </tr>\n");
   echo("          </table>\n");
 
-  echo("          <script type=\"text/javascript\">\n");
-  echo("            Iniciar();\n");
-  echo("          </script>\n");
+//  echo("          <script type=\"text/javascript\">\n");
+//  echo("            Iniciar();\n");
+//  echo("          </script>\n");
 
   echo("        </td>\n");
   echo("      </tr>\n");

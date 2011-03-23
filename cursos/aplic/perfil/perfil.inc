@@ -692,4 +692,136 @@ function EditarPerfilDinamic($cod_curso, $cod_usuario, $novo_nome, $texto){
  
 }
 
+/**
+ * IniciaPaginacaoDinamic - Funcao que cria a paginacao inicial
+ * @param $cod_curso
+ * @param $tipo_usuario
+ * @param $ordem
+ */
+function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem) {
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	$sock=Conectar("");
+	$lista_usuarios=ListaUsuario($sock,$tipo_usuario,$cod_curso);
+	$total_usuarios=count($lista_usuarios);
+
+	/* Numero de paginas a ser mostrada */
+	$paginas=(ceil($total_usuarios/10));
+
+	/* Caso exista mais que 5 paginas mostramos a primeira paginacao com 5*/
+	/* A variavel que controla o proximo eh liberada, assim a navegacao ainda existe para frente*/
+	$prox="N";
+	if($paginas>5) {
+		$paginas=5;
+		$prox="L";
+	}
+
+	$objResponse->addScriptCall("Inicial",(int)$paginas,$prox);
+
+	return $objResponse->getXML();
+
+}
+
+/**
+ * MudaDinamic - Controla a mudanca no intervalo de paginacao
+ * @param unknown_type $intervalo
+ * @param unknown_type $flag
+ * @param unknown_type $cod_curso
+ * @param unknown_type $tipo_usuario
+ * @param unknown_type $ordem
+ */
+function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	$sock=Conectar("");
+	$lista_usuarios=ListaUsuario($sock,$tipo_usuario,$cod_curso);
+	$total_usuarios=count($lista_usuarios);
+	if($flag=='L'){
+		$intervalo=(ceil(($total_usuarios-50)/10))+1;
+		$status='BF';
+	}
+	if($flag=='P'){
+		if($total_usuarios-(($intervalo*10)+50)<=0)
+		$status='BF';
+		else
+		$status='LF';
+		$intervalo++;
+	}
+	if($flag=='A'){
+		$intervalo--;
+		if($intervalo==1)
+		$status='BV';
+		else
+		$status='LV';
+	}
+	if($flag=='PR'){
+		$intervalo=1;
+		$status='BV';
+	}
+	$objResponse->addScriptCall("MudaIntervalo",$intervalo);
+	$objResponse->addScriptCall("ApagaPagina",'N');
+	$objResponse->addScriptCall("Paginacao",$status);
+	return $objResponse->getXML();
+}
+
+/**
+ * PaginacaoDinamic - Funcao responsavel por criar a paginacao
+ * @param $aux
+ * @param $pag
+ * @param $pag_atual
+ * @param $cod_curso
+ * @param $tipo_usuario
+ * @param $ordem
+ * @param $acao
+ * @param $ativado
+ * @param $desativado
+ */
+function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$acao,$ativado,$desativado){
+	$objResponse = new xajaxResponse('ISO-8859-1');
+
+	/* Busca no banco os registros a serem mostrados */
+	$sock=Conectar("");
+	$lista_usuarios=ListaUsuario($sock,$tipo_usuario,$cod_curso);
+	$num=count($lista_usuarios);
+
+	/* comeca a preparar ate onde pegaremos, ou seja, se for a ultima pagina vai ate o fim, caso contrario
+	 * pega vai ate um multiplo de 10
+	 */
+
+	$limite=((int)$pag_atual*10);
+	$i=(((int)$pag_atual-1)*10)+1;
+
+	if($i==0) {
+		$i=1;
+	}
+
+	if(($num-$limite)< 0) {
+		$limite=$num;
+	}
+
+	/* apaga todas as mensagens anteriores.Teremos 10 mensagens ou ateh terminar caso seja a ultima pagina */
+	$objResponse->addScriptCall("ApagaPagina",'T');
+
+	/* colocamos na pagina o conteudo da respectiva pagina */
+	$control=1;
+	foreach($lista_usuarios as $cod_usuario_l => $linha){
+		if($control>=$i && $control<=$limite){
+			if($acao=='R'){
+				if($linha['portfolio'] == "ativado")
+				$port=$ativado;
+				else
+				$port=$desativado;
+			}
+			$objResponse->addScriptCall("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$acao,$port);
+		}
+		$control++;
+	}
+	
+	/* muda a variavel atual via javascript, para tirar o evento onclick da pagina que
+	 esta sendo mostrada*/
+	$objResponse->addScriptCall("MudaAtual",$pag_atual);
+
+	$objResponse->addScriptCall("Paginacao",$aux);
+	$objResponse->addScriptCall("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
+	return $objResponse->getXML();
+}
+
 ?>
