@@ -194,7 +194,7 @@
   echo("      {\n");
   echo("        if (AlertaBoolean()==true)\n");
   echo("        {\n");
-  echo("          document.gerenc.action='gerenciamento2.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."';\n");
+  echo("          document.gerenc.action='/gerenciamento2.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."';\n");
   echo("          document.gerenc.method='post';\n");
   echo("          document.gerenc.opcao.value='dados';\n");
   echo("          document.gerenc.submit();\n");
@@ -212,7 +212,7 @@
   echo("        {\n");
   echo("          document.gerenc.method='post';\n");
   echo("          document.gerenc.action='acoes.php';\n");
-  echo("          document.gerenc.action.value='mudarinteracao';\n");
+  echo("          document.gerenc.action_js.value='mudarinteracao';\n");
   echo("          document.gerenc.submit();\n");
   echo("        }\n");
   /* Se n�o houver nada selecionado */
@@ -361,7 +361,7 @@
   // variavel que indica que veio da pagina gerenciamento4.php
   echo("      <input type=\"hidden\" name=\"origem\" value=\"convidado\">");
   echo("      <input type=\"hidden\" name=\"action_ger\" value=\"nenhuma\">\n");
-  echo("      <input type=\"hidden\" name=\"action\" value=\"nenhuma\">\n");
+  echo("      <input type=\"hidden\" name=\"action_js\" value=\"nenhuma\">\n");
   // P�gina Principal
   /* 1 - Administra��o */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");

@@ -44,6 +44,8 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
+  $action = $_POST['action_js'];
+  
    $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");
@@ -204,7 +206,7 @@
     /*verifica se o usuario ja esta cadastrado, mudando o login para o dele, caso ele esteja cadastrado*/
 	foreach($dados_preenchidos_s as $cod =>$linha){
 		if($emails[strtoupper($linha['email'])]==1){
-					$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);/*pega o login do usuário*/
+					$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);/*pega o login do usuï¿½rio*/
 					$dados_preenchidos_s[$cod]['status_email']=1;	
 		}
 		else
