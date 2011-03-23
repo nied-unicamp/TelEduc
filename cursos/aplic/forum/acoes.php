@@ -77,7 +77,7 @@
   
     $atualizacao="true";
     if (!((MensagemExiste($sock, $codRespondeMensagem, $cod_forum)) &&
-      (SalvaMensagem($sock, $codRespondeMensagem, $cod_forum, $cod_usuario, $msg_titulo, $msg_corpo)))){
+      (SalvaMensagem($sock, $codRespondeMensagem, $cod_forum, $cod_usuario, $msg_titulo, $msg_corpo, $cod_curso)))){
       /* 30 - Erro ao responder a mensagem. Verifique se a mensagem não foi apagada.. */
       $atualizacao="false";
     }
