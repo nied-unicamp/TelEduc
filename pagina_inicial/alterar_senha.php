@@ -83,6 +83,7 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        document.form_senhas.senha_antiga.focus();\n");
+  echo("        document.form_senhas.senha_antiga.value = \"\";\n");
   echo("        startList();\n");
   echo("      }\n\n");
   
@@ -192,7 +193,7 @@
   echo("                        <td>\n");
   /* 6 - Digite sua senha antiga: */ 
   echo("                          ".RetornaFraseDaLista($lista_frases_configurar,6)."\n");
-  echo("                          <input class=\"input\" type=\"password\" name=\"senha_antiga\" id=\"senha_antiga\" size=\"16\" maxlength=\"16\" />\n");
+  echo("                          <input class=\"input\" type=\"password\" name=\"senha_antiga\" id=\"senha_antiga\" size=\"16\" maxlength=\"16\" onLoad />\n");
   echo("                        </td>\n");
   echo("                        <td>\n");
   echo("                          <table>\n");
