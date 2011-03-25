@@ -57,8 +57,13 @@
   $pag_atual = "cadastro.php";
   include("../topo_tela_inicial.php");
 
+  echo("    <script type=\"text/javascript\">\n\n");
+  echo("      function Iniciar() {\n");
+  echo("      }\n\n");
+  echo("    </script>\n\n");
+
   $lista_escolaridade=RetornaListaEscolaridade($sock);
-  
+
   include("../menu_principal_tela_inicial.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -119,7 +124,7 @@
   echo("            </tr>\n");
   echo("          </table>\n");
   echo("        </td>\n");
-  echo("      </tr>\n"); 
+  echo("      </tr>\n");
   include("../rodape_tela_inicial.php");
   echo("  </body>\n");
   echo("</html>\n");
