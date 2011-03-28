@@ -43,6 +43,7 @@
   $bibliotecas = "../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc"); 
   include("exibe_cursos.inc");
+  include("inicial.inc");
   $pag_atual = "exibe_cursos.php";
   // Inicio TopoTela
   $sock=Conectar("");
@@ -81,14 +82,14 @@
   
   $lista_frases_autenticacao = RetornaListaDeFrases($sock, 25);
 
-  /* Caso o usuário nÃo esteja logado, manda para tela de login. */
+  /* Caso o usuï¿½rio nï¿½o esteja logado, manda para tela de login. */
   if (empty ($_SESSION['login_usuario_s']))
   {
     header("Location: ../cursos/aplic/index.php");
     Desconectar($sock);
     exit;
   }
-  /* Caso o usuário nÃ£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
+  /* Caso o usuï¿½rio nÃ£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
   else if(!PreencheuDadosPessoais($sock))
   {
     Desconectar($sock);

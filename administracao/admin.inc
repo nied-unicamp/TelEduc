@@ -1575,4 +1575,19 @@ function VerificaSeLoginExiste($sock,$login)
 
   return $linha;
 }
+
+/* **********************************************************************
+   RetornaConfiguracao - Retorna o conte�do de um item da configura��o
+   Entrada: $sock - sock da base externa
+            $item - item a ser buscado
+   Saida: conte�do
+*/
+function RetornaConfiguracao($sock,$item)
+{
+  $query="select valor from Config where item='".$item."'";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return ($linha['valor']);
+}
+
 ?>
