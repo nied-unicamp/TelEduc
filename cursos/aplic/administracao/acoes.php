@@ -44,7 +44,8 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
-  $action = $_POST['action_js'];
+  $action = $_POST['action'];
+  $action_js = $_POST['action_js'];
   
    $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
@@ -131,7 +132,7 @@
   }
 
 
-  if($action == "mudarinteracao")
+  if($action_js == "mudarinteracao")
   {
     $interacao_atual  = RetornaListaConvidados ($sock,$cod_curso, 'a', "nome");
 
