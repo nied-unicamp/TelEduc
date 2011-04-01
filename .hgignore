@@ -3,3 +3,4 @@ cursos/aplic/bibliotecas/teleduc.inc
 cursos/diretorio
 cursos/diretorio/**
 *.DS_Store*
+*.metadata*

@@ -66,6 +66,8 @@
   	$cod_curso = $_POST['cod_curso'];
   }
 
+  
+  
   // Verifica se o usuario e a senha estao corretos
   $cod_usuario = VerificaLoginSenha($login, $_POST['senha']);
   if ($cod_usuario == 0)
@@ -84,13 +86,21 @@
   
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
   $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
-  $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock, $login) : $login;
+  $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock) : $login;
 
   //$_SESSION['cod_lingua_s'] 		= $cod_lingua;
 
   $_SESSION['visitante_s'] 			= $cod_visitante_s;
   $_SESSION['visao_formador_s'] = 1;
   
+  
+  /* Se a autenticacao for para inscricao, manda para tela de inscricao */
+  if($_POST['destino']=="inscricao") {
+  	Desconectar($sock);
+  	header("Location:inscricao.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso);
+  	exit;
+  }
+
   /* Verifica se o cod_curso corresponde a um curso valido e 
    * se foi fornecido algum cod_curso no ato de login 
    */

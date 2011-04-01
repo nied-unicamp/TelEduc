@@ -168,7 +168,6 @@ function VerificaConfirmacaoEmail ($login)
 	$query.= "where login='".$login."'";
 	$res = Enviar($sock, $query);
 	$linha = RetornaLinha($res);
-	Desconectar($sock);
 	return ($linha[0] == "") ? true : false;
 }
 
