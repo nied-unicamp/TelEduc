@@ -45,6 +45,7 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("forum.inc");
+  include("avaliacoes_forum.inc");
   require_once("../xajax_0.2.4/xajax.inc.php");
   
   $cod_ferramenta=9;
@@ -60,6 +61,7 @@
 
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
+  $AcessoAvaliacaoF = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
   
   
   if ($acao=='nova_msg'){
@@ -94,7 +96,7 @@
   {
     $atualizacao="true";
 
-    if (($AcessoAvaliacao)&&(ForumEraAvaliacao($sock,$cod_forum)))
+    if (($AcessoAvaliacaoF)&&(ForumEraAvaliacao($sock,$cod_forum)))
     {
       $cod_avaliacao=RetornaCodAvaliacaoDeletada($sock,$cod_forum);
       if (ExcluiAvaliacaoForum($sock, $cod_avaliacao,$cod_usuario))
@@ -125,7 +127,7 @@
   {
     $atualizacao="true";
 
-    if (($AcessoAvaliacao)&&(ForumEraAvaliacao($sock,$cod_forum)))                 //avalia�o foi apagada, tem que recuper�la
+    if (($AcessoAvaliacaoF)&&(ForumEraAvaliacao($sock,$cod_forum)))                 //avalia�o foi apagada, tem que recuper�la
     {
       $cod_avaliacao=RetornaCodAvaliacaoDeletada($sock,$cod_forum);
       if (RecuperaAvaliacaoForum($sock,$cod_avaliacao,$cod_usuario))
@@ -155,7 +157,7 @@
   }else if ($acao=='apagar'){
   
     $atualizacao="true";
-    if (($AcessoAvaliacao)&&(ForumEhAvaliacao($sock,$cod_forum)))
+    if (($AcessoAvaliacaoF)&&(ForumEhAvaliacao($sock,$cod_forum)))
     {
       $cod_avaliacao=RetornaCodAvaliacao($sock,$cod_forum);
       if (ApagaAvaliacaoForum($sock, $cod_avaliacao,$cod_usuario))

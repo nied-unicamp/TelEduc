@@ -65,9 +65,9 @@
     $cod_pagina_ajuda=1;
 
   include("../topo_tela.php");
-
-  $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
-//  $AcessoAvaliacao = true;
+  
+  $AcessoAvaliacaoF = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
+//  $AcessoAvaliacaoF = true;
 
   $feedbackObject =  new FeedbackObject($lista_frases);
   $feedbackObject->addAction("excluir", 65, 66);
@@ -276,7 +276,7 @@
       /* pertencentes a ele ser� movidas para a Lixeira. Se o F�um for avalia�o, a avalia�o tamb� ser�movida para a lixeira DAS AVALIA�ES) */
       echo("        if(confirm('".RetornaFraseDaLista($lista_frases, 105)."'))");
       echo("        {\n");
-      echo("          document.location='acoes.php?cod_forum='+id+'&cod_curso=".$cod_curso."&acao=apagar';\n");
+      echo("          document.location='acoes.php?cod_forum='+id+'&cod_curso=".$cod_curso."&acao=apagar&';\n");
       echo("        }\n");
       echo("      }\n\n");
 
@@ -426,7 +426,7 @@
       echo("         window.open('configurar_forum.php?cod_curso=".$cod_curso."&cod_forum='+cod_forum+'&status='+status, 'ConfigurarForum', 'height=380,width=660,status=yes,toolbar=no,menubar=no,location=no');\n");
       echo("      }\n");
 
-      if($AcessoAvaliacao)
+      if($AcessoAvaliacaoF)
       {
         echo("      function CriarAvaliacao(id,avaliacao)\n");
         echo("      {\n");
@@ -468,7 +468,7 @@
     }
   }
 
-  if ($AcessoAvaliacao)
+  if ($AcessoAvaliacaoF)
   {
   	echo("      function VerAvaliacao(id) {\n");
     echo("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_topico=".$cod_topico_raiz."&cod_avaliacao='+id,'VerAvaliacao','width=600,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
@@ -586,7 +586,7 @@
   /* 11 - Data */
   echo("                    <td style=\"cursor:pointer\" align=\"center\">".RetornaFraseDaLista($lista_frases,11)."</td>\n");
  
-  if($AcessoAvaliacao){
+  if($AcessoAvaliacaoF){
     /* 92 - Avaliação */
     echo("                    <td style=\"cursor:pointer\" align=\"center\">".RetornaFraseDaLista($lista_frases,92)."</td>\n");
   }
@@ -655,7 +655,7 @@
           /* 1 - Apagar */
           echo("                        <li><span onclick='ApagarForum(\"".$lista_foruns[$num]['cod_forum']."\");'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
           /* 95 - Criar Avalia�o */
-          if($AcessoAvaliacao && !$EhAvaliacao)
+          if($AcessoAvaliacaoF && !$EhAvaliacao)
             echo("                        <li><span onclick='CriarAvaliacao(\"".$lista_foruns[$num]['cod_forum']."\");'>".RetornaFraseDaLista($lista_frases, 95)."</span></li>\n");      
         }
         else if ($status == 'D')

@@ -72,9 +72,9 @@ function ForumEhAvaliacao ($sock,$cod_forum)
 ************************************************************************/
 function ApagaAvaliacaoForum($sock, $cod_avaliacao,$cod_usuario)
 {
-  $query = "update Avaliacao set status = 'A' where cod_avaliacao= ".$cod_avaliacao;
+  $query = "update Avaliacao set status = 'X' where cod_avaliacao= ".$cod_avaliacao;
   $res = Enviar($sock, $query);
-   $consulta="insert into Avaliacao_historicos values (".$cod_avaliacao.", ".$cod_usuario.", ".time().", 'A')";
+   $consulta="insert into Avaliacao_historicos values (".$cod_avaliacao.", ".$cod_usuario.", ".time().", 'X')";
   $res=Enviar($sock,$consulta);
   return($res);
 }
