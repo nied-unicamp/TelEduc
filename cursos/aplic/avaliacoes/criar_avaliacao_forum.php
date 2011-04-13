@@ -57,7 +57,13 @@
   GeraJSComparacaoDatas();
   /* ***************** Funï¿½ï¿½es JavaScript **************** */
 
+  
   echo("  <script language=javascript>\n");
+  echo("      function Iniciar()\n");
+  echo("      {\n");
+  
+  echo("        startList();\n");
+  echo("      }\n\n");
 
   echo("  function Atualiza() {\n");
   echo("    document.atualizar.submit();\n");
@@ -112,7 +118,33 @@
   echo("    	alert('".RetornaFraseDaLista($lista_frases,212)."');");
   echo("        return(false); \n");
   echo("	}\n");
+  // 8 - Verifica se as datas estao em um formato valido 
+  echo("   if (! DataValidaAux(document.avaliacao.data_inicio)) {\n");
+  echo("       return false;\n");
+  echo("   } \n");
+  echo("   if (! DataValidaAux(document.avaliacao.data_fim)) {\n");
+  echo("       return false;\n");
+  echo("   } \n");
+  echo("}\n");
 
+  echo("  function verifica_valor(campo) \n");
+  echo("  {\n");
+  echo("    var valor = campo.value;\n");
+  echo("  if (check)\n");
+  echo("    {\n");
+  echo("      if (valor_com_digito_estranho(valor)) \n");
+  echo("      {\n");
+  echo("      check=false;\n");
+ /* 5 - Você digitou caracteres estranhos neste valor da atividade. */
+  /* 6 - Use apenas dígitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5).*/
+  /* 7 - Por favor retorne e corrija.*/
+  echo("        alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."');\n");
+  echo("        return(false);\n");
+  echo("      }\n");
+  echo("    }\n");
+  echo("  }\n");
+  
+  
   echo("  function valor_com_digito_estranho(valor) \n");
   echo("  {\n");
   echo("    var erro=false;\n");
@@ -136,14 +168,9 @@
   echo("    return(erro);\n");
   echo("  }\n");
 
-  // 8 - Verifica se as datas estao em um formato valido 
-  echo("   if (! DataValidaAux(document.avaliacao.data_inicio)) {\n");
-  echo("       return false;\n");
-  echo("   } \n");
-  echo("   if (! DataValidaAux(document.avaliacao.data_fim)) {\n");
-  echo("       return false;\n");
-  echo("   } \n");
-  echo("}\n");
+  
+  
+  
   
   echo("function limpadados(){\n");
   echo("	form = document.avaliacao\n");
