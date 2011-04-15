@@ -306,7 +306,7 @@ function VerificaAutenticacao($cod_curso)
               if(!PreencheuDadosPessoais($sock))
               {
                 Desconectar($sock);
-                header("Location:../../pagina_inicial/preencher_dados.php?cod_curso=".$cod_curso."&acao=preencherDados&atualizacao=true");
+                header("Location:{$caminho}/preencher_dados.php?cod_curso=".$cod_curso."&acao=preencherDados&atualizacao=true");
               }
 
 	      	  Desconectar($sock);
