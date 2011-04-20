@@ -86,7 +86,9 @@
   
   $_SESSION['cod_usuario_global_s'] = $cod_usuario;
   $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'],$cod_curso) : "";
-  $_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock) : $login;
+  //Email nao pode mais ser usado para login
+  //$_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock) : $login;
+  $_SESSION['login_usuario_s']	= $login;
 
   //$_SESSION['cod_lingua_s'] 		= $cod_lingua;
 
