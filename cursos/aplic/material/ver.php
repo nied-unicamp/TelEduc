@@ -109,7 +109,7 @@
 
   $sock=Conectar($cod_curso);
 
-  $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
+  $AcessoAvaliacaoM = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
   switch ($cod_ferramenta) {
     case 3 :
@@ -1475,7 +1475,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
       }
   }
 
-  if (($eformador) && ($cod_ferramenta==3) && ($AcessoAvaliacao))
+  if (($eformador) && ($cod_ferramenta==3) && ($AcessoAvaliacaoM))
   {
     echo("                  <tr class='head'>\n");
     /* 90 - Avalia�o */

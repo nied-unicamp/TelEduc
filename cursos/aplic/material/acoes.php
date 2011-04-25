@@ -68,6 +68,9 @@
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso); 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   
+  $AcessoAvaliacaoM = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
+  
+  
   switch ($cod_ferramenta) {
     case 3 :
       $tabela="Atividade";
@@ -92,7 +95,7 @@
   if ($acao=="apagarItem"){
  
     ApagarItem($sock, $tabela, $cod_item, $cod_usuario);
-    if (($cod_ferramenta==3) && ($AcessoAvaliacao))
+    if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))
     {
       if (AtividadeEhAvaliacao($sock,$cod_item))
       {
@@ -122,7 +125,6 @@
     }
 
   }
-  
   else if ($acao=="apagarSelecionados")
   {
     $cod_topicos_array = explode(",", $cod_topicos);
@@ -133,9 +135,8 @@
 
       foreach ($cod_itens_array as $cod => $linha){
 		ApagarItem($sock, $tabela, $linha, $cod_usuario);
-
-
-        if (($cod_ferramenta==3) && ($AcessoAvaliacao))          
+		
+        if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))          
         {          
           if (AtividadeEhAvaliacao($sock,$linha))
           {            

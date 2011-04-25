@@ -125,7 +125,7 @@
 
   $sock = Conectar($cod_curso);
 
-  $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
+  $AcessoAvaliacaoM = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
   switch ($cod_ferramenta) {
     case 3 :
@@ -508,7 +508,7 @@
     echo("        return false;\n");
     echo("      }\n\n");
 
-    if(($cod_ferramenta==3) && ($AcessoAvaliacao))    {
+    if(($cod_ferramenta==3) && ($AcessoAvaliacaoM))    {
       echo("      function VerAvaliacao(id) {\n");
       echo("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&VeioDaAtividade=1&origem=../material/material&cod_topico=".$cod_topico_raiz."&cod_avaliacao='+id,'VerAvaliacao','width=450,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
       echo("        return(false);\n");
@@ -529,7 +529,7 @@
   include("../menu_principal.php");
 
   $cod_pagina=1;
-  if(($cod_ferramenta==3)&&($AcessoAvaliacao)&&($eformador))/*verifi��o se aparecer� ajuda de avalia��es*/
+  if(($cod_ferramenta==3)&&($AcessoAvaliacaoM)&&($eformador))/*verifi��o se aparecer� ajuda de avalia��es*/
     $cod_pagina=6;
 
 
@@ -639,7 +639,7 @@
     /* 14 - Compartilhar */
     echo("                      <td width=\"20%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,14)."</td>\n");
 
-    if(($cod_ferramenta==3)&&($AcessoAvaliacao)){
+    if(($cod_ferramenta==3)&&($AcessoAvaliacaoM)){
       /* 90 - Avaliacao */
       echo("                      <td width=\"10%\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
     }
@@ -706,7 +706,7 @@
           echo("                      <td class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=\"0\" alt=\"\" />&nbsp;&nbsp;<a href=\"material.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$linha['cod_topico']."\">".$linha['topico']."</a></td>\n");
           echo("                      <td width=\"10%\" align=\"center\">".$data."</td>\n"); //dani
           echo("                      <td width=\"20%\">&nbsp;</td>\n");
-          if (($cod_ferramenta==3) && ($AcessoAvaliacao))
+          if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))
             echo("                      <td width=\"8%\">&nbsp;</td>\n");
         }else{
 
@@ -769,7 +769,7 @@
             echo("                      <td width=\"10%\" align=\"center\"><span id=\"data_".$linha['cod_item']."\">".$data."</span></td>\n");
             echo("                      <td width=\"20%\" align=\"center\">".$compartilhamento."</td>\n");
 
-            if (($cod_ferramenta==3)&&($AcessoAvaliacao))
+            if (($cod_ferramenta==3)&&($AcessoAvaliacaoM))
             {
               if (AtividadeEhAvaliacao($sock,$linha['cod_item']))
               {
