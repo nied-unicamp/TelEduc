@@ -1627,7 +1627,7 @@ function CriarTopico ($sock, $cod_topico_raiz, $novo_nome, $cod_usuario, $cod_gr
     $cod_grupo="NULL";
   $posicao=UltimaPosicaoLivre($sock, $cod_topico_raiz);
 
-  $consulta="insert into Portfolio_topicos (cod_topico_pai, cod_usuario, cod_grupo, topico, tipo_compartilhamento, data, posicao_topico) values (".$cod_topico_raiz.", ".$cod_usuario.", ".$cod_grupo.", '".$novo_nome."', 'P', ".time().", ".$posicao.")";
+  $consulta="insert into Portfolio_topicos (cod_topico_pai, cod_usuario, cod_grupo, topico, tipo_compartilhamento, data, posicao_topico) values (".$cod_topico_raiz.", ".$cod_usuario.", ".$cod_grupo.", '".$novo_nome."', 'T', ".time().", ".$posicao.")";
   $res=Enviar($sock, $consulta);
 
   $consulta="select cod_topico from Portfolio_topicos where posicao_topico='".$posicao."' and cod_topico_pai='".$cod_topico_raiz."'";
