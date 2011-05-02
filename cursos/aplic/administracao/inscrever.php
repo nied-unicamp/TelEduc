@@ -71,7 +71,8 @@
 
   //adicionar as acoes possiveis, 1o parametro é
   $feedbackObject->addAction("dadosPreenchidosLogin", 0, 281);
-
+  $feedbackObject->addAction("usuarioComPapelExistente", 0, "Nao foi possivel cadastrar, pois o usuario jah estah cadastrado com esse papel.");
+  
   /*Funcao JavaScript*/
   echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");

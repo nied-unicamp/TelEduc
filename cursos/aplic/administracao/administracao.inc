@@ -1593,4 +1593,39 @@ function AlterarFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $cod_fe
 	return $objResponse->getXML();	
 }
 
+
+/**
+ * UsuarioComMesmoPapel - Verifica se o usuario jah estah inscrito no curso com o mesmo papel
+ * @param $email - email do usuario	
+ * @param $cod_curso - codigo do curso
+ * @param $papel - papel do usuario no curso que serah verificado
+ * @return Boolean - true, se o usuario jah estah inscrito no curso com o papel(tipo_usuario). False, caso contrario
+ */
+function UsuarioComMesmoPapel($email, $cod_curso, $papel) {
+	$sock=Conectar("");
+
+	// 2Session
+	$dbnamebase = $_SESSION['dbnamebase'];
+
+	/* Seleciona todos os papeis do usuario no determinado curso */
+	$query="select UC.tipo_usuario
+			from ".$dbnamebase.".Usuario_curso UC 
+			inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) 
+			where U.email = '".$email."' 
+			and UC.cod_curso=".$cod_curso." ";
+
+	$res = Enviar($sock,$query);
+
+	$lista_tipo_usuario = RetornaArrayLinhas($res);
+
+	/* Itera na lista de papeis para verificar se o usuario jah estah inscrito no curso com o papel */
+	foreach($lista_tipo_usuario as $tipo_usuario => $linha) {
+		if($linha['tipo_usuario']==$papel) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 ?>

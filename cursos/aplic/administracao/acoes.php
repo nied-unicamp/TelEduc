@@ -204,58 +204,58 @@
     // booleano que indica se um login passado jah estah sendo usado por outro usuario
     $login_existente = false;
     $email_existente = false;
-    /*verifica se o usuario ja esta cadastrado, mudando o login para o dele, caso ele esteja cadastrado*/
-	foreach($dados_preenchidos_s as $cod =>$linha){
-		if($emails[strtoupper($linha['email'])]==1){
-					$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);/*pega o login do usu�rio*/
-					$dados_preenchidos_s[$cod]['status_email']=1;	
-		}
-		else
-			$dados_preenchidos_s[$cod]['status_email']=0;
-	}
-    foreach($dados_preenchidos_s as $cod => $linha)
-    {
-      if ($logins[strtoupper($linha['login'])]==1 && $linha['status_email']==0)
-      {
-        $dados_preenchidos_s[$cod]['login'];
-        $dados_preenchidos_s[$cod]['status_login']=1;
-        $dados_preenchidos_s[$cod]['login']=GeraLogin($sock,$linha['email']);
-        $login_existente=true;
-      }
+    
+    // verifica se o usuario ja esta cadastrado, pegando o login dele, caso ele esteja cadastrado
+    foreach($dados_preenchidos_s as $cod =>$linha) {
+    	if($emails[strtoupper($linha['email'])]==1) {	// Se o email jah existe no BD
+    		//$dados_preenchidos_s[$cod]['login']=PegaLogin($sock,$linha['email']);	// Pega o login do usuario, a partir do email existente
+    		$dados_preenchidos_s[$cod]['status_email']=1;		// Seta flag de status de email jah existente
+    	} else {
+    		$dados_preenchidos_s[$cod]['status_email']=0;		// Seta flag de status de email nao existente
+    	}
     }
 
-    if(($login_existente == true)){
+    // percorre os dados preenchidos, e verifica se o login jah existe. Se sim, gera um novo login baseado no email
+    foreach($dados_preenchidos_s as $cod => $linha) {
+    	if ($logins[strtoupper($linha['login'])]==1) {
+    		$dados_preenchidos_s[$cod]['login'];
+    		$dados_preenchidos_s[$cod]['status_login']=1;
+    		$dados_preenchidos_s[$cod]['login']=GeraLogin($sock,$linha['email']);
+    		$login_existente=true;
+    	}
+    }
+
+    // se o login jah existe, volta para tela de inscricao, exibe msg de erro de inscricao e sugere um login previamente gerado
+    if(($login_existente == true)) {
     	$_SESSION['array_inscricao']=$dados_preenchidos_s;
-       	header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
-    }  	
-    else
-    {
-      foreach($dados_preenchidos_s as $cod => $linha)
-      {
-        $linha['tipo_usuario']=$tipo_usuario;
-        $linha['senha']=GeraSenha();
-        if($linha['status_email']==1){
-        		$cadastrado=CadastradoCurso($sock,$linha['status_email'],$linha['login'],$cod_curso);
-        		if($cadastrado==false) 
-         				$sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);	
-        }
-        else
-        	$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
-        
-      }
-      $dados_preenchidos_s = "";
+    	header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
+    } else {
+    	//se o login nao existe, percorre os dados preenchidos e verifica se o email jah existe
+    	foreach($dados_preenchidos_s as $cod => $linha) {
+    		$linha['tipo_usuario']=$tipo_usuario;
+    		$linha['senha']=GeraSenha();
+    		if($linha['status_email']==1 && UsuarioComMesmoPapel($linha['email'], $cod_curso, $linha['tipo_usuario'])) {
+    			// se o email jah existe e usuario estah sendo cadastrado com um papel que jah possui
+    			header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=usuarioComPapelExistente&atualizacao=false");
+    			exit();
+    		} else {	// senao, cadastra normalmente
+    			$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
+    		}
+    	}
+    	
+    	$dados_preenchidos_s = "";
 
-      if($tipo_usuario == "z")
-      {
-        $dest = "gerenciamento4.php";
-        $tipo_usuario = "a";
-      }
-      else
-        $dest = "gerenciamento.php";
-      $confirma='true';
+    	if($tipo_usuario == "z")
+    	{
+    		$dest = "gerenciamento4.php";
+    		$tipo_usuario = "a";
+    	}
+    	else
+    	$dest = "gerenciamento.php";
+    	$confirma='true';
 
-      Desconectar($sock);
-      header("Location:".$dest."?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."&acao_fb=".$action."&atualizacao=".$confirma."");
+    	Desconectar($sock);
+    	header("Location:".$dest."?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."&acao_fb=".$action."&atualizacao=".$confirma."");
     }
   }
 
