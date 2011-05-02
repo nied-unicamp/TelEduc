@@ -54,6 +54,7 @@
   $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
   $objAjax->registerFunction("VerificaNotas");
   $objAjax->registerFunction("AplicaExercicioDinamic");
+  $objAjax->registerFunction("ExcluirExercicioDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
   
@@ -779,6 +780,8 @@
   echo("        if(checks[i].checked){\n");
   echo("          getNumber=checks[i].id.split(\"_\");\n");
   echo("          xajax_AlteraStatusExercicioDinamic(".$cod_usuario.",".$cod_curso.",getNumber[1],op);\n");
+  echo("		  if(op == \"L\")\n");
+  echo("          	xajax_ExcluirExercicioDinamic(".$cod_curso.",".$cod_usuario.",getNumber[1]);\n");
   echo("          deletaArray[j++] = getNumber[1];\n");
   echo("		  totalExercicios--;");
   echo("          }\n");

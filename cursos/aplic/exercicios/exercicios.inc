@@ -2385,6 +2385,66 @@ function AplicaExercicioDinamic($cod_curso,$cod_exercicio,$cod_usuario,$dt_disp,
     return $objResponse->getXML();
 }
 
+/********************************************************************************************************
+  ExcluirExercicioInternoDinamic - Exclui Exercicio Interno
+  Entrada: $cod_curso - codigo do curso
+  		   $cod_usuario - codigo do usuario
+           $cod_exercicio - codigo do exercicio
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function ExcluirExercicioInternoDinamic($cod_curso,$cod_usuario,$cod_exercicio)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+
+    $sock=Conectar($cod_curso);
+    
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
+    
+    $query = "delete from Exercicios_aplicado where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio);
+    Enviar($sock,$query);
+    
+    if($cod_avaliacao != 0)
+    {
+      $query = "delete from Avaliacao where cod_avaliacao = ".$cod_avaliacao;
+      Enviar($sock,$query);
+    }
+    
+    CancelaResolucaoDoExercicio($sock,$cod_exercicio);
+    
+    $objResponse->addRedirect("exercicios.php?cod_curso=".$cod_curso."&visualizar=E");
+    
+    return $objResponse->getXML();
+}
+
+/********************************************************************************************************
+  ExcluirExercicioDinamic - Exclui Exercicio
+  Entrada: $cod_curso - codigo do curso
+  		   $cod_usuario - codigo do usuario
+           $cod_exercicio - codigo do exercicio
+  Saida: XML da funcao ajax
+********************************************************************************************************/
+function ExcluirExercicioDinamic($cod_curso,$cod_usuario,$cod_exercicio)
+{ 
+    $objResponse = new xajaxResponse('ISO-8859-1');
+
+    $sock=Conectar($cod_curso);
+    
+    $cod_avaliacao = RetornaCodAvaliacao($sock,$cod_exercicio);
+    
+    $query = "delete from Exercicios_aplicado where cod_exercicio = ".VerificaNumeroQuery($cod_exercicio);
+    Enviar($sock,$query);
+    
+    if($cod_avaliacao != 0)
+    {
+      $query = "delete from Avaliacao where cod_avaliacao = ".$cod_avaliacao;
+      Enviar($sock,$query);
+    }
+    
+    CancelaResolucaoDoExercicio($sock,$cod_exercicio);
+    
+    
+    return $objResponse->getXML();
+}
 
 /********************************************************************************************************
   CancelaAplicacaoExercicioDinamic - Cancela aplicacao do exercicio

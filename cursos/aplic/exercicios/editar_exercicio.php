@@ -69,6 +69,9 @@
   $objAjax->registerFunction("MudaStatusArquivosDinamic");
   $objAjax->registerFunction("AlteraStatusExercicioInternoDinamic");
   $objAjax->registerFunction("VerificaNotas");
+  $objAjax->registerFunction("ExcluirExercicioInternoDinamic");
+  $objAjax->registerFunction("AlteraStatusExercicioDinamic");
+  
   
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
@@ -1238,7 +1241,9 @@
   
   echo("	function ApagarExercicio(){\n");
   echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 196)."')){\n");
-  echo("				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
+  //echo("				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
+  echo("				xajax_AlteraStatusExercicioDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
+  echo("				xajax_ExcluirExercicioInternoDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.");\n");
   echo("	  }\n");
   echo("	}\n");	
 	
