@@ -230,19 +230,13 @@
     	$_SESSION['array_inscricao']=$dados_preenchidos_s;
     	header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
     } else {
-    	//se o login nao existe, percorre os dados preenchidos e verifica se o email jah existe
+    	//se o login nao existe, percorre os dados preenchidos e faz o cadastro.
     	foreach($dados_preenchidos_s as $cod => $linha) {
     		$linha['tipo_usuario']=$tipo_usuario;
     		$linha['senha']=GeraSenha();
-    		if($linha['status_email']==1 && UsuarioComMesmoPapel($linha['email'], $cod_curso, $linha['tipo_usuario'])) {
-    			// se o email jah existe e usuario estah sendo cadastrado com um papel que jah possui
-    			header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=usuarioComPapelExistente&atualizacao=false");
-    			exit();
-    		} else {	// senao, cadastra normalmente
-    			$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
-    		}
+    		$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
     	}
-    	
+
     	$dados_preenchidos_s = "";
 
     	if($tipo_usuario == "z")
