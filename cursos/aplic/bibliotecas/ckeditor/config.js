@@ -19,11 +19,11 @@ CKEDITOR.editorConfig = function( config )
 	
 	config.toolbar_TelEduc =
 		[
-		 	['Save','NewPage','Preview'],['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
+		 	['NewPage','Preview'],['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		 	['Find','Replace','-','SelectAll','RemoveFormat'],
 		    ['Bold', 'Italic', 'Underline','Strike', 'Subscript','Superscript', '-', 'NumberedList', 'BulletedList'],
 		    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Image','YouTube','SpecialChar'], '/',
-		    ['Styles','Format','Font','FontSize'], ['TextColor','BGColor'],
+		    ['Font','FontSize'], ['TextColor','BGColor'],
 		    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
 		    ['Link', 'Unlink'],
 		    ['Undo','Redo'],

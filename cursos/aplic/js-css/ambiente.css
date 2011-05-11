@@ -286,6 +286,7 @@ input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204
   position:static;
   margin:0;
   padding:0;
+  height:100%
   /*height:1.0em;*/
 }
 
@@ -293,6 +294,7 @@ input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204
 .divRichText h2{
   font-size:2.0em;
   font-weight:bold;
+  height:100%
 /*  background-color:#ff0;*/
   /*height:0.9em;*/
 }
@@ -304,6 +306,7 @@ input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204
   background-color:#FFF;
   padding:0;
   margin:0;
+  height:100%
   /*height:0.9em;*/
 }
 
@@ -313,6 +316,7 @@ input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204
   color:#696969;
   background-color:#FFF;
   padding:0;
+  height:100%
   /*height:0.9em;*/
 }
 
@@ -323,13 +327,19 @@ input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204
 /*  background-color:none;*/
   padding:0;
   margin:0;
+  height:100%
   /*height:0.9em;*/
 }
 
 .divRichText font{
   line-height:normal;
 }
+
 div.divRichText font{
+  line-height:normal;
+}
+
+.divRichText span{
   line-height:normal;
 }
 
