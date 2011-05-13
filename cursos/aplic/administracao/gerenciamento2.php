@@ -697,7 +697,7 @@
         echo("                            &nbsp;<b>".RetornaFraseDaLista($lista_frases,121)."</b>\n");
         echo("                          </td>\n");
         echo("                          <td style=\"border:none\">\n");
-		    if(ECoordenadorMesmo($sock, $cod_curso, $cod_usuario_local)){			
+		    if(EFormadorMesmo($sock, $cod_curso, $cod_usuario_local)){			
 		    	echo("															<div>".$dados['email']." <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,24)."\" onclick=\"document.getElementById('div_email').style.display='block'; this.parentNode.style.display='none';\"/></div>
 		    																			<div id=\"div_email\" style=\"display:none;\">
 			    																			<form action=\"\" method=\"post\">
