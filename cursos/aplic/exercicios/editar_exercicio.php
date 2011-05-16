@@ -1240,11 +1240,20 @@
 	");
   
   echo("	function ApagarExercicio(){\n");
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 196)."')){\n");
+  
+  				if($exercicio['status'] == 'L'){   //se o exercicio ja estiver na lixeira, ele eh excluido definitivamente
+  echo("      		if (confirm('".RetornaFraseDaLista($lista_frases, 122)."')){\n");
+  echo("				xajax_AlteraStatusExercicioDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'X');\n");
+  echo("				Voltar();\n");						
+  echo("	  		}\n");						
+  				}
+  				else{  //senao o exercicio eh colocado na lixeira
+  echo("      		if (confirm('".RetornaFraseDaLista($lista_frases, 196)."')){\n");
   //echo("				xajax_AlteraStatusExercicioInternoDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
   echo("				xajax_AlteraStatusExercicioDinamic(".$cod_usuario.",".$cod_curso.",".$cod_exercicio.",'L');\n");
   echo("				xajax_ExcluirExercicioInternoDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.");\n");
-  echo("	  }\n");
+  echo("	  		}\n");
+  				}
   echo("	}\n");	
 	
   echo("    </script>\n\n");
