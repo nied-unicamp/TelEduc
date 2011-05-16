@@ -71,6 +71,7 @@
 
   //adicionar as acoes possiveis, 1o parametro é
   $feedbackObject->addAction("dadosPreenchidosLogin", 0, 281);
+  $feedbackObject->addAction("erroUsuarioCadastrado", 0, 308);
   
   /*Funcao JavaScript*/
   echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
