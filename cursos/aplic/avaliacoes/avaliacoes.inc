@@ -4582,7 +4582,7 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
           // o nome do compartilhamento
           $matrizConteudo[$i][3] = $compartilhamento;
           // a justificativa
-          $matrizConteudo[$i][4] = $comentario;
+          $matrizConteudo[$i][4] = ConverteBarraAspas2Aspas(Enter2BR(LimpaConteudo($comentario)));
           // o codigo do formador
           $matrizConteudo[$i][5] = RetornaCodigoUsuarioCurso($sock, $linha['cod_formador'], $cod_curso);
           // o codigo da nota
