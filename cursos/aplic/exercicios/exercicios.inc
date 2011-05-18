@@ -601,7 +601,7 @@ function RetornaValorQuestao($sock,$cod_exercicio,$cod_questao)
 */
 function RetornaExercicio($sock,$cod_exercicio)
 {
-  $query="select cod_exercicio,cod_usuario,titulo,texto,tipo_compartilhamento,situacao from Exercicios_modelo where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
+  $query="select cod_exercicio,cod_usuario,titulo,texto,tipo_compartilhamento,situacao,status from Exercicios_modelo where cod_exercicio=".VerificaNumeroQuery($cod_exercicio);
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   return $linha;
