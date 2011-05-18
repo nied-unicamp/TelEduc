@@ -64,6 +64,7 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
 $feedbackObject->addAction("validarImportacao", 0, 88);
+$feedbackObject->addAction("ErroImportacao", 0, 89);
   
 
 // **************** VARIAVEIS DE ENTRADA ****************

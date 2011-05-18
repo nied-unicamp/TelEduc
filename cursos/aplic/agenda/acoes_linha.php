@@ -201,11 +201,12 @@
   	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
   	$cod_curso_origem = $cod_cursos[1];
   	
+  	
   	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
   	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
   	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
   	
-
+  	
   	if($cod_curso_origem)
   	{
 		$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
@@ -221,7 +222,7 @@
 		}
   	}
   	else
-  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."");
+  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=ErroImportacao&atualizacao=false");
   	
   } else if ($acao == "importarItem"){
   	

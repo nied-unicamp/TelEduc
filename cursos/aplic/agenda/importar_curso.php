@@ -117,6 +117,7 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
 $feedbackObject->addAction("validarImportacao", 0, 88);
+$feedbackObject->addAction("ErroImportacao", 0, 112);
 
 echo ("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
 echo ("    <script type=\"text/javascript\" language=javascript src=\"../bibliotecas/javacrypt.js\"></script>\n");
