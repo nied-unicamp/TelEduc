@@ -524,7 +524,9 @@ if (!$SalvarEmArquivo)
 		echo("				}catch(err){\n");
 		echo(" 					newInput = document.createElement('input');\n");
 		echo("				}\n");
-		echo("			newInput.setAttribute(\"type\",'radio');\n");
+		//Codigo abaixo comentado pois nao funciona no IE
+		//echo("			newInput.setAttribute(\"type\",'radio');\n");
+		echo("			newInput.type='radio');\n");
 		echo("			newInput.setAttribute(\"name\",name);\n");
 		echo("			newInput.setAttribute(\"id\",id);\n");
 		echo("			newInput.setAttribute(\"value\",tipoComp);\n");
