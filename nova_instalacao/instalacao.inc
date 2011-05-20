@@ -195,7 +195,9 @@ function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
 	mysql_query($sql, $sock);
 	
 	/* Nova versao: */
-	$sql = "REPLACE Config values ('versao', '4.2.2')";
+	// Alterado de REPLACE para UPDATE, pois o REPLACE esta criando novo campo.
+	//$sql = "REPLACE Config values ('versao', '4.2.2')";
+	$sql = "UPDATE Config set valor='4.2.2' where item='versao'";
 	mysql_query($sql, $sock);
 	
 	/* Formulario para abertura de cursos */
@@ -207,7 +209,9 @@ function RegistraConfiguracoes($sock, $host, $www, $arquivos, $sendmail){
 	/* Resquicios da instalacao antiga, mantendo por compatibilidade, apenas. */
 	$sql = "REPLACE Config values ('extrator', 'nao')";
 	mysql_query($sql, $sock);
-	$sql = "REPLACE Config values ('listarext', 'sim')";
+	// Alterado de REPLACE para UPDATE, pois o REPLACE esta criando novo campo.
+	//$sql = "REPLACE Config values ('listarext', 'sim')";
+	$sql = "UPDATE Config set valor='sim' where item='listarext'";
 	mysql_query($sql, $sock);
 }
 

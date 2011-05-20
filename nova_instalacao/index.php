@@ -245,7 +245,11 @@ if ($etapa == 0){
 
 	$content_header = "Administrador do Ambiente <span class=etapa>Etapa 3 de 4</span>";
 
+	$_SESSION['host'] = (isset($_POST['host']) ? $_POST['host'] : $_SESSION['host']);
+	$_SESSION['www'] = (isset($_POST['www']) ? $_POST['www'] : $_SESSION['www']);
 	$_SESSION['arquivos'] = (isset($_POST['arquivos']) ? $_POST['arquivos'] : $_SESSION['arquivos']);
+	$_SESSION['sendmail'] = (isset($_POST['sendmail']) ? $_POST['sendmail'] : $_SESSION['sendmail']);
+
 	/*
 	 2a Etapa:
 	 Pré-Req: 1a Etapa
