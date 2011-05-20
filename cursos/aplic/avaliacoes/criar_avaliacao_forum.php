@@ -50,6 +50,8 @@
   $cod_pagina_ajuda=18;
 
   $tabela="Avaliacao";
+  
+  $tipo="I";
 
   include("../topo_tela.php");
 
@@ -256,7 +258,7 @@
         }
         /* �. Atualiza data e segue em frente. */
         CancelaEdicaoAvaliacao($sock, $tabela, $dados['Cod_avaliacao'], $cod_usuario);
-        $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'F');
+        $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'F', $tipo);
       }
       elseif (($dados['Status']=='F') || ($dados['Status']=='E'))
       {
@@ -285,7 +287,7 @@
     }
     else
     {
-      $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'F');
+      $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'F', $tipo);
     }
 
     $forum=RetornaForum($sock,$cod_atividade);

@@ -48,6 +48,9 @@
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=1;
+  
+  $tipo="I";
+  
   include("../topo_tela.php");
 
   
@@ -195,7 +198,7 @@
       $tabela="Avaliacao";
       $cod_assunto=RetornaCodAssuntoSessao($sock,$data_inicio,$data_fim);
       $cod_atividade=$cod_assunto;
-      $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela, $cod_atividade, $cod_usuario, 'B');
+      $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela, $cod_atividade, $cod_usuario, 'B', $tipo);
 	  AtualizaCadastroAvaliacao($sock, $tabela, $cod_usuario, trim($objetivos), trim($criterios),'B', $valor,$data_inicio,$data_fim,$cod_avaliacao);
 
       header("Location:ver_sessoes_marcadas.php?cod_curso=".$cod_curso."&acao=sessao_marcada&atualizacao=true");
