@@ -2545,7 +2545,7 @@ function InsereAvaliacaoDinamic ($data_inicio, $data_termino, $valor, $tipo_ativ
 
   $data = time();
   $data_inicio= Data2UnixTime($data_inicio);
-  $data_termino=Data2UnixTime($data_termino);
+  $data_termino=Data2UnixTime($data_termino) + 86399; //data_termido eh 00h00m00s do dia escolhido + 23h59m59s
 
   $sock=Conectar($cod_curso);
 
