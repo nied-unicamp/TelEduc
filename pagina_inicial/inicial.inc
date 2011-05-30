@@ -1318,6 +1318,23 @@ function RetornaDadosUsuarioEmail($sock,$email)
   return RetornaLinha($res); 
 }
 
+
+/* *********************************************************************
+  RetornaDadosTodosUsuariosEmail - Retorna dados de todos os usuarios da tabela Usuario que possua um mesmo email
+  Entrada: $sock - BASE GERAL
+           $email - email do usuario
+  Saida: array com todas as linhas dos dados dos usuarios que possui o email dado, se houver
+*/
+function RetornaDadosTodosUsuariosEmail($sock,$email)
+{
+  $query="select cod_usuario,nome,login,email,confirmacao from Usuario where email='".VerificaStringQuery($email)."'";
+  $res=Enviar($sock,$query);
+
+ 
+  return RetornaArrayLinhas($res); 
+}
+
+
 /* *********************************************************************
   EnviarSenhaLoginUsuarioDinamic - Cria uma nova senha e a envia para o usuario juntamente com seu login
   Entrada: $valor - login ou email do usuario
@@ -1337,27 +1354,70 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
   /* Obt�m os dados do administrador: nome e e-mail para o remetente da mensagem. */
   $usuario_adm = RetornaDadosUsuario($sock, -1);
   if($opt == 1)
-    $dados_usuario = RetornaDadosUsuarioLogin($sock,$valor);
+   	$dados_usuario = RetornaDadosUsuarioLogin($sock,$valor);
   else
-    $dados_usuario = RetornaDadosUsuarioEmail($sock,$valor);
+   	$dados_usuario = RetornaDadosTodosUsuariosEmail($sock,$valor);
+    
+    //var_dump($dados_usuario);
+    //var_dump(count($dados_usuario));
+    //exit();
 
   if($dados_usuario != "")
   {
-    $senha = GeraSenha();
-    $senha_crypt = crypt($senha,"AA");
-
+    
     // 138 - Login e senha do TelEduc
     $assunto=RetornaFraseDaLista($lista_frases_mensagem,138);
-    // 95 - Prezado(a)
-    $mensagem =RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario['nome']."\n\n";
-    // 140 - Segue abaixo o seu login e senha conforme solicitado para o curso
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
-    $mensagem.="<br />";
-    // 67 - Seu login � 
-    $mensagem.="<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario['login']." ";
-    // 68 - e sua senha � 
-    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
-    $mensagem.="<br />";
+	if(count($dados_usuario) > 1){
+		// 95 - Prezado(a)
+	    $mensagem =RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario[0]['nome'].",\n\n";
+	    $mensagem.="<br />";
+	    $mensagem.="<br />";
+	    // 38 - Esse e-mail possui mais de um login e senha associados. Segue abaixo a lista de logins e senhas cadastrados
+	    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,308).".\n\n";
+	    $mensagem.="<br />";
+	    $mensagem.="<br />";
+	    foreach($dados_usuario as $usuario){
+	    	$senha = GeraSenha();
+    		$senha_crypt = crypt($senha,"AA");
+	    	// 15 - Nome
+	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,15).": ".$usuario['nome']."\n";
+	    	$mensagem.="<br />";
+	    	// 53 - Login
+	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,53).": ".$usuario['login']."\n";
+	    	$mensagem.="<br />";
+	    	// 309 - Senha
+	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,309).": ".$senha."\n\n";
+	    	AtualizaSenhaUsuario($sock, $usuario['cod_usuario'], $senha_crypt);
+	    	$mensagem.="<br />";
+	    	$mensagem.="<br />";
+	    }
+	    
+	    //$destinatario = $dados_usuario[0]['email'];
+	    //var_dump($destinatario);
+	    //exit();
+	    
+	}else{		
+		$senha = GeraSenha();
+    	$senha_crypt = crypt($senha,"AA");
+	    // 95 - Prezado(a)
+	    $mensagem =RetornaFraseDaLista($lista_frases_mensagem,95)." ".$dados_usuario[0]['nome'].",\n\n";
+	    $mensagem.="<br />";
+	    $mensagem.="<br />";
+	    // 140 - Segue abaixo o seu login e senha conforme solicitado para o curso
+	    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,140).".\n\n";
+	    $mensagem.="<br />";
+	    // 67 - Seu login � 
+	    $mensagem.="<p>".RetornaFraseDaLista($lista_frases_mensagem,67)." ".$dados_usuario[0]['login']." ";
+	    // 68 - e sua senha � 
+	    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,68)." ".$senha."\n\n</p>";
+	    $mensagem.="<br />";
+	    AtualizaSenhaUsuario($sock, $dados_usuario[0]['cod_usuario'], $senha_crypt);
+	    
+	    //$destinatario = $dados_usuario['email'];
+	    //var_dump($destinatario);
+	    //exit();
+	    
+	}
     // 139 - Atenciosamente,
     $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,139)."\n";
     $mensagem.="<br />";
@@ -1368,10 +1428,15 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
     // 115 - NAO_RESPONDA
     $remetente = RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
 
-    $destinatario = $dados_usuario['email'];
+  	$destinatario = $dados_usuario[0]['email'];
+    
 
-    AtualizaSenhaUsuario($sock, $dados_usuario['cod_usuario'], $senha_crypt);
     $mensagem_envio = MontaMsg($host, $raiz_www, '', $mensagem, $assunto);
+    //var_dump($remetente);
+    //var_dump($destinatario);
+    //var_dump($assunto);
+    //var_dump($mensagem_envio);
+    //exit();
     MandaMsg($remetente, $destinatario, $assunto, $mensagem_envio);
   }
   else

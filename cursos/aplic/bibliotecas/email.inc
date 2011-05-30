@@ -102,6 +102,7 @@ function MontaMsg($host, $raiz_www, $cod_curso, $mensagem, $assunto, $cod_usuari
   $html_email.="\t\t\t\t\t\t<tr>\n";
   $html_email.="\t\t\t\t\t\t\t<td colspan=\"2\" style=\"text-indent:10px; text-align:left; padding:10px 20px 0px 20px;\">\n";
   $html_email.="\t\t\t\t\t\t\t\t<font size=\"2\">\n";
+  $html_email.="<br /><br />\n";
   $html_email.=$mensagem;
   $html_email.="\t\t\t\t\t\t\t\t</font>\n";
   $html_email.="\t\t\t\t\t\t\t</td>\n";
