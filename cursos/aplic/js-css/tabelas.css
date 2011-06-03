@@ -1,13 +1,13 @@
 /* -------------------------------------------
 	CSS . TABELAS
 ---------------------------------------------- */
-.tabExterna { position:relative; width:100%; padding:6px; _padding:6px; background:#dcdcdc; color:#696969; clear:both;}
+.tabExterna { position:relative; width:100%; padding:6px; _padding:6px; background:#dcdcdc; /*color:#696969;*/ color:#333333; clear:both;}
 .tabInterna { position:relative; width:100%; background:#FFFFFF; margin:-2px 0 2px 0; font-size:1.0em; text-align:center;}
 
 tr.head td {
   /*font-size:11px; Para funcionar a mudafonte()*/
 	background-color: #C5C5C5;
-	color: #333333;
+	color: #000000;
 	font-weight: bold;
 }
 

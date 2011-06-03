@@ -41,7 +41,8 @@
 }
 
 #nav a { 
-	color:#777777; 
+	/*color:#777777; */
+	color:#444444;
 	text-decoration:none; 
 	padding-left: 13px;
 }
@@ -171,7 +172,8 @@ td>#nav3nivel {margin-bottom:-25px;}
 .botao2 span {
 	height:auto;
 	padding:1px 5px;
-	color:#696969;
+	/*color:#696969;*/
+	color:#333333;
 	font-size:1.0em;
 	font-weight:bold;
 	display: block;
