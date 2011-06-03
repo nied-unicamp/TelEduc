@@ -623,10 +623,16 @@
       $bopen_tag = "";
       $bclose_tag = "";
 
-      if ((isset($linha)) && ($linha['data'] > $ultimo_acesso))
-      {
+      // Se houve alteracao no Perfil
+      if ((isset($linha)) && ($linha['data'] > $ultimo_acesso)) {
+      	// Coloca em negrito
         $bopen_tag = "<b>";
         $bclose_tag = "</b>";
+        // Coloca sublinhado
+        $style="style=\"text-decoration: underline;\"";
+      } else {
+      	// Senao, deixa sem negrito e sublinhado
+        $style="style=\"font-weight:normal;\"";
       }
 
       echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
@@ -634,7 +640,7 @@
       echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_aluno[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(1);CheckHeader(1,'cod_aluno[]');Seek_Checked();\" />\n");
       echo("                      </td>\n");
       echo("                      <td align=\"left\">\n");
-      echo("                        ".$icone." ".$bopen_tag."<a href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+      echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
       echo("                      </td>\n");
 
       if (isset($linha)){
@@ -705,19 +711,26 @@
 
         $bopen_tag = "";
         $bclose_tag = "";
-
-        if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
-        {
-          $bopen_tag = "<b>";
-          $bclose_tag = "</b>";
-        }
+        
+      	// Se houve alteracao no Perfil
+      	if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
+      	{
+      		// Coloca em negrito
+      		$bopen_tag = "<b>";
+      		$bclose_tag = "</b>";
+      		// Coloca sublinhado
+      		$style="style=\"text-decoration: underline;\"";
+      	} else {
+      		// Senao, deixa sem negrito e sublinhado
+      		$style="style=\"font-weight:normal;\"";
+      	}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td>\n");
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_convidado[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(3);CheckHeader(3,'cod_convidado[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+        echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -792,16 +805,22 @@
 
         if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
         {
-          $bopen_tag = "<b>";
-          $bclose_tag = "</b>";
-        }
+      		// Coloca em negrito
+      		$bopen_tag = "<b>";
+      		$bclose_tag = "</b>";
+      		// Coloca sublinhado
+      		$style="style=\"text-decoration: underline;\"";
+      	} else {
+      		// Senao, deixa sem negrito e sublinhado
+      		$style="style=\"font-weight:normal;\"";
+		}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td align=\"center\">\n");
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_visitante[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(4);CheckHeader(4,'cod_visitante[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag);
+        echo("                        ".$icone." ".$bopen_tag."<a ".$style."href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag);
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -902,16 +921,22 @@
 
         if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
         {
-          $bopen_tag = "<b>";
-          $bclose_tag = "</b>";
-        }
+      		// Coloca em negrito
+      		$bopen_tag = "<b>";
+      		$bclose_tag = "</b>";
+      		// Coloca sublinhado
+      		$style="style=\"text-decoration: underline;\"";
+      	} else {
+      		// Senao, deixa sem negrito e sublinhado
+      		$style="style=\"font-weight:normal;\"";
+		}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td align=\"center\">\n");
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_formador[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(2);CheckHeader(2,'cod_formador[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+        echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -979,16 +1004,23 @@
 
     if ((isset($linha_perfil)) && ($linha_perfil['data'] > $ultimo_acesso))
     {
-      $bopen_tag = "<b>";
-      $bclose_tag = "</b>";
+    	// Coloca em negrito
+    	$bopen_tag = "<b>";
+    	$bclose_tag = "</b>";
+    	// Coloca sublinhado
+    	$style="style=\"text-decoration: underline;\"";
+    } else {
+    	// Senao, deixa sem negrito e sublinhado
+    	$style="style=\"font-weight:normal;\"";
     }
+
 
     echo("                    <tr>\n");
     echo("                      <td align=\"center\">\n");
     echo("                        <input class=\"input\" onclick=\"Seek_Checked();\" type=\"checkbox\" name=\"cod_coordenador[]\" value=\"".$dados_coord['cod_usuario']."\" />\n");
     echo("                      </td>\n");
     echo("                      <td align=\"left\">\n");
-    echo("                        ".$icone." ".$bopen_tag."<a href=\"#\" onclick=\"return(OpenWindowLink(".$dados_coord['cod_usuario']."));\" class=\"text\">".$dados_coord['nome']."</a>".$bclose_tag."\n");
+    echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados_coord['cod_usuario']."));\" class=\"text\">".$dados_coord['nome']."</a>".$bclose_tag."\n");
     echo("                      </td>\n");
 
     # $linha = RetornaPerfil($sock, $linha['cod_usuario']);

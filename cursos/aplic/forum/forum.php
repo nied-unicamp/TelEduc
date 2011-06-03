@@ -618,7 +618,7 @@
       if ($lista_foruns[$num]['data'] > $ultimo_acesso){
         $style="style=\"text-decoration: underline;\"";
       }else{
-        $style="";
+        $style="style=\"font-weight:normal;\"";
       }
 
       echo("                      <span id=\"forum_".$lista_foruns[$num]['cod_forum']."\" status_conf=\"".$lista_foruns[$num]['status']."\">\n");

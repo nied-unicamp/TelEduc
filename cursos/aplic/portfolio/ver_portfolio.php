@@ -59,7 +59,9 @@
 
   // verificamos se a ferramenta de Avaliacoes estah disponivel
   $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 22);
-
+  
+  $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
+    
   if (isset ($exibir)) // Entao estamos vindo de alguma outra pagina, atraves de menu
   {
     if($exibir=="ind")
@@ -357,7 +359,7 @@
 
       if ($data_acesso<$max_data)
       {
-        $marcatr="class=\"novoitem\"";
+      	$marcatr="class=\"novoitem\"";
       }
       else
       {
