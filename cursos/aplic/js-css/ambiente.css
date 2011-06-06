@@ -137,6 +137,18 @@ font-size: 1.25em;
 	color:#FF0000;
 }	
 
+.novo {
+	text-decoration:underline;
+	font-weight:bold;
+	font-size:1.05em;
+}
+
+.antigo {
+	text-decoration:none;
+	font-weight:normal;
+	font-size:1.0em;
+}
+
 span.link { display:inline; cursor:pointer; color:#2a6686;}
 span.link:hover, span.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
 span.linkTexto { display:inline; cursor:pointer; color:#2a6686; }

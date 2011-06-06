@@ -629,10 +629,10 @@
         $bopen_tag = "<b>";
         $bclose_tag = "</b>";
         // Coloca sublinhado
-        $style="style=\"text-decoration: underline;\"";
+        $classe="class=\"novo\"";
       } else {
       	// Senao, deixa sem negrito e sublinhado
-        $style="style=\"font-weight:normal;\"";
+        $classe="class=\"antigo\"";
       }
 
       echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
@@ -640,7 +640,7 @@
       echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_aluno[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(1);CheckHeader(1,'cod_aluno[]');Seek_Checked();\" />\n");
       echo("                      </td>\n");
       echo("                      <td align=\"left\">\n");
-      echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+      echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
       echo("                      </td>\n");
 
       if (isset($linha)){
@@ -719,10 +719,10 @@
       		$bopen_tag = "<b>";
       		$bclose_tag = "</b>";
       		// Coloca sublinhado
-      		$style="style=\"text-decoration: underline;\"";
+      		$classe="class=\"novo\"";
       	} else {
       		// Senao, deixa sem negrito e sublinhado
-      		$style="style=\"font-weight:normal;\"";
+      		$classe="class=\"antigo\"";
       	}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
@@ -730,7 +730,7 @@
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_convidado[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(3);CheckHeader(3,'cod_convidado[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+        echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -809,10 +809,10 @@
       		$bopen_tag = "<b>";
       		$bclose_tag = "</b>";
       		// Coloca sublinhado
-      		$style="style=\"text-decoration: underline;\"";
+      		$classe="class=\"novo\"";
       	} else {
       		// Senao, deixa sem negrito e sublinhado
-      		$style="style=\"font-weight:normal;\"";
+      		$classe="class=\"antigo\"";
 		}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
@@ -820,7 +820,7 @@
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_visitante[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(4);CheckHeader(4,'cod_visitante[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a ".$style."href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag);
+        echo("                        ".$icone." <a ".$classe."href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>");
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -925,10 +925,10 @@
       		$bopen_tag = "<b>";
       		$bclose_tag = "</b>";
       		// Coloca sublinhado
-      		$style="style=\"text-decoration: underline;\"";
+      		$classe="class=\"novo\"";
       	} else {
       		// Senao, deixa sem negrito e sublinhado
-      		$style="style=\"font-weight:normal;\"";
+      		$classe="class=\"antigo\"";
 		}
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
@@ -936,7 +936,7 @@
         echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_formador[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(2);CheckHeader(2,'cod_formador[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
-        echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>".$bclose_tag."\n");
+        echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
         echo("                      </td>\n");
 
         if (isset($tupla))
@@ -1008,10 +1008,10 @@
     	$bopen_tag = "<b>";
     	$bclose_tag = "</b>";
     	// Coloca sublinhado
-    	$style="style=\"text-decoration: underline;\"";
+    	$classe="class=\"novo\"";
     } else {
     	// Senao, deixa sem negrito e sublinhado
-    	$style="style=\"font-weight:normal;\"";
+    	$classe="class=\"antigo\"";
     }
 
 
@@ -1020,7 +1020,7 @@
     echo("                        <input class=\"input\" onclick=\"Seek_Checked();\" type=\"checkbox\" name=\"cod_coordenador[]\" value=\"".$dados_coord['cod_usuario']."\" />\n");
     echo("                      </td>\n");
     echo("                      <td align=\"left\">\n");
-    echo("                        ".$icone." ".$bopen_tag."<a ".$style." href=\"#\" onclick=\"return(OpenWindowLink(".$dados_coord['cod_usuario']."));\" class=\"text\">".$dados_coord['nome']."</a>".$bclose_tag."\n");
+    echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados_coord['cod_usuario']."));\" class=\"text\">".$dados_coord['nome']."</a>\n");
     echo("                      </td>\n");
 
     # $linha = RetornaPerfil($sock, $linha['cod_usuario']);

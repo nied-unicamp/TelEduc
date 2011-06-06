@@ -615,14 +615,18 @@
       echo("                  <tr class=\"altColor".$cor."\">\n");
       echo("                    <td width=\"65%\" class=\"alLeft\">\n");
 
-      if ($lista_foruns[$num]['data'] > $ultimo_acesso){
-        $style="style=\"text-decoration: underline;\"";
-      }else{
-        $style="style=\"font-weight:normal;\"";
+      if ($lista_foruns[$num]['data'] > $ultimo_acesso) {
+        //$style="style=\"text-decoration: underline;\"";
+        // Coloca classe de notificacao
+        $classe="class=\"novo\"";
+      } else {
+        //$style="style=\"font-weight:normal;\"";
+        // Coloca classe normal
+        $classe="class=\"antigo\"";
       }
 
       echo("                      <span id=\"forum_".$lista_foruns[$num]['cod_forum']."\" status_conf=\"".$lista_foruns[$num]['status']."\">\n");
-      echo("                        ".$icone." <a id=\"link_forum_".$lista_foruns[$num]['cod_forum']."\" href='ver_forum.php?cod_forum=".$lista_foruns[$num]['cod_forum']."&amp;cod_curso=".$cod_curso."&amp;status=".$status."' ".$style.">".$lista_foruns[$num]['nome']."</a>\n");
+      echo("                        ".$icone." <a id=\"link_forum_".$lista_foruns[$num]['cod_forum']."\" href='ver_forum.php?cod_forum=".$lista_foruns[$num]['cod_forum']."&amp;cod_curso=".$cod_curso."&amp;status=".$status."' ".$classe.">".$lista_foruns[$num]['nome']."</a>\n");
       echo("                      </span>\n");
       echo("                      <span id=\"forumQtd_".$lista_foruns[$num]['cod_forum']."\"> (".$total_por_forum[$num].")</span>\n");
 
