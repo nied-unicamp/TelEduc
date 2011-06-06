@@ -42,7 +42,11 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("inicial.inc");
+  
+  
 
+  
+  
   require_once("../xajax_0.2.4/xajax.inc.php");
   
   //Estancia o objeto XAJAX
@@ -86,7 +90,7 @@
   echo("              <td valign=\"top\">\n");
   /* 23 - Voltar (gen) */
   echo("              <ul class=\"btAuxTabs\">\n");
-  echo("                <li><a href='autenticacao.php'>".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+  echo("                <li><a href='autenticacao_cadastro.php'>".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
   echo("              </ul>\n");
   echo("            </tr>");
   echo("            <tr>\n");
@@ -98,17 +102,28 @@
   echo("                  <tr>\n");
   echo("                    <td align=\"center\" style=\"padding:25px 5px 25px 5px; text-indent:25px;\">\n");
   
-  
   $user = $_GET["u"];
   $seq = $_GET["s"];
+  $cod_curso = $_GET["c"];
+  $tipo_curso = $_GET["t"];
+ 
+ 
   
   if(ConfirmaUsuario($user, $seq)) {
-  	//198 - Seu cadastro foi efetivado com sucesso!
-  	//199 - Clique
-  	//200 - aqui
-  	//201 - para efetuar o login.
-  	echo(RetornaFraseDaLista($lista_frases,205)." ".RetornaFraseDaLista($lista_frases,206));
-  	echo(" <a href='autenticacao.php' alt='Efetuar login'>".RetornaFraseDaLista($lista_frases,207)."</a> ".RetornaFraseDaLista($lista_frases,208));
+	  if($cod_curso != NULL){
+	  		$sock = Conectar("");
+	  		$dados_curso=RetornaDadosMostraCurso($sock,$cod_curso);
+  			Desconectar($sock);
+	  		echo(RetornaFraseDaLista($lista_frases,217)."&nbsp;<b>".$dados_curso['nome_curso']."</b> ".RetornaFraseDaLista($lista_frases,218));
+	  		echo(" <a href=\"autenticacao_cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&origem=confirmacao\" alt='Efetuar login'>".RetornaFraseDaLista($lista_frases,207)."!</a>");
+	  	}else{
+		  	//205 - Seu cadastro foi efetuado com sucesso!
+		  	//206 - Clique
+		  	//207 - aqui
+		  	//208 - para efetuar o login.
+		  	echo(RetornaFraseDaLista($lista_frases,205)." ".RetornaFraseDaLista($lista_frases,206));
+		  	echo(" <a href='autenticacao_cadastro.php' alt='Efetuar login'>".RetornaFraseDaLista($lista_frases,207)."</a> ".RetornaFraseDaLista($lista_frases,208));
+	  	}
   }
   else {
   	//202 - Problemas na confirmação do cadastro. Contate o administrador.

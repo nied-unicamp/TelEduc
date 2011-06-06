@@ -57,7 +57,7 @@ session_destroy();
 
 //$_SESSION['logout_flag_s']=0;
 
-header("Location: ../../pagina_inicial/autenticacao.php?logout=1");
+header("Location: ../../pagina_inicial/autenticacao_cadastro.php?logout=1");
 exit;
 
 ?>

@@ -44,11 +44,16 @@
   include($bibliotecas."geral.inc");
   include("inicial.inc");
 
+  
+  $cod_curso = $_GET["cod_curso"];
+  $tipo_curso = $_GET["tipo_curso"];
+  $origem = $_GET["origem"];  //origem tera valor de NULL ou 'confirmacao' se a chamada da inscricao.php vier do confirmacao.php
+  
   $sock = Conectar("");
   
   $pag_atual = "inscricao.php";
   /* Caso o usuário naum esteja logado, direciona para páigna de login */
-  if (empty($_SESSION['login_usuario_s']))
+  if (empty($_SESSION['login_usuario_s']) && $origem == NULL)
   {
     /* Obt� a raiz_www */
     $query = "select diretorio from Diretorio where item = 'raiz_www'";
@@ -58,7 +63,7 @@
 
     $caminho = $raiz_www."/pagina_inicial";
 
-    header("Location: {$caminho}/autenticacao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&destino=inscricao");
+    header("Location: {$caminho}/autenticacao_cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&destino=inscricao");
     exit;
   }
 
@@ -171,7 +176,6 @@
     $remetente = RetornaDadosConfig('adm_email'); 
     $mensagem_envio = MontaMsg($host, $raiz_www, $cod_curso, $mensagem_coord, $assunto, -1, $linha['nome_coordenador']);
     MandaMsg($linha['email'], $destino,$assunto,$mensagem_envio);
-
     /* 108 - Seu pedido de matr�cula no curso */
     /* 109 - foi realizado corretamente. */
     /* 110 - O coordenador e os formadores do curso analisar�o o seu pedido e em breve entrar�o em contato por e-mail com voc� aceitando-o ou n�o como aluno em sua disciplina.  */

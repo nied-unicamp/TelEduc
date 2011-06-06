@@ -1047,6 +1047,11 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 ********************************************************************/
 function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 {
+	
+  $cod_curso = $_GET["cod_curso"];
+  $tipo_curso = $_GET["tipo_curso"];
+  	
+	
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $login	=	$dadosForm['login'];
@@ -1109,8 +1114,11 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     
     //87 - Confirmação de cadastro TelEduc
     $assunto = RetornaFraseDaLista($lista_frases_email, 87);
-    
-    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    if($cod_curso != NULL){
+    	$mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."&c=".$cod_curso."&t=".$tipo_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."&c=".$cod_curso."&t=".$tipo_curso."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    }else{
+    	$mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+    }
     /*
     // 74 - Bem-Vindo ao TelEduc!
     $assunto = RetornaFraseDaLista($lista_frases_email, 74);
@@ -1373,7 +1381,7 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
 	    $mensagem.="<br />";
 	    $mensagem.="<br />";
 	    // 38 - Esse e-mail possui mais de um login e senha associados. Segue abaixo a lista de logins e senhas cadastrados
-	    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,308).".\n\n";
+	    $mensagem.=RetornaFraseDaLista($lista_frases_mensagem,309).".\n\n";
 	    $mensagem.="<br />";
 	    $mensagem.="<br />";
 	    foreach($dados_usuario as $usuario){
@@ -1386,7 +1394,7 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
 	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,53).": ".$usuario['login']."\n";
 	    	$mensagem.="<br />";
 	    	// 309 - Senha
-	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,309).": ".$senha."\n\n";
+	    	$mensagem.=RetornaFraseDaLista($lista_frases_mensagem,310).": ".$senha."\n\n";
 	    	AtualizaSenhaUsuario($sock, $usuario['cod_usuario'], $senha_crypt);
 	    	$mensagem.="<br />";
 	    	$mensagem.="<br />";

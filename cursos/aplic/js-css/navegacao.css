@@ -3,6 +3,8 @@
 ---------------------------------------------- */
 #nav { margin-top:20px; margin-right:16px; }
 
+/*#navCabecalho { margin-top:20px; margin-right:16px; }*/
+
 #nav li {
 	height:20px; 
 	width:175px;
@@ -12,6 +14,18 @@
 	padding-left: 2px;
 	border-bottom:1px dotted #8f8f8f;
 	background:url(../imgs/bulletSeta.gif) no-repeat right;
+}
+
+.navCabecalho {
+	margin-top:20px; 
+	height:20px; 
+	width:162px;
+	color:#4F7A95; 
+	font-weight:bold;
+	padding-top:2px;
+	padding-left: 15px;
+	border-bottom:1px dotted #8f8f8f;
+	font-size: 1.2em;
 }
 
 #nav a.Cabecalho {

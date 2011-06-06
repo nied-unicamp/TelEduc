@@ -41,11 +41,8 @@
   ARQUIVO : pagina_inicial/menu_principal_tela_inicial.php
   ========================================================== */
 
-
-  if(!isset($tipo_curso))
-    $tipo_curso = "";
-  if(!isset($cod_curso))
-    $cod_curso = "";
+  $cod_curso = $_GET["cod_curso"];
+  $tipo_curso = $_GET["tipo_curso"];
 
   if(isset($pag_atual))
     $link = "";
@@ -71,7 +68,7 @@
   echo("            <map title=\"Menu superior\">\n");
   echo("              <li class=\"visoes\"><a href=\"".$link."equipe.php\">".RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
   if(empty($_SESSION['login_usuario_s']))
-    echo("              <li class=\"visoes\"><a href=\"autenticacao.php\">Login</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"autenticacao_cadastro.php\">Login</a></li>\n");
   else
     echo("              <li class=\"visoes\"><a href=\"../cursos/aplic/logout.php\">Logout</a></li>\n");
   echo("            </map>\n");
@@ -108,27 +105,35 @@
   echo("      <tr>\n");
   echo("        <td rowspan=\"2\" style=\"width:200px\" valign=\"top\">\n");
   echo("          <ul id=\"nav\">\n");
-  echo("            <li><a class=\"Cabecalho\" href=\"".$link."teleduc.php\">TelEduc</a></li>\n");
+  //echo("            <li><a class=\"Cabecalho\" href=\"".$link."teleduc.php\">TelEduc</a></li>\n");
+  echo("            <div class=\"navCabecalho\">TelEduc</div>\n");
   echo("            <li><a href=\"".$link."teleduc.php\">".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
   echo("            <li><a href=\"".$link."estrutura.php\">".RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
   /*Se nao estiver logado, deixa link pra se cadastrar*/
   if(empty($_SESSION['login_usuario_s']))
-    //179 - Cadastre-se
-    echo("            <li><a href=\"".$link."cadastro.php\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+    if($cod_curso != NULL){
+    	//179 - Cadastre-se
+	    echo("            <li><a href=\"".$link."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+    }else{
+	  	//179 - Cadastre-se
+	    echo("            <li><a href=\"".$link."cadastro.php\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+    }
   /*Se estiver logado e nao for o admtele, mostra links para o usuario acessar seus dados e seus cursos*/
   else if($_SESSION['cod_usuario_global_s'] != -1)
   {
   	echo("			  </ul><ul id=\"nav\">");
-    echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,187)."</a></li>\n");
+    //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,187)."</a></li>\n");
+    echo("            <div class=\"navCabecalho\">".RetornaFraseDaLista($lista_frases,187)."</div>\n");
     if(PreencheuDadosPessoais($sock))
       echo("            <li><a href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,132)."</a></li>\n");
     echo("            <li><a href=\"".$link."dados.php\">".RetornaFraseDaLista($lista_frases_configurar,1)."</a></li>\n");
   }
   echo("			</ul><ul id=\"nav\">");
-  echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_todos_cursos.php\">".RetornaFraseDaLista($lista_frases,5)."</a></li>\n");
+  //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_todos_cursos.php\">".RetornaFraseDaLista($lista_frases,5)."</a></li>\n");
+  echo("            <div class=\"navCabecalho\">".RetornaFraseDaLista($lista_frases,5)."</div>\n");
+  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=I\">".RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=N\">".RetornaFraseDaLista($lista_frases,192)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=A\">".RetornaFraseDaLista($lista_frases,171)."</a></li>\n");
-  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=I\">".RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=F\">".RetornaFraseDaLista($lista_frases,173)."</a></li>\n");
   echo("            <li><a href=\"".$link."criar_curso.php\">".RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
   echo("          </ul>\n");
