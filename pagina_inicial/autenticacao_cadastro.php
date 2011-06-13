@@ -224,13 +224,13 @@
   echo("                                    <input type=\"password\" id=\"senha\" name=\"senha\" size=\"25\" maxlength=\"100\" style=\"border: 2px solid #9bc;\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");
-  /* Botao Ok do formulario de login
+  /* Botao Entrar do formulario de login
    * Frase cod_texto=18 e cod_ferramenta=-3: ?
    */
   echo("                          	<tr>\n");
   echo("                          	  <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
   echo("                          	  <td style=\"border:none\">\n");
-  echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao OK Login\" onfocus value=\"".RetornaFraseDaLista($lista_frases,55)."\" />\n");
+  echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao Entrar Login\" onfocus value=\"".RetornaFraseDaLista($lista_frases,55)."\" />\n");
   //echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao OK Login\" onfocus value=\"Login\" />\n");
   echo("                          	  </td>\n");
   echo("                          	</tr>\n");

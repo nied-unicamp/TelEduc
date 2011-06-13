@@ -73,14 +73,14 @@
   if ($cod_usuario == 0)
   {
   	Desconectar($sock);
-  	header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+  	header("Location:autenticacao_cadastro.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
   	exit;
   }
 
   /* Verifica se o usuario jah confirmou o email */
   if(!VerificaConfirmacaoEmail($login)) {
   	Desconectar($sock);
-  	header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroConfirmacao&atualizacao=false");
+  	header("Location:autenticacao_cadastro.php?cod_curso=".$cod_curso."&acao=erroConfirmacao&atualizacao=false");
   	exit;
   }
   
