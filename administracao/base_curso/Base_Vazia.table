@@ -157,6 +157,17 @@ CREATE TABLE Ferramentas_destaque (
   data INT NOT NULL
 );
 
+#
+# Table structure for table 'Usuarios_online'
+#
+
+CREATE TABLE Usuarios_online (
+  cod_usuario int(11) NOT NULL,
+  ultimo_acesso int(11) NOT NULL DEFAULT '0',
+  logado int(11) NOT NULL,
+  PRIMARY KEY (cod_usuario)
+);
+
 ###############################################
 # ====  === =   =  ===  =   = ===  ===   ===  #
 # =   =  =  ==  = =   = == ==  =  =   = =   = #

@@ -878,5 +878,58 @@ function RetornaEmailUsuario1($cod_usuario)
   return ($linha['email']);
 }
 
+/**
+ * AtualizaVisita - Atualiza a visita do usuario no curso para verificar os usuarios online
+ * @param $sock - sock para o curso
+ * @param $cod_usuario - codigo do usuario a ser atualizado
+ */
+function AtualizaVisita($sock, $cod_usuario) {
+	$agora = time();
+
+	// caso do admtele
+	if($cod_usuario < 0) {
+		return false;
+	}
+
+	// pega a data de ultimo acesso do usuario no curso
+	$query = "select ultimo_acesso from Usuarios_online where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+	$res=Enviar($sock,$query);
+	$linha=RetornaLinha($res);
+
+	// se o usuario jah estava inserido na tabela, faz um update, senao faz um insert
+	if($linha["ultimo_acesso"]) {
+		$query = "update Usuarios_online set ultimo_acesso = ".$agora.", logado = 1 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+	} else {
+		$query = "insert into Usuarios_online values (".VerificaNumeroQuery($cod_usuario).", ".$agora.", 1)";
+	}
+	Enviar($sock,$query);
+}
+
+/**
+ * DeslogaUsuarioCursoDinamic - Altera status do usuario para deslogado dinamicamente  
+ * @param $cod_curso - codigo do curso que o usuario esta acessando
+ * @param $cod_usuario - codigo do usuario a ser deslogado
+ */
+function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
+	$sock=Conectar($cod_curso);
+	$query = "update Usuarios_online set logado = 0 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+	Enviar($sock,$query);
+}
+
+/**
+ * RetornaUsuariosOnline - retorna os usuarios online de um curso
+ * @param $sock - sock para o curso
+ * @param $time_out - tempo que o usuario eh considerado online
+ */
+function RetornaUsuariosOnline($sock, $time_out) {
+	$agora=time();
+
+	//$query="select cod_usuario from Usuarios_online where (".VerificaNumeroQuery($agora)." - ultimo_acesso < ".VerificaNumeroQuery($time_out).") and logado = 1";
+	$query="select cod_usuario from Usuarios_online where logado = 1";
+	$res=Enviar($sock,$query);
+	$linha=RetornaArrayLinhas($res);
+
+	return $linha;
+}
 
 ?>

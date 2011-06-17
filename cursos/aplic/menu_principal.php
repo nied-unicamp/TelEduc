@@ -1,4 +1,18 @@
 <?
+
+  require_once("../xajax_0.2.4/xajax.inc.php");
+  // Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
+  $objAjax->registerFunction("DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequests();
+  $objAjax->printJavascript("../xajax_0.2.4/");
+
+  $sock=Conectar($cod_curso);
+
+  // Tempo para um usuario ser considerado offline em segundos
+  $time_out=5*60;
   
   /* Fun��es javascript */
   echo("    <script language=\"JavaScript\" type=\"text/javascript\">\n");
@@ -11,7 +25,11 @@
   echo("      {\n");
   echo("           window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario."\",'NOME','width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
   echo("      }\n\n");
-  echo("</script>");
+  
+  echo("	  function FechandoNavegador() {\n");
+  echo("  		xajax_DeslogaUsuarioCursoDinamic('".$cod_curso."', '".$cod_usuario."');\n");
+  echo("	  }\n\n");
+    echo("	</script>");
   
   echo("  </head>\n");
   
@@ -26,7 +44,8 @@
   
   } else {
   	
-  	echo("  <body onload=\"Iniciar();\" >\n");
+  	echo("  <body onload=\"Iniciar();\" onbeforeunload=\"FechandoNavegador();\">\n");
+
   	echo("    <a name=\"topo\"></a>\n");
   	echo("    <h1><a href=\"http://".$tela_host.$tela_raiz_www."\"><img src=\"../imgs/logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o &agrave; Dist&acirc;ncia\" /></a></h1>\n");
 	  
@@ -41,6 +60,7 @@
 	  $tela_marcar_ferramenta    = RetornaFerramentasMarcadas($sock);
 	
 	  $tela_ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
+	  AtualizaVisita($sock, $cod_usuario);
 	
 	  if (!empty ($_SESSION['cod_usuario_global_s'])){
 	  	$email_usuario = RetornaEmailUsuario1($_SESSION['cod_usuario_global_s']);
@@ -193,7 +213,18 @@
 	    }
 	    
 	  echo("          </ul>\n");
-	
+	  echo("		    <br>");
+	  $lista_usuarios_online=RetornaUsuariosOnline($sock, $time_out);
+	  echo("          <ul class=\"usuarioOnline\">\n");
+	  echo("				Usuarios Online:\n");
+	  echo("			</ul>\n");
+	  echo("			<ul >\n");
+	  foreach($lista_usuarios_online as $cod => $linha) {
+	  	echo("				<li class=\"usuarioOnline\">\n");
+	  	echo( NomeUsuario($sock, $linha["cod_usuario"], $cod_curso) );
+	  	echo("				</li>\n");
+	  }
+	  echo("          </ul>\n");
 	  echo("        </td>\n");
   } 
 	  
