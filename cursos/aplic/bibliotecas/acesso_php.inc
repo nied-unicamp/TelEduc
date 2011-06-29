@@ -84,7 +84,7 @@ function VerificaLoginSenha ($login, $senha)
 	// $login podera ser o login ou email cadastrado
     $query = "select senha, cod_usuario, confirmacao from Usuario ";
     $query.= "where login='".VerificaStringQuery($login)."' ";
-    //N‹o pode mais autenticar pelo email
+    //Nï¿½o pode mais autenticar pelo email
     //$query.= "OR email='".VerificaStringQuery($login)."'";
   }
 
@@ -169,7 +169,10 @@ function VerificaConfirmacaoEmail ($login)
 	$query.= "where login='".$login."'";
 	$res = Enviar($sock, $query);
 	$linha = RetornaLinha($res);
-	return ($linha[0] == "") ? true : false;
+	if($linha[0]=="" || $linha[0]=="NULL") {
+		return true;
+	}
+	return false;
 }
 
 /* *********************************************************************
