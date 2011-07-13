@@ -1281,6 +1281,19 @@ CREATE TABLE IF NOT EXISTS `Exercicios_questao_diss` (
 #  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 #
+#  Table structure for table `Exercicios_questao_mult`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_questao_mult` (
+  `cod_questao` int(5) NOT NULL,
+  `gabarito` varchar(10) NOT NULL,
+  `tipo` char(1) NOT NULL,
+  PRIMARY KEY (`cod_questao`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
 #  Table structure for table `Exercicios_questao_historico`
 #
 
@@ -1383,6 +1396,20 @@ CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_questao_obj` (
   `resposta` varchar(10) NOT NULL,
   `nota` decimal(4,2) default NULL,
   PRIMARY KEY  (`cod_questao`,`cod_resolucao`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#
+#  Table structure for table `Exercicios_resolucao_questao_mult`
+#
+
+CREATE TABLE IF NOT EXISTS `Exercicios_resolucao_questao_mult` (
+  `cod_questao` int(5) NOT NULL,
+  `cod_resolucao` int(6) NOT NULL,
+  `resposta` varchar(10) NOT NULL,
+  `nota` decimal(4,2) DEFAULT NULL,
+  PRIMARY KEY (`cod_questao`,`cod_resolucao`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 #  # # # # # # # # # # # # # # # # # # # # # # # # # # # #
