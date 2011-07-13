@@ -64,7 +64,7 @@
 
     $caminho = $raiz_www."/pagina_inicial";
 
-    header("Location: {$caminho}/autenticacao.php");
+    header("Location: {$caminho}/autenticacao_cadastro.php");
     Desconectar($sock);
     exit;
   }
@@ -257,7 +257,7 @@
   echo("            <li class=\"visoes\"><a href=\"".$link."apoio.php\">".RetornaFraseDaLista($lista_frases,11)."</a></li>\n");
   //?? - 157 Login
   if(empty($_SESSION['login_usuario_s']))
-    echo("            <li class=\"visoes\"><a href=\"autenticacao.php\">Login</a></li>\n");
+    echo("            <li class=\"visoes\"><a href=\"autenticacao_cadastro.php\">Login</a></li>\n");
   // ?? - 161 Logout
   else
     echo("            <li class=\"visoes\"><a  href=\"../cursos/aplic/logout.php\">Logout</a></li>\n");

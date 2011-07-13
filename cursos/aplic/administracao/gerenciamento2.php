@@ -272,7 +272,7 @@
 
         /* 112 - Inscri��o aceita */
         $assunto=RetornaFraseDaLista($lista_frases,112);
-
+		$assunto.=$dados_curso['nome_curso'];
         /* 99 - Sua inscri��o como aluno para o curso */
         /* 100 - foi aceita. */
         /* 65 - Visite a p�gina do curso para obter informa��es sobre o seu in�cio */
@@ -297,7 +297,7 @@
         $titulo=RetornaFraseDaLista($lista_frases,90);
 
         /* 112 - Inscri��o aceita */
-        $assunto=RetornaFraseDaLista($lista_frases,112);
+        $assunto=RetornaFraseDaLista($lista_frases,112).$dados_curso['nome_curso'];
 
         /* 188 - Voc� foi inscrito como visitante para o curso */
         /* 65 - Visite a p�gina do curso para obter informa��es sobre o seu in�cio */

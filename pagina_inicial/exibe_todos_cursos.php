@@ -155,7 +155,7 @@
   /*
   				  if(empty($_SESSION['login_usuario_s']))
         		  {
-  echo("			  <div class=\"Aviso\"><h5>".RetornaFraseDaLista($lista_frases,221)."<br /><br />".RetornaFraseDaLista($lista_frases,217)."<a href=\"autenticacao.php\">".RetornaFraseDaLista($lista_frases,218)."</a>.<br />".RetornaFraseDaLista($lista_frases,219)."<a href=\"cadastro.php\">".RetornaFraseDaLista($lista_frases,220)."</a>.</h5></div><br />\n");      		
+  echo("			  <div class=\"Aviso\"><h5>".RetornaFraseDaLista($lista_frases,221)."<br /><br />".RetornaFraseDaLista($lista_frases,217)."<a href=\"autenticacao_cadastro.php\">".RetornaFraseDaLista($lista_frases,218)."</a>.<br />".RetornaFraseDaLista($lista_frases,219)."<a href=\"cadastro.php\">".RetornaFraseDaLista($lista_frases,220)."</a>.</h5></div><br />\n");      		
         		  }
   */
   

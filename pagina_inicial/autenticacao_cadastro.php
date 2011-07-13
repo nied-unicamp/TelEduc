@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : pagina_inicial/autenticacao.php
+    Arquivo : pagina_inicial/autenticacao_cadastro.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�cia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : pagina_inicial/autenticacao.php
+  ARQUIVO : pagina_inicial/autenticacao_cadastro.php
   ========================================================== */
 
   $bibliotecas = "../cursos/aplic/bibliotecas/";
@@ -171,7 +171,7 @@
 
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
   if($destino == "inscricao" && $origem==NULL){
-  	echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)."</p></span>");
+  	echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
   }
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");

@@ -766,6 +766,7 @@ alterar_senha.php
 apoio.php
 autenticacao.inc
 autenticacao.php
+autenticacao_cadastro.php
 cadastro.php
 contato.php
 criar_curso2.php

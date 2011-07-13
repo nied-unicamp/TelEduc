@@ -107,7 +107,7 @@
   echo("        {\n");
   /* 228 - Login e nova senha enviados por e-mail. */
   echo("          alert('".RetornaFraseDaLista($lista_frases_mensagem,228)."');\n");
-  echo("          document.location='autenticacao.php';\n");
+  echo("          document.location='autenticacao_cadastro.php';\n");
   echo("        }\n");
   echo("      }\n\n");
 

@@ -184,7 +184,7 @@
     echo("                    <td align=left>\n");
     echo("                      <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,108)."&nbsp;<b>".$dados_curso['nome_curso']."</b> ".RetornaFraseDaLista($lista_frases,109)."</p>\n");
     echo("                      <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,110)."</p>\n");
-    echo("                      <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,111)."</p>\n");
+   // echo("                      <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,111)."</p>\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }

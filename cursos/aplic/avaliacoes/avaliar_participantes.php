@@ -526,7 +526,7 @@ if (!$SalvarEmArquivo)
 		echo("				}\n");
 		//Codigo abaixo comentado pois nao funciona no IE
 		//echo("			newInput.setAttribute(\"type\",'radio');\n");
-		echo("			newInput.type='radio');\n");
+		echo("			newInput.type='radio';\n");
 		echo("			newInput.setAttribute(\"name\",name);\n");
 		echo("			newInput.setAttribute(\"id\",id);\n");
 		echo("			newInput.setAttribute(\"value\",tipoComp);\n");

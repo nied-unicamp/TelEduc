@@ -68,7 +68,7 @@
 
     $caminho = $raiz_www."/pagina_inicial/autenticacao";
 
-    header("Location: {$caminho}/autenticacao.php");
+    header("Location: {$caminho}/autenticacao_cadastro.php");
     Desconectar($sock);
     exit;
   }

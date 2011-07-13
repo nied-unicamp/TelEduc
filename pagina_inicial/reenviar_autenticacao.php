@@ -114,7 +114,7 @@
   echo("					case (0):\n");
   echo("  	      {\n");												/* 100 - Email de confirmação enviado com sucesso!. */
   echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao,100)."');\n");
-  echo("      	    document.location='autenticacao.php';\n");
+  echo("      	    document.location='autenticacao_cadastro.php';\n");
   echo("						break;");
   echo("  	      }\n");
   echo("	        case (1):\n");

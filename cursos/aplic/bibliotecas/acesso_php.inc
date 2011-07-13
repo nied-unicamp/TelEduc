@@ -129,7 +129,7 @@ function ehEmail($login,$cod_curso){
 			return $linha['login'];
 		}else{ 
     		Desconectar($sock);
-    		header("Location:autenticacao.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+    		header("Location:autenticacao_cadastro.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
     		exit;
 		}
 	}	
@@ -230,7 +230,7 @@ function VerificaAutenticacao($cod_curso)
   	  $_SESSION['url_de_acesso'] = $_SERVER['REQUEST_URI'];
 
 	  /* Usuario é direcionado para a pagina de autenticacao */
-      header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+      header("Location:{$caminho}/autenticacao_cadastro.php?cod_curso=".$cod_curso);
 
       Desconectar($sock);
       exit;
@@ -261,7 +261,7 @@ function VerificaAutenticacao($cod_curso)
       	 
 		 // Salva a URL de acesso, para o caso de precisar redirecionar
   	  	 $_SESSION['url_de_acesso'] = $_SERVER['REQUEST_URI'];          
-         header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+         header("Location:{$caminho}/autenticacao_cadastro.php?cod_curso=".$cod_curso);
 
           Desconectar($sock);
           exit;
@@ -274,7 +274,7 @@ function VerificaAutenticacao($cod_curso)
             //Desconectar($sock);
             $sock=Conectar("");
 
-	    	header("Location:{$caminho}/autenticacao.php?cod_curso=".$cod_curso);
+	    	header("Location:{$caminho}/autenticacao_cadastro.php?cod_curso=".$cod_curso);
 
             Desconectar($sock);
             exit;
@@ -341,7 +341,7 @@ function VerificaAutenticacaoAdministracao()
   	
   if (!isset($_SESSION['login_usuario_s']))
   {
-    header("Location:../pagina_inicial/autenticacao.php");
+    header("Location:../pagina_inicial/autenticacao_cadastro.php");
     Desconectar($sock);
     exit;
   }

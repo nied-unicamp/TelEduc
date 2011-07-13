@@ -661,21 +661,21 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
   $raiz_www=$linha['diretorio'];
 
   /* 63 - TelEduc: Inscri  o */
-  $assunto=RetornaFraseDaLista($lista_frases,63);
+  $assunto=RetornaFraseDaLista($lista_frases,63)." ".$dados_curso['nome_curso'];
   
   if ($dados['tipo_usuario']=="A")
   {
-    /* 64 - Voc  foi inscrito como aluno para o curso */
+    /* 64 - Voc  foi inscrito como aluno no curso */
     $mensagem ="<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'F')
   {
-    /* 72 - Voc  foi inscrito como formador para o curso */
+    /* 72 - Voc  foi inscrito como formador no curso */
     $mensagem ="<p>".RetornaFraseDaLista($lista_frases,72)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'z' || $dados[tipo_usuario] == 'Z')
   {
-    /* 196 - Voc  foi inscrito como convidado para o curso */
+    /* 196 - Voc  foi inscrito como convidado no curso */
     $mensagem ="<p>".RetornaFraseDaLista($lista_frases,196)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else
@@ -687,17 +687,23 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
   }
 
   /* 65 - Visite a p gina do curso para obter informa  es sobre o seu in cio. */
-  $mensagem.="<p>".RetornaFraseDaLista($lista_frases,65).".</p>\n";
+  //$mensagem.="<p>".RetornaFraseDaLista($lista_frases,65).".</p>\n";
 
   //MENSAGEM DEVE INFORMAR QUE LOGIN E SENHA SAO OS MESMOS QUE ELE UTILIZA EM OUTROS CURSOS
 
   /* 254 - O seu login e senha s√£o os mesmos j√° utilizados em cursos do endere√ßo */
-  $mensagem.="<p>".RetornaFraseDaLista($lista_frases,254)." <a href=\"http://".$host.$raiz_www."\">http://".$host.$raiz_www."</a></p>\n";
+  //$mensagem.="<p>".RetornaFraseDaLista($lista_frases,254)." <a href=\"http://".$host.$raiz_www."\">http://".$host.$raiz_www."</a></p>\n";
 
+  /* 311 - Para acessar o curso clique  em*/
+  $mensagem.="<p>".RetornaFraseDaLista($lista_frases,311).": </p>";
   $mensagem.="<p><a href=\"http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p>\n\n";
+  /* 312 - Use login e senha já cadastrados.*/
+  $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,312)."</p>";
+  /* 313 - Visite a página do curso pra saber o seu início.*/
+  $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,313)."</p>";
 
 
-  $mensagem.="<hr /><br />\n";
+  $mensagem.="\n";
 
   /* 66 - Anteciosamente, Coordena  o do curso */
   $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,66)." <strong>".$dados_curso[nome_curso]."</strong>. </p><br />\n";
