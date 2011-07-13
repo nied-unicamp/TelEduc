@@ -12,7 +12,7 @@
   $sock=Conectar($cod_curso);
 
   // Tempo para um usuario ser considerado offline em segundos
-  $time_out=5*60;
+  $time_out=30*60;
   
   /* Fun��es javascript */
   echo("    <script language=\"JavaScript\" type=\"text/javascript\">\n");
@@ -29,7 +29,8 @@
   echo("	  function FechandoNavegador() {\n");
   echo("  		xajax_DeslogaUsuarioCursoDinamic('".$cod_curso."', '".$cod_usuario."');\n");
   echo("	  }\n\n");
-    echo("	</script>");
+
+  echo("	</script>");
   
   echo("  </head>\n");
   
@@ -142,7 +143,8 @@
 	  $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,43);
 	  echo("            ".PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
 	  echo("            <li><img src=\"../imgs/icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
-	  echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
+	  //echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
+	  echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\" onclick=javascript:FechandoNavegador();>".$tela_nome_ferramenta."</a></li>\n");
 	
 	  echo("            </ul>\n");
 	  echo("          </div>\n");

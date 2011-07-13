@@ -911,9 +911,14 @@ function AtualizaVisita($sock, $cod_usuario) {
  * @param $cod_usuario - codigo do usuario a ser deslogado
  */
 function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
+	$objResponse = new xajaxResponse('ISO-8859-1');
+
 	$sock=Conectar($cod_curso);
 	$query = "update Usuarios_online set logado = 0 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
-	Enviar($sock,$query);
+	$res=Enviar($sock,$query);
+	Desconectar($sock);
+
+	return $objResponse->getXML();
 }
 
 /**
@@ -924,8 +929,7 @@ function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
 function RetornaUsuariosOnline($sock, $time_out) {
 	$agora=time();
 
-	//$query="select cod_usuario from Usuarios_online where (".VerificaNumeroQuery($agora)." - ultimo_acesso < ".VerificaNumeroQuery($time_out).") and logado = 1";
-	$query="select cod_usuario from Usuarios_online where logado = 1";
+	$query="select cod_usuario from Usuarios_online where (".VerificaNumeroQuery($agora)." - ultimo_acesso < ".VerificaNumeroQuery($time_out).") and logado = 1";
 	$res=Enviar($sock,$query);
 	$linha=RetornaArrayLinhas($res);
 
