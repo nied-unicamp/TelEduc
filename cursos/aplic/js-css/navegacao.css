@@ -367,14 +367,26 @@ td>#nav3nivel {margin-bottom:-25px;}
 	text-decoration:none;
 }
 
-.usuarioOnline {
+ul.usuarioOnlineExterno {
+	background-color: #DCDCDC;
 	font-weight: bold;
 	padding-top: 2px;
-	width: 165px;
-	margin-left:15px;
-	list-style-image: url('forte.png');
+	width: 180px;
+	padding-bottom: 2px;
 }
 
-ul.usuarioOnline {
-	border-bottom: 2px solid #FFFFFF;
+li.usuarioOnlineHead {
+	padding-left: 6px;
+	margin-left:2px;
+	margin-right:2px;
+}
+
+li.usuarioOnlineLista {
+	background-color: #FFFFFF;
+	padding-top: 2px;
+	padding-left: 6px;
+	margin-left:2px;
+	margin-right:2px;
+	list-style-image: url('forte.png');
+	list-style-position:inside;
 }

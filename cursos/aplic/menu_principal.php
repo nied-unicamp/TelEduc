@@ -215,18 +215,22 @@
 	    }
 	    
 	  echo("          </ul>\n");
-	  echo("		    <br>");
+	  
+	  echo("		  <br>");
+	  
+	  // Lista os usuarios online
 	  $lista_usuarios_online=RetornaUsuariosOnline($sock, $time_out);
-	  echo("          <ul class=\"usuarioOnline\">\n");
-	  echo("				Usuarios Online:\n");
-	  echo("			</ul>\n");
-	  echo("			<ul >\n");
+	  
+	  echo("          <ul class=\"usuarioOnlineExterno\">\n");
+	  echo("		    <li class=\"usuarioOnlineHead\">");
+	  echo(					RetornaFraseDaLista($lista_frases_menu,60));
+	  echo("			</li>");
 	  foreach($lista_usuarios_online as $cod => $linha) {
-	  	echo("				<li class=\"usuarioOnline\">\n");
-	  	echo( NomeUsuario($sock, $linha["cod_usuario"], $cod_curso) );
-	  	echo("				</li>\n");
+	  	echo("			<li class=\"usuarioOnlineLista\">\n");
+	  	echo( 				NomeUsuario($sock, $linha["cod_usuario"], $cod_curso) );
+	  	echo("			</li>\n");
 	  }
-	  echo("          </ul>\n");
+	  echo("		  </ul>\n");
 	  echo("        </td>\n");
   } 
 	  
