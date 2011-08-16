@@ -337,10 +337,12 @@
     echo("                    </td>\n");
     echo("                  </tr>\n");
     echo("                  <tr>\n");  
-    echo("                    <td colspan=\"2\">\n");
-    echo("                        <script type=\"text/javascript\">\n");
-    echo("                          writeRichText('msg_corpo', '".PreparaMensagemExibicao($linha['mensagem'])."', 610, 200, true, true);\n");
-    echo("                        </script>\n");
+    echo("                    <td colspan=\"2\" class=\"itens divRichText\">\n");
+    //echo("                        <script type=\"text/javascript\">\n");
+    //echo("                          writeRichText('msg_corpo', '".PreparaMensagemExibicao($linha['mensagem'])."', 610, 200, true, true);\n");
+    //echo("                        </script>\n");
+  	echo(                         PreparaMensagemExibicao($linha['mensagem']));
+  	echo("                    </td>\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
 
