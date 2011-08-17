@@ -116,6 +116,17 @@
   foreach ($lista_impressao as $cod=>$linha)
     if ($linha[2]!=19) /* Intermap */
       $i=Item(RetornaFraseDaLista($lista_ferramentas,$linha[0]),RetornaFraseDaLista($lista_ferramentas,$linha[1]),$i);
+      
+  $impar=$i/2; 
+  $impar=(int)$impar * 2; 
+  $impar=$i - $impar;
+
+  echo("                  <tr class=\"altColor".$impar."\">\n");
+  echo("                    <td align=left>\n");
+  echo("                      <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_ferramentas,61)."</p>\n");
+  echo("                      <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_ferramentas,62)."</p>\n");
+  echo("                    </td>\n");
+  echo("                  </tr>");
 
   echo("                  <tr class=\"head\">\n");
   /* 36 - Recursos dispon�veis apenas para formadores */

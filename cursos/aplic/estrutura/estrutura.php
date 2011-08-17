@@ -154,7 +154,7 @@
   /* 10 - Ferramentas do ambiente */
   echo("                    <tr class=\"head01\" id=\"tr_ferrAmbiente\">\n");
   echo("                      <td align=left><b>".RetornaFraseDaLista($lista_frases,10)."</b></td>\n");
-  echo("                      <td width=5%><span id=\"span_ferrAmbiente\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",23);\">[+]</span></td>\n");
+  echo("                      <td width=5%><span id=\"span_ferrAmbiente\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",23);\">[+]</span></td>\n"); //FIXME: O tamanho (numero de linhas) passado pela chamada da função MostraTr está sendo passado harcoded
   echo("                    </tr>\n");
 
   foreach ($ordem_ferramentas as $cod=>$linha)
@@ -174,17 +174,18 @@
 
   echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_ferrAmbiente_".($i)."\" style=\"display:none;\">\n");
   echo("                      <td style=\"padding:10px 25px 10px 25px;\" align=left colspan=2>\n");
-  echo("                        <p style=\"font-weight:bold;\"> Usuarios Online</p>\n");	//TODO: Frase Hardcoded
-  echo("                        <p style=\"text-indent:15px;\"> Lista os alunos que estao online no curso.</p>\n");		//TODO: Frase Hardcoded
+  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,61)."</p>\n");
+  echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,62)."</p>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
 
-  echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_ferrAmbiente_".($i)."\" style=\"display:none;\">\n");
-  echo("                      <td style=\"padding:10px 25px 10px 25px;\" align=left colspan=2>\n");
-  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,47)."</p>\n");
-  echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,51)."</p>\n");
-  echo("                      </td>\n");
-  echo("                    </tr>\n");
+  //FIXME: A descrição ($lista_frases_ferramentas,51) está estranho, não está descrevendo a funcionalidade de Notificação ($lista_frases_ferramentas,47)
+  //echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_ferrAmbiente_".($i)."\" style=\"display:none;\">\n");
+  //echo("                      <td style=\"padding:10px 25px 10px 25px;\" align=left colspan=2>\n");
+  //echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,47)."</p>\n");
+  //echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,51)."</p>\n");
+  //echo("                      </td>\n");
+  //echo("                    </tr>\n");
   
   echo("                    <tr class=\"head01\" id=\"tr_ferrExcForm\">\n");
   echo("                      <td align=left>\n");
