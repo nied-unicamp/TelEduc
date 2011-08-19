@@ -3897,7 +3897,7 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
             $cod_usuario - codigo do usuario
             $cod_item - codigo do item
             $cod_avaliacao - codigo da avaliacao
-            $msg1 - 'Sim'
+            $msg1 - 'Nao foi selecionado nenhuma avaliacao.'
             $msg2 - 'Item associado à avaliação:'
 
    Saida: XML da função Ajax
@@ -3912,23 +3912,25 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
   $res=Enviar($sock, $query);
   $linha=RetornaArrayLinhas($res);
 
-  //Não existe Associação
-  if ($cod_avaliacao!=""){
-    if ($linha[0]==""){
-      AssociarItemAvaliacao($sock,$cod_item,$cod_avaliacao);
-    }
-    //Já está associado
-    else if($cod_avaliacao!=""){
-      AlterarAssociacaoItemAvaliacao($sock,$cod_item,$cod_avaliacao);
-      $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+  // Se cod_avaliacao nao for vazio, foi selecionada uma avaliacao no radiobox
+  if ($cod_avaliacao!="") {
+    
+    if ($linha[0]=="") {  // Se nao existe avaliacao associada ao $cod_item
+      AssociarItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Associa a avaliacao no BD
+    } else {  //Se jah existe uma avaliacao associada ao $cod_item
+      AlterarAssociacaoItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Altera a associacao no BD
+      $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");  //Mostra o radiobox da antiga avaliacao associada
     }
 
-	$objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
-	/* Obsoleto agora que temos o feedback:
-	$atividade=RetornaTituloAtividade($sock, $cod_item);
-    $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg1);
-    $objResponse->addAssign("associadoItem", "innerHTML", "<br><br>".$msg2." <a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
-    */
+    $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
+    $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+	
+	$atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
+    $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
+    
+  } else {  // Nao foi selecionada avaliacao
+    $objResponse->addScript("alert('".$msg1."');");
+    $objResponse->addScript("FechaDivAvaliacoes();");
   }
 
   Desconectar($sock);
@@ -3943,13 +3945,16 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
    Entrada: $cod_curso - codigo do curso
             $cod_usuario - codigo do usuario
             $cod_item - codigo do item
-            $msg - 'Não'
+            $msg1 - 'Não'
+            $msg2 - 'Item desassociado à avaliação com sucesso.'
 
    Saida: XML da função Ajax
 */
-function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg){
+function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg1, $msg2){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  global $lista_frases_geral;
 
   $sock=Conectar($cod_curso);
 
@@ -3960,13 +3965,14 @@ function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg){
   //Existe Associação
   if ($linha[0]!=""){
     DesassociarItemAvaliacao($sock,$cod_item);
+    $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
   }
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg);
+  $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg1);
   $objResponse->addClear("associadoItem", "innerHTML");
   $objResponse->addAssign("assocAval", "className", "link");
   $objResponse->addEvent("assocAval", "onClick", "AssociarAvaliacao()");
@@ -3974,7 +3980,7 @@ function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg){
   $objResponse->addScript("cancelarElemento=null;");
   $objResponse->addScript("DesmarcaRadios();");
   $objResponse->addAssign("divAvaliacoes", "className", "divHidden");
-  $objResponse->addScriptCall("mostraFeedback", $msg, 'true');
+  $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
 
   return $objResponse->getXML();
 }

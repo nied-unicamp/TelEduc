@@ -156,24 +156,18 @@ echo ("      var cod_topico_raiz='" . $cod_topico_raiz . "';\n");
 echo ("      var cod_usuario_portfolio='" . $cod_usuario_portfolio . "';\n");
 echo ("      var cod_grupo_portfolio='" . $cod_grupo_portfolio . "';\n");
 
-echo ("/*\n");
-echo (" * Se o usu�rio apertar associar:\n");
-echo (" * Varre todos os radioboxes e muda a visibilidade do radio que tiver marcado pra invisivel e o resto visivel. \n");
-echo (" * Guarda o numero do elemento que foi habilitado, afim de fazer o mesmo com os spans de \n");
-echo (" * associado (deixa o selecionado visivel e o resto invisivel)\n");
-echo ("*/\n");
-echo ("function AtualizaAssociacaoForm(){\n");
-echo ("	radioboxes = document.getElementsByName(\"cod_avaliacao\");\n");
-echo ("	var i = 0;\n");
-echo ("	for(i = 0; i < radioboxes.length; i++){\n");
-echo ("		if (radioboxes[i].checked){\n");
-echo ("			radioboxes[i].style.visibility = 'hidden';\n");
-echo ("			VisibilidadeSpanAssociado(i, true);\n");
-echo ("		} else {\n");
-echo ("			radioboxes[i].style.visibility = 'visible';\n");
-echo ("			VisibilidadeSpanAssociado(i, false);\n");
-echo ("		}\n");
-echo ("	}\n");
+/*
+ * Funcao que atualiza as listas de avitidades a serem associadas ao Portolio.
+ * Varre os radioboxes e muda a visibilidade do radio que foi marcada para ser associado.
+ */
+echo ("function AtualizaAssociacaoForm(cod_avaliacao){\n");
+echo ("  var radioboxes = document.getElementsByName(\"cod_avaliacao\");\n");
+echo ("  for(var i = 0; i < radioboxes.length; i++) {\n");
+echo ("    if(radioboxes[i].value==cod_avaliacao) {\n");
+echo ("      radioboxes[i].style.visibility = 'hidden';\n");
+echo ("      VisibilidadeSpanAssociado(i, true);\n");
+echo ("    }\n");
+echo ("  }\n");
 echo ("}\n");
 
 echo ("function VisibilidadeSpanAssociado(j, b){\n");
@@ -188,18 +182,17 @@ echo ("	}\n");
 echo ("}\n");
 
 /*
- * Desassociar:
- * Deixa visivel todos os radioboxes e invisivel todos os spans.
-*/
-echo ("function AtualizaDesassociacaoForm(){\n");
-echo ("	radioboxes = document.getElementsByName(\"cod_avaliacao\");\n");
-echo ("	var i = 0;\n");
-echo ("	for(i = 0; i < radioboxes.length; i++){\n");
-echo ("		if (radioboxes[i].style.visibility = 'hidden'){\n");
-echo ("			radioboxes[i].style.visibility = 'visible';\n");
-echo ("			VisibilidadeSpanAssociado(i, false);\n");
-echo ("		}\n");
-echo ("	}\n");
+ * Funcao que atualiza as listas de atividades a serem associadas ao Portfolio.
+ * Varre os radioboxes e muda a visibilidade da avaliacao que esta associadad ao item.
+ */
+echo ("function AtualizaDesassociacaoForm(cod_avaliacao){\n");
+echo ("  var radioboxes = document.getElementsByName(\"cod_avaliacao\");\n");
+echo ("  for(var i = 0; i < radioboxes.length; i++){\n");
+echo ("    if (radioboxes[i].value == cod_avaliacao){\n");
+echo ("      radioboxes[i].style.visibility = 'visible';\n");
+echo ("      VisibilidadeSpanAssociado(i, false);\n");
+echo ("    }\n");
+echo ("  }\n");
 echo ("}\n");
 
 echo ("function FechaDivAvaliacoes(){\n");
@@ -213,6 +206,8 @@ echo ("        cod_mover = getLayer(\"mover\");\n");
 echo ("        cod_novapasta = getLayer(\"novapasta\");\n");
 echo ("        cod_mover_arquivo = getLayer(\"mover_arquivo\");\n");
 echo ("        EscondeLayers();\n");
+echo ("        xajax_RetornaFraseDinamic('lista_frases');");
+echo ("        xajax_RetornaFraseGeralDinamic('lista_frases_geral');");
 $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo ("        startList();\n");
 echo ("      }\n");
@@ -981,9 +976,9 @@ if ($dono_portfolio) {
 		echo ("                        " . $frase_atividades);
 
 		echo ("					  <br /><br />");
-		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases_geral, 18) . "\" class=\"input\" id=\"OKAval\" onclick=\"EditaAval(1);AtualizaAssociacaoForm();\"/> ");
+		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases_geral, 18) . "\" class=\"input\" id=\"OKAval\" onclick=\"EditaAval(1);\"/> ");
 		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases_geral, 2) . "\" class=\"input\" id=\"cancAval\" onclick=\"EditaAval(0);FechaDivAvaliacoes();\"/> ");
-		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases, 160) . "\" class=\"input\" onclick=\"xajax_DesassociaAvaliacaoDinamic(" . $cod_curso . ", " . $cod_usuario . ", " . $cod_item . ", '" . RetornaFraseDaLista($lista_frases, 213) . "');AtualizaDesassociacaoForm();\";/> ");
+		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases, 160) . "\" class=\"input\" onclick=\"xajax_DesassociaAvaliacaoDinamic(" . $cod_curso . ", " . $cod_usuario . ", " . $cod_item . ", '" . RetornaFraseDaLista($lista_frases_geral, 36) . "', '" . RetornaFraseDaLista($lista_frases, 213) . "');\";/> ");
 		echo ("                      </div>\n");
 		echo ("                    </td>\n");
 		echo ("                  </tr>\n");
