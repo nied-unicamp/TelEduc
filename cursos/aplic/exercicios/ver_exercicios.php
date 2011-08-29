@@ -341,15 +341,22 @@ if(count($exercicios) > 0 && $exercicios != null)
 		 */
 		
 		if($linha_item['corrigida'] == 'S'){
-			echo("                    <td align=\"left\">".$icone."<a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>".$linha_item['titulo']."</a>");
+			echo("                    <td align=\"left\">".$icone."<a class=\"antigo\"  href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>".$linha_item['titulo']."</a>");
 			if($eformador){
-				echo (" - <a href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\"> (Recorrigir)</a> ");
+				echo (" - <a class=\"antigo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\"> (Recorrigir)</a> ");
 			}
 			echo("</td>\n");
+		// se o aluno ja submeteu mas o formador ainda nao corrigiu, destaca com bold	
 		} else  if($linha_item['submetida'] == 'S' && $eformador){
-			echo("                    <td align=\"left\">".$icone."<a href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
-		 } else {
-			echo("                    <td align=\"left\">".$icone."<a href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+			echo("                    <td align=\"left\">".$icone."<a class=\"novo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+		}
+		// se ja estiver submetida, nao destaca com bold
+		else if($linha_item['submetida'] == 'S'){
+			echo("                    <td align=\"left\">".$icone."<a class=\"antigo\" href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+		}
+		// se nao estiver submetida, destaca com bold
+		else {
+			echo("                    <td align=\"left\">".$icone."<a class=\"novo\"  href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
 		}
 		
 		echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");

@@ -135,7 +135,7 @@
           case 3: $categoria = RetornaFraseDaLista($lista_frases,97); break;
   } 
 
-  /* Impede o acesso a algumas secoes aos usuÃ¡rios que não são formadores. */
+  /* Impede o acesso a algumas secoes aos usuÃ¡rios que nï¿½o sï¿½o formadores. */
   if ((!$tela_formador) && ($categ != '1') && ($categ != '2'))
   {
     /* 1 - Enquete */
@@ -288,16 +288,16 @@
 
   if ($categ == 1) //enquete em ANDAMENTO
   {  
-    // Vai para a página de votação
+    // Vai para a pï¿½gina de votaï¿½ï¿½o
     echo("    function Votar()\n");
     echo("    {\n");
     echo("      document.location.href='vota_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("    }\n\n");
   }
 
-  if (($tela_formador) && ($categ == 0)) // enquete NAO_REALIZADA na visão do formador
+  if (($tela_formador) && ($categ == 0)) // enquete NAO_REALIZADA na visï¿½o do formador
   {
-    // Vai para a página de edição da enquete
+    // Vai para a pï¿½gina de ediï¿½ï¿½o da enquete
     echo("    function Editar()\n");
     echo("    {\n");
     echo("      	document.location.href='editar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
@@ -313,7 +313,7 @@
     echo("    }\n\n");
   }  
   
-  if (($tela_formador) && ($categ == 1)) // enquete em ANDAMENTO na visão do formador
+  if (($tela_formador) && ($categ == 1)) // enquete em ANDAMENTO na visï¿½o do formador
   {  
     // Finaliza a enquete
     echo("    function Finalizar()\n");
@@ -325,9 +325,9 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visão do formador 
+  if (($tela_formador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visï¿½o do formador 
   {
-    // Carrega data e hora final da enquete atual no formulário para  Adiantada/Prorrogada
+    // Carrega data e hora final da enquete atual no formulï¿½rio para  Adiantada/Prorrogada
     echo("    function CarregaDataHora()\n");
     echo("    {\n"); 
     echo("      document.form_adiantar_prorrogar.data_fim.value = data_fim;\n");
@@ -344,7 +344,7 @@
     echo("      if (!DataValidaAux(d_fim))\n");
     echo("        return false;\n");
     echo("      if (! hora_valida(h_fim)){\n");
-    // 110 - Horário de término inválido.
+    // 110 - Horï¿½rio de tï¿½rmino invï¿½lido.
     echo("        alert('".RetornaFraseDaLista($lista_frases,110)."');\n");
     echo("        return false;\n");
     echo("      }\n");
@@ -358,7 +358,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && ($categ != 3)) // enquete fora da LIXEIRA e é formador
+  if (($tela_formador) && ($categ != 3)) // enquete fora da LIXEIRA e ï¿½ formador
   {
     // Apaga a enquete , movendo-a para a lixeira
     echo("    function Apagar()\n");
@@ -419,7 +419,7 @@
   }
   else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EConvidado($sock, $cod_usuario, $cod_curso)))
   {
-	// Início da Página do Aluno, Visitante e Convidado
+	// Inï¿½cio da Pï¿½gina do Aluno, Visitante e Convidado
 	switch($categ)
 	{
 		case 1:  
@@ -486,7 +486,7 @@
 
   if (($tela_formador) || ($categ == 1))
   {
-    // 116 - Opções
+    // 116 - Opï¿½ï¿½es
     echo("                    <td width=\"140px\">".RetornaFraseDaLista($lista_frases,116)."</td>\n");
   }
 
@@ -518,24 +518,23 @@
       $vota = votaEnquete($sock, $ator, $lista_enquetes[$num]);
       $votou = jaVotouEnquete($sock, $cod_usuario, $lista_enquetes[$num]['idEnquete']);
       if(($vota) && ($categ == 1)) $lay_vota = "_vota";
-
+      
       /* DESTACAR ENQUETES QUE DEVE VOTAR */
-      $bi = "";
-      $bf = "";
+      $bi = "antigo";
       $tr = "";
+      
       if ((!$votou) && ($vota) && (strcmp(getStatusEnquete($sock, $lista_enquetes[$num]), "ANDAMENTO") == 0))
-      {
-        $bi = "<strong>";
-        $bf = "</strong>";
+      {      	
+        $bi = "novo";      
       } 
       /***************************************/
 
       $titulo=$lista_enquetes[$num]['titulo'];
 
       echo("                  <tr class=\"altColor".($cor)."\">\n");
-      echo("                    <td class=\"alLeft\"><a id=\"link_enquete_".$lista_enquetes[$num]['idEnquete']."\" href='ver_enquete.php?cod_curso=".$cod_curso."&amp;idEnquete=".$lista_enquetes[$num]['idEnquete']."' >".$bi.$titulo.$bf."</a></td>\n");
+      echo("                    <td class=\"alLeft\"><a class=\"".$bi."\" id=\"link_enquete_".$lista_enquetes[$num]['idEnquete']."\" href='ver_enquete.php?cod_curso=".$cod_curso."&amp;idEnquete=".$lista_enquetes[$num]['idEnquete']."' >".$titulo."</a></td>\n");
 
-      // Se o usuário for formador então cria links com acesso as opções
+      // Se o usuï¿½rio for formador entï¿½o cria links com acesso as opï¿½ï¿½es
       if ($tela_formador)
       {
 	switch($categ)
@@ -598,7 +597,7 @@
 			break;
 	}
       }
-      else if ($categ == 1) //Não formadores
+      else if ($categ == 1) //Nï¿½o formadores
       {
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 		echo("                      <ul>\n");

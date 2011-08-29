@@ -20,7 +20,9 @@ html,body { height:100%; font-size:11px;}
 
 p { margin:8px 0; }
 p.p1 { margin:16px 0; }
+
 a { color:#2a6686; text-decoration:none; font-weight:bold; font-size:1.0em; }
+.enquete { color:#2a6686; text-decoration:none; font-weight:normal; font-size:1.0em; }
 a:visited { color:#4181a3; text-decoration:none; }
 a:hover { color:#1c4c66; text-decoration:underline; }
 
