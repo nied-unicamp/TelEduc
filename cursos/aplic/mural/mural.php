@@ -900,13 +900,8 @@
         $dataaux = explode(" ",$data);
         $data = $dataaux[0] . "<br/>" . $dataaux[1];
               //echo(" data: ".$data[1] ."-". $data[0]." - ultimo: ".UnixTime2DataHora($ultimo_acesso)."<br>");
-      
-        if ($lista_mensagens[$num_msg]['data']>$ultimo_acesso){
-          $nome_usuario="<b>".$nome_usuario."</b>";
-          $titulo="<b>".$titulo."</b>";
-          $data="<b>".$data."</b>";
-    
-        }
+        
+		$estilo = ( $lista_mensagens[$num_msg]['data'] > $ultimo_acesso ? "novo" : "antigo");
   
         /* Cria a linha da tabela */
         /* O uso do &nbsp; entre a tag <A></A> faz-se necessario para    */
@@ -920,9 +915,9 @@
         }
         
         echo("                        <td width=\"2%\">". ($num_msg+1) .".</td>\n");
-        echo("                        <td class=\"alLeft\">".$titulo." </td>\n");
-        echo("                        <td width=\"25%\">".$nome_usuario."</td>\n");
-        echo("                        <td width=\"15%\">".$data."</td>\n");
+        echo("                        <td class=\"alLeft ".$estilo."\">".$titulo."</td>\n");
+        echo("                        <td width=\"25%\" class=\"$estilo\">".$nome_usuario."</td>\n");
+        echo("                        <td width=\"15%\" class=\"$estilo\">".$data."</td>\n");
         echo("                      </tr>\n");
 
         echo("                      <tr style=\"display:none;\" id=\"tr_msg_".$cod_mural."\" name=\"tr_msg\">");

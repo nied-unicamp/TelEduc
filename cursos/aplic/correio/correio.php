@@ -755,7 +755,7 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
       //L = Lida
       if($dados[9] == "N"){
         $icone = "<img src=\"../imgs/icNovaMensagem.gif\" border=\"0\" alt=\"\" id=\"img_".$cod_msg."\" />";
-        $styleFont ="style=\"font-weight:bold;\"";
+        $styleClass ="novo";
       }else{
         if($modoVisualizacao == 'E'){
           $icone = "<img src=\"../imgs/icMensagemEnviada.gif\" border=\"0\" alt=\"\" id=\"img_".$cod_msg."\" />";
@@ -764,13 +764,13 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
         }else{
           $icone = "<img src=\"../imgs/icMensagemLida.gif\" border=\"0\" alt=\"\" id=\"img_".$cod_msg."\" />";
         }
-        $styleFont = "";
+        $styleClass ="antigo";
       }
 
       //Não mostrar remetente nas mensagens enviadas;
       if($modoVisualizacao != 'E'){
         $remetente = RetornaNomeUsuarioDeCodigo($sock, $dados[1], $cod_curso);
-        $remetente = "<span id=\"remetente_".$cod_msg."\" class=\"link\" onclick=\"OpenWindowPerfil(".$dados[1].");\" $styleFont>".$remetente."</span>";
+        $remetente = "<span id=\"remetente_".$cod_msg."\" class=\"link ".$styleClass."\" onclick=\"OpenWindowPerfil(".$dados[1].");\">".$remetente."</span>";
       }
 
       //se a mensagem tiver arquivo anexo, coloca um icone ao lado do Assunto.
@@ -788,12 +788,12 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
         $iconeAnexo = "";
 
       $assunto = LimpaTitulo($dados['assunto']);
-      $assunto="<span id=\"assunto_".$cod_msg."\" class=\"link\" $styleFont onclick=\"AbreMensagem(".$cod_msg .",'". $modoVisualizacao. "');\">".$assunto."</span>";
+      $assunto="<span id=\"assunto_".$cod_msg."\" class=\"link ".$styleClass."\" onclick=\"AbreMensagem(".$cod_msg .",'". $modoVisualizacao. "');\">".$assunto."</span>";
 
       $data = UnixTime2DataHora($dados['data']);
       $dataaux = explode(" ",$data);
       $data = $dataaux[0] . "<br />" . $dataaux[1];
-      $data = "<span id=\"data_".$cod_msg."\" $styleFont>".$data."</span>"; 
+      $data = "<span id=\"data_".$cod_msg."\" class=\"$styleClass\">".$data."</span>"; 
 
       echo("                      <tr id=\"tr_".$cod_msg."\" style=\"".$style."\" class=\"altColor".($num_msg%2)."\">\n");
       echo("                        <td width=\"2%\">\n");

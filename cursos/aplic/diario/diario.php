@@ -339,7 +339,7 @@
   echo("              <td valign=\"top\">\n");
   echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
   $lista_itens = RetornaItens ($sock, $cod_curso, $cod_usuario, $cod_propriet);
-
+  $ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
 
   echo("                  <tr class=\"head\">\n");
   if($dono_diario){
@@ -381,18 +381,20 @@
   foreach ($lista_itens as $item)
   {
     $cod_item = $item ['cod_item'];
+    $estilo = ( $item['data'] > $ultimo_acesso ? "novo" : "antigo");
 
     echo ("                 <tr>\n");
     if($dono_diario){
 
       echo("                    <td width=\"2%\"><input type=\"checkbox\" name=\"chkItem\" id=\"itm_".$cod_item."\" onclick='VerificaCheck();' value=\"".$cod_item."\" /></td>\n");
     }
-    echo ("                   <td class=\"alLeft\">\n".$icone."<a href=\"ver_item.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."&amp;origem=diario\" >".$item ['titulo']."</a></td>\n");
-    echo ("                   <td align=\"center\">".UnixTime2DataHora($item ['data'])."</td>\n");
-     
+	
+    echo ("                   <td class=\"alLeft\">\n".$icone."<a class=\"$estilo\" href=\"ver_item.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."&amp;origem=diario\" >".$item ['titulo']."</a></td>\n");
+    echo ("                   <td align=\"center\" class=\"$estilo\">".UnixTime2DataHora($item ['data'])."</td>\n");
+
     if ($dono_diario)
     {
-      $comp_abre = "          <span id='span_".$cod_item."' class=\"link\" onclick=\"AtualizaComp(".$cod_item.",'".$item['tipo_compartilhamento']."');MostraLayer(cod_comp,100,event);return(false);\">";
+      $comp_abre = "          <span id='span_".$cod_item."' class=\"link ".$estilo."\" onclick=\"AtualizaComp(".$cod_item.",'".$item['tipo_compartilhamento']."');MostraLayer(cod_comp,100,event);return(false);\">";
       $comp_fecha= "</span>";
     }
     else
