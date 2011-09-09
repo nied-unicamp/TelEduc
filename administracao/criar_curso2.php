@@ -103,6 +103,7 @@
   	else
   		$cod_usuario = RetornaCodUsuarioLogin($sock,$login);
   }
+  //var_dump($cod_usuario);
   if($cod_usuario != 0)
   {
     // Criando Base
@@ -112,6 +113,7 @@
     if($cod_usuario != -1)
     {
       $arrayNomeEmail = RetornaNomeEmailUsuario($sock,$login);
+      //var_dump($arrayNomeEmail);
       $nome_coordenador = $arrayNomeEmail['nome'];
       $email = $arrayNomeEmail['email'];
     }

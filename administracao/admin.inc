@@ -1295,7 +1295,8 @@ function ExisteLoginEmail($login,$email,$escolha)
   Desconectar($sock);
 
   $res = RetornaLinha($res);
-
+  //var_dump($res);
+  //$objResponse->addAlert("LOL");
   if($res != "" && $escolha == "nao" && $email != "" && $login != "")
     $objResponse->addScript("EmailLoginRepetido();");
   else

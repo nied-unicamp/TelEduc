@@ -245,7 +245,7 @@ function ValidaCheckEmail()
   echo("                  </tr>\n");
 
   $lista_cursos = ListaDadosCursos($lista);
-
+  //var_dump($lista);
  /*inicio da ordena��o dos cursos*/
  switch ($ordenar)
  {
@@ -267,7 +267,8 @@ function ValidaCheckEmail()
  }
  /*fim da ordena��o dos cursos*/
 
-
+  //var_dump($lista_frases);
+  //var_dump($lista_cursos);
  /*in�cio da lista dos cursos*/
   for ($j = 0; $j < $total; $j++)
   {

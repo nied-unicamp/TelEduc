@@ -218,20 +218,30 @@ function ListaDadosCursos ($lista)
   $sock=Conectar("");
   $jao_array = array();
   $total=count($lista);
-
+  
   for ($j = 0; $j < $total; $j++)
   {
     $cod_curso = $lista[$j]['cod_curso'];
-
-    $query = "select C.cod_curso, C.nome_curso, Cp.pasta, U.nome, U.email from ";
-
-    $query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC, ".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and Cp.cod_pasta=C.cod_pasta and UC.cod_usuario=C.cod_coordenador";
-
+	$query = "select Cp.pasta from ".$dbnamebase.".Cursos C,".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and Cp.cod_pasta=C.cod_pasta";
     $res = Enviar($sock, $query);
     $linha = RetornaLinha($res);
-    $jao_array[] = $linha;
-  }
-
+	// testa se retornou uma linha vazia
+    if($linha){
+    	$query = "select C.cod_curso, C.nome_curso, Cp.pasta, U.nome, U.email from ";
+    	$query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC, ".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador and Cp.cod_pasta=C.cod_pasta";
+    	$res = Enviar($sock, $query);
+    	$linha = RetornaLinha($res);
+    	$jao_array[] = $linha;
+    }
+    // se retornou linha vazia, eh porque o curso nao tem categoria, dai tem que usar uma query diferente
+    else{
+    	$query = "select C.cod_curso, C.nome_curso, U.nome, U.email from ";
+    	$query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador";
+    	$res = Enviar($sock, $query);
+    	$linha = RetornaLinha($res);
+    	$jao_array[] = $linha;
+    }    
+  }      	
   Desconectar($sock);
   return ($jao_array);
 }
