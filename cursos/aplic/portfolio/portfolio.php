@@ -962,7 +962,8 @@ echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($
             echo("<td width=\"110\" align=\"center\"><span>");
             if (is_array($lista))
             {
-              $foiavaliado=ItemFoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_item']);
+              //$foiavaliado=ItemFoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_item']);
+              $foiavaliado=FoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_usuario']);
               if ($foiavaliado){
                 if ($eformador){
                   echo($Sim."</span><span class=\"avaliado\"> (a)");

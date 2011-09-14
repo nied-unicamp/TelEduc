@@ -4953,7 +4953,6 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
   
-  
   $cod_usuario=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar($cod_curso);
@@ -5097,8 +5096,13 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
     }
   }
 
-  if ($dados['Ferramenta'] == 'P' && $cod_item != '')
+  
+  //if ($dados['Ferramenta'] == 'P' && $cod_item != '')
+  if ($dados['Ferramenta'] == 'P')
   {
+    $lista_itens=RetornaListaItensAvaliacaoPortfolio($sock, $cod_avaliacao, $cod_aluno);
+    $cod_item=$lista_itens[0]['cod_item'];
+    
     AtualizaItemDeAvaliacao($sock,$cod_avaliacao,$cod_item,$cod_nota);
   }
 

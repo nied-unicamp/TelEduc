@@ -67,7 +67,7 @@ function RetornaGruposDoUsuario($sock,$cod_usuario)
 
 function RetornaAssociacaoItemAvaliacao($sock,$cod_item)
 {
-   $query="select cod_avaliacao from Portfolio_itens_avaliacao  where cod_item=".$cod_item." and status!='A' and status!='X' and status!='C' and cod_avaliacao=cod_avaliacao";
+   $query="select cod_avaliacao from Portfolio_itens_avaliacao  where cod_item=".$cod_item." and cod_avaliacao=cod_avaliacao";
    $res=Enviar($sock,$query);
    if (RetornaNumLinhas($res) > 0)
    {
