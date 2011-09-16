@@ -114,8 +114,10 @@
   echo("		if (cod_aluno == ' ')\n");	/* perfil de todos os alunos */
   echo("		{\n");
   					$url_exibir_todos = "window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso;
-  					foreach($lista_apelidos as $cod => $apelido){
-  						$url_exibir_todos .= "&cod_aluno[]=".$cod;
+  					if(is_array($lista_apelidos)) {
+    					foreach($lista_apelidos as $cod => $apelido){
+    						$url_exibir_todos .= "&cod_aluno[]=".$cod;
+    					}
   					}
   					$url_exibir_todos .= "\",'PerfilDisplay',\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\"); \n";
   echo(				$url_exibir_todos);
