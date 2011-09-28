@@ -192,8 +192,14 @@
   {
     echo("                  <tr>\n");
     echo("                    <td>\n");
-    // 160 - Usuario ja participa deste curso!
-    echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
+    
+    if(RejeitadoDoCurso($cod_curso)){
+    	echo("						".RetornaFraseDaLista($lista_frases,221)."\n");	
+    }
+    else{
+	    // 160 - Usuario ja participa deste curso!
+    	echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
+    }
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }

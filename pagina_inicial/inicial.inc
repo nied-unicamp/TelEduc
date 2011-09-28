@@ -598,6 +598,24 @@ function RetornaTodosCursosUsuario($sock)
   return RetornaArrayLinhas($res);
 }
 
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Funï¿½ao RetornaTodosCursosETipoUsuarioDeUsuario - Retorna todos os codigos dos cursos que o usuario tem algum vinculo e o tipo de usu‡rio no curso 
+  Entradas: $sock - sock de conexao a base geral
+  Saida:    array contendo os codigos dos cursos que o usuario tem algum vinculo e o tipo de usu‡rio no curso
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
+{
+  $query = "SELECT CUR.cod_curso, USUC.tipo_usuario
+	    FROM Usuario USU
+	    INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
+	    INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
+            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
+
+  $res = Enviar($sock, $query);
+
+  return RetornaArrayLinhas($res);
+}
+
 /********************************************************************
   Funï¿½ao ParticipaDoCurso - Verifica se o usuario participa do curso
   Entradas:  $cod_curso - codigo do curso
@@ -629,6 +647,46 @@ function ParticipaDoCurso($cod_curso)
     }
 
     return $tem_acesso_curso;
+  }
+  else
+    //caso contrario, retornamos null, indicando a impossibilidade de determinar se o usuario pertence ou nao ao curso 
+    return null;
+}
+
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  Funï¿½ao RejeitadoDoCurso - Verifica se o usuario foi rejeitado do curso
+  Entradas:  $cod_curso - codigo do curso
+  Saida:    'true' se o usuario foi rejeitado do curso; 'false', caso contrario.
+            Caso o usuario nao esteja logado, retornamos 'null'.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+
+function RejeitadoDoCurso($cod_curso)
+{
+  if(!empty($_SESSION['cod_usuario_global_s']))
+  {
+    $sock = Conectar("");
+    //caso o usuario esteja logado, ve quais cursos ele possui acesso
+    $meus_cursos = RetornaTodosCursosETipoUsuarioDeUsuario($sock);
+    Desconectar($sock);
+    if($meus_cursos=="") $meus_cursos=array();
+    $rejeitado_curso = false;
+
+    //admtele tem acesso a todos os cursos
+    //if($_SESSION['cod_usuario_global_s'] == -1)
+    //  $tem_acesso_curso = true;
+    //else
+    //{ 
+      for($i=0;$i<count($meus_cursos);$i++)
+      {
+        if($meus_cursos[$i]['cod_curso'] == $cod_curso){
+        	if($meus_cursos[$i]['tipo_usuario'] == "r")
+        		$rejeitado_curso = true;
+        }
+          
+      }
+    //}
+
+    return $rejeitado_curso;
   }
   else
     //caso contrario, retornamos null, indicando a impossibilidade de determinar se o usuario pertence ou nao ao curso 
