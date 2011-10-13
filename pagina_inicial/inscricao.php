@@ -194,7 +194,9 @@
     echo("                    <td>\n");
     
     if(RejeitadoDoCurso($cod_curso)){
-    	echo("						".RetornaFraseDaLista($lista_frases,221)."\n");	
+    	/* 221 - Desculpe-nos, mas você já solicitou inscrição para este curso no dia */
+    	/* 222 - e seu pedido foi rejeitado.*/
+    	echo("						".RetornaFraseDaLista($lista_frases,221)." ".RetornaDataInscricao($cod_curso)." ".RetornaFraseDaLista($lista_frases,222)."\n");	
     }
     else{
 	    // 160 - Usuario ja participa deste curso!

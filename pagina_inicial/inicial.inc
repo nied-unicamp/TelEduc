@@ -612,9 +612,32 @@ function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
             WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
 
   $res = Enviar($sock, $query);
-
+	
   return RetornaArrayLinhas($res);
 }
+
+/********************************************************************
+  Função RetornaDataInscricao - Retorna a data em que o usuario fez a inscrição no curso
+  Entradas: $cod_curso - código do curso
+  Saida: Data em que o usuário fez a inscrição
+********************************************************************/
+
+function RetornaDataInscricao($cod_curso){
+	$sock = Conectar("");
+	$query = "SELECT data_inscricao 
+	          FROM Usuario_curso 
+	          WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' 
+			  AND cod_curso = '".$cod_curso."'";
+	
+	$res = Enviar($sock, $query);
+	$data = RetornaLinha($res);
+
+	Desconectar($sock);
+	
+	return UnixTime2Data($data["data_inscricao"]);
+	
+}
+
 
 /********************************************************************
   FunÔøΩao ParticipaDoCurso - Verifica se o usuario participa do curso
