@@ -43,6 +43,14 @@
 /*
 Funcoes dessa biblioteca:
 
+CriaZipDinamic
+CriaArvorePastasTopico
+RemovePastasVazias
+ApagaArvorePastas
+TemSubPastas
+TemArquivos
+RetornaNomeTopico
+RetornaNomeItem
 RetornaDiretorio
 UltimaPosicaoLivre
 OrganizaPosicaoTopico
@@ -116,6 +124,260 @@ ExcluirItensDinamic
 RecuperarItensDinamic
 */
 
+
+/******************************************************************************************
+   CriaZipDinamic - Cria a estrutura de pastas para os downloads multiplos
+      				e forÁa o download
+      				FunÁ„o para ser usada via ajax
+   Entrada: $cod_topico_raiz - cÛdigo do tÛpico para download
+            $path - diretorio atual no "temp"
+            $cod_curso - codigo do curso
+            $cod_ferramenta - codigo da ferramenta
+            $diretorio_arquivos - repositorio do proprio teleduc
+            $tabela - nome da tabela da ferramenta
+            $bibliotecas - path das bibliotecas
+            $nome_ferramenta - nome da ferramenta
+            $diretorio_temp - diretÛrio registrado na base de dados
+   Saida: nenhuma
+*******************************************************************************************/
+function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diretorio_arquivos,$tabela,$bibliotecas,$nome_ferramenta,$diretorio_temp){
+  	// inicializaÁ„o do ajax
+	$objResponse = new xajaxResponse('ISO-8859-1');
+	$sock = Conectar($cod_curso);
+	// cria a hierarquia de pastas
+	CriaArvorePastasTopico($sock, $cod_topico_raiz, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos);
+  	// adequa o nome do tÛpico
+	(RetornaNomeTopico($sock,$tabela,$cod_topico_raiz)=="Raiz") ? ($nome_topico=$nome_ferramenta) : ($nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico_raiz));
+  	$path=$path.'/'.$nome_topico;  
+  	// limpa a hierarquia de pastas
+  	RemovePastasVazias($path);
+  	$dir_tmp_ferramenta=$path."/../";
+  	$working_dir=getcwd();
+  	// verifica se foi criada a hierarquia de pastas, caso contr·rio È porque n„o tem anexos a serem baixados
+  	if (file_exists($path)){
+  		chdir($path.'/../');
+  		// gera o zip a partir do diretorio $nome_topico
+  		$directoryToZip=$nome_topico;
+  		// o zip gerado È colocado no cwd
+  		$outputDir="";
+  		// acrescenta a extens„o do arquivo
+  		$zipName=$nome_topico.".zip";
+  		chdir($working_dir);
+  		include_once($bibliotecas."CreateZipFile.inc.php");
+  		chdir($dir_tmp_ferramenta);
+  		// m·gica para gerar o zip
+  		$createZipFile=new CreateZipFile;
+  		$createZipFile->zipDirectory($directoryToZip,$outputDir);
+  		$fd=fopen($zipName, "wb");
+  		$out=fwrite($fd,$createZipFile->getZippedfile());
+  		$FilePath=getcwd();
+  		fclose($fd);
+  		// apaga a hierarquia de pastas
+  		ApagaArvorePastas($path);
+  		$FilePath.="/".$zipName;
+  		chdir($working_dir);
+  		$DownloadPath=$diretorio_temp;
+  		$DownloadPath.="/".$zipName;
+  		copy($FilePath,$DownloadPath);
+  		// faz a m·gica do download
+  		$objResponse->addScriptCall("redirecionaDownloadAnexos",$DownloadPath);
+  	}
+  	else{
+  		// se n„o tem anexos emite um alerta, mais perceptÌvel que um feedback
+  		$objResponse->addAlert("N„o existem anexos a serem baixados!\n");
+  	}
+  	Desconectar($sock);
+  	return $objResponse->getXML();
+  	
+}
+
+
+
+/******************************************************************************************
+   CriaArvorePastasTopico - Cria a estrutura de pastas para os downloads multiplos
+      						a partir de um tÛpico
+   Entrada: $sock - BASE EXTERNA
+            $cod_topico - codigo do topico atual
+            $path - diretorio atual no "temp"
+            $cod_curso - codigo do curso
+            $cod_ferramenta - codigo da ferramenta
+            $diretorio_arquivos - repositorio do proprio teleduc
+   Saida: nenhuma
+*******************************************************************************************/
+function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos){
+    // adequa as variaveis internas de acordo com a ferramenta
+	switch ($cod_ferramenta) {
+    case 3 :
+        $tabela="Atividade";
+        $dir="atividades";
+        $nome_topico="Atividades";
+        break;
+    case 4 :
+        $tabela="Apoio";
+        $dir="apoio";
+        $nome_topico="Material_de_apoio";
+        break;
+    case 5 :
+        $tabela="Leitura";
+        $dir="leituras";
+        $nome_topico="Leituras";  
+        break;
+    case 7 :
+        $tabela="Obrigatoria";
+        $dir="obrigatoria";
+        $nome_topico="Parada_obrigatoria";
+        break;
+    }
+    // se nao for o topico raiz, adequa $nome_topico ao nome do topico atual
+    if($cod_topico != 1) $nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico);
+    
+    $new_path=$path.'/'.$nome_topico;
+	// cria a pasta do topico atual
+    mkdir($new_path);
+	
+    $itens=RetornaItensDoTopico($sock,$tabela,$cod_topico);
+    // verifica se o topico possui itens
+    if($itens){
+        foreach ($itens as $item){
+        	// caso possua itens, cria uma pasta para cada item e copia os anexos do item
+            $item_path=$new_path.'/'.$item["titulo"];
+            mkdir($item_path);            
+            $copy_path=$diretorio_arquivos.'/'.$cod_curso.'/'.$dir.'/'.$item["cod_item"].'/';
+            $item_arquivos=scandir($copy_path);
+            foreach ($item_arquivos as $item_arquivo){            	
+            	if($item_arquivo!="." && $item_arquivo!=".."){
+            		// workaround para copiar os arquivos sem precisar das permissıes adequadas
+            		try{
+            			$source=$copy_path.$item_arquivo;
+            			$dest=$item_path.'/'.$item_arquivo;
+            			$data=file_get_contents($source);
+            			$handle=fopen($dest,"w");
+            			fwrite($handle,$data);
+            			fclose($handle);
+            		}catch(Exception $e){
+            			die($e->errorMessage());
+            		}          		
+            	}
+            }
+        }    
+    }   	
+    $filhos=RetornaTopicosDoTopico($sock,$tabela,$cod_topico);
+    // verifica se o topico possui subtopicos
+    if($filhos){
+        foreach ($filhos as $filho){
+        	// se tiver, tail call pra cada filho
+            CriaArvorePastasTopico($sock,$filho["cod_topico"],$new_path,$cod_curso,$cod_ferramenta,$diretorio_arquivos);        
+        }    
+    }
+}
+
+
+
+
+/******************************************************************************************
+   RemovePastasVazias - Percorre uma hierarquia de diretorios removendo pastas vazias,
+                        eh utilizado em conjunto com o CriaArvorePastas para implementacao
+                        de downloads multiplos 
+   Entrada: $path - diretorio a ser analisado            
+   Saida: nenhuma
+*******************************************************************************************/
+function RemovePastasVazias($path){	
+	if(TemSubPastas($path)){
+		$subpastas=scandir($path);
+		foreach ($subpastas as $subpasta){
+			if($subpasta != "." && $subpasta != ".."){
+				// chama recursivamente para cada subdiretorio do diretorio atual
+				if(is_dir($path.'/'.$subpasta)) RemovePastasVazias($path.'/'.$subpasta);
+			}
+		}
+	}
+	// se o atual diretorio estiver vazio na volta da recursao, remove o mesmo
+	if(!(TemSubPastas($path)||TemArquivos($path))){
+		rmdir($path);
+	}
+}
+/******************************************************************************************
+   ApagaArvorePastas - Apaga toda uma hierarquia de diretÛrios, pode ser perigosa se usada de modo indevido
+   Entrada: $dir - diretorio a ser removido           
+   Saida: nenhuma
+*******************************************************************************************/
+function ApagaArvorePastas($dir) {
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (filetype($dir."/".$object) == "dir") ApagaArvorePastas($dir."/".$object); else unlink($dir."/".$object);
+       }
+     }
+     reset($objects);
+     rmdir($dir);
+   }
+ } 
+
+
+/******************************************************************************************
+   TemSubPastas - Verifica se existem subdiretorios num determinado diretorio
+   Entrada: $path - diretorio a ser analisado
+   Saida: bool
+*******************************************************************************************/
+function TemSubPastas($path){
+	$subpastas=scandir($path);
+	// o tamanho do array vai sempre ser no minimo 2, ja que scandir sempre retorna o '.' e o '..'
+	if(count($subpastas)>2){
+	foreach ($subpastas as $subpasta){
+			if($subpasta != "." && $subpasta != ".."){
+				if(is_dir($path.'/'.$subpasta)) return true;
+			}
+		}
+	}
+	return false;
+}
+/******************************************************************************************
+   TemArquivos - Verifica se existem arquivos num determinado diretorio
+   Entrada: $path - diretorio a ser analisado
+   Saida: bool
+*******************************************************************************************/
+function TemArquivos($path){
+	$subpastas=scandir($path);	
+	if(count($subpastas)>2){
+	foreach ($subpastas as $subpasta){
+			if($subpasta != "." && $subpasta != ".."){
+				if(is_file($path.'/'.$subpasta)) return true;
+			}
+		}
+	}
+	return false;
+}
+
+/******************************************************************************************
+   RetornaNomeTopico - Retorna o Nome do Topico na tabela de topicos
+   Entrada: $sock - BASE EXTERNA
+            $tabela - tabela da ferramenta na qual se busca o topico
+            $cod_topico - codigo do topico buscado
+   Saida: string com o nome do topico
+*******************************************************************************************/
+function RetornaNomeTopico($sock,$tabela,$cod_topico)
+{
+  $consulta="select topico from ".$tabela."_topicos where cod_topico=".$cod_topico;
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+  return($lista[0][0]);
+}
+
+/******************************************************************************************
+   RetornaNomeItem - Retorna o Nome do Item na tabela de itens
+   Entrada: $sock - BASE EXTERNA
+            $tabela - tabela da ferramenta na qual se busca o item
+            $cod_item - codigo do item buscado
+   Saida: string com o nome do item
+*******************************************************************************************/
+function RetornaNomeItem($sock,$tabela,$cod_item)
+{
+  $consulta="select titulo from ".$tabela."_itens where cod_item=".$cod_item;
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);  
+  return($lista[0][0]);
+}
 
 /******************************************************************************************
    RetornaDiretorio - Retorna o Diret√Øorio da tabela de diretorios

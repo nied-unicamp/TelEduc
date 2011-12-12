@@ -133,6 +133,10 @@
   $dir_item_temp = CriaLinkVisualizar($sock,$dir,$cod_curso,$cod_usuario,$cod_item,$diretorio_arquivos,$diretorio_temp);
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
 
+  $dir_tmp_ferramenta = $diretorio_arquivos.'/'.$cod_curso.'/'.$dir.'/tmp';
+  
+  if (!file_exists($dir_tmp_ferramenta)) mkdir($dir_tmp_ferramenta);
+  
   /* Verificação se o item está em Edi��o */
   /* Se estiver, voltar a tela anterior, e disparar a tela de Em Edi��o... */
 
@@ -1144,6 +1148,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   echo("              <td valign=\"top\">\n");
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
+    
   /* 35 - Titulo */
   echo("                    <td width=\"\" class=\"itens\">".RetornaFraseDaLista($lista_frases,35)."</td>\n");
 

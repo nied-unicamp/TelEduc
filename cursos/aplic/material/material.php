@@ -60,6 +60,7 @@
   $objMaterial->registerFunction("AtualizaPosicoes");
   $objMaterial->registerFunction("CriaTopicoDinamic");
   $objMaterial->registerFunction("RenomearTopicoDinamic");
+  $objMaterial->registerFunction("CriaZipDinamic");
   
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
@@ -120,7 +121,11 @@
 
   $diretorio_arquivos=RetornaDiretorio($sock,'Arquivos');
   $diretorio_temp=RetornaDiretorio($sock,'ArquivosWeb');
-
+  $diretorio_raiz=RetornaDiretorio($sock,'raiz_www');
+  
+  //echo getcwd()."<br>";
+  //var_dump($diretorio_arquivos);
+  //var_dump($diretorio_temp);
   Desconectar($sock);
 
   $sock = Conectar($cod_curso);
@@ -131,18 +136,22 @@
     case 3 :
       $tabela="Atividade";
       $dir="atividades";
+      $nome_ferramenta="Atividades";
       break;
     case 4 :
       $tabela="Apoio";
       $dir="apoio";
+      $nome_ferramenta="Material_de_apoio";
       break;
     case 5 :
       $tabela="Leitura";
       $dir="leituras";
+      $nome_ferramenta="Leituras";
       break;
     case 7 :
       $tabela="Obrigatoria";
       $dir="obrigatoria";
+      $nome_ferramenta="Parada_obrigatoria";
       break;
   }
 
@@ -152,11 +161,19 @@
 
   $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 
-
-  if($eformador){
+  $dir_tmp_ferramenta = $diretorio_arquivos.'/'.$cod_curso.'/'.$dir.'/tmp';
+  
+  if (!file_exists($dir_tmp_ferramenta)) mkdir($dir_tmp_ferramenta);
+  
     /**************** ajax ****************/
 
-    $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript("../xajax_0.2.4/");
+  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("		function redirecionaDownloadAnexos(url){\n");
+  echo("			window.location=url;\n");
+  echo("		}\n");
+  echo(" 	</script>\n");
+  if($eformador){
 
     /**************** ajax ****************/
 
@@ -181,7 +198,6 @@
     echo("      if (isNav){\n");
     echo("        document.captureEvents(Event.MOUSEMOVE);\n");
     echo("      }\n");
-    
     echo("      function getPageScrollY()\n");
     echo("      {\n");
     echo("        if (isNav)\n");
@@ -619,9 +635,10 @@
 
   $lista_topicos=RetornaTopicosDoTopico($sock, $tabela, $cod_topico_raiz);
   $lista_itens=RetornaItensDoTopico($sock, $tabela, $cod_topico_raiz);
-
+  
   echo("                    <tr class=\"head\">\n");
-
+  
+  
   if($eformador){
     echo("                      <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
   }
@@ -806,6 +823,14 @@
       echo("            <li id=\"mMover_Selec\" class=\"menuUp\"><span id=\"moverSelec\">".RetornaFraseDaLista($lista_frases_geral,69)."</span></li>\n");
       echo("          </ul>\n");
     }
+    // testa se é raiz e se tem itens para habilitar o download de todos os anexos
+    if(($cod_topico_raiz < 2) && !((empty($lista_topicos)) && ((empty($lista_itens) || (!ExistemItensVisiveis($sock, $tabela, $cod_topico_raiz, $eformador)))))){
+    	echo("					<div id=\"downloadAnexos\">");
+    	echo("                  <ul class=\"btAuxTabs\">\n");
+    	echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos."','".$tabela."','".$bibliotecas."','".$nome_ferramenta."','".$diretorio_temp."');\">Baixar todos os anexos</span></li>\n");
+    	echo("                  </ul>\n");
+    	echo("					</div>");       
+    }     
     echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a><a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
