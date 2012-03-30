@@ -655,7 +655,12 @@
   echo("                <ul class=\"btAuxTabs03\">\n");
 
   // 69 - Atualizar
-echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
+	echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
+  
+  // download de todos os anexos do portfolio de um aluno
+  // TODO: falta fazer a funcao dinamica para pegar os anexos e montar o zip
+	if ($eformador)
+		echo("		<li> <span onclick=\"window.location.reload();\">Baixar todos os anexos</span></li>\n");
 
   if ($dono_portfolio)
   {

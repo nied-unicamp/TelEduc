@@ -127,9 +127,9 @@ RecuperarItensDinamic
 
 /******************************************************************************************
    CriaZipDinamic - Cria a estrutura de pastas para os downloads multiplos
-      				e força o download
-      				Função para ser usada via ajax
-   Entrada: $cod_topico_raiz - código do tópico para download
+      				e forï¿½a o download
+      				Funï¿½ï¿½o para ser usada via ajax
+   Entrada: $cod_topico_raiz - cï¿½digo do tï¿½pico para download
             $path - diretorio atual no "temp"
             $cod_curso - codigo do curso
             $cod_ferramenta - codigo da ferramenta
@@ -137,35 +137,35 @@ RecuperarItensDinamic
             $tabela - nome da tabela da ferramenta
             $bibliotecas - path das bibliotecas
             $nome_ferramenta - nome da ferramenta
-            $diretorio_temp - diretório registrado na base de dados
+            $diretorio_temp - diretï¿½rio registrado na base de dados
    Saida: nenhuma
 *******************************************************************************************/
 function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diretorio_arquivos,$tabela,$bibliotecas,$nome_ferramenta,$diretorio_temp){
-  	// inicialização do ajax
+  	// inicializaï¿½ï¿½o do ajax
 	$objResponse = new xajaxResponse('ISO-8859-1');
 	$sock = Conectar($cod_curso);
 	// cria a hierarquia de pastas
 	CriaArvorePastasTopico($sock, $cod_topico_raiz, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos);
-  	// adequa o nome do tópico
+  	// adequa o nome do tï¿½pico
 	(RetornaNomeTopico($sock,$tabela,$cod_topico_raiz)=="Raiz") ? ($nome_topico=$nome_ferramenta) : ($nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico_raiz));
   	$path=$path.'/'.$nome_topico;  
   	// limpa a hierarquia de pastas
   	RemovePastasVazias($path);
   	$dir_tmp_ferramenta=$path."/../";
   	$working_dir=getcwd();
-  	// verifica se foi criada a hierarquia de pastas, caso contrário é porque não tem anexos a serem baixados
+  	// verifica se foi criada a hierarquia de pastas, caso contrï¿½rio ï¿½ porque nï¿½o tem anexos a serem baixados
   	if (file_exists($path)){
   		chdir($path.'/../');
   		// gera o zip a partir do diretorio $nome_topico
   		$directoryToZip=$nome_topico;
-  		// o zip gerado é colocado no cwd
+  		// o zip gerado ï¿½ colocado no cwd
   		$outputDir="";
-  		// acrescenta a extensão do arquivo
+  		// acrescenta a extensï¿½o do arquivo
   		$zipName=$nome_topico.".zip";
   		chdir($working_dir);
   		include_once($bibliotecas."CreateZipFile.inc.php");
   		chdir($dir_tmp_ferramenta);
-  		// mágica para gerar o zip
+  		// mï¿½gica para gerar o zip
   		$createZipFile=new CreateZipFile;
   		$createZipFile->zipDirectory($directoryToZip,$outputDir);
   		$fd=fopen($zipName, "wb");
@@ -179,12 +179,12 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
   		$DownloadPath=$diretorio_temp;
   		$DownloadPath.="/".$zipName;
   		copy($FilePath,$DownloadPath);
-  		// faz a mágica do download
+  		// faz a mï¿½gica do download
   		$objResponse->addScriptCall("redirecionaDownloadAnexos",$DownloadPath);
   	}
   	else{
-  		// se não tem anexos emite um alerta, mais perceptível que um feedback
-  		$objResponse->addAlert("Não existem anexos a serem baixados!\n");
+  		// se nï¿½o tem anexos emite um alerta, mais perceptï¿½vel que um feedback
+  		$objResponse->addAlert("Nao existem anexos a serem baixados!\n");
   	}
   	Desconectar($sock);
   	return $objResponse->getXML();
@@ -195,7 +195,7 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
 
 /******************************************************************************************
    CriaArvorePastasTopico - Cria a estrutura de pastas para os downloads multiplos
-      						a partir de um tópico
+      						a partir de um tï¿½pico
    Entrada: $sock - BASE EXTERNA
             $cod_topico - codigo do topico atual
             $path - diretorio atual no "temp"
@@ -246,7 +246,7 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
             $item_arquivos=scandir($copy_path);
             foreach ($item_arquivos as $item_arquivo){            	
             	if($item_arquivo!="." && $item_arquivo!=".."){
-            		// workaround para copiar os arquivos sem precisar das permissões adequadas
+            		// workaround para copiar os arquivos sem precisar das permissï¿½es adequadas
             		try{
             			$source=$copy_path.$item_arquivo;
             			$dest=$item_path.'/'.$item_arquivo;
@@ -297,7 +297,7 @@ function RemovePastasVazias($path){
 	}
 }
 /******************************************************************************************
-   ApagaArvorePastas - Apaga toda uma hierarquia de diretórios, pode ser perigosa se usada de modo indevido
+   ApagaArvorePastas - Apaga toda uma hierarquia de diretï¿½rios, pode ser perigosa se usada de modo indevido
    Entrada: $dir - diretorio a ser removido           
    Saida: nenhuma
 *******************************************************************************************/

@@ -145,7 +145,8 @@
   echo("        return false;\n");
   echo("      }\n");
   // Verifica se o e-mail é valido
-  echo("      var EmailValido = /^[\w-]+(\.[\w-]+)*@(([A-Za-z\d][A-Za-z\d-]{0,61}[A-Za-z\d]\.)+[A-Za-z]{2,6}|\[\d{1,3}(\.\d{1,3}){3}\])$/;\n");
+  // valida o e-mail na conformação foo@bar
+  echo("      var EmailValido =/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/;\n");
   echo("      if (!EmailValido.test(email)){\n");
   /* 52 - O e-mail parece estar errado */
   echo("        mostraFeedback('".RetornaFraseDaLista($lista_frases_configurar,52).".', false);\n");
