@@ -47,15 +47,18 @@
   $pag_atual = "exibe_cursos.php";
   // Inicio TopoTela
   $sock=Conectar("");
-
+  
   if (isset($cod_lin))
     MudancaDeLingua($sock,$cod_lin);
-  else if(!empty($_SESSION['login_usuario_s']))
-  {
-    $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
-    $cod_lin = ($cod_lin == NULL) ? 1 : $cod_lin;
-    MudancaDeLingua($sock,$cod_lin);
-  }
+    
+// Comentado parte do codigo abaixo, pois estava sempre mudando a lingua da usuario para o padrao. Nao deixava a lingua com o idioma 
+// esolhido.    
+//  else if(!empty($_SESSION['login_usuario_s']))
+//  {
+//    $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
+//    $cod_lin = ($cod_lin == NULL) ? 1 : $cod_lin;
+//    MudancaDeLingua($sock,$cod_lin);
+//  }
 	
 
   $cod_ferramenta = -3;//Cursos

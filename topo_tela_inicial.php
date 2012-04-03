@@ -41,15 +41,16 @@
   ========================================================== */
 
   $sock=Conectar("");
-   	
+  
   if (isset($cod_lin))
      MudancaDeLingua($sock,$cod_lin);
-       
-  else if(!empty($_SESSION['login_usuario_s']))
-  {
-  	$cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
-  	MudancaDeLingua($sock,$cod_lin);
-  }
+
+// Comentado parte do codigo abaixo, pois estava sempre mudando a lingua do usuario para o padrao       
+//  else if(!empty($_SESSION['login_usuario_s']))
+//  {
+//  	$cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
+//  	MudancaDeLingua($sock,$cod_lin);
+//  }
 
   /*$abv_lingua variavel utilizada para determinar o atributo lang do HTML*/
   $abv_lingua = AbreviaturaLingua($cod_lin);
