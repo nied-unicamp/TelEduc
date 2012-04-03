@@ -55,10 +55,10 @@
   	
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
-  
-  $auxiliar = $_SESSION['cod_lingua_s'];
-  $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-  // Se diferente, então língua do curso é diferente da língua do usuário, atualiza a lista de frases. 
+
+  $auxiliar = RetornaLinguaCurso($sock,$cod_curso);
+
+  // Se diferente, entï¿½o lï¿½ngua do curso ï¿½ diferente da lï¿½ngua do usuï¿½rio, atualiza a lista de frases
   if($auxiliar != $_SESSION['cod_lingua_s']){
   	unset($_SESSION['lista_frases_s']);
   }
@@ -122,11 +122,13 @@
   $estilos_css = array(	"../js-css/ambiente.css",
   						"../js-css/navegacao.css",
   						"../js-css/tabelas.css",
-  						"../js-css/dhtmlgoodies_calendar.css");
+  						"../js-css/dhtmlgoodies_calendar.css",
+                        "../js-css/chat.css");
   
   $codigos_js = array(	"../bibliotecas/dhtmllib.js",
   						"../js-css/dhtmlgoodies_calendar.js",
-  						"../js-css/jscript.js");
+  						"../js-css/jscript.js",
+  						"../js-css/chat.js");
   
   /* Se estamos salvando a pagina em um arquivo, manter o css inline e sem javascript.
    * Caso contrario podemos servi-los normalmente sob a forma de links.

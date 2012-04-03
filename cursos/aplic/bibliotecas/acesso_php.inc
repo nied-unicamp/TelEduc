@@ -300,12 +300,13 @@ function VerificaAutenticacao($cod_curso)
               $cod_lin=RetornaLinguaUsuario($sock,$linha[1], $cod_curso);
 
               //Desconectar($sock);
-              if ($cod_lin!=$_SESSION['cod_lingua_s'])
-              {
-                $sock=Conectar("");
-                MudancaDeLingua($sock, $cod_lin); 
-	        //desconectar aqui??
-              }
+// Retirado trecho do codigo abaixo pois estava mudando a lingua escolhida para a lingua no BD.              
+//              if ($cod_lin!=$_SESSION['cod_lingua_s'])
+//              {
+//                $sock=Conectar("");
+//                MudancaDeLingua($sock, $cod_lin); 
+//	        //desconectar aqui??
+//              }
 
               if(!PreencheuDadosPessoais($sock))
               {
