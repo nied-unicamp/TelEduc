@@ -294,7 +294,8 @@
           echo("                    <td align=left width=\"50%\"><b>".$cod_texto."</b>: ".LimpaTags($texto)."</td>\n");
           echo("                    <td><input class=\"input\" type=\"text\" size=\"45\" name=\"texto_".$cod_texto."\" value='".$lista_estr[$cod_ferramenta][$cod_texto]."' /></td>\n");
           /* 24 - Alterar */
-          echo("                    <td><input class=\"input\" type=\"button\" onClick=\"xajax_AlteraTextoDinamic(".$cod_texto.",".$cod_ferramenta.",".$cod_lingua.",document.frmIncluir.texto[".$cod_ferramenta."][".$cod_texto."].value);\" value='".RetornaFraseDaLista($lista_frases_geral,24)."' /></td>\n");
+          //echo("                    <td><input class=\"input\" type=\"button\" onClick=\"xajax_AlteraTextoDinamic(".$cod_texto.",".$cod_ferramenta.",".$cod_lingua.",document.frmIncluir.texto[".$cod_ferramenta."][".$cod_texto."].value);\" value='".RetornaFraseDaLista($lista_frases_geral,24)."' /></td>\n");
+          echo("                    <td><input class=\"input\" type=\"button\" onClick=\"xajax_AlteraTextoDinamic(".$cod_texto.",".$cod_ferramenta.",".$cod_lingua.",document.frmIncluir.texto_".$cod_texto.".value);\" value='".RetornaFraseDaLista($lista_frases_geral,24)."' /></td>\n");
           echo("                  </tr>\n");
         }
         else

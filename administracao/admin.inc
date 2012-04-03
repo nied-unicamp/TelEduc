@@ -582,8 +582,20 @@ function AlteraTexto($cod_lingua,$cod_ferramenta,$cod_texto,$texto)
 {
   $sock=Conectar("");
   $texto=ConverteAspas2Html($texto);
-  $query="update Lingua_textos set texto='".$texto."' where cod_lingua=".$cod_lingua." and cod_ferramenta=".$cod_ferramenta." and cod_texto=".$cod_texto;
-  Enviar($sock,$query);
+  
+  $query="select texto from Lingua_textos where cod_lingua=".$cod_lingua." and cod_ferramenta=".$cod_ferramenta." and cod_texto=".$cod_texto;
+  $res=Enviar($sock,$query);
+  $numero_de_linhas=RetornaNumLinhas($res);
+  
+  // Se o texto ja esta no BD, faz update
+  if($numero_de_linhas>0) {
+    $query="update Lingua_textos set texto='".$texto."' where cod_lingua=".$cod_lingua." and cod_ferramenta=".$cod_ferramenta." and cod_texto=".$cod_texto;
+    Enviar($sock,$query);
+  } else {    // Se nao, insere no BD
+    $query="insert into Lingua_textos values (".$cod_texto.",".$cod_lingua.",".$cod_ferramenta.",'".$texto."')";
+    Enviar($sock,$query);
+  }
+
   Desconectar($sock);
   return $cod_texto;
 }
