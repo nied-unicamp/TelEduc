@@ -227,6 +227,11 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
         $dir="obrigatoria";
         $nome_topico="Parada_obrigatoria";
         break;
+    case 15 :
+    	$tabela="Portfolio";
+    	$dir="portfolio";
+    	$nome_topico="Portfolio";
+    	break;
     }
     // se nao for o topico raiz, adequa $nome_topico ao nome do topico atual
     if($cod_topico != 1) $nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico);

@@ -823,7 +823,7 @@
       echo("            <li id=\"mMover_Selec\" class=\"menuUp\"><span id=\"moverSelec\">".RetornaFraseDaLista($lista_frases_geral,69)."</span></li>\n");
       echo("          </ul>\n");
     }
-    // testa se é raiz e se tem itens para habilitar o download de todos os anexos
+    // testa se ï¿½ raiz e se tem itens para habilitar o download de todos os anexos
     if(($cod_topico_raiz < 2) && !((empty($lista_topicos)) && ((empty($lista_itens) || (!ExistemItensVisiveis($sock, $tabela, $cod_topico_raiz, $eformador)))))){
     	echo("					<div id=\"downloadAnexos\">");
     	echo("                  <ul class=\"btAuxTabs\">\n");

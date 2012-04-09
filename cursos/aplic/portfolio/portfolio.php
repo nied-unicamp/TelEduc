@@ -39,13 +39,16 @@
 /*==========================================================
   ARQUIVO : cursos/aplic/portfolio/portfolio.php
   ========================================================== */
-
-
+/*
+  $sock1 = Conectar("");
+  $diretorio_arquivos=RetornaDiretorio($sock1,'Arquivos');
+  $diretorio_temp=RetornaDiretorio($sock1,'ArquivosWeb');
+  Desconectar($sock1);
+*/
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
-
   require_once("../xajax_0.2.4/xajax.inc.php");
        
   // Estancia o objeto XAJAX
@@ -58,7 +61,8 @@
   $objMudarComp->registerFunction("DecodificaString");
   $objMudarComp->registerFunction("CriaTopicoDinamic");
   $objMudarComp->registerFunction("RenomearTopicoDinamic");
-
+  $objMudarComp->registerFunction("CriaZipDinamic");
+  
   // Manda o xajax executar os pedidos acima.
   $objMudarComp->processRequests();
   /* Necess?io para a lixeira. */
@@ -69,6 +73,13 @@
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
   $cod_pagina_ajuda = 2;
+  
+  // diretorios para a geracao dinamica de zip
+  $sock1 = Conectar("");
+  $diretorio_arquivos_dinamic=RetornaDiretorio($sock1,'Arquivos');
+  $diretorio_temp_dinamic=RetornaDiretorio($sock1,'ArquivosWeb');
+  Desconectar($sock1);
+  
   include("../topo_tela.php");
  
   // instanciar o objeto, passa a lista de frases por parametro
@@ -81,11 +92,16 @@
 
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
   $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
-
-
+  
+  
+  // cria o diretorio temporario da ferramenta
+  $dir_tmp_ferramenta = $diretorio_arquivos_dinamic.'/'.$cod_curso.'/portfolio/tmp';
+  if (!file_exists($dir_tmp_ferramenta)) mkdir($dir_tmp_ferramenta);
+  $tabela_dinamic="Portfolio";
+  $nome_ferramenta_dinamic="Portfolio";
+  
   // verificamos se a ferramenta de Avaliacoes está disponivel
   $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 22);
-
   /* Apaga links simbolicos que por acaso tenham sobrado daquele usuario */
   system ("rm ../../diretorio/portfolio_".$cod_curso."_*_".$cod_usuario);
 
@@ -150,7 +166,15 @@
 
   session_register ("ferramenta_grupos_s");
   $ferramenta_grupos_s = StatusFerramentaGrupos ($sock);
-
+  
+  if ($eformador){
+  	echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("		function redirecionaDownloadAnexos(url){\n");
+    echo("			window.location=url;\n");
+    echo("		}\n");
+    echo(" 	</script>\n");
+  }
+  
   if (!$dono_portfolio){
     //JS utilizado para mover as colunas da tabela
   echo("    <script type='text/javascript'>\n");
@@ -659,9 +683,14 @@
   
   // download de todos os anexos do portfolio de um aluno
   // TODO: falta fazer a funcao dinamica para pegar os anexos e montar o zip
-	if ($eformador)
-		echo("		<li> <span onclick=\"window.location.reload();\">Baixar todos os anexos</span></li>\n");
-
+  //var_dump($cod_topico_raiz);
+	//if ($eformador)
+    	//echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$sock."','".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos_dinamic."','".$tabela_dinamic."','".$bibliotecas."','".$nome_ferramenta_dinamic."','".$diretorio_temp_dinamic."');\">Baixar todos os anexos</span></li>\n");
+		// FIXME
+    	//CriaZipDinamic($cod_topico_raiz, $dir_tmp_ferramenta, $cod_curso, $cod_ferramenta, $diretorio_arquivos_dinamic, $tabela_dinamic, $bibliotecas, $nome_ferramenta_dinamic, $diretorio_temp_dinamic);
+    	//$sock1 = Conectar($cod_curso);
+    	//CriaArvorePastasTopico($sock1, $cod_topico_raiz, $dir_tmp_ferramenta, $cod_curso, $cod_ferramenta, $diretorio_arquivos_dinamic);
+  		//Desconectar($sock1);
   if ($dono_portfolio)
   {
     // 4 - Incluir Novo Item
