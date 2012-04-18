@@ -79,8 +79,9 @@ function CorrigeZeros($data)
 */
 function TratamentoArrayDataGenerico($num,$numarray)
 {
-  /* A lista estar� em mem�ria, ent�o $sock n�o � necess�rio */
-  $lista_frases=RetornaListaDeFrases(0,-2);
+  /* A lista estara em memoria, entao $sock nao eh necessario */
+  $sock=Conectar("");
+  $lista_frases=RetornaListaDeFrases($sock,-2);
 
   $Array=RetornaFraseDaLista($lista_frases,$numarray);
   $elems=explode(",",$Array);
