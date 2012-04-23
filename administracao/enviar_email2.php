@@ -93,6 +93,7 @@
   $host = RetornaConfig("host");
   $raiz_www = RetornaDiretorio("raiz_www");
 
+  $cod_curso = $_POST["cod_curso"];
   if ($cod_curso=="Todos")
   {
     $lista=RetornaListaCursosAtivos();
