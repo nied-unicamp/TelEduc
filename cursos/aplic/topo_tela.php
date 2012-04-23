@@ -59,9 +59,9 @@
   $auxiliar = RetornaLinguaCurso($sock,$cod_curso);
 
   // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
-  if($auxiliar != $_SESSION['cod_lingua_s']){
-  	unset($_SESSION['lista_frases_s']);
-  }
+//  if($auxiliar != $_SESSION['cod_lingua_s']){
+//  	unset($_SESSION['lista_frases_s']);
+//  }
   
   
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
