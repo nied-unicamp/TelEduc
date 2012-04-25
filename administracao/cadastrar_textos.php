@@ -211,7 +211,7 @@
             echo("                    <td><b>".$cod_ferr." ".$cod_texto.":</b>&nbsp;".LimpaTags($texto)." </td>\n");
             echo("                    <td><input class=\"input\" type=\"text\" name=\"texto_".$cod_texto."\" size=\"45\" /></td>\n");
             /* 24 - Alterar */
-            echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,24)."\" onClick=\"xajax_AlteraTextoDinamic(".$cod_texto.",".$cod_ferramenta.",".$cod_lingua.",document.frmIncluir.texto_".$cod_texto.".value);\" type=\"button\" /></td>\n");
+            echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,24)."\" onClick=\"xajax_AlteraTextoDinamic(".$cod_texto.",".$cod_ferr.",".$cod_lingua.",document.frmIncluir.texto_".$cod_texto.".value);\" type=\"button\" /></td>\n");
             echo("                  </tr>\n");
           }
           else
