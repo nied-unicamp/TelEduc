@@ -827,7 +827,8 @@
     if(($cod_topico_raiz < 2) && !((empty($lista_topicos)) && ((empty($lista_itens) || (!ExistemItensVisiveis($sock, $tabela, $cod_topico_raiz, $eformador)))))){
     	echo("					<div id=\"downloadAnexos\">");
     	echo("                  <ul class=\"btAuxTabs\">\n");
-    	echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos."','".$tabela."','".$bibliotecas."','".$nome_ferramenta."','".$diretorio_temp."');\">Baixar todos os anexos</span></li>\n");
+    	/* 151 - Baixar todos os anexos */
+    	echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos."','".$tabela."','".$bibliotecas."','".$nome_ferramenta."','".$diretorio_temp."');\">".RetornaFraseDaLista($lista_frases,151)."</span></li>\n");
     	echo("                  </ul>\n");
     	echo("					</div>");       
     }     
