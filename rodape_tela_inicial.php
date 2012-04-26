@@ -68,7 +68,10 @@
   $sock=Conectar("");
   $versao = RetornaConfiguracao($sock,'versao');
   $host = RetornaConfiguracao($sock,'host');
-  echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\"> Vers&atilde;o: ".$versao." Servidor: ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
+  //echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\"> Vers&atilde;o: ".$versao." Servidor: ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
+  // 15 - Versao 
+  // 14 - Servidor
+  echo("        <td valign=\"bottom\" id=\"rodape\" lang=\"pt\"> ".RetornaFraseDaLista($lista_frases, 15).": ".$versao." ".RetornaFraseDaLista($lista_frases, 14).": ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 
