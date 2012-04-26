@@ -823,7 +823,7 @@
         echo("                      <div><b>Mensagem:</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
         echo("                      </div></td>\n");
         echo("                    <td width=\"25%\" id=\"td_close".$cod_msg."\">\n");
-        echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">Fechar</span><br />\n");
+        echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">".RetornaFraseDaLista($lista_frases,138)."</span><br />\n");
 
         echo("                    </td>\n");
         echo("                  </tr>\n");

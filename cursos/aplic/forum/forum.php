@@ -761,7 +761,7 @@
 
       /* Novo Item */
       echo("    <div id=\"layer_novo_forum\" class=\"popup\">\n");
-      echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_novo_forum);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+      echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_novo_forum);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
       echo("      <div class=\"int_popup\">\n");
       echo("        <form name=\"form_novo_forum\" method=\"post\" action=\"acoes.php\" onsubmit='return (testa_nome(document.form_novo_forum));'>\n");
       echo("          <div class=\"ulPopup\">\n");    
@@ -789,7 +789,7 @@
 
       //div do Layer de alteração da configuração
       echo("    <div id='layer_conf' class=\"popup\">\n");
-      echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_conf);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+      echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(lay_conf);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
       echo("      <div class=\"int_popup\">\n");
       echo("        <form method=\"post\" id=\"formConfiguracao\" name=\"formConfiguracao\" action=\"\">\n");
       echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"$cod_curso\" />\n");

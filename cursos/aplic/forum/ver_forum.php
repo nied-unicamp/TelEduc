@@ -1032,7 +1032,7 @@
         echo("                      <div><b>Mensagem:</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
         echo("                      </div></td>\n");
         echo("                    <td width=\"25%\" id=\"td_close".$cod_msg."\">\n");
-        echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">Fechar</span><br />\n");
+        echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">".RetornaFraseDaLista($lista_frases,138)."</span><br />\n");
 
 
         /* Se o status do fórum for Ativo (permite leitura e escrita) e se o usu�io N� */
@@ -1043,7 +1043,7 @@
         {
           if (($status_curso != 'E') || ($usr_formador))
           {
-            echo("                      <span class=\"link\" id=\"responder_".$cod_msg."\" onclick=\"ResponderMsg(".$cod_msg.");\">Responder</span><br />\n");
+            echo("                      <span class=\"link\" id=\"responder_".$cod_msg."\" onclick=\"ResponderMsg(".$cod_msg.");\">".RetornaFraseDaLista($lista_frases,139)."</span><br />\n");
           }
         }
         echo("                    </td>\n");
@@ -1119,7 +1119,7 @@
 
   //div do Layer de alteração de relevância
   echo("          <div id='relev' class=\"popup\">\n");
-  echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(relevIni);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(relevIni);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
   echo("            <div class=\"int_popup\">\n");
   echo("              <form method=\"post\" id=\"formRelevancia\" name=\"formRelevancia\" action=\"\">\n");
   //  2 - Cancelar

@@ -48,14 +48,14 @@
   
   require_once("../xajax_0.2.4/xajax.inc.php");
   
-  /* Ajustes necessários para independer do topo_tela.php */
+  /* Ajustes necessï¿½rios para independer do topo_tela.php */
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   
   $auxiliar = $_SESSION['cod_lingua_s'];
   $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-  // Se diferente, então língua do curso é diferente da língua do usuário, atualiza a lista de frases. 
+  // Se diferente, entï¿½o lï¿½ngua do curso ï¿½ diferente da lï¿½ngua do usuï¿½rio, atualiza a lista de frases. 
   if($auxiliar != $_SESSION['cod_lingua_s']){
   	unset($_SESSION['lista_frases_s']);
   }
@@ -92,7 +92,7 @@
   $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
   $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   
-  /* Fim dos Ajustes necessários para independer do topo_tela.php */
+  /* Fim dos Ajustes necessï¿½rios para independer do topo_tela.php */
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
@@ -167,7 +167,7 @@
   if ((!isset($_SESSION['forum_ordem']) || $_SESSION['forum_ordem'] == "") && (!isset($_GET['forum_ordem']) || $_GET['forum_ordem'] == "")) {
   	$ordem = 'arvore';
   } else {
-  	/* Se o usuário tentar atualizar a ordenacao, grava na $_SESSION */
+  	/* Se o usuï¿½rio tentar atualizar a ordenacao, grava na $_SESSION */
   	if (isset($_GET['forum_ordem']))
   		$_SESSION['forum_ordem'] = $_GET['forum_ordem'];
   	$ordem = $_SESSION['forum_ordem'];
@@ -1159,7 +1159,7 @@
 
   //div do Layer de alteraÃ§Ã£o de relevÃ¢ncia
   echo("          <div id='relev' class=\"popup\">\n");
-  echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(relevIni);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(relevIni);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
   echo("            <div class=\"int_popup\">\n");
   echo("              <form method=\"post\" id=\"formRelevancia\" name=\"formRelevancia\" action=\"\">\n");
   //  2 - Cancelar
