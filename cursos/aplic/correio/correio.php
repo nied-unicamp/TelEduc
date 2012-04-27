@@ -821,7 +821,7 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
   echo("                      <tr>\n");
   echo("                        <td colspan=\"2\" align=\"left\" style=\"border-right:none\">\n");
   if($totalMsg>1)
-    echo("                          *clique no cabe&ccedil;alho para ordenar as mensagens\n");
+    echo("                          ".RetornaFraseDaLista($lista_frases, 142)."\n");
   echo("                        </td>\n");
 
   echo("                        <td colspan=\"2\" align=\"right\">\n");
