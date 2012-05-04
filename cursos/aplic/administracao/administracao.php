@@ -160,13 +160,13 @@
   echo(RetornaFraseDaLista($lista_frases,51)."</a><br />\n");
 
   // 164 - Inscrever Convidados
-  echo("                      <a href=\"inscrever.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z\">".RetornaFraseDaLista($lista_frases, 164)."</a><br />\n");
+  echo("                      <a href=\"inscrever.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z\">".RetornaFraseDaLista($lista_frases, 164)."</a><br />\n");
   // aqui, a variavel origem indica que a proxima pagina veio de administracao.php
 
-  /*
+  
   // 182 - Inscrever visitantes
-  echo("    <a href=\"inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=V&origem=1\">".RetornaFraseDaLista($lista_frases,182)."</a><br /><br />\n");
-  */
+  echo("    <a href=\"inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=z&origem=1\">".RetornaFraseDaLista($lista_frases,182)."</a><br /><br />\n");
+  
   echo("                    </td>\n");
   echo("                    <td align=\"left\">\n");
   echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=N\">");
@@ -198,7 +198,7 @@
   echo("                      <a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 165)."</a><br />\n");
   
   // 179 - Gerenciamento de Visitantes
-  echo("                      <a href=\"gerenciamento_visitantes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 179)."</a><br />\n");
+  echo("                      <a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 179)."</a><br />\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
   echo("                  <tr class=\"head\">\n");

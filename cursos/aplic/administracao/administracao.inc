@@ -1208,7 +1208,7 @@ function AtualizaEmailUsuario($sock,$cod_curso,$cod_usuario,$email)
        [ $cod_usuario ]['data_inscricao'] - data de inscricao
        [ $cod_usuario ]['interacao'] - booleano. indica se true: convidado com interacao ou false: convidado sem interacao
 */
-function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
+function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem, $tipo_usuario)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -1219,12 +1219,12 @@ function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
 
   if ($acao == 'a')
   {
-    // convidados com inscricao aceita
+    // Colaborador(Z) ou Visitante(z)
     $where .= "(UC.tipo_usuario='Z' or UC.tipo_usuario='z')";
   }
   else if ($acao == 'r')
   {
-    // convidados com inscricao rejeitada
+    // 
     $where .= "UC.tipo_usuario='t'";
   }
   else
@@ -1239,12 +1239,17 @@ function RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem)
             where ".$where."
             and UC.cod_curso='".$cod_curso."'
             order by ".$ordem;
+  
   $res   = Enviar ($sock, $query);
   while ($linha = RetornaLinha ($res))
   {
-    $lista_retorno [ $linha ['cod_usuario'] ]['nome'] = $linha ['nome'];
-    $lista_retorno [ $linha ['cod_usuario'] ]['data_inscricao'] = $linha ['data'];
-    $lista_retorno [ $linha ['cod_usuario'] ]['interacao'] = ( $linha ['tipo_usuario'] == 'Z' );
+  	if ( $linha ['tipo_usuario'] == $tipo_usuario )
+  	{
+    	$lista_retorno [ $linha ['cod_usuario'] ]['nome'] = $linha ['nome'];
+    	$lista_retorno [ $linha ['cod_usuario'] ]['data_inscricao'] = $linha ['data'];
+    	//$lista_retorno [ $linha ['cod_usuario'] ]['interacao'] = ( $linha ['tipo_usuario'] == $tipo_usuario );
+    	$lista_retorno [ $linha ['cod_usuario'] ]['interacao'] = $linha ['tipo_usuario'];
+  	}
   }
 
   return $lista_retorno;

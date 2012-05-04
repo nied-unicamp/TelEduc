@@ -134,11 +134,17 @@
 
   if($action_js == "mudarinteracao")
   {
-    $interacao_atual  = RetornaListaConvidados ($sock,$cod_curso, 'a', "nome");
+  	$tipo_usu = $_POST['tipo_usu'];
+    $interacao_atual  = RetornaListaConvidados ($sock,$cod_curso, 'a', "nome", $tipo_usu);
 
     // array com os convidados que estavam na tela anterior
     $convidados_mudar = $cod_usu;
-  
+  	
+    
+    
+    //var_dump($tipo_usu);
+    //exit(1);
+        
     if (!isset($interacao))
      $interacao=array();
 
@@ -147,13 +153,16 @@
     {
       foreach ($convidados_mudar as $cod_convidado)
       {
-        $valor_novo  = !($interacao_atual[ $cod_convidado ][ 'interacao' ]);
+      	$valor_novo = ($tipo_usu == 'Z' ? 0 : 1);
+        //$valor_novo  = !($interacao_atual[ $cod_convidado ][ 'interacao' ]);
         AlterarConvidado ($sock,$cod_curso, $cod_convidado, $valor_novo);
       }
     }
     $confirma='true';
     Desconectar($sock);
-    header("Location:gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action."&atualizacao=".$confirma."");
+    if ($tipo_usu == 'Z') header("Location:gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action."&atualizacao=".$confirma."");
+    else if ($tipo_usu == 'z') header("Location:gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action."&atualizacao=".$confirma."");
+    	
   }
 
   if($action == "inscrever_cadastrado")
@@ -247,9 +256,13 @@
 
   		$dados_preenchidos_s = "";
 
-  		if($tipo_usuario == "z")
+  		if($tipo_usuario == "Z")
   		{
   			$dest = "gerenciamento4.php";
+  			$tipo_usuario = "a";
+  		}
+  		else if($tipo_usuario == "z"){
+  			$dest = "gerenciamento5.php";
   			$tipo_usuario = "a";
   		}
   		else

@@ -47,6 +47,8 @@
   $cod_ferramenta = 0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 13;
+  
+  $tipo_usuario = 'z';
 
   include("../topo_tela.php");
   // instanciar o objeto, passa a lista de frases por parametro
@@ -213,7 +215,7 @@
   echo("          document.gerenc.method='post';\n");
   echo("          document.gerenc.action='acoes.php';\n");
   echo("          document.gerenc.action_js.value='mudarinteracao';\n");
-  echo("          document.gerenc.tipo_usu.value='Z';\n");
+  echo("          document.gerenc.tipo_usu.value='z';\n");
   echo("          document.gerenc.submit();\n");
   echo("        }\n");
   /* Se n�o houver nada selecionado */
@@ -282,8 +284,6 @@
   echo("        }\n");
   echo("      }\n");
 
-  
-  
 
 
 
@@ -369,8 +369,8 @@
   // P�gina Principal
   /* 1 - Administra��o */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
-  // 165 - Gerenciamento de Colaboradores
-  $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 165)."</h4>";
+  // 165 - Gerenciamento de Visitantes
+  $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 179)."</h4>";
   echo($cabecalho);
 
   // 3 A's - Muda o Tamanho da fonte
@@ -383,8 +383,8 @@
   /*Voltar*/			
   echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br><br>\n");
 
-  // 166 - N� de Colaboradores:
-  $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
+  // 191 - N� de Visitantes:
+  $frase_qtde=RetornaFraseDaLista($lista_frases, 191);
 
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -395,14 +395,11 @@
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
-	
+
   /* C�digo de montagem do conte�do a partir daqui */
-  $tipo_usuario = 'Z';
+  $tipo_usuario = 'z';
   $lista_convidados = RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem, $tipo_usuario);
   $num=count($lista_convidados);
-  
-  
-  
 
   echo("            <tr>\n");
   echo("              <td>\n");
@@ -428,8 +425,13 @@
   echo("                    <td align=\"left\"><b>".RetornaFraseDaLista($lista_frases,119)."</b></td>\n");
   // 132 - Data de inscri��o
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,132)."</b></td>\n");
+  
+  
+/***************  
   // 169 - Participa��o no curso
-  //echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases, 169)."</b></td>");
+  echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases, 169)."</b></td>");
+***************/
+  
   // 79 - Dados
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,79)."</b></td>\n");
   
@@ -448,16 +450,15 @@
   {
     foreach($lista_convidados as $cod_usuario_l => $linha)
     {
-    	 
-    	if ($linha ['interacao'] == 'Z')
-    	{
+    	if ($linha ['interacao'] == 'z')
+      	{
       		echo("                  <tr>\n");
       		echo("                    <td><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
       		echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
       		echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
 
       
-/*********************      
+/******************      
       if ($linha ['interacao'])
       {
         // convidado com interacao: participa��o no curso habilitada
@@ -471,15 +472,16 @@
         $participa = RetornaFraseDaLista($lista_frases, 174);
       }
       echo("                    <td>".$participa."</td>\n");
-*********************/
-      
-      
+******************/
+
+
+
       		/* 79 - Dados */
       		echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=z&amp;ordem=".$ordem."&amp;opcao=dados&amp;origem=convidado&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
 
       		echo("                  </tr>\n");
-    		}
     	}
+    }
 
     echo("                </table>\n");
   }
@@ -499,13 +501,13 @@
       
     // 108 - Transformar em Formador
     echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,108)."</span></li>\n");
-    
-    
 
-    // 314 - Tranformar em Visitante
-    echo("                  <li id=\"mAltPart_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,314)."</span></li>\n");
-    
-    
+
+
+    // 315 - Transformar em Colaborador
+    echo("                  <li id=\"mAltPart_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,315)."</span></li>\n");
+
+  
   }
   // 178 - Encerrar Convite
   echo("                  <li id=\"mEncerrar_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,178)."</span></li>\n");

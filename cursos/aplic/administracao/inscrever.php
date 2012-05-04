@@ -403,19 +403,19 @@
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 50)."</h4>";
     $cod_pagina=6;
   }
-  else if ($tipo_usuario == 'z')
+  else if ($tipo_usuario == 'Z')
   {
-    // 164 - Inscrever Convidados
+    // 164 - Inscrever Colaboradores
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>";
 
     // 166 - N� de Convidados:
     $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
     $cod_pagina=14;
   }
-  else if ($tipo_usuario == 'V')
+  else if ($tipo_usuario == 'z')
   {
-    // 164 - Inscrever Visitantes
-    $cabecalho .= " - "."[Inscrever Visitantes]"."</h4>";
+    // 182 - Inscrever Visitantes
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 182)."</h4>";
 
     // 166 - N� de Visitantes:
     $frase_qtde="N� de Visitantes:";
@@ -464,10 +464,15 @@
     /* 87 - Gerenciamento de formadores */
 	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,87)."</a></li>\n");
   }
+  else if ($tipo_usuario == 'Z')
+  {
+    // 85 - Gerenciamento de Colaboradores
+	echo("                  <li><a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
+  }
   else if ($tipo_usuario == 'z')
   {
-    // 85 - Gerenciamento de Convidados
-	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
+    // 88 - Gerenciamento de Visitantes
+	echo("                  <li><a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,88)."</a></li>\n");
   }
   else if ($tipo_usuario == 'A')
   {

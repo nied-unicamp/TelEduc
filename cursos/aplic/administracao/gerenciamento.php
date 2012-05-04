@@ -939,7 +939,7 @@
     echo("                  <li id=\"mAceitar_Selec\" class=\"menuUp\"><span id=\"aceitar\">".RetornaFraseDaLista($lista_frases,80)."</span></li>\n");
      
     // 187 - Aceitar como visitante
-    echo("                  <li id=\"mAceitarVis_Selec\" class=\"menuUp\"><span id=\"aceitar_vis\">".RetornaFraseDaLista($lista_frases,187)."</span></li>\n");
+//    echo("                  <li id=\"mAceitarVis_Selec\" class=\"menuUp\"><span id=\"aceitar_vis\">".RetornaFraseDaLista($lista_frases,187)."</span></li>\n");
       
     // Ativar / Desativar Portfolio
     if($acao == "R"){
