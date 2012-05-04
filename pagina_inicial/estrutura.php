@@ -138,6 +138,16 @@
   $i=Item(RetornaFraseDaLista($lista_ferramentas,39),RetornaFraseDaLista($lista_ferramentas,40),$i);
 
   echo("                  <tr class=\"head\">\n");
+  /* 36 - Recursos dispon�veis apenas para formadores */
+  echo("                    <td align=left>".RetornaFraseDaLista($lista_ferramentas,63)."</td>\n");
+  echo("                  </tr>   \n");
+  
+  $i=Item(RetornaFraseDaLista($lista_ferramentas,64),RetornaFraseDaLista($lista_ferramentas,65),$i);
+  $i=Item(RetornaFraseDaLista($lista_ferramentas,66),RetornaFraseDaLista($lista_ferramentas,67),$i);
+  $i=Item(RetornaFraseDaLista($lista_ferramentas,68),RetornaFraseDaLista($lista_ferramentas,69),$i);
+  $i=Item(RetornaFraseDaLista($lista_ferramentas,70),RetornaFraseDaLista($lista_ferramentas,71),$i);
+  
+  echo("                  <tr class=\"head\">\n");
   /* 38 - Autentica��o de acesso */
   echo("                    <td align=left>".RetornaFraseDaLista($lista_frases,38)."</td>\n");
   echo("                  </tr>\n");

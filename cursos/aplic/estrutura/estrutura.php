@@ -213,6 +213,63 @@
   echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,40)."</p>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
+  
+    echo("                    <tr class=\"head01\" id=\"tr_papeisUsuarios\">\n");
+  echo("                      <td align=left>\n");
+  // (-4) 63 - Tipos de usuarios e suas permissoes
+  echo("                        ".RetornaFraseDaLista($lista_frases_ferramentas,63)."\n");
+  echo("                      </td>\n");
+  echo("                      <td><span id=\"span_papeisUsuarios\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",4);\">[+]</span></td>\n");
+  echo("                    </tr>\n");
+  
+  // 64 - Alunos
+  // 65 - Somente Visualizacao:</u> Estrutura do Ambiente, Dinâmica do Curso, Agenda, Avaliação, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatória e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Exercícios, Mural, Fórum de Discussão, Bate-Papo, Correio, Grupos, Diário de Bordo e Portifólio</br>
+  //	  <u>Edicao:</u> -</br>
+  //	  <u>Edicao e Interacao:</u> -</br>
+  //	  <u>Sem Visualizacao da Ferramenta:</u> -</br>
+  echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
+  echo("                      <td align=left colspan=2>\n");
+  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,64)."</p>\n");
+  echo("                        <div style=\"margin:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,65)."</div>\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
+  // 66 - Formadores
+  // 67 - <u>Somente Visualizacao:</u> Estrutura do Ambiente</br>
+  //	  <u>Visualizacao e Interacao:</u> Correio e Portifólio</br>
+  //	  <u>Edicao:</u> Dinâmica do Curso, Agenda, Avaliação, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Exercícios, Enquetes, Parada Obrigatória e Diário de Bordo</br>
+  //	  <u>Edicao e Interacao:</u> Mural, Fórum de Discussão, Bate-Papo, Grupos e Perfil</br>
+  //	  <u>Sem Visualizacao da Ferramenta:</u> -</br>
+  echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
+  echo("                      <td align=left colspan=2>\n");
+  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,66)."</p>\n");
+  echo("                        <div style=\"margin:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,67)."</div>\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
+  // 68 - Colaboradores
+  // 69 - <u>Somente Visualizacao:</u> Dinâmica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatória e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Enquetes, Fórum de Discussão, Bate-Papo, Correio e Portifólio</br>
+  //	  <u>Edicao:</u> -</br>
+  //	  <u>Edicao e Interacao:</u> -</br>
+  //	  <u>Sem Visualizacao da Ferramenta:</u> Avaliação, Exercícios, Grupos e Diário de Bordo</br></p>\n");
+  echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
+  echo("                      <td align=left colspan=2>\n");
+  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,68)."</p>\n");
+  echo("                        <div style=\"margin:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,69)."</div>\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
+  // 70 - Visitantes
+  // 71 - <u>Somente Visualizacao:</u> Estrutura do Ambiente, Dinâmica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatória, Mural, Fórum de Discussão e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Enquetes e Bate-Papo</br>
+  //	  <u>Edicao:</u> -</br>
+  //	  <u>Edicao e Interacao:</u> -</br>
+  //	  <u>Sem Visualizacao da Ferramenta:</u> Avaliação, Exercícios, Correio, Grupos, Diário de Bordo e Portifólio</br></p>\n");
+  echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
+  echo("                      <td align=left colspan=2>\n");
+  echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,70)."</p>\n");
+  echo("                        <div style=\"margin:15px;\">".RetornaFraseDaLista($lista_frases_ferramentas,71)."</div>\n");
+  echo("                      </td>\n");
+  echo("                    </tr>\n");
 
   /* 12 - GNU General Public License*/
   /* 13 - O TelEduc ÔøΩ um software livre; vocÔøΩ pode redistribuÔøΩ-lo e/ou modificÔøΩ-lo sob os termos da*/
