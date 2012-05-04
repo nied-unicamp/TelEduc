@@ -151,7 +151,7 @@
       	$cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $linha['cod_curso']);
         Desconectar($sock);
         $tem_acesso_curso = ParticipaDoCurso($linha['cod_curso']);
-        $rejeitado_curso = RejeitadoDoCurso($linha['cod_curso']);
+        //$rejeitado_curso = RejeitadoDoCurso($linha['cod_curso']);
         $sock=Conectar("");
         
         echo("                  <tr>\n");
@@ -198,15 +198,19 @@
         	echo("                  </tr>\n");
         }
         *******************/
+        if(!empty($_SESSION['cod_usuario_global_s'])){
+        		echo("					  <td id=\"status_cel\"> ".StatusUsuarioNoCurso($sock, $linha['cod_curso'])." </td>");
+        }
+        
         
         if($tem_acesso_curso){
-        	if($rejeitado_curso){
-        		/* 223 - Inscrição não aceita */
-        		echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        	}else{
+//        	if($rejeitado_curso){
+//        		/* 223 - Inscrição não aceita */
+//        		echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+//        	}else{
         		/* 55 - Entrar */
           		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,55)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
-        	}
+//        	}
         }
         else
         {

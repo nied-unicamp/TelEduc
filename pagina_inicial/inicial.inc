@@ -638,6 +638,57 @@ function RetornaDataInscricao($cod_curso){
 	
 }
 
+/********************************************************************
+  Função RetornaTipoUsuario - Retorna o tipo_usuario da tabela Usuario_curso
+  Entradas: $cod_curso - código do curso
+  Saída: Flag de tipo_usuario
+********************************************************************/
+
+function RetornaTipoUsuario($sock, $cod_curso){
+
+	$query = "SELECT tipo_usuario 
+	          FROM Usuario_curso 
+	          WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' 
+			  AND cod_curso = '".$cod_curso."'";
+	
+	$res = Enviar($sock, $query);
+	
+	
+	return RetornaLinha($res);
+}
+
+/********************************************************************
+  Função StatusUsuarioNoCurso - Retorna a condição do usuario no curso
+  Entradas: $cod_curso - código do curso
+  Saída: String com a condição do usuário
+********************************************************************/
+
+function StatusUsuarioNoCurso($sock, $cod_curso){
+	$lista_frases = RetornaListaDeFrases($sock,-3);
+	$status_usuario = RetornaTipoUsuario($sock, $cod_curso);
+	if ($status_usuario == NULL)
+		return "Nao participa do curso"; 
+		
+	switch ($status_usuario['tipo_usuario']){
+		case "a":
+			return RetornaFraseDaLista($lista_frases,224);
+		case "r":
+			return RetornaFraseDaLista($lista_frases,225);
+		case "A":
+			return RetornaFraseDaLista($lista_frases,226);
+		case "F":
+			return RetornaFraseDaLista($lista_frases,227);
+		case "f":
+			return RetornaFraseDaLista($lista_frases,228);
+		case "t":
+			return RetornaFraseDaLista($lista_frases,229);
+		case "z":
+			return RetornaFraseDaLista($lista_frases,230);
+		case "Z":			
+			return RetornaFraseDaLista($lista_frases,231);
+	}
+}
+
 
 /********************************************************************
   FunÔøΩao ParticipaDoCurso - Verifica se o usuario participa do curso

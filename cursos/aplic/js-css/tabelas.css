@@ -82,4 +82,6 @@ td.itens { text-align:left; }
 
 #legenda li { display:inline; margin-right:14px; }
 
+#status_cel { width: 8%; }
+
 /* #td_feedback { height:5px; } */
