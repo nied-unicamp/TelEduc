@@ -110,7 +110,8 @@
 	  echo("          <div id=\"btsNivel3\" class=\"menu_dd\">\n");
 	
 	  echo("            <ul>\n".$tela_email);
-	  RetornaListaDeCursosUsuario($sock);
+	  /* 72 - Meus Cursos */
+	  RetornaListaDeCursosUsuario($sock,RetornaFraseDaLista($lista_frases_menu,72));
 	
 	  /* 47 - Configurar */
 	  $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,47);

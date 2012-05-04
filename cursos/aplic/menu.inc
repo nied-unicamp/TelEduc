@@ -527,9 +527,9 @@ function RetornaNomeCodCursoUsuario($sock)
   return RetornaArrayLinhas($res);
 }
 
-function RetornaListaDeCursosUsuario($sock){
+function RetornaListaDeCursosUsuario($sock, $meus_cursos){
 
-  echo("              <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">Meus Cursos<!--[if IE 7]><!--></a><!--<![endif]-->\n");
+  echo("              <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">$meus_cursos<!--[if IE 7]><!--></a><!--<![endif]-->\n");
   echo("                <!--[if lte IE 6]><table><tr><td><![endif]-->\n");
   echo("                <ul>\n");
 
