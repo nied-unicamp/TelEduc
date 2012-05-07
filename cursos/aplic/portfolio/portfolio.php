@@ -1070,8 +1070,8 @@
   echo("          </table>\n");
   if($dono_portfolio){
     echo("          <ul>\n");
-    echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">Excluir selecionados</span></li>\n");
-    echo("            <li id=\"mMover_Selec\" class=\"menuUp\"><span id=\"moverSelec\">Mover selecionados</span></li>\n");
+    echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
+    echo("            <li id=\"mMover_Selec\" class=\"menuUp\"><span id=\"moverSelec\">".RetornaFraseDaLista($lista_frases_geral,69)."</span></li>\n");
     echo("          </ul>\n");
   }
   echo("        </td>\n");

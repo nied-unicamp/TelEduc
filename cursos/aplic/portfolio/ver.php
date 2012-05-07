@@ -765,10 +765,10 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 		echo ("                    <td align=\"left\" colspan=\"4\">\n");
 		echo ("                      <ul>\n");
 		echo ("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></span></li>\n");
-		echo ("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">Apagar</span></li>\n");
-		echo ("                        <li class=\"menuUp\" id=\"mArq_mover\"><span id=\"sArq_mover\">Mover</span></li>\n");
-		echo ("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">Descompactar</span></li>\n");
-		echo ("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">Ocultar</span></li>\n");
+		echo ("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
+		echo ("                        <li class=\"menuUp\" id=\"mArq_mover\"><span id=\"sArq_mover\">".RetornaFraseDaLista($lista_frases_geral, 25)."</span></li>\n");
+		echo ("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">".RetornaFraseDaLista($lista_frases_geral, 38)."</span></li>\n");
+		echo ("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases_geral, 78)."</span></li>\n");
 		echo ("                      </ul>\n");
 		echo ("                    </td>\n");
 		echo ("                  </tr>\n");
