@@ -504,7 +504,7 @@
 
 
 
-    // 315 - Transformar em Colaborador
+    // 314 - Transformar em Colaborador
     echo("                  <li id=\"mAltPart_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,315)."</span></li>\n");
 
   

@@ -667,7 +667,7 @@ function StatusUsuarioNoCurso($sock, $cod_curso){
 	$lista_frases = RetornaListaDeFrases($sock,-3);
 	$status_usuario = RetornaTipoUsuario($sock, $cod_curso);
 	if ($status_usuario == NULL)
-		return "Nao participa do curso"; 
+		return RetornaFraseDaLista($lista_frases,232); 
 		
 	switch ($status_usuario['tipo_usuario']){
 		case "a":

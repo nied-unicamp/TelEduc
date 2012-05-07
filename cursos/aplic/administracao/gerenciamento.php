@@ -286,8 +286,10 @@
   if($ecoordenador){
     if($acao == 'A' || $acao == 'F')
     {
-      echo("          document.getElementById('mConvidado_Selec').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mConvidado_Selec').onclick=function(){ Alerta('convidado','transformar'); };\n");
+      echo("          document.getElementById('mColaborador_Selec').className=\"menuUp02\";\n");
+      echo("          document.getElementById('mColaborador_Selec').onclick=function(){ Alerta('colaborador','transformar'); };\n");
+      echo("          document.getElementById('mVisitante_Selec').className=\"menuUp02\";\n");
+      echo("          document.getElementById('mVisitante_Selec').onclick=function(){ Alerta('visitante','transformar'); };\n");
       if($acao == 'A')
       {
         echo("          document.getElementById('mFormador_Selec').className=\"menuUp02\";\n");
@@ -352,8 +354,10 @@
   if($ecoordenador){
     if($acao == 'A' || $acao == 'F')
     {
-      echo("          document.getElementById('mConvidado_Selec').className=\"menuUp\";\n");
-      echo("          document.getElementById('mConvidado_Selec').onclick=function(){ };\n");
+      echo("          document.getElementById('mColaborador_Selec').className=\"menuUp\";\n");
+      echo("          document.getElementById('mColaborador_Selec').onclick=function(){ };\n");
+      echo("          document.getElementById('mVisitante_Selec').className=\"menuUp\";\n");
+      echo("          document.getElementById('mVisitante_Selec').onclick=function(){ };\n");
       if($acao == 'A')
       {
         echo("          document.getElementById('mFormador_Selec').className=\"menuUp\";\n");
@@ -970,10 +974,12 @@
       // 108 - Transformar em Formador
       echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,108)."</span></li>\n");
         
-    if ($acao == 'A' || $acao == 'F')
-      // 176 - Transformar em convidado
-      echo("                  <li id=\"mConvidado_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,176)."</span></li>\n");
-
+    if ($acao == 'A' || $acao == 'F'){
+      // 176 - Transformar em colaborador
+      echo("                  <li id=\"mColaborador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,315)."</span></li>\n");
+      // 176 - Transformar em visitante
+      echo("                  <li id=\"mVisitante_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,314)."</span></li>\n");
+    }
     if ($acao == 'A')
       // 288 - Desligar Aluno
       echo("                  <li id=\"mDesligar_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,288)."</span></li>\n");

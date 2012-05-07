@@ -108,7 +108,10 @@
     else if ($opcao == "aluno")
       $tipo_usuario="A";
 
-    else if ($opcao == "convidado")
+    else if ($opcao == "colaborador")
+      $tipo_usuario="Z";
+      
+    else if ($opcao == "visitante")
       $tipo_usuario="z";
 
     foreach($cod_usu as $cod => $cod_usuario)
