@@ -446,7 +446,7 @@
   if($dono_diario)
   {
     echo("          <ul>\n");
-    echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">Excluir selecionados</span></li>\n");
+    echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
     echo("          </ul>\n");
   }
   
