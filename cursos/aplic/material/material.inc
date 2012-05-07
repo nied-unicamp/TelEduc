@@ -724,9 +724,12 @@ function MoverTopico ($sock, $tabela, $cod_topico, $cod_usuario, $cod_topico_des
 ********************************************************************************************/
 function RetornaListaDeTopicos ($sock, $tabela)
 {
+  global $lista_frases_geral;
   $consulta="select * from ".$tabela."_topicos where cod_topico=1";
   $res=Enviar($sock, $consulta);
   $linha=RetornaLinha($res);
+  /* 37 - Pasta Raiz */
+  $linha['topico']=RetornaFraseDaLista($lista_frases_geral,37);
   $retorno[0]=$linha;
   $retorno[0]['nivel']=0;
   $retorno[0]['espacos']="";
@@ -1105,6 +1108,7 @@ function MudarPosicaoTopico ($sock, $tabela, $cod_topico_raiz, $cod_topico, $pos
 **************************************************************************************************/
 function RetornaTopicosAncestrais ($sock, $tabela, $cod_topico)
 {
+  global $lista_frases;
   $cont=0;
   do
   {
@@ -1116,6 +1120,9 @@ function RetornaTopicosAncestrais ($sock, $tabela, $cod_topico)
     $cont++;
   }
   while ($cod_topico!="");
+  // 152 - Raiz
+  $retorno[$cont - 1]['topico']=RetornaFraseDaLista($lista_frases, 152);
+  
   return($retorno);
 }
 
