@@ -1129,8 +1129,8 @@ echo ("           </tr>\n");
 echo ("           <tr>\n");
 echo ("             <td>\n");
 echo ("               <ul class=\"btAuxTabs03\">\n");
-/*? - Ver avaliacao*/
-echo("                  <li><span OnClick='VerObj();'>Ver avalicao</span></li>\n");
+/*120 - Ver avaliacao*/
+echo("                  <li><span OnClick='VerObj();'>".RetornaFraseDaLista($lista_frases, 120)."</span></li>\n");
 echo("                  <form name=frmAvaliar method=post>\n");
 echo("                    <input type=hidden name=cod_curso value=".$cod_curso.">\n");
 echo("                    <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");

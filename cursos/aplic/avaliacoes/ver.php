@@ -478,8 +478,8 @@
   // 123 - T�tulo
   echo("                    <td>".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
   if($usr_formador)
-    // ?? - Opçoes
-    echo("                    <td width=\"15%\" align=\"center\">Opcoes</td>\n");
+    // 70 - Opçoes
+    echo("                    <td width=\"15%\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
   // 113 - Tipo de Avalia��o
   echo("                    <td width=\"15%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
   // 19 - Valor
@@ -492,17 +492,17 @@
   {
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
       echo("                      <ul>\n");
-     // ? - Renomear Título TODO: frases
-      echo(  $titulo="<li><span onclick=\"AlteraCampo('tit',".$dados_avaliacao['Cod_atividade'].");\">Renomear Titulo</span></li>");
+     // 230 - Renomear Título
+      echo(  $titulo="<li><span onclick=\"AlteraCampo('tit',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,230)."</span></li>");
            
-      // ? - Editar Criterios
-      echo("                        <li><span onClick=\"AlteraTexto('crt');\">Editar Criterios</span></li>\n");
+      // 211 - Editar Criterios
+      echo("                        <li><span onClick=\"AlteraTexto('crt');\">".RetornaFraseDaLista($lista_frases,211)."</span></li>\n");
 
-      // ? - Editar Objetivos
-      echo("                        <li><span onClick=\"AlteraTexto('obj');\">Editar Objetivos</span></li>\n");
+      // 210 - Editar Objetivos
+      echo("                        <li><span onClick=\"AlteraTexto('obj');\">".RetornaFraseDaLista($lista_frases,210)."</span></li>\n");
       
-      // ? - Editar Valor TODO: frases
-      echo(  "<li><span onclick=\"AlteraCampo('valor',".$dados_avaliacao['Cod_atividade'].");\">Editar Valor</span></li>");
+      // 231 - Editar Valor
+      echo(  "<li><span onclick=\"AlteraCampo('valor',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,231)."</span></li>");
       
    // G 1 - Apagar
      // echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
