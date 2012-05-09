@@ -80,8 +80,7 @@ function CorrigeZeros($data)
 function TratamentoArrayDataGenerico($num,$numarray)
 {
   /* A lista estara em memoria, entao $sock nao eh necessario */
-  $sock=Conectar("");
-  $lista_frases=RetornaListaDeFrases($sock,-2);
+  $lista_frases=RetornaListaDeFrases(0,-2);
 
   $Array=RetornaFraseDaLista($lista_frases,$numarray);
   $elems=explode(",",$Array);
