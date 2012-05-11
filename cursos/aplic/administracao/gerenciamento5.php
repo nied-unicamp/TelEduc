@@ -362,7 +362,7 @@
   echo("      <input type=\"hidden\" name=\"acao\" value=\"z\">\n");
   echo("      <input type=\"hidden\" name=\"opcao\" value=\"nenhuma\">\n");
   // variavel que indica que veio da pagina gerenciamento4.php
-  echo("      <input type=\"hidden\" name=\"origem\" value=\"convidado\">");
+  echo("      <input type=\"hidden\" name=\"origem\" value=\"visitante\">");
   echo("      <input type=\"hidden\" name=\"action_ger\" value=\"nenhuma\">\n");
   echo("      <input type=\"hidden\" name=\"action_js\" value=\"nenhuma\">\n");
   echo("      <input type=\"hidden\" name=\"tipo_usu\" value=\"nenhuma\">\n");

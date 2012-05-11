@@ -121,6 +121,8 @@
       $origem = "gerenciamento4.php";
     else if($origem == "gerenciamento")
       $origem = "gerenciamento.php";
+    else if ($origem == "visitante")
+      $origem = "gerenciamento5.php";
     else
       $origem = "gerenciamento_visitantes.php"; 
 
