@@ -160,7 +160,8 @@ echo ("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"1
 echo ("          </div>\n");
 
 /*Voltar*/
-echo ("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br />\n");
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
 /* 1 - Perguntas Freq�entes */
 $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";

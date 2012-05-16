@@ -40,7 +40,7 @@
   ARQUIVO : cursos/aplic/acessos/acessos.php
   ========================================================== */
 
-/* Código principal */
+/* Cï¿½digo principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -214,7 +214,7 @@
   echo("          return false;\n");
   echo("        if (ComparaData(campo_i, campo_f) > 0)\n");
   echo("        {\n");
-  // 38 - A data inicial não pode ser posterior à data final no período de busca.
+  // 38 - A data inicial nï¿½o pode ser posterior ï¿½ data final no perï¿½odo de busca.
   echo("          alert('".RetornaFraseDaLista($lista_frases,38)."');\n");
   echo("          return false;\n");
   echo("        }\n");
@@ -279,7 +279,7 @@
   echo("          var saida = 'relatorio_frequencia_individual.php?cod_curso=".$cod_curso."';\n");
   echo("          saida+='&data_ini='+data_i;\n");
   echo("          saida+='&data_fim='+data_f;\n");
-  // Verificando exibição de participantes
+  // Verificando exibiï¿½ï¿½o de participantes
   /*echo("          if (document.formFreq.check_alunos.checked)\n");
   echo("          {\n");
   */
@@ -341,8 +341,9 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onClick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -526,13 +527,13 @@
   echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
    // esta form nao deve levar a lugar nenhum, vc precisa fazer o window open!
   echo("                    <tr class=\"head\">\n");
-  /* 3 - Relatório de freqÃ¼Ãªncia */
+  /* 3 - Relatï¿½rio de freqÃ¼Ãªncia */
   echo("                      <td colspan=6>".RetornaFraseDaLista($lista_frases,3)." individual</td>\n");
   echo("                    </tr>\n");
   echo("                    <tr>\n");
-  /* 24 - Período de busca: */
+  /* 24 - Perï¿½odo de busca: */
   echo("                      <td width=15%><b>".RetornaFraseDaLista($lista_frases,24)."</b></td>\n");
-  /* 25 - Início: */
+  /* 25 - Inï¿½cio: */
   echo("                      <td width=\"23%\" class=\"alLeft\" style=\"border-right:2pt solid #DCDCDC;\">\n");
   echo("                        <ul>\n");
   echo("                          <li>\n");
@@ -558,10 +559,10 @@
   $ordem_usuarios = RetornaUsuarios($sock, "nome", $cod_curso);  
   /* ? - Aluno: */
   echo("                      <td width=12%><b>Aluno:</b></td>\n");
-  /* 25 - Início: */
+  /* 25 - Inï¿½cio: */
   echo("                      <td width=25%>\n");
   echo("                        <select name=cod_aluno size=10 style=\"width:200px\">\n");
-  /* 29 - Primeiro usuário */
+  /* 29 - Primeiro usuï¿½rio */
   echo("                          <option selected value=\"-1\">".FirstName($sock, $cod_usuario, $cod_curso)."\n");
 
   foreach ($ordem_usuarios as $key => $value)
@@ -576,7 +577,7 @@
   echo("                      <td colspan=6>\n");
   echo("                        <ul class=\"btAuxTabs\">\n");
   echo("                          <li>\n");
-  /* 15 - Exibir relatório */
+  /* 15 - Exibir relatï¿½rio */
   echo("                            <span onClick=\"EmulaSubmissaoFrequenciaIndividual();\">".RetornaFraseDaLista($lista_frases,15)."</span>\n");
   echo("                          </li>\n");
   echo("                        </ul>\n");

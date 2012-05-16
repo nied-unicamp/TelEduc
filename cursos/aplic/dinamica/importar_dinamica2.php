@@ -154,7 +154,8 @@ echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heig
 echo ("          </div>\n");
 
 /*Voltar*/
-echo ("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br />\n");
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
 // Se n�o foi definido um curso do qual ser�o importados
 // itens, emite uma mensagem de erro.

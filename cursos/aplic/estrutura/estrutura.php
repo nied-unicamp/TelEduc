@@ -110,8 +110,9 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("<span class=\"btsNav\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" alt=\"Voltar\" width=\"48\" height=\"14\" border=\"0\" /></a></span>\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
   //<!----------------- Tabelao ----------------->
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -154,7 +155,7 @@
   /* 10 - Ferramentas do ambiente */
   echo("                    <tr class=\"head01\" id=\"tr_ferrAmbiente\">\n");
   echo("                      <td align=left><b>".RetornaFraseDaLista($lista_frases,10)."</b></td>\n");
-  echo("                      <td width=5%><span id=\"span_ferrAmbiente\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",23);\">[+]</span></td>\n"); //FIXME: O tamanho (numero de linhas) passado pela chamada da fun‹o MostraTr est‡ sendo passado harcoded
+  echo("                      <td width=5%><span id=\"span_ferrAmbiente\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",23);\">[+]</span></td>\n"); //FIXME: O tamanho (numero de linhas) passado pela chamada da funï¿½ï¿½o MostraTr estï¿½ sendo passado harcoded
   echo("                    </tr>\n");
 
   foreach ($ordem_ferramentas as $cod=>$linha)
@@ -179,7 +180,7 @@
   echo("                      </td>\n");
   echo("                    </tr>\n");
 
-  //FIXME: A descri‹o ($lista_frases_ferramentas,51) est‡ estranho, n‹o est‡ descrevendo a funcionalidade de Notifica‹o ($lista_frases_ferramentas,47)
+  //FIXME: A descriï¿½ï¿½o ($lista_frases_ferramentas,51) estï¿½ estranho, nï¿½o estï¿½ descrevendo a funcionalidade de Notificaï¿½ï¿½o ($lista_frases_ferramentas,47)
   //echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_ferrAmbiente_".($i)."\" style=\"display:none;\">\n");
   //echo("                      <td style=\"padding:10px 25px 10px 25px;\" align=left colspan=2>\n");
   //echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,47)."</p>\n");

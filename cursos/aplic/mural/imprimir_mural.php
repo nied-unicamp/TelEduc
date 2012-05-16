@@ -45,14 +45,14 @@
   //ini_set("display_errors","on"); //APGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
   
   
-  /* Ajustes necessários para independer do topo_tela.php */
+  /* Ajustes necessï¿½rios para independer do topo_tela.php */
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   
   $auxiliar = $_SESSION['cod_lingua_s'];
   $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-  // Se diferente, então língua do curso é diferente da língua do usuário, atualiza a lista de frases. 
+  // Se diferente, entï¿½o lï¿½ngua do curso ï¿½ diferente da lï¿½ngua do usuï¿½rio, atualiza a lista de frases. 
   if($auxiliar != $_SESSION['cod_lingua_s']){
   	unset($_SESSION['lista_frases_s']);
   }
@@ -89,7 +89,7 @@
   $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
   $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   
-  /* Fim dos Ajustes necessários para independer do topo_tela.php */
+  /* Fim dos Ajustes necessï¿½rios para independer do topo_tela.php */
   Desconectar($sock);
   
   $sock=Conectar($cod_curso);
@@ -759,8 +759,9 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-  //echo("          <table border=\"0\" width=\"100%\" cellspacing=\"2\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    //echo("          <table border=\"0\" width=\"100%\" cellspacing=\"2\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   //echo("            <tr>\n");
   //echo("              <td valign=\"top\">\n");
 

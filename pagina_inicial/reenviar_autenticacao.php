@@ -48,7 +48,7 @@
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
   
-  // Registre os nomes das funções em PHP que você quer chamar através do xajax
+  // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
   $objAjax->registerFunction("EnviarConfirmacaoUsuarioDinamic");
   
   // Manda o xajax executar os pedidos acima.
@@ -56,7 +56,7 @@
 
   include("../topo_tela_inicial.php");
 
-  // Obtém as mensagens da ferramenta Administração.
+  // Obtï¿½m as mensagens da ferramenta Administraï¿½ï¿½o.
   $pag_atual = "reenviar_autenticacao.php";
   $lista_frases_configuracao	= RetornaListaDeFrases($sock,-3);
   $lista_frases_autenticacao	=	RetornaListaDeFrases($sock,-2);
@@ -80,7 +80,7 @@
   echo("        {\n");
   echo("          log = log.replace(/ /, '');\n");
   echo("        }\n");
-  echo("        if (log == '')\n");				  /* 69 - O campo de e-mail/login não pode estar em branco! */
+  echo("        if (log == '')\n");				  /* 69 - O campo de e-mail/login nï¿½o pode estar em branco! */
   echo("        {\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases_autenticacao, 69)."');\n");
   echo("          return(false);\n");
@@ -93,7 +93,7 @@
   echo("      {\n");
   echo("				input = document.frmLogin.input.value;\n");
   echo("				if (input.search('@') == -1)\n");
-	echo("					return 1;\n");			/* 1 é a opção para login */
+	echo("					return 1;\n");			/* 1 ï¿½ a opï¿½ï¿½o para login */
 	echo("				return 2;\n");				/* 2 para email */
   echo("      }\n");
   
@@ -112,18 +112,18 @@
   echo("				switch (flag)\n");
   echo("				{\n");
   echo("					case (0):\n");
-  echo("  	      {\n");												/* 100 - Email de confirmação enviado com sucesso!. */
+  echo("  	      {\n");												/* 100 - Email de confirmaï¿½ï¿½o enviado com sucesso!. */
   echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao,100)."');\n");
   echo("      	    document.location='autenticacao_cadastro.php';\n");
   echo("						break;");
   echo("  	      }\n");
   echo("	        case (1):\n");
-  echo("  	      {\n");												/* 72 - Email inválido! */
+  echo("  	      {\n");												/* 72 - Email invï¿½lido! */
   echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 72)."');\n");
   echo("						break;");
   echo("	        }\n");
   echo(" 	       	case (2):\n");
-  echo("  	     	{\n");												/* 99 - Usuário já efetuou confirmação do cadastro! */
+  echo("  	     	{\n");												/* 99 - Usuï¿½rio jï¿½ efetuou confirmaï¿½ï¿½o do cadastro! */
   echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 99)."');\n");
   echo("						break;");
   echo("       	 	}\n");
@@ -153,13 +153,14 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
-  // 94 - Se você não confirmou seu cadastro através de seu email ou está tendo
-  // problemas com a confirmação, siga os passos abaixo para confirmar seu cadastro.
-  // 95 - Você precisará do seu login ou do email que você cadastrou para o acesso.  
-  // 96 - Preencha o campo abaixo e selecione o botão Enviar.
-  // 97 - Um novo email será enviado para efetuar a confirmação de seu cadastro.
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
+  // 94 - Se vocï¿½ nï¿½o confirmou seu cadastro atravï¿½s de seu email ou estï¿½ tendo
+  // problemas com a confirmaï¿½ï¿½o, siga os passos abaixo para confirmar seu cadastro.
+  // 95 - Vocï¿½ precisarï¿½ do seu login ou do email que vocï¿½ cadastrou para o acesso.  
+  // 96 - Preencha o campo abaixo e selecione o botï¿½o Enviar.
+  // 97 - Um novo email serï¿½ enviado para efetuar a confirmaï¿½ï¿½o de seu cadastro.
 	// 215 - Login / Email:
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");

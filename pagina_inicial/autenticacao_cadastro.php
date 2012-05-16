@@ -169,8 +169,9 @@
   echo("           <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-  if($destino == "inscricao" && $origem==NULL){
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    if($destino == "inscricao" && $origem==NULL){
   	echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
   }
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -255,11 +256,11 @@
   
   echo("					<td class=\"divide_meio\">\n");
   if($cod_curso != NULL){
-  	  // 90 - Se não tiver cadastro,
+  	  // 90 - Se nÔøΩo tiver cadastro,
 	  // 101 - clique aqui!
 	  echo("                    ".RetornaFrase($sock, 90, -2)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFrase($sock, 101, -2)."</a><br />");
   }else{
-	  // 90 - Se não tiver cadastro,
+	  // 90 - Se nÔøΩo tiver cadastro,
 	  // 101 - clique aqui!
 	  echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 101, -2)."</a><br />");
   }
@@ -271,7 +272,7 @@
   // 101 - clique aqui!
   echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".RetornaFrase($sock, 101, -2)."</a><br/>");
   
-  // 92 - Se não recebeu seu email de confirmação,
+  // 92 - Se nÔøΩo recebeu seu email de confirmaÔøΩÔøΩo,
   // 101 - clique aqui!
   echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 101, -2)."</a><br/>");
   

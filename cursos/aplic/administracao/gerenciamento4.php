@@ -282,8 +282,6 @@
   echo("        }\n");
   echo("      }\n");
 
-  
-  
 
 
 
@@ -333,8 +331,9 @@
   	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
 	
     /*Voltar*/
-    echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  	
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -365,11 +364,10 @@
   echo("      <input type=\"hidden\" name=\"origem\" value=\"convidado\">");
   echo("      <input type=\"hidden\" name=\"action_ger\" value=\"nenhuma\">\n");
   echo("      <input type=\"hidden\" name=\"action_js\" value=\"nenhuma\">\n");
-  echo("      <input type=\"hidden\" name=\"tipo_usu\" value=\"nenhuma\">\n");
   // P�gina Principal
   /* 1 - Administra��o */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
-  // 165 - Gerenciamento de Colaboradores
+  // 165 - Gerenciamento de Convidados
   $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 165)."</h4>";
   echo($cabecalho);
 
@@ -381,9 +379,10 @@
   echo("          </div>\n");
 
   /*Voltar*/			
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br><br>\n");
-
-  // 166 - N� de Colaboradores:
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
+  // 166 - N� de Convidados:
   $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
 
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -395,14 +394,10 @@
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
-	
+
   /* C�digo de montagem do conte�do a partir daqui */
-  $tipo_usuario = 'Z';
-  $lista_convidados = RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem, $tipo_usuario);
+  $lista_convidados = RetornaListaConvidados ($sock,$cod_curso, $acao, $ordem);
   $num=count($lista_convidados);
-  
-  
-  
 
   echo("            <tr>\n");
   echo("              <td>\n");
@@ -429,7 +424,7 @@
   // 132 - Data de inscri��o
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,132)."</b></td>\n");
   // 169 - Participa��o no curso
-  //echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases, 169)."</b></td>");
+  echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases, 169)."</b></td>");
   // 79 - Dados
   echo("                    <td align=\"center\" width=\"15%\"><b>".RetornaFraseDaLista($lista_frases,79)."</b></td>\n");
   
@@ -448,16 +443,11 @@
   {
     foreach($lista_convidados as $cod_usuario_l => $linha)
     {
-    	 
-    	if ($linha ['interacao'] == 'Z')
-    	{
-      		echo("                  <tr>\n");
-      		echo("                    <td><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
-      		echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
-      		echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
+      echo("                  <tr>\n");
+      echo("                    <td><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
+      echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
+      echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
 
-      
-/*********************      
       if ($linha ['interacao'])
       {
         // convidado com interacao: participa��o no curso habilitada
@@ -471,15 +461,12 @@
         $participa = RetornaFraseDaLista($lista_frases, 174);
       }
       echo("                    <td>".$participa."</td>\n");
-*********************/
-      
-      
-      		/* 79 - Dados */
-      		echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=z&amp;ordem=".$ordem."&amp;opcao=dados&amp;origem=convidado&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
 
-      		echo("                  </tr>\n");
-    		}
-    	}
+      /* 79 - Dados */
+      echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=z&amp;ordem=".$ordem."&amp;opcao=dados&amp;origem=convidado&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
+
+      echo("                  </tr>\n");
+    }
 
     echo("                </table>\n");
   }
@@ -499,13 +486,9 @@
       
     // 108 - Transformar em Formador
     echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,108)."</span></li>\n");
-    
-    
-
-    // 314 - Tranformar em Visitante
-    echo("                  <li id=\"mAltPart_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,314)."</span></li>\n");
-    
-    
+      
+    // 167 - Alterar Participa��o
+    echo("                  <li id=\"mAltPart_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,167)."</span></li>\n");
   }
   // 178 - Encerrar Convite
   echo("                  <li id=\"mEncerrar_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,178)."</span></li>\n");

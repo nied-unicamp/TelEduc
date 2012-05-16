@@ -138,8 +138,9 @@
     echo("    - ".RetornaFraseDaLista($lista_frases_geral, 76)."</h4>");
 
   /*Voltar*/			
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    
   echo("          <div id=\"mudarFonte\">\n");
   echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -207,8 +208,9 @@
   echo("          </div>\n");
  
   /*Voltar*/			
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-    
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+      
   /* Tabela Externa */
   echo("          <table id=\"tabelaExterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -427,7 +429,7 @@
     echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
     echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
     echo("                          <span class=\"destaque\">".RetornaFraseDaLista ($lista_frases_geral, 26)."</span>\n");
-    /* 12: Pressione o bot‹o abaixo para selecionar o arquivo a ser anexado. */
+    /* 12: Pressione o botï¿½o abaixo para selecionar o arquivo a ser anexado. */
     /* 13: (arquivos .ZIP podem ser enviados e descompactados posteriormente) */
     echo("                          <span> - ".RetornaFraseDaLista ($lista_frases, 12).RetornaFraseDaLista ($lista_frases, 13)."</span>\n");
     echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");

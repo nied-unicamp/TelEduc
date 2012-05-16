@@ -199,7 +199,8 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
  
 /* Frase #5 - Voltar */
-echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></span>\n");
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
  
 if($visualizar=="G")
 {
@@ -394,8 +395,9 @@ echo("                <span class=\"entregue\">(e)</span> ".RetornaFraseDaLista(
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
-/* Frase #5 - Voltar */
-echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 5)."\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
+    echo("          <br />\n");    
+    /* 509 - voltar, 510 - topo */
+    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
 
 
 echo("        </td>\n");
