@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/batepapo/desmarcar_sessoes2.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -83,7 +83,7 @@
 
   $e_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
-  /* Verifica se alguma sessão foi marcada. Se nenhuma foi, apresenta opção de volta a tela anterior */
+  /* Verifica se alguma sessï¿½o foi marcada. Se nenhuma foi, apresenta opï¿½ï¿½o de volta a tela anterior */
   if (count($cod_assunto_desmarcar)!=0)
   {
     $where_clause=implode(" or cod_assunto=",$cod_assunto_desmarcar);
@@ -106,8 +106,9 @@
     /* 63 - Desmarcar sessï¿½es */
     echo(" - ".RetornaFraseDaLista($lista_frases,63)."</h4>");
 
-    echo("<span class=\"btsNav\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a></span><br/>\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    
     echo("<div id=\"mudarFonte\">\n");
     echo("	<a href=\"#\" onClick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
     echo("	<a href=\"#\" onClick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
@@ -132,8 +133,8 @@
       /* 78 - Lixeira */
       echo("        <li><span title=\"Lixeira\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
     }
-    /* 55 - Próxima sessão marcada */
-    echo("        <li><span title=\"Próxima sessão marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
+    /* 55 - Prï¿½xima sessï¿½o marcada */
+    echo("        <li><span title=\"Prï¿½xima sessï¿½o marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
 
     echo("      </ul>\n");
 
@@ -144,7 +145,7 @@
     echo("    <td valign=\"top\">\n");
     echo("      <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("        <tr>\n");
-    /* 65 - Nenhuma sessão foi selecionada. Volte e selecione as sessões a serem desmarcadas. */
+    /* 65 - Nenhuma sessï¿½o foi selecionada. Volte e selecione as sessï¿½es a serem desmarcadas. */
     echo("          <td>".RetornaFraseDaLista($lista_frases,65)."</td>\n");
     echo("        </tr>\n");
     // Fim Tabela Interna
@@ -157,7 +158,7 @@
 
   echo("    </td>\n");
   echo("  </tr>\n");
-  // Fim Tabelão
+  // Fim Tabelï¿½o
   echo("</table>\n");
 
   include("../tela2.php");

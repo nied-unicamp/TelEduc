@@ -73,7 +73,7 @@
     /* 6 - Cursos em Andamento */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,6)."</h4>\n");
   else if ($tipo_curso=="I")
-    /* 7 - Cursos com inscrições abertas */
+    /* 7 - Cursos com inscriï¿½ï¿½es abertas */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,7)."</h4>\n");
   else
     /* 8 - Cursos encerrados */
@@ -89,8 +89,9 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
   $lista_pastas=RetornaPastasDeCursos($sock,$tipo_curso);
 
   if (count($lista_pastas)<2 || isset($cod_pasta))
@@ -184,12 +185,12 @@
         
         	if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
         	{
-          		/* 54 - Inscrições */
+          		/* 54 - Inscriï¿½ï¿½es */
           	/*	echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         	}
         	else if(!$tem_acesso_curso)
         	{
-          		/* 53 - Informações */
+          		/* 53 - Informaï¿½ï¿½es */
           	/*	echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         	}
         	//else
@@ -201,7 +202,7 @@
         
         if($tem_acesso_curso){
         	if($rejeitado_curso){
-        		/* 223 - Inscri‹o n‹o aceita */
+        		/* 223 - Inscriï¿½ï¿½o nï¿½o aceita */
         		echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         	}else{
         		/* 55 - Entrar */
@@ -212,12 +213,12 @@
         {
         	if($tipo_curso == "I")
         	{
-        		/* 54 - Inscrições */
+        		/* 54 - Inscriï¿½ï¿½es */
           		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         	}
         	else
         	{
-        		/* 53 - Informações */
+        		/* 53 - Informaï¿½ï¿½es */
           		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
         	}
         }
@@ -228,7 +229,7 @@
     {
       /* 195 - curso nao iniciado */
       /* 174 - curso em andamento */
-      /* 175 - curso com inscrição aberta */
+      /* 175 - curso com inscriï¿½ï¿½o aberta */
       /* 176 - Curso encerrado */
       if ($tipo_curso=="N")
         $tela2=RetornaFraseDaLista($lista_frases,195);
@@ -238,7 +239,7 @@
         $tela2=RetornaFraseDaLista($lista_frases,175);
       else
         $tela2=RetornaFraseDaLista($lista_frases,176);
-      /* 57 - Nã há nenhum */
+      /* 57 - Nï¿½ hï¿½ nenhum */
       echo("                  <tr>\n");
       echo("                    <td colspan=3>".RetornaFraseDaLista($lista_frases,57)." ".$tela2.".</td>\n");
       echo("                  </tr>\n");
@@ -249,7 +250,7 @@
     echo("            </tr>\n");
     echo("          </table>\n");
   }
-  else /* Há mais de uma pasta de cursos com cursos nela, e não se estï¿½ dentro de nenhuma */
+  else /* Hï¿½ mais de uma pasta de cursos com cursos nela, e nï¿½o se estï¿½ dentro de nenhuma */
   {
     echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
     echo("            <tr>\n");

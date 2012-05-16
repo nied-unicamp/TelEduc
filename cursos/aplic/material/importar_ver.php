@@ -200,8 +200,9 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onClick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>");
-  //		"<!--<span class=\"btsNav\">".PreparaBusca($cod_curso,$cod_ferramenta)."</span>-->\n");
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    //		"<!--<span class=\"btsNav\">".PreparaBusca($cod_curso,$cod_ferramenta)."</span>-->\n");
   $sock = MudarDB($sock, $cod_curso_origem);
   
   $linha_item=RetornaDadosDoItem($sock, $tabela, $cod_item);
@@ -447,8 +448,10 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
-  echo("          <span class=\"btsNavBottom\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a> <a href=\"#topo\"><img src=\"../imgs/btTopo.gif\" border=\"0\" alt=\"Topo\" /></a></span>\n");
-  echo("        </td>\n");
+    echo("          <br />\n");    
+    /* 509 - voltar, 510 - topo */
+    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
+    echo("        </td>\n");
   echo("      </tr>\n");
   include("../tela2.php");
 

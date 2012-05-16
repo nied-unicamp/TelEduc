@@ -119,8 +119,8 @@ td>#nav3nivel {margin-bottom:-25px;}
 	color: #FFFFFF;
 	background-color: #B5B5B5;
 }
-.btsNav, .btsNavHover { float:right; margin:4px 0 6px 6px; cursor:pointer; }
-.btsNavBottom img, .btsNavBottomHover img { margin-left:8px; margin-top:10px; float:right; }
+.btsNav, .btsNavHover, .btsNav a, .btsNav a:hover { font-weight:normal; text-decoration:none; background-color:#EFEFEF; color:#000000; font-family:"monospace"; font-size:9px; float:right; margin:4px 0 6px 6px; cursor:pointer; }
+.btsNavBottom, .btsNavBottomHover,  .btsNavBottom a, .btsNavBottom a:hover, .btsNav span, .btsNav span:hover { font-weight:normal; text-decoration:none; background-color:#EFEFEF; color:#000000; font-family:"monospace"; font-size:9px; float:right; cursor:pointer; }
 
 .btAuxTabs li, .btAuxTabs02 li, .btAuxTabs03 li {
 	display:inline;

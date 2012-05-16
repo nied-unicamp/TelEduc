@@ -194,7 +194,7 @@ function LeConfig()
     die("LeConfig(): Diret&oacute;rio sem arquivo de autoriza&ccedil;&atilde;o.");
 
   $cam=fgets($fp,256);
-  if ($cam == "") die("LeConfig(): Arquivo de autoriza&ccedil;&atilde;o em branco. Se você está vendo isso depois da instalação do ambiente, talvez tenha esquecido de rodar os scripts configure e configure_end. Reveja o manual.");
+  if ($cam == "") die("LeConfig(): Arquivo de autoriza&ccedil;&atilde;o em branco. Se vocï¿½ estï¿½ vendo isso depois da instalaï¿½ï¿½o do ambiente, talvez tenha esquecido de rodar os scripts configure e configure_end. Reveja o manual.");
   $cam1=explode("\n",$cam);
   $caminho=$cam1[0];
   fclose($fp);
@@ -219,17 +219,17 @@ function LeConfig()
     
     /* Para os campos criticos, verifica se eles nao estao vazios */
     if ($parte[0]=="dbuser")
-      ($conteudo[0] != "") ? $_SESSION['dbuser'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbuser'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");
     if ($parte[0]=="dbpassword")
-      ($conteudo[0] != "") ? $_SESSION['dbpassword'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbpassword'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");
     if ($parte[0]=="dbnamebase")
-      ($conteudo[0] != "") ? $_SESSION['dbnamebase'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbnamebase'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");
     if ($parte[0]=="dbnamecurso")
-      ($conteudo[0] != "") ? $_SESSION['dbnamecurso'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");  
+      ($conteudo[0] != "") ? $_SESSION['dbnamecurso'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");  
     if ($parte[0]=="dbhost")
-      ($conteudo[0] != "") ? $_SESSION['dbhost'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbhost'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");
     if ($parte[0]=="dbport")
-      ($conteudo[0] != "") ? $_SESSION['dbport'] = trim($conteudo[0]) : die("LeConfig(): Falta informação no teleduc.conf");
+      ($conteudo[0] != "") ? $_SESSION['dbport'] = trim($conteudo[0]) : die("LeConfig(): Falta informaï¿½ï¿½o no teleduc.conf");
     if ($parte[0]=="dbtmpuser")
       $_SESSION['dbtmpuser']=trim($conteudo[0]);
     if ($parte[0]=="dbtmppassword")

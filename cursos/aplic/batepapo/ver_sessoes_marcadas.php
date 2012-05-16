@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/batepapo/ver_sessoes_marcadas.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -53,9 +53,9 @@
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
-  // 82 - Sessão marcada com sucesso.
-  //  - Erro ao marcar a sessão.
-  $feedbackObject->addAction("sessao_marcada", 53, "Erro ao marcar a sessão.");
+  // 82 - Sessï¿½o marcada com sucesso.
+  //  - Erro ao marcar a sessï¿½o.
+  $feedbackObject->addAction("sessao_marcada", 53, "Erro ao marcar a sessï¿½o.");
 
   /* tela_topo faz isso
   $cod_usuario=VerificaAutenticacao($cod_curso);
@@ -106,11 +106,12 @@
 
   /* 1 - Bate-Papo */
   echo("<h4>".RetornaFraseDaLista($lista_frases,1));
-  /* 58 - Ver sessões marcadas */
+  /* 58 - Ver sessï¿½es marcadas */
   echo(" - ".RetornaFraseDaLista($lista_frases,58)."</h4>");
 
-  echo("<span class=\"btsNav\"><a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a></span><br/>\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
   echo("<div id=\"mudarFonte\">\n");
   echo("	<a href=\"#\" onClick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("	<a href=\"#\" onClick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
@@ -123,20 +124,20 @@
   echo("    <td valign=\"top\">\n");
 
   echo("      <ul class=\"btAuxTabs\">\n");
-  /* 27 - Ver sessões realizadas */
-  echo("        <li><span title=\"Ver sessões realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
+  /* 27 - Ver sessï¿½es realizadas */
+  echo("        <li><span title=\"Ver sessï¿½es realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
   if ($e_formador)
   {
-    /* 47 - Marcar sessão */
-    echo("        <li><span title=\"Marcar sessão\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
-    /* 63 - Desmarcar sessões */
-    echo("        <li><span title=\"Desmarcar sessões\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
+    /* 47 - Marcar sessï¿½o */
+    echo("        <li><span title=\"Marcar sessï¿½o\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
+    /* 63 - Desmarcar sessï¿½es */
+    echo("        <li><span title=\"Desmarcar sessï¿½es\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
 
     /* 78 - Lixeira */
     echo("        <li><span title=\"Lixeira\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
   }
-  /* 55 - Próxima sessão marcada */
-  echo("        <li><span title=\"Próxima sessão marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
+  /* 55 - Prï¿½xima sessï¿½o marcada */
+  echo("        <li><span title=\"Prï¿½xima sessï¿½o marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
 
   echo("      </ul>\n");
 
@@ -148,17 +149,17 @@
 
   echo("      <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("        <tr class=\"head\">\n");
-  /* 40 - Assunto da Sessão */
+  /* 40 - Assunto da Sessï¿½o */
   echo("          <td>".RetornaFraseDaLista($lista_frases,40)."</td>\n");
   /* 41 - Data */
   echo("          <td>".RetornaFraseDaLista($lista_frases,41)."</td>\n");
-  /* 29 - Início */
+  /* 29 - Inï¿½cio */
   echo("          <td>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
   /* 30 - Fim */
   echo("          <td>".RetornaFraseDaLista($lista_frases,30)."</td>\n");
   if($AcessoAvaliacao)
   {
-    /* 88 - Avaliação */
+    /* 88 - Avaliaï¿½ï¿½o */
     echo("          <td>".RetornaFraseDaLista($lista_frases,88)."</td>\n");
   }
   echo("        </tr>\n");
@@ -189,7 +190,7 @@
           echo("          <td><a class=text href=# onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a></td>");
         }
         else
-          // G 36 - Não
+          // G 36 - Nï¿½o
           echo("          <td>".RetornaFraseDaLista($lista_frases_geral,36)."</td>\n");
       }
       echo("        </tr>\n");
@@ -198,7 +199,7 @@
   else
   {
     echo("        <tr>\n");
-    /* 59 - (Não existe nenhuma sessão marcada) */
+    /* 59 - (Nï¿½o existe nenhuma sessï¿½o marcada) */
     echo("          <td colspan=5>".RetornaFraseDaLista($lista_frases,59)."</td>\n");
     echo("        </tr>\n");
   }
@@ -213,7 +214,7 @@
 
   echo("    </td>\n");
   echo("  </tr>\n");
-  // Fim Tabelão
+  // Fim Tabelï¿½o
   echo("</table>\n");
 
   include("../tela2.php");

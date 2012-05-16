@@ -93,8 +93,9 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../cursos/aplic/imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../cursos/aplic/imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td>\n");
@@ -148,13 +149,13 @@
 
     $host=RetornaConfiguracao($sock,"host");
 
-    /* Endereço do Link de gerenciamento */
+    /* Endereï¿½o do Link de gerenciamento */
     $link_gerenciamento = "<a href='";
     $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
  	$link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
  	$link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
  	$link_gerenciamento.= "&cod_ferramenta=0&acao=N";
- 	$link_gerenciamento.= "'> Gerenciamento de Inscrições </a>";
+ 	$link_gerenciamento.= "'> Gerenciamento de Inscriï¿½ï¿½es </a>";
     
     /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */
@@ -194,7 +195,7 @@
     echo("                    <td>\n");
     
     if(RejeitadoDoCurso($cod_curso)){
-    	/* 221 - Desculpe-nos, mas voc j‡ solicitou inscri‹o para este curso no dia */
+    	/* 221 - Desculpe-nos, mas vocï¿½ jï¿½ solicitou inscriï¿½ï¿½o para este curso no dia */
     	/* 222 - e seu pedido foi rejeitado.*/
     	echo("						".RetornaFraseDaLista($lista_frases,221)." ".RetornaDataInscricao($cod_curso)." ".RetornaFraseDaLista($lista_frases,222)."\n");	
     }

@@ -253,8 +253,9 @@ if ($tela_formador != 1) {
 	echo ("    - " . RetornaFraseDaLista($lista_frases, 45) . "</h4>");
 
 	/*Voltar*/
-	echo ("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span><br /><br />\n");
-
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+	
 	echo ("          <div id=\"mudarFonte\">\n");
 	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
 	echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -284,7 +285,7 @@ echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heig
 echo ("          </div>\n");
 
 /*Voltar*/
-echo ("          <a class=\"btsNav\" href=\"material.php?cod_curso=" . $cod_curso . "&amp;cod_ferramenta=" . $cod_ferramenta . ";\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a><br /><br />\n");
+echo ("          <a class=\"btsNavBottom\" href=\"material.php?cod_curso=" . $cod_curso . "&amp;cod_ferramenta=" . $cod_ferramenta . ";\"><span class=\"btsNavBottom\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></a><br /><br />\n");
 echo ("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo ("            <tr>\n");
 echo ("              <td valign=\"top\" colspan=3>\n");

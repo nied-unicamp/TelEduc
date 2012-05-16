@@ -169,8 +169,9 @@ echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
 	echo ("          </div>\n");
 
-	 echo("          <span class=\"btsNav\" onclick=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></span>\n");
-	/* 1 - Perguntas Freq�entes */
+   /* 509 - Voltar */
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+		/* 1 - Perguntas Freq�entes */
   $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
 
 echo ("            <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
