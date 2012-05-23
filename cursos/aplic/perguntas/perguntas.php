@@ -768,7 +768,8 @@
   
   echo("                      <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
 
-  echo("					<td class=alLeft style=\"cursor:pointer\" colspan=\"3\">Assunto</td>");
+  /* 55 - Assunto */
+  echo("					<td class=alLeft style=\"cursor:pointer\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,55)."</td>");
   echo("					</tr>");
   
   /* 67 - N�o h� nenhuma pergunta freq�ente. */
@@ -887,7 +888,8 @@
 	        	echo("			   </ul>\n");
 				echo("          </td>\n");
 	       	}
-			echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>Fechar</a></td>\n");
+	       	/* 13 - Fechar (ger) */
+			echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>".RetornaFraseDaLista($lista_frases_geral,13)."</a></td>\n");
 			echo("      </tr>\n");
 	    }
    	}
