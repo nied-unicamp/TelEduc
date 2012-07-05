@@ -895,7 +895,7 @@ function RetornaItensDoTopico ($sock, $tabela, $cod_topico, $tipo_comp="")
   $consulta="select * from ".$tabela."_itens where cod_topico=".$cod_topico;
   
   if($tipo_comp!="")
-    $consulta=" and tipo_compartilhamento='".$tipo_comp."'";
+    $consulta.=" and tipo_compartilhamento='".$tipo_comp."'";
   $consulta.=" order by posicao_item";
     
   $res=Enviar($sock, $consulta);
