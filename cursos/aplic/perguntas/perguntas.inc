@@ -224,6 +224,8 @@ function ListaAssuntos($sock, $cod_assunto_pai)
 
 function RetornaLinkCaminhoAssuntoRecur($sock, $cod_assunto, $cod_curso, $pagprinc)
 {
+  global $lista_frases_geral;
+
   $query = "select cod_assunto_pai, nome from Pergunta_assuntos where cod_assunto = ".$cod_assunto;
   $res = Enviar($sock, $query);
 
@@ -237,7 +239,17 @@ function RetornaLinkCaminhoAssuntoRecur($sock, $cod_assunto, $cod_curso, $pagpri
     $nome = "<a href='".$pagprinc.".php?".RetornaSessionID();
     $nome .= "&cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto;
     $nome .= "&".time()."'>";
-    $nome .= TruncaString($linha['nome'], 20)."</a>";
+    
+    /* Se o cod_assunto 1(Pasta Raiz) ou 2(Lixeira), pega da lista_frases para traducao. */
+    if($cod_assunto == 1) {
+        /* 37 - Raiz(Ger) */
+        $nome .= RetornaFraseDaLista($lista_frases_geral,37)."</a>";
+    } else if($cod_assunto == 2) {
+        /* 16 - Lixeira(Ger) */
+        $nome .= RetornaFraseDaLista($lista_frases_geral,16)."</a>";
+    } else {
+        $nome .= TruncaString($linha['nome'], 20)."</a>";
+    }
 
     if (($cod_assunto == 1) || ($cod_assunto == 2))
     /* Se estiver na Raiz ou Lixeira entao retorna o nome. */
@@ -271,14 +283,26 @@ function RetornaLinkCaminhoAssuntoRecur($sock, $cod_assunto, $cod_curso, $pagpri
 
 function RetornaLinkCaminhoAssunto($sock, $cod_assunto, $cod_curso, $pagprinc)
 {
+  global $lista_frases_geral;
+    
   $query = "select cod_assunto_pai, nome from Pergunta_assuntos where cod_assunto = ".$cod_assunto;
   $res = Enviar($sock, $query);
 
   /* Se possui algum assunto-pai entao: */
   $linha = RetornaLinha($res);
   $codigo_assunto_pai = $linha['cod_assunto_pai'];
-  $nome = "<b>".$linha['nome']."</b>";
 
+  /* Se o cod_assunto 1(Pasta Raiz) ou 2(Lixeira), pega da lista_frases para traducao. */
+  if($cod_assunto == 1) {
+    /* 37 - Raiz(Ger) */
+    $nome = "<b>".RetornaFraseDaLista($lista_frases_geral,37)."</b>";
+  } else if($cod_assunto == 2) {
+    /* 16 - Lixeira(Ger) */
+    $nome = "<b>".RetornaFraseDaLista($lista_frases_geral,16)."</b>";
+  } else {
+    $nome = "<b>".$linha['nome']."</b>";
+  }
+  
   if ($codigo_assunto_pai != "")
   {
     $caminho_links = RetornaLinkCaminhoAssuntoRecur($sock, $codigo_assunto_pai, $cod_curso, $pagprinc);
@@ -401,7 +425,8 @@ function EstruturaDeAssuntosRecur($sock, $cod_assunto_pai, $cod_assunto_atual, $
 
 function EstruturaDeAssuntos($sock, $cod_assunto_atual, $eformador)
 {
-
+  global $lista_frases_geral;
+  
   $query1 = "select nome from Pergunta_assuntos ";
   $query1 .= "where cod_assunto = 1";
   $res1 = Enviar($sock, $query1);
@@ -421,7 +446,8 @@ function EstruturaDeAssuntos($sock, $cod_assunto_atual, $eformador)
   /* nome do assunto-raiz e chama a fun�ao EstruturaMoverAssuntoPropr.  */
   {
       $caminho = "<img src=\"../imgs/pasta.gif\" border=0>\n";
-      $caminho .= TruncaString($tupla['nome'], 20)."<br>\n";
+      /* 37 - Raiz(Ger) */
+      $caminho .= RetornaFraseDaLista($lista_frases_geral,37)."<br>\n";
   }
   else
   /* Se NAO estiver no assunto-raiz entao, cria um link para o       */
@@ -430,7 +456,8 @@ function EstruturaDeAssuntos($sock, $cod_assunto_atual, $eformador)
     $caminho = "<img src=\"../imgs/pasta.gif\" border=0><a class=\"link\" href=# onClick='Abrir(1);return(false);'/>\n";
     $caminho .= "<a class=\"link\" href=# onClick='Abrir";
     $caminho .= "(1);return(false);'>";
-    $caminho .= TruncaString($tupla['nome'], 20)."</a><br>\n";
+    /* 37 - Raiz(Ger) */
+    $caminho .= RetornaFraseDaLista($lista_frases_geral,37)."</a><br>\n";
   }
 
   /* Para cada assunto contido nos sub-assuntos cria os links.        */
@@ -449,10 +476,11 @@ function EstruturaDeAssuntos($sock, $cod_assunto_atual, $eformador)
 
     if ($cod_assunto_atual == 2)
     {
-    $caminho .= "<img src=\"../imgs/trash.gif\" border=0>\n";
-    /* Se estiver na lixeira entao, cria uma apenas uma string com o */
-    /* nome da lixeira.                                              */
-        $caminho .= TruncaString($tupla['nome'], 20)."<br>\n";
+      $caminho .= "<img src=\"../imgs/trash.gif\" border=0>\n";
+      /* Se estiver na lixeira entao, cria uma apenas uma string com o */
+      /* nome da lixeira.                                              */
+      /* 16 - Lixeira(Ger) */
+      $caminho .= RetornaFraseDaLista($lista_frases_geral,16)."<br>\n";
     }
     else
     /* Se NAO estiver na lixeira entao, cria um link para a lixeira. */
@@ -460,7 +488,8 @@ function EstruturaDeAssuntos($sock, $cod_assunto_atual, $eformador)
       $caminho .= "<a class=\"link\" href=# onClick='Abrir(2);return(false);'><img src=\"../imgs/trash.gif\" border=0></a>\n";
       $caminho .= "<a class=\"link\" href=# onClick='Abrir";
       $caminho .= "(2);return(false);'>";
-      $caminho .= TruncaString($tupla['nome'], 20)."</a><br>\n";
+      /* 16 - Lixeira(Ger) */
+      $caminho .= RetornaFraseDaLista($lista_frases_geral,16)."<br>\n";
     }
   }
 

@@ -1003,7 +1003,8 @@
 	  echo("                <ul>\n");
       /* Frase #131 - Apagar selecionados */
       echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"eapagarrSelec\">".RetornaFraseDaLista($lista_frases, 131)."</span></li>\n");
-      echo("				  <li id=\"mAplicar_Selec\" class=\"menuUp\"><span>Aplicar</span></li>\n");
+      /* Frase #53 - Aplicar */
+      echo("				  <li id=\"mAplicar_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases, 53)."</span></li>\n");
       /* Frase #132 - Cancelar aplicacao dos selecionados */
       echo("                  <li id=\"mCancelarAplic_Selec\" class=\"menuUp\"><span id=\"cancelarAplicSelec\">".RetornaFraseDaLista($lista_frases, 132)."</span></li>\n");
       echo("                </ul>\n");

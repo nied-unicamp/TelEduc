@@ -455,9 +455,9 @@
 	/* 20 - Alunos  */
         echo("                              <input id='result2' type=checkbox name=\"result[2]\" value='A'><label for=\"result2\">".RetornaFraseDaLista ($lista_frases, 20)."</label>\n");
 	/* 57 - Visitantes  */
-        echo("                              <input id='result3' type=checkbox name=\"result[3]\" value='V'><label for=\"result3\">Visitantes</label>\n");
+        echo("                              <input id='result3' type=checkbox name=\"result[3]\" value='V'><label for=\"result3\">".RetornaFraseDaLista ($lista_frases, 57)."</label>\n");
 	/* 58 - Convidados  */
-        echo("                              <input id='result4' type=checkbox name=\"result[4]\" value='Z'><label for=\"result4\">Convidados</label>\n");
+        echo("                              <input id='result4' type=checkbox name=\"result[4]\" value='Z'><label for=\"result4\">".RetornaFraseDaLista ($lista_frases, 58)."</label>\n");
 	echo("                            </td>\n");
 	echo("                          </tr>\n");
 	echo("                          <tr>\n");
@@ -487,8 +487,10 @@
 	echo("                            <td class='itens' >".RetornaFraseDaLista($lista_frases,70)."</td>\n");
 	echo("                            <td class='itens' >\n");
 	echo("                              <input type=hidden name=num_escolhas value=''>\n");
-	echo("                              <input class=input type=radio name=num_esc id=num_esc_1 onClick=\"document.enquete.num_escolhas.value='1';\"><label for=\"num_esc_1\">Somente uma alternativa</label>\n");
-	echo("                              <input class=input type=radio name=num_esc id=num_esc_n onClick=\"document.enquete.num_escolhas.value='N';\"><label for=\"num_esc_n\">Uma ou mais alternativas</label>\n");
+	/* 59 - Somente uma alternativa  */
+	echo("                              <input class=input type=radio name=num_esc id=num_esc_1 onClick=\"document.enquete.num_escolhas.value='1';\"><label for=\"num_esc_1\">".RetornaFraseDaLista($lista_frases,59)."</label>\n");
+	/* 60 - Uma ou mais alternativas */
+	echo("                              <input class=input type=radio name=num_esc id=num_esc_n onClick=\"document.enquete.num_escolhas.value='N';\"><label for=\"num_esc_n\">".RetornaFraseDaLista($lista_frases,60)."</label>\n");
 	echo("                            </td>\n");
 	echo("                          </tr>\n");
 	echo("                          <tr>\n");

@@ -373,17 +373,21 @@ function NomeGrupo($sock, $cod_grupo)
             $data_disp - data em que foi/sera disponibilizado
    Saida: string dizendo a situacao do exercicio
 */
-function RetornaSituacaoExercicio($situacao,$data,$data_disp)
-{
-  switch($situacao)
-  {
-  	case 'A': if($data >= $data_disp)
-  	            return "Disponibilizado";
-  	          else 
-  	            return "Agendado";
-  	          break;
-  	case 'C': return "Em cricao";
-  }
+function RetornaSituacaoExercicio($situacao,$data,$data_disp) {
+    switch($situacao) {
+        case 'A':
+            if($data >= $data_disp) {
+                /* Frase #229 - Disponibilizado */
+                return RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 229);
+            } else {
+                /* Frase #230 - Agendado */
+                return RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 230);
+            }
+            break;
+        case 'C':
+            /* Frase #231 - Em criação */
+            return RetornaFraseDaLista(RetornaListaDeFrases($sock,23), 231);
+    }
 }
 
 /* *********************************************************************
