@@ -1,4 +1,5 @@
 .:
+teste
 administracao
 ajuda
 avaliarcurso
