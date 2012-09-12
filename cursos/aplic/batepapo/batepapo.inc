@@ -512,7 +512,7 @@ function RetornaAssuntoPeriodo($sock,$data_inicio,$data_fim)
     $linha=RetornaLinha($res);
     $retorno=$linha[0];
     while ($linha=RetornaLinha($res))
-      $retorno.="<br>".$linha[0];
+      $retorno.="<br/>".$linha[0];
     return $retorno;
   }
   else

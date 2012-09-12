@@ -368,4 +368,21 @@ function VerificaNumeroQuery($num)
     return "";
 }
 
+/* *********************************************************************
+   str2num - Converte "valor_inteiro,valor_decimal" para "valor_inteiro.valor_decimal"
+   Entrada: $str - string a ser corrigida.
+   Saida: string corrigida
+*/
+function str2num($str)
+{
+	if(strpos($str, '.') < strpos($str,',')) {
+		$str = str_replace('.','',$str);
+		$str = strtr($str,',','.');           
+	}
+	else {
+		$str = str_replace(',','',$str);           
+	}
+	return (float)$str;
+}
+
 ?>

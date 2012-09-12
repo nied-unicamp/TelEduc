@@ -129,8 +129,9 @@
   echo("  </head>\n");
   echo("  <body style=\"background:none;border-left:1px solid; padding-left:5px;\">\n");
   echo("    <br />\n");
-  echo("    <b>Usu&aacute;rios Online</b><br >\n");
-  echo("    <a href=# onclick=\"OpenWindowLink(' ');\">Todos</a><br />\n");
+  //echo("    <b>Usu&aacute;rios Online</b><br >\n");
+  echo("    <b>".RetornaFraseDaLista($lista_frases,110)."</b><br>\n");
+  //echo("    <a href=# onclick=\"OpenWindowLink(' ');\">Todos</a><br />\n");
   foreach($lista_apelidos as $cod => $apelido){
      if ($cod!=$cod_usuario)
       echo("    <a href=# onclick=\"OpenWindowLink(".$cod.");\">".html_entity_decode($apelido)."</a><br />\n");

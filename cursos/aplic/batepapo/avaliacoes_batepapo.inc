@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/batepapo/avaliacoes_batepapo.inc
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,10 +42,10 @@
 
 
 /* ************************************************************************
-   AtualizaStatusAvaliacao - Atualiza o status da avaliacão
+   AtualizaStatusAvaliacao - Atualiza o status da avaliacï¿½o
    Entrada: $sock - BASE DO CURSO
             $cod_sessoes - array com as sessoes a serem apagadas
-            $açao - Status a ser colocado
+            $aï¿½ao - Status a ser colocado
             $cod_usuario - Codigo do usuario
    Saida: Nenhuma
 */
@@ -54,13 +54,13 @@ function AtualizaStatusAvaliacao($sock,$cod_sessoes,$acao,$cod_usuario)
   foreach($cod_sessoes as $num => $cod_sessao)
   {
     $assunto=RetornaAssuntoSessao($sock,$cod_sessao);
-    if (strcmp($assunto,"(Sessão não agendada)"))
+    if (strcmp($assunto,"(Sessï¿½o nï¿½o agendada)"))
     {
       $cod_assunto=RetornaCodAssuntoBatePapo($sock,$cod_sessao);
       $sessoes=RetornaSessoesDeUmAssunto($sock,$cod_assunto);
       if ($cod_assunto!="")
       {
-        if (count($sessoes)==1) //se houver mais de uma sessao relacionada ao assunto nao pode apagar ou excluir a avaliaçao,pois pode haver alguma sessao que nao foi apagada ou excluida
+        if (count($sessoes)==1) //se houver mais de uma sessao relacionada ao assunto nao pode apagar ou excluir a avaliaï¿½ao,pois pode haver alguma sessao que nao foi apagada ou excluida
         {
           if ($acao=='L')
           {
@@ -80,7 +80,7 @@ function AtualizaStatusAvaliacao($sock,$cod_sessoes,$acao,$cod_usuario)
           }
         }
 
-        if ($acao=='A')     //Recuperar sessao de bate-papo e avaliação
+        if ($acao=='A')     //Recuperar sessao de bate-papo e avaliaï¿½ï¿½o
         {
           if (AvaliacaoFoiApagada($sock,$cod_assunto))
           {
@@ -95,7 +95,7 @@ function AtualizaStatusAvaliacao($sock,$cod_sessoes,$acao,$cod_usuario)
 
 
 /* ************************************************************************
-   ExcluiAvaliacaoDesmarcada - Atualiza o status da avaliacão
+   ExcluiAvaliacaoDesmarcada - Atualiza o status da avaliacï¿½o
    Entrada: $sock - BASE DO CURSO
             $cod_assuntos - array com os assuntos a serem desmarcados
             $cod_usuario - Codigo do usuario
@@ -118,9 +118,9 @@ function ExcluiAvaliacaoDesmarcada ($sock,$cod_assuntos,$cod_usuario)
 
 
 /* ********************************************************************************
-   EhAvaliacaoBatePapo - Verifica se a sessão de bate-papo é uma avaliação
+   EhAvaliacaoBatePapo - Verifica se a sessï¿½o de bate-papo ï¿½ uma avaliaï¿½ï¿½o
    Entrada:  $sock - BASE DO CURSO
-            $cod_assunto - Codigo do Assunto da sessão de bate-papo
+            $cod_assunto - Codigo do Assunto da sessï¿½o de bate-papo
    Saida: Nenhuma
 
 */
@@ -140,10 +140,10 @@ function EhAvaliacaoBatePapo($sock,$cod_assunto)
 }
 
 /* ********************************************************************************
-   BatePapoEhAvaliacao - Verifica se a sessão de bate-papo é uma avaliação
+   BatePapoEhAvaliacao - Verifica se a sessï¿½o de bate-papo ï¿½ uma avaliaï¿½ï¿½o
    Entrada:  $sock - BASE DO CURSO
             $cod_sessao - sessao visualizada
-            $assunto - Assunto da sessão de bate-papo
+            $assunto - Assunto da sessï¿½o de bate-papo
    Saida: Nenhuma
 
 */
@@ -151,9 +151,9 @@ function EhAvaliacaoBatePapo($sock,$cod_assunto)
 function BatePapoEhAvaliacao($sock,$assunto,$di,$df)
 {
   /*
-      Ve se um dos assuntos é avaliação
+      Ve se um dos assuntos ï¿½ avaliaï¿½ï¿½o
   */
-  $assunto_unico = explode("<br>", $assunto);
+  $assunto_unico = explode("<br/>", $assunto);
   foreach($assunto_unico as $assunto_u){
   	$cod_assunto=RetornaCodAssunto($sock,$assunto_u,$di,$df);
   	//echo ("Cod_assunto = ".$cod_assunto);
@@ -171,9 +171,9 @@ function BatePapoEhAvaliacao($sock,$assunto,$di,$df)
 /* ********************************************************************************
   RetornaCodAvaliacao - Retorna  o codigo da Avaliacao
    Entrada:  $sock - BASE DO CURSO
-             $cod_atividade -  Código do Assunto da sessão de Bate-Papo
+             $cod_atividade -  Cï¿½digo do Assunto da sessï¿½o de Bate-Papo
 
-   Saida:   Código da Avaliação
+   Saida:   Cï¿½digo da Avaliaï¿½ï¿½o
 */
 function RetornaCodAvaliacao($sock,$cod_atividade)
 {
@@ -185,10 +185,10 @@ function RetornaCodAvaliacao($sock,$cod_atividade)
 
 
 /* *********************************************************************
-   FoiAvaliado - Verifica se o aluno já foi avaliado
+   FoiAvaliado - Verifica se o aluno jï¿½ foi avaliado
    Entrada: $sock - BASE DO CURSO
-            $cod_aluno - aluno que está sendo avaliado
-            $cod_avaliacao - avaliacao que está sendo corrigida
+            $cod_aluno - aluno que estï¿½ sendo avaliado
+            $cod_avaliacao - avaliacao que estï¿½ sendo corrigida
    Saida: nenhuma
 */
 
@@ -204,10 +204,10 @@ function FoiAvaliado($sock,$cod_avaliacao,$cod_aluno)
 
 
 /* ********************************************************************************
-   BatePapoEraAvaliacao - Verifica se a sessão de bate-papo era uma avaliação, ou seja se agora está apagada
+   BatePapoEraAvaliacao - Verifica se a sessï¿½o de bate-papo era uma avaliaï¿½ï¿½o, ou seja se agora estï¿½ apagada
    Entrada:  $sock - BASE DO CURSO
             $cod_sessao - sessao visualizada
-            $assunto - Assunto da sessão de bate-papo
+            $assunto - Assunto da sessï¿½o de bate-papo
    Saida: Nenhuma
 
 */
@@ -231,9 +231,9 @@ function BatePapoEraAvaliacao($sock,$assunto,$di,$df)
 /* ********************************************************************************
   RetornaCodAvaliacaoApagada - Retorna  o codigo da Avaliacao
    Entrada:  $sock - BASE DO CURSO
-             $cod_atividade -  Código do Assunto da sessão de Bate-Papo
+             $cod_atividade -  Cï¿½digo do Assunto da sessï¿½o de Bate-Papo
 
-   Saida:   Código da Avaliação
+   Saida:   Cï¿½digo da Avaliaï¿½ï¿½o
 */
 function RetornaCodAvaliacaoApagada($sock,$cod_atividade)
 {
@@ -245,12 +245,12 @@ function RetornaCodAvaliacaoApagada($sock,$cod_atividade)
 
 
 /* ******************************************************
-  ApagaAvaliacaoBatepapo - Muda o status da Avaliação associada a sessão de bate-papo
+  ApagaAvaliacaoBatepapo - Muda o status da Avaliaï¿½ï¿½o associada a sessï¿½o de bate-papo
     para 'A', impedindo que sejam visualizadas.
 
   Entradas: $sock - sock de conexao,
-            $cod_avaliacao - código da avaliacao.
-  Saida:    true se bem-sucedido, do contrário, false.
+            $cod_avaliacao - cï¿½digo da avaliacao.
+  Saida:    true se bem-sucedido, do contrï¿½rio, false.
 
 */
 function ApagaAvaliacaoBatepapo($sock, $cod_avaliacao,$cod_usuario)
@@ -265,9 +265,9 @@ function ApagaAvaliacaoBatepapo($sock, $cod_avaliacao,$cod_usuario)
 
 
 /* ********************************************************************************
-   AvaliacaoFoiApagada - Verifica se a sessão de bate-papo era uma avaliação, ou seja se é uma avaliação apagada
+   AvaliacaoFoiApagada - Verifica se a sessï¿½o de bate-papo era uma avaliaï¿½ï¿½o, ou seja se ï¿½ uma avaliaï¿½ï¿½o apagada
    Entrada:  $sock - BASE DO CURSO
-            $cod_assunto - Codigo do Assunto da sessão de bate-papo
+            $cod_assunto - Codigo do Assunto da sessï¿½o de bate-papo
    Saida: Nenhuma
 
 */
@@ -288,13 +288,13 @@ function AvaliacaoFoiApagada($sock,$cod_assunto)
 
 
 /* ******************************************************
-  RecuperaAvaliacaoBatepapo - Muda o status da Avaliação associada a sessão de bate-papo
+  RecuperaAvaliacaoBatepapo - Muda o status da Avaliaï¿½ï¿½o associada a sessï¿½o de bate-papo
     para 'F', permitindo que sejam visualizadas.
 
   Entradas: $sock - sock de conexao,
-            $cod_avaliacao - código da avaliacao.
-            $cod_usuario - codigo do usuario que recuperou a avaliaçao
-  Saida:    true se bem-sucedido, do contrário, false.
+            $cod_avaliacao - cï¿½digo da avaliacao.
+            $cod_usuario - codigo do usuario que recuperou a avaliaï¿½ao
+  Saida:    true se bem-sucedido, do contrï¿½rio, false.
 
 */
 function RecuperaAvaliacaoBatepapo($sock,$cod_avaliacao,$cod_usuario)
@@ -310,13 +310,13 @@ function RecuperaAvaliacaoBatepapo($sock,$cod_avaliacao,$cod_usuario)
 
 
 /* ******************************************************
-  ExcluiAvaliacaoBatepapo - Muda o status da Avaliação associada a sessão de bate-papo
+  ExcluiAvaliacaoBatepapo - Muda o status da Avaliaï¿½ï¿½o associada a sessï¿½o de bate-papo
     para 'X', impedindo que sejam visualizadas.
 
   Entradas: $sock - sock de conexao,
-            $cod_avaliacao - código da avaliacao.
-            $cod_usuario - codigo do usuario que recuperou a avaliaçao
-  Saida:    true se bem-sucedido, do contrário, false.
+            $cod_avaliacao - cï¿½digo da avaliacao.
+            $cod_usuario - codigo do usuario que recuperou a avaliaï¿½ao
+  Saida:    true se bem-sucedido, do contrï¿½rio, false.
 
 */
 function ExcluiAvaliacaoBatepapo($sock, $cod_avaliacao,$cod_usuario)

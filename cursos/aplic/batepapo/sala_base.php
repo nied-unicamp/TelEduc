@@ -211,32 +211,35 @@
   echo("                  </select></td>\n");
 
   echo("                <td width=\"15%\">\n");
-//   echo("                  <select class=input name=cod_usuario_r>\n");
-//   $selected="";
-//   if (!isset($cod_usuario_r))
-//     $selected="selected";
-//   /* 20 - Todos */
-//   echo("                    <option value=''>".RetornaFraseDaLista($lista_frases,20)."\n");
-// 
-//   $lista_apelidos=RetornaListaApelidosOnline($sock,$cod_sessao);
-//   if (count($lista_apelidos)>0)
-//     foreach($lista_apelidos as $cod => $apelido)
-//     {
-//       $selected="";
-//         
-//       if ($cod_usuario_r==$cod)
-//         $selected="selected";
-//       if ($cod!=$cod_usuario)
-//         echo("                <option value=".$cod." ".$selected.">".stripslashes($apelido)."</option>\n");
-//     }
-//   echo("                </select>\n");
+   echo("                  <select class=input name=cod_usuario_r>\n");
+   $selected="";
+   if (!isset($cod_usuario_r))
+     $selected="selected";
+   /* 20 - Todos */
+   echo("                    <option value=''>".RetornaFraseDaLista($lista_frases,20)."\n");
+ 
+   $lista_apelidos=RetornaListaApelidosOnline($sock,$cod_sessao);
+   if (count($lista_apelidos)>0)
+     foreach($lista_apelidos as $cod => $apelido)
+     {
+       $selected="";
+         
+       if ($cod_usuario_r==$cod)
+         $selected="selected";
+       if ($cod!=$cod_usuario) {
+         $cod_usuario_r = $cod;
+         $apelido_usuario_r = stripslashes($apelido);
+         echo("                <option value=".$cod." ".$selected.">".stripslashes($apelido)."</option>\n");
+       }
+     }
+   echo("                </select>\n");
 
   //Voltar as op��es padr�o "fala para" e "Todos"
   echo("                <script  type=\"text/javascript\" language=javascript>\n");
   echo("                  VoltaPadroes();\n");
   echo("          </script>\n");
 
-  echo("         <span id=\"apelido_r\">".(($apelido_usuario_r!="")?$apelido_usuario_r:'Todos')."</span>\n");
+  //echo("         <span id=\"apelido_r\">".(($apelido_usuario_r!="")?$apelido_usuario_r:'Todos')."</span>\n");
   echo("         <input type=\"hidden\" name=\"cod_usuario_r\" id=\"cod_usuario_r\" value=\"".(($cod_usuario_r!="")?$cod_usuario_r:'')."\" />\n");
   echo("         <input type=\"hidden\" name=\"apelido_usuario_r\" id=\"apelido_usuario_r\" value=\"".(($apelido_usuario_r!="")?$apelido_usuario_r:'Todos')."\" /></td>\n");
   echo("        </tr>\n");

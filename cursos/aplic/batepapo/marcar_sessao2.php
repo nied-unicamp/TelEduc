@@ -44,7 +44,6 @@
   include($bibliotecas."geral.inc");
   include("batepapo.inc");
 
-
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=1;
@@ -52,10 +51,14 @@
   $tipo="I";
   
   include("../topo_tela.php");
-
   
   /* Pega a informação da possivel avaliacao */
-  $valor = $_POST['ValorAval'];
+  if ( is_numeric($_POST['ValorAval']) ) {
+    $valor = $_POST['ValorAval'];
+  }
+  else {
+    $valor = str2num($_POST['ValorAval']);
+  }
   $objetivos = $_POST['ObjetivosAval'];
   $criterios = $_POST['CriteriosAval'];
   $com_avaliacao = ($objetivos != NULL && $valor != NULL && $criterios != NULL);
