@@ -335,8 +335,8 @@
   echo("            </tr>\n");
   echo("          </table>\n");
   echo("          <ul>\n");
-  echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">Excluir selecionados</span></li>\n");
-  echo("            <li id=\"mRecuperar_Selec\" class=\"menuUp\"><span id=\"moverSelec\">Recuperar selecionados</span></li>\n");
+  echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases,153)."</span></li>\n");
+  echo("            <li id=\"mRecuperar_Selec\" class=\"menuUp\"><span id=\"moverSelec\">".RetornaFraseDaLista($lista_frases,154)."</span></li>\n");
   echo("          </ul>\n");
   echo("        </td>\n");
   echo("      </tr>\n");

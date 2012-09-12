@@ -49,17 +49,41 @@
   require_once("../xajax_0.2.4/xajax.inc.php");
   
   /* Ajustes necess�rios para independer do topo_tela.php */
+
+  /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
+  if (!isset($cod_curso)){
+  	if (isset($_GET['cod_curso'])){
+  		$cod_curso = $_GET['cod_curso'];
+  	} else if (isset($_POST['cod_curso'])){
+  		$cod_curso = $_POST['cod_curso'];
+  	}
+  }
+  
+  /* Desnecessário
   $cod_curso = $_GET['cod_curso'];
+  */
+  
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   
+  /* Desnecessário
   $auxiliar = $_SESSION['cod_lingua_s'];
   $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
   // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases. 
   if($auxiliar != $_SESSION['cod_lingua_s']){
   	unset($_SESSION['lista_frases_s']);
   }
+  */
+  
+  $auxiliar = RetornaLinguaCurso($sock,$cod_curso);
+
+  // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
+  //  if($auxiliar != $_SESSION['cod_lingua_s']){
+  //  	unset($_SESSION['lista_frases_s']);
+  //  }
+  
   $cod_ferramenta = 9;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
 
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
   
@@ -100,8 +124,10 @@
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,0);
   MarcaAcesso($sock,$cod_usuario,$cod_ferramenta);
 
+  /* Desnecessário
   if (!isset($cod_ferramenta))
-    $cod_ferramenta=1; /* Agenda */
+    $cod_ferramenta=1; // Agenda
+  */
 
   echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
   echo("<html lang=\"pt\">\n"); 
@@ -123,7 +149,7 @@
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
-//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->registerFunction("MudarRelevanciaDinamic");
   $objAjax->registerFunction("MostraMensagemDinamic");
   
@@ -134,18 +160,12 @@
   session_register('array_mensagens_s');
   session_register('sin_pag_s');
   
-  $cod_ferramenta=9;
-  $cod_ferramenta_ajuda = $cod_ferramenta;
-  
   if ($status == 'D')
     $cod_pagina_ajuda=3;
   else
     $cod_pagina_ajuda=6;
 
-  //include("../topo_tela.php");
-  
-
-  $feedbackObject =  new FeedbackObject($lista_frases);
+  $feedbackObject = new FeedbackObject($lista_frases);
   $feedbackObject->addAction("nova_msg", 17, 18);
   $feedbackObject->addAction("responde_mensagem", 17, 30);
 
@@ -1074,7 +1094,7 @@
         echo("                    <td width=\"5%\">&nbsp;</td>\n");
         echo("                    <td style=\"width:50px\" colspan=".($status == 'D'?"2":"3")." id=\"td_msg_".$cod_msg."\" align=\"left\">\n");
 
-        echo("                      <div><b>Mensagem:</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
+        echo("                      <div><b>".RetornaFraseDaLista($lista_frases,14).":</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
         echo("                      </div></td>\n");
         echo("                    <td width=\"25%\" id=\"td_close".$cod_msg."\">\n");
         //echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">Fechar</span><br />\n");

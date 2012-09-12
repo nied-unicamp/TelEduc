@@ -1030,7 +1030,7 @@
         echo("                    <td width=\"5%\">&nbsp;</td>\n");
         echo("                    <td colspan=".($status == 'D'?"2":"3")." id=\"td_msg_".$cod_msg."\" align=\"left\">\n");
 
-        echo("                      <div><b>Mensagem:</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
+        echo("                      <div><b>".RetornaFraseDaLista($lista_frases,14).":</b><br /><br /><div class=\"divRichText\">". PreparaExibicaoMensagem($dados['mensagem'])."</div>\n");
         echo("                      </div></td>\n");
         echo("                    <td width=\"25%\" id=\"td_close".$cod_msg."\">\n");
         echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">".RetornaFraseDaLista($lista_frases,138)."</span><br />\n");
