@@ -56,11 +56,15 @@ include("../topo_tela.php");
 
 // instanciar o objeto, passa a lista de frases por parametro
 $feedbackObject =  new FeedbackObject($lista_frases);
-//adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+// adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
 $feedbackObject->addAction("apagarItem", 101, 0);
 $feedbackObject->addAction("apagarSelecionados", 101, 0);
 $feedbackObject->addAction("ativaragenda", 102, 0);
 $feedbackObject->addAction("importarItem", 108, 0);
+
+// tipo de usuário
+$e_formador    = EFormador($sock,$cod_curso,$cod_usuario);
+$e_coordenador = ECoordenador($sock, $cod_curso, $cod_usuario);
 
 echo("    <script type=\"text/javascript\">\n\n");
 
@@ -385,9 +389,12 @@ else
 echo("                </table>\n");
 
 /* 68 - Excluir Selecionados (ger)*/
-echo("                <ul>\n");
-echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
-echo("                </ul>\n");
+if ($e_formador || $e_coordenador)
+{
+	echo("                <ul>\n");
+	echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
+	echo("                </ul>\n");
+}
 
 /*Fim tabela externa*/
 echo("              </td>\n");
