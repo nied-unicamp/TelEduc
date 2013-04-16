@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : instalacao/instalacao3.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,7 +42,7 @@
 
   include "instalacao.inc";
 
-  ExibirCabecalho(4,"Criação do arquivo teleduc.conf");
+  ExibirCabecalho(4,"Criaï¿½ï¿½o do arquivo teleduc.conf");
 
   session_register("teleduc_login_s");
   session_register("teleduc_senha_s");
@@ -61,16 +61,16 @@
   $versao_numero = $versao_geral[0];
 
   if ($sock==-1)
-    Voltar("Não foi possível conectar ao MySQL. Pode ser que o MySQL não esteja corretamente instalado, ou que o Deamon do MySQL não esteja em execução, ou o login e senha de root tenham sido digitados errados.<br><br>Mensagem de erro retornada pelo MySQL: <font color=black>".mysql_error()."</font>");
+    Voltar("Nï¿½o foi possï¿½vel conectar ao MySQL. Pode ser que o MySQL nï¿½o esteja corretamente instalado, ou que o Deamon do MySQL nï¿½o esteja em execuï¿½ï¿½o, ou o login e senha de root tenham sido digitados errados.<br><br>Mensagem de erro retornada pelo MySQL: <font color=black>".mysql_error()."</font>");
 
   $tmpdbbasecurso_s=$tmpdbbasecurso;
   $tmpteleduc_login_s=$tmpteleduc_login;
   $tmpteleduc_senha_s=$tmpteleduc_senha;
 
-#create temporary tables ,lock tables, reload e file foram retirados para manter compatibilidade com versões anteriores à 4.0.2 do MySQL
+#create temporary tables ,lock tables, reload e file foram retirados para manter compatibilidade com versï¿½es anteriores ï¿½ 4.0.2 do MySQL
 #  $query1="grant alter, create, create temporary tables, delete, drop, file, index, insert, lock tables, reload, select, update, references privileges on ".$dbbasegeral_s.".* to ".$teleduc_login_s."@localhost identified by '".$teleduc_senha_s."'";
 
-#Estes inserts fazem a mesma coisa que o grant acima, não são necessários.
+#Estes inserts fazem a mesma coisa que o grant acima, nï¿½o sï¿½o necessï¿½rios.
 /*
   if ($versao_numero == 3)
     $query2 = "INSERT INTO user VALUES ('localhost', '".$teleduc_login_s."', PASSWORD('".$teleduc_senha_s."'), 'N','N','N','N','N','N','N','N','N','N','N','N','N','N')";
@@ -80,7 +80,7 @@
   Enviar($sock,$query2);
 */
 
-#Seta privilégios do usuário do teleduc na base dos cursos; A partir da versao 4.1 do MySQl eh necessario ter privilegio de Lock da Base de Dados para poder aplicar um DUMP usado para a extracao de Cursos. No primeiro if colocamos permissao de Lock na Base Geral. E no segundo para todas as Bases de Cursos que forem criadas.
+#Seta privilï¿½gios do usuï¿½rio do teleduc na base dos cursos; A partir da versao 4.1 do MySQl eh necessario ter privilegio de Lock da Base de Dados para poder aplicar um DUMP usado para a extracao de Cursos. No primeiro if colocamos permissao de Lock na Base Geral. E no segundo para todas as Bases de Cursos que forem criadas.
 if (mysql_get_server_info()>=4.1)
 {
 $query1="grant alter, create, delete, drop, index, insert, select, update, lock tables on ".$dbbasegeral_s.".* to ".$teleduc_login_s."@localhost identified by '".$teleduc_senha_s."'";
@@ -108,8 +108,8 @@ $query4 = "update db set Lock_tables_priv='Y' where Db = '".$dbbasecurso_s."%' a
 Enviar($sock, $query4);
 }
 
-#Caso seja pedido uma base temporária (passo 3 da instalação) seta permissões para um usuário criar tais bases, 
-#Usadas durante a importação.
+#Caso seja pedido uma base temporï¿½ria (passo 3 da instalaï¿½ï¿½o) seta permissï¿½es para um usuï¿½rio criar tais bases, 
+#Usadas durante a importaï¿½ï¿½o.
 
   if ($importar_curso_extr_s)
   {
@@ -127,15 +127,15 @@ Enviar($sock, $query4);
        Enviar($sock, $query4);
     }
     
-    /* TODO - Se for usuários diferentes, deve-se dar permissão ao tmp para o banco geral e dos cursos. */
-    if($tmpteleduc_login_s!=$teleduc_login_s) /*temos q inserir na tabela usuário tb.*/
+    /* TODO - Se for usuï¿½rios diferentes, deve-se dar permissï¿½o ao tmp para o banco geral e dos cursos. */
+    if($tmpteleduc_login_s!=$teleduc_login_s) /*temos q inserir na tabela usuï¿½rio tb.*/
     {
       $query8 = "INSERT INTO user (Host, User, Password) VALUES ('localhost', '$tmpteleduc_login_s', PASSWORD('$tmpteleduc_senha_s'))";
     }
     Enviar($sock, $query8);
   }
 
-#Query desnessária pois seta os mesmos privilégios que o grant logo no início, estava repetido.
+#Query desnessï¿½ria pois seta os mesmos privilï¿½gios que o grant logo no inï¿½cio, estava repetido.
 /*
   $query4 = "INSERT INTO db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, References_priv, Index_priv, Alter_priv) VALUES ('localhost', '".$dbbasegeral_s."', '".$teleduc_login_s."', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y')";
   Enviar($sock, $query4);
@@ -255,7 +255,7 @@ echo("
   /* <!----------------- Tabela Interna -----------------> */
   echo("<td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("<tr><td style=\"padding-left: 150px; padding-top: 15px; padding-right: 150px; padding-bottom: 15px; font-size: small;\" align=\"left\">\n");
-  Paragrafo("1 - Usuários inseridos com sucesso!");
+  Paragrafo("1 - Usuï¿½rios inseridos com sucesso!");
   echo("<br/>\n");
   Paragrafo("2 - Bases criadas com sucesso!");
   echo("<br/>\n");
@@ -292,37 +292,37 @@ echo("
   $mimetypes="/usr/local/apache/conf/mime.types";
   $tar="/bin/tar";
 
-  Paragrafo("<b><font size=+1>Preencha abaixo os diretórios e caminhos de execução para uso interno do ambiente</font></b>");
-  CaixaTexto("Diretório que contém os arquivos do TelEduc (deve ser acessível pela web. <b>Ex.:</b> /home/teleduc/public_html):","dirtele", $dirtele);
-  CaixaTexto("Diretório no qual ficará o arquivo de configuração do TelEduc, \"<b><i>teleduc.conf</i></b>\" (deve ficar fora do acesso da web. <b>Ex:</b> /home/teleduc):","ambiente", $ambiente);
-  CaixaTexto("Diretório em que ficarão os arquivos anexados a itens das ferramentas do curso (deve ficar fora do acesso da web. <b>Ex:</b> /home/teleduc/arquivos):","arquivos",$arquivos); 
-  CaixaTexto("Diretório em que será criados links para exibição dos arquivos pela web (<b>Ex:</b> /home/teleduc/public_html/diretorio):","arquivosweb",$arquivosweb); 
-  CaixaTexto("Diretório para o qual serão movidos os cursos extraidos (<b>Ex:</b> /home/teleduc/extraidos):","extracao",$extracao); 
+  Paragrafo("<b><font size=+1>Preencha abaixo os diretï¿½rios e caminhos de execuï¿½ï¿½o para uso interno do ambiente</font></b>");
+  CaixaTexto("Diretï¿½rio que contï¿½m os arquivos do TelEduc (deve ser acessï¿½vel pela web. <b>Ex.:</b> /home/teleduc/public_html):","dirtele", $dirtele);
+  CaixaTexto("Diretï¿½rio no qual ficarï¿½ o arquivo de configuraï¿½ï¿½o do TelEduc, \"<b><i>teleduc.conf</i></b>\" (deve ficar fora do acesso da web. <b>Ex:</b> /home/teleduc):","ambiente", $ambiente);
+  CaixaTexto("Diretï¿½rio em que ficarï¿½o os arquivos anexados a itens das ferramentas do curso (deve ficar fora do acesso da web. <b>Ex:</b> /home/teleduc/arquivos):","arquivos",$arquivos); 
+  CaixaTexto("Diretï¿½rio em que serï¿½ criados links para exibiï¿½ï¿½o dos arquivos pela web (<b>Ex:</b> /home/teleduc/public_html/diretorio):","arquivosweb",$arquivosweb); 
+  CaixaTexto("Diretï¿½rio para o qual serï¿½o movidos os cursos extraidos (<b>Ex:</b> /home/teleduc/extraidos):","extracao",$extracao); 
    
   if($importar_curso_extr_s) 
-    CaixaTexto("Diretório onde serão montados os cursos extraídos durante a importação (<b>Ex:</b> /home/teleduc/montagem):","montagem",$montagem);
+    CaixaTexto("Diretï¿½rio onde serï¿½o montados os cursos extraï¿½dos durante a importaï¿½ï¿½o (<b>Ex:</b> /home/teleduc/montagem):","montagem",$montagem);
    
-  CaixaTexto("Caminho via browser (sem o nome da máquina. <b>Ex:</b> /~teleduc):","raiz_www",$raiz_www); 
+  CaixaTexto("Caminho via browser (sem o nome da mï¿½quina. <b>Ex:</b> /~teleduc):","raiz_www",$raiz_www); 
 
   if (file_exists($sendmail))
-    CaixaTexto("Caminho do Sendmail (inclusive o executável):","sendmail",$sendmail);
+    CaixaTexto("Caminho do Sendmail (inclusive o executï¿½vel):","sendmail",$sendmail);
   else
-    CaixaTexto("Caminho do Sendmail (inclusive o executável):","sendmail","", "&nbsp;Ex.: ".$sendmail);
+    CaixaTexto("Caminho do Sendmail (inclusive o executï¿½vel):","sendmail","", "&nbsp;Ex.: ".$sendmail);
 
   if (file_exists($mysqldump))
-    CaixaTexto("Caminho do mysqldump (inclusive o executável):","mysqldump",$mysqldump);
+    CaixaTexto("Caminho do mysqldump (inclusive o executï¿½vel):","mysqldump",$mysqldump);
   else
-    CaixaTexto("Caminho do mysqldump (inclusive o executável):","mysqldump","","&nbsp;Ex.: ".$mysqldump);
+    CaixaTexto("Caminho do mysqldump (inclusive o executï¿½vel):","mysqldump","","&nbsp;Ex.: ".$mysqldump);
 
   if (file_exists($mimetypes))
-    CaixaTexto("Caminho do arquivo \"mime.types\" do Apache para resolução do arquivos (inclusive o nome do arquivo):","mimetypes",$mimetypes);
+    CaixaTexto("Caminho do arquivo \"mime.types\" do Apache para resoluï¿½ï¿½o do arquivos (inclusive o nome do arquivo):","mimetypes",$mimetypes);
   else
     CaixaTexto("Caminho do arquivo \"mime.types\" do Apache para envio de e-mail(inclusive o nome do arquivo):","mimetypes","","&nbsp;Ex.: ".$mimetypes);
 
   if (file_exists($tar))
-    CaixaTexto("Caminho do tar (inclusive o executável):","tar",$tar);
+    CaixaTexto("Caminho do tar (inclusive o executï¿½vel):","tar",$tar);
   else
-    CaixaTexto("Caminho do tar (inclusive o executável):","tar","", "&nbsp;Ex.: ".$tar);
+    CaixaTexto("Caminho do tar (inclusive o executï¿½vel):","tar","", "&nbsp;Ex.: ".$tar);
 
   echo("</td></tr></table>\n");
   echo("</td></tr></table>\n");

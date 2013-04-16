@@ -1,4 +1,4 @@
-<?
+<?php
 
   require_once("../xajax_0.2.4/xajax.inc.php");
   // Estancia o objeto XAJAX

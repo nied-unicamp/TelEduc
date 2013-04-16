@@ -1,4 +1,4 @@
-<?
+<?php
 /* mime_lookup() function - returns the mime type when given a file
    extension. */
 

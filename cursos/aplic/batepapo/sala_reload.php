@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ function delayReload() {
 
 
 </script>
-<?
+<?php
 echo("</head>\n");
 echo("<body bgcolor=\"#666696\" text=\"#000000\" link=\"#000020\" vlink=\"#000020\" alink=\"#000020\" leftmargin=\"10\" topmargin=\"10\" marginwidth=\"10\" marginheight=\"10\">\n");
 

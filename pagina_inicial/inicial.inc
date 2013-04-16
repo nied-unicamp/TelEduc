@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -599,9 +599,9 @@ function RetornaTodosCursosUsuario($sock)
 }
 
 /*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  Funï¿½ao RetornaTodosCursosETipoUsuarioDeUsuario - Retorna todos os codigos dos cursos que o usuario tem algum vinculo e o tipo de usu‡rio no curso 
+  Funï¿½ao RetornaTodosCursosETipoUsuarioDeUsuario - Retorna todos os codigos dos cursos que o usuario tem algum vinculo e o tipo de usuï¿½rio no curso 
   Entradas: $sock - sock de conexao a base geral
-  Saida:    array contendo os codigos dos cursos que o usuario tem algum vinculo e o tipo de usu‡rio no curso
+  Saida:    array contendo os codigos dos cursos que o usuario tem algum vinculo e o tipo de usuï¿½rio no curso
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
 function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
 {
@@ -617,9 +617,9 @@ function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
 }
 
 /********************************************************************
-  Fun‹o RetornaDataInscricao - Retorna a data em que o usuario fez a inscri‹o no curso
-  Entradas: $cod_curso - c—digo do curso
-  Saida: Data em que o usu‡rio fez a inscri‹o
+  Funï¿½ï¿½o RetornaDataInscricao - Retorna a data em que o usuario fez a inscriï¿½ï¿½o no curso
+  Entradas: $cod_curso - cï¿½digo do curso
+  Saida: Data em que o usuï¿½rio fez a inscriï¿½ï¿½o
 ********************************************************************/
 
 function RetornaDataInscricao($cod_curso){
@@ -639,9 +639,9 @@ function RetornaDataInscricao($cod_curso){
 }
 
 /********************************************************************
-  Fun‹o RetornaTipoUsuario - Retorna o tipo_usuario da tabela Usuario_curso
-  Entradas: $cod_curso - c—digo do curso
-  Sa’da: Flag de tipo_usuario
+  Funï¿½ï¿½o RetornaTipoUsuario - Retorna o tipo_usuario da tabela Usuario_curso
+  Entradas: $cod_curso - cï¿½digo do curso
+  Saï¿½da: Flag de tipo_usuario
 ********************************************************************/
 
 function RetornaTipoUsuario($sock, $cod_curso){
@@ -658,9 +658,9 @@ function RetornaTipoUsuario($sock, $cod_curso){
 }
 
 /********************************************************************
-  Fun‹o StatusUsuarioNoCurso - Retorna a condi‹o do usuario no curso
-  Entradas: $cod_curso - c—digo do curso
-  Sa’da: String com a condi‹o do usu‡rio
+  Funï¿½ï¿½o StatusUsuarioNoCurso - Retorna a condiï¿½ï¿½o do usuario no curso
+  Entradas: $cod_curso - cï¿½digo do curso
+  Saï¿½da: String com a condiï¿½ï¿½o do usuï¿½rio
 ********************************************************************/
 
 function StatusUsuarioNoCurso($sock, $cod_curso){

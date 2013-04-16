@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -59,7 +59,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
     echo("<html>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     $tabela="Avaliacao";
@@ -71,7 +71,7 @@
     if (!EFormador($sock,$cod_curso,$cod_usuario))
     {
       echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-      /* 1 - Avaliações*/
+      /* 1 - Avaliaï¿½ï¿½es*/
       echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
       /* 8 - ï¿½ea restrita ao formador. */
       echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");

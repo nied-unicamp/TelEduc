@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/historico_desempenho_todos.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -40,7 +40,7 @@
   ARQUIVO : cursos/aplic/avaliacoes/historico_desempenho_todos.php
   ========================================================== */
 
-/* Código principal */
+/* Cï¿½digo principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -64,7 +64,7 @@
   $usr_formador=EFormador($sock,$cod_curso,$cod_usuario);
   $usr_aluno=EAluno($sock,$cod_curso,$cod_usuario);
 
-  /* Funções javascript */
+  /* Funï¿½ï¿½es javascript */
   echo("<script language=JavaScript>\n");
 
   /* *****************************************************************
@@ -83,7 +83,7 @@
     Abre nova janela com o historico de desempenho, se acessado atraves do link
     Entrada: funcao = $cod_curso - Codigo do curso
     Saida:   false - para nao dar reload na pagina. Conferir a
-                     chamada da função
+                     chamada da funï¿½ï¿½o
   */
   echo("function OpenWindowLink(funcao) \n");
   echo("{\n");
@@ -204,16 +204,16 @@
   echo("</script>\n");
 
    echo("  <html>\n");
-  /* 1 - Avaliações */
-  echo("  <head><title>TelEduc - Avaliações</title></head>\n");
+  /* 1 - Avaliaï¿½ï¿½es */
+  echo("  <head><title>TelEduc - Avaliaï¿½ï¿½es</title></head>\n");
   echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
   echo("\n");
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-    /* 105 - Histórico de Desempenho dos participantes */
+    /* 105 - Histï¿½rico de Desempenho dos participantes */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,105)."</b>";
 
    $cod_pagina=15;
@@ -227,21 +227,21 @@
     if (!strcmp($linha['Ferramenta'],'F')) //Avaliacao no Forum
     {
       //$forum_linha = RetornaForum($sock,$linha['Cod_atividade']);
-      /* 12 - Fórum */
+      /* 12 - Fï¿½rum */
       echo("    <font class=text>".RetornaFraseDaLista($lista_frases,12).":</font>\n");
       echo("    <font class=text> ".$titulo."");
     }
     elseif (!strcmp($linha['Ferramenta'],'B')) //Avaliacao no Bate-Papo
     {
       //$assunto_sessao = RetornaAssunto($sock,$linha['Cod_atividade']);
-      /* 13 - Assunto da Sessão */
+      /* 13 - Assunto da Sessï¿½o */
       echo("    <font class=text>".RetornaFraseDaLista($lista_frases,13).":</font>\n");
       echo("    <font class=text> ".$titulo."");
     }
     else //Avaliacao no portfolio
     {
       //$atividade_linha = RetornaAtividade($sock,$linha['Cod_atividade']);
-      /* 14 - Atividade no Portfólio */
+      /* 14 - Atividade no Portfï¿½lio */
       echo("    <font class=text>".RetornaFraseDaLista($lista_frases,14).":</font>\n");
       echo("    <font class=text> ".$titulo."<br>");
       /* 20 - Tipo da Atividade*/
@@ -260,7 +260,7 @@
 
     echo("<p>\n");
     if (!$SalvarEmArquivo)
-    /* 46 - Ver objetivos/critérios da avaliação */
+    /* 46 - Ver objetivos/critï¿½rios da avaliaï¿½ï¿½o */
       echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
 
 
@@ -311,7 +311,7 @@
         {
           echo("    <td>");
           if ($usr_formador)
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Não</a>");
+            echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Nï¿½o</a>");
           else
             echo("&nbsp;\n");
           echo("</td>\n");
@@ -335,7 +335,7 @@
                 $podevernota=1;
               elseif (!strcmp($linha['tipo_compartilhamento'],'F'))
                 $podevernota=0;
-              elseif (!strcmp($linha['tipo_compartilhamento'],'G'))     //é portfolio de grupo e nota compartilhada so com o grupo avaliado
+              elseif (!strcmp($linha['tipo_compartilhamento'],'G'))     //ï¿½ portfolio de grupo e nota compartilhada so com o grupo avaliado
               {
                 $cod_grupo_usuario=RetornaCodGrupoPortfolio($sock,$cod_usuario);         //retorna o codigo do grupo do usuario que esta acessando
                 if ($cod_grupo_usuario==$cod_grupo)    //O usuario pertence ao grupo que foi avaliado
@@ -356,7 +356,7 @@
             {
               echo("    <td>");
               echo("&nbsp;\n");
-             // echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Não</a>");
+             // echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Nï¿½o</a>");
               echo("</td>\n");
             }
           }
@@ -369,7 +369,7 @@
       echo("  <input class=text type=submit value='".RetornaFraseDaLista($lista_frases,108)."'><br><br>\n");
     }
     else
-    /* 77 - Não há grupos criados*/
+    /* 77 - Nï¿½o hï¿½ grupos criados*/
       echo(RetornaFraseDaLista($lista_frases,77)."<br>");
   }
   else
@@ -405,7 +405,7 @@
         {
           echo("    <td>");
           if ($usr_formador)
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Não</a>");
+            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Nï¿½o</a>");
           else
             echo("&nbsp;\n");
           echo("</td>\n");
@@ -430,7 +430,7 @@
                 $podevernota=0;
               elseif (!strcmp($linha['tipo_compartilhamento'],'A'))     //nota compartilhada so com o aluno avaliado
               {
-                if ($cod_usuario==$dados['cod_usuario'])    //O usuario é o aluno que foi avaliado
+                if ($cod_usuario==$dados['cod_usuario'])    //O usuario ï¿½ o aluno que foi avaliado
                   $podevernota=1;
                 else                   //outro aluno nao pode ver
                   $podevernota=0;
@@ -448,7 +448,7 @@
             {
               echo("    <td>");
               echo("&nbsp;\n");
-              //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Não</a>");
+              //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Nï¿½o</a>");
               echo("</td>\n");
             }
           }
@@ -498,7 +498,7 @@
           if(!$foiavaliado)
           {
             echo("    <td>");
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Não</a>");
+            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Nï¿½o</a>");
             echo("</td>\n");
           }
           else
@@ -521,7 +521,7 @@
                   $podevernota=0;
                 elseif (!strcmp($linha['tipo_compartilhamento'],'A'))     //nota compartilhada so com o aluno avaliado
                 {
-                  if ($cod_usuario==$dados['cod_usuario'])    //O usuario é o aluno que foi avaliado
+                  if ($cod_usuario==$dados['cod_usuario'])    //O usuario ï¿½ o aluno que foi avaliado
                     $podevernota=1;
                   else                   //outro aluno nao pode ver
                     $podevernota=0;
@@ -539,7 +539,7 @@
               {
                 echo("    <td>");
                 echo("&nbsp;\n");
-                //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Não</a>");
+                //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Nï¿½o</a>");
                 echo("</td>\n");
               }
             }*/

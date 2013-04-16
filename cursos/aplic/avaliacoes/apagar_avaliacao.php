@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/apagar_avaliacao.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -57,7 +57,7 @@
   VerificaAcessoAoCurso($sock, $cod_curso, $cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações*/
+  /* 1 - Avaliaï¿½ï¿½es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -70,7 +70,7 @@
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  /* 61 - Ação exclusiva a formadores. */
+  /* 61 - Aï¿½ï¿½o exclusiva a formadores. */
   if (!$usr_formador)
     exit(RetornaFraseDaLista($lista_frases, 61));
 
@@ -78,8 +78,8 @@
 
   // echo(__FILE__." ".__LINE__."<pre>\n"); var_dump($origem); var_dump($cod_avaliacao);
 
-  // 1 - Avaliações
-  // 26 - Apagar Avaliação
+  // 1 - Avaliaï¿½ï¿½es
+  // 26 - Apagar Avaliaï¿½ï¿½o
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b> - <b class=subtitulo>".RetornaFraseDaLista($lista_frases, 26)."</b>\n";
   $cod_pagina=1;
   /* Cabecalho */
@@ -88,7 +88,7 @@
 
   if ($origem == "ver" || $origem == "avaliacoes")
   {
-    // Avaliação apagada com sucesso.
+    // Avaliaï¿½ï¿½o apagada com sucesso.
     echo("<form name=frmApagar action=avaliacoes.php> \n");
     echo(RetornaSessionIDInput());
     echo("  <input type=hidden name=cod_curso value=".$cod_curso." \n");
@@ -100,13 +100,13 @@
     }
     else
     {
-      // 28 - Erro ao apagar a avaliação.
+      // 28 - Erro ao apagar a avaliaï¿½ï¿½o.
       echo("<script language=JavaScript> alert('".RetornaFraseDaLista($lista_frases, 28)."'); </script>\n");
     }
   }
   else
   {
-    echo(__FILE__." ".__LINE__." origem inválida !<pre>\n"); var_dump($origem);
+    echo(__FILE__." ".__LINE__." origem invï¿½lida !<pre>\n"); var_dump($origem);
     exit;
   }
 

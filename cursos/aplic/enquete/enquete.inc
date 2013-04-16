@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -42,14 +42,14 @@
 
 /* ***************************************************************
 	AtualizaFerramentaEnquete - atualiza a tabela Ferramentas_nova
-							para haver notificações da Enquete via
+							para haver notificaï¿½ï¿½es da Enquete via
 							Email.
 	Entrada: $sock - sock da conexao
 			 $idEnquete - para buscar no banco informacoes de
 			  aplicacao / resultado da enquete
 			 $opcao - 'INICIO' - para nova Enquete
 					  'FIM' - para o encerramento da enquete
-	Saída: Atualizacao da tabela Ferramentas_nova
+	Saï¿½da: Atualizacao da tabela Ferramentas_nova
  */
 function AtualizaFerramentaEnquete($sock, $idEnquete, $opcao)
 {
@@ -378,7 +378,7 @@ function recuperarEnquete($sock, $idEnquete)
 	
 	$consulta="update Enquete set status = ".$status." where idEnquete=".VerificaNumeroQuery($idEnquete);
   	  		
-  	// Atualiza para notificação Ferramentas_nova (caso 'A')
+  	// Atualiza para notificaï¿½ï¿½o Ferramentas_nova (caso 'A')
   	if ($status == 'A')
   		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
   		  		
@@ -551,7 +551,7 @@ function getStatusEnquete($sock, $enquete)
 /* *******************************************************************
 	setStatusEnquetesRecentes - verifica todas as enquetes que
 		possuem status que precisam ser alterados! 
-		entrada: $sock - sock de conexão com o curso
+		entrada: $sock - sock de conexï¿½o com o curso
 */
 function setStatusEnquetesRecentes($sock)
 {
@@ -631,8 +631,8 @@ function getCodStatusEnquete($sock, $idEnquete)
             $pergunta - pergunta da enquete
             $data_inicio - data de inicio da consulta 
             $data_fim -  data de fim da consulta
-            $aplicacao - especificação de quais pessoas votariam na enquete (RFAVC)
-            $resultado - especificação de quais pessoas veriam o resultado da enquete (RFAVC)
+            $aplicacao - especificaï¿½ï¿½o de quais pessoas votariam na enquete (RFAVC)
+            $resultado - especificaï¿½ï¿½o de quais pessoas veriam o resultado da enquete (RFAVC)
             $resultado_parcial - 'S' se possuir resultado parcial, 'N' caso contrï¿½io
             $identidade_votos  - 'S' se a identidade dos votos serï¿½mostrada, 'N' caso contrï¿½io 
             $num_escolhas - '1' se somente uma resposta pode ser escolhida, 'N' caso vï¿½ias possam
@@ -844,11 +844,11 @@ function insertVoto($sock, $cod_usuario, $idEnquete, $idAlternativa){
   
   
 /* *******************************************************************
-   votaEnquete - verifica se um usuário pode votar numa enquete
+   votaEnquete - verifica se um usuï¿½rio pode votar numa enquete
    entrada: $sock - sock de conexao
-            $ator - código do ator
+            $ator - cï¿½digo do ator
             $enquete - array associativo da enquete
-   saida:   'true' se o usuario tem permissão para votar na enquete, 'false' caso contrário
+   saida:   'true' se o usuario tem permissï¿½o para votar na enquete, 'false' caso contrï¿½rio
 */ 
 function votaEnquete($sock, $ator, $enquete){
 	
@@ -864,11 +864,11 @@ function votaEnquete($sock, $ator, $enquete){
 }
 
 /* *******************************************************************
-   jaVotouEnquete - verifica se um usuário já votou numa enquete
+   jaVotouEnquete - verifica se um usuï¿½rio jï¿½ votou numa enquete
    entrada: $sock - sock de conexao
-            $ator - código do ator
+            $ator - cï¿½digo do ator
             $enquete - array associativo da enquete
-   saida:   'true' se o usuario já tinha votado na enquete, 'false' caso contrário
+   saida:   'true' se o usuario jï¿½ tinha votado na enquete, 'false' caso contrï¿½rio
 */ 
 function jaVotouEnquete($sock,$cod_usuario, $idEnquete){
 	$query="SELECT EV.cod_usuario from Enquete_voto EV, Enquete_alternativa EA WHERE EV.idAlternativa = EA.idAlternativa AND  EA.idEnquete = ".VerificaNumeroQuery($idEnquete)." AND EV.cod_usuario= ".VerificaNumeroQuery($cod_usuario);

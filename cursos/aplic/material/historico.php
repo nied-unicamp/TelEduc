@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -72,7 +72,7 @@
   /* 1 - 3: Atividades
          4: Material de Apoio
          5: Leituras
-         7: Parada Obrigatória
+         7: Parada Obrigatï¿½ria
    */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
@@ -107,14 +107,14 @@
     echo("<body link=#0000ff vlink=#0000ff onLoad=\"self.focus();\">\n");
     echo("\n");
 
-    /* Página Principal */
+    /* Pï¿½gina Principal */
     /* 1 - 3: Atividades
            4: Material de Apoio
            5: Leituras
-           7: Parada Obrigatória
+           7: Parada Obrigatï¿½ria
      */
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>");
-    /* 34 - Histórico */
+    /* 34 - Histï¿½rico */
     echo("<b class=text> - ".RetornaFraseDaLista($lista_frases,34)."</b><br>\n");
     
     $linha_item=RetornaDadosDoItem($sock, $tabela, $cod_item);
@@ -123,11 +123,11 @@
     echo("<p>\n");
     echo("<table border=0 width=100% cellspacing=0>\n");
     echo("  <tr>\n");
-    /* 36 - Ação */
+    /* 36 - Aï¿½ï¿½o */
     echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,36)."</td>\n");
     /* 13 - Data */
     echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,13)."</td>\n");
-    /* 37 - Usuário */
+    /* 37 - Usuï¿½rio */
     echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,37)."</td>\n");
     echo("  </tr>\n");
 
@@ -156,7 +156,7 @@
           $data=UnixTime2DataHora($linha['data']);
           if ($linha['acao']=="E")
           {
-            /* 38 - Edição Finalizada */
+            /* 38 - Ediï¿½ï¿½o Finalizada */
             $acao=RetornaFraseDaLista($lista_frases,38);
           }
           else
@@ -167,13 +167,13 @@
         }
         else
         {
-          /* tem que ser criação, então */ 
+          /* tem que ser criaï¿½ï¿½o, entï¿½o */ 
           $linha=RetornaLinha($res);
           $num_linhas--;
           $data=UnixTime2DataHora($linha['data']);
           if ($linha['acao']=="C")
           {
-            /* 41 - Criação */
+            /* 41 - Criaï¿½ï¿½o */
             $acao=RetornaFraseDaLista($lista_frases,41);
           }
           else
@@ -194,7 +194,7 @@
             $data=UnixTime2DataHora($linha['data']);
             if ($linha['acao']=="E")
             {
-              /* 40 - Edição Cancelada */
+              /* 40 - Ediï¿½ï¿½o Cancelada */
               $acao=RetornaFraseDaLista($lista_frases,40);
             }
             else
@@ -209,7 +209,7 @@
 
           if ($linha['acao']=="C")
           {
-            /* 41 - Criação */
+            /* 41 - Criaï¿½ï¿½o */
             $acao=RetornaFraseDaLista($lista_frases,41);
           }
           else
@@ -230,7 +230,7 @@
               {
                 if ($linha['acao']=="R")
                 {
-                  /* 44 - Recuperação */
+                  /* 44 - Recuperaï¿½ï¿½o */
                   $acao=RetornaFraseDaLista($lista_frases,44);
                 }
                 else
@@ -242,7 +242,7 @@
                   }
                   else if ($linha['acao']=="E")
                   {
-                    /* 18 - Em Edição */
+                    /* 18 - Em Ediï¿½ï¿½o */
                     $acao=RetornaFraseDaLista($lista_frases,18);
                   }
                 }

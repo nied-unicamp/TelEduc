@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/lixeira.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -62,11 +62,11 @@
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  /* 128 - Ação exclusiva a formadores. */
+  /* 128 - Aï¿½ï¿½o exclusiva a formadores. */
   if (!$usr_formador) exit(RetornaFraseDaLista($lista_frases,128));
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -109,8 +109,8 @@
 
   echo("    function iniciar()\n");
   echo("    {\n");
-  /* Obtém o layer */
-  /* para acesso às opções (Ver,EditarAvaliacao e ExcluirAvaliacao   */
+  /* Obtï¿½m o layer */
+  /* para acesso ï¿½s opï¿½ï¿½es (Ver,EditarAvaliacao e ExcluirAvaliacao   */
   echo("      lay_avaliacao = getLayer('layer_avaliacao');\n");
   echo("    }\n\n");
 
@@ -121,8 +121,8 @@
 
   echo("    function EscondeLayers()\n");
   echo("    {\n");
-  /* Se estiver visualizando as avaliacoes atuais então esconde os layers   */
-  /* para acesso às opções (Ver, Editar, */
+  /* Se estiver visualizando as avaliacoes atuais entï¿½o esconde os layers   */
+  /* para acesso ï¿½s opï¿½ï¿½es (Ver, Editar, */
   /* Apagar, Ver Notas, Ver Atividades Entregues e Ver Atividades Pendentes). */
   echo("      hideLayer(lay_avaliacao);\n");
   echo("    }\n\n");
@@ -134,8 +134,8 @@
   echo("      showLayer(cod_layer);\n");
   echo("    }\n\n");
 
-  /* Cria as funções JavaScript */
-  /* Ver(id), Editar(), Apagar(id), Ver Notas, Ver Atividades Entregues e Histórico de Notas    */
+  /* Cria as funï¿½ï¿½es JavaScript */
+  /* Ver(id), Editar(), Apagar(id), Ver Notas, Ver Atividades Entregues e Histï¿½rico de Notas    */
   echo("    function VerItemLixeira(id)\n");
   echo("    {\n");
   echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
@@ -145,8 +145,8 @@
 
     echo("    function ExcluirAvaliacao(id)\n");
     echo("    {\n");
-    /* 129 - Você tem certeza de que deseja excluir esta avaliação? */
-    /* 130 - (a avaliação será excluída definitivamente) */
+    /* 129 - Vocï¿½ tem certeza de que deseja excluir esta avaliaï¿½ï¿½o? */
+    /* 130 - (a avaliaï¿½ï¿½o serï¿½ excluï¿½da definitivamente) */
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases,129).RetornaFraseDaLista($lista_frases,130)."'))");
     echo("      {\n");
     echo("        document.frmAvaliacao.cod_avaliacao.value = id; \n");
@@ -159,8 +159,8 @@
 
     echo("    function RecuperarAvaliacao(id)\n");
     echo("    {\n");
-    /* 118 - Você tem certeza de que deseja recuperar esta avaliação? */
-    /* 119 - (Se você também excluiu a atividade a que a avaliação se refere e quiser também recuperá-la é necessário fazê-lo na respectiva ferramenta) */
+    /* 118 - Vocï¿½ tem certeza de que deseja recuperar esta avaliaï¿½ï¿½o? */
+    /* 119 - (Se vocï¿½ tambï¿½m excluiu a atividade a que a avaliaï¿½ï¿½o se refere e quiser tambï¿½m recuperï¿½-la ï¿½ necessï¿½rio fazï¿½-lo na respectiva ferramenta) */
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases,118).RetornaFraseDaLista($lista_frases,119)."'))");
     echo("      {\n");
     echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
@@ -205,8 +205,8 @@
   //else
   //  echo(">\n");
 
-  /* Página Principal */
-  /* 1 - Avaliações*/
+  /* Pï¿½gina Principal */
+  /* 1 - Avaliaï¿½ï¿½es*/
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n";
   /* 16 - Lixeira (gen)*/
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases_geral,16)."</b>\n";
@@ -220,11 +220,11 @@
   echo("  <table border=0 width=100%>\n");
   echo("    <tbody>\n");
   echo("      <tr class=menu>\n");
-  // 29 - Avaliações Passadas
+  // 29 - Avaliaï¿½ï¿½es Passadas
   echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('P')) class=menu><b>".RetornaFraseDaLista($lista_frases, 29)."</b></a></td>\n");
-  // 32 - Avaliações Atuais
+  // 32 - Avaliaï¿½ï¿½es Atuais
   echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('A')) class=menu><b>".RetornaFraseDaLista($lista_frases, 32)."</b></a></td>\n");
-  // 30 - Avaliações Futuras
+  // 30 - Avaliaï¿½ï¿½es Futuras
   echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('F')) class=menu><b>".RetornaFraseDaLista($lista_frases, 30)."</b></a></td>\n");
   // 31 - Notas dos Participantes
   echo("        <td align=center><a href=# onClick=return(VerTelaNotas()) class=menu><b>".RetornaFraseDaLista($lista_frases, 31)."</b></a></td>\n");
@@ -243,7 +243,7 @@
   echo("<input type=hidden name=operacao value=''>\n");
   echo("<input type=hidden name=status value='D'>\n");
  */
-  /* Passa o cod_avaliacao para executar ações sobre ela.       */
+  /* Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.       */
   echo("      <input type=hidden name=cod_avaliacao value=-1> \n");
   echo("      <input type=hidden name=tela_avaliacao value=-1> \n");
   echo("      <input type=hidden name=operacao value=-1> \n");
@@ -253,16 +253,16 @@
   echo("<table border=0 width=100% cellspacing=0>\n");
   echo("  <tr>\n");
   echo("    <td width=10 class=colorfield>&nbsp;</td>\n");
-  // 1 - Avaliações
+  // 1 - Avaliaï¿½ï¿½es
   echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,1)."</td>\n");
   /*
     // ?? - Ferramenta
     echo("    <td class=colorfield>"."[Ferramenta]"."</td>\n"); */
-  // 113 - Tipo da avaliação
+  // 113 - Tipo da avaliaï¿½ï¿½o
   echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
-  // 16 - Data de Início
+  // 16 - Data de Inï¿½cio
   echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
-  // 17 - Data de Término
+  // 17 - Data de Tï¿½rmino
   echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
   echo("  </tr>\n");
   /*
@@ -289,12 +289,12 @@
 
       if (!strcmp($linha['Ferramenta'],'F'))
       {
-        // 145 - Fórum de Discussão
+        // 145 - Fï¿½rum de Discussï¿½o
         $ferramenta = RetornaFraseDaLista($lista_frases,145);
       }
       elseif (!strcmp($linha['Ferramenta'],'B'))
       {
-        // 146 - Sessão de Bate-Papo
+        // 146 - Sessï¿½o de Bate-Papo
         $ferramenta = RetornaFraseDaLista($lista_frases,146);
       }
       else if ($linha['Ferramenta'] == 'P')
@@ -371,7 +371,7 @@
   }
   else
   {
-    /* 132 - Nenhuma avaliação apagada! */
+    /* 132 - Nenhuma avaliaï¿½ï¿½o apagada! */
     echo("</table>\n");
 
     echo("<P> \n");

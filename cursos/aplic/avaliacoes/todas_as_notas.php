@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/todas_as_notas.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -60,10 +60,10 @@
   $usr_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
-  /* Funções JavaScript */
+  /* Funï¿½ï¿½es JavaScript */
   echo("<script language=JavaScript>\n");
 
   echo("  function HistoricodoDesempenho(funcao)\n");
@@ -86,12 +86,12 @@
   echo("    }\n");
   echo("    else\n");
   echo("    {\n");
-  /* 51 - Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
+  /* 51 - Infelizmente nï¿½o foi possï¿½vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
   echo("      alert('".RetornaFraseDaLista($lista_frases,51)."');\n");
   echo("    }\n");
   echo("  }\n");
 
-   /* Função JvaScript para chamar página para salvar em arquivo. */
+   /* Funï¿½ï¿½o JvaScript para chamar pï¿½gina para salvar em arquivo. */
   echo("      function SalvarTodasNotas()\n");
   echo("      {\n");
   echo("        document.frmMsg.action = \"salvar_todas_as_notas.php?".RetornaSessionID());
@@ -116,7 +116,7 @@
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad=self.focus();>\n");
 
-  $cabecalho ="<b class=titulo>Avaliações</b>";
+  $cabecalho ="<b class=titulo>Avaliaï¿½ï¿½es</b>";
     /* 31 - Notas dos participantes */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,31)."</b>";
 
@@ -130,11 +130,11 @@
   {
     echo("<table border=0 width=100%>\n");
     echo("  <tr class=menu>\n");
-    /* 110 - Ver Avaliações Atuais */
+    /* 110 - Ver Avaliaï¿½ï¿½es Atuais */
     echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
-    /* 29 - Ver Avaliações passadas */
+    /* 29 - Ver Avaliaï¿½ï¿½es passadas */
     echo("    <td align=center><a href=\"ver_avaliacoes_anteriores.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,29)."</b></a></td>\n");
-    /* 30 - Ver Avaliações Futuras */
+    /* 30 - Ver Avaliaï¿½ï¿½es Futuras */
     echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
     echo("  </tr>\n");
     echo("</table>\n");
@@ -144,9 +144,9 @@
   if (!$SalvarEmArquivo)
   {
     echo("<p>\n");
-    /* 111 - Para visualizar os objetivos/critérios de uma avaliação, clique sobre o valor da mesma.*/
+    /* 111 - Para visualizar os objetivos/critï¿½rios de uma avaliaï¿½ï¿½o, clique sobre o valor da mesma.*/
     echo("<font class=text>".RetornaFraseDaLista($lista_frases,111)."</font><br>\n");
-    /* 112 - Para visualizar o histórico de desempenho de um participante em uma atividade, clique sobre a  nota dele.*/
+    /* 112 - Para visualizar o histï¿½rico de desempenho de um participante em uma atividade, clique sobre a  nota dele.*/
     echo("<font class=text>".RetornaFraseDaLista($lista_frases,112)."</font><br>\n");
     echo("<br>\n");
   }
@@ -157,10 +157,10 @@
   $width=($reg*50)+150;
   if (count($lista_avaliacoes)>0)
   {
-    //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliação realizada
+    //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliaï¿½ï¿½o realizada
     echo("<table border=0 width=".$width.">\n");
     echo("  <tr class=menu>\n");
-    /* 113 - Tipo da Avaliação */
+    /* 113 - Tipo da Avaliaï¿½ï¿½o */
     echo("    <td width=150 class=colorfield align=left>".RetornaFraseDaLista($lista_frases,113)."</td>\n");
 
     $cont_batepapo=0;
@@ -189,7 +189,7 @@
     echo ("</tr>\n");
 
     echo("  <tr class=menu>\n");
-    /* 114 - Valor da Avaliação */
+    /* 114 - Valor da Avaliaï¿½ï¿½o */
     echo("    <td width=150 class=b1field align=left>".RetornaFraseDaLista($lista_frases,114)."</td>\n");
 
     foreach ($lista_avaliacoes as $cod => $linha)
@@ -258,7 +258,7 @@
               else
                 echo($nota."</td>\n");
             }
-            else           //é aluno
+            else           //ï¿½ aluno
             {
               echo("      <td class=".$field." align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
@@ -287,7 +287,7 @@
                 else
                   echo($nota."</td>\n");
               }
-              else //Está compartilhada só com formadores
+              else //Estï¿½ compartilhada sï¿½ com formadores
                 echo("&nbsp;</td>\n");
             }
           }
@@ -363,7 +363,7 @@
   }
   else
   {
-    /* 115 - Nenhuma avaliação foi criada! */
+    /* 115 - Nenhuma avaliaï¿½ï¿½o foi criada! */
     echo("<font class=text>".RetornaFraseDaLista($lista_frases,115)."</font>\n");
   }
 
@@ -396,19 +396,19 @@
     if (!strcmp($linha['Ferramenta'],'F'))
     {
       $cont_forum++;
-      /* 145 -Fórum de Discussão*/
+      /* 145 -Fï¿½rum de Discussï¿½o*/
       $ferramenta=RetornaFraseDaLista($lista_frases,145);
     }
     elseif (!strcmp($linha['Ferramenta'],'B'))
     {
       $cont_batepapo++;
-      /* 146 - Sessão de Bate-Papo*/
+      /* 146 - Sessï¿½o de Bate-Papo*/
       $ferramenta=RetornaFraseDaLista($lista_frases,146);
     }
     elseif (!strcmp($linha['Ferramenta'],'P'))
     {
       $cont_portfolio++;
-      /* 14 - Atividade no Portfólio*/
+      /* 14 - Atividade no Portfï¿½lio*/
       $ferramenta=RetornaFraseDaLista($lista_frases,14);
     }
 

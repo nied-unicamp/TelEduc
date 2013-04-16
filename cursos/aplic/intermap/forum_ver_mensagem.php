@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/forum_ver_mensagem.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -66,10 +66,10 @@
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  /* Obtém o nome e o status do fórum                     */
+  /* Obtï¿½m o nome e o status do fï¿½rum                     */
   $forum_dados = RetornaForum($sock, $cod_forum);
 
-  /* Obtém dados da mensagem.           */
+  /* Obtï¿½m dados da mensagem.           */
   list($total, $mensagem_dados) = RetornaMensagem($sock, $cod_msg, $cod_forum);
 
   echo("<script type=\"text/javascript\" language=javascript>\n");
@@ -91,7 +91,7 @@
   echo("<br><br>\n");
   /* 1 - Intermap */
   echo("<h4>".RetornaFraseDaLista($lista_frases,1));
-  /* 28 - Fórum de Discussão */
+  /* 28 - Fï¿½rum de Discussï¿½o */
   echo(" - ".RetornaFraseDaLista($lista_frases,28));
   /* 77 - Ver Mensagem */
   echo(" - ".RetornaFraseDaLista($lista_frases,77)."</h4>\n");
@@ -120,7 +120,7 @@
     echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     /* Exibe os nomes dos campos da tabela.                                  */
     echo("        <tr class=\"head\">\n");
-    // 71 - Título
+    // 71 - Tï¿½tulo
     echo("          <td width=40%>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
     // 22 - Emissor
     echo("          <td width=30%>".RetornaFraseDaLista($lista_frases,22)."</td>\n");
@@ -141,7 +141,7 @@
     echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,39)."</td>\n");
     echo("        </tr>\n");
 
-    /* Exibe o conteúdo da mensagem convertendo quebras de linhas em tags  */
+    /* Exibe o conteï¿½do da mensagem convertendo quebras de linhas em tags  */
     /* <BR> e elimina algumas tags HTML.                                   */
     echo("        <tr>\n");
     echo("          <td colspan=3>".Enter2BR(LimpaConteudo($mensagem_dados['mensagem']))."</td>\n");
@@ -152,7 +152,7 @@
 
   echo("    </td>\n");
   echo("  </tr>\n");
-  // Fim Tabelão
+  // Fim Tabelï¿½o
   echo("</table>\n");
 
   echo("</body>\n");

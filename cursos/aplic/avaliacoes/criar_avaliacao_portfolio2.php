@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -58,7 +58,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações
+  /* 1 - Avaliaï¿½ï¿½es
   */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
@@ -70,10 +70,10 @@
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliações
+    /* 1 - Avaliaï¿½ï¿½es
      */
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 8 - Área restrita ao formador. */
+    /* 8 - ï¿½rea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
     echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
@@ -82,7 +82,7 @@
     exit;
   }
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 9 - Cadastro de Avaliaï¿½o */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>";

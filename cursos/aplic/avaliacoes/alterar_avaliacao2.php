@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/alterar_avaliacao2.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -59,7 +59,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações*/
+  /* 1 - Avaliaï¿½ï¿½es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   $tabela="Avaliacao";
@@ -76,13 +76,13 @@
   echo("  }\n");
   echo("</script>\n");
 
-  /* Verifica se a pessoa a editar é formador */
+  /* Verifica se a pessoa a editar ï¿½ formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliacões*/
+    /* 1 - Avaliacï¿½es*/
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 8 - Área restrita ao formador. */
+    /* 8 - ï¿½rea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
     echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
@@ -121,11 +121,11 @@
   AtualizaFerramentasNova($sock,22,'T');
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-  /* 1 - Avaliacões*/
+  /* 1 - Avaliacï¿½es*/
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-  /* 9 - Cadastro de Avaliação */
+  /* 9 - Cadastro de Avaliaï¿½ï¿½o */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)."</b>";
-  // nao ha ajuda para esta página.
+  // nao ha ajuda para esta pï¿½gina.
   $cod_pagina = -1;
   echo(PreparaCabecalho($cod_curso,$cabecalho,22, $cod_pagina));
 
@@ -135,7 +135,7 @@
 
   echo("<form action=".$origem.".php?".RetornaSessionID()." method=post>\n");
 
-  /* 25 - Avaliação alterada com sucesso. */
+  /* 25 - Avaliaï¿½ï¿½o alterada com sucesso. */
   echo("<font class=text>".RetornaFraseDaLista($lista_frases,25)."<br><br>\n");
 
   if ($VeioDaAtividade)
@@ -153,7 +153,7 @@
 
       echo("<form name=atualizar action=".$origem.".php method=post target=trabalho>\n");
       echo(RetornaSessionIDInput());
-      echo("  <input type=hidden name=cod_ferramenta value=3>");/*Atividades que perde a variavel de sessão quando aberta a ajuda*/
+      echo("  <input type=hidden name=cod_ferramenta value=3>");/*Atividades que perde a variavel de sessï¿½o quando aberta a ajuda*/
       echo("  <input type=hidden name=titulo value=\"\">\n");
       echo("  <input type=hidden name=texto value=\"\">\n");
       echo("  <input type=hidden name=compartilhamento value=\"\">\n");

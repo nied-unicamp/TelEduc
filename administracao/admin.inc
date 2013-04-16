@@ -1,4 +1,4 @@
-<?
+<?php
 
  if (!defined("NOME_RESUMO"))
   define("NOME_RESUMO", "curso.txt");

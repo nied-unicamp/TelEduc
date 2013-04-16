@@ -1,4 +1,4 @@
-<?
+<?php
 
 /*
 <!--
@@ -1321,7 +1321,7 @@ function SalvaMensagem($sock, $cod_msg_pai, $cod_forum, $cod_usuario, $titulo, $
   $objResponse = new xajaxResponse('ISO-8859-1');
   
 
-  /* Se não fizer o magic quotes, nos fazemos =) */
+  /* Se nï¿½o fizer o magic quotes, nos fazemos =) */
   if (!ini_get("magic_quotes_gpc")){
   $titulo = ConverteAspas2BarraAspas($titulo);
   $mensagem = ConverteAspas2BarraAspas($mensagem);

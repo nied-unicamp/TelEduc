@@ -1,4 +1,4 @@
-<?
+<?php
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("../administracao/admin.inc");

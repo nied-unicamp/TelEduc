@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/correio_grafico_periodo.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -53,7 +53,7 @@
   echo("    if (ComparaData(document.mapa.inicio,document.mapa.fim)>0)\n");
   echo("    {\n");
 
-  // 57 - Período Inválido
+  // 57 - Perï¿½odo Invï¿½lido
   echo("      alert('".RetornaFraseDaLista($lista_frases,57)."!');\n");
   echo("      return false;\n");
   echo("    }\n");
@@ -70,15 +70,15 @@
 
   echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("  <tr class=\"head\">\n");
-  // 7 - Apresentação:
+  // 7 - Apresentaï¿½ï¿½o:
   echo("    <td width=50%>".RetornaFraseDaLista($lista_frases,7)."</td>\n");
-  // 58 - Período:
+  // 58 - Perï¿½odo:
   echo("    <td>".RetornaFraseDaLista($lista_frases,58)."</td>\n");
   echo("  </tr>\n");
 
   echo("  <tr>\n");
   echo("    <td>\n");
-  // 31 - Gráfico
+  // 31 - Grï¿½fico
   echo("      <input type=radio checked class=g1field name=apresentacao value=grafico />".RetornaFraseDaLista($lista_frases,31));
   // 68 - Tabela
   echo("      <br/><input type=radio class=g1field name=apresentacao value=tabela />".RetornaFraseDaLista($lista_frases,68));
@@ -93,7 +93,7 @@
   {
     $linha_curso['curso_fim']=time();
   }
-  // 12 - Até:
+  // 12 - Atï¿½:
   echo("      <br/>".RetornaFraseDaLista($lista_frases,12)." \n");
   echo("      <input class=\"input\" size=\"10\" maxlength=\"10\" id=\"data_ini2\" name=\"fim\" value=\"".UnixTime2Data($linha_curso['curso_fim'])."\" type=\"text\" />\n");
   echo("      <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini2'),'dd/mm/yyyy',this);\" />\n");
@@ -113,7 +113,7 @@
   echo("      <input type=radio checked class=g1field name=agrupar value=dia />".RetornaFraseDaLista($lista_frases,21)."<br/>\n");
   // 63 - Semana
   echo("      <input type=radio class=g1field name=agrupar value=semana />".RetornaFraseDaLista($lista_frases,63)."<br/>\n");
-  // 46 - Mês
+  // 46 - Mï¿½s
   echo("      <input type=radio class=g1field name=agrupar value=mes />".RetornaFraseDaLista($lista_frases,46)."<br/>\n");
   echo("    </td>\n");
 

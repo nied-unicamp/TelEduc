@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -284,7 +284,7 @@
 		          	//foreach($ferramenta_do_sistema as $key => $value){
 			          	if($cod_usuario == $_GET['cod_aluno_relatorio']){
 				            // Exibe linha com os acessos do usuario em cada dia
-				            //echo("cod_usuario:".."\n Código Certo:".$_POST['cod_aluno_relatorio']);
+				            //echo("cod_usuario:".."\n Cï¿½digo Certo:".$_POST['cod_aluno_relatorio']);
 				            ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT);
 				            $cor_linha++;
 				            break;

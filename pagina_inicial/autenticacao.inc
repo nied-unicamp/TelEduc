@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -89,11 +89,11 @@ function EliminaEspacos($frase)
 
 
 /* **********************************************************************
- * BoolEhEmail - Verifica se o $login <parametro> é um email, apenas.
+ * BoolEhEmail - Verifica se o $login <parametro> ï¿½ um email, apenas.
  * 
- * Entrada: $login - login/email do usuário
+ * Entrada: $login - login/email do usuï¿½rio
  * 
- * Saída: 1 se for email, 0 caso contrario;
+ * Saï¿½da: 1 se for email, 0 caso contrario;
 **/
 function BoolEhEmail($login)
 {

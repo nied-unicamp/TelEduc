@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -57,8 +57,8 @@ function RetornaCursosRequisicao($sock)
 
 /*************************************************************************
   VerificaUsuario - veirifica se o usuario confirmou seu cadastro via email
-  Entrada- $sock - Socket de conexão atual
-  Saida: false para usuario não confirmado, true para usuario confirmado
+  Entrada- $sock - Socket de conexï¿½o atual
+  Saida: false para usuario nï¿½o confirmado, true para usuario confirmado
 */
 function VerificaUsuario($sock,$email){
 	$query="SELECT confirmacao FROM Usuario WHERE email='".$email."'";

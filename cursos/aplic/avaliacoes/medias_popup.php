@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/medias.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -60,7 +60,7 @@
   $usr_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
   if ($SalvarEmArquivo)
@@ -76,7 +76,7 @@
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
     echo("\n");
 
-    /* Funções JavaScript */
+    /* Funï¿½ï¿½es JavaScript */
     echo("<script language=JavaScript>\n");
 
     $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
@@ -98,7 +98,7 @@
 
     echo("  function CorrigeExpressao() {\n");
 
-    // Funções em inglês
+    // Funï¿½ï¿½es em inglï¿½s
     echo("    expressao=expressao.toUpperCase();\n");
     echo("    expressao=expressao.replace(new RegExp(/SQRT\(/g), 'Math.sqrt(');\n");
     echo("    expressao=expressao.replace(new RegExp(/POW\(/g), 'Math.pow(');\n");
@@ -119,9 +119,9 @@
     echo("    expressao=expressao.replace(new RegExp(/SIN\(/g), 'Math.sin(');\n");
     echo("    expressao=expressao.replace(new RegExp(/TAN\(/g), 'Math.tan(');\n");
            
-    // Funções em português
+    // Funï¿½ï¿½es em portuguï¿½s
     echo("    expressao=expressao.replace(new RegExp(/RAIZ\(/g), 'Math.sqrt(');\n");
-    echo("    expressao=expressao.replace(new RegExp(/POTÊNCIA\(/g), 'Math.pow(');\n");
+    echo("    expressao=expressao.replace(new RegExp(/POTï¿½NCIA\(/g), 'Math.pow(');\n");
     echo("    expressao=expressao.replace(new RegExp(/POTENCIA\(/g), 'Math.pow(');\n");
     echo("    expressao=expressao.replace(new RegExp(/ABS\(/g), 'Math.abs(');\n");
     //echo("    expressao=expressao.replace(new RegExp(/ACOS\(/g), 'Math.acos(');\n");
@@ -131,12 +131,12 @@
     echo("    expressao=expressao.replace(new RegExp(/TETO\(/g), 'Math.ceil(');\n");
     echo("    expressao=expressao.replace(new RegExp(/COS\(/g), 'Math.cos(');\n");
     echo("    expressao=expressao.replace(new RegExp(/EXP\(/g), 'Math.exp(');\n");
-    echo("    expressao=expressao.replace(new RegExp(/CHÃO\(/g), 'Math.floor(');\n");
+    echo("    expressao=expressao.replace(new RegExp(/CHï¿½O\(/g), 'Math.floor(');\n");
     echo("    expressao=expressao.replace(new RegExp(/CHAO\(/g), 'Math.floor(');\n");
     echo("    expressao=expressao.replace(new RegExp(/LOG\(/g), 'Math.log(');\n");
-    echo("    expressao=expressao.replace(new RegExp(/MÁXIMO\(/g), 'Math.max(');\n");
+    echo("    expressao=expressao.replace(new RegExp(/Mï¿½XIMO\(/g), 'Math.max(');\n");
     echo("    expressao=expressao.replace(new RegExp(/MAXIMO\(/g), 'Math.max(');\n");
-    echo("    expressao=expressao.replace(new RegExp(/MÍNIMO\(/g), 'Math.min(');\n");
+    echo("    expressao=expressao.replace(new RegExp(/Mï¿½NIMO\(/g), 'Math.min(');\n");
     echo("    expressao=expressao.replace(new RegExp(/MINIMO\(/g), 'Math.min(');\n");
     //echo("    expressao=expressao.replace(new RegExp(/ALEAT\(/g), 'Math.random(');\n");
     echo("    expressao=expressao.replace(new RegExp(/ARRED\(/g), 'Math.round(');\n");
@@ -182,14 +182,14 @@
     echo("      if (expressao != '') {\n");
     echo("        var nota=eval(expressao);\n");
     echo("      } else {\n");
-    // 200 - Não definido
+    // 200 - Nï¿½o definido
     echo("        document.getElementById('expFinal').innerHTML=\"<font class='text'>(".RetornaFraseDaLista($lista_frases, 200).")</font>\";\n");
     echo("        document.getElementById('normaFinal').innerHTML=\"<font class='text'>(".RetornaFraseDaLista($lista_frases, 200).")</font>\";");
     echo("        return;\n");
     echo("      }\n");
     echo("    } catch (e){\n");
     if ($usr_formador) {
-    // 191 - Verifique se a sua expressão está correta!
+    // 191 - Verifique se a sua expressï¿½o estï¿½ correta!
       echo("      alert('".RetornaFraseDaLista($lista_frases, 191)."');\n");
     }
     echo("      ok=false;");
@@ -201,7 +201,7 @@
     echo("      }\n");
     echo("      if ((isUndefined(nota)) || (nota == 'Infinity') || (media == Infinity)) {\n");
     echo("        if ((nota == 'Infinity') || (media == 'Infinity')) {\n");
-    // 198 - A divisão por 0 (zero) não é permitida!
+    // 198 - A divisï¿½o por 0 (zero) nï¿½o ï¿½ permitida!
     echo("          alert('".RetornaFraseDaLista($lista_frases, 198)."');\n");
     echo("        }\n");
     echo("        ok=false;\n");
@@ -255,9 +255,9 @@
   if (EConvidado($sock, $cod_usuario) || EVisitante($sock, $cod_curso, $cod_usuario) || !EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    // 1 - Avaliações
+    // 1 - Avaliaï¿½ï¿½es
     $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
-    // 94 - Usuário sem acesso
+    // 94 - Usuï¿½rio sem acesso
     $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
     echo(PreparaCabecalho($cod_curso, $cabecalho, COD_AVALIACAO, 1));
     echo("    <br>\n");
@@ -270,9 +270,9 @@
   }
   
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad='LoopAvaliarExpressao();self.focus();'>\n");
-  $cabecalho ="<b class=titulo>Avaliações</b>";
+  $cabecalho ="<b class=titulo>Avaliaï¿½ï¿½es</b>";
 
-  /* 190 - Médias dos participantes */
+  /* 190 - Mï¿½dias dos participantes */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 190)."</b>";
 
   $cod_pagina = 14;
@@ -283,7 +283,7 @@
   echo("    <form name=frmAvaliacao method=post>\n");
   echo(RetornaSessionIDInput());
   echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  // Passa o cod_avaliacao para executar ações sobre ela.
+  // Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.
   echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
   echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
@@ -291,11 +291,11 @@
 
   if (strcmp($gravar, "sim") == 0) {
      if (GravarExpressaoMedia($sock, $exp_gravar, $norma_gravar, $tipo_compartilhamento_gravar)) {
-        // Expressão foi gravada com sucesso
-        // echo("<p><font class='text'>Expressão gravada com sucesso: ".$exp_gravar." (Norma: $norma_gravar)</font></p>\n");
+        // Expressï¿½o foi gravada com sucesso
+        // echo("<p><font class='text'>Expressï¿½o gravada com sucesso: ".$exp_gravar." (Norma: $norma_gravar)</font></p>\n");
         echo("<script>Fechar();</script>");
      } else {
-        // 196 - Ocorreu um erro ao gravar a expressão:
+        // 196 - Ocorreu um erro ao gravar a expressï¿½o:
         // 195 - Norma
         echo("<p><font class='text'>".RetornaFraseDaLista($lista_frases, 196).": ".$exp_gravar." (".RetornaFraseDaLista($lista_frases, 195).": $norma_gravar)</font></p>\n");
         // 13 - Fechar (ger)
@@ -306,7 +306,7 @@
   }
 
   if (!$usr_formador) {
-    echo("<p><font class='text'>Área Restrita ao Formador.</font></p>\n");
+    echo("<p><font class='text'>ï¿½rea Restrita ao Formador.</font></p>\n");
     exit();
   }
   
@@ -408,7 +408,7 @@
   }
   $media=RetornaInformacoesMedia($sock);
 
-  // 203 - Expressão atual
+  // 203 - Expressï¿½o atual
   echo("<font class='text'>".RetornaFraseDaLista($lista_frases, 203).":&nbsp;</font>\n");
   echo("<font class='text' id='expFinal'>".$media['expressao']."</font><br>\n");
   // 195 - Norma
@@ -419,7 +419,7 @@
     echo("<form name='frmExpressao' method='post'>\n");
     echo(   RetornaSessionIDInput());
     echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    // Passa o cod_avaliacao para executar ações sobre ela.
+    // Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.
     echo("  <input type='hidden' name='cod_avaliacao' value=".$cod_avaliacao.">\n");
     echo("  <input type='hidden' name='origem' value='avaliacoes'>\n");
     echo("  <input type='hidden' name='exp_gravar' id='exp_gravar'>\n");
@@ -428,7 +428,7 @@
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr>\n");
-    // 202 - Expressão para cálculo da média
+    // 202 - Expressï¿½o para cï¿½lculo da mï¿½dia
     echo("    <td class=colorfield width=75%><font class='text'>&nbsp;".RetornaFraseDaLista($lista_frases, 202)."</font></td>\n");
     // 201 - Opcional
     // 195 - Norma
@@ -491,7 +491,7 @@
                         
     echo("  <tr>\n");
     echo("    <td colspan='2'>\n");
-    // 193 - Gravar Expressão
+    // 193 - Gravar Expressï¿½o
     echo("        <br><input type='button' onClick='GravarExpressao();' value='".RetornaFraseDaLista($lista_frases,193)."'>\n");
     // 2 - Cancelar (ger)
     echo("        <input type='button' onClick='self.close();' value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>\n");
@@ -525,13 +525,13 @@
       $linha_data_forum =
          "<tr> \n".
          "<td colspan=2>&nbsp;</td> \n".
-         // 168 - Período
+         // 168 - Perï¿½odo
          "<td><font class=text><b>".RetornaFraseDaLista($lista_frases, 168)."</b></font></td> \n".
          "</tr> \n";
     }
     else
     {
-      // 168 - Período
+      // 168 - Perï¿½odo
       $frase_data = RetornaFraseDaLista($lista_frases, 168);
       // nao existem sessoes de bate-papo. Entao nao ponho cabecalho acima do forum e do portfolio, ponho o cabecalho direto na tabela
       $linha_data_forum = "";
@@ -553,7 +553,7 @@
         $leg=explode("\n",$linha_legenda['leg']);
         echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
         echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
-        // 146 - Sessão de Batepapo
+        // 146 - Sessï¿½o de Batepapo
         echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 146)."</font></td>\n");
         echo("</tr>\n");
       }
@@ -571,7 +571,7 @@
         $leg=explode("\n",$linha_legenda['leg']);
         echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
         echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
-        // 145 - Fórum de discussão
+        // 145 - Fï¿½rum de discussï¿½o
         echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 145)."</font></td>\n");
         echo("</tr>\n");
       }
@@ -604,7 +604,7 @@
           $leg=explode("\n",$linha_exercicio['leg']); 
           echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_exercicio['titulo']."</font></td>\n");
           echo("<td><font class=text>".$linha_exercicio['data']."</font></td>\n");
-          // 175 - Atividade em Exercícios
+          // 175 - Atividade em Exercï¿½cios
           echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 175)."</font></td>\n");
           echo("</tr>\n");
         }

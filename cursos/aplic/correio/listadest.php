@@ -1,4 +1,4 @@
-<?
+<?php
 $checked = "";
   echo("                        <div class=\"bordaBox\" style=\"float:left;\">\n");
 //   echo("                    <form id=\"selectDest\" name=\"selectDest\" action=\"naumsei.php\" method=\"Post\" >");

@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/alterar_avaliacao.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Ncleo de Informática Aplicada à Educação
+    Nied - Ncleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -62,7 +62,7 @@
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
 
   echo("<html>\n");
-  /* 1 - Avaliações*/
+  /* 1 - Avaliaï¿½ï¿½es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
 
@@ -70,7 +70,7 @@
   echo("\n");
 
 
-  /****************** Funções JavaScript **************** */
+  /****************** Funï¿½ï¿½es JavaScript **************** */
    GeraJSVerificacaoData();
 
   echo("  <script language=javascript>\n");
@@ -87,7 +87,7 @@
   
   echo("      if (data_inicial_maior(data_ini,data_fim)) \n");
   echo("      {\n");
-  /* 2 - A data inicial da avaliação deve ser menor ou igual a data final. Volte e corrija. */
+  /* 2 - A data inicial da avaliaï¿½ï¿½o deve ser menor ou igual a data final. Volte e corrija. */
   echo("    alert('".RetornaFraseDaLista($lista_frases,2)."');\n");
   echo("    return (false);\n");
   echo("      }\n");
@@ -103,13 +103,13 @@
   echo("  document.avaliacao.valor.value=temp;\n");
   echo("  if (document.avaliacao.valor.value=='')\n");
   echo("  {\n");
-  /* 3 - Você não informou o valor da avaliação. */
+  /* 3 - Vocï¿½ nï¿½o informou o valor da avaliaï¿½ï¿½o. */
   echo("    alert('".RetornaFraseDaLista($lista_frases,3)."');\n");
   echo("    return (false);\n");
   echo("  }\n");
   echo("  if (document.avaliacao.valor.value < 0)\n");
   echo("  {\n");
-  /* 4 - A avaliação não pode ter valor negativo. */
+  /* 4 - A avaliaï¿½ï¿½o nï¿½o pode ter valor negativo. */
   echo("    alert('".RetornaFraseDaLista($lista_frases,4)."');\n");
   echo("    return (false);\n");
   echo("  }\n");
@@ -120,8 +120,8 @@
   echo("      if (valor_com_digito_estranho(valor)) \n");
   echo("      {\n");
   echo("      check=false;\n");
-  /* 5 - Você digitou caracteres estranhos neste valor da atividade. */
-  /* 6 - Use apenas dígitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5).*/
+  /* 5 - Vocï¿½ digitou caracteres estranhos neste valor da atividade. */
+  /* 6 - Use apenas dï¿½gitos de 0 a 9 e o ponto ( . ) ou a vï¿½rgula ( , ) para o campo valor (exemplo: 7.5).*/
   /* 7 - Por favor retorne e corrija.*/
   echo("        alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."');\n");
   echo("        return(false);\n");
@@ -145,8 +145,8 @@
   echo("      if (valor_com_digito_estranho(valor)) \n");
   echo("      {\n");
   echo("      check=false;\n");
-  /* 5 - Você digitou caracteres estranhos neste valor da atividade. */
-  /* 6 - Use apenas díitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5).*/
+  /* 5 - Vocï¿½ digitou caracteres estranhos neste valor da atividade. */
+  /* 6 - Use apenas dï¿½itos de 0 a 9 e o ponto ( . ) ou a vï¿½rgula ( , ) para o campo valor (exemplo: 7.5).*/
   /* 7 - Por favor retorne e corrija.*/
   echo("        alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."');\n");
   echo("        return(false);\n");
@@ -198,13 +198,13 @@
 
   echo("  </script>\n");
 
-  /* Verifica se a pessoa a editar é formador */
+  /* Verifica se a pessoa a editar ï¿½ formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-    /* 8 - Área restrita ao formador. */
+    /* 8 - ï¿½rea restrita ao formador. */
     $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b>";
     echo($cabecalho);
     /* 23 - Voltar (gen) */
@@ -216,9 +216,9 @@
   else
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-    /* 9 - Cadastro de Avaliação */
+    /* 9 - Cadastro de Avaliaï¿½ï¿½o */
     $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)."</b>";
 /*
     if (!strcmp($dados['Ferramenta'],'B')) //Avaliacao no Forum
@@ -244,14 +244,14 @@
     {
       if ($dados['Status']=='E')
       {
-        /* alguém já está editando */
-        /* Ve se não é você*/
+        /* alguï¿½m jï¿½ estï¿½ editando */
+        /* Ve se nï¿½o ï¿½ vocï¿½*/
         if ($cod_usuario!=$dados['Cod_usuario'])
         {
           if ($linha_hist['data']>time()-1800)
           {
             echo ("<br><p>");
-            /* 10 - A Avaliação já está sendo editada desde */
+            /* 10 - A Avaliaï¿½ï¿½o jï¿½ estï¿½ sendo editada desde */
             echo("<font class=text>".RetornaFraseDaLista($lista_frases,9));
 
             /* 57 - Por (gen)*/
@@ -265,7 +265,7 @@
             Desconectar($sock);
             exit;
           }
-          /* Passou o tempo limite, captura a edição */
+          /* Passou o tempo limite, captura a ediï¿½ï¿½o */
         }
         /* Atualiza data e segue em frente. */
         CancelaEdicaoAvaliacao($sock, $tabela, $cod_avaliacao, $cod_usuario);
@@ -279,7 +279,7 @@
     }
     else
     {
-      /* Não deveria acontecer... */
+      /* Nï¿½o deveria acontecer... */
       /* 11 - Erro Interno...*/
       exit(RetornaFraseDaLista($lista_frases,11));
     }
@@ -294,13 +294,13 @@
     }
     elseif (!strcmp($dados['Ferramenta'],'B')) //Avaliacao no Bate-Papo
     {
-      /* 13 - Assunto da Sessão */
+      /* 13 - Assunto da Sessï¿½o */
       echo("    <font class=text>".RetornaFraseDaLista($lista_frases,13).":</font>\n");
       echo("    <font class=text> <i>".$titulo."</i>");
     }
     elseif (!strcmp($dados['Ferramenta'],'E')) //Avaliacao em Exercicio
     {
-      /* 175 - Atividade em Exercício */
+      /* 175 - Atividade em Exercï¿½cio */
       echo("    <font class=text>".RetornaFraseDaLista($lista_frases,175).":</font>\n");
       echo("    <font class=text> <i>".$titulo."</i>");
     }
@@ -323,7 +323,7 @@
 
     echo("<form name=avaliacao action=alterar_avaliacao2.php method=post onSubmit=\"return(verifica_formulario())\";>\n");
     echo(RetornaSessionIDInput());
-    /* 15 - Forneça abaixo os dados de avaliação desta atividade. */
+    /* 15 - Forneï¿½a abaixo os dados de avaliaï¿½ï¿½o desta atividade. */
     echo("  <font class=text>".RetornaFraseDaLista($lista_frases,15)."<br>\n");
     echo("    <br>\n");
 
@@ -331,10 +331,10 @@
     {
       echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
       echo("  <tr class=colorfield>\n");
-      /* 16 - Data de início*/
+      /* 16 - Data de inï¿½cio*/
       echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
 
-      /* 17 - Data de Término */
+      /* 17 - Data de Tï¿½rmino */
       echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
 
       echo("  </tr>\n");
@@ -439,7 +439,7 @@
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr class=colorfield>\n");
-    /* 23 - Critérios */
+    /* 23 - Critï¿½rios */
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,23)."</td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");
@@ -482,7 +482,7 @@
         }
         else if (!strcmp($origem,'../material/material'))
         {
-          $arquivo='index_avaliacao';  //para o caso de cancelar a avaliação, ai deve ir para esse outro arquivo
+          $arquivo='index_avaliacao';  //para o caso de cancelar a avaliaï¿½ï¿½o, ai deve ir para esse outro arquivo
         }
         else
           $arquivo=$origem;

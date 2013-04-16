@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -59,7 +59,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   $cod_atividade = RetornaProximoCodigoExterna($sock,'N');
     echo("<html>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     $tabela="Avaliacao";
@@ -67,7 +67,7 @@
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
 
      GeraJSVerificacaoData();
-  /****************** Funções JavaScript **************** */
+  /****************** Funï¿½ï¿½es JavaScript **************** */
    
   echo("  <script language=javascript>\n");
 
@@ -90,7 +90,7 @@
  
   echo("      if (data_inicial_maior(data_ini,data_fim)) \n");
   echo("      {\n");
-  /* 2 - A data inicial da avaliação deve ser menor ou igual a data final. Volte e corrija */
+  /* 2 - A data inicial da avaliaï¿½ï¿½o deve ser menor ou igual a data final. Volte e corrija */
   echo("    alert(' ".RetornaFraseDaLista($lista_frases,2)."');\n");
   echo("    return (false);\n");
   echo("      }\n");
@@ -105,14 +105,14 @@
   echo("  document.avaliacao.valor.value=temp;\n");
   echo("  if (document.avaliacao.valor.value=='')\n");
   echo("  {\n");
-  /* 3 - Você não informou o valor da avaliação. */
+  /* 3 - Vocï¿½ nï¿½o informou o valor da avaliaï¿½ï¿½o. */
   echo("    alert('".RetornaFraseDaLista($lista_frases,3)."');\n");
   echo("    return (false);\n");
   echo("  }\n");
 
   echo("  if (document.avaliacao.titulo.value=='')\n");
   echo("  {\n");
-  /* 3 - Você não informou o título da avaliação. */
+  /* 3 - Vocï¿½ nï¿½o informou o tï¿½tulo da avaliaï¿½ï¿½o. */
   echo("    alert('".RetornaFraseDaLista($lista_frases, 188)."');\n");
   echo("    return (false);\n");
   echo("  }\n");
@@ -120,7 +120,7 @@
   
   echo("  if (document.avaliacao.valor.value < 0)\n");
   echo("  {\n");
-  /* 4 - A avaliação não pode ter valor negativo. */
+  /* 4 - A avaliaï¿½ï¿½o nï¿½o pode ter valor negativo. */
   echo("    alert('".RetornaFraseDaLista($lista_frases,4)."');\n");
   echo("    return (false);\n");
   echo("  }\n");
@@ -131,8 +131,8 @@
   echo("      if (valor_com_digito_estranho(valor)) \n");
   echo("      {\n");
   echo("      check=false;\n");
-  /* 5 - Você digitou caracteres estranhos neste valor da atividade. */
-  /* 6 - Use apenas dígitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5).*/
+  /* 5 - Vocï¿½ digitou caracteres estranhos neste valor da atividade. */
+  /* 6 - Use apenas dï¿½gitos de 0 a 9 e o ponto ( . ) ou a vï¿½rgula ( , ) para o campo valor (exemplo: 7.5).*/
   /* 7 - Por favor retorne e corrija.*/
   echo("        alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."');\n");
   echo("        return(false);\n");
@@ -157,8 +157,8 @@
   echo("      if (valor_com_digito_estranho(valor)) \n");
   echo("      {\n");
   echo("      check=false;\n");
- /* 5 - Você digitou caracteres estranhos neste valor da atividade. */
-  /* 6 - Use apenas dígitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5).*/
+ /* 5 - Vocï¿½ digitou caracteres estranhos neste valor da atividade. */
+  /* 6 - Use apenas dï¿½gitos de 0 a 9 e o ponto ( . ) ou a vï¿½rgula ( , ) para o campo valor (exemplo: 7.5).*/
   /* 7 - Por favor retorne e corrija.*/
   echo("        alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."');\n");
   echo("        return(false);\n");
@@ -210,14 +210,14 @@
 
   echo("  </script>\n");
 
-  /* Verifica se a pessoa a editar é formador */
+  /* Verifica se a pessoa a editar ï¿½ formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliações
+    /* 1 - Avaliaï¿½ï¿½es
      */
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 2 - Área restrita ao formador. */
+    /* 2 - ï¿½rea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
     echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
@@ -228,9 +228,9 @@
   else
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-    /* 9 - Cadastro de Avaliação */
+    /* 9 - Cadastro de Avaliaï¿½ï¿½o */
     $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
 
     $cod_pagina=13;
@@ -247,13 +247,13 @@
       $linha_hist=RetornaUltimaPosicaoHistoricoAvaliacao($sock, 'Avaliacao_historicos', $dados['Cod_avaliacao']);
       if ($dados['Status']=='C')
       {
-        /* alguém já está editando */
-        /* Ve se não é você */
+        /* alguï¿½m jï¿½ estï¿½ editando */
+        /* Ve se nï¿½o ï¿½ vocï¿½ */
         if ($cod_usuario!=$dados['Cod_usuario'])
         {
           if ($linha_hist['data']>time()-1800)
           {
-            /* 78 - A Avaliação já está sendo criada desde */
+            /* 78 - A Avaliaï¿½ï¿½o jï¿½ estï¿½ sendo criada desde */
             echo("<font class=text>".RetornaFraseDaLista($lista_frases,78)." ");
 
             /* 57 - por */
@@ -267,15 +267,15 @@
             Desconectar($sock);
             exit;
           }
-          /* Passou o tempo limite, captura a edição */
+          /* Passou o tempo limite, captura a ediï¿½ï¿½o */
         }
-        /* É. Atualiza data e segue em frente. */
+        /* ï¿½. Atualiza data e segue em frente. */
         CancelaEdicaoAvaliacao($sock, $tabela, $dados['Cod_avaliacao'], $cod_usuario);
         $cod_avaliacao=IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'N');
       }
       elseif (($dados['Status']=='F') || ($dados['Status']=='E') || ($dados['Status']=='D'))
       {
-        /* 70 - Já existe uma avaliação criada para esta atividade.*/
+        /* 70 - Jï¿½ existe uma avaliaï¿½ï¿½o criada para esta atividade.*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,70)."</font><br><br>");
 
         /* 23 - Fechar (gen) */
@@ -286,8 +286,8 @@
       }
       elseif (($dados['Status']=='A') || ($dados['Status']=='T'))
       {
-        /* 71 - Já existe uma avaliação criada para esta atividade. Porém, ela foi apagada.*/
-        /* 72 - Se desejar criar outra avaliação, você precisa primeiro excluir definitivamente a avaliação existente.*/
+        /* 71 - Jï¿½ existe uma avaliaï¿½ï¿½o criada para esta atividade. Porï¿½m, ela foi apagada.*/
+        /* 72 - Se desejar criar outra avaliaï¿½ï¿½o, vocï¿½ precisa primeiro excluir definitivamente a avaliaï¿½ï¿½o existente.*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,71)."");
         echo(" ".RetornaFraseDaLista($lista_frases,72)."</font><br><br>");
 
@@ -306,7 +306,7 @@
     }
 
     echo("<form name=avaliacao action=criar_avaliacao_externa2.php?".RetornaSessionID()." method=post onSubmit=return(verifica_formulario());>\n");
-    /* 15 - Forneça abaixo os dados de avaliação desta atividade. */
+    /* 15 - Forneï¿½a abaixo os dados de avaliaï¿½ï¿½o desta atividade. */
     echo("  <font class=text>".RetornaFraseDaLista($lista_frases,15)."<br>\n");
     echo("    <br>\n");
 
@@ -320,10 +320,10 @@
     
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");    
     echo("  <tr class=colorfield>\n");
-    /* 16 - Data de início*/
+    /* 16 - Data de inï¿½cio*/
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
 
-    /* 17 - Data de Término */
+    /* 17 - Data de Tï¿½rmino */
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
 
     echo("  </tr>\n");
@@ -386,7 +386,7 @@
 
         echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr class=colorfield>\n");
-    /* 23 - Critérios */
+    /* 23 - Critï¿½rios */
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,23)."</td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");
@@ -410,7 +410,7 @@
     echo("</form>\n");
 
     echo("<form name=atualizar action=avaliacoes.php".RetornaSessionID()." method=post target=trabalho>\n");
-    echo("  <input type=hidden name=cod_ferramenta value=3>");/*Atividades que perde a variavel de sessão quando aberta a ajuda*/
+    echo("  <input type=hidden name=cod_ferramenta value=3>");/*Atividades que perde a variavel de sessï¿½o quando aberta a ajuda*/
     echo("  <input type=hidden name=titulo value=\"\">\n");
     echo("  <input type=hidden name=texto value=\"\">\n");
     echo("  <input type=hidden name=compartilhamento value=\"\">\n");

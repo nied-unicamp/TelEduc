@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -224,8 +224,8 @@
   echo("                    </tr>\n");
   
   // 64 - Alunos
-  // 65 - Somente Visualizacao:</u> Estrutura do Ambiente, Din‰mica do Curso, Agenda, Avalia‹o, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigat—ria e Perfil</br>
-  //	  <u>Visualizacao e Interacao:</u> Exerc’cios, Mural, F—rum de Discuss‹o, Bate-Papo, Correio, Grupos, Di‡rio de Bordo e Portif—lio</br>
+  // 65 - Somente Visualizacao:</u> Estrutura do Ambiente, Dinï¿½mica do Curso, Agenda, Avaliaï¿½ï¿½o, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatï¿½ria e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Exercï¿½cios, Mural, Fï¿½rum de Discussï¿½o, Bate-Papo, Correio, Grupos, Diï¿½rio de Bordo e Portifï¿½lio</br>
   //	  <u>Edicao:</u> -</br>
   //	  <u>Edicao e Interacao:</u> -</br>
   //	  <u>Sem Visualizacao da Ferramenta:</u> -</br>
@@ -237,9 +237,9 @@
   echo("                    </tr>\n");
   // 66 - Formadores
   // 67 - <u>Somente Visualizacao:</u> Estrutura do Ambiente</br>
-  //	  <u>Visualizacao e Interacao:</u> Correio e Portif—lio</br>
-  //	  <u>Edicao:</u> Din‰mica do Curso, Agenda, Avalia‹o, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Exerc’cios, Enquetes, Parada Obrigat—ria e Di‡rio de Bordo</br>
-  //	  <u>Edicao e Interacao:</u> Mural, F—rum de Discuss‹o, Bate-Papo, Grupos e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Correio e Portifï¿½lio</br>
+  //	  <u>Edicao:</u> Dinï¿½mica do Curso, Agenda, Avaliaï¿½ï¿½o, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Exercï¿½cios, Enquetes, Parada Obrigatï¿½ria e Diï¿½rio de Bordo</br>
+  //	  <u>Edicao e Interacao:</u> Mural, Fï¿½rum de Discussï¿½o, Bate-Papo, Grupos e Perfil</br>
   //	  <u>Sem Visualizacao da Ferramenta:</u> -</br>
   echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
   echo("                      <td align=left colspan=2>\n");
@@ -248,11 +248,11 @@
   echo("                      </td>\n");
   echo("                    </tr>\n");
   // 68 - Colaboradores
-  // 69 - <u>Somente Visualizacao:</u> Din‰mica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigat—ria e Perfil</br>
-  //	  <u>Visualizacao e Interacao:</u> Enquetes, F—rum de Discuss‹o, Bate-Papo, Correio e Portif—lio</br>
+  // 69 - <u>Somente Visualizacao:</u> Dinï¿½mica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatï¿½ria e Perfil</br>
+  //	  <u>Visualizacao e Interacao:</u> Enquetes, Fï¿½rum de Discussï¿½o, Bate-Papo, Correio e Portifï¿½lio</br>
   //	  <u>Edicao:</u> -</br>
   //	  <u>Edicao e Interacao:</u> -</br>
-  //	  <u>Sem Visualizacao da Ferramenta:</u> Avalia‹o, Exerc’cios, Grupos e Di‡rio de Bordo</br></p>\n");
+  //	  <u>Sem Visualizacao da Ferramenta:</u> Avaliaï¿½ï¿½o, Exercï¿½cios, Grupos e Diï¿½rio de Bordo</br></p>\n");
   echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
   echo("                      <td align=left colspan=2>\n");
   echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,68)."</p>\n");
@@ -260,11 +260,11 @@
   echo("                      </td>\n");
   echo("                    </tr>\n");
   // 70 - Visitantes
-  // 71 - <u>Somente Visualizacao:</u> Estrutura do Ambiente, Din‰mica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigat—ria, Mural, F—rum de Discuss‹o e Perfil</br>
+  // 71 - <u>Somente Visualizacao:</u> Estrutura do Ambiente, Dinï¿½mica do Curso, Agenda, Atividades, Material de Apoio, Leituras, Perguntas Frequentes, Parada Obrigatï¿½ria, Mural, Fï¿½rum de Discussï¿½o e Perfil</br>
   //	  <u>Visualizacao e Interacao:</u> Enquetes e Bate-Papo</br>
   //	  <u>Edicao:</u> -</br>
   //	  <u>Edicao e Interacao:</u> -</br>
-  //	  <u>Sem Visualizacao da Ferramenta:</u> Avalia‹o, Exerc’cios, Correio, Grupos, Di‡rio de Bordo e Portif—lio</br></p>\n");
+  //	  <u>Sem Visualizacao da Ferramenta:</u> Avaliaï¿½ï¿½o, Exercï¿½cios, Correio, Grupos, Diï¿½rio de Bordo e Portifï¿½lio</br></p>\n");
   echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_papeisUsuarios_".($i)."\" style=\"display:none;\">\n");
   echo("                      <td align=left colspan=2>\n");
   echo("                        <p style=\"font-weight:bold;\">".RetornaFraseDaLista($lista_frases_ferramentas,70)."</p>\n");

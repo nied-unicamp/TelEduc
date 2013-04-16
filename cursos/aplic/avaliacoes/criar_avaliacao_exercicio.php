@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 --------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/criar_avaliacao_exercicio.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2004  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -59,14 +59,14 @@
    $tabela="Avaliacao";
 
     echo("<html>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
 
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
 
     GeraJSVerificacaoData();
-  /****************** Funções JavaScript **************** */
+  /****************** Funï¿½ï¿½es JavaScript **************** */
 
   echo("  <script language=javascript>\n");
 
@@ -76,13 +76,13 @@
 
   echo("  </script>\n");
 
-  /* Verifica se a pessoa a editar é formador */
+  /* Verifica se a pessoa a editar ï¿½ formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 8 - Área restrita ao formador. */
+    /* 8 - ï¿½rea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
     echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
@@ -93,9 +93,9 @@
   else
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus(); >\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
-    /* 9 - Cadastro de Avaliação */
+    /* 9 - Cadastro de Avaliaï¿½ï¿½o */
     $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
 
     $cod_pagina=5;
@@ -112,13 +112,13 @@
       $linha_hist=RetornaUltimaPosicaoHistoricoAvaliacao($sock, 'Avaliacao_historicos', $dados['Cod_avaliacao']);
       if ($dados['Status']=='C')
       {
-        /* alguém já está editando */
-        /* Ve se não é você */
+        /* alguï¿½m jï¿½ estï¿½ editando */
+        /* Ve se nï¿½o ï¿½ vocï¿½ */
         if ($cod_usuario!=$dados['Cod_usuario'])
         {
           if ($linha_hist['data']>time()-1800)
           {
-            /* 78 - A Avaliação já está sendo criada desde */
+            /* 78 - A Avaliaï¿½ï¿½o jï¿½ estï¿½ sendo criada desde */
             echo("<font class=text>".RetornaFraseDaLista($lista_frases,78));
 
             /* 57 - Por */
@@ -133,15 +133,15 @@
             Desconectar($sock);
             exit;
           }
-          /* Passou o tempo limite, captura a edição */
+          /* Passou o tempo limite, captura a ediï¿½ï¿½o */
         }
-        /* É. Atualiza data e segue em frente. */
+        /* ï¿½. Atualiza data e segue em frente. */
         CancelaEdicaoAvaliacao($sock, $tabela, $dados['Cod_avaliacao'], $cod_usuario);
         $cod_avaliacao=IniciaCriacaoAvaliacaoExercicio($sock, $tabela,$cod_atividade, $cod_usuario, 'E');
       }
       elseif (($dados['Status']=='F') || ($dados['Status']=='E'))
       {
-        /* 70 - Já existe uma avaliação criada para esta atividade.*/
+        /* 70 - Jï¿½ existe uma avaliaï¿½ï¿½o criada para esta atividade.*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,70)."</font><br><br>");
 
         /* 23 - Voltar (gen) */
@@ -152,8 +152,8 @@
       }
       elseif ($dados['Status']=='A')
       {
-        /* 71 - Já existe uma avaliação criada para esta atividade. Porém, ela foi apagada.*/
-        /* 72 - Se desejar criar outra avaliação, você precisa primeiro excluir definitivamente a avaliação existente.*/
+        /* 71 - Jï¿½ existe uma avaliaï¿½ï¿½o criada para esta atividade. Porï¿½m, ela foi apagada.*/
+        /* 72 - Se desejar criar outra avaliaï¿½ï¿½o, vocï¿½ precisa primeiro excluir definitivamente a avaliaï¿½ï¿½o existente.*/
         echo("<font class=text>".RetornaFraseDaLista($lista_frases,71)."");
         echo(" ".RetornaFraseDaLista($lista_frases,72)."</font><br><br>");
 
@@ -171,21 +171,21 @@
 
     $exercicio=RetornaExercicio($sock, $cod_atividade);
 
-    /* 173 - Exercício */
+    /* 173 - Exercï¿½cio */
     echo("    <font class=text>".RetornaFraseDaLista($lista_frases,173)."</font>\n");
     echo("    <font class=text><i>".$exercicio."</i></font>");
 
     echo("<form name=avaliacao action=criar_avaliacao_exercicio2.php?".RetornaSessionID()." method=post>\n");
-    /* 79 - Forneça abaixo os dados que serão considerados na avaliação desta atividade. */
+    /* 79 - Forneï¿½a abaixo os dados que serï¿½o considerados na avaliaï¿½ï¿½o desta atividade. */
     echo("  <font class=text>".RetornaFraseDaLista($lista_frases,79)."<br>\n");
     echo("    <br>\n");
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr class=colorfield>\n");
-    /* 16 - Data de início*/
+    /* 16 - Data de inï¿½cio*/
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
                                                                                                                             
-    /* 17 - Data de Término */
+    /* 17 - Data de Tï¿½rmino */
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
                                                                                                                             
     echo("  </tr>\n");
@@ -248,7 +248,7 @@
 
         echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr class=colorfield>\n");
-    /* 23 - Critérios */
+    /* 23 - Critï¿½rios */
     echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,23)."</td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -697,9 +697,9 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
   /* 311 - Para acessar o curso clique  em*/
   $mensagem.="<p>".RetornaFraseDaLista($lista_frases,311).": </p>";
   $mensagem.="<p><a href=\"http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p>\n\n";
-  /* 312 - Use login e senha j‡ cadastrados.*/
+  /* 312 - Use login e senha jï¿½ cadastrados.*/
   $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,312)."</p>";
-  /* 313 - Visite a p‡gina do curso pra saber o seu in’cio.*/
+  /* 313 - Visite a pï¿½gina do curso pra saber o seu inï¿½cio.*/
   $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,313)."</p>";
 
 

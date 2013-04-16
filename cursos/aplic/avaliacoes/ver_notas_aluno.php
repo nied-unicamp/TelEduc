@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 
 <!--
@@ -6,7 +6,7 @@
 
     Arquivo : cursos/aplic/avaliacoes/ver_nota_aluno.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -24,9 +24,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -59,7 +59,7 @@
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
   if (!$SalvarEmArquivo)
@@ -98,10 +98,10 @@
   $cod_avaliacao=$lista['cod_avaliacao'];
 
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
-  /* Obtém o nome e o status do fórum                     */
+  /* Obtï¿½m o nome e o status do fï¿½rum                     */
   $atividade=RetornaAtividade($sock,$dados['Cod_atividade']);
 
-  /* Funções JavaScript */
+  /* Funï¿½ï¿½es JavaScript */
   echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("<script language=JavaScript>\n");
   echo("var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
@@ -235,12 +235,12 @@
   echo("    }\n");
   echo("    else\n");
   echo("    {\n");
-  /* 51 - Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
+  /* 51 - Infelizmente nï¿½o foi possï¿½vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
   echo("      alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
   echo("    }\n");
   echo("  }\n");
 
-  /* Função JvaScript para chamar página para salvar em arquivo. */
+  /* Funï¿½ï¿½o JvaScript para chamar pï¿½gina para salvar em arquivo. */
   echo("      function SalvarVerNotas()\n");
   echo("      {\n");
   echo("        document.frmpart.action = \"salvar_ver_notas_aluno.php?".RetornaSessionID());
@@ -266,7 +266,7 @@
   if ($usr_formador)
     echo(" onload=\"Iniciar();\"");
     echo(">\n");
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 134 - Notas do Participante  */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,134)."</b>";
@@ -280,7 +280,7 @@
 
    /* 135 - Atividade */
   echo("    <font class=text>".RetornaFraseDaLista($lista_frases,135).":</font>\n");
-  echo("    <font class=text> ".$atividade."<br>");/*Nome do Fórum */
+  echo("    <font class=text> ".$atividade."<br>");/*Nome do Fï¿½rum */
   /* 20 - Tipo da Atividade */
   echo("    <font class=text>".RetornaFraseDaLista($lista_frases,20).":</font>\n");
   if (!strcmp($dados['Tipo'],'I'))
@@ -295,7 +295,7 @@
 
   if (!$SalvarEmArquivo)
   {
-  /* 46 - Ver objetivos/critérios da avaliação */
+  /* 46 - Ver objetivos/critï¿½rios da avaliaï¿½ï¿½o */
      if ($usr_formador)
     echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&VeioDePortfolio=1&VeioDaAtividade=1','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
     else
@@ -312,7 +312,7 @@
     if (!$SalvarEmArquivo)
     {
       echo("<p>\n");
-      /* 136 - Para visualizar o histórico do desempenho do grupo, clique sobre a nota dele.*/
+      /* 136 - Para visualizar o histï¿½rico do desempenho do grupo, clique sobre a nota dele.*/
       echo(RetornaFraseDaLista($lista_frases,136)."<br>\n");
       echo("<br>\n");
     }
@@ -324,13 +324,13 @@
     if (!$SalvarEmArquivo)
     {
       echo("<p>\n");
-      /* 137 - Para visualizar o histórico do desempenho do participante, clique sobre a nota dele.*/
+      /* 137 - Para visualizar o histï¿½rico do desempenho do participante, clique sobre a nota dele.*/
       echo(RetornaFraseDaLista($lista_frases,136)."<br>\n");
       echo("<br>\n");
     }
   }
 
- //Tabela com o nome do aluno, com a nota atual se houver e opção de avaliar
+ //Tabela com o nome do aluno, com a nota atual se houver e opï¿½ï¿½o de avaliar
   echo("<table border=0 width=100%>\n");
   echo("  <tr class=menu>\n");
   if ($portfolio_grupo)
@@ -417,7 +417,7 @@
       echo("      <td class=text align=center>".$compartilhamento);
       echo("</td>\n");
     }
-    else     //é aluno
+    else     //ï¿½ aluno
     {
       if (!strcmp($tipo_compartilhamento,'T'))
       {
@@ -457,7 +457,7 @@
         else
             echo($nota."</td>\n");
       }
-      else //Está compartilhada só com formadores
+      else //Estï¿½ compartilhada sï¿½ com formadores
         echo("      <td class=text align=center>&nbsp;</td>\n");
     }
   }

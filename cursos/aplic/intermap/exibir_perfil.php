@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/exibir_perfil.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001-2004  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -39,9 +39,9 @@
   ARQUIVO : cursos/aplic/intermap/exibir_perfil.php
   ========================================================== */
 
-  // Parâmetros necessários
-  // $cod_curso: código do curso
-  // $cod_usuario_perfil: código do usuário cujo perfil será mostrado
+  // Parï¿½metros necessï¿½rios
+  // $cod_curso: cï¿½digo do curso
+  // $cod_usuario_perfil: cï¿½digo do usuï¿½rio cujo perfil serï¿½ mostrado
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");

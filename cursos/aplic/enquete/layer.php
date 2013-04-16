@@ -1,4 +1,4 @@
-<?
+<?php
 /* Layers */
 if ($tela_formador)
 {

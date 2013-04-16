@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/ver_notas.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -79,7 +79,7 @@
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
   if (!$SalvarEmArquivo)
@@ -104,7 +104,7 @@
       $portfolio_grupo=0;
   }
 
-  /* Funções JavaScript */
+  /* Funï¿½ï¿½es JavaScript */
   echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("<script language=JavaScript>\n");
   echo("  if ((navigator.appName.indexOf(\"Netscape\") !=-1) && navigator.appVersion.charAt(0) <= '4') {\n");
@@ -262,12 +262,12 @@
   echo("    }\n");
   echo("    else\n");
   echo("    {\n");
-  // 51 - Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir.
+  // 51 - Infelizmente nï¿½o foi possï¿½vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir.
   echo("      alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
   echo("    }\n");
   echo("  }\n");
 
-  // Função JvaScript para chamar página para salvar em arquivo.
+  // Funï¿½ï¿½o JvaScript para chamar pï¿½gina para salvar em arquivo.
   echo("      function SalvarVerNotas()\n");
   echo("      {\n");
   echo("        document.frmMsg.action = \"salvar_ver_notas.php?".RetornaSessionID());
@@ -325,7 +325,7 @@
 
   if ($usr_formador)
   {
-    /*A função Iniciar só existe para formadores*/
+    /*A funï¿½ï¿½o Iniciar sï¿½ existe para formadores*/
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad=\"Iniciar();\">\n");
     $escondelayer="EscondeLayers();";
   }
@@ -334,7 +334,7 @@
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
   }
 
-  $cabecalho ="<b class=titulo>Avaliações</b>";
+  $cabecalho ="<b class=titulo>Avaliaï¿½ï¿½es</b>";
   /* 36 - Notas dos participantes */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,36)."</b>";
 
@@ -353,7 +353,7 @@
   echo("    <form name=frmAvaliacao method=post>\n");
   echo(RetornaSessionIDInput());
   echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  // Passa o cod_avaliacao para executar ações sobre ela.
+  // Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.
   echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
   echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
@@ -364,11 +364,11 @@
   echo("  <table border=0 width=100%>\n");
   echo("    <tbody>\n");
   echo("      <tr class=menu>\n");
-  // 29 - Avaliações Passadas
+  // 29 - Avaliaï¿½ï¿½es Passadas
   echo("        <td align=center><a href=# onMouseDown=return(VerTelaAvaliacoes('P')) class=menu>".$cor_link1['P']."<b>".RetornaFraseDaLista($lista_frases, 29)."</b>".$cor_link2['P']."</a></td>\n");
-  // 32 - Avaliações Atuais
+  // 32 - Avaliaï¿½ï¿½es Atuais
   echo("        <td align=center><a href=# onMouseDown=return(VerTelaAvaliacoes('A')) class=menu>".$cor_link1['A']."<b>".RetornaFraseDaLista($lista_frases, 32)."</b>".$cor_link2['A']."</a></td>\n");
-  // 30 - Avaliações Futuras
+  // 30 - Avaliaï¿½ï¿½es Futuras
   echo("        <td align=center><a href=# onMouseDown=return(VerTelaAvaliacoes('F')) class=menu>".$cor_link1['F']."<b>".RetornaFraseDaLista($lista_frases, 30)."</b>".$cor_link2['F']."</a></td>\n");
   // 31 - Notas dos Participantes
   echo("        <td align=center><a href=# onMouseDown=return(VerTelaNotas()) class=menu><b>".RetornaFraseDaLista($lista_frases, 31)."</b></a></td>\n");
@@ -380,9 +380,9 @@
   echo("<table border=0 width=100%;>\n");
   echo("  <tbody>\n");
   echo("    <tr class=menu3>\n");
-  // 120 - Ver Avaliação
+  // 120 - Ver Avaliaï¿½ï¿½o
   echo("      <td align=center><a href=# class=menu3 onClick='Ver(); return false;'>".RetornaFraseDaLista($lista_frases, 120)."</a></td>\n");
-  // 46 - Ver objetivos/critérios da avaliação
+  // 46 - Ver objetivos/critï¿½rios da avaliaï¿½ï¿½o
   echo("      <td align=center><a href=# class=menu3 onclick='VerObj();return false;'>".RetornaFraseDaLista($lista_frases, 46)."</a></td>\n");
   echo("    </tr>\n");
   echo("  </tbody>\n");
@@ -403,13 +403,13 @@
   }
   else if ($dados['Ferramenta'] == 'F')
   {
-    // 145 - Fórum de Discussão
+    // 145 - Fï¿½rum de Discussï¿½o
     $tipo = RetornaFraseDaLista($lista_frases,145);
     $titulo = RetornaForum($sock,$dados['Cod_atividade']);
   }
   elseif ($dados['Ferramenta'] == 'B')
   {
-    // 146 - Sessão de Bate-Papo
+    // 146 - Sessï¿½o de Bate-Papo
     $tipo = RetornaFraseDaLista($lista_frases,146);
     $titulo = RetornaAssunto($sock,$dados['Cod_atividade']);
   }
@@ -419,7 +419,7 @@
   echo("    <tr>\n");
   // imagem
   echo("      <td width=1% class=colorfield>&nbsp;</td>\n");
-  // 123 - Título
+  // 123 - Tï¿½tulo
   echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
   // // ?? - Ferramenta
   // echo("      <td class=colorfield align=left>&nbsp;&nbsp;"."[Ferramenta]"."</td>\n");
@@ -445,7 +445,7 @@
     $num_grupos=count($lista_grupos);
     if ($num_grupos > 0)
     {
-      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliação realizada
+      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliaï¿½ï¿½o realizada
       echo("<table border=0 width=100%>\n");
       echo("  <tr class=menu>\n");
       /* 158 - Grupo */
@@ -480,9 +480,9 @@
         else
           echo($nome."</td>\n");
 
-        // retorna o codigo de um aluno  que tem mais notas no grupo (caso aconteca) para garantir que retorne todas as avaliações.
-        // Isso é necessario porque alguns alunos podem ser inseridos no grupo depois que algumas avaliações ja foram feitas para este grupo
-        // E sempre que avalia um grupo, todos os alunos do grupo recebem a mesma avaliaçao
+        // retorna o codigo de um aluno  que tem mais notas no grupo (caso aconteca) para garantir que retorne todas as avaliaï¿½ï¿½es.
+        // Isso ï¿½ necessario porque alguns alunos podem ser inseridos no grupo depois que algumas avaliaï¿½ï¿½es ja foram feitas para este grupo
+        // E sempre que avalia um grupo, todos os alunos do grupo recebem a mesma avaliaï¿½ao
         $foiavaliado=GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo);
         if ($foiavaliado)           //Ja existe uma nota atribuida
         {
@@ -536,7 +536,7 @@
               echo("</td>\n");
             }
           }
-          else           //é aluno
+          else           //ï¿½ aluno
           {
             if ($nota=='')
               echo("      <td class=text align=center>&nbsp;</td>\n");
@@ -566,7 +566,7 @@
                 else
                   echo("&nbsp;</td>\n");
               }
-              else //Está compartilhada só com formadores
+              else //Estï¿½ compartilhada sï¿½ com formadores
                 echo("&nbsp;</td>\n");
             }
           }
@@ -605,15 +605,15 @@
       echo("</table>\n");
     }
     else
-      echo("Não há grupos criados<br>");
+      echo("Nï¿½o hï¿½ grupos criados<br>");
   }
-  else  // não é portfolio de grupo
+  else  // nï¿½o ï¿½ portfolio de grupo
   {
     $lista_users=RetornaListaUsuariosAluno($sock);
 
     if (count($lista_users) > 0)
     {
-      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliação realizada
+      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliaï¿½ï¿½o realizada
       echo("<table border=0 width=100%>\n");
       echo("  <tr class=menu>\n");
       /* 64 - Alunos */
@@ -711,7 +711,7 @@
               echo("</td>\n");
             }
           }
-          else           //é aluno
+          else           //ï¿½ aluno
           {
             if ($nota=='')
               echo("      <td class=text align=center>&nbsp;</td>\n");
@@ -744,7 +744,7 @@
                 else
                   echo($nota."</td>\n");
               }
-              else //Está compartilhada só com formadores
+              else //Estï¿½ compartilhada sï¿½ com formadores
                 echo("&nbsp;</td>\n");
             }
           }
@@ -785,7 +785,7 @@
 
     if ((count($lista_users_formador) > 0) && ($usr_formador))
     {
-      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliação realizada
+      //Tabela com a lista de alunos do curso, com suas respectivas notas na avaliaï¿½ï¿½o realizada
       echo("<table border=0 width=100%>\n");
       echo("  <tr class=menu>\n");
       /* 156 - Formadores */
@@ -887,7 +887,7 @@
                 echo("</td>\n");
               }
             }
-            else           //é aluno
+            else           //ï¿½ aluno
             {
               if ($nota=='')
                 echo("      <td class=text align=center>&nbsp;</td>\n");
@@ -920,7 +920,7 @@
                   else
                     echo($nota."</td>\n");
                 }
-                else //Está compartilhada só com formadores
+                else //Estï¿½ compartilhada sï¿½ com formadores
                   echo("&nbsp;</td>\n");
               }
             }

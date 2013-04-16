@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/forum_grafico_periodo.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -53,7 +53,7 @@
   echo("    if (ComparaData(document.mapa.inicio,document.mapa.fim)>0)\n");
   echo("    {\n");
 
-  // 57 - Período Inválido
+  // 57 - Perï¿½odo Invï¿½lido
   echo("      alert('".RetornaFraseDaLista($lista_frases,57)."!');\n");
   echo("      return false;\n");
   echo("    }\n");
@@ -75,17 +75,17 @@
 
     echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("  <tr class=\"head\">\n");
-    // 7 - Apresentação:
+    // 7 - Apresentaï¿½ï¿½o:
     echo("    <td width=30%>".RetornaFraseDaLista($lista_frases,7)."</td>\n");
-    // 29 - Fórum de Discussão:
+    // 29 - Fï¿½rum de Discussï¿½o:
     echo("    <td width=40%>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
-    // 58 - Período:
+    // 58 - Perï¿½odo:
     echo("    <td width=30%>".RetornaFraseDaLista($lista_frases,58)."</td>\n");
     echo("  </tr>\n");
 
     echo("  <tr>\n");
     echo("    <td>\n");
-    // 31 - Gráfico
+    // 31 - Grï¿½fico
     echo("      <input type=radio checked class=g1field name=apresentacao value=grafico />".RetornaFraseDaLista($lista_frases,31)."<br/>");
     // 68 - Tabela
     echo("      <input type=radio class=g1field name=apresentacao value=tabela />".RetornaFraseDaLista($lista_frases,68)."<br/>");
@@ -101,7 +101,7 @@
         echo("(somente leitura)");
       // 18 - de
       echo(" - ".RetornaFraseDaLista($lista_frases,18)." ".UnixTime2Data($linha['inicio']));
-      // 11 - até
+      // 11 - atï¿½
       echo(" ".RetornaFraseDaLista($lista_frases,11)." ".UnixTime2Data($linha['fim']));
       echo("        </option>\n");
     }
@@ -117,7 +117,7 @@
     {
       $linha_curso['curso_fim']=time();
     }
-    // 12 - Até:
+    // 12 - Atï¿½:
     echo("      <br/>".RetornaFraseDaLista($lista_frases,12)." \n");
     echo("      <input class=\"input\" size=\"10\" maxlength=\"10\" id=\"data_ini2\" name=\"fim\" value=\"".UnixTime2Data($linha_curso['curso_fim'])."\" type=\"text\" />\n");
     echo("      <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini2'),'dd/mm/yyyy',this);\" />\n");
@@ -137,7 +137,7 @@
     echo("      <input type=radio checked class=g1field name=agrupar value=dia />".RetornaFraseDaLista($lista_frases,21)."<br/>\n");
     // 63 - Semana
     echo("      <input type=radio class=g1field name=agrupar value=semana />".RetornaFraseDaLista($lista_frases,63)."<br/>\n");
-    // 46 - Mês
+    // 46 - Mï¿½s
     echo("      <input type=radio class=g1field name=agrupar value=mes />".RetornaFraseDaLista($lista_frases,46)."<br/>\n");
     echo("    </td>\n");
 
@@ -163,7 +163,7 @@
   {
     echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("  <tr>\n");
-    // 47 - Não existe nenhum fórum neste curso.
+    // 47 - Nï¿½o existe nenhum fï¿½rum neste curso.
     echo("    <td>".RetornaFraseDaLista($lista_frases,47)."</td>\n");
     echo("  </tr>\n");
     echo("</table>\n");

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   document.getElementById('tr_master').parentNode.appendChild(principal);
 }
   
-<?
+<?php
   echo("      var conteudo;\n\n");
 
   /* Funcao Edicao Titulo */

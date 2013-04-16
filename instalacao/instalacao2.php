@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : instalacao/instalacao2.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,7 +42,7 @@
 
   include "instalacao.inc"; 
 
-  ExibirCabecalho(2,"Criação dos usuários do MySQL para uso do TelEduc");
+  ExibirCabecalho(2,"Criaï¿½ï¿½o dos usuï¿½rios do MySQL para uso do TelEduc");
 
   session_register("dbbasegeral_s");
   session_register("dbbasecurso_s");
@@ -85,7 +85,7 @@
 
         if (document.inst.teleduc_senha_conf.value != document.inst.teleduc_senha.value)
         {
-          alert('A senha não confere.');
+          alert('A senha nï¿½o confere.');
           return false;
         }
 	
@@ -102,27 +102,27 @@
   echo("<td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("<tr><td style=\"padding-left: 150px; padding-top: 15px; padding-right: 150px; padding-bottom: 15px; font-size: small;\" align=\"left\">\n");
 
-  Paragrafo("<b>Será criada uma conta de acesso à base de dados do MySQL para uso do ambiente TelEduc (somente com acesso local):</b>");
+  Paragrafo("<b>Serï¿½ criada uma conta de acesso ï¿½ base de dados do MySQL para uso do ambiente TelEduc (somente com acesso local):</b>");
 
-  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> usuário '<b><i>teleduc</i></b>': Terá acesso a todas as tabelas e bases criadas pelo ambiente, para leitura e escrita;");
-  Paragrafo("<b>Para criação das contas será necessário fornecer a senha da <font color=\"#2a6686\">conta de ROOT do MySQL</font> (não confundir com a do Linux) e especificar uma senha para a conta '<i>teleduc</i>'</b>");
+  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> usuï¿½rio '<b><i>teleduc</i></b>': Terï¿½ acesso a todas as tabelas e bases criadas pelo ambiente, para leitura e escrita;");
+  Paragrafo("<b>Para criaï¿½ï¿½o das contas serï¿½ necessï¿½rio fornecer a senha da <font color=\"#2a6686\">conta de ROOT do MySQL</font> (nï¿½o confundir com a do Linux) e especificar uma senha para a conta '<i>teleduc</i>'</b>");
 
   Paragrafo("<font color=\"#2a6686\"><b>Obs.:</b></font>");
-  Paragrafo("<font color=\"#2a6686\">* O login e senha da conta de ROOT do MySQL não serão armazenados. Serão usados apenas para criar os usuários acima, que serão usados daqui para frente.</font>");
-  Paragrafo("<font color=\"#2a6686\">* Caso o usuário de ROOT do MySQL tenha acesso sem senha, interrompa a instalação e configure o MySQL para permitir somente o acesso ao usuário root com login e senha (Veja documentação do MySQL para tal). Após isso, reinicie a partir do passo 4 do arquivo <a href=# onClick='window.open(\"LeiaMe.txt\", \"LeiaMe\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>LeiaMe.txt</a> da instalação do TelEduc.</font>");
+  Paragrafo("<font color=\"#2a6686\">* O login e senha da conta de ROOT do MySQL nï¿½o serï¿½o armazenados. Serï¿½o usados apenas para criar os usuï¿½rios acima, que serï¿½o usados daqui para frente.</font>");
+  Paragrafo("<font color=\"#2a6686\">* Caso o usuï¿½rio de ROOT do MySQL tenha acesso sem senha, interrompa a instalaï¿½ï¿½o e configure o MySQL para permitir somente o acesso ao usuï¿½rio root com login e senha (Veja documentaï¿½ï¿½o do MySQL para tal). Apï¿½s isso, reinicie a partir do passo 4 do arquivo <a href=# onClick='window.open(\"LeiaMe.txt\", \"LeiaMe\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>LeiaMe.txt</a> da instalaï¿½ï¿½o do TelEduc.</font>");
 
 
-  CaixaTexto("Login do usuário de ROOT do MySQL:","root_mysql","root");
-  CaixaSenha("Senha do usuário de ROOT do MySQL:","root_mysql_senha");
-  CaixaTexto("Nome do usuário '<b><i>teleduc</i></b>': (altere somente se julgar necessário)","teleduc_login","teleduc"); // teleduc por padrão
-  CaixaSenha("Senha para o usuário '<b><i>teleduc</i></b>':","teleduc_senha");
-  CaixaSenha("Confirme a senha do usuário '<b><i>teleduc</i></b>':", "teleduc_senha_conf");
+  CaixaTexto("Login do usuï¿½rio de ROOT do MySQL:","root_mysql","root");
+  CaixaSenha("Senha do usuï¿½rio de ROOT do MySQL:","root_mysql_senha");
+  CaixaTexto("Nome do usuï¿½rio '<b><i>teleduc</i></b>': (altere somente se julgar necessï¿½rio)","teleduc_login","teleduc"); // teleduc por padrï¿½o
+  CaixaSenha("Senha para o usuï¿½rio '<b><i>teleduc</i></b>':","teleduc_senha");
+  CaixaSenha("Confirme a senha do usuï¿½rio '<b><i>teleduc</i></b>':", "teleduc_senha_conf");
 	
-  //Paragrafo("Nessa nova versão do Teleduc(3.2.0), foi implementada a função de <b>Importar Material de Cursos Extraídos</b>.");  
-  Paragrafo("Você deseja ter a opção de importar cursos extraídos?");
-  Paragrafo("<font color=\"#2a6686\">Para isso, você deverá criar uma nova base de dados. Toda vez que desejar importar material de um curso extraído, será criada uma base temporária com as informações do curso extraído.</font>");
+  //Paragrafo("Nessa nova versï¿½o do Teleduc(3.2.0), foi implementada a funï¿½ï¿½o de <b>Importar Material de Cursos Extraï¿½dos</b>.");  
+  Paragrafo("Vocï¿½ deseja ter a opï¿½ï¿½o de importar cursos extraï¿½dos?");
+  Paragrafo("<font color=\"#2a6686\">Para isso, vocï¿½ deverï¿½ criar uma nova base de dados. Toda vez que desejar importar material de um curso extraï¿½do, serï¿½ criada uma base temporï¿½ria com as informaï¿½ï¿½es do curso extraï¿½do.</font>");
   Radio("SIM ","importar_curso_extr","",1);
-  Radio("NÃO ","importar_curso_extr","CHECKED",0);
+  Radio("Nï¿½O ","importar_curso_extr","CHECKED",0);
 
   echo("</td></tr></table>\n");
   echo("</td></tr></table>\n");

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -110,13 +110,13 @@ function RetornaCursosNaoIniciados($sock,$cod_usuario)
 }
 
 /* **********************************************************************
-   RetornaCursosNaoIniciadosSemUsuario - Retorna a lista de cursos não iniciados
+   RetornaCursosNaoIniciadosSemUsuario - Retorna a lista de cursos nï¿½o iniciados
    Entrada: $sock - sock da base externa
    Saida: array []['cod_curso']
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 */
 
 function RetornaCursosNaoIniciadosSemUsuario($sock)
@@ -188,7 +188,7 @@ function RetornaCursosEmAndamento($sock,$cod_usuario)
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 */
 function RetornaCursosEmAndamentoSemUsuario($sock)
 {
@@ -261,7 +261,7 @@ function RetornaCursosPassados($sock,$cod_usuario)
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 */
 function RetornaCursosPassadosSemUsuario($sock,$cod_usuario)
 {
@@ -286,13 +286,13 @@ function RetornaCursosPassadosSemUsuario($sock,$cod_usuario)
 }
 
 /* **********************************************************************
-   RetornaCursosInscricaoSemUsuario - Retorna a lista de cursos com inscrição aberta
+   RetornaCursosInscricaoSemUsuario - Retorna a lista de cursos com inscriï¿½ï¿½o aberta
    Entrada: $sock - sock da base externa
    Saida: array []['cod_curso']
                 []['nome_curso']
                 []['inscricao_inicio']
                 []['inscricao_fim']
-                []['acesso_visitante'] - 'A' se aceita, 'N' se não
+                []['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 */
 function RetornaCursosInscricaoSemUsuario($sock)
 {

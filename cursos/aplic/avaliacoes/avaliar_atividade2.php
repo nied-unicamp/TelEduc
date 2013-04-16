@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -60,14 +60,14 @@
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<html>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
 
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("<b class=titulo> ".RetornaFraseDaLista($lista_frases,1)."</b>\n");
   /* 8 - ï¿½ea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
@@ -79,14 +79,14 @@
   }
 
   echo("<html>\n");
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
 
    
-  /*CONSISTENCIA PARA NÃO DEIXAR O CAMPO NOTA DO BANCO DE 
-  DADOS DE AVALIAÇÃO DIFERENTE DO CAMPO NOTA DO BANCO DE DADOS DE EXERCICIOS*/
+  /*CONSISTENCIA PARA Nï¿½O DEIXAR O CAMPO NOTA DO BANCO DE 
+  DADOS DE AVALIAï¿½ï¿½O DIFERENTE DO CAMPO NOTA DO BANCO DE DADOS DE EXERCICIOS*/
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
   $portfolio_grupo = ( ($dados['Ferramenta'] == 'P' || $dados['Ferramenta']=='N') && ($dados['Tipo'] == 'G') )||(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'));
     
@@ -161,7 +161,7 @@
   }
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-  /* 1 - Avaliações */
+  /* 1 - Avaliaï¿½ï¿½es */
   $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 33 - Avaliar participante */
   $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,95)."</b>";

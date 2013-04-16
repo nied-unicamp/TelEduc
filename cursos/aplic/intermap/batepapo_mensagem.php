@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/batepapo_mensagem.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -40,7 +40,7 @@
   ARQUIVO : cursos/aplic/intermap/batepapo_mensagem.php
   ========================================================== */
 
-/* Código principal */
+/* Cï¿½digo principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -121,7 +121,7 @@
         print "<font class=text color=#2a6686>";
       }
       echo("<b>".$linha['Apelido']."</b> ".RetornaFraseDaLista($lista_frases_batepapo,$linha['cod_texto_fala'])." ");
-      if ($linha['cod_texto_fala']>8) /* Não é entrada ou saída... */
+      if ($linha['cod_texto_fala']>8) /* Nï¿½o ï¿½ entrada ou saï¿½da... */
       {
         echo("<b>".$linha['ApelidoR']."</b>: ".$linha['Mensagem']);
       }
@@ -135,7 +135,7 @@
   echo("      </table>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
-  // Fim Tabelão
+  // Fim Tabelï¿½o
   echo("</table>\n");
 
   Desconectar($sock);

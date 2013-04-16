@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/ver_avaliacoes_anteriores.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -65,7 +65,7 @@
   $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 
   echo("<html>\n");
-  /* 1 - Avaliações  */
+  /* 1 - Avaliaï¿½ï¿½es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
   echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -108,8 +108,8 @@
 
   echo("    function iniciar()\n");
   echo("    {\n");
-  /* Obtém o layer */
-  /* para acesso às opções (Ver,EditarAvaliacao e apagarAvaliacao   */
+  /* Obtï¿½m o layer */
+  /* para acesso ï¿½s opï¿½ï¿½es (Ver,EditarAvaliacao e apagarAvaliacao   */
   echo("      lay_avaliacao = getLayer('layer_avaliacao');\n");
   echo("    }\n\n");
 
@@ -120,8 +120,8 @@
 
   echo("    function EscondeLayers()\n");
   echo("    {\n");
-  /* Se estiver visualizando as avaliacoes passadas então esconde os layers   */
-  /* para acesso às opções (Ver, Editar, */
+  /* Se estiver visualizando as avaliacoes passadas entï¿½o esconde os layers   */
+  /* para acesso ï¿½s opï¿½ï¿½es (Ver, Editar, */
   /* Apagar, Ver Notas, Ver Atividades Entregues e Ver Atividades Pendentes).                                                     */
   echo("      hideLayer(lay_avaliacao);\n");
   echo("    }\n\n");
@@ -133,8 +133,8 @@
   echo("      showLayer(cod_layer);\n");
   echo("    }\n\n");
 
-  /* Cria as funções JavaScript */
-  /* Ver(id), Editar(), Apagar(id), Ver Notas, Ver Atividades Entregues e Histórico de Notas    */
+  /* Cria as funï¿½ï¿½es JavaScript */
+  /* Ver(id), Editar(), Apagar(id), Ver Notas, Ver Atividades Entregues e Histï¿½rico de Notas    */
   echo("    function Ver(id)\n");
   echo("    {\n");
   echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
@@ -171,8 +171,8 @@
   {
 /*    echo("    function ApagarAvaliacao(id)\n");
     echo("    {\n");
-    /* XX - Deseja realmente apagar a avaliação selecionada? (Esta atividade deixará de ser avaliação e a avaliação será movida para a lixeira)*/
- /*   echo("      if(confirm('Deseja realmente apagar a avaliação selecionada? (Esta atividade deixará de ser avaliação e a avaliação será movida para a lixeira.)'))");
+    /* XX - Deseja realmente apagar a avaliaï¿½ï¿½o selecionada? (Esta atividade deixarï¿½ de ser avaliaï¿½ï¿½o e a avaliaï¿½ï¿½o serï¿½ movida para a lixeira)*/
+ /*   echo("      if(confirm('Deseja realmente apagar a avaliaï¿½ï¿½o selecionada? (Esta atividade deixarï¿½ de ser avaliaï¿½ï¿½o e a avaliaï¿½ï¿½o serï¿½ movida para a lixeira.)'))");
     echo("      {\n");
     echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
     echo("        document.frmAvaliacao.action = \"apagar_avaliacao.php?".RetornaSessionID());
@@ -211,8 +211,8 @@
   //else
   //  echo(">\n");
 
-  /* Página Principal */
-  /* 29 - Avaliações passadas */
+  /* Pï¿½gina Principal */
+  /* 29 - Avaliaï¿½ï¿½es passadas */
   $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,29)."</b>\n";
 
   $cod_pagina=2;
@@ -222,9 +222,9 @@
   echo("<p>\n");
   echo("<table border=0 width=100%>\n");
   echo("  <tr class=menu>\n");
-  /* 110 - Ver Avaliações Atuais */
+  /* 110 - Ver Avaliaï¿½ï¿½es Atuais */
   echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
-  /* 30 - Ver Avaliações Futuras */
+  /* 30 - Ver Avaliaï¿½ï¿½es Futuras */
   echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
   /* 31 - Notas da Turma */
   echo("    <td align=center><a href=\"todas_as_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,31)."</b></a></td>\n");
@@ -241,18 +241,18 @@
   echo(RetornaSessionIDInput());
   echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
 
-  /* Passa o cod_avaliacao para executar ações sobre ela.       */
+  /* Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.       */
   echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
   echo("    </form>\n");
 
   echo("<table border=0 width=100% cellspacing=0>\n");
   echo("  <tr>\n");
   echo("    <td width=10 class=colorfield>&nbsp;</td>\n");
-  /* 29 - Avaliações passadas */
+  /* 29 - Avaliaï¿½ï¿½es passadas */
   echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
-  /* 16 - Data de Início*/
+  /* 16 - Data de Inï¿½cio*/
   echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
-  /* 17 - Data de Término*/
+  /* 17 - Data de Tï¿½rmino*/
   echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
   echo("  </tr>\n");
   echo("  <tr>\n");
@@ -280,13 +280,13 @@
       }
 
       if (!strcmp($linha['Ferramenta'],'F'))
-      /* 145 - Fórum de Discussão*/
+      /* 145 - Fï¿½rum de Discussï¿½o*/
         $ferramenta=RetornaFraseDaLista($lista_frases,145);
       elseif (!strcmp($linha['Ferramenta'],'B'))
-      /* 146 - Sessão de Bate-Papo*/
+      /* 146 - Sessï¿½o de Bate-Papo*/
         $ferramenta=RetornaFraseDaLista($lista_frases,146);
       else
-      /* 14 - Atividade no Portfólio*/
+      /* 14 - Atividade no Portfï¿½lio*/
         $ferramenta=RetornaFraseDaLista($lista_frases,14);
 
       //$titulo="<a href=\"agenda.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&visualizar=sim&origem=historico&cod_item=".$linha_item['cod_item']."\">".$linha['Titulo']."</a>";
@@ -323,23 +323,23 @@
     echo("      <tr class=wtfield>\n");
     echo("        <td class=wtfield>\n");
 
-     /* 33 - Objetivos/Critérios */
+     /* 33 - Objetivos/Critï¿½rios */
     echo("          <a href=# class=text onClick='Ver(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,33)."</a><br>\n");
     if ($usr_formador)
     {
-      /* XX - Editar Objetivos/Critérios*/
-//      echo("          <a href=# class=text onClick='AlterarAvaliacao(selected_item);return(false);'>Editar Objetivos/Critérios</a><br>\n");
-      /* XX - Apagar Objetivos/Critérios */
-//      echo("          <a href=# class=text onClick='ApagarAvaliacao(selected_item);return(false);'>Apagar Objetivos/Critérios</a><br>\n");
+      /* XX - Editar Objetivos/Critï¿½rios*/
+//      echo("          <a href=# class=text onClick='AlterarAvaliacao(selected_item);return(false);'>Editar Objetivos/Critï¿½rios</a><br>\n");
+      /* XX - Apagar Objetivos/Critï¿½rios */
+//      echo("          <a href=# class=text onClick='ApagarAvaliacao(selected_item);return(false);'>Apagar Objetivos/Critï¿½rios</a><br>\n");
       /* 34 - Avaliar Participantes */
       echo("          <a href=# class=text onClick='AvaliarParticipantes(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,34)."</a><br>\n");
     }
 
-    /* 35 - Ver Participação */
+    /* 35 - Ver Participaï¿½ï¿½o */
     echo("          <a href=# class=text onClick='VerificarParticipacao(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,35)."</a><br>\n");
     /* 36 - Ver Notas */
     echo("          <a href=# class=text onClick='VerNotas(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,36)."</a><br>\n");
-    /* 37 - Histórico do Desempenho */
+    /* 37 - Histï¿½rico do Desempenho */
     echo("          <a href=# class=text onClick='HistoricodoDesempenho(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,37)."</a><br>\n");
 
     echo("        </td>\n");
@@ -349,7 +349,7 @@
   }
   else
   {
-    /* 125 - Não existem avaliações anteriores! */
+    /* 125 - Nï¿½o existem avaliaï¿½ï¿½es anteriores! */
     echo("</table>\n");
     echo("<font class=text>".RetornaFraseDaLista($lista_frases,125)."</font>\n");
   }

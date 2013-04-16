@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : instalacao/instalacao1.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,7 +42,7 @@
 
   include "instalacao.inc"; 
 
-  ExibirCabecalho(1,"Definição dos nomes das bases de dados do TelEduc");
+  ExibirCabecalho(1,"Definiï¿½ï¿½o dos nomes das bases de dados do TelEduc");
 
   echo("
     <script type=\"text/javascript\" language=javascript>
@@ -69,10 +69,10 @@
   echo("<td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("<tr><td style=\"padding-left: 150px; padding-top: 15px; padding-right: 150px; padding-bottom: 15px; font-size: small;\" align=\"left\">\n");
 
-  Paragrafo("O ambiente TelEduc utiliza uma base de dados para manter configurações do ambiente e uma base de dados para cada curso:");
-  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> Uma base de dados comum a todos os cursos, que contém informações de configurações do ambiente;");
-  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> Uma base de dados distinta para cada curso, com as informações do curso em si. O nome da base será uma composição do nome dado abaixo mais o código do curso (Ex.: 'TelEducCurso' + '1' = 'TelEducCurso1').");
-  Paragrafo("Obs.: Altere o nome das bases somente se julgar necessário.");
+  Paragrafo("O ambiente TelEduc utiliza uma base de dados para manter configuraï¿½ï¿½es do ambiente e uma base de dados para cada curso:");
+  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> Uma base de dados comum a todos os cursos, que contï¿½m informaï¿½ï¿½es de configuraï¿½ï¿½es do ambiente;");
+  Paragrafo("<font color=\"#2a6686\"><b>*</b></font> Uma base de dados distinta para cada curso, com as informaï¿½ï¿½es do curso em si. O nome da base serï¿½ uma composiï¿½ï¿½o do nome dado abaixo mais o cï¿½digo do curso (Ex.: 'TelEducCurso' + '1' = 'TelEducCurso1').");
+  Paragrafo("Obs.: Altere o nome das bases somente se julgar necessï¿½rio.");
 
   CaixaTexto("Base de dados comum a todos os cursos:","dbbasegeral","TelEduc"); // Deveria ser TelEduc
   CaixaTexto("Base de dados de cada curso:","dbbasecurso","TelEducCurso"); // Deveria ser TelEducCurso

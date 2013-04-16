@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/avaliar_atividade.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -63,11 +63,11 @@
 
    $cod_item = $_GET['cod_item'];
 
-  /* Verifica se a pessoa a editar é formador */
+  /* Verifica se a pessoa a editar ï¿½ formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("<html>\n");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
 
@@ -77,9 +77,9 @@
 
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white");
-    /* 1 - Avaliações*/
+    /* 1 - Avaliaï¿½ï¿½es*/
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 8 - Área restrita ao formador. */
+    /* 8 - ï¿½rea restrita ao formador. */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Fechar (gen) */
 echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onclick=self.close();></form>\n");
@@ -93,10 +93,10 @@ $exercicio_grupo = ( ($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G') );
 
 echo("<script language=JavaScript>\n");
 
-/*Variavel para controlar quando deve ou não fazer alguma coisa no evento onUnload*/
+/*Variavel para controlar quando deve ou nï¿½o fazer alguma coisa no evento onUnload*/
 echo("var unload=1;\n");
 
-/*Função chamada quando a página é descarregada*/
+/*Funï¿½ï¿½o chamada quando a pï¿½gina ï¿½ descarregada*/
 echo("function Descarregar(codigo) \n");
 echo("{ \n");
 echo("   if (unload==1)\n");
@@ -165,13 +165,13 @@ echo("  unload=0;\n");
 echo("  var nota = document.avaliado.nota.value; \n");
 // echo("  var comp = document.avaliado.compartilhamento.value; \n");
 echo("  if (nota == '') { \n");
-// 40 - O campo nota não pode ser vazio
+// 40 - O campo nota nï¿½o pode ser vazio
 echo("    alert('".RetornaFraseDaLista($lista_frases,40)."'); \n");
 echo("    return false; \n");
 echo("  } \n");
 echo("  if (nota_com_digito_estranho(nota)) { \n");
-// 5 - Você digitou caracteres estranhos nesta nota.
-// 6 - Use apenas dígitos de 0 a 9 e o ponto ( . ) ou a vírgula ( , ) para o campo valor (exemplo: 7.5). \n");
+// 5 - Vocï¿½ digitou caracteres estranhos nesta nota.
+// 6 - Use apenas dï¿½gitos de 0 a 9 e o ponto ( . ) ou a vï¿½rgula ( , ) para o campo valor (exemplo: 7.5). \n");
 // 7 - Por favor retorne e corrija.
 echo("      alert('".RetornaFraseDaLista($lista_frases,5)."\\n".RetornaFraseDaLista($lista_frases,6)."\\n".RetornaFraseDaLista($lista_frases,7)."'); \n");
 echo("      return(false); \n");
@@ -179,11 +179,11 @@ echo("  } \n");
 // verificamos se a nota tem virgula, se tiver, convertemos para ponto
 echo("  nota = nota.replace(/\,/, '.'); \n");
 echo("  if (nota > ".$dados['Valor'].") { \n");
-// 169 - O valor mínimo para a nota é       
+// 169 - O valor mï¿½nimo para a nota ï¿½       
 echo("      alert('".RetornaFraseDaLista($lista_frases, 169)." ".$dados['Valor']."'); \n");
 echo("      return(false); \n");
 echo("  } \n");
-// 24 - A nota não pode ser negativa
+// 24 - A nota nï¿½o pode ser negativa
 echo("  if (nota < 0) { \n");
 echo("    alert('".RetornaFraseDaLista($lista_frases,24)."'); \n");
 echo("    return false; \n");
@@ -193,7 +193,7 @@ echo("          || document.avaliado.compartilhamento.value == 'F' \n");
 echo("          || document.avaliado.compartilhamento.value == 'G' \n");
 echo("          || document.avaliado.compartilhamento.value == 'A')\n");
 echo("          ) { \n");
-// 42 - Voce não selecionou o modo de compartilhamento !
+// 42 - Voce nï¿½o selecionou o modo de compartilhamento !
 echo("    alert('".RetornaFraseDaLista($lista_frases, 42)."'); \n");
 echo("    return false; \n");
 echo("  } \n");
@@ -230,7 +230,7 @@ echo("}\n");
 echo("</script>\n");
 
 echo("<html>\n");
-/* 1 - Avaliações */
+/* 1 - Avaliaï¿½ï¿½es */
 echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
 echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
@@ -246,7 +246,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
    $verificacao=AlunoFoiAvaliado($sock,$cod_avaliacao,$cod_aluno);
    if ($verificacao['Existe'])
    {
-      if (($verificacao['Cont']==1) && ($verificacao['Edicao'])) // é a primeira avaliação realizada, mas havia uma em edicao antes que foi cancelada
+      if (($verificacao['Cont']==1) && ($verificacao['Edicao'])) // ï¿½ a primeira avaliaï¿½ï¿½o realizada, mas havia uma em edicao antes que foi cancelada
       {
          if (($portfolio_grupo)||($exercicio_grupo))
          {
@@ -274,7 +274,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
             {
                $cod_nota=IniciaAvaliacaoAluno($sock,$cod_aluno, $cod_avaliacao, $cod_usuario, $cod_grupo_portfolio);
             }
-         // mudança
+         // mudanï¿½a
             $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod_grupo_portfolio);
          }
          else
@@ -285,7 +285,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
          }
       }
    }
-   else //$verificacao[existe]=false      A avaliação não existe, o formador pode avaliar o aluno
+   else //$verificacao[existe]=false      A avaliaï¿½ï¿½o nï¿½o existe, o formador pode avaliar o aluno
    {
       $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=".$verificacao['Existe'].">\n");
       if (($portfolio_grupo)&&($exercicio_grupo))
@@ -332,7 +332,7 @@ else if (($portfolio_grupo)||($exercicio_grupo))
 
 echo("<body link=#0000ff vlink=#0000ff bgcolor=white onUnload=Descarregar($cod_nota);>");/*.$onUnload);/*'window.location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";'");
 
-/* 1 - Avaliações */
+/* 1 - Avaliaï¿½ï¿½es */
 $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
 /* 34 - Avaliar participantes */
 $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,34)."</b>";
@@ -343,13 +343,13 @@ echo("<br>");
 
 if ($dados['Ferramenta'] == 'F') // Avaliacao no Forum
 {
-  // 145 - Fórum de Discussão
+  // 145 - Fï¿½rum de Discussï¿½o
    $tipo = RetornaFraseDaLista($lista_frases, 145);
    $titulo = RetornaForum($sock,$dados['Cod_atividade']);
 }
 elseif ($dados['Ferramenta'] == 'B') //Avaliacao no Bate-Papo
 {
-   // 146 - Sessão de Bate-Papo
+   // 146 - Sessï¿½o de Bate-Papo
    $tipo = RetornaFraseDaLista($lista_frases,146);
    $titulo = RetornaAssunto($sock,$dados['Cod_atividade']);
 }
@@ -391,12 +391,12 @@ echo("<p>\n");
 echo("<table cellpadding='0' cellspacing='0' border='0' style='width: 100%; text-align: left;'>\n");
 echo("  <tbody>\n");
 echo("    <tr class='colorfield'>\n");
-// 123 - Título
+// 123 - Tï¿½tulo
 echo("      <td style='vertical-align: top;'>&nbsp; ".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
 /*
 // ?? - [Ferramenta]
 echo("      <td style='vertical-align: top;'>&nbsp; "."[Ferramenta]"."</td>\n"); */
-// 113 - Tipo da Avaliação
+// 113 - Tipo da Avaliaï¿½ï¿½o
 echo("      <td style='vertical-align: top;'>&nbsp; ".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
 // 19 - Valor
 echo("      <td style='vertical-align: top;'>&nbsp; ".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
@@ -415,7 +415,7 @@ echo("<p>\n");
 echo("<table border=0 width=100%>\n");
 echo("  <tbody>\n");
 echo("    <tr class=menu3>\n");
-// 46 - Ver objetivos/critérios da avaliação
+// 46 - Ver objetivos/critï¿½rios da avaliaï¿½ï¿½o
 echo("      <td align=center><a href=# class=menu3 onclick='VerObj();return false;'>".RetornaFraseDaLista($lista_frases, 46)."</a></td>\n");
 echo("    </tr>\n");
 echo("  </tbody>\n");
@@ -433,7 +433,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
    'T' => RetornaFraseDaLista($lista_frases, 51),
    // 52 - Compartilhado com Formadores
    'F' => RetornaFraseDaLista($lista_frases, 52),
-   // 170 - Não compartilhado
+   // 170 - Nï¿½o compartilhado
    'P' => RetornaFraseDaLista($lista_frases, 170)
    );
 }
@@ -482,9 +482,9 @@ if ($dados['Ferramenta'] == 'P' )
    $lista_itens = RetornaListaItensAvaliacaoPortfolio($sock, $cod_avaliacao, $cod_aluno_grupo);  
    if (! is_array($lista_itens))
    {
-      // 49 - Participações
+      // 49 - Participaï¿½ï¿½es
       echo "      <tr><td class=colorfield colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
-      // 164 - Não há participações
+      // 164 - Nï¿½o hï¿½ participaï¿½ï¿½es
       echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
    else
@@ -543,8 +543,8 @@ if ($dados['Ferramenta'] == 'E')
    $lista_itens = RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_aluno_grupo,$exercicio_grupo);
    if(!is_array($lista_itens))
    {
-      // 49 - Participações
-      echo "      <tr><td class=colorfield colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";      // 164 - Não há participações
+      // 49 - Participaï¿½ï¿½es
+      echo "      <tr><td class=colorfield colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";      // 164 - Nï¿½o hï¿½ participaï¿½ï¿½es
       echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
    else
@@ -593,7 +593,7 @@ if ($dados['Ferramenta'] == 'E')
 }
 else if ($dados['Ferramenta'] == 'F')
 {
-   // 49 - Participações
+   // 49 - Participaï¿½ï¿½es
    echo "      <tr><td class=colorfield colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
    if (ParticipouDoForum($sock,$cod_aluno_grupo,$dados['Cod_atividade']))
    {
@@ -604,13 +604,13 @@ else if ($dados['Ferramenta'] == 'F')
    }
    else
    {
-   // 164 - Não há participações
+   // 164 - Nï¿½o hï¿½ participaï¿½ï¿½es
    echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
 }
 else if ($dados['Ferramenta'] == 'B')
 {
-   // 49 - Participações
+   // 49 - Participaï¿½ï¿½es
    echo "      <tr><td class=colorfield colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
    if (ParticipouDaSessao($sock,$cod_aluno_grupo,$dados['Cod_atividade']))
    {
@@ -621,7 +621,7 @@ else if ($dados['Ferramenta'] == 'B')
    }
    else
    {
-      // 164 - Não há participações
+      // 164 - Nï¿½o hï¿½ participaï¿½ï¿½es
       echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
 }

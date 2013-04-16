@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/avaliacoes/index_avaliacao.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -75,16 +75,16 @@
   if($origem=="../material/material")
   {
      echo("  <html>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("    <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
     echo("\n\n");
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 9 - Cadastro de Avaliação */
+    /* 9 - Cadastro de Avaliaï¿½ï¿½o */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
 
     echo("<script language=JavaScript>\n");
@@ -95,23 +95,23 @@
   elseif ($origem=="alterar_avaliacao")               //neste caso veio da atividade (forum,batepapo ou atividade de portfolio)
   {
     echo("  <html>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("    <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
     echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
     echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
     echo("\n\n");
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-    /* 1 - Avaliações */
+    /* 1 - Avaliaï¿½ï¿½es */
     echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
-    /* 9 - Cadastro de Avaliação */
+    /* 9 - Cadastro de Avaliaï¿½ï¿½o */
     echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
 
     echo("<script language=JavaScript>\n");
     echo("self.close();");
     echo("</script>\n");
   }
-  else              //neste caso veio de avaliaçoes
+  else              //neste caso veio de avaliaï¿½oes
   {
     echo("<html>\n");
     echo("<head>\n");

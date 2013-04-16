@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ if (!isset($bibliotecas))
 session_start();
 
 /* De agora em diante, usaremos o teleduc.inc, 
- * e para não quebrar o ramo desenvolvimento,
+ * e para nï¿½o quebrar o ramo desenvolvimento,
  * vamos manter a compatibilidade reversa.
  */
 include("teleduc.inc");

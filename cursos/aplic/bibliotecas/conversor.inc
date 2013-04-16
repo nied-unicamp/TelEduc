@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : bibliotecas/conversor.inc
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -41,23 +41,23 @@
   ========================================================== */
   
 /* **********************************************************************
-   AtualizaTabelasVersaoCurso - Atualiza as tabelas para a versão atual
-   Entrada: $sock - Socket da conexão
+   AtualizaTabelasVersaoCurso - Atualiza as tabelas para a versï¿½o atual
+   Entrada: $sock - Socket da conexï¿½o
             $tabelas - array contendo os nomes das tabelas ou "" para todas
-            $versao - Atual versão do curso
+            $versao - Atual versï¿½o do curso
    Saida: nenhuma
 */
 function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
 {
-  /*   Aqui atualizamos a base de dados do curso que está sendo inserido.  */
-  /*   As alterações necessárias foram retiradas dos arquivos              */
+  /*   Aqui atualizamos a base de dados do curso que estï¿½ sendo inserido.  */
+  /*   As alteraï¿½ï¿½es necessï¿½rias foram retiradas dos arquivos              */
   /* patch-v3.x.y.inc de cada patch.
-  /*   obs: os cases não possuem break porque se um curso está numa versão */
-  /* antiga deve ser atualizado até chegar à versão atual, em sequência.   */
+  /*   obs: os cases nï¿½o possuem break porque se um curso estï¿½ numa versï¿½o */
+  /* antiga deve ser atualizado atï¿½ chegar ï¿½ versï¿½o atual, em sequï¿½ncia.   */
 
   switch ($versao)
   {
-    case '3.0': // atualiza base de dados para versão 3.0.1
+    case '3.0': // atualiza base de dados para versï¿½o 3.0.1
       $query = "select * from Cursos";
       $res = Enviar($sock,$query);
       $linha = RetornaLinha($res);
@@ -78,10 +78,10 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
           Enviar($sock,$query);
         }
       }
-    case '3.0.1': /*atualiza base de dados para versão 3.0.2 */
-      /* patch 3.0.2 não altera base dos cursos */
+    case '3.0.1': /*atualiza base de dados para versï¿½o 3.0.2 */
+      /* patch 3.0.2 nï¿½o altera base dos cursos */
 
-    case '3.0.2': /*atualiza base de dados para versão 3.0.3 */
+    case '3.0.2': /*atualiza base de dados para versï¿½o 3.0.3 */
       $query="select * from Correio_intermap limit 1";
       $res=Enviar($sock,$query);
       $linha=RetornaLinha($res);
@@ -107,22 +107,22 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
           }
         }
       }
-    case '3.0.3': /*atualiza base de dados para versão 3.0.4 */
-      /* patch 3.0.4 não altera base dos cursos */
+    case '3.0.3': /*atualiza base de dados para versï¿½o 3.0.4 */
+      /* patch 3.0.4 nï¿½o altera base dos cursos */
 
-    case '3.0.4': /*atualiza base de dados para versão 3.0.5 */
-      /* patch 3.0.5 não altera base dos cursos */
+    case '3.0.4': /*atualiza base de dados para versï¿½o 3.0.5 */
+      /* patch 3.0.5 nï¿½o altera base dos cursos */
 
-    case '3.0.5': /*atualiza base de dados para versão 3.0.6 */
-      /* patch 3.0.6 não altera base dos cursos */
+    case '3.0.5': /*atualiza base de dados para versï¿½o 3.0.6 */
+      /* patch 3.0.6 nï¿½o altera base dos cursos */
 
-    case '3.0.6': /*atualiza base de dados para versão 3.0.7 */
-      /* patch 3.0.7 não altera base dos cursos */
+    case '3.0.6': /*atualiza base de dados para versï¿½o 3.0.7 */
+      /* patch 3.0.7 nï¿½o altera base dos cursos */
 
-    case '3.0.7': /*atualiza base de dados para versão 3.0.8 */
-      /* patch 3.0.8 não altera base dos cursos */
+    case '3.0.7': /*atualiza base de dados para versï¿½o 3.0.8 */
+      /* patch 3.0.8 nï¿½o altera base dos cursos */
 
-    case '3.0.8': /*atualiza base de dados para versão 3.1 */
+    case '3.0.8': /*atualiza base de dados para versï¿½o 3.1 */
       $query="select * from Cursos";
       $res=Enviar($sock,$query);
       $linha=RetornaLinha($res);
@@ -159,7 +159,7 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
         }
       }
 
-    case '3.1': /*atualiza base de dados para versão 3.1.1 */
+    case '3.1': /*atualiza base de dados para versï¿½o 3.1.1 */
       if (($tabelas == "") ||
           ((is_array($tabelas)) && (in_array("Usuario", $tabelas)))
          )
@@ -167,7 +167,7 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
         $query = "update Usuario set cod_lingua = 1 where cod_lingua is NULL";
         $res = Enviar($sock, $query);
       }
-    case '3.1.1': /*atualiza base de dados para versão 3.1.2 */
+    case '3.1.1': /*atualiza base de dados para versï¿½o 3.1.2 */
       if (($tabelas == "") ||
           ((is_array($tabelas)) && (in_array("Usuario", $tabelas)))
          )
@@ -175,7 +175,7 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
         $query = "update Usuario set cod_lingua = 1 where cod_lingua is NULL";
         $res = Enviar($sock, $query);
       }
-    case '3.1.2': /*atualiza base de dados para versão 3.1.3 */
+    case '3.1.2': /*atualiza base de dados para versï¿½o 3.1.3 */
       if (($tabelas == "") ||
           ((is_array($tabelas)) && (in_array("Diario_itens", $tabelas)))
          )
@@ -183,10 +183,10 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
         $query = "ALTER TABLE Diario_itens ADD COLUMN tipo_compartilhamento CHAR(1) DEFAULT 'F'";
         $res = Enviar($sock, $query);
       }
-    case '3.1.3': /*atualiza base de dados para versão 3.1.4 */
-      /* patch 3.1.4 não altera base dos cursos */
+    case '3.1.3': /*atualiza base de dados para versï¿½o 3.1.4 */
+      /* patch 3.1.4 nï¿½o altera base dos cursos */
 
-    case '3.1.4': /*atualiza base de dados para versão 3.1.5 */
+    case '3.1.4': /*atualiza base de dados para versï¿½o 3.1.5 */
       $query = "select UNIX_TIMESTAMP(_timestamp) 'data' from Cursos";
       $res = Enviar($sock,$query);
       $data = RetornaLinha($res);
@@ -197,7 +197,7 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
       $query3 .= "notificar_data int(11) default 0, PRIMARY KEY  (cod_usuario))";
       $query4 = "SELECT cod_usuario, nome FROM Usuario";
 
-      /*   parte comentada pois não sei como fazer para desconectar do sock passado, conectar-se a outro e depois */
+      /*   parte comentada pois nï¿½o sei como fazer para desconectar do sock passado, conectar-se a outro e depois */
       /* recuperar o antigo */
 
       //$sock = Conectar("");
@@ -227,17 +227,17 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
         {
           $query5 = "INSERT INTO Usuario_config VALUES (".($lista_usuarios[$k]['cod_usuario']).", 0, ".time().")";
           if (!Enviar($sock, $query5))
-            die("Erro ao inserir dados para notificar usuário \"".($lista_usuarios[$k]['nome'])."\"(".($lista_usuarios[$k]['cod_usuario']).") do curso ".$novo_cod_curso." sobre novidades no ambiente na consulta: ".$query5);
+            die("Erro ao inserir dados para notificar usuï¿½rio \"".($lista_usuarios[$k]['nome'])."\"(".($lista_usuarios[$k]['cod_usuario']).") do curso ".$novo_cod_curso." sobre novidades no ambiente na consulta: ".$query5);
         }
       }
 
-    case '3.1.5': /*atualiza base de dados para versão 3.1.6 */
-      /* patch 3.1.6 não altera base dos cursos */
+    case '3.1.5': /*atualiza base de dados para versï¿½o 3.1.6 */
+      /* patch 3.1.6 nï¿½o altera base dos cursos */
 
-    case '3.1.6': /*atualiza base de dados para versão 3.1.7 */
-      /* patch 3.1.7 não altera base dos cursos */
+    case '3.1.6': /*atualiza base de dados para versï¿½o 3.1.7 */
+      /* patch 3.1.7 nï¿½o altera base dos cursos */
 
-    case '3.1.7': /*atualiza base de dados para versão 3.1.8 */
+    case '3.1.7': /*atualiza base de dados para versï¿½o 3.1.8 */
       if (($tabelas == "") ||
           ((is_array($tabelas)) && (in_array("Curso_ferramentas", $tabelas)))
          )
@@ -261,7 +261,7 @@ function AtualizaTabelasVersaoCurso($sock, $tabelas, $versao)
 
             $res3 = Enviar($sock, $query3);
             if (!$res3)
-              echo ("Não foi possível converter o tipo do campo '_timestamp' da tabela 'Curso_ferramentas' do curso: ".$novo_cod_curso."<br>\n");
+              echo ("Nï¿½o foi possï¿½vel converter o tipo do campo '_timestamp' da tabela 'Curso_ferramentas' do curso: ".$novo_cod_curso."<br>\n");
           }
         }
       }

@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : instalacao/index.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,7 +42,7 @@
 
   include "instalacao.inc"; 
 
-  ExibirCabecalho(0,"Instalação");
+  ExibirCabecalho(0,"Instalaï¿½ï¿½o");
 
   echo("
     <script type=\"text/javascript\" language=javascript>
@@ -72,26 +72,26 @@
 
  if( ((bool) ini_get('register_globals')) && ($phpok))
   {
-    Paragrafo("<font size=+2>Bem vindo à instalação do ambiente TelEduc!</font>");
+    Paragrafo("<font size=+2>Bem vindo ï¿½ instalaï¿½ï¿½o do ambiente TelEduc!</font>");
     Paragrafo("");  //<br>
-    Paragrafo("<font color=\"#2a6686\">Leia atentamente as instruções contidas em cada passo da instalação</font>");
-    Paragrafo("Nas próximas páginas, serão pedidas informações necessárias para a instalação do TelEduc.");
-    Paragrafo("Os campos já preenchidos indicam quais seriam os valores necessários ao exemplo (conforme o arquivo <a href=# onClick='window.open(\"Guia_de_Instalacao.pdf\", \"Guia_de_Instalacao\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>Guia_de_Instalacao.pdf</a>).");
-    Paragrafo("Siga as instruções para a correta instalação do ambiente.");
+    Paragrafo("<font color=\"#2a6686\">Leia atentamente as instruï¿½ï¿½es contidas em cada passo da instalaï¿½ï¿½o</font>");
+    Paragrafo("Nas prï¿½ximas pï¿½ginas, serï¿½o pedidas informaï¿½ï¿½es necessï¿½rias para a instalaï¿½ï¿½o do TelEduc.");
+    Paragrafo("Os campos jï¿½ preenchidos indicam quais seriam os valores necessï¿½rios ao exemplo (conforme o arquivo <a href=# onClick='window.open(\"Guia_de_Instalacao.pdf\", \"Guia_de_Instalacao\", \"status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes\")'>Guia_de_Instalacao.pdf</a>).");
+    Paragrafo("Siga as instruï¿½ï¿½es para a correta instalaï¿½ï¿½o do ambiente.");
     echo("</td></tr></table>\n");
     echo("</td></tr></table>\n");
     EncerraPagina(0);
   }
   else  {
 	if(!(bool)ini_get('register_globals')){
-    		Paragrafo("Erro: Aparentemente a opção register_globals do php está desligada, a instalação não pode continuar. Edite seu arquivo php.ini e altere a linha:");
+    		Paragrafo("Erro: Aparentemente a opï¿½ï¿½o register_globals do php estï¿½ desligada, a instalaï¿½ï¿½o nï¿½o pode continuar. Edite seu arquivo php.ini e altere a linha:");
     		Paragrafo("<b> register_globals=Off</b> para <b> register_globals=On</b>");
     		Paragrafo("Reinicie o servidor Apache e tente instalar o TelEduc novamente.");
 	}
 	if(!$phpok){
-	    Paragrafo("Erro: Sua versão do PHP não é compatível com o sistema TelEduc, devido um bug na função <b>glob()</b>.");
+	    Paragrafo("Erro: Sua versï¿½o do PHP nï¿½o ï¿½ compatï¿½vel com o sistema TelEduc, devido um bug na funï¿½ï¿½o <b>glob()</b>.");
 	    Paragrafo("Para corrigir o problema instale o PHP <b>4.3.9 ou superior</b>.");
-	    Paragrafo("Após atualizar o PHP, reinicie o servidor Apache e instale o TelEduc novamente.");
+	    Paragrafo("Apï¿½s atualizar o PHP, reinicie o servidor Apache e instale o TelEduc novamente.");
 	
 	}
     echo("</td></tr></table>\n");

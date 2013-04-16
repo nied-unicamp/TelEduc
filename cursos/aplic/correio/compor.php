@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -273,7 +273,7 @@
    */
   echo("      function submitForm(){\n");
  				/* Se o assunto esta vazio, avisa ao usuario
-   				* Frase 43 (ferramenta 11): Voce n‹o informou o assunto da correspondencia. */
+   				* Frase 43 (ferramenta 11): Voce nï¿½o informou o assunto da correspondencia. */
   echo("        if(document.getElementById('assunto').value.replace(\" \", \"\")  == ''){\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases,43)."');\n");
   echo("          document.getElementById('assunto').focus();\n");

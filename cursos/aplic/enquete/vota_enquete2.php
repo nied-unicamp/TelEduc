@@ -1,4 +1,4 @@
-<?
+<?php
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("enquete.inc");

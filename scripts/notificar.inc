@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/configurar/notificar.inc
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -65,8 +65,8 @@ function RetornaListaDeFrasesNotificar($sock, $cod_ferramenta, $cod_lingua)
   }
   else
   {
-    // Erro na execução da cláusula : terminar o programa
-    $msg = "<H3>ERRO : Não foi possível executar a cláusula SQL<H3>";
+    // Erro na execuï¿½ï¿½o da clï¿½usula : terminar o programa
+    $msg = "<H3>ERRO : Nï¿½o foi possï¿½vel executar a clï¿½usula SQL<H3>";
     $msg .= "<BR><B>SQL : </B><BR>".$query;
     $msg .= "<BR><B>Mensagem de erro do Msql : </B><BR>".msql_error();
     $msg .= "<BR><a href=# onclick=history.go(-1);>Voltar</a>";
@@ -99,7 +99,7 @@ function UltimoAcessoAmbiente($sock, $cod_usuario)
 }
 
 /* *********************************************************************
-   PertenceAoGrupo - Retorna trua se o usuario pertence ao grupo e o grupo está ativo
+   PertenceAoGrupo - Retorna trua se o usuario pertence ao grupo e o grupo estï¿½ ativo
    Entrada: $sock - BASE DO CURSO
             $cod_usuario - codigo do usuario
             $cod_grupo_portfolio - codigo do grupo
@@ -120,12 +120,12 @@ function PertenceAoGrupo($sock,$cod_usuario,$cod_grupo_portfolio)
 
 
 /* ********************************************************************************
-   RetornaMaiorItemComentario - Retorna a maior data e o cod_usuario do item ou comentário
-                                    dentro de um tópico ou subtópico
-   Entrada: $sock - Conexão com a base interna
+   RetornaMaiorItemComentario - Retorna a maior data e o cod_usuario do item ou comentï¿½rio
+                                    dentro de um tï¿½pico ou subtï¿½pico
+   Entrada: $sock - Conexï¿½o com a base interna
             $cod_topico - codigo do topico a ser checado
             $tipo_comp - tipo do compartilhamento (F ou T)
-            $data - Data do tópico
+            $data - Data do tï¿½pico
             $cod_usuario - usuario logado
    Saida: maior data
 */
@@ -152,7 +152,7 @@ function RetornaMaiorItemComentario($sock,$cod_topico,$tipo_comp,$dados,$cod_usu
   $res=Enviar($sock,$query);
   $lista_topicos=RetornaArrayLinhas($res);
 
-  // Verifica se existem subtópicos
+  // Verifica se existem subtï¿½picos
   if (count($lista_topicos)>0)
   {
     foreach($lista_topicos as $cod=>$linha)
@@ -224,14 +224,14 @@ function RetornaGruposDoUsuarioNotificar($sock,$cod_usuario)
 }
 
 /* *********************************************************************
-   RetornaNovidadeFerramentas - retorna um array com as datas das últimas
-                                atualizações para o usuário dado.
+   RetornaNovidadeFerramentas - retorna um array com as datas das ï¿½ltimas
+                                atualizaï¿½ï¿½es para o usuï¿½rio dado.
    Entrada: $sock - BASE DO CURSO
             $cod_curso
             $cod_usuario
    Saida: array [$cod_ferramenta]['data'] - data ultimo acesso,
-                                 ['cod_usuario'] - código do usuário
-                                                   que realizou a alteração.
+                                 ['cod_usuario'] - cï¿½digo do usuï¿½rio
+                                                   que realizou a alteraï¿½ï¿½o.
 */
 function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 {
@@ -240,8 +240,8 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   $linha = RetornaLinha($res);
   $cod_coordenador = $linha['cod_coordenador'];
 
-  // Se for visitante ou o participante ainda não foi autorizado
-  // pelo coordenador do curso , nunca há novidade 
+  // Se for visitante ou o participante ainda nï¿½o foi autorizado
+  // pelo coordenador do curso , nunca hï¿½ novidade 
   if ((EVisitante($sock,$cod_curso,$cod_usuario)) || 
   	  (!EAluno($sock, $cod_curso, $cod_usuario) && 
   	   !EFormador($sock, $cod_curso, $cod_usuario) && 
@@ -282,7 +282,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 /********************************************************************
  * 1 - Agenda
  *******************************************************************/
-  // Pega última atualização da agenda (Ativa ou Edição Finalizada)
+  // Pega ï¿½ltima atualizaï¿½ï¿½o da agenda (Ativa ou Ediï¿½ï¿½o Finalizada)
   $query = "select cod_usuario, data from Agenda_itens_historicos ";
   $query .= "where acao = 'A' or acao = 'F' ";
   $query .= "order by data desc limit 1";
@@ -468,7 +468,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[8]['cod_usuario'] = $linha['cod_usuario'];
   }
 
-  // 9 - Fóruns de discussão
+  // 9 - Fï¿½runs de discussï¿½o
   $saida[9]['data'] = 0;
   $query1 = "select cod_usuario, data from Forum_mensagens ";
   $query2 = "select data from Forum ";
@@ -578,7 +578,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
  *******************************************************************/  
   if ($formador)
   {
-    // Se formador, verifica se há itens ou comentários novos em qualquer usuário
+    // Se formador, verifica se hï¿½ itens ou comentï¿½rios novos em qualquer usuï¿½rio
     // Itens novos.
     $query = "select cod_usuario, data from Diario_itens where status='A' and tipo_compartilhamento <> 'P' order by data desc limit 1";
     $res = Enviar($sock,$query);
@@ -610,7 +610,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   }
   else
   {
-    // Se for aluno, checa se há comentário novo em seu diário
+    // Se for aluno, checa se hï¿½ comentï¿½rio novo em seu diï¿½rio
     $query="select Dc.cod_comentarist, Dc.data from Diario_itens Di, Diario_comentarios Dc where (Di.cod_item = Dc.cod_item) and (Di.cod_usuario = ".$cod_usuario.") and (Dc.cod_comentarist != ".$cod_usuario.") and (Di.status = 'A') and (Dc.status = 'A') order by Dc.data desc limit 1";
     $res=Enviar($sock,$query);
     if (RetornaNumLinhas($res) > 0)
@@ -630,7 +630,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $saida[15]=RetornaMaiorItemComentario($sock,1,'T', array('cod_usuario' => $cod_usuario, 'data' => 0),$cod_usuario);
 
 /********************************************************************
- * 16 - Dinâmica
+ * 16 - Dinï¿½mica
  *******************************************************************/    
   $query = "select cod_usuario, data from Dinamica where status = 'A'";
   $res=Enviar($sock, $query);
@@ -642,9 +642,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   }
     
 /********************************************************************
- * 22 - Avaliações
+ * 22 - Avaliaï¿½ï¿½es
  *******************************************************************/    
-  // Pega última atualização da avaliação (Ativa ou Edição Finalizada)
+  // Pega ï¿½ltima atualizaï¿½ï¿½o da avaliaï¿½ï¿½o (Ativa ou Ediï¿½ï¿½o Finalizada)
   $query = "select cod_usuario, data from Avaliacao_historicos ";
   $query .= "where (acao = 'C') or (acao = 'F') order by data desc limit 1";
   $res = Enviar($sock, $query);
@@ -661,23 +661,23 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 
 /**
  *  $query1
- *  1. Formador cria um exercicio, todos os formadores são notificados.
- *  2. Formador edita um exercício, todos os formadores são notificados.
- *  3. Formador aplica um exercício, todos os formadores e alunos são
+ *  1. Formador cria um exercicio, todos os formadores sï¿½o notificados.
+ *  2. Formador edita um exercï¿½cio, todos os formadores sï¿½o notificados.
+ *  3. Formador aplica um exercï¿½cio, todos os formadores e alunos sï¿½o
  *  notificados.
  *
  *  $query2
- *  1. Formador corrige um trabalho, aluno recebe a notificação SE o tempo
- *  de submissão do exercício acabou.
- *  2. Aluno submete um exercício, Formador recebe notificação.
+ *  1. Formador corrige um trabalho, aluno recebe a notificaï¿½ï¿½o SE o tempo
+ *  de submissï¿½o do exercï¿½cio acabou.
+ *  2. Aluno submete um exercï¿½cio, Formador recebe notificaï¿½ï¿½o.
  *
 **/
 
     $query1 = "select data from Exercicios_modelo_historico where ";
     $query1.= "(acao != 'L') and (acao != 'C') ";	
 
-    // As 3 tabelas serão necessárias para verificar o timelimit de um
-    // exercício, para nao notificar aluno antes do fim do exercício.
+    // As 3 tabelas serï¿½o necessï¿½rias para verificar o timelimit de um
+    // exercï¿½cio, para nao notificar aluno antes do fim do exercï¿½cio.
     $query2 = "select hist.data as data from Exercicios_resolucao_historico as hist, ";
     $query2.= "Exercicios_resolucao as reso, Exercicios_aplicado as aplic ";
     $query2.= "where ";
@@ -687,12 +687,12 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
       /* Formador quer saber se algum aluno submeteu exercicio */
       $query2.= "(acao = 'S') ";
     }
-    else    /* se não é formador */
+    else    /* se nï¿½o ï¿½ formador */
     {
       /* Aluno quer saber se algum exercicio foi aplicado */
       $query1.= "and (acao = 'P') ";
 
-      /* Aluno quer saber se tem correção disponível pra ele ver */
+      /* Aluno quer saber se tem correï¿½ï¿½o disponï¿½vel pra ele ver */
       $query2.= "(hist.cod_usuario = ".$cod_usuario.") and (hist.acao = 'C') ";
       $query2.= "and ((hist.cod_resolucao = reso.cod_resolucao) ";
       $query2.= "and (reso.cod_exercicio = aplic.cod_exercicio) ";
@@ -701,7 +701,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $query1.= "order by data desc limit 1";
     $query2.= "order by data desc limit 1";
 
-    $saida[23]['data'] = 0;     /* Inicialização necessária */
+    $saida[23]['data'] = 0;     /* Inicializaï¿½ï¿½o necessï¿½ria */
     $res = Enviar($sock, $query1);
     if (RetornaNumLinhas($res) > 0)
     {
@@ -724,7 +724,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
 /********************************************************************
  * 24 - Enquete
  *******************************************************************/  
-  // Pega atualização do status da Enquete (Ativa ou Encerrada)
+  // Pega atualizaï¿½ï¿½o do status da Enquete (Ativa ou Encerrada)
   MudarDB($sock, "");
   $query  = "select tipo_usuario from Usuario_curso ";
   $query .= "where cod_curso = ".$cod_curso;

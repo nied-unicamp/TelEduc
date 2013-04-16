@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
@@ -144,7 +144,7 @@
   echo("    }\n");
 
   /* *********************************************************************
-  Funcao VerIndice - JavaScript.  Altera o valor de um input hidden para colocar o botão de indice.
+  Funcao VerIndice - JavaScript.  Altera o valor de um input hidden para colocar o botï¿½o de indice.
     Entrada: nome_form = nome do formulario que contem o input que sera alterado
     Saida:   Nenhuma.
   */
@@ -236,7 +236,7 @@
       echo("              <li><span onclick=\"VerToda(document.ajuda1);AlteraAjuda(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral, 508)."</span></li>\n");
 	
       /*?? - Indice */
-      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">Índice</span></li>\n");
+      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">ï¿½ndice</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
@@ -280,7 +280,7 @@
     echo("          <form name=\"ajuda3\" method=\"post\" action=\"\">\n");
     echo("          	<table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
 	echo("		            <tr>\n");
-	echo("		              <td><b>".$nome_ferramenta." - Índice</b>\n");
+	echo("		              <td><b>".$nome_ferramenta." - ï¿½ndice</b>\n");
 	echo ("<br /><br />\n");
     echo("			            <ul>\n");	
 
@@ -365,7 +365,7 @@
       echo("              <li><span onclick=\"VerToda(document.ajuda2);AlteraAjuda(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,508)."</span></li>\n");
       
       /*?? - Indice */
-      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">Índice</span></li>\n");
+      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">ï¿½ndice</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");

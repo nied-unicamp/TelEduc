@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : instalacao/instalacao5.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -42,9 +42,9 @@
   include "instalacao.inc";
 /*
   if (!is_readable($mimetypes))
-    Voltar("<font color=red>O arquivo \"mime.types\" não possui permissão para leitura. Altere suas permissões para 644 e reinicie a instalação</font>");
+    Voltar("<font color=red>O arquivo \"mime.types\" nï¿½o possui permissï¿½o para leitura. Altere suas permissï¿½es para 644 e reinicie a instalaï¿½ï¿½o</font>");
 */
-  ExibirCabecalho(5,"Dados da administração do Ambiente");
+  ExibirCabecalho(5,"Dados da administraï¿½ï¿½o do Ambiente");
 
   session_register("teleduc_login_s");
   session_register("teleduc_senha_s");
@@ -58,7 +58,7 @@
   $sock=ConectarDB($dbbasegeral_s,$teleduc_login_s,$teleduc_senha_s);
 
   if ($sock==-1)
-    Voltar("Erro inesperado! Reinicie a instalação");
+    Voltar("Erro inesperado! Reinicie a instalaï¿½ï¿½o");
 
   // Descomentar quando para valer
   EspalharArquivoAuth($ambiente);
@@ -122,7 +122,7 @@
 
         var host=document.inst.host.value;
         if (host.indexOf('.')< 0) {
-	  alert ('Por Favor, coloque o endereço completo no nome da máquina. Ex: www.nied.unicamp.br e não apenas nied');
+	  alert ('Por Favor, coloque o endereï¿½o completo no nome da mï¿½quina. Ex: www.nied.unicamp.br e nï¿½o apenas nied');
           return false;
         }
         while (host.search(\" \") != -1)
@@ -139,7 +139,7 @@
 
         if (regras1.test(mail_admin) || !regras2.test(mail_admin))
         {
-          alert('email inválido!');
+          alert('email invï¿½lido!');
           return(false);
         }
 
@@ -150,7 +150,7 @@
         }
         if (document.inst.senha_admin.value != document.inst.senha_conf.value)
         {
-          alert('A senha não confere.');
+          alert('A senha nï¿½o confere.');
           return false;
         }
 
@@ -173,19 +173,19 @@
   /* <!----------------- Tabela Interna -----------------> */
   echo("<td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("<tr><td style=\"padding-left: 150px; padding-top: 15px; padding-right: 150px; padding-bottom: 15px; font-size: small;\" align=\"left\">\n");
-  Paragrafo("1 - Diretórios configurados com sucesso!");
+  Paragrafo("1 - Diretï¿½rios configurados com sucesso!");
 
   echo("<br/>\n");
 
-  Paragrafo("<b><font size=+1>Preencha os dados da administração abaixo:</font></b>");
+  Paragrafo("<b><font size=+1>Preencha os dados da administraï¿½ï¿½o abaixo:</font></b>");
 
-  Paragrafo("O ambiente utiliza o usuário '<font color=\"#2a6686\">admtele</font>' para acesso à administração do ambiente (Página Inicial). Especifique uma senha para esse usuário e <b>utilize essas informações</b> para autentificar na Administração do ambiente.");
+  Paragrafo("O ambiente utiliza o usuï¿½rio '<font color=\"#2a6686\">admtele</font>' para acesso ï¿½ administraï¿½ï¿½o do ambiente (Pï¿½gina Inicial). Especifique uma senha para esse usuï¿½rio e <b>utilize essas informaï¿½ï¿½es</b> para autentificar na Administraï¿½ï¿½o do ambiente.");
 
-  CaixaSenha("Senha para a conta de administração do TelEduc (usuário '<font color=\"#2a6686\">admtele</font>'):","senha_admin");
+  CaixaSenha("Senha para a conta de administraï¿½ï¿½o do TelEduc (usuï¿½rio '<font color=\"#2a6686\">admtele</font>'):","senha_admin");
   CaixaSenha("Confirme a senha do Administrador:","senha_conf");
-  CaixaTexto("Nome da máquina com TelEduc na rede (Ex. www.nied.unicamp.br): ","host",$nome_da_maquina); // teleduc por padrão
-  CaixaTexto("Nome do administrador: ","nome_admin",""); // teleduc por padrão
-  CaixaTexto("E-mail do administrador: ","mail_admin",""); // teleduc por padrão
+  CaixaTexto("Nome da mï¿½quina com TelEduc na rede (Ex. www.nied.unicamp.br): ","host",$nome_da_maquina); // teleduc por padrï¿½o
+  CaixaTexto("Nome do administrador: ","nome_admin",""); // teleduc por padrï¿½o
+  CaixaTexto("E-mail do administrador: ","mail_admin",""); // teleduc por padrï¿½o
 
   echo("</td></tr></table>\n");
   echo("</td></tr></table>\n");

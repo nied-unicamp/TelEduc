@@ -1,11 +1,11 @@
-<?
+<?php
 /*
 <!--
 -------------------------------------------------------------------------------
 
     Arquivo : cursos/aplic/intermap/batepapo_fluxo_conversacao.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Núcleo de Informática Aplicada à Educação
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitária "Zeferino Vaz"
+    Cidade Universitï¿½ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -51,7 +51,7 @@
 
   echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("  <tr class=\"head\">\n");
-  // 64 - Sessão:
+  // 64 - Sessï¿½o:
   echo("    <td>".RetornaFraseDaLista($lista_frases,64)."</td>\n");
   echo("  </tr>\n");
 
@@ -82,7 +82,7 @@
   else
   {
     echo("  <tr>\n");
-    // 52 - Nenhuma sessão foi realizada
+    // 52 - Nenhuma sessï¿½o foi realizada
     echo("    <td>".RetornaFraseDaLista($lista_frases,52)."</td>\n");
     echo("  </tr>\n");
   }
