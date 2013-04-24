@@ -71,7 +71,7 @@ switch ($cod_ferramenta) {
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 1;
 
-$sock = MudarDB($sock, $cod_curso_origem);
+ $sock = MudarDB($sock, $cod_curso_origem);
     
 echo ("    <script type=\"text/javascript\" language=\"JavaScript\" defer>\n\n");
 
@@ -107,7 +107,7 @@ echo ("           return true;\n");
 echo ("         else\n");
 echo ("         {\n");
 /*58(biblioteca) - Selecione pelo menos um item*/
-echo ("           alert('" . RetornaFraseDaLista($lista_frases, 153) . "');\n");
+echo ("           alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 58) . "');\n");
 echo ("           return false;\n");
 echo ("         }\n");
 echo ("       }\n");

@@ -60,8 +60,8 @@ include ("../topo_tela.php");
 $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
-$feedbackObject->addAction("validarImportacao", 0, 155);
-$feedbackObject->addAction("FalhaImportacao", 0, 154);
+$feedbackObject->addAction("validarImportacao", 0, 88);
+$feedbackObject->addAction("FalhaImportacao", 0, 151);
 
 
 

@@ -699,21 +699,19 @@
         echo("                            &nbsp;<b>".RetornaFraseDaLista($lista_frases,121)."</b>\n");
         echo("                          </td>\n");
         echo("                          <td style=\"border:none\">\n");
-        /*
-        if(EFormadorMesmo($sock, $cod_curso, $cod_usuario_local)) {			
-			echo("															<div>".$dados['email']." <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,24)."\" onclick=\"document.getElementById('div_email').style.display='block'; this.parentNode.style.display='none';\"/></div>
-		    																				<div id=\"div_email\" style=\"display:none;\">
-				    																			<form action=\"\" method=\"post\">
-						                              					<input class=\"input\" type=\"text\" name=\"c_email\" value=\"".$dados['email']."\"/>
-						                              					<input type=\"hidden\" name=\"c_usuario\" value=\"".$dados['cod_usuario']."\"/>
-						                              					<input class=\"input\" type=\"submit\">
-																									</form>
-																			</div>");
-		} else
-		*/
-			echo("                              ".$dados['email']."\n");
-		echo("                          </td>\n");
-		echo("                        </tr>\n");
+		    if(EFormadorMesmo($sock, $cod_curso, $cod_usuario_local)){			
+		    	echo("															<div>".$dados['email']." <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,24)."\" onclick=\"document.getElementById('div_email').style.display='block'; this.parentNode.style.display='none';\"/></div>
+		    																			<div id=\"div_email\" style=\"display:none;\">
+			    																			<form action=\"\" method=\"post\">
+						                              				<input class=\"input\" type=\"text\" name=\"c_email\" value=\"".$dados['email']."\"/>
+						                              				<input type=\"hidden\" name=\"c_usuario\" value=\"".$dados['cod_usuario']."\"/>
+						                              				<input class=\"input\" type=\"submit\">
+																								</form>
+																							</div>");
+				}else
+	        echo("                              ".$dados['email']."\n");
+				echo("                          </td>\n");
+	      echo("                        </tr>\n");
         /* 122 - Telefone: */
         echo("                        <tr>\n");
         echo("                          <td style=\"border:none; text-align:right;\">\n");

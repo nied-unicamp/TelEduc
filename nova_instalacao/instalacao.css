@@ -1,0 +1,145 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+body {
+	background: url("../cursos/aplic/imgs/fdoBody.gif") repeat-x;
+	font-family: Arial,Verdana,Trebuchet MS;
+	font-size: 1em;
+}	
+
+span.etapa {
+	float: right;
+}	
+
+a {
+	color:#3F6AA0;
+	font-weight:bold;
+	text-decoration:none;
+}
+pre {
+	background-color:#EEEEEE;
+	border:2px solid #888888;
+	margin-top: 5px;
+	padding:5px;
+	overflow: auto;
+}
+
+#logo {
+	float: left;
+	display: block;
+	margin: 25px 0px 0px 15px;
+}
+
+h1 {
+	float: left;
+    background:none repeat scroll 0 0 #3F6AA0;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: bold;
+	padding: 5px;
+	position: relative;
+	top: 50px;
+	left: 20px;
+	width: 82%;
+}
+
+.container {
+	width: 1010px;
+	margin-left: 10px;
+	
+}
+
+.content {
+	height: auto;
+	background-color: #FFF;
+	display: block;
+	float: left;
+	left: 3px;
+	margin:0 auto;
+	position:relative;
+	top:30px;
+	width:590px;
+	padding: 10px;
+	border: 5px solid #DCDCDC;
+}
+
+.console {
+	background-color:#F9F9FF;
+	border:2px solid #658CBC;
+	color:#454545;
+	float:right;
+	height:auto;
+	left:3px;
+	margin:0 28px 0 auto;
+	padding:5px;
+	position:relative;
+	top:31px;
+	width:337px;
+}
+
+#console-header {
+	text-align: center;
+	margin-bottom: 3px;
+}
+
+.content-header {
+	height: auto;
+	background-color: #E3DDC7;
+	display:block;
+	float:left;
+	left:3px;
+	margin:0 auto;
+	position:relative;
+	top:20px;
+	width:973px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.footer {
+	display:block;
+	float:left;
+	position:relative;
+	top:40px;
+}
+
+.footer #signature {
+	font-size: 0.7em;
+	margin-top: 14px;
+	width: 620px;
+	position: relative;
+	left: 70px;
+	
+}
+
+#logo_sampler {
+	float: left;
+}
+
+input.form{
+	text-align: left;
+	margin: 0px 10px 10px 240px;
+	border:2px solid #99BBCC;
+	padding: 3px;
+	font-size: 0.9em;
+}
+
+input.formtn{
+	text-align: left;
+	margin: 0px 10px 10px 0px;
+	border:2px solid #99BBCC;
+	padding: 3px;
+	font-size: 0.9em;
+}
+
+label {
+	width:230px;
+	text-align: right;
+	position: absolute;
+}
+
+.feedbackp {
+	font-size: 0.8em;
+}

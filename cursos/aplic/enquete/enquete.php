@@ -613,7 +613,7 @@
 
       echo("                    <td align=\"center\">".UnixTime2Data($lista_enquetes[$num]['data_inicio'])."</td>\n");
       echo("                    <td align=\"center\">".UnixTime2Data($lista_enquetes[$num]['data_fim'])."</td>\n");
-      echo("                    <td align=\"center\">".($votou ? RetornaFraseDaLista(RetornaListaDeFrases($sock,-5),509) : RetornaFraseDaLista(RetornaListaDeFrases($sock,-5),510))."</td>\n");
+      echo("                    <td align=\"center\">".($votou ? "Sim" : "N&atilde;o")."</td>\n");
       echo("                  </tr>\n");
 
       // Incrementa o contador.

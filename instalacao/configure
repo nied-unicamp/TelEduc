@@ -1,0 +1,112 @@
+echo
+echo "*********************************************************"
+echo Copiando arquivo teleduc.conf para raiz do usuário ../.. 
+echo "*********************************************************"
+echo
+
+chmod 777 teleduc.conf
+yes | cp -R --preserve=mode teleduc.conf ../..
+
+echo
+echo "************************************************************"
+echo  Copiando arquivo .auth para todos os diretrios necessários 
+echo "************************************************************"
+echo
+chmod 777 .auth
+
+yes | cp -R --preserve=mode .auth ../
+yes | cp -R --preserve=mode .auth ../administracao
+yes | cp -R --preserve=mode .auth ../administracao/base_curso
+yes | cp -R --preserve=mode .auth ../ajuda
+yes | cp -R --preserve=mode .auth ../avaliarcurso
+yes | cp -R --preserve=mode .auth ../cursos
+yes | cp -R --preserve=mode .auth ../cursos/aplic
+yes | cp -R --preserve=mode .auth ../cursos/aplic/acessos
+yes | cp -R --preserve=mode .auth ../cursos/aplic/administracao
+yes | cp -R --preserve=mode .auth ../cursos/aplic/agenda
+yes | cp -R --preserve=mode .auth ../cursos/aplic/ajuda
+yes | cp -R --preserve=mode .auth ../cursos/aplic/bibliotecas
+yes | cp -R --preserve=mode .auth ../cursos/aplic/bibliotecas/rte/
+yes | cp -R --preserve=mode .auth ../cursos/aplic/bibliotecas/htmlarea/
+yes | cp -R --preserve=mode .auth ../cursos/aplic/busca
+yes | cp -R --preserve=mode .auth ../cursos/aplic/configurar
+yes | cp -R --preserve=mode .auth ../cursos/aplic/correio
+yes | cp -R --preserve=mode .auth ../cursos/aplic/diario
+yes | cp -R --preserve=mode .auth ../cursos/aplic/dinamica
+yes | cp -R --preserve=mode .auth ../cursos/aplic/enquete
+yes | cp -R --preserve=mode .auth ../cursos/aplic/extracao
+yes | cp -R --preserve=mode .auth ../cursos/aplic/estrutura
+yes | cp -R --preserve=mode .auth ../cursos/aplic/forum
+yes | cp -R --preserve=mode .auth ../cursos/aplic/grupos
+yes | cp -R --preserve=mode .auth ../cursos/aplic/imgs
+yes | cp -R --preserve=mode .auth ../cursos/aplic/js-css
+yes | cp -R --preserve=mode .auth ../cursos/aplic/material
+yes | cp -R --preserve=mode .auth ../cursos/aplic/mural
+yes | cp -R --preserve=mode .auth ../cursos/aplic/perfil
+yes | cp -R --preserve=mode .auth ../cursos/aplic/portfolio
+yes | cp -R --preserve=mode .auth ../cursos/aplic/xajax_0.2.4
+yes | cp -R --preserve=mode .auth ../estatistica
+yes | cp -R --preserve=mode .auth ../extracao
+yes | cp -R --preserve=mode .auth ../imgs
+yes | cp -R --preserve=mode .auth ../infocurso
+yes | cp -R --preserve=mode .auth ../pagina_inicial
+yes | cp -R --preserve=mode .auth ../xajax_0.2.4
+
+echo 
+echo "*************************************"
+echo  Ajustando autorização de diretorios 
+echo "*************************************"
+echo
+
+chmod 755 .
+chmod 755 ../
+chmod 755 ../
+chmod 755 ../administracao
+chmod 755 ../administracao/base_curso
+chmod 755 ../ajuda
+chmod 755 ../avaliarcurso
+chmod 755 ../cursos
+chmod 755 ../cursos/aplic
+chmod 755 ../cursos/aplic/acessos
+chmod 755 ../cursos/aplic/administracao
+chmod 755 ../cursos/aplic/agenda
+chmod 755 ../cursos/aplic/ajuda
+chmod 755 ../cursos/aplic/bibliotecas
+chmod 755 ../cursos/aplic/bibliotecas/rte/
+chmod 755 ../cursos/aplic/bibliotecas/htmlarea/
+chmod 755 ../cursos/aplic/busca
+chmod 755 ../cursos/aplic/configurar
+chmod 755 ../cursos/aplic/correio
+chmod 755 ../cursos/aplic/diario
+chmod 755 ../cursos/aplic/dinamica
+chmod 755 ../cursos/aplic/enquete
+chmod 755 ../cursos/aplic/extracao
+chmod 755 ../cursos/aplic/estrutura
+chmod 755 ../cursos/aplic/forum
+chmod 755 ../cursos/aplic/grupos
+chmod 755 ../cursos/aplic/imgs
+chmod 755 ../cursos/aplic/js-css
+chmod 755 ../cursos/aplic/material
+chmod 755 ../cursos/aplic/mural
+chmod 755 ../cursos/aplic/perfil
+chmod 755 ../cursos/aplic/portfolio
+chmod 755 ../cursos/aplic/xajax_0.2.4
+chmod 777 ../cursos/diretorio
+chmod 755 ../estatistica
+chmod 755 ../extracao
+chmod 755 ../imgs
+chmod 755 ../infocurso
+chmod 755 ../pagina_inicial
+chmod 755 ../xajax_0.2.4
+chmod 777 ../..
+echo
+echo  Os diretórios ../.. e ../cursos estão com permissão 777. 
+echo  Aps encerrar a instalação, os mesmos estarão com permissão 755. 
+echo
+echo
+echo "|--------------------------------------------------------------------|"
+echo "|                                                                    |"
+echo "|**** CONFIRA SE AO EXECUTAR O CONFIGURE N�O OCORREU NENHUM ERRO ****|"
+echo "|                                                                    |"
+echo "|--------------------------------------------------------------------|"
+echo
