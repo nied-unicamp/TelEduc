@@ -49,7 +49,6 @@
   $cod_pagina_ajuda=1;  
   $tabela = "Pergunta";
   
-  
   require_once("../xajax_0.2.4/xajax.inc.php");  
 
   $objPerguntas = new xajax();
@@ -874,7 +873,7 @@
         	echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
         	echo("      </tr>\n");
         	echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
-        	echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
+        	echo("        <td align=left><b>".RetornaFraseDaLista($lista_frases, 11).":</b>&nbsp;&nbsp;\n");
         	echo("			<div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div>\n");
         	echo("		  </td>\n");
 			//      	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");

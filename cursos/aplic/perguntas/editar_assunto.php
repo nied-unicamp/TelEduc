@@ -46,7 +46,9 @@
 
   $cod_ferramenta = 6;  
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda=7;  
+  $cod_pagina_ajuda=7;
+  
+  $lista_frases_geral = RetornaListaDeFrases($sock,-1);
   
     /**************** ajax ****************/
 

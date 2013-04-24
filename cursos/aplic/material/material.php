@@ -122,10 +122,7 @@
   $diretorio_arquivos=RetornaDiretorio($sock,'Arquivos');
   $diretorio_temp=RetornaDiretorio($sock,'ArquivosWeb');
   $diretorio_raiz=RetornaDiretorio($sock,'raiz_www');
-  
-  //echo getcwd()."<br>";
-  //var_dump($diretorio_arquivos);
-  //var_dump($diretorio_temp);
+
   Desconectar($sock);
 
   $sock = Conectar($cod_curso);

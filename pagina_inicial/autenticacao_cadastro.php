@@ -74,8 +74,6 @@
   include("../topo_tela_inicial.php");
 
   
-  
-  
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   // adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase 
@@ -95,9 +93,6 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  
-  
-  
 
   // Esse $destino � utilizado como verifica��o para execu��o do
   // feedback hardcoded abaixo (com link na mensagem)
@@ -111,10 +106,10 @@
   // Elimina os espa�os para verificar se o titulo nao eh formado por apenas espa�os
   // 181 - Por favor preencha o campo 'Login'.
   // 182 - Por favor preencha o campo \"Senha\".
-  echo("      function TestaNome(form){\n");
-  echo("        Campo_login = form.login.value;;\n");
-  echo("        Campo_senha = form.senha.value;\n");
-  echo("        while (Campo_login.search(\" \") != -1){\n");
+  echo("     function TestaNome(form){\n");
+  echo("          Campo_login = form.login.value;\n");
+  echo("          Campo_senha = form.senha.value;\n"); 
+  echo("          while (Campo_login.search(\" \") != -1){\n");
   echo("          Campo_login = Campo_login.replace(/ /, \"\");\n");
   echo("        }\n");
   echo("        if (Campo_login == ''){\n");
@@ -161,7 +156,7 @@
   }else{
   	echo("          <h4>".RetornaFraseDaLista($lista_frases,183)."</h4>\n");
   }
-
+  
   // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
   echo("           <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../cursos/aplic/imgs/btFont1.gif\"/></a>\n");
@@ -173,7 +168,7 @@
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     if($destino == "inscricao" && $origem==NULL){
   	echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
-  }
+    }
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td colspan=\"4\">\n");
