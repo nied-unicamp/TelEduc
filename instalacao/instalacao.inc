@@ -1,362 +1,276 @@
 <?php
-/*
-<!--
--------------------------------------------------------------------------------
+/* ************************************************************************
+   verificaRequisitos - Verifica se os pre-requisitos das etapas estao devidamente instalados.
 
-    Arquivo : instalacao/instalacao.inc
-
-    TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
-    Copyright (C) 2001  NIED - Unicamp
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2 as
-    published by the Free Software Foundation.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-    You could contact us through the following addresses:
-
-    Nied - N�cleo de Inform�tica Aplicada � Educa��o
-    Unicamp - Universidade Estadual de Campinas
-    Cidade Universit�ria "Zeferino Vaz"
-    Bloco V da Reitoria - 2o. Piso
-    CEP:13083-970 Campinas - SP - Brasil
-
-    http://www.nied.unicamp.br
-    nied@unicamp.br
-
-------------------------------------------------------------------------------
--->
+   Entrada: $etapa - Numero da etapa em questao
+            $flag  - variável que armazena bit a bit os erros ocorridos durante o passo atual.
+   Saida:   $flag  - Variável que armazena bit a bit os erros ocorridos durante o passo atual.
 */
+function &verificaRequisitos($etapa, $flag = 0) {
+	switch ($etapa) {
+		case 1:
+			if (!function_exists('mysql_connect')) {
+				$flag |= 1;
+			}
+			$versao = explode('.',phpversion());
+			if ($versao[0] == 5 && $versao[1] > 3) {
+				$flag |= 2;
+			}
+			if (!(bool) ini_get('register_globals')) {
+				$flag |= 4;
+			}
+			if (!(bool) ini_get('magic_quotes_gpc')) {
+				$flag |= 8;
+			}
 
-/*==========================================================
-  ARQUIVO : instalacao/instalacao.inc
-  ========================================================== */
+			break;
 
-session_start();
-/*if(strcmp(session_name(), "teleduc4.0") != 0){
-  session_name("teleduc4.0");
-}*/
+		case 2:
+			clearstatcache();
 
-function RetornaSessionID()
-{
-  return SID;
+			if (!is_writable('../cursos/aplic/bibliotecas/')) {
+				$flag |= 1;
+			}
+
+			// Vamos exibir apenas um erro de mysql de cada vez, pois a função mysql_error retorna o erro do último comando de sql.
+			if (!$sock = mysql_connect($_SESSION['dbhost'].':'.$_SESSION['dbport'], $_SESSION['dbuser'], $_SESSION['dbpwd'])) {
+				$flag |= 2;
+				break;
+			}
+			if (!$query = mysql_query('CREATE DATABASE '.$_SESSION['dbname'].' DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;', $sock)) {
+				$flag |= 4;
+				break;
+			}
+			if (!$db = mysql_select_db($_SESSION['dbname'], $sock)) {
+				$flag |= 8;
+				break;
+			}
+
+			// Se não deu erro de mysql, podemos escrever o arquivo de configuração.
+			$comando = 'mysql -h ' .$_SESSION['dbhost']. ' -u ' .$_SESSION['dbuser']. ' -p' .$_SESSION['dbpwd']. ' ' .$_SESSION['dbname']. ' < base_geral.sql';
+			exec($comando, $saida = array(), $sucesso);
+				
+			$conteudo = "<?php\n";
+			$conteudo .= '$_SESSION[\'dbnamebase\']=\''.$_SESSION['dbname']."';\n";
+			$conteudo .= '$_SESSION[\'dbnamecurso\']=\''.$_SESSION['dbnamecurso']."';\n";
+			$conteudo .= '$_SESSION[\'dbuser\']=\''.$_SESSION['dbuser']."';\n";
+			$conteudo .= '$_SESSION[\'dbpassword\']=\''.$_SESSION['dbpwd']."';\n";
+			$conteudo .= '$_SESSION[\'dbhost\']=\''.$_SESSION['dbhost']."';\n";
+			$conteudo .= '$_SESSION[\'dbport\']=\''.$_SESSION['dbport']."';\n";
+			$conteudo .= '$_SESSION[\'dbtmpnamecurso\']=\''.$_SESSION['dbname']."tmp';\n";
+			$conteudo .= '$_SESSION[\'dbtmpuser\']=\''.$_SESSION['dbuser']."';\n";
+			$conteudo .= '$_SESSION[\'dbtmppassword\']=\''.$_SESSION['dbpwd']."';\n";
+			$conteudo .= '$_SESSION[\'dbtmphost\']=\''.$_SESSION['dbhost']."';\n";
+			$conteudo .= '$_SESSION[\'dbtmpport\']=\''.$_SESSION['dbport']."';\n";
+			$conteudo .= "?>\n";
+
+			$arquivo = fopen('../cursos/aplic/bibliotecas/teleduc.inc', "w");
+			fwrite($arquivo, $conteudo);
+			fclose($arquivo);
+
+			break;
+
+		case 3:
+			clearstatcache();	
+
+			if (!is_dir($_SESSION['arquivos']) && !is_writable($_SESSION['arquivos'].'/')) {
+				if (!mkdir($_SESSION['arquivos'], 0775)) {
+					$flag |= 1;
+					break;
+				}
+			}
+
+			// Se o diretório existe, pode ser modificado e temos permissão, 
+			// tentamos criar um link simbólico para ele para testar.
+			$arquivo = fopen($_SESSION['arquivos'].'/teste.txt', "w");
+			fwrite($arquivo, '... testando pasta de arquivos. EOF\n');
+			fclose($arquivo);
+
+			if (!is_link('../cursos/diretorio/123.txt')) {
+				if (!symlink($_SESSION['arquivos'].'/teste.txt', '../cursos/diretorio/123.txt')) {
+					$flag |= 2;
+					break;
+				}
+			}
+
+			// Se conseguimos criar um link simbólico
+			// de teste, então o apagamos.
+			unlink($_SESSION['arquivos'].'/teste.txt');
+			unlink('../cursos/diretorio/123.txt');
+
+			$sock = mysql_quick_connect();
+	
+			mysql_query("TRUNCATE Config;");
+			mysql_query("TRUNCATE Diretorio;");
+
+			mysql_query("INSERT INTO Config VALUES ('versao', '".VERSAO."');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('listarext', 'sim');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('host', '".$_SESSION['host']."');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('curso_form', 'nao');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('normas', ' ');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('extrator', 'nao');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('raiz_www', '".$_SESSION['www']."');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('Arquivos', '".$_SESSION['arquivos']."');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('sendmail', '".$_SESSION['sendmail']."');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('ArquivosWeb', '../../diretorio');", $sock);
+
+
+			break;
+
+		case 4:
+			$sock = mysql_quick_connect();
+			
+			mysql_query("TRUNCATE Usuario;");
+			
+			mysql_query("INSERT INTO Config VALUES ('adm_nome', '".$_SESSION['admtele_nome']."');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('adm_email', '".$_SESSION['admtele_email']."');", $sock);
+			mysql_query("INSERT INTO Config VALUES ('admtele', '".crypt($_SESSION['admtele_senha'],"AA")."');", $sock);
+
+			mysql_query("INSERT INTO Usuario VALUES (-1,'admtele','".crypt($_SESSION['admtele_senha'],"AA")."','".$_SESSION['admtele_nome']."','','".$_SESSION['admtele_email']."','','','','','',0,'M','','',3,'',0,1,NULL);", $sock);
+
+			break;
+	}
+
+	return $flag;
 }
 
-function ExibirCabecalho($fase,$titulo)
-{
-  global $fase_g;
-  $fase_g=$fase;
-  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-  echo("<html lang=\"pt\">\n");
-  echo("<head>\n");
-  echo("<title>TelEduc - Instala&ccedil;&atilde;o</title>\n");
-  echo("<meta name=\"robots\" content=\"follow,index\" />\n");
-  echo("<meta name=\"description\" content=\"\" />\n");
-  echo("<meta name=\"keywords\" content=\"\" />\n");
-  echo("<meta name=\"owner\" content=\"\" />\n");
-  echo("<meta name=\"copyright\" content=\"\" />\n");
-  echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
-  echo("<link href=\"../cursos/aplic/js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  echo("</head>\n");
+/* ************************************************************************
+   exibeErro - Exibe a mensagem de erro / falha na instalacao de acordo com a etapa e flag de erro.
 
-  echo("<body>\n");
-  echo("  <a name=\"topo\"></a>\n");
-  echo("  <h1><a href=\"../pagina_inicial/index.php\"><img src=\"../cursos/aplic/imgs/logo.gif\" alt=\"TelEduc . Educa 	&ccedil;&atilde;o � Dist�ncia\" border=\"0\" /></a></h1>\n");
-  echo("  <table id=\"container\" cellpadding=\"0\" cellspacing=\"0\">\n");
-  echo("    <tbody><tr><td valign=\"top\">\n");
-  echo("          <h3 style=\"margin: 40px 0px 0px 150px;\">".$titulo."</h3>\n");
-  echo("        </td>\n");
-  echo("      </tr>\n");
-  echo("      <tr>\n");
-  echo("        <td id=\"conteudo\" valign=\"top\" width=\"100%\">\n");
-  echo("          <h4 style=\"margin-left: 150px;\">Instala&ccedil;&atilde;o - Fase ".$fase." de 6</h4>\n");
-  echo("          <br />\n");
-
-}
-
-function AbreForm()
-{
-  global $fase_g;
-  $fase=$fase_g;
-  echo("<form action='instalacao".($fase+1).".php' name=inst onSubmit='return(Valida());' method=post>\n");
-}
-
-function AbreFormFinal()
-{
-  global $fase_g;
-  $fase=$fase_g;
-  echo("<form action='../pagina_inicial/autenticacao_cadastro.php'>\n");
-}
-
-function Paragrafo($texto)
-{
-  echo("<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
-  echo($texto);
-  echo("\n</p>\n");
-}
-
-function EncerraPagina()
-{
-  echo("<br /><div align=right><input class=input type=submit value='Continuar' /></div>\n");
-  echo("</form>\n");
-  echo("</td></tr></table>\n");
-  echo("</body></html>\n");
-}
-
-function EncerraPaginaFinal()
-{
-  echo("<br /><div align=right><input class=input type=submit value='Entrar no TelEduc' /></div>\n");
-  echo("</form>\n");
-  echo("</td></tr></table>\n");
-  echo("</body></html>\n");
-}
-
-function Destaque($texto)
-{
-  echo("<ul><font face=Verdana,Arial,Helvetica size=-1>\n");
-  echo($texto);
-  echo("\n</font></ul>\n");
-}
-
-function CaixaTexto($texto,$nome_var,$padrao)
-{
-  if (func_num_args() > 3)
-    $arg = func_get_arg(3);
-  else
-    $arg = "";
-  echo("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face=Verdana,Arial,Helvetica size=-1>$texto<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=input type=text name=".$nome_var." value='".$padrao."' /></font>".$arg."<br/><br/>\n");
-}
-
-function Radio($texto,$nome_var,$check,$padrao)
-{
-  echo("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face=Verdana,Arial,Helvetica size=-1><input type='radio' name=".$nome_var." value='".$padrao."' ".$check." /> $texto</font><br/>\n");
-}
-
-function CaixaSenha($texto,$nome_var)
-{
-  echo("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face=Verdana,Arial,Helvetica size=-1>$texto<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class=input type=password name=".$nome_var." /></font><br/><br/>\n");
-}
-
-/* *******************************************
-   ConectarDB - Conecta a base de dados pedida
-   Entrada: $base - nome da base de dados
-   Saida: socket do servidor de base de dados, se ok.
-          interrompe o c�digo e envia alerta caso contrario
+   Entrada: $etapa - Numero da etapa em questao
+            $erro  - variável que armazena bit a bit os erros ocorridos durante o passo atual.
+   Saida:   void
 */
-function ConectarDB($base,$dbuser,$dbpassword)
-{
+function exibeErro($etapa,$erro) {
 
-  if (! $sock = mysql_connect('localhost',$dbuser,$dbpassword))
-  {
-    return -1;
-  }
-  else
-  {
-    if (! mysql_select_db($base, $sock))
-    {
-      return -1;
-    }
-    else
-    {
-      //echo("</div>\n");
-      return($sock);
-    }
-  }
+	$content_header = "Não foi possível continuar com a instalação.";
+	
+	switch ($etapa) {
+		case 1:
+			if ($erro & 1) {
+				$console .= "<p class=feedbackp>O módulo php-mysql não foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>O módulo php-mysql não foi encontrado.</p>";
+				$content .= "<br />";
+				$content .= "<p>A instalação desse módulo deve ser feita de acordo com a distribuição utilizada.</p>";
+				$content .= "<br />";
+			}
+			if ($erro & 2) {
+				$console .= "<p class=feedbackp>A versão do PHP está acima da requerida. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>O TelEduc necessita da versão <b>5.3.x</b> ou inferior para funcionar corretamente.</p>";
+				$content .= "<br />";
+				$content .= "<p>Faça o downgrade do seu PHP se desejar continuar com a instalação.</p>";
+				$content .= "<br />";
+			}
+			if ($erro & 4) {
+				$console .= "<p class=feedbackp>A diretiva register_globals está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>A diretiva <b>register_globals</b> deveria estar ligada.</p>";
+				$content .= "<br />";
+				$content .= "<pre>register_globals = On</pre>";
+				$content .= "<br />";
+				$content .= "<p>Para isso, edite o arquivo de configuração do seu PHP.</p>";
+				$content .= "<br />";
+				$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir alteração da diretiva register_globals.</p>";
+				$content .= "<br/>";
+			}
+			if ($erro & 8) {
+				$console .= "<p class=feedbackp>A diretiva magic_quotes_gpc está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>A diretiva <b>magic_quotes_gpc</b> deveria estar ligada.</p>";
+				$content .= "<br />";
+				$content .= "<pre>magic_quotes_gpc = On</pre>";
+				$content .= "<br />";
+				$content .= "<p>Para isso, edite o arquivo de configuração do seu PHP.</p>";
+				$content .= "<br />";
+				$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir alteração da diretiva magic_quotes_gpc.</p>";
+				$content .= "<br />";
+			}
+			break;
+		case 2:
+			if ($erro & 1) {
+				$console .= "<p class=feedbackp>Erro de permissão em <b>cursos/aplic/bibliotecas/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			}
+			if ($erro & 2) {
+				$console .= "<p class=feedbackp>Não foi possível realizar a conexão com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			}
+			if ($erro & 4) {
+				$console .= "<p class=feedbackp>Não foi possível criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			}
+			if ($erro & 8) {
+				$console .= "<p class=feedbackp>Não foi possível selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			}
+
+			if ($erro & 1) {
+				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para escrever e ler no seguinte diretório:</p>";
+				$content .= "<pre>".str_replace("instalacao", "cursos/aplic/bibliotecas/", getcwd())."</pre>";
+				$content .= "<br />";
+				$content .= "<p>Para prosseguir com a instalação é necessário configurar o diretório com permissão <b>775 (drwxrwxr-x)</b> para um dos usuários acima citados.</p>";
+				$content .= "<br />";
+			}
+			else {
+				$content .= "<p>Verifique os dados inseridos na etapa anterior. (<b>nome do banco, usuário, senha, servidor etc</b>)</p>";
+				$content .= "<br />";
+				$content .= "<p>Em caso de instalação em banco de dados remoto, verifique se não há algum firewall impedindo a conexão.</p>";
+				$content .= "<br />";
+				$content .= "<p>Além disso, veja se foi dada a permissão para a conexão remota.</p>";
+				$content .= "<br />";
+				$content .= "<p>O erro exibido pelo MySQL foi:</p>";
+				$content .= "<pre>".mysql_error()."</pre>";
+				$content .= "<br />";
+			}
+			break;
+		case 3:
+			if ($erro & 1) {
+				$console .= "<p class=feedbackp>Não foi possível criar o diretório de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				
+				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para criar o seguinte diretório:</p>";
+				$content .= "<pre>".$_SESSION['arquivos']."/</pre>";
+				$content .= "<br />";
+				$content .= "<p>Isso impedirá o ambiente de fazer o upload de arquivos.</p>";
+				$content .= "<br />";
+			}
+			if ($erro & 2) {
+				$console .= "<p class=feedbackp>Não foi possível fazer links para a diretório de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+			
+				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para escrever e ler no seguinte diretório:</p>";
+				$content .= "<pre>teleduc4/cursos/diretorio/</pre>";
+				$content .= "<br />";
+				$content .= "<p>O upload de arquivos é feito para uma pasta não acessível pela web com o objetivo de proteger os arquivos de acessos não autorizados.</p>";
+				$content .= "<br />";
+				$content .= "<p>Quando um usuário autenticado tenta acessar um dos aos anexos, é feito um link da pasta temporária para a pasta de arquivos.</p>";
+				$content .= "<br />";
+			}
+			$content .= "<p>Para prosseguir com a instalação é necessário criar e configurar o diretório com permissão <b>775 (drwxrwxr-x)</b> para um dos usuários acima citados.</p>";
+			$content .= "<br />";
+			break;
+		case 4:
+			break;
+	}
+
+	$content .= "<div class=formulario>";
+		$content .= "<form method='GET' action='index.php'>";
+			if ($etapa == 3) {
+				$content .= "<input type='button' class='form' style='margin-left: 105px;' value='Voltar' onClick='history.go(-1)'>";
+				$content .= "<input type='button' class='formtn' value='Tentar Novamente' onClick='history.go(0)'>";
+				$content .= "<input type='button' class='formtn' value='Pular Verificação' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+			}
+			else {
+				$content .= "<input type='button' class='form' style='margin-left: 195px;' value='Voltar' onClick='history.go(-1)'>";
+				$content .= "<input type='button' class='formtn' value='Tentar Novamente' onClick='history.go(0)'>";
+			}
+		$content .= "</form>";
+	$content .= "</div>";
+
+	include 'template_instalacao.php';
+	exit();
 }
 
-function Enviar($sock, $query)
-{
-  if (!($ms = mysql_query($query, $sock)))
-    return -1;
-  else
-    return($ms);
+// For faster database connection use this "macro" that returns $sock on success and FALSE on failure.
+function mysql_quick_connect() {
+	$sock = mysql_connect($_SESSION['dbhost'].':'.$_SESSION['dbport'], $_SESSION['dbuser'], $_SESSION['dbpwd']);
+	mysql_select_db($_SESSION['dbname'], $sock);
+	return ($sock ? $sock : false);
 }
-
-function Voltar($mensagem)
-{
-  echo("<p><font face=Verdana,Arial,Helvetica size=-1 color=red><b>\n");
-  echo($mensagem);
-  echo("\n<b></font></p>\n");
-  echo("<form><input type=button value='Voltar' onClick=history.go(-1); /></form>\n");
-  echo("</body></html>\n");
-  die;
-}
-
-/*Funcion CriaBase
-Descri��o: Preenche a base de dados geral criada pelo TelEduc com as tabelas necess�rias.
-entrada:
-dbbasegeral - Nome da base criada
-teleduc_login - login de acesso ao mysql
-teleduc_senha - senha de acesso ao mysql
-sa�da:
-0 - se a extra��o ocorreu OK
--1 - se ocorreu algum erro nas etapas.
-*/
-
-function CriaBase($dbbasegeral,$teleduc_login,$teleduc_senha)
-{
-if(file_exists("base_geral.table")){
-  if(!shell_exec("mysql -u".$teleduc_login." -p".$teleduc_senha." ".$dbbasegeral." < base_geral.table"))
-    return true;
-  else
-    return false;
-}
-else
-  return false;
-}
-
-/*Funcion CriaTelEducConf
-Descri��o: Cria o arquivo teleduc.conf onde s�o armazenados o usu�rio e senha do MySQL e os nomes da Base Geral e da Base do Curso
-$arquivo - nome do arquivo 
-$dbbasegeral - Nome da Base Geral
-$dbbasecurso - Nome da Base do Curso
-$teleduc_login - nome de usu�rio do MySQL usado pelo TelEduc
-$teleduc_senha - senha do usu�rio MySQL
-$dbtmpbasecurso  - Nome da base tempor�ria
-$tmpteleduc_login - Nome de usu�rio MySQL para a base Tempor�ria
-$tmpteleduc_senha - Senha do usu�rio MySQL para a base tempor�ria
-$importar_curso_extr - Vari�vel que indica se o curso usar� bases tempor�rias
-sa�da:
-0 - se a cria��o do arquivo ocorreu OK
--1 - se ocorreu algum erro nas etapas.
-*/
-
-function CriaTelEducConf($arquivo,$dbbasegeral,$dbbasecurso,$teleduc_login,$teleduc_senha,$dbtmpbasecurso,$tmpteleduc_login,$tmpteleduc_senha, $importar_curso_extr)
-{
-  if ($fh=fopen($arquivo,"w"))
-  {
-    fputs($fh,"dbnamebase=".$dbbasegeral."\n");
-    fputs($fh,"dbnamecurso=".$dbbasecurso."\n");
-    fputs($fh,"dbuser=".$teleduc_login."\n");
-    fputs($fh,"dbpassword=".$teleduc_senha."\n");
-    fputs($fh,"dbhost=localhost\n");
-    fputs($fh,"dbport=3306\n");
-/* Se o usu�rio optar por n�o importar itens de cursos extra�dos,
- deixar os campos dbtmpnamecurso, dbtmpuser, dbtmppassword, dbtmphost,
-  dbtmpport em branco e n�o realizar grant � conta tempor�ria.*/
-
-// Inserir Valores  
-    if ($importar_curso_extr)
-    {
-      fputs($fh,"dbtmpnamecurso=".$dbtmpbasecurso."\n");
-      fputs($fh,"dbtmpuser=".$tmpteleduc_login."\n");
-      fputs($fh,"dbtmppassword=".$tmpteleduc_senha."\n");
-      fputs($fh,"dbtmphost=localhost\n");
-      fputs($fh,"dbtmpport=3306\n");
-    }
-// Deixar Vazio
-    else
-    {
-      fputs($fh,"dbtmpnamecurso=\n");
-      fputs($fh,"dbtmpuser=\n");
-      fputs($fh,"dbtmppassword=\n");
-      fputs($fh,"dbtmphost=\n");
-      fputs($fh,"dbtmpport=\n");
-    }
-  }
-  else
-    return -1;
-
-  fclose($fh);
-  return 0;
-}
-
-function CriaDiretorio($diretorio)
-{
-  $r1=mkdir ($diretorio, 0777);
-  $r2=chmod ($diretorio, 0777);
-  return ($r1 & $r2);
-}
-
-function CompareRetornaArrayDiretorio($ar1, $ar2)
-{
-  if ($ar1['Diretorio']<$ar2['Diretorio'])
-    return -1;
-  else if ($ar1['Diretorio']>$ar2['Diretorio'])
-    return 1;
-  if ($ar1['Arquivo']<$ar2['Arquivo'])
-    return -1;
-  else if ($ar1['Arquivo']>$ar2['Arquivo'])
-    return 1;
-  return 0;
-}
-
-function RetornaArrayDiretorio($diretorio)
-{
-  /* Coloca a barra no final, se n�o tiver */
-  $diretorio .="/";
-  $diretorio = implode("/",explode("//",$diretorio));
-
-  /* Prepara lista de arquivos */
-  clearstatcache();
-  $lista = "";
-  unset ($lista);
-  $fp=popen("find ".$diretorio." -follow","r");
-
-  $cont=0;
-  while($s = fgets($fp, 15360))
-  {
-    /* cortando carro de linha */
-    $enter=explode("\n",$s);
-    $s=$enter[0];
-
-    $lista[$cont]['Caminho']=$s;
-    $quebrando=explode($diretorio,$s);
-    $relativo=$quebrando[1];
-    if (is_dir($s))
-    {
-      $lista[$cont]['Diretorio']=$relativo;
-      $lista[$cont]['Arquivo']="";
-      $lista[$cont]['Tamanho']=0;
-    }
-    else
-    {
-      $dir = "";
-      unset($dir);
-      $partes=explode("/",$relativo);
-      for ($c=0;$c<count($partes)-1;$c++)
-      {
-        $dir.=$partes[$c];
-        if ($c<count($partes)-2)
-          $dir .="/";
-      }
-      $lista[$cont]['Diretorio']=$dir;
-      $lista[$cont]['Arquivo']=$partes[count($partes)-1];
-      $lista[$cont]['Tamanho']=filesize($s);
-    }
-    $lista[$cont]['Data']=filemtime($s);
-    $cont++;
-  }
-  if (count($lista)>0)
-    uasort ($lista, CompareRetornaArrayDiretorio);
-  return ($lista);
-}
-
-function EspalharArquivoAuth($ambiente)
-{
-  $lista=RetornaArrayDiretorio("..");
-
-  foreach($lista as $cod=>$linha)
-    if ($linha['Arquivo']==".auth")
-    {
-      $fh=fopen($linha['Caminho'],"w");
-      fputs($fh,$ambiente."/");
-      fclose($fh);
-    }
-}
-
-function CriaLinkSimbolico($origem,$destino)
-{
-  symlink($origem,$destino);
-}
-
-
 ?>
