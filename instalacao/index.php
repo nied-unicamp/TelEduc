@@ -93,6 +93,7 @@ if ($etapa > 0) {
 
 /* Verifica se os pre-requisitos da etapa estao devidamente instalados e
  * monta o console com as mensagens de acordo com as etapas concluidas. */
+if (!isset($erro)) $erro = 0;
 if ($erro =& verificaRequisitos($etapa, $erro) && !isset($_GET['bypass_anexo'])) {
 	exibeErro($etapa,$erro);
 }
@@ -100,7 +101,7 @@ if ($erro =& verificaRequisitos($etapa, $erro) && !isset($_GET['bypass_anexo']))
 if ($etapa == 0) {
 	$content_header = "Bem-Vindo(a) à Instalação do TelEduc ".VERSAO."!";
 
-	$content .= "<p>Leia atentamente as instruções contidas em cada passo da instalação.</p>";
+	$content  = "<p>Leia atentamente as instruções contidas em cada passo da instalação.</p>";
 	$content .= "<p>Em caso de dúvida, consulte o nosso <a href='doc/InstalacaoTelEduc4.pdf' target='_blank'>Guia de Instalação.</a></p>";
 
 	$content .= "<div class=formulario>";
@@ -111,13 +112,13 @@ if ($etapa == 0) {
 	$content .= "</div>";
 }
 else if ($etapa == 1) {
-	$console .= "<p class=feedbackp>O módulo php-mysql está instalado na versão correta. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class=feedbackp>O módulo php-mysql está instalado na versão correta. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	$console .= "<p class=feedbackp>A diretiva register_globals está habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	$console .= "<p class=feedbackp>A diretiva magic_quotes_gpc está habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	$content_header = "Banco de Dados e Arquivo de Configuração <span class=etapa>Etapa <font color='#FF0000'>1</font> de 4</span>";
 
-	$content .= "<p>O TelEduc utiliza os seguintes bancos de dados:</p>";
+	$content  = "<p>O TelEduc utiliza os seguintes bancos de dados:</p>";
 	$content .= "<p style='margin-top:10px'>&nbsp;&nbsp;<b>Banco Geral</b> - Contém configurações e informações do ambiente.</p>";
 	$content .= "<p>&nbsp;&nbsp;<b>Banco do Curso X</b> - Contém as informações do curso com o código <b>X</b>.</p>";
 	$content .= "<br />";
@@ -146,14 +147,14 @@ else if ($etapa == 1) {
 	$content .= "</div>";
 }
 else if ($etapa == 2) {	
-	$console .= "<p class=feedbackp>O banco de dados foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class=feedbackp>O banco de dados foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	$console .= "<p class=feedbackp>O banco de dados foi inicializado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	$console .= "<p class=feedbackp>As bases de dados foram importadas com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	$console .= "<p class=feedbackp>O arquivo de configuração foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	
 	$content_header = "Servidor e Diretórios <span class=etapa>Etapa <font color='#FF0000'>2</font> de 4</span>";
 
-	$content .= "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do TelEduc, que podem ser verificados dentro do navegador utilizando sua barra de endereços:</p>";
+	$content  = "<p>Nesta etapa será necessário informar o nome do servidor e o caminho do TelEduc, que podem ser verificados dentro do navegador utilizando sua barra de endereços:</p>";
 	$content .= "<pre>http://nome.do.servidor/caminho/do/teleduc/instalacao</pre>";
 	$content .= "<br/>";
 	$content .= "<p>É necessário uma pasta para armazenar os arquivos dos usuários, certifique-se de que o servidor web tem as permissões necessárias para escrever nessa pasta.</p>";
@@ -177,11 +178,11 @@ else if ($etapa == 2) {
 	$content .= "</div>";
 }
 else if ($etapa == 3) {
-	$console .= "<p class=feedbackp>O diretório de arquivos foi configurado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class=feedbackp>O diretório de arquivos foi configurado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 
 	$content_header = "Administrador do Ambiente <span class=etapa>Etapa <font color='#FF0000'>3</font> de 4</span>";
 
-	$content .= "<p>O TelEduc utiliza o usuário <b>admtele</b> para acesso à administração do ambiente.</p>";
+	$content  = "<p>O TelEduc utiliza o usuário <b>admtele</b> para acesso à administração do ambiente.</p>";
 	$content .= "<br />";
 	$content .= "<p>Preencha os campos abaixo com os dados do administrador do ambiente.</p>";
 	$content .= "<br />";
@@ -200,11 +201,11 @@ else if ($etapa == 3) {
 	$content .= "</div>"; 
 }
 else if ($etapa == 4) {
-	$console .= "<p class=feedbackp>Os dados do administrador do ambiente foram salvos com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class=feedbackp>Os dados do administrador do ambiente foram salvos com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
 	
 	$content_header = "Fim da Instalação <span class=etapa>Etapa <font color='#FF0000'>4</font> de 4</span>";
 	
-	$content .= "<b><p style='text-align: center; font-size: 20px;'>O TelEduc foi instalado e está pronto para uso!</p></b>";
+	$content  = "<b><p style='text-align: center; font-size: 20px;'>O TelEduc foi instalado e está pronto para uso!</p></b>";
 	$content .= "<br />";
 	$content .= "<p>Recomendamos a remoção da pasta de instalação por questões de segurança.</p>";
 	$content .= "<br/>";

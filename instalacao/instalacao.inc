@@ -144,6 +144,8 @@ function &verificaRequisitos($etapa, $flag = 0) {
 function exibeErro($etapa,$erro) {
 
 	$content_header = "Não foi possível continuar com a instalação.";
+	$console = '';
+	$content = '';
 	
 	switch ($etapa) {
 		case 1:
