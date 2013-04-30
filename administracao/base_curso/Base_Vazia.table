@@ -84,6 +84,7 @@ INSERT INTO Curso_ferramentas VALUES (25,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (30,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (10,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (19,'A','N',0);
+INSERT INTO Curso_ferramentas VALUES (22,'A','N',0);
 INSERT INTO Curso_ferramentas VALUES (23,'A','N',0);
 
 #

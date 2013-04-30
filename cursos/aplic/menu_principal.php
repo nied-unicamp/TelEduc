@@ -178,7 +178,7 @@
 	    {	
 	      $tela_cod_ferr=$linha['cod_ferramenta'];
 	      
-	      if($tela_cod_ferr != -1){
+	      if($tela_cod_ferr != -1 && isset($tela_curso_ferramentas[$tela_cod_ferr])){
 	        $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
 	        $tela_diretorio=$tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
 	        $tela_status=$tela_curso_ferramentas[$tela_cod_ferr]['status'];
