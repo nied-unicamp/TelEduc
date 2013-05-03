@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `Cursos_extraidos` (
   `montado` enum('nao','desmontando','montando','sim') NOT NULL DEFAULT 'nao',
   `data_ultimo_acesso` int(11) DEFAULT '0',
   PRIMARY KEY (`codigo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `Cursos_extraidos_sequencia` (
   `cod_usuario` int(11) DEFAULT NULL,
   `data` int(11) DEFAULT NULL,
   PRIMARY KEY (`cod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `Cursos_pastas` (
   `cod_pasta` int(11) NOT NULL AUTO_INCREMENT,
   `pasta` char(127) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`cod_pasta`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -14343,7 +14343,7 @@ CREATE TABLE IF NOT EXISTS `Patchs` (
   `cod_patch` int(11) NOT NULL AUTO_INCREMENT,
   `patch` char(128) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
   PRIMARY KEY (`cod_patch`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -14373,7 +14373,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `cod_lingua` int(11) DEFAULT NULL,
   `confirmacao` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`cod_usuario`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3863 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -14416,7 +14416,7 @@ CREATE TABLE IF NOT EXISTS `Usuario_sequencia` (
   `cod_usuario` int(11) NOT NULL,
   `data` int(11) DEFAULT NULL,
   PRIMARY KEY (`cod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3863 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

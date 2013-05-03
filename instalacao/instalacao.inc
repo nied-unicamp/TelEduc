@@ -114,7 +114,6 @@ function &verificaRequisitos($etapa, $flag = 0) {
 			mysql_query("INSERT INTO Diretorio VALUES ('sendmail', '".$_SESSION['sendmail']."');", $sock);
 			mysql_query("INSERT INTO Diretorio VALUES ('ArquivosWeb', '../../diretorio');", $sock);
 
-
 			break;
 
 		case 4:
