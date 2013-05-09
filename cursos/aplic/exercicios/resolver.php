@@ -564,8 +564,6 @@ if ((count($questoes)>0)&&($questoes != null))
 		else
 			$status = RetornaFraseDaLista($lista_frases, 167);
 
-		
-		
 		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
 		echo("                    <td colspan=\"2\" align=left>".$icone."<span class=\"link\" onclick=\"AlternaResposta(".$linha_item['cod_questao'].");\">".$titulo."</span></td>\n");
 		//echo("                    <td>".$nota."</td>\n");
@@ -654,7 +652,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                          </dd>\n");
 			
 			if ($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
-				echo("													<dd class='portletFooter'><span class='link' onClick=\"SalvaRespostaQuestaoObjMult(".$linha_item['cod_questao'].", '".$linha_item['tp_questao']."');\">Salvar Resposta</dd>");
+				echo("							<dd class='portletFooter'><span class='link' onClick=\"SalvaRespostaQuestaoObjMult(".$linha_item['cod_questao'].", '".$linha_item['tp_questao']."');\">".RetornaFraseDaLista($lista_frases, 505)."</dd>");
 			}
 		}
 		else if($linha_item['tp_questao'] == 'D')
@@ -670,7 +668,7 @@ if ((count($questoes)>0)&&($questoes != null))
 			echo("                            </div>\n");
 			echo("                          </dd>\n");
 			if ($disponivel && $resolucao['corrigida'] == 'N' && ($cod_usuario == $resolucao['cod_usuario'] || isset($cod_grupo)) ){
-				echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>Salvar Resposta</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+				echo("							<dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class='link' onClick='SalvaRespostaQuestaoDiss(".$linha_item['cod_questao'].");'>".RetornaFraseDaLista($lista_frases, 505)."</span>&nbsp;&nbsp;&nbsp;<span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">".RetornaFraseDaLista($lista_frases, 506)."</span></dd>\n");
 			}
 		}
 		echo("                      </dl>\n");
@@ -689,7 +687,7 @@ if($disponivel && $resolucao['submetida'] == 'N' && ($cod_usuario == $resolucao[
 	echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 	echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 	echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-	echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
+	echo("								<div align='right'><input class='input' type='button' onClick='SalvaTodasRespostas()' value='".RetornaFraseDaLista($lista_frases, 504)."'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
 	echo("								</form>");
 }
 else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
@@ -704,7 +702,7 @@ else if($resolucao['submetida'] == 'S' && $resolucao['corrigida'] == 'N')
 		echo("								<input type='hidden' name='acao' value='entregarExercicio'/>");
 		echo("								<input type='hidden' name='cod_resolucao' value='".$cod_resolucao."'/>");
 		echo("								<input type='hidden' name='cod_curso' value='".$cod_curso."'/>");
-		echo("                <div align='right'><input class='input' type='button' value='Salvar Todas' onClick='SalvaTodasRespostas()'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
+		echo("								<div align='right'><input class='input' type='button' onClick='SalvaTodasRespostas()' value='".RetornaFraseDaLista($lista_frases, 504)."'>\n<input type='submit' class='input' value='".RetornaFraseDaLista($lista_frases, 189)."'></div>\n");
 		echo("								</form>");
 	}
 }
