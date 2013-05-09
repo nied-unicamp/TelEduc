@@ -738,7 +738,7 @@
                 
         echo("      </tr>\n");
         echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
-        echo("        <td align=left><b>Resposta:</b>&nbsp;&nbsp;\n");
+        echo("        <td align=left><b>".RetornaFraseDaLista($lista_frases, 11).":</b>&nbsp;&nbsp;\n");
         echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div></td>\n");
 //        echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
         
@@ -754,7 +754,7 @@
         echo("			   </ul>\n");
 		echo("          </td>\n");
         }
-		echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>Fechar</a></td>\n");
+		echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>".RetornaFraseDaLista($lista_frases_geral,13)."</a></td>\n");
 		echo("      </tr>\n");
       }
     }
