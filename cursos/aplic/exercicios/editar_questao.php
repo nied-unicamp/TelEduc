@@ -74,8 +74,8 @@
   $objAjax->registerFunction("MudaTipoQuestaoDinamic");
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
-  
-  
+
+
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=3;
@@ -84,9 +84,9 @@
   $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
   $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
   Desconectar($sock);
-  
+
   include("../topo_tela.php");
-  
+
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject = new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
@@ -97,7 +97,7 @@
 
   /* Se a questao esta em um exercicio que ja foi aplicado, volta para a pagina de questoes e exibe feedback. */
   $aplicada = QuestaoAplicada($sock, $cod_questao);
-  
+
   $questao = RetornaQuestao($sock,$cod_questao);
   $questao_diss = RetornaQuestaoDiss($sock,$cod_questao);
   $alternativas = RetornaAlternativas($sock,$cod_questao);
@@ -117,35 +117,35 @@
     $gabaritoObj = null;
     $existeGabaritoDiss = 1;
   }
-  
-  if($tp_questao == 'O')
-		$tipo_tit = RetornaFraseDaLista($lista_frases, 159);
-  elseif($tp_questao == 'D')
-		$tipo_tit = RetornaFraseDaLista($lista_frases, 160);
-  else
-		$tipo_tit=RetornaFraseDaLista($lista_frases, 212);
 
-		
-		
+  if($tp_questao == 'O')
+    $tipo_tit = RetornaFraseDaLista($lista_frases, 159);
+  elseif($tp_questao == 'D')
+    $tipo_tit = RetornaFraseDaLista($lista_frases, 160);
+  else
+    $tipo_tit=RetornaFraseDaLista($lista_frases, 212);
+
+
+
   /*********************************************************/
   /* inicio - JavaScript */
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
+  echo("  <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("  <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
+  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
 
-  echo("    <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
-   	
+  echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
+
   if($tp_questao == 'O' || $tp_questao == 'M'){
-  	echo("    var posiAlt = new Array();\n");
-  	echo("    var gabarito = new Array();\n\n");
-  }	
-   	
-  	
-  
-  
-  
+    echo("    var posiAlt = new Array();\n");
+    echo("    var gabarito = new Array();\n\n");
+  }
+
+
+
+
+
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
   echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
@@ -165,16 +165,16 @@
   echo("    var pastaAtual = \"Raiz/\";\n");
   echo("    var js_comp = new Array();\n");
   echo("    var cancelarTodos = 0;\n");
-  echo("	var lay_novo_topico;");
-  echo("	var conteudo;\n\n");
+  echo("    var lay_novo_topico;");
+  echo("    var conteudo;\n\n");
 
   if ( ($tp_questao == 'O' || $tp_questao == 'M') && (count($alternativas)>0) && ($alternativas != null))
+  {
+    $qtdAlternativas = 0;
+    foreach ($alternativas as $cod => $linha_item)
     {
-    	$qtdAlternativas = 0;
-    	foreach ($alternativas as $cod => $linha_item)
-    {
-      	echo("    posiAlt[".$qtdAlternativas."] = ".$linha_item['cod_alternativa'].";\n");
-      	$qtdAlternativas++;
+      echo("    posiAlt[".$qtdAlternativas."] = ".$linha_item['cod_alternativa'].";\n");
+      $qtdAlternativas++;
     }
     echo("\n");
   }
@@ -195,12 +195,12 @@
     }
     echo("\n");
   }
-  
-  echo("	if (document.addEventListener) {\n");/* Caso do FireFox */
-  echo("		document.addEventListener('mousemove', TrataMouse, false);\n");
-  echo("	} else if (document.attachEvent){\n");/* Caso do IE */
-  echo("		document.attachEvent('onmousemove', TrataMouse);\n");
-  echo("	}\n");
+
+  echo("    if (document.addEventListener) {\n");/* Caso do FireFox */
+  echo("      document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("    } else if (document.attachEvent){\n");/* Caso do IE */
+  echo("      document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("    \n");
 
   echo("    function TrataMouse(e)\n");
   echo("    {\n");
@@ -223,48 +223,48 @@
   echo("      else\n");
   echo("        return(0);\n");
   echo("    }\n\n");
-  
-  //echo("var	  num = 0;\n");
-  echo("var   resposta=\"\";\n");
-  
+
+  //echo("    var num = 0;\n");
+  echo("    var resposta=\"\";\n");
+
   $icone_correto = " <img src=\"../imgs/certo.png\" name=\"correta[ ]\"	alt=\"resposta certa\" border=\"0\" /> ";
   $icone_errado = " <img  src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
-     
+
   //funcao que carrega o numero de questões corretas
-  echo("function CarregaNumCerta(){\n");
-  echo("	var Alt=\"\";\n");
-  echo("	var divCorreta=\"\";\n");
-  echo("	var Resp=\"\";\n");
-  echo("	Alt=document.getElementsByName('Alt[ ]');\n");
-  echo("	for(var i=0;i<Alt.length;i++){\n");
-  echo("		div=Alt[i].id.split('_');\n");
-  echo("		divCorreta=document.getElementById('div_'+div[1]);\n");
-  echo("		Resp=divCorreta.childNodes[1].alt;\n");
-  echo("		if(Resp=='resposta correta')\n"); 
-  echo("			num++;\n");
-  echo("	}\n");
-  echo("}\n");
-  
-  echo("	function NumCerta(option_value){\n");
-  echo("		if(option_value==1) {\n");	/* Se a opcao for outra alternativa correta */
-  echo("			var num=0;\n");
-  echo("			var numcorreta=document.getElementsByName('correta[ ]');\n");
-  echo("			for(var i=1;i<=numcorreta.length;i++){\n");
-  echo("				num++;");
-  echo("			}\n");
-  echo("			if(num>=1){\n");
-  echo("				tr=document.getElementsByName('Alt[ ]');\n");
- //frase 207 Ja existe uma alternativa correta. Deseja continuar?
- echo("					if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
- echo("						CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("					}\n");
- echo("					else{\n");
- echo("						ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
- echo("					}\n");
- echo(" 			}\n");
- echo(" 		}\n");
- echo("		}\n");
-    	
+  echo("    function CarregaNumCerta(){\n");
+  echo("      var Alt=\"\";\n");
+  echo("      var divCorreta=\"\";\n");
+  echo("      var Resp=\"\";\n");
+  echo("      Alt=document.getElementsByName('Alt[ ]');\n");
+  echo("      for(var i=0;i<Alt.length;i++){\n");
+  echo("        div=Alt[i].id.split('_');\n");
+  echo("        divCorreta=document.getElementById('div_'+div[1]);\n");
+  echo("        Resp=divCorreta.childNodes[1].alt;\n");
+  echo("        if(Resp=='resposta correta')\n"); 
+  echo("          num++;\n");
+  echo("      }\n");
+  echo("    }\n");
+
+  echo("    function NumCerta(option_value){\n");
+  echo("      if(option_value==1) {\n");	/* Se a opcao for outra alternativa correta */
+  echo("        var num=0;\n");
+  echo("        var numcorreta=document.getElementsByName('correta[ ]');\n");
+  echo("        for(var i=1;i<=numcorreta.length;i++){\n");
+  echo("          num++;");
+  echo("        }\n");
+  echo("        if(num>=1){\n");
+  echo("          tr=document.getElementsByName('Alt[ ]');\n");
+  //frase 207 Ja existe uma alternativa correta. Deseja continuar?
+  echo("          if(!confirm('".RetornaFraseDaLista($lista_frases, 207)."')){\n");
+  echo("            CancelaAlternativaNovaAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            ConfirmaEdicaoAlternativa(tr[tr.length -1].id.split('_')[1]);\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("     }\n");
+
   echo("function MudaCabecalho(){\n");
   echo("	tituloPrinc=document.getElementById('tituloPrinc');\n");
   echo("		if(num<=1){\n");
@@ -289,7 +289,7 @@
   echo("			}\n");
   echo("		}\n");
   echo("	}\n\n");
-    
+
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
@@ -304,10 +304,10 @@
   if($tp_questao == 'O' || $tp_questao == 'M'){
   	echo("     xajax_AtualizaIconesDinamic('".$questao['cod_questao']."','".$cod_curso."','".$tp_questao."');\n");
   }
-    
+
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("    }\n\n");
-  
+
   echo("    function WindowOpenVer(id)\n");
   echo("    {\n");
   echo("      window.open(\"" . $dir_questao_temp['link'] . "\"+id,'Portfolio','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
@@ -454,7 +454,7 @@
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("    function LimparGabarito(id)\n");
   echo("    {\n");
   /* Frase #87 - Voce realmente deseja limpar o gabarito? O conteudo sera perdido. */
@@ -478,7 +478,7 @@
   echo("        editaTexto = id;\n");
   //echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("    function AlteraGabarito(id){\n");
   //echo("      if (editaTexto==-1 || editaTexto != id){\n");
   echo("        CancelaTodos();\n");
@@ -525,7 +525,7 @@
   echo("      cancelarElemento=null;\n");
   echo("      HabilitarMudancaPosicaoAlt();\n");
   echo("    }\n\n");
-  
+
   echo("    function EdicaoTexto_gabarito(codigo, id, valor){\n");
   echo("      var cod;\n");
   echo("      if (valor=='ok'){\n");
@@ -553,7 +553,7 @@
   echo("      xajax_CriaNovoTopicoDinamic(".$cod_curso.",".$cod_questao.",texto,'".RetornaFraseDaLista($lista_frases, 89)."');\n");
   echo("      EscondeLayer(lay_novo_topico);\n");
   echo("    }\n\n");
-  
+
   echo("    function AtualizaTopicoCriado(cod) {\n");
   echo("      select = document.getElementById('selectTopico');\n");
   echo("	  select.selectedIndex = cod; ");
@@ -712,7 +712,7 @@
   echo("      span.setAttribute(\"id\",'span_'+cod);\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaSpanDiv(cod)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
@@ -741,7 +741,7 @@
   echo("      span.onclick= function(){ CancelaEdicaoAlternativa(cod, conteudo); };\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaSpanCancNovaAlternativa(cod)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
@@ -782,8 +782,8 @@
   echo("      span.appendChild(CriaSpanEspAlt(2));\n");
   echo("      span.appendChild(CriaSpanCanc(cod,conteudo));\n");
   echo("    }\n\n");
-  
-  
+
+
   //função que cria o campo de edicao quando o usuario quer adicionar nova alternativa
   echo("    function CriaCamposEdicaoNovaAlternativa(conteudo,cod)\n");
   echo("    {\n");	
@@ -801,8 +801,8 @@
   echo("      span.appendChild(CriaSpanEspAlt(2));\n");
   echo("      span.appendChild(CriaSpanCancNovaAlternativa(cod));\n");
   echo("    }\n\n");
-  
-  
+
+
 
   echo("    function CriaSpanEditarGabarito(cod)\n");
   echo("    {\n");	
@@ -902,9 +902,9 @@
   	echo("	    document.getElementById('textAlt_'+cod).focus();");
   echo("      qtdAlternativas++;\n");
   echo("    }\n\n");
-  
-  
-  
+
+
+
   echo("    function NovaAlternativa()\n");
   echo("    {\n");
   echo("      if(qtdAlternativas < 10)\n");
@@ -916,10 +916,10 @@
   echo("	  }");
   echo("      else\n");
   //184 - Uma questao pode conter no maximo 10 alternativas. TODO:
-  
+
   echo("        alert('".RetornaFraseDaLista($lista_frases, 183)."');\n");
   echo("    }\n\n");
-  
+
   echo("function CancelaAlternativaNovaAlternativa(cod){\n");
   echo("	tr=document.getElementById('trAlt_'+cod);\n");
   echo("	if(tr!=null){\n");
@@ -930,7 +930,7 @@
   echo("		document.getElementById('trAddAlt').className = '';");
   echo("	}\n");
   echo("}\n");
-  
+
  // echo("function CancelaAlternativa(cod, conteudo){\n");
 //  echo("		tr=document.getElementById('trAlt_'+cod);\n");
  // echo("		if(tr!=null){\n");
@@ -1005,7 +1005,7 @@
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("    function DeletarLinhaGabarito(cod){\n");
   echo("      var trAltGab;\n");
   echo("      trAltGab = document.getElementById('trAltGab_'+cod);\n");
@@ -1030,7 +1030,7 @@
   echo("          return i;\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("	function RetornaNovaPosiAlternativa(posiAltNova,cod)\n");
   echo("	{");
   echo("      var i;\n");
@@ -1055,7 +1055,7 @@
   echo("        gabarito[i] = gabarito[i+1];\n");
   echo("      }\n");
   echo("    }\n\n");
-    
+
   echo("	function AtualizaPosicoesGabEPosi(string)\n");
   echo("	{");
   echo("      var i,j,posiAltNova,gabaritoTemp;\n");
@@ -1075,7 +1075,7 @@
   echo("	    posiAlt[i] = posiAltNova[i];\n");
   echo("	  }\n");
   echo("	}\n\n");
-  
+
   echo("    function AtualizarMudancaPosicoes(string){\n");
   echo("      var stringGabarito;\n");
   echo("	  AtualizaPosicoesGabEPosi(string);\n");
@@ -1111,7 +1111,7 @@
   echo("      }\n");
   echo("      return stringGabarito;\n");
   echo("    }\n\n");
-  
+
   if($tp_questao == 'O' || $tp_questao == 'M')
   {
     echo("    function ConfirmaEdicaoAlternativa(cod){\n");
@@ -1289,7 +1289,7 @@
   echo("        VerificaChkBoxArq();\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("    function VerificaChkBoxArq(){\n");
   echo("      var i,getNumber,nomeArq;\n");
   echo("      var j=0;\n");
@@ -1320,8 +1320,8 @@
   echo("        document.getElementById('mArq_ocultar').onclick=function(){ };\n");
   echo("      }\n");
   echo("    }\n\n");
-  
-  
+
+
   echo("    function InsereDiretorioVazio(){\n");
   echo("	  var trRef,tr,td;");
   echo("	  tr = document.createElement(\"tr\");\n");
@@ -1334,7 +1334,7 @@
   echo("      trRef = document.getElementById(\"optArq\");\n");
   echo("	  trRef.parentNode.insertBefore(tr,trRef);\n");
   echo("    }\n\n");
-  
+
   echo("    function DeletaLinhaArq(arrayIdArq,n){\n");
   echo("      var i,tr;\n");
   echo("      for (i=0; i < n; i++){\n");
@@ -1343,7 +1343,7 @@
   echo("        contaArq--;\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
     echo("    function criaTrArq(id){\n");
   echo("	  var tr;\n");
   echo("	  tr = document.createElement(\"tr\");\n");
@@ -1351,7 +1351,7 @@
   echo("	  tr.setAttribute(\"name\",pastaAtual);\n");
   echo("      return tr;\n");
   echo("    }\n\n");
-  
+
   echo("    function RetornaSrcImg(nomeArq)\n");
   echo("    {\n");	
   echo("      var array,formato,n;\n");
@@ -1378,7 +1378,7 @@
   echo("	  }\n");
   echo("      return '../imgs/arqp.gif';\n");
   echo("    }\n\n");
-  
+
   echo("    function RetornaTipoArq(nomeArq)\n");
   echo("    {\n");	
   echo("      var array,formato,n;\n");
@@ -1392,7 +1392,7 @@
   echo("        return 'comum';\n");
   echo("	  }\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaCheckBoxArq(cod)\n");
   echo("    {\n");	
   echo("      var check = document.createElement(\"input\");\n");
@@ -1403,7 +1403,7 @@
   echo("      check.onclick = function(){ VerificaChkBoxArq(1); };\n");
   echo("      return check;\n");
   echo("    }\n\n");
-    
+
   echo("    function CriaImgArq(nomeArq)\n");
   echo("    {\n");	
   echo("      var img = document.createElement(\"img\");\n");
@@ -1411,7 +1411,7 @@
   echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
   echo("      return img;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
@@ -1438,7 +1438,7 @@
   echo("      check.onclick = function(){ VerificaChkBoxArq(); };\n");
   echo("      return check;\n");
   echo("    }\n\n");
-    
+
   echo("    function CriaImgArq(nomeArq)\n");
   echo("    {\n");	
   echo("      var img = document.createElement(\"img\");\n");
@@ -1446,7 +1446,7 @@
   echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
   echo("      return img;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaImgPasta()\n");
   echo("    {\n");	
   echo("      var img = document.createElement(\"img\");\n");
@@ -1454,7 +1454,7 @@
   echo("      img.setAttribute(\"src\",\"../imgs/pasta.gif\");\n");
   echo("      return img;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
@@ -1470,7 +1470,7 @@
   echo("      span.innerHTML = nomeArq;\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaSpanAbrirPasta(nome,cod,caminho)\n");
   echo("    {\n");	
   echo("      var span = document.createElement(\"span\");\n");
@@ -1481,8 +1481,8 @@
   echo("      span.innerHTML = nome;\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
- 
+
+
   echo("    function criaSpanArq(nomeArq,numArq,caminho){\n");
   echo("	  var span;\n");
 //  echo("      span.setAttribute(\"numArq\",\"arq_\"+numArq);\n");
@@ -1491,7 +1491,7 @@
   echo("	  span.appendChild(CriaSpanVisualizarArq(nomeArq,numArq,caminho));\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function criaSpanPasta(nome,numArq,caminho){\n");
   echo("	  var span;\n");
   echo("	  span = document.createElement(\"span\");\n");
@@ -1499,7 +1499,7 @@
   echo("	  span.appendChild(CriaSpanAbrirPasta(nome,numArq,caminho));\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function criaSpanArqOculto(){\n");
   echo("	  var span;\n");
   echo("	  span = document.createElement(\"span\");\n");
@@ -1507,12 +1507,12 @@
   echo("	  span.innerHTML = \" (oculto)\";\n");
   echo("      return span;\n");
   echo("    }\n\n");
-  
+
   echo("    function CriaTexto(texto){\n");
   echo("	  texto = document.createTextNode(texto);\n");
   echo("      return texto;\n");
   echo("    }\n\n");
-  
+
   echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho,data,tipo,status){\n");
   echo("      var novaTr,trRef,tdChk,spanNome;\n");
   echo("      if(tipo == \"arquivo\"){\n");
@@ -1530,7 +1530,7 @@
   echo("      tdRef.appendChild(document.createElement(\"br\"));\n");
   echo("      contaArq++;\n");
   echo("    }\n\n");
-  
+
   echo("    function EncontraArquivoEApaga(nomeArq)\n");
   echo("    {\n");
   echo("	  var i,span;\n");
@@ -1546,7 +1546,7 @@
   echo("        }\n");
   echo("      }\n");
   echo("    }\n\n");
-  
+
   echo("    function VerificaUpload(nomeArq,flag)\n");
   echo("    {\n");
   echo("      subpasta = pastaAtual.split(\"Raiz/\")[1];\n");
@@ -1567,35 +1567,35 @@
   echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
   echo("      }");
   echo("    }\n\n");
-    
+
   echo("	function HabilitarMudancaPosicaoAlt()\n");
   echo("	{\n");
   echo("      if(tBody_alternativas) tableDnD.init(null,tBody_alternativas,".$existeGabaritoDiss.");\n");
   echo("	}\n\n");
-  
+
   echo("	function DesabilitarMudancaPosicaoAlt()\n");
   echo("	{");
   echo("      if(tableDnD) tableDnD.term();\n");
   echo("	}\n\n");
-  
+
   echo("	function SoltaMouse(ids)\n");
   echo("	{");
   //echo("      IntercalaCorLinhaAlt();\n");
   echo("      xajax_AtualizaPosicoesDasAlternativasDinamic(".$cod_curso.", ".$cod_usuario.", ids, \"".$tp_questao."\");\n");
   echo("	}\n\n");
-    
+
   echo("    function Voltar()\n");
   echo("    {\n");
   echo("      window.location='questoes.php?cod_curso=".$cod_curso."&visualizar=Q';\n");
   echo("    }\n\n");
-  
+
   echo("	function ApagarQuestao()\n");
   echo("	{\n");
   /* Frase #93 - Tem certeza que deseja excluir definitivamente as questoes? */
   echo("	  if(confirm('".RetornaFraseDaLista($lista_frases, 93)."'))\n");
   echo("	    document.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=apagar&lixeira=".$lixeira."';\n");
   echo("	}\n\n");
-  
+
   echo("      function AtualizaComp(js_tipo_comp)\n");
   echo("      {\n");
   echo("        if ((isNav) && (!isMinNS6)) {\n");
@@ -1657,13 +1657,13 @@
 		$cabecalho=RetornaFraseDaLista($lista_frases, 214);	/* Frase #214 - Editar Questao Multipla Escolha */
 	elseif($tp_questao == 'D')
 		$cabecalho=RetornaFraseDaLista($lista_frases, 229);	/* Frase #229 - Editar Questao Dissertativa */
-		
+
 	echo("          <h4 id=\"tituloPrinc\">".RetornaFraseDaLista($lista_frases, 1)." - ".$cabecalho."</h4>\n");
-	
+
   	/* Frase #5 - Voltar */
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-	
+
   	echo("          <div id=\"mudarFonte\">\n");
   	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
   	echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -1723,7 +1723,7 @@
 				$texto = "selected";
 				else
 				$texto = "";
-	
+
 				echo("                <option value=\"".$cod_topico."\" ".$texto.">".$topico."</option>\n");
 			}
 		}
@@ -1734,7 +1734,7 @@
 	}
 	echo("                      </td>\n");
 	echo("                      <td>\n");
-	
+
 	if($questao['nivel'] == 'D') {
 		$dificil = "checked='true'";
 		$nivel_texto = RetornaFraseDaLista($lista_frases, 100);	/* Frase #100 - Dificil */
@@ -1753,7 +1753,7 @@
 	} else {
 		$facil = "";
 	}
-	
+
 	if(!$aplicada) {
 		/* Frase #100 - Dificil */
 		echo("                        <input type=\"radio\" name=\"nivel\" onClick=\"AtualizaNivel('D');\" ".$dificil." />".RetornaFraseDaLista($lista_frases, 100)."<br />\n");
@@ -1771,7 +1771,7 @@
 		echo("                      <li>".$renomear."</li>\n");
 		echo("                      <li>".$editar."</li>\n");
 		echo("                      <li>".$limpar."</li>\n");
-			
+
 		if($tp_questao == 'D')
 		{
 			echo("                    <li>".$editar_gabarito."</li>\n");
@@ -1797,9 +1797,9 @@
 	}
 
 	echo("					    <td>".$compartilhamento."</td>");
-      
+
     echo("                    </tr>\n");
-	
+
 	echo("                    <tr class=\"head\">\n");
 	/* Frase #17 - Enunciado */
 	echo("                      <td class=\"center\" colspan=\"6\">".RetornaFraseDaLista($lista_frases, 17)."</td>\n");
@@ -1811,7 +1811,7 @@
 	echo("                        </div>\n");
 	echo("                      </td>\n");
 	echo("                    </tr>\n");
-	
+
 	if($tp_questao == "D")
 	{
 	  /* Frase #103 - Gabarito */
@@ -1834,7 +1834,7 @@
 	  echo("                    <td class=\"center\" colspan=\"6\">".RetornaFraseDaLista($lista_frases, 18)."</td>\n");
 	  echo("                  </tr>\n");
 	  echo("					<tBody id=\"tBody_alternativas\">");
-	   
+
 	  if ((count($alternativas)>0)&&($alternativas != null))
 	  {
         foreach ($alternativas as $cod => $linha_item)
@@ -1852,7 +1852,7 @@
 
           if($tp_questao == 'D')
           {
-  
+
             $gabarito = RetornaGabaritoQuestaoDiss($sock,$cod_questao,$cod_alternativa);
 
             echo("                  <tr id=\"trAltGab_".$cod_alternativa."\" style=\"display:none;\">\n");
@@ -1868,20 +1868,20 @@
           }
         }
       }
-        
+
       echo("					</tBody>");
-      
+
 	  if(!$aplicada) {
 	      echo("                  <tr id=\"optAlt\">\n");
 	      echo("                    <td align=\"left\" colspan=\"6\">\n");
 		  echo("                      <ul>\n");
-		  
+
 		  echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuAlt\" onclick=\"CheckTodos(2);\" /></span></li>\n");
 		  // Frase #71 - Apagar 
 		  echo("                        <li class=\"menuUp\" id=\"mAlt_apagar\"><span id=\"sAlt_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
 		  // Frase #104 - Editar 
 		  echo("                        <li class=\"menuUp\" id=\"mAlt_editar\"><span id=\"sAlt_editar\">".RetornaFraseDaLista($lista_frases, 104)."</span></li>\n");
-	      
+
 	      //if($tp_questao == 'D')
 	       // echo("                        <li class=\"menuUp\" id=\"mAlt_gabarito\"><span id=\"sAlt_gabarito\">Exibir gabarito</span></li>\n"); 
 		  echo("                      </ul>\n");
@@ -1901,7 +1901,7 @@
 	echo("                  </tr>\n");
 	echo ("                  <tr>\n");
 	echo ("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
-	
+
 	if (count($lista_arq) > 0 || $lista_arq != null) {
 
 		$conta_arq = 0;
@@ -2052,7 +2052,7 @@
 		echo("                        <input type=\"hidden\" name=\"pasta\" value=\"questao\" />\n");
 	    echo("                        <input type=\"hidden\" name=\"acao\" value=\"anexar\" />\n");
 	    echo("                        <input type=\"hidden\" name=\"subpasta\" value=\"\" />\n");
-	    
+
 		echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
 		echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=\"0\" />\n");
 		echo("                          <span class=\"destaque\">" . RetornaFraseDaLista($lista_frases_geral, 26) . "</span>\n");
@@ -2086,11 +2086,11 @@
 		/* Frase #1 - Exercicios */
   	/* Frase #74 - Area restrita ao formador. */
   	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,74)."</h4>\n");
-	
+
         /* Frase #5 - Voltar */
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+
         echo("          <div id=\"mudarFonte\">\n");
         echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
         echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -2121,7 +2121,7 @@
   echo("        </div>\n");
   echo("      </div>\n");
   echo("    </div>\n\n");
-  
+
   /* Mudar Compartilhamento */
   echo("    <div class=popup id=\"comp\">\n");
   echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
@@ -2150,7 +2150,7 @@
   echo("        </form>\n");
   echo("      </div>\n");
   echo("    </div>\n");
-  
+
   echo("  </body>\n");
   echo("</html>\n");
 

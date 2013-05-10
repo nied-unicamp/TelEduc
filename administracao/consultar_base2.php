@@ -63,6 +63,7 @@
   session_register("base_s");
 
   $consulta=ConverteBarraAspas2Aspas($consulta);
+  $affected_rows = FALSE;
 
   $consulta_s=$consulta;
   $base_s=$base;
@@ -70,6 +71,30 @@
   $lista_frases=RetornaListaDeFrases($sock,-5);
 
   Desconectar($sock);
+
+  $consulta=implode(" ",explode("\n",$consulta));
+
+  /* 67 - Todas os Cursos */
+  if ($base==RetornaFraseDaLista($lista_frases,67))
+      $lista=EnviarTodasBasesCursos($consulta); 
+  else
+  {
+    $lista[0]['NomeBase']=$base;
+    $sock=ConectarDB($base);
+    $res=Enviar($sock,$consulta);
+    
+    if (eregi("^(update) ", $consulta)) 
+    {
+      $affected_rows = mysql_affected_rows($sock);
+    }
+
+    if (eregi("^(select|desc|show|describe) ",$consulta))
+    {
+      $lista[0]['Campos']=RetornaCampos($res);
+      $lista[0]['Res']=RetornaArrayLinhas($res, MYSQL_ASSOC);
+    }
+    Desconectar($sock);
+  }
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 5 - Consulta a Base de Dados */
@@ -90,7 +115,14 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='consultar_base.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span style=\"href: #\" title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='consultar_base.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  if (eregi("^(select|desc|show|describe) ",$consulta)) {
+    echo("                  <li>");
+    echo("                  <form method=\"post\" action=\"exportar_resultados.php\">");
+    echo("                  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,533)."\"/>\n");
+    echo("                  </form>");
+    echo("                  </li>");
+  }
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -98,39 +130,18 @@
   echo("              <td valign=\"top\">\n");
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 
-  $consulta=implode(" ",explode("\n",$consulta));
-
   /* 69 - Query enviada */
   echo("                  <tr>\n");
   echo("                    <td><b>".RetornaFraseDaLista($lista_frases,69)."</b> ".$consulta);
-
-  /* 67 - Todas os Cursos */
-  if ($base==RetornaFraseDaLista($lista_frases,67))
-      $lista=EnviarTodasBasesCursos($consulta); 
-  else
-  {
-    $lista[0]['NomeBase']=$base;
-    $sock=ConectarDB($base);
-    $res=Enviar($sock,$consulta);
-    
-    if (eregi("^(update) ", $consulta)) 
-    {
-      /* 503 - Total de linhas alteradas: */
-      echo ("<br />".RetornaFraseDaLista($lista_frases, 503)." ".mysql_affected_rows($sock)."<br>\n");
-    }
-
-    if (eregi("^(select|desc|show|describe) ",$consulta))
-    {
-      $lista[0]['Campos']=RetornaCampos($res);
-      $lista[0]['Res']=RetornaArrayLinhas($res);
-    }
-    Desconectar($sock);
-  }
+  if ($affected_rows != FALSE)
+    /* 503 - Total de linhas alteradas: */
+    echo ("<br />".RetornaFraseDaLista($lista_frases, 503)." ".$affected_rows."<br>\n");
 
   if (eregi("^(select|desc|show|describe) ",$consulta))
   {
     if (count($lista)>0)
     {
+      $_SESSION['lista_s'] = $lista;
       $cont=0;
       foreach($lista as $cod => $linha)
         $cont = $cont + count($linha['Res']);

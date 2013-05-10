@@ -469,7 +469,7 @@ function RetornaLinha($id)
    Entrada: $id - apontador de resultado da consulta
    Saida: array das linhas 
 */
-function RetornaArrayLinhas($id)
+function RetornaArrayLinhas($id, $result_type = MYSQL_BOTH)
 {
   $num=RetornaNumLinhas($id);
   $cont=0;
@@ -477,7 +477,7 @@ function RetornaArrayLinhas($id)
   while ($num>0)
   {
     $num--;
-    $ar[$cont]=mysql_fetch_array($id); 
+    $ar[$cont]=mysql_fetch_array($id, $result_type); 
     $cont++;
   }
   return($ar);
