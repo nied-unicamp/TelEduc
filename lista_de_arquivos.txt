@@ -38,6 +38,7 @@ criar_curso.php
 editar_categoria.php
 enviar_email2.php
 enviar_email.php
+exportar_resultados.php
 extracao.inc
 extrair_curso2.php
 extrair_curso.php
