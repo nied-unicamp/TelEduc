@@ -72,37 +72,31 @@ function AcessoNegado()
 */
 function VerificaLoginSenha ($login, $senha)
 {
-  $senha_crypt	=	crypt($senha,"AA");
-  $sock					=	Conectar("");
+  $senha_crypt = crypt($senha,"AA");
+  $sock = Conectar("");
   
-  if ($login=="admtele")
-  {
-    $query="select valor from Config where item='admtele'";
+  if ($login == "admtele") {
+    $query = "select valor from Config where item = 'admtele'";
   }
-  else
-  {
-	// $login podera ser o login ou email cadastrado
-    $query = "select senha, cod_usuario, confirmacao from Usuario ";
-    $query.= "where login='".VerificaStringQuery($login)."' ";
-    //N�o pode mais autenticar pelo email
-    //$query.= "OR email='".VerificaStringQuery($login)."'";
+  else {
+    //$query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' and senha='".VerificaStringQuery($senha_crypt)."'";
+    $query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
   }
 
-  $res	=	Enviar($sock,$query);
-  $num	=	RetornaNumLinhas($res);
-  $linha=	RetornaLinha($res);
+  $res = Enviar($sock,$query);
+  $num = RetornaNumLinhas($res);
+  $linha = RetornaLinha($res);
 
-  if($login=="admtele"){
+  if ($login == "admtele") {
     $cod_usuario = -1;
-    $confirmacao = ""; // admtele nao precisa confirmar a conta
+    $confirmacao = "";
     $senha_db = $linha['valor'];
   } else {
     $cod_usuario = $linha['cod_usuario'];
 	$confirmacao = $linha['confirmacao'];
-	$senha_db = $linha['senha'] ;
+	$senha_db = $linha['senha'];
   }
-  
-  //return (($num < 1) || ($senha_db != $senha_crypt) || ($confirmacao != "") ? 0 : $cod_usuario);
+
   return (($num < 1) || ($senha_db != $senha_crypt) ? 0 : $cod_usuario);
 }
 
