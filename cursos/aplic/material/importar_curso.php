@@ -60,10 +60,8 @@ include ("../topo_tela.php");
 $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
-$feedbackObject->addAction("validarImportacao", 0, 88);
-$feedbackObject->addAction("FalhaImportacao", 0, 151);
-
-
+$feedbackObject->addAction("validarImportacao", 0, 155);
+$feedbackObject->addAction("falhaImportacao", 0, 153);
 
 // **************** VARIAVEIS DE ENTRADA ****************
 //    codigo do curso
@@ -137,7 +135,6 @@ switch ($cod_ferramenta) {
 
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 6;
-
 
 echo ("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n\n");
 if ($tipo_curso == 'E') {
