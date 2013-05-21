@@ -77,6 +77,7 @@ include ("email.inc");
 /* Fun��es de data */
 include ("data.inc");
 
+/* Fun��es de controle de javascript*/
 include ("data_javascript.inc");
 
 /* Fun��es de manipula��o de arquivos*/
@@ -88,6 +89,7 @@ include ("usuarios.inc");
 /* Fun��es de controle de cursos*/
 include ("cursos.inc");
 
+/* Fun��es de controle de feedback*/
 include ("FeedbackObject.inc.php");
 
 ?>

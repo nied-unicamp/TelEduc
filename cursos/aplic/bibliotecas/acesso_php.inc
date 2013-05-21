@@ -79,8 +79,8 @@ function VerificaLoginSenha ($login, $senha)
     $query = "select valor from Config where item = 'admtele'";
   }
   else {
-    //$query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' and senha='".VerificaStringQuery($senha_crypt)."'";
-    $query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
+    $query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."' and senha='".VerificaStringQuery($senha_crypt)."'";
+    //$query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
   }
 
   $res = Enviar($sock,$query);
