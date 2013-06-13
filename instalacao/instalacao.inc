@@ -6,7 +6,8 @@
             $flag  - variável que armazena bit a bit os erros ocorridos durante o passo atual.
    Saida:   $flag  - Variável que armazena bit a bit os erros ocorridos durante o passo atual.
 */
-function &verificaRequisitos($etapa, $flag = 0) {
+function &verificaRequisitos($etapa) {
+  $flag = 0;
 	switch ($etapa) {
 		case 1:
 			if (!function_exists('mysql_connect')) {
@@ -33,15 +34,15 @@ function &verificaRequisitos($etapa, $flag = 0) {
 			}
 
 			// Vamos exibir apenas um erro de mysql de cada vez, pois a função mysql_error retorna o erro do último comando de sql.
-			if (!$sock = mysql_connect($_SESSION['dbhost'].':'.$_SESSION['dbport'], $_SESSION['dbuser'], $_SESSION['dbpwd'])) {
+			if (!$sock = @mysql_connect($_SESSION['dbhost'].':'.$_SESSION['dbport'], $_SESSION['dbuser'], $_SESSION['dbpwd'])) {
 				$flag |= 2;
 				break;
 			}
-			if (!$query = mysql_query('CREATE DATABASE '.$_SESSION['dbname'].' DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;', $sock)) {
+			if (!$query = @mysql_query('CREATE DATABASE '.$_SESSION['dbname'].' DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;', $sock)) {
 				$flag |= 4;
 				break;
 			}
-			if (!$db = mysql_select_db($_SESSION['dbname'], $sock)) {
+			if (!$db = @mysql_select_db($_SESSION['dbname'], $sock)) {
 				$flag |= 8;
 				break;
 			}

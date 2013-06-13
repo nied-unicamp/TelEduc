@@ -47,7 +47,7 @@ define("VERSAO", "4.3.1", true);
 
 /* Limpeza de variaveis usadas para controlar as mensagens exibidas
  * na console e no "miolo" da pagina. */
-if (isset($console) && isset($content)) {
+if (!isset($console) && !isset($content)) {
 	$console = "";
 	$content = "";
 }
@@ -93,8 +93,7 @@ if ($etapa > 0) {
 
 /* Verifica se os pre-requisitos da etapa estao devidamente instalados e
  * monta o console com as mensagens de acordo com as etapas concluidas. */
-if (!isset($erro)) $erro = 0;
-if ($erro =& verificaRequisitos($etapa, $erro) && !isset($_GET['bypass_anexo'])) {
+if ($erro =& verificaRequisitos($etapa) && !isset($_GET['bypass_anexo'])) {
 	exibeErro($etapa,$erro);
 }
 
