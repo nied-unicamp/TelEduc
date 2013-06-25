@@ -231,7 +231,8 @@
       echo("                    <input type=\"checkbox\" id=\"chk_sem_head\" onclick=\"ClickHead('sem');\" />\n");
       echo("                  </td>\n");
       echo("                  <td width=\"45%\">\n");
-      echo("                    Sem Grupo\n");
+      /* 85 - Sem Grupo */
+      echo("                    ".RetornaFraseDaLista($lista_frases,85)."\n");
       echo("                  </td>\n");
     }
     if ($existe_com_grupo=is_array($vetor_nome_com_grupo)){
@@ -239,7 +240,8 @@
       echo("                    <input type=\"checkbox\" id=\"chk_com_head\" onclick=\"ClickHead('com');\" />\n");
       echo("                  </td>\n");
       echo("                  <td width=\"45%\">\n");
-      echo("                    Com Grupo\n");
+      /* 84 - Com Grupo */
+      echo("                    ".RetornaFraseDaLista($lista_frases,84)."\n");
       echo("                  </td>\n");
     }
     echo("                </tr>\n");
