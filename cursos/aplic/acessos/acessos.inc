@@ -91,7 +91,7 @@ function FirstName($sock, $cod_usuario, $cod_curso) {
 /* *********************************************************************
    RetornaInfosUsuario - Retorna informacoes sobre um unico usuario
    entrada: $sock - sock de conexao
-            $cod_usuario - codigo do usuairo
+            $cod_usuario - codigo do usuario
    saida:   array ['nome'] - nome do usuario
                   ['cidade'] - cidade do usuario
                   ['estado'] - estado do usuario
@@ -115,6 +115,7 @@ function RetornaInfosUsuario($sock,$cod_curso, $cod_usuario)
    Entrada: $sock - sock de conexao
             $ordenacao - parametro de ordenacao
    Saida:   array [$cod_usuario]['nome'] - nome do usuario
+                  [$cod_usuario]['tipo'] - tipo do usuario
                   [$cod_usuario]['cidade'] - cidade do usuario
                   [$cod_usuario]['estado'] - estado do usuario
                   [$cod_usuario]['local_trab'] - local de trabalho do usuario
@@ -124,16 +125,19 @@ function RetornaUsuarios($sock,$ordenacao, $cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select UC.cod_usuario,U.nome,U.cidade,U.estado,U.local_trab
-	  from ".$dbnamebase.".Usuario_curso UC
-	  inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global and UC.cod_curso='".$cod_curso."')
-          where UC.cod_usuario >= 0
-          and (binary UC.tipo_usuario='A' or
-               binary UC.tipo_usuario='F' or
-               binary UC.tipo_usuario='Z' or
-               binary UC.tipo_usuario='z' or
-               binary UC.tipo_usuario='V')
-          order by ".$ordenacao;
+  $query = "select UC.cod_usuario,U.nome,U.cidade,U.estado,U.local_trab,UC.tipo_usuario ";
+  $query.= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query.= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global and UC.cod_curso='".$cod_curso."') ";
+  $query.= "where "; 
+  $query.= "UC.cod_usuario >= 0 and ";
+             //A - Alunos
+  $query.= "(binary UC.tipo_usuario='A' or ";
+             //F - Formadores
+  $query.= " binary UC.tipo_usuario='F' or ";
+             //V - Visitantes
+  $query.= " binary UC.tipo_usuario='V') ";
+  $query.= "order by ".$ordenacao;
+
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
 
@@ -145,6 +149,7 @@ function RetornaUsuarios($sock,$ordenacao, $cod_curso)
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['estado'] = $linha['estado'];
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['local_trab'] = $linha['local_trab'];
       $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['cod_usuario'] = $linha['cod_usuario'];
+      $lista_usuarios_retorno[$linha['cod_usuario'] + 0]['tipo_usuario'] = $linha['tipo_usuario'];
     }
 
   return ($lista_usuarios_retorno);
@@ -453,10 +458,10 @@ function RetornaNomesUsuarios($sock,$cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query = "select UC.cod_usuario, U.nome
-            from ".$dbnamebase.".Usuario_curso UC
-            inner join ".$dbnamebase.".Usuario U ON ((U.cod_usuario = UC.cod_usuario_global) AND (UC.cod_curso = '".$cod_curso."'))
-            where UC.cod_usuario >= 0";
+  $query  = "select UC.cod_usuario, U.nome ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON ((U.cod_usuario = UC.cod_usuario_global) AND (UC.cod_curso = '".$cod_curso."')) ";
+  $query .= "where UC.cod_usuario >= 0";
 
   $res   = Enviar($sock, $query);
 
@@ -505,27 +510,10 @@ function RetornaNomeUnicoGrupo($sock,$cod_grupo)
 }
 
 /* *********************************************************************
-   HaConvidados - retorna se ha convidados, ativos ou passivos no curso.
-   entrada: $sock - sock de conexao
-   saida: true  - ha convidados
-          false - nao ha
-*/
-function HaConvidados ($sock,$cod_curso)
-{
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-  $query = "select cod_usuario from ".$dbnamebase.".Usuario_curso where (tipo_usuario='z' or tipo_usuario='Z') and (cod_curso = '".$cod_curso."') limit 1";
-  $res   = Enviar ($sock, $query);
-
-  return ( RetornaNumLinhas($res) > 0);
-}
-
-/* *********************************************************************
    HaVisitantes - retorna se ha visitantes
    entrada: $sock - sock de conexao
-   saida: true - Ha convidados no curso
-          false - Nao ha convidados no curso
+   saida: true  - Ha visitantes no curso
+          false - Nao ha visitantes no curso
 */
 function HaVisitantes($sock)
 {
@@ -562,7 +550,7 @@ function StatusFerramentaGrupos ($sock, $cod_curso, $cod_usuario)
   else if ($status == 'F')
     $retorno = EFormador ($sock, $cod_curso, $cod_usuario);
   else if ($status == 'A')
-    // se entrou aqui, status da ferramenta = 'A'. Permito para alunos e convidados
+    // se entrou aqui, status da ferramenta = 'A'. Permito para alunos e visitantes
     $retorno = true;
 
   return $retorno;
@@ -926,8 +914,7 @@ function ExibeLinhaGrupoVerdadeiro($cod_grupo, $acessos_grupo, $tam_tabela, $dia
    entrada: $cod_grupo - nome do falso grupo:
                 -1 - grupo com alunos
                 -2 - grupo com formadores
-                -3 - grupo com convidados
-                -4 - grupo com visitantes
+                -3 - grupo com visitantes
             $tam_tabela - tamanho da tabela
             $coluna_total - booleano, se a tabela conta com uma coluna de total de acessos
 */
@@ -946,10 +933,8 @@ function ExibeLinhaFalsoGrupo($cod_grupo, $tam_tabela, $coluna_total)
     case -1: $nome = RetornaFraseDaLista($lista_frases, 61); break;
     // 62 - Formadores
     case -2: $nome = RetornaFraseDaLista($lista_frases, 62); break;
-    // 55 - Convidados
-    case -3: $nome = RetornaFraseDaLista($lista_frases, 55); break;
     // 57 - Visitantes
-    case -4: $nome = RetornaFraseDaLista($lista_frases, 57); break;
+    case -3: $nome = RetornaFraseDaLista($lista_frases, 57); break;
   }
 
   echo("            <tr class=\"head01\">\n");
@@ -1162,73 +1147,77 @@ function ExibeLinhaTotaisDiarios($tam_tabela, $diaUT, $coluna_total, $totais_dia
 */
 function RetornaListaGrupos($sock, $alunos, $formadores, $cod_curso)
 {
-   // 2Session
+  // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-    $sock = Conectar("");
-    if ($alunos || $formadores)
+  $sock = Conectar("");
+  $tipos = array();
+  if ($alunos)
+    $tipos[] = 'USUC.tipo_usuario=\'A\'';
+  if ($formadores)
+    $tipos[] = 'USUC.tipo_usuario=\'F\'';
+
+  $retorno = array();
+
+  if (count($tipos)) {
+
+    $condicoes = array();
+    $condicoes[] = '('.implode(' or ', $tipos).')';
+    $condicoes[] = 'USUC.cod_curso=\''.$cod_curso.'\'';
+
+    $condicoes = implode(' and ', $condicoes);
+
+    $query_usu  = 'SELECT USUC.cod_usuario, USU.nome, USUC.tipo_usuario ';
+    $query_usu .= 'FROM '.$dbnamebase.'.Usuario_curso USUC ';
+    $query_usu .= 'INNER JOIN '.$dbnamebase.'.Usuario USU ON (USU.cod_usuario = USUC.cod_usuario_global) ';
+    $query_usu .= 'WHERE '.$condicoes.' ';
+    $query_usu .= 'order by tipo_usuario, nome';
+
+    $res_usu   = Enviar($sock, $query_usu);
+    $lista_usu = RetornaArrayLinhas($res_usu);
+
+    if (count($lista_usu) > 0)
     {
-      if ($alunos)
-        $tmp[] = "USUC.tipo_usuario='A'";
-      if ($formadores)
-        $tmp[] = "USUC.tipo_usuario='F'";
-      if (is_array($tmp))
-        $tipo_usu = "(".implode(" or ", $tmp).")";
-
-      $query_usu = "SELECT USUC.cod_usuario, USU.nome, USUC.tipo_usuario
-      		    FROM ".$dbnamebase.".Usuario_curso USUC
-		    INNER JOIN ".$dbnamebase.".Usuario USU ON (USU.cod_usuario = USUC.cod_usuario_global)
-		    WHERE ".((isset($tipo_usu)) ? $tipo_usu : "1")."
-		    and USUC.cod_curso='".$cod_curso."'
-		    order by tipo_usuario, nome";
-
-      $res_usu   = Enviar($sock, $query_usu);
-      $lista_usu = RetornaArrayLinhas($res_usu);
-
-      if (count ($lista_usu) > 0)
+      $lista_codigos = Array();
+      foreach ($lista_usu as $valor)
       {
-        $lista1 = Array();
-        foreach ($lista_usu as $valor)
-        {
-          $lista1[] = $valor['cod_usuario'];
-        }
+        $lista_codigos[] = $valor['cod_usuario'];
       }
 
-    $sock = Conectar($cod_curso);
+      $sock = Conectar($cod_curso);
 
-    $query = "select GU.cod_usuario, G.cod_grupo from Grupos G, Grupos_usuario GU
-              where G.status<>'X'
-              and G.cod_grupo=GU.cod_grupo
-              and GU.cod_usuario IN (".implode (",", $lista1).")";
+      $condicoes = array();
+      $condicoes[] = 'G.status<>\'X\'';
+      $condicoes[] = 'G.cod_grupo=GU.cod_grupo';
+      $condicoes[] = 'GU.cod_usuario IN ('.implode (',', $lista_codigos).')';
 
-      
-    //$query.=   " order by U.tipo_usuario, U.nome";
-    // a ordenacao por tipo_usuario serve para colocar Alunos 'A' antes de Formadores 'F'
+      $condicoes = implode(' and ', $condicoes);
 
-    $res   = Enviar($sock, $query);
-    while ($linha = RetornaLinha($res))
-    {
-      $retorno[ $linha['cod_grupo'] ][] = $linha['cod_usuario'];
-    }
-    if ($retorno == NULL)
-    {
-      $query = "select cod_grupo from Grupos where status<>'X'";
+      $query = 'select GU.cod_usuario, G.cod_grupo from Grupos G, Grupos_usuario GU  where '.$condicoes;
+
+      //$query.=  " order by U.tipo_usuario, U.nome";
+      // a ordenacao por tipo_usuario serve para colocar Alunos 'A' antes de Formadores 'F'
+
       $res   = Enviar($sock, $query);
       while ($linha = RetornaLinha($res))
       {
-        $retorno[$linha['cod_grupo']] = "";
+        $retorno[ $linha['cod_grupo'] ][] = $linha['cod_usuario'];
       }
-    } 
+
+    }
   }
-  else
+
+  // Se $retorno � vazio, ou ambos os par�metros $alunos e $formadores s�o
+  // falsos ou a query de recupera��o de alunos n�o retornou nenhum resultado.
+  if (!count($retorno))
   {
     $sock = Conectar($cod_curso);
 
-    $query = "select cod_grupo from Grupos where status<>'X'";
+    $query = 'select cod_grupo from Grupos where status<>\'X\'';
     $res   = Enviar($sock, $query);
     while ($linha = RetornaLinha($res))
     {
-      $retorno[$linha['cod_grupo']] = "";
+      $retorno[$linha['cod_grupo']] = '';
     }
   }
 
@@ -1237,157 +1226,104 @@ function RetornaListaGrupos($sock, $alunos, $formadores, $cod_curso)
 
 /* *********************************************************************
    RetornaFalsosGrupos - retorna lista com falsos grupos. Servem para agrupar
-                         alunos, formadores, convidados e visitantes
+                         alunos, formadores e visitantes
    entrada: $alunos     - booleano, se montar grupo com alunos
             $formadores - booleano, se montar grupo com formadores
-            $convidados - booleano, se montar grupo com convidados
             $visitantes - booleano, se montar grupo com visitantes
    saida:   array que agrupa os usuario em grupos, de acordo com seus tipo_usuario
               [-1] = array com os cod_usuario dos alunos
               [-2] = array com os cod_usuario dos formadores
-              [-3] = array com os cod_usuario dos convidados
-              [-4] = array com os cod_usuario dos visitantes
+              [-3] = array com os cod_usuario dos visitantes
 */
-function RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso)
+function RetornaFalsosGrupos($sock, $alunos, $formadores, $visitantes, $cod_curso)
 {
-   // 2Session
+  // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  function DescCmp($a, $b)
-  {
-    // funcao auxiliar de comparacao para ordenar o array, ordena em ordem decrescente
-    if ($a == $b) return 0;
-    else if ($a > $b) return -1;
-    else return 1;
-  }
-
   // primeiro, descobrimos os tipos de usuarios a retornar
-  $tmp = array();
+  $tipos = array();
   if ($alunos)
-    $tmp[] = "binary tipo_usuario='A'";
+    $tipos[] = 'binary tipo_usuario=\'A\'';
   if ($formadores)
-    $tmp[] = "binary tipo_usuario='F'";
-  if ($convidados)
-    $tmp[] = "tipo_usuario='Z' or tipo_usuario='z'";
+    $tipos[] = 'binary tipo_usuario=\'F\'';
   if ($visitantes)
-    $tmp[] = "binary tipo_usuario='V'";
+    $tipos[] = 'binary tipo_usuario=\'V\'';
 
-  // se nenhuma das quatro booleanas de entrada for verdadeira, �pq queremos exibir apenas os grupos. Ent� n� retornamos usu�ios
-  // e a fun�o p�a por aqui
+  // Se nenhuma das três booleanas de entrada for verdadeira, é porque queremos
+  // exibir apenas os grupos. Ent� n� retornamos usu�ios e a fun�o pára por aqui.
 
-  $tipo_usuario = "(".implode(" or ", $tmp).")";
+    $retorno = array();
 
-  // a query
-  // a ordenacao por tipo_usuario desc serve para colocar Formadores 'F' antes de Aluno 'A'
-  $query = "select cod_usuario, tipo_usuario from ".$dbnamebase.".Usuario_curso where ".$tipo_usuario." and cod_usuario>0 and cod_curso='".$cod_curso."' order by tipo_usuario";
+    if (count($tipos))
+    {
 
-  $res   = Enviar($sock, $query);
+      $condicoes = array();
 
-  // este array auxiliar nos ajuda a separar os usuarios em seus grupos
-  $separa = array('A' => -1, 'F' => -2, 'Z' => -3, 'z' => -3, 'V' => -4);
+      $condicoes[] = '('.implode(' or ', $tipos).')';
+      $condicoes[] = 'cod_usuario>0';
+      $condicoes[] = 'cod_curso=\''.$cod_curso.'\'';
 
-  while ($linha = RetornaLinha($res))
-  {
-    $saida[ $separa[$linha['tipo_usuario'] ] ][] = $linha['cod_usuario'];
-  }
+      $condicoes = implode(' and ', $condicoes);
 
-  // Ordenar saida, para aparecer na ordem Alunos, Formadores, Convidados, Visitantes
-  if (is_array($saida))
-  {
-    uksort($saida, "DescCmp");
-  }
+      // a query
+      // a ordenacao por tipo_usuario desc serve para colocar Formadores 'F' antes de Aluno 'A'
+      $query = 'select cod_usuario, tipo_usuario from '.$dbnamebase.'.Usuario_curso where '.$condicoes.' order by tipo_usuario';
 
- return $saida;
+      $res   = Enviar($sock, $query);
+
+      // este array auxiliar nos ajuda a separar os usuarios em seus grupos
+      $separa = array('A' => -1, 'F' => -2, 'V' => -3);
+
+      while ($linha = RetornaLinha($res))
+      {
+        $retorno[ $separa[$linha['tipo_usuario'] ] ][] = $linha['cod_usuario'];
+      }
+
+      // Ordenar saida, para aparecer na ordem Alunos, Formadores, Visitantes
+      krsort($retorno);
+
+    }
+
+  return $retorno;
 }
 
 /* *********************************************************************
     RetornaGrupos - retorna lista com os grupos do curso
     entrada:
         $sock - sock de conexao
-        $grupos - booleano. true  = retornar grupos do curso
-                            false = retornar falsos grupos, de alunos, formadores, convidados e visitantes
-        $alunos - booleano, indica se retornar falso grupo com os alunos, NO CASO DE RETORNAR FALSOS GRUPOS
-        $formadores - booleano, indica se retornar falso grupo com os formadores, NO CASO DE RETORNAR FALSOS GRUPOS
-        $convidados - booleano, indica se retornar falso grupo com os convidados, NO CASO DE RETORNAR FALSOS GRUPOS
-        $visitantes - booleano, indica se retornar falso grupo com os visitantes, NO CASO DE RETORNAR FALSOS GRUPOS
+        $exibir_grupos - booleano. true  = retornar grupos do curso
+                                   false = retornar falsos grupos, de alunos, formadores e visitantes
+        $exibir_alunos -     booleano, indica se retornar grupo com os alunos, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false). 
+
+        $exibir_formadores - booleano, indica se retornar grupo com os formadores, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
+
+        $exibir_visitantes - booleano, indica se retornar grupo com os visitantes, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
+
     saida: array associativo multi-dimensional com os grupos do curso
         array[$cod_grupo] - �um array contendo os cod_usuario dos alunos do curso
 */
-function RetornaGrupos($sock, $grupos, $alunos, $formadores, $convidados, $visitantes, $cod_curso)
+function RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso)
 {
-  if ($grupos)
+  if ($exibir_grupos)
   {
-    // retornamos nao somente os grupos verdadeiros, mas tb os grupos com convidados e visitantes, se forem pedidos
-    $l1 = RetornaListaGrupos($sock, $alunos, false, $cod_curso);
-    $l4 = RetornaListaGrupos($sock, $alunos, $formadores, $cod_curso);
-    
+    // Retornamos n�o somente os grupos verdadeiros, mas tamb�m os grupos com visitantes, se forem pedidos.
+    $grupos = RetornaListaGrupos($sock, $exibir_alunos, $exibir_formadores, $cod_curso);
+
     $sock = Conectar("");
 
-    if ($convidados || $visitantes)
+    $falsos_grupos = RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
+    if (is_array($falsos_grupos))
     {
-      $l2 = RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso);
-      if (is_array ($l2))
+      foreach ($falsos_grupos as $cod_grupo => $array_usuarios)
       {
-        foreach ($l2 as $cod_grupo => $array_usuarios)
-        {
-          $l4[ $cod_grupo ] = $array_usuarios;
-        }
+        $grupos[ $cod_grupo ] = $array_usuarios;
       }
-      else if($formadores)
-      {
-        $l3 = RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso);
+    }
 
-        if (is_array ($l3))
-        {
-          foreach ($l3 as $cod_grupo => $array_usuarios)
-          {
-            $l4[ $cod_grupo ] = $array_usuarios;
-          }
-        }
-      }
-    }
-    else if ($formadores)
-    {
-      $l3 = RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso);
-      if (is_array ($l3))
-      {
-        foreach ($l3 as $cod_grupo => $array_usuarios)
-        {
-          $l4[ $cod_grupo ] = $array_usuarios;
-        }
-      }
-    }
-    else if ($alunos)
-    {
-      $l3 = RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso);
-      if (is_array ($l3))
-      {
-        foreach ($l3 as $cod_grupo => $array_usuarios)
-        {
-          $l4[ $cod_grupo ] = $array_usuarios;
-        }
-      }
-    }
-    if( $l4[ $cod_grupo] < 0)
-    {
-       foreach ($l1 as $cod_grupo => $array_usuarios)
-       {
-	  $result [ $cod_grupo ] = $array_usuarios;
-	  $auxiliar = $cod_grupo;
-       }
-       foreach ($l4 as $cod_grupo => $array_usuarios)
-       {
-	  $result [ $auxiliar ] = $array_usuarios;
-     	  $auxiliar++;
-       }	  
-       return $result;
-    }
-    
-    else
-       return $l4;
+    return $grupos;
   }
   else
-    return RetornaFalsosGrupos($sock, $alunos, $formadores, $convidados, $visitantes, $cod_curso);
+    return RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
 }
 
 /* *********************************************************************
@@ -1403,11 +1339,11 @@ function RetornaAcessosGrupos($sock, $cod_ferramenta, $data_iniUT, $data_fimUT)
   // determinando para que ferramenta olhar os acessos
   if (isset ($cod_ferramenta) )
   {
-    $ferr = " and cod_ferramenta=".$cod_ferramenta;
+    $ferr = "cod_ferramenta=".$cod_ferramenta;
   }
   else
   {
-    $ferr = " and cod_ferramenta is null";
+    $ferr = "cod_ferramenta is null";
   }
 
   //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
@@ -1415,7 +1351,7 @@ function RetornaAcessosGrupos($sock, $cod_ferramenta, $data_iniUT, $data_fimUT)
   $query.= " where CA.cod_usuario=GU.cod_usuario";
   $query.=   " and G.cod_grupo=GU.cod_grupo";
   $query.=   " and G.status<>'X'";
-  $query.= $ferr;
+  $query.=   " and ".$ferr;
   $query.=   " and data>=".$data_iniUT;
   $query.=   " and data<=".$data_fimUT;
   $query.= " group by cod_grupo, FROM_UNIXTIME(data,'%Y%m%d')";
@@ -1434,6 +1370,7 @@ function RetornaAcessosGrupos($sock, $cod_ferramenta, $data_iniUT, $data_fimUT)
 */
 function RetornaTotaisUsuarios( $acessos_users )
 {
+  $retorno = array();
   if (is_array ($acessos_users) )
   {
     foreach ( $acessos_users as $cod_usuario => $acessos_usuario )
@@ -1442,12 +1379,15 @@ function RetornaTotaisUsuarios( $acessos_users )
       {
         foreach ($acessos_usuario as $data => $num_acessos)
         {
-          $saida[$cod_usuario] += $num_acessos;
+          if (!isset($retorno[$cod_usuario]))
+            $retorno[$cod_usuario]  = 0;
+          else
+            $retorno[$cod_usuario] += $num_acessos;
         }
       }
     }
   }
-  return $saida;
+  return $retorno;
 }
 
 /* *********************************************************************
@@ -1459,12 +1399,11 @@ function RetornaTotaisUsuarios( $acessos_users )
         $data_fimUT         - data de final do periodo
         $exibir_alunos      - bool, se exibir alunos
         $exibir_formadores  - bool, se exibir formadores
-        $exibir_convidados  - bool, se exibir convidados
         $exibir_visitantes  - bool, se exibir visitantes
    saida: array associativo na data, contendo o numero de acessos no dia
        array [ data ] = numero de acessos no dia
 */
-function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_convidados, $exibir_visitantes, $exibir_grupos, $cod_curso)
+function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $exibir_grupos, $cod_curso)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -1472,11 +1411,11 @@ function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT,
   // determinando para que ferramenta olhar os acessos
   if (isset ($cod_ferramenta) )
   {
-    $ferr = " and cod_ferramenta=".$cod_ferramenta;
+    $ferr = "cod_ferramenta=".$cod_ferramenta;
   }
   else
   {
-    $ferr = " and cod_ferramenta is null";
+    $ferr = "cod_ferramenta is null";
   }
 
   // determinando o tipo de usuario para olhar os acessos
@@ -1485,244 +1424,249 @@ function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT,
 
   if ($exibir_alunos)
   {
-	$tmp[] = "binary tipo_usuario='A'";
-    	$bool = true;
+    $tmp[] = "binary tipo_usuario='A'";
+    $bool  = true;
   }
   if ($exibir_formadores && !$exibir_grupos)
   {
-    	$tmp[] = "binary tipo_usuario='F'";
-    	$bool = true;
-  }
-  if ($exibir_convidados)
-  {
-    	$tmp[] = "tipo_usuario='Z' or tipo_usuario='z' ";
-    	$bool = true;
+      $tmp[] = "binary tipo_usuario='F'";
+      $bool = true;
   }
   if ($exibir_visitantes)
   {
-    	$tmp[] = "binary tipo_usuario='V'";
-    	$bool = true;
+      $tmp[] = "binary tipo_usuario='V'";
+      $bool = true;
   }
   if ($bool)
     $tipo_usuario = " (".implode(" or ", $tmp).")";
+  
+  $saida = array();
 
   if ($exibir_grupos)
   {
-	if ($exibir_formadores)
+    if ($exibir_formadores)
     {
-		if ($exibir_alunos)
-		{
-	    	$query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-			  WHERE (binary tipo_usuario='A' or binary tipo_usuario='F')
-			  and cod_curso='".$cod_curso."'";
-	
-	    	$res_usu   = Enviar($sock, $query_usu);
-     	    $lista_usu = RetornaArrayLinhas($res_usu);
-	
-     	    if (count ($lista_usu) > 0)
-     	    {
-     	      $lista1 = Array();
-     	      foreach ($lista_usu as $valor)
-     	      {
-	 			$lista1[] = $valor['cod_usuario'];
-     	      }
-     	    }
+      if ($exibir_alunos)
+      {
+        $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+        $query_usu .= "WHERE (binary tipo_usuario='A' or binary tipo_usuario='F') ";
+        $query_usu .= "and cod_curso='".$cod_curso."'";
 
-	    	$sock = Conectar($cod_curso);
-	
-            //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-	    	$query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
-	    	$query.= $ferr;
-	    	$query.= " and data>=".$data_iniUT;
-  	    	$query.= " and data<=".$data_fimUT;
-  	    	$query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-  	    	$res   = Enviar($sock, $query);
+        $res_usu    = Enviar($sock, $query_usu);
+        $lista_usu  = RetornaArrayLinhas($res_usu);
 
-  	    	while ($linha = RetornaLinha($res))
-  	    	{
-    	       $saida[ $linha['data'] ] = $linha['num_acessos'];
-  	    	}
-    	}
-		else
-		{
-	    	$query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-			  WHERE binary tipo_usuario='F'
-			  and cod_curso='".$cod_curso."'";
-	
-	    	$res_usu   = Enviar($sock, $query_usu);
-     	    $lista_usu = RetornaArrayLinhas($res_usu);
-	
-     	    if (count ($lista_usu) > 0)
-     	    {
-     	      $lista1 = Array();
-     	      foreach ($lista_usu as $valor)
-     	      {
-	 			$lista1[] = $valor['cod_usuario'];
-     	      }
-     	    }
+        if (count ($lista_usu) > 0)
+        {
+          $lista1 = Array();
+          foreach ($lista_usu as $valor)
+          {
+            $lista1[] = $valor['cod_usuario'];
+          }
+          
+          $sock = Conectar($cod_curso);
+          
+          //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+          $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
+          $query.= " and ".$ferr;
+          $query.= " and data>=".$data_iniUT;
+          $query.= " and data<=".$data_fimUT;
+          $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+          $res   = Enviar($sock, $query);
+          
+          while ($linha = RetornaLinha($res))
+          {
+            $saida[ $linha['data'] ] = $linha['num_acessos'];
+          }
+          
+        }
+      }
+      else
+      {
+        $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+        $query_usu .= "WHERE binary tipo_usuario='F' ";
+        $query_usu .= "and cod_curso='".$cod_curso."'";
 
-	    	$sock = Conectar($cod_curso);
-	
-	    //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-            $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
-            $query.= $ferr;
-	    	$query.= " and data>=".$data_iniUT;
-  	    	$query.= " and data<=".$data_fimUT;
-  	    	$query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-  	    	$res   = Enviar($sock, $query);
+        $res_usu    = Enviar($sock, $query_usu);
+        $lista_usu  = RetornaArrayLinhas($res_usu);
 
-  	    	while ($linha = RetornaLinha($res))
-  	    	{
-    	       $saida[ $linha['data'] ] = $linha['num_acessos'];
-  	    	}
-		}
+        if (count ($lista_usu) > 0)
+        {
+          $lista1 = Array();
+          foreach ($lista_usu as $valor)
+          {
+            $lista1[] = $valor['cod_usuario'];
+          }
+          
+          $sock = Conectar($cod_curso);
+          
+          //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+          $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
+          $query.= " and ".$ferr;
+          $query.= " and data>=".$data_iniUT;
+          $query.= " and data<=".$data_fimUT;
+          $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+          $res   = Enviar($sock, $query);
+          
+          while ($linha = RetornaLinha($res))
+          {
+            $saida[ $linha['data'] ] = $linha['num_acessos'];
+          }
+          
+        }
+      }
      }
      else
      {
-		if ($exibir_alunos)
-		{
-	    	$query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-			  WHERE binary tipo_usuario='A'
-			  and cod_curso='".$cod_curso."'";
-	
-	    	$res_usu   = Enviar($sock, $query_usu);
-     	    $lista_usu = RetornaArrayLinhas($res_usu);
-	
-     	    if (count ($lista_usu) > 0)
-     	    {
-     	      $lista1 = Array();
-     	      foreach ($lista_usu as $valor)
-     	      {
-	 			$lista1[] = $valor['cod_usuario'];
-     	      }
-     	    }
+       if ($exibir_alunos)
+       {
+         $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+         $query_usu .= "WHERE binary tipo_usuario='A' ";
+         $query_usu .= "and cod_curso='".$cod_curso."'";
 
-	    	$sock = Conectar($cod_curso);
+         $res_usu   = Enviar($sock, $query_usu);
+         $lista_usu = RetornaArrayLinhas($res_usu);
 
-	    	//inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-	    	$query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
-	    	$query.= $ferr;
-	    	$query.= " and data>=".$data_iniUT;
-  	    	$query.= " and data<=".$data_fimUT;
-  	    	$query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-  	    	$res   = Enviar($sock, $query);
-	    	if (isset($saida)) unset($saida);
-  	    	while ($linha = RetornaLinha($res))
-  	    	{
-    	       $saida[ $linha['data'] ] = $linha['num_acessos'];
-  	    	}
-		}
-		else
-		{
-	    	$query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-			  WHERE (binary tipo_usuario='A' or binary tipo_usuario='F')
-			  and cod_curso='".$cod_curso."'";
-	
-	    	$res_usu   = Enviar($sock, $query_usu);
-     	    $lista_usu = RetornaArrayLinhas($res_usu);
-	
-     	    if (count ($lista_usu) > 0)
-     	    {
-     	      $lista1 = Array();
-     	      foreach ($lista_usu as $valor)
-     	      {
-	 			$lista1[] = $valor['cod_usuario'];
-     	      }
-     	    }
-	
-	    	$sock = Conectar($cod_curso);
+         if (count ($lista_usu) > 0)
+         {
+           $lista1 = Array();
+           foreach ($lista_usu as $valor)
+           {
+             $lista1[] = $valor['cod_usuario'];
+           }
+           
+           $sock = Conectar($cod_curso);
+           
+           //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+           $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
+           $query.= " and ".$ferr;
+           $query.= " and data>=".$data_iniUT;
+           $query.= " and data<=".$data_fimUT;
+           $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+           $res   = Enviar($sock, $query);
+           if (isset($saida)) unset($saida);
+           while ($linha = RetornaLinha($res))
+           {
+             $saida[ $linha['data'] ] = $linha['num_acessos'];
+           }
+           
+         }
+       }
+       else
+       {
+         $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+         $query_usu .= "WHERE (binary tipo_usuario='A' or binary tipo_usuario='F') ";
+         $query_usu .= "and cod_curso='".$cod_curso."'";
 
-            //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-	    	$query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
-	   		$query.= $ferr;
-	    	$query.= " and data>=".$data_iniUT;
-  	    	$query.= " and data<=".$data_fimUT;
-  	    	$query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-  	    	$res   = Enviar($sock, $query);
-	    	if (isset($saida)) unset($saida);
-  	    	while ($linha = RetornaLinha($res))
-  	    	{
-    	       $saida[ $linha['data'] ] = $linha['num_acessos'];
-  	    	}
-		}
+         $res_usu   = Enviar($sock, $query_usu);
+         $lista_usu = RetornaArrayLinhas($res_usu);
+
+         if (count ($lista_usu) > 0)
+         {
+           $lista1 = Array();
+           foreach ($lista_usu as $valor)
+           {
+             $lista1[] = $valor['cod_usuario'];
+           }
+           
+           $sock = Conectar($cod_curso);
+           
+           //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+           $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN ('".implode(",", $lista1)."')";
+           $query.= " and ".$ferr;
+           $query.= " and data>=".$data_iniUT;
+           $query.= " and data<=".$data_fimUT;
+           $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+           $res   = Enviar($sock, $query);
+           if (isset($saida)) unset($saida);
+           while ($linha = RetornaLinha($res))
+           {
+             $saida[ $linha['data'] ] = $linha['num_acessos'];
+           }
+           
+         }
+       }
      }
 
      //Desconectar($sock);
      $sock = Conectar("");
 
-     $query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-		   WHERE ".(($bool) ? $tipo_usuario: "1")."
-		   and cod_curso='".$cod_curso."'";
+     $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+     $query_usu .= "WHERE ".(($bool) ? $tipo_usuario: "1")." ";
+     $query_usu .= "and cod_curso='".$cod_curso."'";
 
      $res_usu   = Enviar($sock, $query_usu);
      $lista_usu = RetornaArrayLinhas($res_usu);
-	
+
      if (count ($lista_usu) > 0)
      {
        $lista1 = Array();
        foreach ($lista_usu as $valor)
        {
-			$lista1[] = $valor['cod_usuario'];
+         $lista1[] = $valor['cod_usuario'];
        }
-     }
-
-     Desconectar($sock);
-     $sock = Conectar($cod_curso);
-
-      //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-     $query= "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA, Grupos_usuario GU, Grupos G where CA.cod_usuario IN (".implode(",", $lista1).") and GU.cod_grupo = G.cod_grupo and G.status<>'X'";
-
-     /*if ($bool)
-       $query.= $tipo_usuario;*/
-     $query.= $ferr;
-     $query.= " and data>=".$data_iniUT;
-     $query.= " and data<=".$data_fimUT;
-     $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-     $res   = Enviar($sock, $query);
-     if (isset($saida)) unset($saida);
-     while ($linha1 = RetornaLinha($res))
-     {
-        $saida1 [ $linha1['data'] ] = $linha1['num_acessos'];
-     }
-
-     if($saida['data'] == $saida1['data'])
-     {
-       $saida['data'] = $saida['data'] + $saida1['data'];
+       
+       Desconectar($sock);
+       $sock = Conectar($cod_curso);
+       
+       //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+       $query= "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA, Grupos_usuario GU, Grupos G where CA.cod_usuario IN (".implode(",", $lista1).") and GU.cod_grupo = G.cod_grupo and G.status<>'X'";
+       
+       /*if ($bool)
+        $query.= $tipo_usuario;*/
+       $query.= " and ".$ferr;
+       $query.= " and data>=".$data_iniUT;
+       $query.= " and data<=".$data_fimUT;
+       $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+       $res   = Enviar($sock, $query);
+       if (isset($saida)) unset($saida);
+       while ($linha1 = RetornaLinha($res))
+       {
+         $saida1 [ $linha1['data'] ] = $linha1['num_acessos'];
+       }
+       
+       if($saida['data'] == $saida1['data'])
+       {
+         $saida['data'] = $saida['data'] + $saida1['data'];
+       }
+       
      }
   }
   else
   {
-     $query_usu = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso
-		   WHERE ".(($bool) ? $tipo_usuario : "1")."
-		   and cod_curso='".$cod_curso."'";
-	
+     $query_usu  = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso ";
+     $query_usu .= "WHERE ".(($bool) ? $tipo_usuario." and " : "");
+     $query_usu .= "cod_curso='".$cod_curso."'";
+
      $res_usu   = Enviar($sock, $query_usu);
      $lista_usu = RetornaArrayLinhas($res_usu);
-	
+
+     $lista1 = Array();
      if (count ($lista_usu) > 0)
      {
        $lista1 = Array();
        foreach ($lista_usu as $valor)
        {
-			$lista1[] = $valor['cod_usuario'];
+         $lista1[] = $valor['cod_usuario'];
        }
-     }
-
-     $sock = Conectar($cod_curso);
-
-     //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
-     $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where CA.cod_usuario IN (".implode(",", $lista1).")";
-     /*if ($bool) 
-       $query.= $tipo_usuario;*/
-     $query.= $ferr;
-     $query.= " and data>=".$data_iniUT;
-     $query.= " and data<=".$data_fimUT;
-     $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
-     $res   = Enviar($sock, $query);
-     if (isset($saida)) unset($saida);
-     while ($linha = RetornaLinha($res))
-     {
-       $saida [ $linha['data'] ] = $linha['num_acessos'];
+       
+       $sock = Conectar($cod_curso);
+       
+       //inverter a data para o formato YYYY/mm/dd para consertar erro na exibição, pois as datas iniciadas com 0 (zero) são interpretadas erradamente (octais)
+       $query = "select FROM_UNIXTIME(data,'%Y%m%d') 'data',count(*) 'num_acessos' from Curso_acessos CA where ";
+       $query.= (count ($lista1) > 0)?"CA.cod_usuario IN (".implode(",", $lista1).") and ": "";
+       /*if ($bool)
+        $query.= $tipo_usuario;*/
+       $query.= $ferr." and";
+           $query.= " data>=".$data_iniUT." and ";
+               $query.= " data<=".$data_fimUT;
+               $query.= " group by FROM_UNIXTIME(data,'%Y%m%d')";
+               $res   = Enviar($sock, $query);
+               if (isset($saida)) unset($saida);
+               while ($linha = RetornaLinha($res))
+               {
+                 $saida [ $linha['data'] ] = $linha['num_acessos'];
+               }
+       
      }
   }
 
@@ -1754,10 +1698,8 @@ function ExistemAlunos($sock, $cod_curso)
     $query = "select COUNT(cod_usuario) as total_alunos from ".$dbnamebase.".Usuario_curso where binary tipo_usuario='A' and cod_curso='".$cod_curso."'";
     $res = Enviar($sock, $query);
     $linha = RetornaLinha($res);
-    if ($linha['total_alunos'] > 0)
-        return true;
-    else
-        return false;
+
+    return ($linha['total_alunos'] > 0);
 }
 
 ?>

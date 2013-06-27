@@ -161,34 +161,31 @@
   $exibir_grupos        = isset ($check_grupos);
   $exibir_alunos        = isset ($check_alunos);
   $exibir_formadores    = isset ($check_formadores);
-  $exibir_convidados    = isset ($check_convidados);
   $exibir_visitantes    = isset ($check_visitantes);
 
   if (! $SalvarEmArquivo)
   {  
   
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
-    echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
-    echo("            <input type=hidden name=origem value='freq' />\n");
-    echo("            <input type=hidden name=nome_arquivo value='relatorio_frequencia.html' />");
+    echo("            <input type=hidden name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("            <input type=hidden name=\"origem\" value='freq' />\n");
+    echo("            <input type=hidden name=\"nome_arquivo\" value='relatorio_frequencia.html' />");
     if (isset($cod_ferramenta))
-      echo("            <input type=hidden name=cod_ferramenta value=".$cod_ferramenta." />\n");
+      echo("            <input type=hidden name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\" />\n");
     if(isset($data_ini))
-      echo("            <input type=hidden name=data_ini value=".$data_ini." />\n");
+      echo("            <input type=hidden name=\"data_ini\" value=\"".$data_ini."\" />\n");
     if(isset($data_fim))
-      echo("            <input type=hidden name=data_fim value=".$data_fim." />\n");
+      echo("            <input type=hidden name=\"data_fim\" value=\"".$data_fim."\" />\n");
     if (isset($check_part) && $check_part)
-      echo("            <input type=hidden name=check_part value=1 />\n");
+      echo("            <input type=hidden name=\"check_part\" value=\"1\" />\n");
     if (isset($check_grupos) && $check_grupos)
-      echo("            <input type=hidden name=check_grupos value=1 />\n");
-    if (isset($exibir_convidados) && $exibir_convidados)
-      echo("            <input type=hidden name=exibir_convidados value=1 />\n");
+      echo("            <input type=hidden name=\"check_grupos\" value=\"1\" />\n");
     if (isset($check_formadores) && $check_formadores)
-      echo("            <input type=hidden name=check_formadores value=1 />\n");  
+      echo("            <input type=hidden name=\"check_formadores\" value=\"1\" />\n");  
     if (isset($check_alunos) && $check_alunos)
-      echo("            <input type=hidden name=check_alunos value=1 />\n");  
+      echo("            <input type=hidden name=\"check_alunos\" value=\"1\" />\n");  
     if (isset($exibir_visitantes) && $exibir_visitantes)
-      echo("            <input type=hidden name=check_visitantes value=1 />\n");
+      echo("            <input type=hidden name=\"check_visitantes\" value=\"1\" />\n");
     echo("          </form>\n");
 
     echo("          <ul class=\"btAuxTabs\">\n");  
@@ -218,7 +215,7 @@
   Desconectar($sock);
   $sock = Conectar("");
 
-  $lista_grupos   = RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_convidados, $exibir_visitantes, $cod_curso);
+  $lista_grupos   = RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
   $exibir_so_grupos=(!(($exibir_grupos)||($exibir_alunos)||($exibir_formadores)));
 
   if ($exibir_grupos)
@@ -242,7 +239,7 @@
 
   Desconectar($sock);
   $sock = Conectar("");
-  $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_convidados, $exibir_visitantes, $exibir_grupos, $cod_curso);
+  $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $exibir_grupos, $cod_curso);
 
   // definindo o numero de dias em uma tabela como uma constante
   define("NUM_DIAS_TABELA", 14, FALSE);
@@ -288,7 +285,7 @@
         }
         else
         {
-	  // se nao for detalhar os participantes dos grupos, precisa ainda tratar as mudancas de cor na linha
+          // se nao for detalhar os participantes dos grupos, precisa ainda tratar as mudancas de cor na linha
           // CUIDADO !!! Não caia na tentação de juntar esse comando com a mudanca de cor na linha acima, os tratamentos sao diferentes !
           $cor_linha++;
         }

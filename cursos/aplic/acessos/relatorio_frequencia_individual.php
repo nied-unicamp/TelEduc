@@ -71,13 +71,13 @@
 
   if (!$SalvarEmArquivo)
   {
-  	echo("    <script type=\"text/javascript\">\n");
+      echo("    <script type=\"text/javascript\">\n");
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
     echo("         window.open('../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
     echo("        return(false);\n");
     echo("      }\n");
-  
+
     echo("      function AbreGrupo(cod_grupo)\n");
     echo("      {\n");
     echo("          window.open('../grupos/exibir_grupo.php?cod_curso=".$cod_curso."&cod_grupo='+cod_grupo+'&esconder_barra=1','MostrarComponentes','width=500,height=300,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
@@ -104,7 +104,7 @@
     echo("      {\n");
     echo("         window.open('relatorio_frequencia2.php?cod_curso=".$cod_curso."&cod_grupo='+cod_grupo+'&diaUT='+diaUT+'&data_iniUT='+data_iniUT+'&data_fimUT='+data_fimUT+'&cod_ferramenta_relatorio=".$cod_ferramenta_relatorio."&opcao='+opcao,'JanelaFreq','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
     echo("      }\n");
-  
+
     echo("      function ImprimirRelatorio()\n");
     echo("      {\n");
     echo("        if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
@@ -132,7 +132,7 @@
   echo("        self.focus();\n");
   echo("      }\n\n");
   echo("    </script>\n");
-  
+
   echo("  </head>\n");
   echo("  <body link=#0000ff vlink=#0000ff bgcolor=white onLoad=\"Iniciar();\">\n");
   echo("    <a name=\"topo\"></a>\n");
@@ -161,31 +161,28 @@
   echo("      <tr>\n");
   echo("        <td valign=\"top\">\n");
 
-  $exibir_grupos        = isset ($check_grupos);
-  $exibir_alunos        = isset ($check_alunos);
-  $exibir_formadores    = isset ($check_formadores);
-  $exibir_convidados    = isset ($check_convidados);
-  $exibir_visitantes    = isset ($check_visitantes);
+  $exibir_grupos     = false;//isset ($check_grupos);
+  $exibir_alunos     = isset ($check_alunos);
+  $exibir_formadores = isset ($check_formadores);
+  $exibir_visitantes = isset ($check_visitantes);
 
 /*  if (! $SalvarEmArquivo)
   {  
-  
+
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
-    echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
+    echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
     echo("            <input type=hidden name=origem value='freq' />\n");
     echo("            <input type=hidden name=nome_arquivo value='relatorio_frequencia.html' />");
     /*if (isset($cod_ferramenta))
-      echo("            <input type=hidden name=cod_ferramenta value=".$cod_ferramenta." />\n");*/
+      echo("            <input type=hidden name=cod_ferramenta value=\"".$cod_ferramenta."\" />\n");*/
 /*    if(isset($data_ini))
-      echo("            <input type=hidden name=data_ini value=".$data_ini." />\n");
+      echo("            <input type=hidden name=data_ini value=\"".$data_ini."\" />\n");
     if(isset($data_fim))
-      echo("            <input type=hidden name=data_fim value=".$data_fim." />\n");
+      echo("            <input type=hidden name=data_fim value=\"".$data_fim."\" />\n");
     if (isset($check_part) && $check_part)
       echo("            <input type=hidden name=check_part value=1 />\n");
     if (isset($check_grupos) && $check_grupos)
       echo("            <input type=hidden name=check_grupos value=1 />\n");
-    if (isset($exibir_convidados) && $exibir_convidados)
-      echo("            <input type=hidden name=exibir_convidados value=1 />\n");
     if (isset($check_formadores) && $check_formadores)
       echo("            <input type=hidden name=check_formadores value=1 />\n");  
     if (isset($check_alunos) && $check_alunos)
@@ -221,109 +218,109 @@
   Desconectar($sock);
   $sock = Conectar("");
 
-  $lista_grupos   = RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_convidados, $exibir_visitantes, $cod_curso);
+  $lista_grupos   = RetornaGrupos($sock, false, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
   //$exibir_so_grupos=(!(($exibir_grupos)||($exibir_alunos)||($exibir_formadores)));
   $lista_nomes    = RetornaNomesUsuarios($sock,$cod_curso);
   Desconectar($sock);
-  
+
   foreach ($ordem_ferramentas as $cod=>$linha)
   {
-	if(($cod_ferramenta=$linha['cod_ferramenta']) > 0){
-	  //print_r($cod_ferramenta);
-	
-	  $sock = Conectar($cod_curso);
-	  $acessos_users  = RetornaUsuariosAcessos($sock, $cod_ferramenta, $data_iniUT, $data_fimUT);
-	  $totais_users   = RetornaTotaisUsuarios( $acessos_users );
-	
-	  Desconectar($sock);
-	  $sock = Conectar("");
-	  $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_convidados, $exibir_visitantes, $exibir_grupos, $cod_curso);
-	
-	  // definindo o numero de dias em uma tabela como uma constante
-	  define("NUM_DIAS_TABELA", 14, FALSE);
-	  // numero de dias entre a data inicial e a data final do periodo de exibicao - muda a cada passagem do loop mais externo
-	  $num_dias = intval(ceil(($data_fimUT - $data_iniUT) / 86400));
-	  // numero de tabelas a exibir - nao muda. Exibimos tabelas de no maximo 20 dias
-	  $num_tabelas = intval(ceil($num_dias / NUM_DIAS_TABELA));
-	  // tamanho de cada tabela menor - muda a cada passagem de loop. Exemplo: 29 dias = 1 tabela de 15 + 1 tabela de 14
-	  $tam_tabela = ($num_dias > NUM_DIAS_TABELA ? ceil($num_dias / $num_tabelas) : $num_dias);
-	  // variavel para percorrer o loop numerando as colunas
-	  $diaUT = $data_iniUT;
-	  
-	  
-	  while ($num_tabelas-- > 0)
-	  {
-	    // numero de dias entre a data atualmente tratada pelo loop e o fim do periodo
-	    $num_dias = ceil(($data_fimUT - $diaUT) / 86400);
-	    // uma das tabelas vai ser menor que as outras
-	    $tam_tabela = ($tam_tabela <= $num_dias ? $tam_tabela : $num_dias);
-	
-	    // determina a cor da linha
-	    $cor_linha = 0;
-	    CriaTabela();
-	
-	    // num_tabelas == 0 indica que esta eh a ultima tabela a ser gerada
-	    $sock = Conectar("");
-	    $titulo = RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_nome']);
-	    
-	    ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $diaUT, $SalvarEmArquivo, ($coluna_total = (0 == $num_tabelas)),$titulo);
-	 
-	    if (is_array ($lista_grupos))
-	    {
-	      foreach ($lista_grupos as $cod_grupo => $linha_grupo)
-	      {
-	      	//print_r($lista_grupos);
-	      	//exit();
-		        // exibe linha com os acessos diarios do grupo
-		        ExibeLinhaGrupo($cod_grupo, $acessos_grupos[ $cod_grupo ], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $nomes_grupos[$cod_grupo], $exibir_alunos || $exibir_formadores, ($cod_grupo+1), $data_iniUT);
-		        if (is_array ($linha_grupo))
-		        {
-		          // listamos os integrantes do grupo
-		          foreach ($linha_grupo as $cod_usuario)
-		          {
-		          	//foreach($ferramenta_do_sistema as $key => $value){
-			          	if($cod_usuario == $_GET['cod_aluno_relatorio']){
-				            // Exibe linha com os acessos do usuario em cada dia
-				            //echo("cod_usuario:".."\n C�digo Certo:".$_POST['cod_aluno_relatorio']);
-				            ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT);
-				            $cor_linha++;
-				            break;
-			          	}
-		          	//}
-		          }
-		        }
-		        else
-		        {
-			  // se nao for detalhar os participantes dos grupos, precisa ainda tratar as mudancas de cor na linha
-		          // CUIDADO !!! Não caia na tentação de juntar esse comando com a mudanca de cor na linha acima, os tratamentos sao diferentes !
-		          $cor_linha++;
-		        }
-	      	
-	      }
-	    }
-	
-	    ExibeLinhaTotaisDiarios($tam_tabela, $diaUT, $coluna_total, $totais_diarios);
-	    FechaTabela();
-	
-	    /* avancando a variavel $diaUT. */
-	    $diaST = explode("/",UnixTime2Data($diaUT));
-	    $diaUT = Data2UnixTime(($tam_tabela + $diaST[0])."/".$diaST[1]."/".$diaST[2]);
-	  }
-	  
-	  /* ****************************************************************************** 
-	     Gerando tabelas - FIM
-	  ****************************************************************************** */
-	  if ($exibir_grupos)
-	  {
-	    /* 45 - Obs.: O número total de acessos não corresponderão à soma da coluna caso haja algum aluno em mais de um grupo. Cada Aluno é contado somente uma vez no total. */
-	    echo("          <b>".RetornaFraseDaLista($lista_frases,45)."</b>\n");
-	  }
-	
-	  echo("        </td>\n");
-	  echo("      </tr>\n");
-	  echo("    </table>\n");
-	  Desconectar($sock);
-	  }
+    if(($cod_ferramenta=$linha['cod_ferramenta']) > 0)
+    {
+
+      $sock = Conectar($cod_curso);
+      $acessos_users  = RetornaUsuariosAcessos($sock, $cod_ferramenta, $data_iniUT, $data_fimUT);
+      $totais_users   = RetornaTotaisUsuarios( $acessos_users );
+
+      Desconectar($sock);
+      $sock = Conectar("");
+      $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $exibir_grupos, $cod_curso);
+
+      // definindo o numero de dias em uma tabela como uma constante
+      define("NUM_DIAS_TABELA", 14, FALSE);
+      // numero de dias entre a data inicial e a data final do periodo de exibicao - muda a cada passagem do loop mais externo
+      $num_dias = intval(ceil(($data_fimUT - $data_iniUT) / 86400));
+      // numero de tabelas a exibir - nao muda. Exibimos tabelas de no maximo 20 dias
+      $num_tabelas = intval(ceil($num_dias / NUM_DIAS_TABELA));
+      // tamanho de cada tabela menor - muda a cada passagem de loop. Exemplo: 29 dias = 1 tabela de 15 + 1 tabela de 14
+      $tam_tabela = ($num_dias > NUM_DIAS_TABELA ? ceil($num_dias / $num_tabelas) : $num_dias);
+      // variavel para percorrer o loop numerando as colunas
+      $diaUT = $data_iniUT;
+
+
+      while ($num_tabelas-- > 0)
+      {
+        // numero de dias entre a data atualmente tratada pelo loop e o fim do periodo
+        $num_dias = ceil(($data_fimUT - $diaUT) / 86400);
+        // uma das tabelas vai ser menor que as outras
+        $tam_tabela = ($tam_tabela <= $num_dias ? $tam_tabela : $num_dias);
+
+        // determina a cor da linha
+        $cor_linha = 0;
+        CriaTabela();
+
+        // num_tabelas == 0 indica que esta eh a ultima tabela a ser gerada
+        $sock = Conectar("");
+        $titulo = RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_nome']);
+
+        ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $diaUT, $SalvarEmArquivo, ($coluna_total = (0 == $num_tabelas)),$titulo);
+
+        if (is_array ($lista_grupos))
+        {
+          foreach ($lista_grupos as $cod_grupo => $linha_grupo)
+          {
+              //print_r($lista_grupos);
+              //exit();
+                // exibe linha com os acessos diarios do grupo
+                ExibeLinhaGrupo($cod_grupo, $acessos_grupos[ $cod_grupo ], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $nomes_grupos[$cod_grupo], $exibir_alunos || $exibir_formadores, ($cod_grupo+1), $data_iniUT);
+                if (is_array ($linha_grupo))
+                {
+                  // listamos os integrantes do grupo
+                  foreach ($linha_grupo as $cod_usuario)
+                  {
+                      //foreach($ferramenta_do_sistema as $key => $value){
+                          if($cod_usuario == $_GET['cod_aluno_relatorio']){
+                            // Exibe linha com os acessos do usuario em cada dia
+                            //echo("cod_usuario:".."\n C�digo Certo:".$_POST['cod_aluno_relatorio']);
+                            ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT);
+                            $cor_linha++;
+                            break;
+                          }
+                      //}
+                  }
+                }
+                else
+                {
+              // se nao for detalhar os participantes dos grupos, precisa ainda tratar as mudancas de cor na linha
+                  // CUIDADO !!! Não caia na tentação de juntar esse comando com a mudanca de cor na linha acima, os tratamentos sao diferentes !
+                  $cor_linha++;
+                }
+
+          }
+        }
+
+        ExibeLinhaTotaisDiarios($tam_tabela, $diaUT, $coluna_total, $totais_diarios);
+        FechaTabela();
+
+        /* avancando a variavel $diaUT. */
+        $diaST = explode("/",UnixTime2Data($diaUT));
+        $diaUT = Data2UnixTime(($tam_tabela + $diaST[0])."/".$diaST[1]."/".$diaST[2]);
+      }
+
+      /* ****************************************************************************** 
+         Gerando tabelas - FIM
+      ****************************************************************************** */
+      if ($exibir_grupos)
+      {
+        /* 45 - Obs.: O número total de acessos não corresponderão à soma da coluna caso haja algum aluno em mais de um grupo. Cada Aluno é contado somente uma vez no total. */
+        echo("          <b>".RetornaFraseDaLista($lista_frases,45)."</b>\n");
+      }
+
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      echo("    </table>\n");
+      Desconectar($sock);
+      }
   }
   echo("  </body>\n");
   echo("</html>");

@@ -130,7 +130,7 @@
     if (!$SalvarEmArquivo)
     {
       echo("          <form action=salvar_arquivo.php method=get name=\"formSalvar\">\n");
-      echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
+      echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
       echo("            <input type=hidden name=nome_arquivo value='relatorio_acessos.html' />\n");
       echo("            <input type=hidden name=origem value='acessos' />\n");
       if (isset($check_ultimos))
@@ -144,7 +144,7 @@
       if (isset($check_estado))
         echo("            <input type=hidden name=check_estado value=1 />\n");
       if (isset($radio_ord))
-        echo("            <input type=hidden name=radio_ord value=".$radio_ord." />\n");
+        echo("            <input type=hidden name=radio_ord value=\"".$radio_ord."\" />\n");
 
       echo("          </form>\n");
 

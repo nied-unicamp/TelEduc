@@ -135,23 +135,23 @@
   if (!$SalvarEmArquivo)
   {
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
-    echo("            <input type=hidden name=cod_curso value=".$cod_curso." />\n");
+    echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
     echo("            <input type=hidden name=origem value='freq2' />\n");
     echo("            <input type=hidden name=nome_arquivo value='relatorio_frequencia3.html' />\n");
     if(isset($opcao))
-      echo("            <input type=hidden name=opcao value=".$opcao." />\n");
+      echo("            <input type=hidden name=opcao value=\"".$opcao."\" />\n");
     if(isset($cod_ferramenta))
-      echo("            <input type=hidden name=cod_ferramenta value=".$cod_ferramenta." />\n");
+      echo("            <input type=hidden name=cod_ferramenta value=\"".$cod_ferramenta."\" />\n");
     if(isset($diaUt))
-      echo("            <input type=hidden name=diaUT value=".$diaUT." />\n");
+      echo("            <input type=hidden name=diaUT value=\"".$diaUT."\" />\n");
     if(isset($data_iniUT))
-      echo("            <input type=hidden name=data_iniUT value=".$data_iniUT." />\n");
+      echo("            <input type=hidden name=data_iniUT value=\"".$data_iniUT."\" />\n");
     if(isset($data_fimUT))
-      echo("            <input type=hidden name=data_fimUT value=".$data_fimUT." />\n");
+      echo("            <input type=hidden name=data_fimUT value=\"".$data_fimUT."\" />\n");
     if (isset($usuario))
-      echo("            <input type=hidden name=usuario value=".$usuario." />\n");
+      echo("            <input type=hidden name=usuario value=\"".$usuario."\" />\n");
     if (isset($cod_grupo))
-      echo("            <input type=hidden name=cod_grupo value=".$cod_grupo." />\n");
+      echo("            <input type=hidden name=cod_grupo value=\"".$cod_grupo."\" />\n");
     echo("          </form>\n");
     echo("          <ul class=\"btAuxTabs\">\n");  
     /* 22 - Salvar Em Arquivo */
