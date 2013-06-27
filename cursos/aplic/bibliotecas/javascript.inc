@@ -58,7 +58,7 @@
 */
 function GeraJSVerificacaoData()
 {
-  echo("<script language=JavaScript>\n");
+  echo("<script type=\"text/javascript\">\n");
   echo("var ndias=new Array(31,28,31,30,31,30,31,31,30,31,30,31);\n");
   echo("var divisor=20; //divisor de janela de tempo\n");
 
@@ -199,7 +199,7 @@ function GeraJSVerificacaoData()
 
 function GeraJSComparacaoDatas()
 {
-  echo("<script language=JavaScipt>\n");
+  echo("<script type=\"text/javascript\">\n");
   echo("function AnoMesDia(data)\n");
   echo("{\n");
   echo("  alert('estou em anomesdia');");

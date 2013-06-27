@@ -291,7 +291,7 @@ function EFormador($sock,$cod_curso,$cod_usuario)
   $estado=RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
   //se for administrador
   
-  if(($_SESSION['cod_usuario_global_s'] == -1) && !($_SESSION['visao_aluno_s']))
+  if(($_SESSION['cod_usuario_global_s'] == -1) && (!isset($_SESSION['visao_aluno_s']) || !($_SESSION['visao_aluno_s'])))
     return true;  
   else if ($estado=="F")
   {
