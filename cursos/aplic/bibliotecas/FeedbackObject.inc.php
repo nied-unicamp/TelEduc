@@ -17,7 +17,7 @@ class FeedbackObject{
   }
 
   function returnFeedback($theAction, $theCase){
-    if(!$this->action[$theAction]) return false;
+    if(!isset($this->action[$theAction]) || !$this->action[$theAction]) return false;
 
     if(!strcmp($theCase, 'true')){
       if(is_integer($this->action[$theAction][1])){

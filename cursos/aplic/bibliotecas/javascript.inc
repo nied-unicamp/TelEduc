@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/bibliotecas/JavaScript.inc
+    Arquivo : cursos/aplic/bibliotecas/Javascript.inc
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /* ==========================================================
-   ARQUIVO : cursos/aplic/bibliotecas/JavaScript.inc
+   ARQUIVO : cursos/aplic/bibliotecas/Javascript.inc
    ========================================================== */
 
 /*
