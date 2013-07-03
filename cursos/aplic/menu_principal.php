@@ -154,14 +154,14 @@
 	  echo("        </td>\n");
 	  echo("      </tr>\n");
 	  echo("      <tr>\n");
-	  
-	 
+
+
 	    
 	  echo("        <td style=\"width:200px\" valign=\"top\">\n");
 	  echo("          <!-- Navegacao Principal -->\n");
 	  echo("          <ul id=\"nav\">\n");
-	
-	
+
+
 	  // Ferramenta 11 - Correio
 	  // Ferramenta 12 - Grupos
 	  // Ferramenta 14 - Di�rio de bordo
@@ -173,16 +173,21 @@
 	  $tela_array_convidado_passivo = array (11, 12, 14, 15, 22, 23);
 	  // Lista das ferramentas a esconder de convidados ativos
 	  $tela_array_convidado_ativo   = array (12, 14, 22, 23);
-		
+
 	    foreach($tela_ordem_ferramentas as $cod => $linha)
 	    {	
 	      $tela_cod_ferr=$linha['cod_ferramenta'];
 	      
-	      if($tela_cod_ferr != -1 && isset($tela_curso_ferramentas[$tela_cod_ferr])){
+	      if($tela_cod_ferr != -1){
 	        $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
 	        $tela_diretorio=$tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
-	        $tela_status=$tela_curso_ferramentas[$tela_cod_ferr]['status'];
-	  
+	        if (isset($tela_curso_ferramentas[$tela_cod_ferr])) {
+	          $tela_status=$tela_curso_ferramentas[$tela_cod_ferr]['status'];
+	        }
+	        else {
+	          $tela_status = 'A';
+	        }
+	
 	        $tela_exibir = false;
 	        if (! $tela_convidado)
 	        {
