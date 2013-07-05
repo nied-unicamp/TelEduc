@@ -82,7 +82,7 @@
   // Guarda dados da avaliação atual
   $dados_avaliacao = RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
 
-  if (EConvidado($sock, $cod_usuario) || EVisitante($sock, $cod_curso, $cod_usuario))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
     echo("<html>\n");
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");

@@ -252,7 +252,7 @@
     echo("</script>\n");
   }
 
-  if (EConvidado($sock, $cod_usuario) || EVisitante($sock, $cod_curso, $cod_usuario) || !EFormador($sock,$cod_curso,$cod_usuario))
+  if (EVisitante($sock, $cod_curso, $cod_usuario) || !EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     // 1 - Avalia��es
