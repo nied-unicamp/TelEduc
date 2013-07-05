@@ -139,7 +139,7 @@
     echo("              <td align=center><b>".RetornaFraseDaLista($lista_frases_geral,57)."</b></td>\n");
     echo("            </tr>\n");
     echo("            <tr>\n");
- 
+
     $res=RetornaResHistoricoDaAvaliacao($sock, $tabela, $cod_avaliacao);
     $num_linhas=RetornaNumLinhas($res);
 

@@ -64,7 +64,7 @@
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
 
   /* Fun��es JavaScript */
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\">\n");
 
   echo("  function HistoricodoDesempenho(funcao)\n");
   echo("  {\n");
@@ -116,9 +116,10 @@
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad=self.focus();>\n");
 
-  $cabecalho ="<b class=titulo>Avalia��es</b>";
-    /* 31 - Notas dos participantes */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,31)."</b>";
+  /* 1 - Avalia��es */
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
+  /* 31 - Notas dos participantes */
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,31)."</b>";
 
    $cod_pagina=17;
   /* Cabecalho */
@@ -129,13 +130,13 @@
   if (!$SalvarEmArquivo)
   {
     echo("<table border=0 width=100%>\n");
-    echo("  <tr class=menu>\n");
+    echo("  <tr class=\"menu\">\n");
     /* 110 - Ver Avalia��es Atuais */
-    echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
+    echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
     /* 29 - Ver Avalia��es passadas */
-    echo("    <td align=center><a href=\"ver_avaliacoes_anteriores.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,29)."</b></a></td>\n");
+    echo("    <td align=center><a href=\"ver_avaliacoes_anteriores.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,29)."</b></a></td>\n");
     /* 30 - Ver Avalia��es Futuras */
-    echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
+    echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
     echo("  </tr>\n");
     echo("</table>\n");
     echo("<br>\n");
@@ -145,9 +146,9 @@
   {
     echo("<p>\n");
     /* 111 - Para visualizar os objetivos/crit�rios de uma avalia��o, clique sobre o valor da mesma.*/
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,111)."</font><br>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,111)."</font><br>\n");
     /* 112 - Para visualizar o hist�rico de desempenho de um participante em uma atividade, clique sobre a  nota dele.*/
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,112)."</font><br>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,112)."</font><br>\n");
     echo("<br>\n");
   }
 
@@ -159,7 +160,7 @@
   {
     //Tabela com a lista de alunos do curso, com suas respectivas notas na avalia��o realizada
     echo("<table border=0 width=".$width.">\n");
-    echo("  <tr class=menu>\n");
+    echo("  <tr class=\"menu\">\n");
     /* 113 - Tipo da Avalia��o */
     echo("    <td width=150 class=colorfield align=left>".RetornaFraseDaLista($lista_frases,113)."</td>\n");
 
@@ -176,7 +177,7 @@
       elseif (!strcmp($linha['Ferramenta'],'P'))
         $cont_portfolio++;
 
-      echo("    <td class=colorfield width=50 align=center>\n");
+      echo("    <td class=\"colorfield\" width=50 align=center>\n");
       if (!strcmp($linha['Ferramenta'],'F'))
         echo($linha['Ferramenta']."".$cont_forum."\n");
       elseif (!strcmp($linha['Ferramenta'],'B'))
@@ -188,15 +189,15 @@
     }
     echo ("</tr>\n");
 
-    echo("  <tr class=menu>\n");
+    echo("  <tr class=\"menu\">\n");
     /* 114 - Valor da Avalia��o */
-    echo("    <td width=150 class=b1field align=left>".RetornaFraseDaLista($lista_frases,114)."</td>\n");
+    echo("    <td width=150 class=\"b1field\" align=left>".RetornaFraseDaLista($lista_frases,114)."</td>\n");
 
     foreach ($lista_avaliacoes as $cod => $linha)
     {
-      echo("    <td class=b1field width=50 align=center>\n");
+      echo("    <td class=\"b1field\" width=50 align=center>\n");
       if (!$SalvarEmArquivo)
-        echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$linha['Cod_avaliacao']."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".$linha['Valor']."</a>\n");
+        echo("        <a class=\"text\" href=\"#\" onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$linha['Cod_avaliacao']."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".$linha['Valor']."</a>\n");
       else
         echo($linha['Valor']."\n");
       echo("</td>\n");
@@ -209,9 +210,9 @@
     if (count($lista_users)>0)
     {
     /* 64 - Alunos*/
-      echo("    <td width=150 class=colorfield align=left>".RetornaFraseDaLista($lista_frases,64)."&nbsp;</td>\n");
+      echo("    <td width=150 class=\"colorfield\" align=left>".RetornaFraseDaLista($lista_frases,64)."&nbsp;</td>\n");
     /* 155 - Notas*/
-      echo("    <td colspan=".$reg." class=colorfield align=left>".RetornaFraseDaLista($lista_frases,155)."&nbsp;</td>\n");
+      echo("    <td colspan=".$reg." class=\"colorfield\" align=left>".RetornaFraseDaLista($lista_frases,155)."&nbsp;</td>\n");
       echo("<tr>\n");
 
       foreach($lista_users as $cod => $nome)
@@ -225,9 +226,9 @@
 
         $i = ($i + 1) % 2;
 
-        echo("      <td class=text>");
+        echo("      <td class=\"text\">");
         if (!$SalvarEmArquivo)
-          echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
+          echo("<a class=\"text\" href=\"#\" onClick=\"return(AbrePerfil(".$cod."));\">".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
 
@@ -246,13 +247,13 @@
             {
               $marcaib="";
               $marcafb="";
-              echo("      <td class=".$field." align=center>");
+              echo("      <td class=\"".$field."\" align=center>");
               if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
-                  echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
+                  echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));\">");
                 else
-                  echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));>");
+                  echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));\">");
                 echo($nota."</a></td>\n");
               }
               else
@@ -260,15 +261,15 @@
             }
             else           //� aluno
             {
-              echo("      <td class=".$field." align=center>");
+              echo("      <td class=\"".$field."\" align=center>");
               if (!strcmp($tipo_compartilhamento,'T'))
               {
                 if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
-                    echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
+                    echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));\">");
                   else
-                    echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));>");
+                    echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));\">");
                   echo($nota."</a></td>\n");
                 }
                 else
@@ -279,9 +280,9 @@
                 if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
-                    echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
+                    echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));\">");
                   else
-                    echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));>");
+                    echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));\">");
                   echo($nota."</a></td>\n");
                 }
                 else
@@ -292,7 +293,7 @@
             }
           }
           else // nenhuma nota foi atribuida
-            echo("      <td class=".$field." align=center>&nbsp;</td>\n");
+            echo("      <td class=\"".$field."\" align=center>&nbsp;</td>\n");
 
     //    $j = ($j + 1) % 2;
         }
@@ -303,7 +304,7 @@
     if ($usr_formador)
     {
     /* 156 - Formador */
-      echo("    <td colspan=".($reg+1)." class=colorfield align=left>".RetornaFraseDaLista($lista_frases,156)."</td>\n");
+      echo("    <td colspan=".($reg+1)." class=\"colorfield\" align=left>".RetornaFraseDaLista($lista_frases,156)."</td>\n");
       $lista_users=RetornaListaUsuariosFormador($sock);
 
       foreach($lista_users as $cod => $nome)
@@ -312,13 +313,13 @@
           $field="g1field";
         else
           $field="g2field";
-        echo("    <tr class=".$field.">\n");
+        echo("    <tr class=\"".$field."\">\n");
 
         $i = ($i + 1) % 2;
 
-        echo("      <td class=text>");
+        echo("      <td class=\"text\">");
         if (!$SalvarEmArquivo)
-          echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
+          echo("<a class=\"text\" href=\"#\" onClick=\"return(AbrePerfil(".$cod."));\">".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
 
@@ -343,16 +344,16 @@
             if (!$SalvarEmArquivo)
             {
               if (strcmp($linha['Ferramenta'],'P'))
-                echo("      <a href=# onClick=return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));>");
+                echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.".".$linha['Cod_avaliacao']."));\">");
               else
-                echo("      <a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));>");
+                echo("      <a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.".".$linha['Cod_avaliacao']."));\">");
               echo($nota."</a></td>\n");
             }
             else
               echo($nota."</td>\n");
           }
           else // nenhuma nota foi atribuida
-            echo("      <td class=".$field." align=center>&nbsp;</td>\n");
+            echo("      <td class=\"".$field."\" align=center>&nbsp;</td>\n");
 
          // $j = ($j + 1) % 2;
         }
@@ -364,21 +365,21 @@
   else
   {
     /* 115 - Nenhuma avalia��o foi criada! */
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,115)."</font>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,115)."</font>\n");
   }
 
-  echo("    <form name=frmMsg method=post>\n");
+  echo("    <form name=\"frmMsg\" method=\"post\">\n");
 
   echo("      <div align=right>\n");
   if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
-    echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarTodasNotas();'>\n");
-    echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+    echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarTodasNotas();\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
   }
 
   /* 14 - Imprimir */
-  echo("<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
+  echo("<input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">\n");
 
   echo("      </div>\n");
 
@@ -389,7 +390,7 @@
   $cont_portfolio=0;
 
   /* 116 - Legenda */
-  echo("<font class=text><b>".RetornaFraseDaLista($lista_frases,116).":</b></font><br>\n");
+  echo("<font class=\"text\"><b>".RetornaFraseDaLista($lista_frases,116).":</b></font><br>\n");
 
   foreach ($lista_avaliacoes as $cod => $linha)
   {
@@ -412,7 +413,7 @@
       $ferramenta=RetornaFraseDaLista($lista_frases,14);
     }
 
-    echo("<font class=text><b>");
+    echo("<font class=\"text\"><b>");
 
     if (!strcmp($linha['Ferramenta'],'F'))
       echo($linha['Ferramenta']."".$cont_forum);

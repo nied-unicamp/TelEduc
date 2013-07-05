@@ -47,7 +47,7 @@
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $cod_curso = $_GET['cod_curso'];
-  
+
   $sock = Conectar("");
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);  
 
@@ -168,7 +168,7 @@
     foreach ($lista_integrantes as $cod_usuario => $linha)
     {
       echo("            <tr>\n");
-      echo("              <td class=whitefield><A class=text href=# onclick=return(AbrePerfil($cod_usuario));>");
+      echo("              <td class=\"whitefield\"><A class=\"text\" href=\"#\" onclick=\"return(AbrePerfil($cod_usuario));\">");
       if ($linha['tipo_usuario']=="F")
         /* 58 - Formador */
         echo(RetornaFraseDaLista($lista_frases_geral,58)." ");

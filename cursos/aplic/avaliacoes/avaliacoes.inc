@@ -141,15 +141,15 @@ function RetornaAvaliacoes($sock, $usr_formador)
       $titulo=RetornaLinha($res);
       if (($titulo!="")&&(!is_null($titulo)))
       {
-        $retorno[$cont]['Cod_avaliacao']=$linha['cod_avaliacao'];
-        $retorno[$cont]['Ferramenta']=$linha['ferramenta'];
-        $retorno[$cont]['Valor']=$linha['valor'];
-        $retorno[$cont]['Data']=$linha['data'];
-        $retorno[$cont]['Data_inicio']=$linha['data_inicio'];
-        $retorno[$cont]['Data_termino']=$linha['data_termino'];
-        $retorno[$cont]['Titulo']=$titulo[0];
-        $retorno[$cont]['tipo']  = $linha['tipo'];
-        $retorno[$cont]['Cod_atividade']=$linha['cod_atividade'];
+        $retorno[$cont]['Cod_avaliacao'] = $linha['cod_avaliacao'];
+        $retorno[$cont]['Ferramenta']    = $linha['ferramenta'];
+        $retorno[$cont]['Valor']         = $linha['valor'];
+        $retorno[$cont]['Data']          = $linha['data'];
+        $retorno[$cont]['Data_inicio']   = $linha['data_inicio'];
+        $retorno[$cont]['Data_termino']  = $linha['data_termino'];
+        $retorno[$cont]['Titulo']        = $titulo[0];
+        $retorno[$cont]['tipo']          = $linha['tipo'];
+        $retorno[$cont]['Cod_atividade'] = $linha['cod_atividade'];
         $cont++;
       }
     }

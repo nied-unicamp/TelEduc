@@ -44,7 +44,7 @@
   include("avaliacoes.inc");
 
   require_once("../xajax_0.2.4/xajax.inc.php");
-       
+
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
@@ -68,8 +68,8 @@
   $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
   $expressao = "";
   $norma = "";
-  
-  if(count($lista_avaliacoes) > 0)
+
+  if (count($lista_avaliacoes) > 0)
   {
     $expressao = $media['expressao'];	//Expressao
     $norma = $media['norma'];			//Norma
@@ -78,7 +78,7 @@
   if (!$SalvarEmArquivo)
   {
     /* Fun��es JavaScript */
-    echo("    <script language=JavaScript>\n");
+    echo("    <script language=\"javascript\">\n");
 
     /* Parte redundante */
 
@@ -87,12 +87,12 @@
     $cont_portfolio=1;
     $cont_av_ext=1;
     $cont_exercicio=1;
-    
+
     if (count($lista_avaliacoes) > 0) {
-    	/* Itera na lista de avaliacoes para criar as siglas das avaliacoes
-    	 * Exemplo: B1v, B2v, E1v
-    	 */
-       foreach($lista_avaliacoes as $index => $avaliacao) {
+      /* Itera na lista de avaliacoes para criar as siglas das avaliacoes
+       * Exemplo: B1v, B2v, E1v
+       */
+      foreach ($lista_avaliacoes as $index => $avaliacao) {
           if (!strcmp($avaliacao['Ferramenta'], 'B')) {
              $cont=$cont_batepapo;
              $cont_batepapo++;
@@ -109,13 +109,13 @@
              $cont=$cont_av_ext;
              $cont_av_ext++;
           }
-                              
+
           echo("      var ".$avaliacao['Ferramenta'].$cont."v = new Array();\n");	/* Cria um array para cada avaliacao. */
-          
+
           //Coloca a primeira linha(cabecalho) das avaliacoes
           echo("     ".$avaliacao['Ferramenta'].$cont."v[0] = ".$avaliacao['Valor'].";\n");
-          
-       }
+
+      }
     }
 
     $lista_users=RetornaListaUsuariosAluno($cod_curso);
@@ -123,7 +123,7 @@
     $j=1;
     $cont_cod_usr=0;
     echo("      var codv = new Array();\n");
-    
+
     if (count($lista_users)>0) {
     	/* Itera na lista de usuarios do curso. */
       foreach($lista_users as $cod => $nome) {
@@ -151,7 +151,7 @@
              $codigo=$cod;
              $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
           }
-          
+
           //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
           if ($foiavaliado && $linha['Ferramenta']!='E') {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
@@ -178,17 +178,17 @@
 
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
-          } elseif($foiavaliado && $linha['Ferramenta']=='E') {	//Exercicios
+          } elseif($foiavaliado && $linha['Ferramenta']=='E') { //Exercicios
           	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
-            
+
             $contador=$cont_exercicio;
             $cont_exercicio++;
-            
+
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
-            
+
           } else { // nenhuma nota foi atribuida
              //if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B') ) {
                if (!strcmp($linha['Ferramenta'], 'B')) {
@@ -207,36 +207,36 @@
                   $contador=$cont_av_ext;
                   $cont_av_ext++;
                }
-               
+
                echo("     ".$linha['Ferramenta'].$contador."v[".$j."] = 0.00;\n");	/* Se nao tem nota atribuida, deixa zero. */
 
              //}
           }
-          
+
         }
         $j++;
       }
     }
-    
+
     if ($usr_formador) {
       $lista_users=RetornaListaUsuariosFormador($cod_curso);
       $sock = MudarDB($sock, $cod_curso);
       /* Itera na lista de usuarios do curso. */ 
       foreach($lista_users as $cod => $nome) {
         echo("      codv[$cont_cod_usr] = ".$cod.";\n");
-        
+
         $cont_cod_usr++;
         $cont_batepapo=1;
         $cont_forum=1;
         $cont_portfolio=1;
         $cont_av_ext=1;
         $cont_exercicio=1;
-        
+
         /* Volta a iterar na lista de avaliacoes de cada usuario. */
         foreach ($lista_avaliacoes as $cont => $linha) {
            $grupo=(($linha['tipo']=='G') && (($linha['Ferramenta']=='E') || ($linha['Ferramenta']=='N')));
            //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $cod, $grupo);
-             
+
            if ($grupo) {
               $codigo=RetornaCodGrupoPortfolioAvaliacao($sock,$cod,$linha['Cod_avaliacao']);
               if ($codigo) {
@@ -250,13 +250,13 @@
                $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
 		   }  
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
-                                                       
+
          if ( $foiavaliado && $linha['Ferramenta']!='E' ) {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
-            
+
             if (!strcmp($linha['Ferramenta'], 'B')) {
                $contador=$cont_batepapo;
                $cont_batepapo++;
@@ -281,12 +281,12 @@
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
-            
+
             $contador=$cont_exercicio;
             $cont_exercicio++;
-            
+
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
-            
+
           } else { // nenhuma nota foi atribuida
             //if ( ( $linha['Ferramenta']=='E' && $linha['Data_termino']<=time() ) || ($linha['Ferramenta']=='N' || $linha['Ferramenta']=='P' || $linha['Ferramenta']=='F' || $linha['Ferramenta']=='B')) {
               if (!strcmp($linha['Ferramenta'], 'B')) {
@@ -310,16 +310,16 @@
 
             //}
          }
-        
+
 //         if ($j == 1) { 
 //			echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
 //         }
-        
+
         }//Fim: foreach ($lista_avaliacoes as $cont => $linha)
         $j++;
       }//Fim: foreach($lista_users as $cod => $nome)
     }
-    
+
     $j--;
     /* Fim da parte redundante */
 
@@ -378,7 +378,7 @@
     echo("             else\n");
     echo("               return '';\n");
     echo("        }\n\n");
-    
+
     echo("        function MudaSpanCompartilhamento(spanName,novoComp,tipoComp,codNota,codGrupo,codAluno)\n");
     echo("        {\n");
     echo("          spanElements = document.getElementsByName(spanName);\n");
@@ -389,7 +389,7 @@
     echo("          }\n");
     echo("        }\n");
   }                
-  
+
   if($usr_formador)
   {  
     echo("        function MudaCompartilhamentoHisDes(spanId,codAvaliacao) \n");
@@ -517,7 +517,7 @@
   echo("              codNota = arrayConteudo[i][6];\n");
   echo("              tipoComp = arrayConteudo[i][7];\n");
   echo("              newTable = document.createElement('table');\n");
-  echo("			  var tbody = document.createElement('tbody');\n");
+  echo("              var tbody = document.createElement('tbody');\n");
   echo("              newTable.width = '100%';\n");
   echo("              newTable.setAttribute(\"id\", 'table_'+codNota+'_'+i);\n");
   echo("              newTable.setAttribute(\"name\", 'table_'+codAvaliacao+'_'+codGrupo+'_'+i);\n");
@@ -545,7 +545,7 @@
   {
     echo("                else\n");
     echo("                {\n");
-	// Botão Apagar do Histórico do Desempenho do Participante
+    // Botão Apagar do Histórico do Desempenho do Participante
     echo("                  newSpan = document.createElement('span');\n");
     echo("                  newSpan.innerHTML=js_arrayCab[j];\n");
     echo("                  newSpan.className='link';\n");
@@ -559,7 +559,7 @@
   echo("              }\n");
   echo("              newTrMid = document.createElement('tr');\n");
   //echo("              newTrMid.setAttribute(\"class\", \"altColor1\");\n");
-  echo("			  newTrMid.className=\"altColor1\";");
+  echo("              newTrMid.className=\"altColor1\";");
   echo("              newTrMid.setAttribute('id', 'tr_mid_'+i);\n");
   if($usr_formador)
     echo("              for(j=0;j<4;j++)\n");
@@ -588,7 +588,7 @@
   echo("              }\n");
   echo("              newTrJust = document.createElement('tr');\n");
   echo("              newTrJust.className = 'head01';\n");
-	//	Justificativa
+  // Justificativa
   echo("              newTd = document.createElement('td');\n");
   echo("              newTd.colSpan = 5;\n");
   echo("              newTd.align = 'left';\n");
@@ -629,7 +629,7 @@
   echo("              tbody.appendChild(newTrMid);\n");
   echo("              tbody.appendChild(newTrJust);\n");
   echo("              tbody.appendChild(newTrJustMid);\n");
-  echo("			  newTable.appendChild(tbody);");
+  echo("              newTable.appendChild(tbody);");
   echo("              newTdConteiner.appendChild(newTable);\n");
   echo("              newBr = document.createElement('br');\n");
   echo("              newTdConteiner.appendChild(newBr);\n");               
@@ -746,7 +746,7 @@
   	echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
   	echo("			document.attachEvent('onmousemove', TrataMouse);\n");
   	echo("		}\n");
-  
+
   	echo("      function TrataMouse(e)\n");
     echo("      {\n");
     echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
@@ -807,7 +807,7 @@
     echo("        LoopAvaliarExpressao(".$j.",'".$expressao."','".$norma."');\n");
     echo("        startList();\n");
     echo("      }\n");
-    
+
 
     echo("      function EscondeLayers()\n");
     echo("      {\n");
@@ -916,9 +916,9 @@
     echo("            return true;\n");
     echo("          }\n");
     echo("        }\n");
- 
+
     echo("      function AvaliarExpressao(i) {\n");
-    
+
     $cont_batepapo=1;
     $cont_forum=1;
     $cont_portfolio=1;
@@ -926,7 +926,7 @@
     $cont_av_ext=1;
 
     if (count($lista_avaliacoes) > 0) {
-       foreach($lista_avaliacoes as $index => $avaliacao) {
+       foreach ($lista_avaliacoes as $index => $avaliacao) {
           if (!strcmp($avaliacao['Ferramenta'], 'B')) {
              $cont=$cont_batepapo;
              $cont_batepapo++; 
@@ -945,14 +945,11 @@
           } 
 
           echo("        var ".$avaliacao['Ferramenta'].$cont." = ".$avaliacao['Ferramenta'].$cont."v[i];\n");
-          //echo("		alert('ferramenta.cont: '+'".$avaliacao['Ferramenta'].$cont."');");
        }
     }
-    //echo("			alert('AvaliarExpressao-expressao: '+expressao);");
     echo("        try {\n");
     echo("          if (expressao != '') {\n");
     echo("            var nota=eval(expressao);\n");
-    //echo("				alert('AvaliarExpressao-nota: '+nota);");
     echo("          } else { return; }\n");
     echo("        } catch (e){\n");
     echo("          if (i == 0) {\n");
@@ -1019,11 +1016,11 @@
     echo("            document.getElementById('normaFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 228)."';\n");
     echo("        }\n");
     echo("      }\n\n");
-   
+
     echo("      function isUndefined(a) {\n");
     echo("        return typeof a == 'undefined';\n");
     echo("      }\n\n");
-   
+
     echo("      function AjudaMedia(ajuda, nome_janela)\n");
     echo("      {\n");
     $param = "'width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes'";
@@ -1147,16 +1144,16 @@
   }
 
   echo("    </script>\n");
-  echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
-	
+  echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
+
   if (!$SalvarEmArquivo) $objAjax->printJavascript("../xajax_0.2.4/");
 
-  echo("    <form name=frmAvaliacao method=get>\n");
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"get\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a��es sobre ela.
-  echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\" value=\"-1\">\n");
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+  echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
   echo("    </form>\n");
 
   $sock = MudarDB($sock, $cod_curso);
@@ -1174,10 +1171,10 @@
   echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
-  
+
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   //<!----------------- Cabe�alho Acaba Aqui ----------------->
 
   //<!----------------- Tabelao ----------------->
@@ -1188,11 +1185,11 @@
   echo("              <td class=\"btAuxTabs\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 29 - Avalia��es Passadas */
-  echo("                  <li><a href=\"#\" title=\"Avalia&ccedil;&otilde;es passadas\" onClick=return(VerTelaAvaliacoes('P'))>".RetornaFraseDaLista($lista_frases, 29)."</a></li>\n");
+  echo("                  <li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases, 29)."\" onClick=\"return(VerTelaAvaliacoes('P'));\">".RetornaFraseDaLista($lista_frases, 29)."</a></li>\n");
   /* 32 - Avalia��es Atuais*/
-  echo("                  <li><a href=\"#\" title=\"Avalia&ccedil;&otilde;es atuais\" onClick=return(VerTelaAvaliacoes('A'))>".RetornaFraseDaLista($lista_frases, 32)."</a></li>\n");
+  echo("                  <li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases, 32)."\" onClick=\"return(VerTelaAvaliacoes('A'));\">".RetornaFraseDaLista($lista_frases, 32)."</a></li>\n");
   /* 30 - Avalia��es Futuras*/
-  echo("	          <li><a href=\"#\" title=\"Avalia&ccedil;&otilde;es futuras\" onClick=return(VerTelaAvaliacoes('F'))>".RetornaFraseDaLista($lista_frases, 30)."</a></li>\n");
+  echo("                  <li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases, 30)."\" onClick=\"return(VerTelaAvaliacoes('F'));\">".RetornaFraseDaLista($lista_frases, 30)."</a></li>\n");
   /* 31 - Notas dos participantes */
   echo("	          <li><span onClick='return(VerTelaNotas());'>".RetornaFraseDaLista($lista_frases, 31)."</span></li>");
   echo("                </ul>\n");
@@ -1208,7 +1205,7 @@
   if (count($lista_avaliacoes)>0)
   {
     //Tabela com a lista de alunos do curso, com suas respectivas notas na avalia��o realizada
-    
+
     echo("                <tr class=\"head\">\n");
     echo("                  <td style=\"width:20%\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
 
@@ -1228,7 +1225,7 @@
     {
       if (!$SalvarEmArquivo)
       {
-        $a1 = "<a href=# onClick='AdicionarLegenda(\"".$linha['Ferramenta'].$cont++."\",".$linha['Cod_avaliacao'].");')>";
+        $a1 = "<a href=\"#\" onClick=\"AdicionarLegenda('".$linha['Ferramenta'].$cont++."',".$linha['Cod_avaliacao'].");\">";
         $a2 = "</a>";
       }
       else
@@ -1285,9 +1282,8 @@
                       UnixTime2Data($linha['Data_inicio'])." ".
                       RetornaFraseDaLista($lista_frases, 167)." ".
                       UnixTime2Data($linha['Data_termino'])
-        
-         ); 
-                     
+         );
+
       }
       elseif (!strcmp($linha['Ferramenta'],'E'))
       {
@@ -1329,7 +1325,7 @@
 
     if($usr_formador)
     {
-      $a1 = "<a class=menu href=# onClick='MostraLayer(lay_muda_expressao, 400); document.getElementById(\"nova_expressao\").focus();'>";
+      $a1 = "<a class=\"menu\" href=\"#\" onClick=\"MostraLayer(lay_muda_expressao, 400); document.getElementById('nova_expressao').focus();\">";
       $a2 = "</a>";
     } 
     else
@@ -1345,10 +1341,10 @@
 
     foreach ($lista_avaliacoes as $cod => $linha)
     {
-      echo("                    <td id=media align=center>".FormataNota($linha['Valor'])."</td>\n");
+      echo("                    <td id=\"media\" align=center>".FormataNota($linha['Valor'])."</td>\n");
     }
 
-    echo("                    <td id='maxMedia' align='center'>0.00</td>");
+    echo("                    <td id=\"maxMedia\" align='center'>0.00</td>");
     echo("                  </tr>\n");
 
     $lista_users=RetornaListaUsuariosAluno($cod_curso);
@@ -1363,17 +1359,17 @@
       // 155 - Notas
       echo("                    <td colspan=".($reg+1).">".RetornaFraseDaLista($lista_frases,155)."</td>\n");
       echo("                  </tr>\n");
-$sock = MudarDB($sock, $cod_curso);
+      $sock = MudarDB($sock, $cod_curso);
       foreach($lista_users as $cod => $nome)
       {
-        
+
         echo("                  <tr id=\"tr_aluno_".$cod."\">\n");
         echo("                    <td align=left>"."&nbsp;&nbsp;");
         if (!$SalvarEmArquivo)
-          echo("<a href=# onClick=return(AbrePerfil(".$cod."));>".$nome."</a></td>\n");
+          echo("<a href=\"#\" onClick=\"return(AbrePerfil(".$cod."));\">".$nome."</a></td>\n");
         else
           echo($nome."</td>\n");
-	    
+
 
         foreach ($lista_avaliacoes as $cont => $linha)
         {
@@ -1396,7 +1392,7 @@ $sock = MudarDB($sock, $cod_curso);
             $codigo=$cod;
             $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
           }
-          
+
           //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);                    /**********************************************/
 
           if ($foiavaliado && $linha['Ferramenta']!='E')  
@@ -1405,7 +1401,7 @@ $sock = MudarDB($sock, $cod_curso);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
-            
+
             if ($usr_formador)
             {
               $marcaib="";
@@ -1414,9 +1410,9 @@ $sock = MudarDB($sock, $cod_curso);
               if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
-                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
                 else
-                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
                 echo($nota."</a></td>\n");
               }
               else
@@ -1430,9 +1426,9 @@ $sock = MudarDB($sock, $cod_curso);
                 if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
-                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
                   else
-                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
 
                   echo($nota."</a></td>\n");
                 }
@@ -1444,10 +1440,10 @@ $sock = MudarDB($sock, $cod_curso);
                 if (!$SalvarEmArquivo)
                 {
                   if (strcmp($linha['Ferramenta'],'P'))
-                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
                   else
-                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-                  
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+
                   echo($nota."</a></td>\n");
                 }
                 else
@@ -1457,69 +1453,69 @@ $sock = MudarDB($sock, $cod_curso);
                 echo("&nbsp;</td>\n");
             }
           }//Exerc�cio
-          elseif($foiavaliado && $linha['Ferramenta']=='E'){
+          elseif($foiavaliado && $linha['Ferramenta']=='E') {
             $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
-            
-	          	if ($usr_formador)
-	            {
-	              $marcaib="";
-	              $marcafb="";
-	              echo("                    <td align=center>");
-	              if (!$SalvarEmArquivo)
-	              {
-	                if (strcmp($linha['Ferramenta'],'P'))
-	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                else
-	                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                echo($nota."</a></td>\n");
-	              }
-	              else
-	                echo($nota."</td>\n");
+
+            if ($usr_formador)
+            {
+              $marcaib="";
+              $marcafb="";
+              echo("                    <td align=center>");
+              if (!$SalvarEmArquivo)
+              {
+                if (strcmp($linha['Ferramenta'],'P'))
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                else
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                echo($nota."</a></td>\n");
+              }
+              else
+                echo($nota."</td>\n");
+            }
+            else       //� ALUNO
+            {
+              echo("                    <td align=center>");
+              if (!strcmp($tipo_compartilhamento,'T'))
+              {
+                if (!$SalvarEmArquivo)
+                {
+                  if (strcmp($linha['Ferramenta'],'P'))
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                  else
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+
+                  echo($nota."</a></td>\n");
+                }
+                else
+                  echo($nota."</td>\n");
+              }
+              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
+              {
+                if (!$SalvarEmArquivo)
+                {
+                  if (strcmp($linha['Ferramenta'],'P'))
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                  else
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+
+                  echo($nota."</a></td>\n");
+                }
+                else
+                  echo($nota."</td>\n");
+              }
+              else //Est� compartilhada s� com formadores
+                echo("&nbsp;</td>\n");
 	            }
-	            else       //� ALUNO
-	            {
-	              echo("                    <td align=center>");
-	              if (!strcmp($tipo_compartilhamento,'T'))
-	              {
-	                if (!$SalvarEmArquivo)
-	                {
-	                  if (strcmp($linha['Ferramenta'],'P'))
-	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  else
-	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	
-	                  echo($nota."</a></td>\n");
-	                }
-	                else
-	                  echo($nota."</td>\n");
-	              }
-	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
-	              {
-	                if (!$SalvarEmArquivo)
-	                {
-	                  if (strcmp($linha['Ferramenta'],'P'))
-	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  else
-	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  
-	                  echo($nota."</a></td>\n");
-	                }
-	                else
-	                  echo($nota."</td>\n");
-	              }
-	              else //Est� compartilhada s� com formadores
-	                echo("&nbsp;</td>\n");
-	            }
-	          }
+          }
           else // nenhuma nota foi atribuida
           {
              if ($linha['Ferramenta']=='E' && $linha['Data_termino']<=time() )  
              {
                echo("      <td align=center>\n");
-               echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
+               echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
                $nota=" 0.00 ";
                echo($nota."</a></td>\n");
              }
@@ -1528,7 +1524,7 @@ $sock = MudarDB($sock, $cod_curso);
           }
         }
         $j=$j+1;
-        echo("                    <td align=center><font id='media".$j."'></font></td>\n");
+        echo("                    <td align=center><font id=\"media".$j."\"></font></td>\n");
         echo("                  </tr>\n");
       }
     }
@@ -1550,15 +1546,15 @@ $sock = MudarDB($sock, $cod_curso);
           echo("                  <tr id=\"tr_formador_".$cod."\">\n");
           echo("                    <td align=left>"."&nbsp;&nbsp;");
           if (!$SalvarEmArquivo)
-            echo("<a class=text href=# onClick=return(AbrePerfil(".$cod.")); class=text>".$nome."</a></td>\n");
+            echo("<a class=\"text\" href=\"#\" onClick=\"return(AbrePerfil(".$cod."));\">".$nome."</a></td>\n");
           else
             echo($nome."</td>\n");
 
           foreach ($lista_avaliacoes as $cont => $linha)
-          {  
+          {
             /*******************************************/
-            /*******Pega dados do exercicio*************/        
-            $sock = MudarDB($sock, $cod_curso);      
+            /*******Pega dados do exercicio*************/
+            $sock = MudarDB($sock, $cod_curso);
             $grupo=(($linha['tipo']=='G') && (($linha['Ferramenta']=='E') || ($linha['Ferramenta']=='N')));
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $cod, $grupo);
 
@@ -1578,14 +1574,14 @@ $sock = MudarDB($sock, $cod_curso);
               $codigo=$cod;
               $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
             }
-			$sock = MudarDB($sock, $cod_curso);
+            $sock = MudarDB($sock, $cod_curso);
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
-                                                       
+
             /*******************************************/
             if ( $foiavaliado && $linha['Ferramenta']!='E' )
             //Ja existe uma nota atribuida
             {
-              $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
+              $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
               $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
               $cod_nota=$dados_nota['cod_nota'];
               $nota=FormataNota($dados_nota['nota']);
@@ -1596,87 +1592,87 @@ $sock = MudarDB($sock, $cod_curso);
               if (!$SalvarEmArquivo)
               {
                 if (strcmp($linha['Ferramenta'],'P'))
-                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));>");
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));\">");
                 else
-                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));>");
-              
+                  echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));\">");
+
                 echo($nota."</a></td>\n");
               }
               else
                 echo($nota."</td>\n");
             }//Exerc�cio
-          elseif($foiavaliado && $linha['Ferramenta']=='E'){
-            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
-            $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
-            $cod_nota=$dados_nota['cod_nota'];
-            $nota=FormataNota($dados_nota['nota']);
-            
-	          	if ($usr_formador)
-	            {
-	              $marcaib="";
-	              $marcafb="";
-	              echo("                    <td align=center>");
-	              if (!$SalvarEmArquivo)
-	              {
-	                if (strcmp($linha['Ferramenta'],'P'))
-	                  echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                else
-	                  echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                echo($nota."</a></td>\n");
-	              }
-	              else
-	                echo($nota."</td>\n");
-	            }
-	            else       //� ALUNO
-	            {
-	              echo("                    <td align=center>");
-	              if (!strcmp($tipo_compartilhamento,'T'))
-	              {
-	                if (!$SalvarEmArquivo)
-	                {
-	                  if (strcmp($linha['Ferramenta'],'P'))
-	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  else
-	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	
-	                  echo($nota."</a></td>\n");
-	                }
-	                else
-	                  echo($nota."</td>\n");
-	              }
-	              elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
-	              {
-	                if (!$SalvarEmArquivo)
-	                {
-	                  if (strcmp($linha['Ferramenta'],'P'))
-	                    echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  else
-	                    echo("<a href=# onClick=return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));>");
-	                  
-	                  echo($nota."</a></td>\n");
-	                }
-	                else
-	                  echo($nota."</td>\n");
-	              }
-	              else //Est� compartilhada s� com formadores
-	                echo("&nbsp;</td>\n");
-	            }
-	          }
+            elseif($foiavaliado && $linha['Ferramenta']=='E') {
+              $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+              $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
+              $cod_nota=$dados_nota['cod_nota'];
+              $nota=FormataNota($dados_nota['nota']);
+
+              if ($usr_formador)
+              {
+                $marcaib="";
+                $marcafb="";
+                echo("                    <td align=center>");
+                if (!$SalvarEmArquivo)
+                {
+                  if (strcmp($linha['Ferramenta'],'P'))
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                  else
+                    echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                  echo($nota."</a></td>\n");
+                }
+                else
+                  echo($nota."</td>\n");
+              }
+              else       //� ALUNO
+              {
+                echo("                    <td align=center>");
+                if (!strcmp($tipo_compartilhamento,'T'))
+                {
+                  if (!$SalvarEmArquivo)
+                  {
+                    if (strcmp($linha['Ferramenta'],'P'))
+                      echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                    else
+                      echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+
+                    echo($nota."</a></td>\n");
+                  }
+                  else
+                    echo($nota."</td>\n");
+                }
+                elseif (((!strcmp($tipo_compartilhamento,'A')) || (!strcmp($tipo_compartilhamento,'G'))) && ($cod_usuario==$cod))
+                {
+                  if (!$SalvarEmArquivo)
+                  {
+                    if (strcmp($linha['Ferramenta'],'P'))
+                      echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+                    else
+                      echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenhoPortfolio(".$cod.",".$linha['Cod_avaliacao'].",'tr_aluno_".$cod."','".$cod_nota."'));\">");
+
+                    echo($nota."</a></td>\n");
+                  }
+                  else
+                    echo($nota."</td>\n");
+                }
+                else //Est� compartilhada s� com formadores
+                  echo("&nbsp;</td>\n");
+              }
+            }
             else // nenhuma nota foi atribuida
-            { 
+            {
               if ($linha['Ferramenta']=='E' && $linha['Data_termino']<=time() )
               {
                 echo("                    <td align=center>\n");
-                echo("<a href=# onClick=return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));>");    
+                echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));\">");    
                 $nota=" 0.00 ";
                 echo($nota."</a></td>\n");
               }
-              else   
+              else
                 echo("                    <td align=center>&nbsp;</td>\n");
             }
           }
-          $j=$j+1;
-          echo("                    <td  align=center><font id='media".$j."'></font></td>");
+          $j = $j+1;
+          echo("                    <td  align=center><font id=\"media".$j."\"></font></td>");
           echo("                  </tr>\n");
         }
       }
@@ -1693,16 +1689,18 @@ $sock = MudarDB($sock, $cod_curso);
   echo("            </tr>\n");
   echo("            <tr>\n");
   echo("              <td class=\"btAuxTabs\">\n");
-  echo("                <form name=frmMsg method=post>\n");
-  echo("                  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("                <form name=\"frmMsg\" method=\"post\">\n");
+  echo("                  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
   echo("                <ul class=\"btAuxTabs03\">\n");
-  if($usr_formador)
-    // 192 - Alterar Express�o
-    echo("                  <li><span onClick='MostraLayer(lay_muda_expressao, 0); document.getElementById(\"nova_expressao\").focus();'>".RetornaFraseDaLista($lista_frases, 192)."</span></li>\n");
-  // ?? - Exibir/Ocultar Legenda
-  echo("                  <li><span id=\"span_legenda\" onClick=\"ExibirLegenda();\">Exibir Legenda</span></li>");
-  echo("                  <li><span onClick=\"SalvarTodasNotas();\">Salvar em arquivo</span></li>\n");
-  echo("                  <li><span onClick=\"ImprimirRelatorio();\">Imprimir</span></li>\n");
+  if ($usr_formador)
+    /* 192 - Alterar Express�o */
+    echo("                  <li><span onClick=\"MostraLayer(lay_muda_expressao, 0); document.getElementById('nova_expressao').focus();\">".RetornaFraseDaLista($lista_frases, 192)."</span></li>\n");
+  /* 207 - Exibir Legenda */
+  echo("                  <li><span id=\"span_legenda\" onClick=\"ExibirLegenda();\">".RetornaFraseDaLista($lista_frases, 207)."</span></li>");
+  /* 208 - Salvar em arquivo */
+  echo("                  <li><span onClick=\"SalvarTodasNotas();\">".RetornaFraseDaLista($lista_frases, 208)."</span></li>\n");
+  /* 209 - Imprimir */
+  echo("                  <li><span onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases, 209)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -1725,13 +1723,13 @@ $sock = MudarDB($sock, $cod_curso);
   if (count($lista_avaliacoes) > 0) 
   {
     // 194 - Express�o avaliada 
-    echo("          <font class='text'><b>".RetornaFraseDaLista($lista_frases, 194).":</b>&nbsp;</font>\n");
-    echo("          <font class='text' id='expFinal'>".$media['expressao']."</font><font class='text'>&nbsp;&nbsp;<a href='#' onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\" /></a></font><br>\n");
+    echo("          <font class=\"text\"><b>".RetornaFraseDaLista($lista_frases, 194).":</b>&nbsp;</font>\n");
+    echo("          <font class=\"text\" id=\"expFinal\">".$media['expressao']."</font><font class=\"text\">&nbsp;&nbsp;<a href=\"#\" onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\" /></a></font><br>\n");
     // 195 - Norma
-    echo("          <font class='text'><b>".RetornaFraseDaLista($lista_frases, 195).":</b>&nbsp;</font>\n");
-    echo("          <font class='text' id='normaFinal'>".$media['norma']."</font><font class='text'>&nbsp;&nbsp;<a href='#' onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\"/></a></font><br><br>\n");
+    echo("          <font class=\"text\"><b>".RetornaFraseDaLista($lista_frases, 195).":</b>&nbsp;</font>\n");
+    echo("          <font class=\"text\" id=\"normaFinal\">".$media['norma']."</font><font class=\"text\">&nbsp;&nbsp;<a href=\"#\" onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\"/></a></font><br><br>\n");
   }
-  
+
   $apresentar_legenda = (
        (is_array($legenda_batepapo)  && count($legenda_batepapo) > 0)
     || (is_array($legenda_forum)     && count($legenda_forum) > 0)
@@ -1744,10 +1742,10 @@ $sock = MudarDB($sock, $cod_curso);
   {
     echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display: ".$mostraLegenda.";\">\n");
     echo("            <tr>\n");
-    /*116 - Legenda */
+    /* 116 - Legenda */
     echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,116)."</b></td>\n");
-    /*?? -  Período */
-    echo("              <td bgcolor=\"#f1f1f1\"><b>Per&iacute;odo</b></td>\n");
+    /* 168 -  Período */
+    echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,168)."</b></td>\n");
     // 113 - Tipo de Avalia��o
     echo("              <td align=center bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases, 113)."</b></td>\n");
     echo("            </tr>\n");
@@ -1771,7 +1769,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avalicao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."',".$linha_legenda['cod_avalicao'].");\">".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 146 - Sess�o de Batepapo
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 146)."</td>\n");
@@ -1788,7 +1786,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avaliacao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."',".$linha_legenda['cod_avaliacao'].");\">".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 145 - F�rum de discuss�o
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 145)."</td>\n");
@@ -1804,7 +1802,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avaliacao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."',".$linha_legenda['cod_avaliacao'].");\">".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 14 - Atividade no Portfolio
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 14)."</td>\n");
@@ -1812,20 +1810,20 @@ $sock = MudarDB($sock, $cod_curso);
       }
     }
 
-      if (is_array($legenda_exercicio) && count($legenda_exercicio) > 0)
+    if (is_array($legenda_exercicio) && count($legenda_exercicio) > 0)
+    {
+      echo($linha_data_forum);
+      foreach ($legenda_exercicio as $linha_exercicio)
       {
-        echo($linha_data_forum);
-        foreach ($legenda_exercicio as $linha_exercicio)
-        {
-          echo("            <tr>\n");
-          $leg=explode("\n",$linha_exercicio['leg']);
-          echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_exercicio['cod_avaliacao'].");'>".$linha_exercicio['leg']."</a></b> - ".$linha_exercicio['titulo']."</td>\n");
-          echo("              <td bgcolor=\"#f1f1f1\">".$linha_exercicio['data']."</td>\n");
-          // 175 - Atividade em Exerc�cios
-          echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 175)."</td>\n");
-          echo("            </tr>\n");
-        }
-       }
+        echo("            <tr>\n");
+        $leg=explode("\n",$linha_exercicio['leg']);
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."',".$linha_exercicio['cod_avaliacao'].");\">".$linha_exercicio['leg']."</a></b> - ".$linha_exercicio['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\">".$linha_exercicio['data']."</td>\n");
+        // 175 - Atividade em Exerc�cios
+        echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 175)."</td>\n");
+        echo("            </tr>\n");
+      }
+     }
 
     if (is_array($legenda_avaliacao_externa) && count($legenda_avaliacao_externa) > 0)
     {
@@ -1834,7 +1832,7 @@ $sock = MudarDB($sock, $cod_curso);
       {
         echo("            <tr>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("              <td bgcolor=\"#f1f1f1\"><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\",".$linha_legenda['cod_avaliacao'].");'>".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
+        echo("              <td bgcolor=\"#f1f1f1\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."',".$linha_legenda['cod_avaliacao'].");\">".$linha_legenda['leg']."</a></b> - ".$linha_legenda['titulo']."</td>\n");
         echo("              <td bgcolor=\"#f1f1f1\">".$linha_legenda['data']."</td>\n");
         // 14 - Atividade no Portfolio
         echo("              <td bgcolor=\"#f1f1f1\">".RetornaFraseDaLista($lista_frases, 187)."</td>\n");
@@ -1849,8 +1847,8 @@ $sock = MudarDB($sock, $cod_curso);
   	echo("            <tr>\n");
     /*116 - Legenda */
     echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,116)."</b></td>\n");
-    /*?? -  Período */
-    echo("              <td bgcolor=\"#f1f1f1\"><b>Per&iacute;odo</b></td>\n");
+    /* 168 -  Período */
+    echo("              <td bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases,168)."</b></td>\n");
     // 113 - Tipo de Avalia��o
     echo("              <td align=center bgcolor=\"#f1f1f1\"><b>".RetornaFraseDaLista($lista_frases, 113)."</b></td>\n");
     echo("            </tr>\n");
@@ -1859,7 +1857,7 @@ $sock = MudarDB($sock, $cod_curso);
     echo("              <td bgcolor=\"#f1f1f1\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,115)."</td>\n");
     echo("            </tr>\n");
     echo("          </table>\n");
-  	
+
   }
   echo("          </form>\n");
 
@@ -1870,16 +1868,16 @@ $sock = MudarDB($sock, $cod_curso);
     $media=RetornaInformacoesMedia($sock);
     echo("          <div id=\"layer_muda_expressao\" class=popup>\n");
     echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(lay_muda_expressao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-    echo("              <div class=int_popup>\n");
-    echo("                <form name=\"form_muda_expressao\" id=\"form_muda_expressao\" method=post action=acoes.php onsubmit=\"return(GravarExpressao());\">\n");
-    echo("                <div class=ulPopup>\n");    
+    echo("              <div class=\"int_popup\">\n");
+    echo("                <form name=\"form_muda_expressao\" id=\"form_muda_expressao\" method=\"post\" action=\"acoes.php\" onsubmit=\"return(GravarExpressao());\">\n");
+    echo("                <div class=\"ulPopup\">\n");    
     // 202 - Express�o para c�lculo da m�dia
     echo("                <b>".RetornaFraseDaLista($lista_frases,202)."</b><br />\n");
-    echo("                  <input class=\"input\" type=text name=\"nova_expressao\" id=\"nova_expressao\" value=\"".$media['expressao']."\" maxlength=\"100\" size=\"25\" /><a href='#' onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\" /></a><br /><br />\n");
+    echo("                  <input class=\"input\" type=\"text\" name=\"nova_expressao\" id=\"nova_expressao\" value=\"".$media['expressao']."\" maxlength=\"100\" size=\"25\" /><a href='#' onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\" /></a><br /><br />\n");
     // 201 - Opcional
     // 195 - Norma
     echo("                <b>".RetornaFraseDaLista($lista_frases,195)."(".RetornaFraseDaLista($lista_frases,201).")</b><br />\n");
-    echo("                  <input class=\"input\" type=text name=\"nova_norma\" id=\"nova_norma\" value=\"".$media['norma']."\" maxlength=100 size=5 /><a href='#' onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\"/></a><br /><br />\n");
+    echo("                  <input class=\"input\" type=\"text\" name=\"nova_norma\" id=\"nova_norma\" value=\"".$media['norma']."\" maxlength=100 size=5 /><a href=\"#\" onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\"/></a><br /><br />\n");
     // 50 - Compartilhar
     echo("                <b>".RetornaFraseDaLista($lista_frases,50)."</b><br />\n");
     if ($media['tipo_compartilhamento']=="F")
@@ -1887,39 +1885,39 @@ $sock = MudarDB($sock, $cod_curso);
       $compf=" checked";
       $comptotal="";
       $compfp="";
-      echo("                  <input type=hidden name=tipo_compartilhamento value=F>\n");
+      echo("                  <input type=\"hidden\" name=\"tipo_compartilhamento\" value='F'>\n");
     }
     else if ($media['tipo_compartilhamento']=="T")
     {
       $compf="";
       $comptotal=" checked";
       $compfp="";
-      echo("                  <input type=hidden name=tipo_compartilhamento value=T>\n");
+      echo("                  <input type=\"hidden\" name=\"tipo_compartilhamento\" value='T'>\n");
     }
     else if ($media['tipo_compartilhamento']=="A")
     {     
       $compf="";
       $comptotal="";
       $compfp=" checked";
-      echo("                  <input type=hidden name=tipo_compartilhamento value=A>\n");;
+      echo("                  <input type=\"hidden\" name=\"tipo_compartilhamento\" value='A'>\n");
     }
     else
     {     
       $compf="";
       $comptotal="";
       $compfp=" checked";
-      echo("                  <input type=hidden name=tipo_compartilhamento value=A>\n");;
+      echo("                  <input type=\"hidden\" name=\"tipo_compartilhamento\" value='A'>\n");
     }
     // 51 - Totalmente Compartilhado
-    echo("                  <input type='radio' name='compartilhamento' id='compartilhamento'".$comptotal." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='T';\">".RetornaFraseDaLista($lista_frases,51)."<br>");
+    echo("                  <input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\"".$comptotal." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='T';\">".RetornaFraseDaLista($lista_frases,51)."<br>");
     // 52 - Compartilhado com Formadores
-    echo("                  <input type='radio' name='compartilhamento' id='compartilhamento'".$compf." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='F';\">".RetornaFraseDaLista($lista_frases,52)."<br>");
+    echo("                  <input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\"".$compf." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='F';\">".RetornaFraseDaLista($lista_frases,52)."<br>");
     // 54 - Compartilhado com Formadores e Com o Participante
-    echo("                  <input type='radio' name='compartilhamento' id='compartilhamento'".$compfp." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='A';\">".RetornaFraseDaLista($lista_frases,54)."<br><br />");   
-    echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=hidden name=action value=alterarExpressao />\n");
-    echo("                  <input type=hidden name=cod_usuario value=\"".$cod_usuario."\">\n");
-    echo("                  <input type=hidden name=tela_avaliacao value='".$tela_avaliacao."' />\n"); 
+    echo("                  <input type=\"radio\"  name=\"compartilhamento\" id=\"compartilhamento\"".$compfp." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='A';\">".RetornaFraseDaLista($lista_frases,54)."<br><br />");   
+    echo("                  <input type=\"hidden\" name=\"cod_curso\"        value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"action\"           value=\"alterarExpressao\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_usuario\"      value=\"".$cod_usuario."\">\n");
+    echo("                  <input type=\"hidden\" name=\"tela_avaliacao\"   value=\"".$tela_avaliacao."\" />\n"); 
     /* 18 - Ok (gen) */
     echo("                  <input type=\"button\" id=\"ok_novaexpressao\" class=\"input\" onClick=\"EscondeLayer(lay_muda_expressao);GravarExpressao();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\">\n");
     /* 2 - Cancelar (gen) */
@@ -1928,21 +1926,21 @@ $sock = MudarDB($sock, $cod_curso);
     echo("                </form>\n");
     echo("              </div>\n");
     echo("            </div>\n");
-  
+
     // Mudar Compartilhamento
-    echo("          <div class=popup id=\"comp\" visibility=hidden onContextMenu='return(false);'>\n");
+    echo("          <div class=\"popup\" id=\"comp\" visibility=hidden onContextMenu='return(false);'>\n");
     echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-    echo("            <div class=int_popup>\n");
+    echo("            <div class=\"int_popup\">\n");
     echo("            <form name=\"form_comp\" id=\"form_comp\">\n");
-    echo("              <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    echo("              <input type=hidden name=cod_nota value=\"\">\n");
-    echo("              <input type=hidden name=cod_aluno value=\"\">\n");
-    echo("              <input type=hidden name=cod_grupo value=\"\">\n");
-    echo("              <input type=hidden name=cod_avaliacao value=\"\">\n");
-    echo("              <input type=hidden name=portfolio_grupo value=\"\">\n");
-    echo("              <input type=hidden name=spanName value=\"\">\n");
-    echo("              <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
-    echo("              <ul class=ulPopup>\n");
+    echo("              <input type=\"hidden\" name=\"cod_curso\"       value=\"".$cod_curso."\" />\n");
+    echo("              <input type=\"hidden\" name=\"cod_nota\"        value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"cod_aluno\"       value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"cod_grupo\"       value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"cod_avaliacao\"   value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"portfolio_grupo\" value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"spanName\"        value=\"\" />\n");
+    echo("              <input type=\"hidden\" name=\"tipo_comp\"       value=\"\" id=\"tipo_comp\" />\n");
+    echo("              <ul class=\"ulPopup\">\n");
     echo("                <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), '".RetornaFraseDaLista($lista_frases,51)."'); EscondeLayers();\">\n");
     echo("                  <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
     /* 51 - Totalmente compartilhado */
@@ -1962,7 +1960,7 @@ $sock = MudarDB($sock, $cod_curso);
     echo("            </div>\n");
     echo("          </div>\n");
   }
-  
+
   include("../tela2.php");
   echo("        </td>\n");
   echo("      </tr>\n");

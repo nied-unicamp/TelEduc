@@ -61,10 +61,10 @@
   /* 1 - Avalia��es
   */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
   $tabela="Avaliacao";
   $dir="Avaliacao";
-  echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../avaliacoes/avaliacoes.css\">\n");
 
   /* Verifica se a pessoa a editar �formador */
   if (!EFormador($sock,$cod_curso,$cod_usuario))
@@ -72,20 +72,20 @@
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     /* 1 - Avalia��es
      */
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 8 - �rea restrita ao formador. */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
     echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
     echo("</body></html>\n");
     Desconectar($sock);
     exit;
   }
-  echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
+  echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=\"self.focus();\">\n");
   /* 1 - Avalia��es */
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 9 - Cadastro de Avalia�o */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
 
   $cod_pagina=6;
   /* Cabecalho */
@@ -94,7 +94,7 @@
   echo("<br>\n");
   echo("<p>\n");
 
-  echo("<script languague=JavaScript>\n");
+  echo("<script languague=\"javascript\">\n");
   echo("  function Atualiza() {\n");
   echo("    document.atualizar.titulo.value=top.opener.document.material.titulo.value;\n");
   echo("    document.atualizar.texto.value=top.opener.document.material.texto.value;\n");
@@ -123,23 +123,23 @@
   }
   else
     AtualizaAvaliacaoTemporaria($sock, $tabela, $cod_usuario, trim($objetivos), trim($criterios),$tipo,$valor,$data_inicio,$data_termino,$cod_avaliacao);
-  echo("<form action=../material/editar_material2.php?".RetornaSessionID()." method=post>\n");
+  echo("<form action=\"../material/editar_material2.php?".RetornaSessionID()."\" method=\"post\">\n");
 
   /* 76 - Avalia�o incluida com sucesso. */
-  echo("<font class=text>".RetornaFraseDaLista($lista_frases,76)."<br><br>\n");
+  echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,76)."<br><br>\n");
   /* 35 - Voltar */
-  echo("  <input class=text type=submit value='Voltar' onclick=\"Atualiza();self.close();\" class=text>\n");
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("  <input class=\"text\" type=\"submit\" value=\"Voltar\" onclick=\"Atualiza();self.close();\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
 
   echo("</form>\n");
 
-  echo("<form name=atualizar action=../material/editar_material2.php".RetornaSessionID()." method=post target=trabalho>\n");
-  echo("  <input type=hidden name=cod_ferramenta value=3>");/*Atividades que perde a variavel de sess� quando aberta a ajuda*/
-  echo("  <input type=hidden name=titulo value=\"\">\n");
-  echo("  <input type=hidden name=texto value=\"\">\n");
-  echo("  <input type=hidden name=compartilhamento value=\"\">\n");
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("  <input type=hidden name=criacao_avaliacao value=".$criacao_avaliacao.">\n");
+  echo("<form name=\"atualizar\" action=\"../material/editar_material2.php".RetornaSessionID()."\" method=\"post\" target=\"trabalho\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_ferramenta\"    value=\"3\">");/*Atividades que perde a variavel de sess� quando aberta a ajuda*/
+  echo("  <input type=\"hidden\" name=\"titulo\"            value=\"\">\n");
+  echo("  <input type=\"hidden\" name=\"texto\"             value=\"\">\n");
+  echo("  <input type=\"hidden\" name=\"compartilhamento\"  value=\"\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso\"         value=\"".$cod_curso."\">\n");
+  echo("  <input type=\"hidden\" name=\"criacao_avaliacao\" value=\"".$criacao_avaliacao."\">\n");
   echo("</form>\n");
 
   echo("</body>\n");

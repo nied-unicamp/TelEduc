@@ -67,11 +67,11 @@
   echo("<html>\n");
   /* 1 - Avalia��es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
 
-   echo("  <script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
-  echo("  <script language=JavaScript>\n\n");
+  echo("  <script language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("  <script language=\"javascript\">\n\n");
 
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
@@ -207,13 +207,13 @@
    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white");
 
   //if ($usr_formador)
-  echo(" onLoad='iniciar();'>\n");
+  echo(" onLoad=\"iniciar();\">\n");
   //else
   //  echo(">\n");
 
   /* P�gina Principal */
   /* 29 - Avalia��es passadas */
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,29)."</b>\n";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,29)."</b>\n";
 
   $cod_pagina=2;
   /* Cabecalho */
@@ -221,13 +221,13 @@
 
   echo("<p>\n");
   echo("<table border=0 width=100%>\n");
-  echo("  <tr class=menu>\n");
+  echo("  <tr class=\"menu\">\n");
   /* 110 - Ver Avalia��es Atuais */
-  echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
+  echo("    <td align=center><a href=\"avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,110)."</b></a></td>\n");
   /* 30 - Ver Avalia��es Futuras */
-  echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
+  echo("    <td align=center><a href=\"ver_avaliacoes_futuras.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,30)."</b></a></td>\n");
   /* 31 - Notas da Turma */
-  echo("    <td align=center><a href=\"todas_as_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases,31)."</b></a></td>\n");
+  echo("    <td align=center><a href=\"todas_as_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases,31)."</b></a></td>\n");
   if ($usr_formador)
   /* 16 - Lixeira (ger)*/
     echo("    <td align=center><a href=\"ver_lixeira_avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\" class=menu><b>".RetornaFraseDaLista($lista_frases_geral,16)."</b></a></td>\n");
@@ -236,24 +236,24 @@
   echo("</table>\n");
   echo("<br>\n");
 
-  echo("    <form name=frmAvaliacao method=post>\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"post\">\n");
 
   echo(RetornaSessionIDInput());
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
 
   /* Passa o cod_avaliacao para executar a��es sobre ela.       */
-  echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\" value=\"-1\">\n");
   echo("    </form>\n");
 
   echo("<table border=0 width=100% cellspacing=0>\n");
   echo("  <tr>\n");
-  echo("    <td width=10 class=colorfield>&nbsp;</td>\n");
+  echo("    <td width=10 class=\"colorfield\">&nbsp;</td>\n");
   /* 29 - Avalia��es passadas */
-  echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
+  echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,29)."</td>\n");
   /* 16 - Data de In�cio*/
-  echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
+  echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
   /* 17 - Data de T�rmino*/
-  echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
+  echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
   echo("  </tr>\n");
   echo("  <tr>\n");
   echo("    <td colspan=4 height=5></td>\n");
@@ -264,8 +264,8 @@
   {
     foreach ($lista_avaliacoes as $cod => $linha)
     {
-      $data_inicio="<font class=text>".UnixTime2Data($linha['Data_inicio'])."</font>";
-      $data_termino="<font class=text>".UnixTime2Data($linha['Data_termino'])."</font>";
+      $data_inicio="<font class=\"text\">".UnixTime2Data($linha['Data_inicio'])."</font>";
+      $data_termino="<font class=\"text\">".UnixTime2Data($linha['Data_termino'])."</font>";
       if ($data_acesso<$linha['Data'])
       {
         $marcaib="<b>";
@@ -290,16 +290,16 @@
         $ferramenta=RetornaFraseDaLista($lista_frases,14);
 
       //$titulo="<a href=\"agenda.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&visualizar=sim&origem=historico&cod_item=".$linha_item['cod_item']."\">".$linha['Titulo']."</a>";
-      //$icone="<a href=\"agenda.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&visualizar=sim&origem=historico&cod_item=".$linha_item['cod_item']."\"><img src=../figuras/avaliacao.gif border=0></a>";
+      //$icone="<a href=\"agenda.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&visualizar=sim&origem=historico&cod_item=".$linha_item['cod_item']."\"><img src=\"../figuras/avaliacao.gif\" border=0></a>";
 
-      $icone="<a href=\"ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$linha['Cod_avaliacao']."\"><img src=../figuras/avaliacao.gif border=0></a>";
+      $icone="<a href=\"ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$linha['Cod_avaliacao']."\"><img src=\"../figuras/avaliacao.gif\" border=0></a>";
       echo("  <tr".$marcatr.">\n");
       echo("    <td width=10 align=center>".$icone."</td>\n");
 
       echo("    <td>\n");
-      echo($marcaib."<a class=text href=# onMouseDown='selected_item=");
-      echo($linha['Cod_avaliacao'].";MostraLayer(lay_avaliacao);");
-      echo("return(false);'>".$linha['Titulo']."</a><font class=text> (".$ferramenta.")</font>".$marcafb);
+      echo($marcaib."<a class=\"text\" href=\"#\" ");
+      echo("onMouseDown=\"selected_item=".$linha['Cod_avaliacao'].";MostraLayer(lay_avaliacao);return(false);\"");
+      echo(">".$linha['Titulo']."</a><font class=\"text\"> (".$ferramenta.")</font>".$marcafb);
       echo(" </td>\n");
 
       echo($marcaib."    <td align=center>".$data_inicio."</td>\n".$marcafb);
@@ -312,35 +312,35 @@
     echo("</table>\n");
 
     /* layer_avaliacao */
-    echo("  <div id=layer_avaliacao class=block visibility=hidden onContextMenu='return(false);'>\n");
+    echo("  <div id=\"layer_avaliacao\" class=\"block\" visibility=hidden onContextMenu=\"return(false);\">\n");
     echo("    <table bgcolor=#ffffff cellpadding=1 cellspacing=1 border=2>\n");
-    echo("      <tr class=bgcolor>\n");
-    echo("        <td class=bgcolor align=right>\n");
-    echo("          <a href=# onClick='EscondeLayer(lay_avaliacao);return(false);'>");
-    echo("<img src=../figuras/x.gif border=0></a>\n");
+    echo("      <tr class=\"bgcolor\">\n");
+    echo("        <td class=\"bgcolor\" align=right>\n");
+    echo("          <a href=\"#\" onClick=\"EscondeLayer(lay_avaliacao);return(false);\">");
+    echo("<img src=\"../figuras/x.gif\" border=0></a>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
-    echo("      <tr class=wtfield>\n");
-    echo("        <td class=wtfield>\n");
+    echo("      <tr class=\"wtfield\">\n");
+    echo("        <td class=\"wtfield\">\n");
 
      /* 33 - Objetivos/Crit�rios */
-    echo("          <a href=# class=text onClick='Ver(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,33)."</a><br>\n");
+    echo("          <a href=\"#\" class=\"text\" onClick=\"Ver(selected_item);return(false);\">".RetornaFraseDaLista($lista_frases,33)."</a><br>\n");
     if ($usr_formador)
     {
       /* XX - Editar Objetivos/Crit�rios*/
-//      echo("          <a href=# class=text onClick='AlterarAvaliacao(selected_item);return(false);'>Editar Objetivos/Crit�rios</a><br>\n");
+//      echo("          <a href=\"#\" class=\"text\" onClick=\"AlterarAvaliacao(selected_item);return(false);\">Editar Objetivos/Crit�rios</a><br>\n");
       /* XX - Apagar Objetivos/Crit�rios */
-//      echo("          <a href=# class=text onClick='ApagarAvaliacao(selected_item);return(false);'>Apagar Objetivos/Crit�rios</a><br>\n");
+//      echo("          <a href=\"#\" class=\"text\" onClick=\"ApagarAvaliacao(selected_item);return(false);\">Apagar Objetivos/Crit�rios</a><br>\n");
       /* 34 - Avaliar Participantes */
-      echo("          <a href=# class=text onClick='AvaliarParticipantes(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,34)."</a><br>\n");
+      echo("          <a href=\"#\" class=\"text\" onClick=\"AvaliarParticipantes(selected_item);return(false);\">".RetornaFraseDaLista($lista_frases,34)."</a><br>\n");
     }
 
     /* 35 - Ver Participa��o */
-    echo("          <a href=# class=text onClick='VerificarParticipacao(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,35)."</a><br>\n");
+    echo("          <a href=\"#\" class=\"text\" onClick=\"VerificarParticipacao(selected_item);return(false);\">".RetornaFraseDaLista($lista_frases,35)."</a><br>\n");
     /* 36 - Ver Notas */
-    echo("          <a href=# class=text onClick='VerNotas(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,36)."</a><br>\n");
+    echo("          <a href=\"#\" class=\"text\" onClick=\"VerNotas(selected_item);return(false);\">".RetornaFraseDaLista($lista_frases,36)."</a><br>\n");
     /* 37 - Hist�rico do Desempenho */
-    echo("          <a href=# class=text onClick='HistoricodoDesempenho(selected_item);return(false);'>".RetornaFraseDaLista($lista_frases,37)."</a><br>\n");
+    echo("          <a href=\"#\" class=\"text\" onClick=\"HistoricodoDesempenho(selected_item);return(false);\">".RetornaFraseDaLista($lista_frases,37)."</a><br>\n");
 
     echo("        </td>\n");
     echo("      </tr>\n");
@@ -351,7 +351,7 @@
   {
     /* 125 - N�o existem avalia��es anteriores! */
     echo("</table>\n");
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,125)."</font>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,125)."</font>\n");
   }
 
 

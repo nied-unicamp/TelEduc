@@ -53,26 +53,25 @@
     $cod_pagina_ajuda=2;
   else
     $cod_pagina_ajuda=3;
-  
+
 
   include("../topo_tela.php");
-  
+
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("excluirAvaliacao", 213, 83);
-  
-  
+
+
   $data_acesso = PenultimoAcesso($sock, $cod_usuario, "");
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
   // A variavel tela_avaliacao indica quais avaliacoes devem ser listadas: 'P'assadas, 'A'tuais ou 'F'uturas
-  if (!isset ($tela_avaliacao) || !in_array($tela_avaliacao, array (
-		'P',
-		'A',
-		'F'
-	))) {
-	$tela_avaliacao = 'A';
+  if (!isset ($tela_avaliacao) || 
+      !in_array($tela_avaliacao, 
+                array ('P', 'A', 'F'))
+     ) {
+    $tela_avaliacao = 'A';
   }
 
   /* 														*/
@@ -132,30 +131,30 @@
 //}
 
   switch ($tela_avaliacao) {
-	case 'P' :
-		$lista_avaliacoes = RetornaAvaliacoesAnteriores($sock, $usr_formador);
-		// 29 - Avalia��es Passadas
-		$frase_avaliacoes = RetornaFraseDaLista($lista_frases, 29);
-		$cod_pagina = 2;
-		break;
-	case 'A' :
-		$lista_avaliacoes = RetornaAvaliacoesAtuais($sock, $usr_formador);
-		// 32 - Avalia��es Atuais
-		$frase_avaliacoes = RetornaFraseDaLista($lista_frases, 32);
-		$cod_pagina = 1;
-		break;
-	case 'F' :
-		$lista_avaliacoes = RetornaAvaliacoesFuturas($sock, $usr_formador);
-		// 30 - Avalia��es Futuras
-		$frase_avaliacoes = RetornaFraseDaLista($lista_frases, 30);
-		$cod_pagina = 3;
-		break;
-  } 
+    case 'P' :
+      $lista_avaliacoes = RetornaAvaliacoesAnteriores($sock, $usr_formador);
+      // 29 - Avalia��es Passadas
+      $frase_avaliacoes = RetornaFraseDaLista($lista_frases, 29);
+      $cod_pagina = 2;
+      break;
+    case 'A' :
+      $lista_avaliacoes = RetornaAvaliacoesAtuais($sock, $usr_formador);
+      // 32 - Avalia��es Atuais
+      $frase_avaliacoes = RetornaFraseDaLista($lista_frases, 32);
+      $cod_pagina = 1;
+      break;
+    case 'F' :
+      $lista_avaliacoes = RetornaAvaliacoesFuturas($sock, $usr_formador);
+      // 30 - Avalia��es Futuras
+      $frase_avaliacoes = RetornaFraseDaLista($lista_frases, 30);
+      $cod_pagina = 3;
+      break;
+  }
 
   /* Funções javascript */
   echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-  echo("	<script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
-  echo("    <script type=\"text/javascript\">\n");
+  echo("  <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
+  echo("  <script type=\"text/javascript\">\n");
 
   echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("      var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
@@ -166,7 +165,7 @@
 //  echo("        document.captureEvents(Event.MOUSEMOVE);\n");
 //  echo("      }\n");
 //  echo("      document.onmousemove = TrataMouse;\n\n");
-  
+
   /* Verificação do browser sendo usado */
   echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
   echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
@@ -246,7 +245,8 @@
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        lay_nova_avaliacao = getLayer('layer_nova_avaliacao');\n");
-  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  if (isset($_GET['acao']))
+    $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
   echo("      }\n");
   echo("      \n");
@@ -356,68 +356,68 @@
 
   if ($usr_formador) 
   {
-	echo("      function VerTelaLixeira()\n");
-	echo("      {\n");
-	echo("        document.frmAvaliacao.action = 'lixeira.php';\n");
-	echo("        document.frmAvaliacao.submit();\n");
-	echo("        return false;\n");
-	echo("      }\n");
+    echo("      function VerTelaLixeira()\n");
+    echo("      {\n");
+    echo("        document.frmAvaliacao.action = 'lixeira.php';\n");
+    echo("        document.frmAvaliacao.submit();\n");
+    echo("        return false;\n");
+    echo("      }\n");
 
-	echo("      function Apagar(id)\n");
-	echo("      {\n");
-	// 117 - Deseja realmente apagar a avalia��oo selecionada? (Esta atividade deixaria de ser avaliada e a avalia��oo seria movida para a lixeira DAS AVALIA��ES)*/
-	echo("        if(confirm('" . RetornaFraseDaLista($lista_frases, 117) . "'))");
-	echo("        {\n");
-	echo("          document.frmAvaliacao.cod_avaliacao.value = id;\n");
-	echo("          document.frmAvaliacao.action = 'apagar_avaliacao.php'; \n");
-	echo("          document.frmAvaliacao.origem.value = 'avaliacoes'; \n");
-	echo("          document.frmAvaliacao.submit();\n");
-	echo("        }\n");
-	echo("      }\n\n");
+    echo("      function Apagar(id)\n");
+    echo("      {\n");
+    // 117 - Deseja realmente apagar a avalia��oo selecionada? (Esta atividade deixaria de ser avaliada e a avalia��oo seria movida para a lixeira DAS AVALIA��ES)*/
+    echo("        if(confirm('" . RetornaFraseDaLista($lista_frases, 117) . "'))");
+    echo("        {\n");
+    echo("          document.frmAvaliacao.cod_avaliacao.value = id;\n");
+    echo("          document.frmAvaliacao.action = 'apagar_avaliacao.php'; \n");
+    echo("          document.frmAvaliacao.origem.value = 'avaliacoes'; \n");
+    echo("          document.frmAvaliacao.submit();\n");
+    echo("        }\n");
+    echo("      }\n\n");
   }
- 
- 
+
+
   echo("    </script>\n");
-  
+
   include("../menu_principal.php");
-  
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">");
   echo("          <h4> ".RetornaFraseDaLista($lista_frases, 1)." - $frase_avaliacoes </h4>");
-  
+
     // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
   echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
-  
+
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
 /************************CABECALHO ACABA AQUI ****************************/
 
 // Determinamos a cor de cada link (amarelo ou branco) no menu superior
 $cor_link1 = array (
-	'A' => "",
-	'F' => "",
-	'P' => ""
+  'A' => "",
+  'F' => "",
+  'P' => ""
 );
 $cor_link2 = array (
-	'A' => "",
-	'F' => "",
-	'P' => ""
+  'A' => "",
+  'F' => "",
+  'P' => ""
 );
 $cor_link1[$tela_avaliacao] = "<font color=yellow>";
 $cor_link2[$tela_avaliacao] = "</font>";
 
-  echo("          <form name=frmAvaliacao method=get>\n");
-  echo("            <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("          <form name=\"frmAvaliacao\" method=\"get\">\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a�es sobre ela.
-  echo("            <input type=hidden name=cod_avaliacao value=-1>\n");
+  echo("            <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"-1\">\n");
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("            <input type=hidden name=tela_avaliacao value=" . $tela_avaliacao . ">\n");
-  echo("            <input type=hidden name=origem value=avaliacoes>\n");
-  echo("            <input type=hidden name=operacao value=null>\n");
+  echo("            <input type=\"hidden\" name=\"tela_avaliacao\" value=" . $tela_avaliacao . ">\n");
+  echo("            <input type=\"hidden\" name=\"origem\"         value=\"avaliacoes\">\n");
+  echo("            <input type=\"hidden\" name=\"operacao\"       value=null>\n");
   echo("          </form>\n");
 
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id =\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -426,9 +426,9 @@ $cor_link2[$tela_avaliacao] = "</font>";
   echo("              <td class=\"btAuxTabs\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 29 - Avalia��es Passadas */
-  echo("		      <li><span onClick=return(VerTelaAvaliacoes('P'))>".RetornaFraseDaLista($lista_frases, 29)."</span></li>\n");
+  echo("		      <li><span onClick=\"return(VerTelaAvaliacoes('P'))\">".RetornaFraseDaLista($lista_frases, 29)."</span></li>\n");
   /* 32 - Avalia��es Atuais*/
-  echo("		      <li><span onClick=return(VerTelaAvaliacoes('A'))>".RetornaFraseDaLista($lista_frases, 32)."</span></li>\n");
+  echo("		      <li><span onClick=\"return(VerTelaAvaliacoes('A'))\">".RetornaFraseDaLista($lista_frases, 32)."</span></li>\n");
   /* 30 - Avalia��es Futuras*/
   echo("		      <li><span onClick=return(VerTelaAvaliacoes('F'))>".RetornaFraseDaLista($lista_frases, 30)."</span></li>\n");
   /* 31 - Notas dos participantes */
@@ -447,9 +447,9 @@ $cor_link2[$tela_avaliacao] = "</font>";
   echo("              </td>");
   echo("            </tr>\n");	
   echo("            <tr>\n");
-  echo("	      <td valign=\"top\">\n");
+  echo("          <td valign=\"top\">\n");
   echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
-  echo("		  <tr class=\"head\">\n");
+  echo("          <tr class=\"head\">\n");
   echo("                    <td width=\"66%\" align=left style=\"cursor:pointer\">$frase_avaliacoes</td>\n");
   /* 113 -Tipo da Avalia��o */
   echo("	            <td width=\"14%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
@@ -458,85 +458,83 @@ $cor_link2[$tela_avaliacao] = "</font>";
   /* 17 - Data de T�rmino */
   echo("	            <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
   echo("		  </tr>\n");
-  if (count($lista_avaliacoes) > 0) 
+  if (count($lista_avaliacoes) > 0)
   {
-	foreach ($lista_avaliacoes as $cod => $linha) 
-        {
-		$data_inicio = UnixTime2Data($linha['Data_inicio']);
-		$data_termino = UnixTime2Data($linha['Data_termino']);
-		if (!strcmp($linha['Ferramenta'], 'F')) {
-			// 145 - Frum de Discuss�
-			$ferramenta = RetornaFraseDaLista($lista_frases, 145);
-		}
-		elseif (!strcmp($linha['Ferramenta'], 'B')) {
-			// 146 - Sess� de Bate-Papo
-			$ferramenta = RetornaFraseDaLista($lista_frases, 146);
-		}
+    foreach ($lista_avaliacoes as $cod => $linha)
+    {
+      $data_inicio = UnixTime2Data($linha['Data_inicio']);
+      $data_termino = UnixTime2Data($linha['Data_termino']);
+      if (!strcmp($linha['Ferramenta'], 'F')) {
+        // 145 - Frum de Discuss�
+        $ferramenta = RetornaFraseDaLista($lista_frases, 145);
+      }
+      elseif (!strcmp($linha['Ferramenta'], 'B')) {
+        // 146 - Sess� de Bate-Papo
+        $ferramenta = RetornaFraseDaLista($lista_frases, 146);
+      }
+      elseif (!strcmp($linha['Ferramenta'], 'E')) {
+        if ($linha['tipo'] == 'I')
+          // 176 - Exerc�io Individual
+          $ferramenta = RetornaFraseDaLista($lista_frases, 176);
+        elseif ($linha['tipo'] == 'G')
+          // 174 - Exerc�io em Grupo
+          $ferramenta = RetornaFraseDaLista($lista_frases, 174);
+      } else {
+        if ($linha['Ferramenta'] == 'P') {
+          if ($linha['tipo'] == 'G')
+            // 162 - Atividade em grupo no Portfolio
+            $ferramenta = RetornaFraseDaLista($lista_frases, 162);
+          elseif ($linha['tipo'] == 'I')
+            // 161 - Atividade individual no Portfolio
+            $ferramenta = RetornaFraseDaLista($lista_frases, 161);
+        }
 
-		elseif (!strcmp($linha['Ferramenta'], 'E')) {
-			if ($linha['tipo'] == 'I')
-				// 176 - Exerc�io Individual
-				$ferramenta = RetornaFraseDaLista($lista_frases, 176);
-			elseif ($linha['tipo'] == 'G')
-			// 174 - Exerc�io em Grupo
-			$ferramenta = RetornaFraseDaLista($lista_frases, 174);
-		} else
-			if ($linha['Ferramenta'] == 'P') {
-				if ($linha['tipo'] == 'G')
-					// 162 - Atividade em grupo no Portfolio
-					$ferramenta = RetornaFraseDaLista($lista_frases, 162);
-				elseif ($linha['tipo'] == 'I')
-				// 161 - Atividade individual no Portfolio
-				$ferramenta = RetornaFraseDaLista($lista_frases, 161);
-			}
+        /*Caso seja uma Avalia��o externa*/
+        elseif ($linha['Ferramenta'] == 'N') {
+            if ($linha['tipo'] == 'I')
+              $ferramenta = RetornaFraseDaLista($lista_frases, 185);
+            else
+              $ferramenta = RetornaFraseDaLista($lista_frases, 186);
+          }
+      }
 
-		/*Caso seja uma Avalia��o externa*/
-		else
-			if ($linha['Ferramenta'] == 'N') {
-				if ($linha['tipo'] == 'I')
-					$ferramenta = RetornaFraseDaLista($lista_frases, 185);
-				else
-					$ferramenta = RetornaFraseDaLista($lista_frases, 186);
+      $a1 = "<a href=\"#\" onClick=\"Ver(".$linha['Cod_avaliacao'].");\">";
+      $a2 = "</a>";
 
-			}
+      echo("                  <tr> \n");
+      echo("                    <td align=left>" .$a1 . $linha['Titulo'] . $a2 . "</td>\n");
 
-		$a1 = "<a href=# onClick=\"Ver(".$linha['Cod_avaliacao'].");\">";
-		$a2 = "</a>";
+      // coluna do tipo de avaliacao: "Atividade Individual" ou "Atividade Em Grupo" ou "Sessao de Batepapo" ou "Forum"
+      echo("                    <td align=center>" . $ferramenta . "</td>\n");
 
-		echo("                  <tr> \n");
-		echo("                    <td align=left>" .$a1 . $linha['Titulo'] . $a2 . "</td>\n");
-		
-		// coluna do tipo de avaliacao: "Atividade Individual" ou "Atividade Em Grupo" ou "Sessao de Batepapo" ou "Forum"
-		echo("		          <td align=center>" . $ferramenta . "</td>\n");
+      // coluna da data de inicio
+      echo("                    <td align=center>" . $data_inicio . "</td>\n");
 
-		// coluna da data de inicio
-		echo("                    <td align=center>" . $data_inicio . "</td>\n");
-
-		// coluna da data de termino
-		echo("                    <td align=center>" . $data_termino . "</td>\n");
-		echo("		        </tr>\n");
-	}
+      // coluna da data de termino
+      echo("                    <td align=center>" . $data_termino . "</td>\n");
+      echo("                  </tr>\n");
+    }
   } else {
-	switch ($tela_avaliacao) {
-		case 'P' :
-			// 177 - Nao existem avalia��es passadas
-			$nao_existe = RetornaFraseDaLista($lista_frases, 177);
-			break;
-		case 'A' :
-			// 38 - N�o existem avalia��es atuais!
-			$nao_existe = RetornaFraseDaLista($lista_frases, 38);
-			break;
-		case 'F' :
-			// 178 - Nao existem avalia��es futuras
-			$nao_existe = RetornaFraseDaLista($lista_frases, 178);
-			break;
-	}
-        echo("                  <tr>\n");
-		echo("                    <td align=center>" . $nao_existe . "</td>\n");
-		echo("                    <td align=center>-</td>\n");
-		echo("                    <td align=center>-</td>\n");
-		echo("                    <td align=center>-</td>\n");
-		echo("                  </tr>\n");
+    switch ($tela_avaliacao) {
+      case 'P' :
+        // 177 - Nao existem avalia��es passadas
+        $nao_existe = RetornaFraseDaLista($lista_frases, 177);
+        break;
+      case 'A' :
+        // 38 - N�o existem avalia��es atuais!
+        $nao_existe = RetornaFraseDaLista($lista_frases, 38);
+        break;
+      case 'F' :
+        // 178 - Nao existem avalia��es futuras
+        $nao_existe = RetornaFraseDaLista($lista_frases, 178);
+        break;
+    }
+    echo("                  <tr>\n");
+    echo("                    <td align=center>" . $nao_existe . "</td>\n");
+    echo("                    <td align=center>-</td>\n");
+    echo("                    <td align=center>-</td>\n");
+    echo("                    <td align=center>-</td>\n");
+    echo("                  </tr>\n");
   }
   echo("                </table>\n");
   echo("              </td>\n"); 
@@ -547,38 +545,38 @@ $cor_link2[$tela_avaliacao] = "</font>";
   if($usr_formador)
   {  
     /* Nova Avaliacao */
-    echo("          <div id=\"layer_nova_avaliacao\" class=popup>\n");
+    echo("          <div id=\"layer_nova_avaliacao\" class=\"popup\">\n");
     echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_avaliacao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-    echo("              <div class=int_popup>\n");
-    echo("                <form name=form_nova_agenda method=post action=acoes.php onSubmit='return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));'>\n");
-    echo("                <div class=ulPopup>\n");    
+    echo("              <div class=\"int_popup\">\n");
+    echo("                <form name=\"form_nova_agenda\" method=\"post\" action=\"acoes.php\" onSubmit='return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));'>\n");
+    echo("                <div class=\"ulPopup\">\n");
     /* 123 - Titulo: */
     echo("                  ".RetornaFraseDaLista($lista_frases,123)."<br />\n");
-    echo("                  <input class=\"input\" type=text name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=150 /><br />\n");
+    echo("                  <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=150 /><br />\n");
     /* 20 - Tipo da Atividade */
     echo("                  ".RetornaFraseDaLista($lista_frases,20)."<br />\n");
     echo("                  <select name=\"tipo\" class=\"input\">\n");
     /* 21 - Individual */
-    echo("                    <option value=I>".RetornaFraseDaLista($lista_frases,21)."</option>\n");
+    echo("                    <option value='I'>".RetornaFraseDaLista($lista_frases,21)."</option>\n");
     /* 22 - Em Grupo */
-    echo("                    <option value=G>".RetornaFraseDaLista($lista_frases,22)."</option>\n");
+    echo("                    <option value='G'>".RetornaFraseDaLista($lista_frases,22)."</option>\n");
     echo("                  </select><br>\n");
-//    echo("                  Ferramenta de Avaliacao<br />\n");
-//    /* Ferramenta da Avaliação */
-//    echo("                  <select name=\"ferramenta_avaliacao\" class=\"input\">\n");
-//    /* 21 - Individual */
-//    echo("                    <option value=\"F\">Forum</option>\n");
-//    echo("                    <option value=\"B\">Bate-Papo</option>\n");
-//    echo("                    <option value=\"E\">Exercicios</option>\n");
-//    echo("                    <option value=\"P\">Portifolio</option>\n");
-//    echo("                    <option value=\"N\">Avaliacao Externa</option>\n");
-//    echo("                  </select><br>\n");
-    
-    echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=hidden name=acao value=criarAvaliacaoExt />\n");
-    echo("                  <input type=hidden name=cod_usuario value=\"".$cod_usuario."\">\n");
-    echo("                  <input type=hidden name=ferramenta value='".$linha['Ferramenta']."' />\n");
-    echo("                  <input type=hidden name=tela_avaliacao value='".$tela_avaliacao."' />\n");
+//     echo("                  Ferramenta de Avaliacao<br />\n");
+//     /* Ferramenta da Avaliação */
+//     echo("                  <select name=\"ferramenta_avaliacao\" class=\"input\">\n");
+//     /* 21 - Individual */
+//     echo("                    <option value=\"F\">Forum</option>\n");
+//     echo("                    <option value=\"B\">Bate-Papo</option>\n");
+//     echo("                    <option value=\"E\">Exercicios</option>\n");
+//     echo("                    <option value=\"P\">Portifolio</option>\n");
+//     echo("                    <option value=\"N\">Avaliacao Externa</option>\n");
+//     echo("                  </select><br>\n");
+
+    echo("                  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"acao\"           value=\"criarAvaliacaoExt\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_usuario\"    value=\"".$cod_usuario."\">\n");
+    echo("                  <input type=\"hidden\" name=\"ferramenta\"     value=\"".$linha['Ferramenta']."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\" />\n");
     /* 18 - Ok (gen) */
     echo("                  <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
     /* 2 - Cancelar (gen) */
@@ -588,7 +586,7 @@ $cor_link2[$tela_avaliacao] = "</font>";
     echo("              </div>\n");
     echo("            </div>\n\n");
   }
-  
+
   include("../tela2.php");  
   echo ("</body>\n");
   echo ("</html>\n");

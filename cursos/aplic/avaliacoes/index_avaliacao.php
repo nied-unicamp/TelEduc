@@ -70,24 +70,24 @@
     $query="update Exercicios_aplicado set avaliacao=0 where cod_modelo=$cod_modelo";
     Enviar($sock,$query);
   }
-      
+
 
   if($origem=="../material/material")
   {
      echo("  <html>\n");
     /* 1 - Avalia��es */
     echo("    <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../avaliacoes/avaliacoes.css\">\n");
     echo("\n\n");
 
-    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
+    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=\"self.focus();\">\n");
     /* 1 - Avalia��es */
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 9 - Cadastro de Avalia��o */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
 
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
     echo("self.close();");
     echo("</script>\n");
 
@@ -97,17 +97,17 @@
     echo("  <html>\n");
     /* 1 - Avalia��es */
     echo("    <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../avaliacoes/avaliacoes.css\">\n");
     echo("\n\n");
 
-    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
+    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=\"self.focus();\">\n");
     /* 1 - Avalia��es */
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 9 - Cadastro de Avalia��o */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,9)." </b>\n");
 
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
     echo("self.close();");
     echo("</script>\n");
   }
@@ -119,8 +119,8 @@
     echo("</head>\n");
 
     echo("<Frameset cols='200,*' border=0 frameborder=0>\n");
-    echo("<Frame src=../menu.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&time=".time()."&cod_ferramenta=22 name=menu>\n");
-    echo("<Frame src=".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico."&cod_avaliacao=".$cod_avaliacao."&time=".time()." NORESIZE SCROLLING=auto name=direita>\n");
+    echo("<Frame src=\"../menu.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&time=".time()."&cod_ferramenta=22\" name=\"menu\">\n");
+    echo("<Frame src=\"".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico."&cod_avaliacao=".$cod_avaliacao."&time=".time()."\" NORESIZE SCROLLING=auto name=\"direita\">\n");
     echo("</Frameset>\n");
   }
   echo("</body>\n");

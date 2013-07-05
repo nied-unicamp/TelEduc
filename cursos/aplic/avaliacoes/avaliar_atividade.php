@@ -69,20 +69,20 @@
     echo("<html>\n");
     /* 1 - Avalia��es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
 
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
     $tabela="Avaliacao";
     $dir="avaliacao";
 
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white");
     /* 1 - Avalia��es*/
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 8 - �rea restrita ao formador. */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Fechar (gen) */
-echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onclick=self.close();></form>\n");
+echo("<form><input class=\"text\" type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,13)."' onclick=self.close();></form>\n");
 echo("</body></html>\n");
 Desconectar($sock);
 exit;
@@ -91,7 +91,7 @@ exit;
 $portfolio_grupo = ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N') ) && ($dados['Tipo'] == 'G') );
 $exercicio_grupo = ( ($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G') );
 
-echo("<script language=JavaScript>\n");
+echo("<script language=\"javascript\">\n");
 
 /*Variavel para controlar quando deve ou n�o fazer alguma coisa no evento onUnload*/
 echo("var unload=1;\n");
@@ -232,8 +232,8 @@ echo("</script>\n");
 echo("<html>\n");
 /* 1 - Avalia��es */
 echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
 
 $portfolio_grupo = ( ($dados['Ferramenta'] == 'P' || $dados['Ferramenta']=='N') && ($dados['Tipo'] == 'G') );
 $exercicio_grupo = ( ($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G') );
@@ -253,20 +253,20 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
             $lista_integrantes=RetornaListaIntegrantes($sock,cod_grupo_portfolio);
             foreach ($lista_integrantes as $cod_aluno => $linha)
             {
-               $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=0>\n");
+               $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"0\">\n");
                $cod_nota=IniciaAvaliacaoAluno($sock, $cod_aluno, $cod_avaliacao, $cod_usuario, $cod_grupo_portfolio);
             }
          }
          else
          {
-            $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=0>\n");
+            $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"0\">\n");
             $cod_null='NULL';
             $cod_nota=IniciaAvaliacaoAluno($sock, $cod_aluno, $cod_avaliacao, $cod_usuario, $cod_null);
          }
       }
       else           //         O aluno ja foi avaliado
       {
-         $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=".$verificacao['Existe'].">\n");
+         $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"".$verificacao['Existe']."\">\n");
          if (($portfolio_grupo)||($exercicio_grupo))
          {
             $lista_integrantes=RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo_portfolio,$cod_avaliacao);
@@ -287,7 +287,7 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
    }
    else //$verificacao[existe]=false      A avalia��o n�o existe, o formador pode avaliar o aluno
    {
-      $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=".$verificacao['Existe'].">\n");
+      $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"".$verificacao['Existe']."\">\n");
       if (($portfolio_grupo)&&($exercicio_grupo))
       {
          $lista_integrantes=RetornaListaIntegrantes($sock,$cod_grupo_portfolio);
@@ -311,7 +311,7 @@ else if (($portfolio_grupo)||($exercicio_grupo))
       if(is_array($lista_integrantes))
       foreach ($lista_integrantes as $cod_aluno => $linha)
       {
-         $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=1>\n");
+         $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"1\">\n");
          $cod_nota=IniciaAvaliacaoAluno($sock, $cod_aluno, $cod_avaliacao, $cod_usuario, $cod_grupo);
       }
    }
@@ -321,7 +321,7 @@ else if (($portfolio_grupo)||($exercicio_grupo))
       if(is_array($lista_integrantes))
       foreach ($lista_integrantes as $cod_aluno => $linha)
       {     
-         $alteracao = ("  <input type=hidden name=EhAlteracaoDeNota value=0>\n");
+         $alteracao = ("  <input type=\"hidden\" name=\"EhAlteracaoDeNota\" value=\"0\">\n");
          $cod_null='NULL';
          $cod_nota=IniciaAvaliacaoAluno($sock, $cod_aluno, $cod_avaliacao, $cod_usuario, $cod_grupo);
       }
@@ -333,9 +333,9 @@ else if (($portfolio_grupo)||($exercicio_grupo))
 echo("<body link=#0000ff vlink=#0000ff bgcolor=white onUnload=Descarregar($cod_nota);>");/*.$onUnload);/*'window.location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";'");
 
 /* 1 - Avalia��es */
-$cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+$cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
 /* 34 - Avaliar participantes */
-$cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,34)."</b>";
+$cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,34)."</b>";
 $cod_pagina=8;
 /* Cabecalho */
 echo(PreparaCabecalho($cod_curso, $cabecalho, COD_AVALIACAO, $cod_pagina));
@@ -414,9 +414,9 @@ echo("</p>\n");
 echo("<p>\n");
 echo("<table border=0 width=100%>\n");
 echo("  <tbody>\n");
-echo("    <tr class=menu3>\n");
+echo("    <tr class=\"menu3\">\n");
 // 46 - Ver objetivos/crit�rios da avalia��o
-echo("      <td align=center><a href=# class=menu3 onclick='VerObj();return false;'>".RetornaFraseDaLista($lista_frases, 46)."</a></td>\n");
+echo("      <td align=center><a href=\"#\" class=\"menu3\" onclick\"VerObj();return false;\">".RetornaFraseDaLista($lista_frases, 46)."</a></td>\n");
 echo("    </tr>\n");
 echo("  </tbody>\n");
 echo("</table>\n");
@@ -459,19 +459,19 @@ if ((!$portfolio_grupo)&&(!$exercicio_grupo))
 {
    // 47 - Participante
    echo("      <tr>\n");
-   echo("        <td class=colorfield rowspan=1 colspan=5>&nbsp; ".RetornaFraseDaLista($lista_frases, 47)."</td>\n");
+   echo("        <td class=\"colorfield\" rowspan=1 colspan=5>&nbsp; ".RetornaFraseDaLista($lista_frases, 47)."</td>\n");
    echo("      </tr>\n");
 }
 else
 {
    // 48 - Grupo
    echo("      <tr>\n");
-   echo("        <td class=colorfield rowspan=1 colspan=5>&nbsp; ".RetornaFraseDaLista($lista_frases, 48)."</td>\n");
+   echo("        <td class=\"colorfield\" rowspan=1 colspan=5>&nbsp; ".RetornaFraseDaLista($lista_frases, 48)."</td>\n");
    echo("      </tr>\n");
 }
 // nome do participante
 echo("      <tr>\n");
-echo("        <td rowspan=1 colspan=5>&nbsp;&nbsp;&nbsp;<a href=# class=text onClick='".$funcao." return false;'>".$nome."</a></td>\n");
+echo("        <td rowspan=1 colspan=5>&nbsp;&nbsp;&nbsp;<a href=\"#\" class=\"text\" onClick=\"".$funcao." return false;\">".$nome."</a></td>\n");
 echo("      </tr>\n");
 
 // linha em branco parea separar nome do participante dos itens
@@ -483,27 +483,27 @@ if ($dados['Ferramenta'] == 'P' )
    if (! is_array($lista_itens))
    {
       // 49 - Participa��es
-      echo "      <tr><td class=colorfield colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
+      echo "      <tr><td class=\"colorfield\" colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
       // 164 - N�o h� participa��es
-      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
+      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=\"text\">".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
    else
    {
-      echo("      <tr class=colorfield>\n");
-      echo("        <td class=colorfield></td>\n");
+      echo("      <tr class=\"colorfield\">\n");
+      echo("        <td class=\"colorfield\"></td>\n");
       // 172 - Itens
-      echo("        <td class=colorfield>&nbsp; ".RetornaFraseDaLista($lista_frases, 172)."</td>\n");
+      echo("        <td class=\"colorfield\">&nbsp; ".RetornaFraseDaLista($lista_frases, 172)."</td>\n");
       // 101 - Data
-      echo("        <td class=colorfield>&nbsp; ".RetornaFraseDaLista($lista_frases, 101)."</td>\n");
+      echo("        <td class=\"colorfield\">&nbsp; ".RetornaFraseDaLista($lista_frases, 101)."</td>\n");
       // 63 - Compartilhamento
-      echo("        <td class=colorfield align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
+      echo("        <td class=\"colorfield\" align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
       // 106 - Avaliado
-      echo("        <td class=colorfield align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 106)."</td>\n");
+      echo("        <td class=\"colorfield\" align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 106)."</td>\n");
       echo("      </tr>\n");
 
       foreach ($lista_itens as $cod_item_p => $linha_item)
       {
-         $icone = "<img src=../portfolio/figuras/arquivo.gif>";
+         $icone = "<img src=\"../portfolio/figuras/arquivo.gif\">";
 
          if ($linha_item['status'] == 'A')
          {
@@ -520,15 +520,15 @@ if ($dados['Ferramenta'] == 'P' )
          // icone do item de avaliacao
          echo("        <td>".$icone."</td>\n");
          // titulo do item de avaliacao
-         $a1 = "<a href=# onClick='VerItemPortfolio(".$linha_item['cod_item'].");return false;'>";
+         $a1 = "<a href=\"#\" onClick=\"VerItemPortfolio(".$linha_item['cod_item'].");return false;\">";
          $a2 = "</a>";
-         echo("        <td><font  class=text>&nbsp; ".$a1.$linha_item['titulo'].$a2."</font></td>\n");
+         echo("        <td><font  class=\"text\">&nbsp; ".$a1.$linha_item['titulo'].$a2."</font></td>\n");
          // data
-         echo("        <td><font class=text>&nbsp; ".UnixTime2Data($linha_item['data'])."</font></td>\n");
+         echo("        <td><font class=\"text\">&nbsp; ".UnixTime2Data($linha_item['data'])."</font></td>\n");
          // Compartilhamento
-         echo("        <td align=center><font class=text>&nbsp; ".$frase_compartilhamento[ $linha_item['tipo_compartilhamento'] ]."</font></td>\n");
+         echo("        <td align=center><font class=\"text\">&nbsp; ".$frase_compartilhamento[ $linha_item['tipo_compartilhamento'] ]."</font></td>\n");
          // Avaliado ? Sim ou Nao
-         echo("        <td align=center><font class=text>&nbsp; ".$av."</font></td>\n");
+         echo("        <td align=center><font class=\"text\">&nbsp; ".$av."</font></td>\n");
          echo("      </tr>\n");
          echo("      <tr>\n");
          echo("        <td rowspan=1 colspan=5><hr></td>\n");
@@ -544,24 +544,24 @@ if ($dados['Ferramenta'] == 'E')
    if(!is_array($lista_itens))
    {
       // 49 - Participa��es
-      echo "      <tr><td class=colorfield colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";      // 164 - N�o h� participa��es
-      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
+      echo "      <tr><td class=\"colorfield\" colspan=5>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";      // 164 - N�o h� participa��es
+      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=\"text\">".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
    else
    {
       $cod_modelo=$lista_itens['cod_modelo'];
-      echo("      <tr class=colorfield>\n");
-      echo("        <td class=colorfield></td>\n");
+      echo("      <tr class=\"colorfield\">\n");
+      echo("        <td class=\"colorfield\"></td>\n");
       // 173 - Exercicio
-      echo("        <td class=colorfield>&nbsp; ".RetornaFraseDaLista($lista_frases, 173)."</td>\n");
+      echo("        <td class=\"colorfield\">&nbsp; ".RetornaFraseDaLista($lista_frases, 173)."</td>\n");
       // 101 - Data
-      echo("        <td class=colorfield>&nbsp; ".RetornaFraseDaLista($lista_frases, 101)."</td>\n");
+      echo("        <td class=\"colorfield\">&nbsp; ".RetornaFraseDaLista($lista_frases, 101)."</td>\n");
       // 63 - Compartilhamento
-      echo("        <td class=colorfield align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
+      echo("        <td class=\"colorfield\" align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 63)."</td>\n");
       // 106 - Avaliado
-      echo("        <td class=colorfield align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 106)."</td>\n");
+      echo("        <td class=\"colorfield\" align=center>&nbsp; ".RetornaFraseDaLista($lista_frases, 106)."</td>\n");
       echo("      </tr>\n");
-      $icone = "<img src=../portfolio/figuras/arquivo.gif>";
+      $icone = "<img src=\"../portfolio/figuras/arquivo.gif\">";
 
       if (($lista_itens['status'] == 'G') || ($lista_itens['status'] == 'N'))
       {
@@ -576,15 +576,15 @@ if ($dados['Ferramenta'] == 'E')
       // icone do item de avaliacao
       echo("        <td>".$icone."</td>\n");
       // titulo do item de avaliacao
-      $a1 = "<a href=# onClick='VerExercicio(".$lista_itens['cod_modelo'].", ".$cod_aluno_grupo.");return false;'>";
+      $a1 = "<a href=\"#\" onClick=\"VerExercicio(".$lista_itens['cod_modelo'].", ".$cod_aluno_grupo.");return false;\">";
       $a2 = "</a>";
-      echo("        <td><font  class=text>&nbsp; ".$a1.$lista_itens['titulo'].$a2."</font></td>\n");
+      echo("        <td><font  class=\"text\">&nbsp; ".$a1.$lista_itens['titulo'].$a2."</font></td>\n");
       // data
-      echo("        <td><font class=text>&nbsp; ".UnixTime2Data($lista_itens['dt_submissao'])."</font></td>\n");
+      echo("        <td><font class=\"text\">&nbsp; ".UnixTime2Data($lista_itens['dt_submissao'])."</font></td>\n");
       // Compartilhamento
-      echo("        <td align=center><font class=text>&nbsp; ".$frase_compartilhamento[ $lista_itens['compartilhada'] ]."</font></td>\n");
+      echo("        <td align=center><font class=\"text\">&nbsp; ".$frase_compartilhamento[ $lista_itens['compartilhada'] ]."</font></td>\n");
       // Avaliado ? Sim ou nao
-      echo("        <td align=center><font class=text>&nbsp; ".$av."</font></td>\n");
+      echo("        <td align=center><font class=\"text\">&nbsp; ".$av."</font></td>\n");
       echo("      </tr>\n");
       echo("      <tr>\n");
       echo("        <td rowspan=1 colspan=5><hr></td>\n");
@@ -594,10 +594,10 @@ if ($dados['Ferramenta'] == 'E')
 else if ($dados['Ferramenta'] == 'F')
 {
    // 49 - Participa��es
-   echo "      <tr><td class=colorfield colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
+   echo "      <tr><td class=\"colorfield\" colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
    if (ParticipouDoForum($sock,$cod_aluno_grupo,$dados['Cod_atividade']))
    {
-      $a1 = "<a class=text href=# onClick='RetornaMensagensAluno(".$cod_aluno_grupo."); return false;'>";
+      $a1 = "<a class=\"text\" href=\"#\" onClick=\"RetornaMensagensAluno(".$cod_aluno_grupo."); return false;\">";
       $a2 = "</a>";
       // 160 - Ver falas do participante
       echo "      <tr><td colspan=5> &nbsp;&nbsp;".$a1.RetornaFraseDaLista($lista_frases, 160).$a2."</td></tr>\n";
@@ -605,24 +605,24 @@ else if ($dados['Ferramenta'] == 'F')
    else
    {
    // 164 - N�o h� participa��es
-   echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
+   echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=\"text\">".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
 }
 else if ($dados['Ferramenta'] == 'B')
 {
    // 49 - Participa��es
-   echo "      <tr><td class=colorfield colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
+   echo "      <tr><td class=\"colorfield\" colspan=5>"."&nbsp;".RetornaFraseDaLista($lista_frases, 49)."</td></tr>\n";
    if (ParticipouDaSessao($sock,$cod_aluno_grupo,$dados['Cod_atividade']))
    {
-      $a1 = "<a class=text href=# onClick='RetornaFalasAluno($cod_aluno_grupo); return false;'>";
+      $a1 = "<a class=\"text\" href=\"#\" onClick=\"RetornaFalasAluno($cod_aluno_grupo); return false;\">";
       $a2 = "</a>";
       // 160 - Ver falas do participante
-      echo "      <tr><td colspan=5><img src=../figuras/batepapo.gif> &nbsp;&nbsp;".$a1.RetornaFraseDaLista($lista_frases, 160).$a2."</td></tr>\n";
+      echo "      <tr><td colspan=5><img src=\"../figuras/batepapo.gif\"> &nbsp;&nbsp;".$a1.RetornaFraseDaLista($lista_frases, 160).$a2."</td></tr>\n";
    }
    else
    {
       // 164 - N�o h� participa��es
-      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=text>".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
+      echo "      <tr><td colspan=5>"."&nbsp;&nbsp;"."<font class=\"text\">".RetornaFraseDaLista($lista_frases, 164)."</font></td></tr>\n";
    }
 }
 
@@ -630,9 +630,9 @@ else if ($dados['Ferramenta'] == 'B')
 // echo("<tr><td colspan=5>"."&nbsp;"."</td></tr>\n");
 echo("<tr><td colspan=5>"."&nbsp;"."</td></tr>\n");
 
-echo("      <form name=avaliado action=avaliar_atividade2.php onSubmit=return(VerificaCampos());> \n");
+echo("      <form name=\"avaliado\" action=\"avaliar_atividade2.php\" onSubmit=\"return(VerificaCampos());\"> \n");
 echo(RetornaSessionIDInput());
-echo("      <tr class=colorfield>\n");
+echo("      <tr class=\"colorfield\">\n");
 // 60 - Nota
 echo("        <td rowspan=1 colspan=3>&nbsp; ".RetornaFraseDaLista($lista_frases, 60)."</td>\n");
 // 19 - Valor
@@ -647,25 +647,25 @@ if ($dados['Ferramenta'] == 'E')
   {
     /* 179 - Indisponível*/  /* 180 - Corrigir dissertativas*/
     echo(RetornaFraseDaLista($lista_frases, 179));
-    echo("<input type=hidden name=nota value=0>");
+    echo("<input type=\"hidden\" name=\"nota\" value=\"0\">");
     if($array_exercicio['resolvido'] == true)
-      echo("  <a href=# onClick=return(Corrigir(".$cod_modelo.")); class=text>".RetornaFraseDaLista($lista_frases, 180)."</a>");
+      echo("  <a href=\"#\" onClick=\"return(Corrigir(".$cod_modelo."));\" class=\"text\">".RetornaFraseDaLista($lista_frases, 180)."</a>");
   }
   else
   {
     echo($array_exercicio['nota']);
-    echo("<input type=hidden name=nota value='".$array_exercicio['nota']."'>");
+    echo("<input type=\"hidden\" name=\"nota\" value=\"".$array_exercicio['nota']."\">");
   }
   echo("</td>\n");
 }
 else
 {
-  echo("        <td rowspan=1 colspan=3><input type=text name=nota class=text size=6></td>\n");
+  echo("        <td rowspan=1 colspan=3><input type=\"text\" name=\"nota\" class=\"text\" size=6></td>\n");
 }
-echo("        <td rowspan=1 colspan=2 class=text align=left>"."&nbsp; &nbsp; ".FormataNota($dados['Valor'])."</td>\n");
+echo("        <td rowspan=1 colspan=2 class=\"text\" align=left>"."&nbsp; &nbsp; ".FormataNota($dados['Valor'])."</td>\n");
 echo("      </tr>\n");
 
-echo("      <tr class=colorfield>\n");
+echo("      <tr class=\"colorfield\">\n");
 // 163 - Justificativa
 echo("        <td rowspan=1 colspan=5>&nbsp; ".RetornaFraseDaLista($lista_frases, 163)."</td>\n");
 echo("      </tr>\n");
@@ -675,39 +675,39 @@ if (($dados['Ferramenta'] == 'E')&&($array_exercicio['existe'] == false))
   echo("        <td rowspan=1 colspan=5>");
     /* 179 - Indisponível*/
     echo(RetornaFraseDaLista($lista_frases, 179));
-    echo("<input type=hidden name=comentario value=''>");
+    echo("<input type=\"hidden\" name=\"comentario\" value=''>");
   echo("</td>\n");
 }
 else
 {
-     echo("        <td rowspan=1 colspan=5>"."<textarea name=comentario class=text rows=5 cols=60 wrap=soft></textarea>"."</td>\n");
+     echo("        <td rowspan=1 colspan=5>"."<textarea name=\"comentario\" class=\"text\" rows=5 cols=60 wrap=soft></textarea>"."</td>\n");
   }
   echo("      </tr>\n");
   // 50 - Compartilhar
-  echo("      <tr class=colorfield>\n");
+  echo("      <tr class=\"colorfield\">\n");
   echo("        <td colspan=5 rowspan=1>&nbsp; ".RetornaFraseDaLista($lista_frases, 50)."</td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td rowspan=1 colspan=5 class=g1field>");
+  echo("        <td rowspan=1 colspan=5 class=\"g1field\">");
   // 51 - Totalmente Compartilhado
-  echo("        <input type=hidden name=compartilhamento value=0> \n");
+  echo("        <input type=\"hidden\" name=\"compartilhamento\" value=\"0\"> \n");
   if (($dados['Ferramenta'] != 'E')||($array_exercicio['existe'] == true))/*Se existe avaliacao para este exercicio*/
   {
-    echo("        <input type=radio name=comp onClick=MudaComp('T');><font class=text>".RetornaFraseDaLista($lista_frases, 51)."</font><br>\n");
-    echo("        <input type=radio name=comp onClick=MudaComp('F');><font class=text>".RetornaFraseDaLista($lista_frases, 52)."</font><br>\n");
+    echo("        <input type=\"radio\" name=\"comp\" onClick=\"MudaComp('T');\"><font class=\"text\">".RetornaFraseDaLista($lista_frases, 51)."</font><br>\n");
+    echo("        <input type=\"radio\" name=\"comp\" onClick=\"MudaComp('F');\"><font class=\"text\">".RetornaFraseDaLista($lista_frases, 52)."</font><br>\n");
     if(($portfolio_grupo)||($exercicio_grupo))
-    echo("        <input type=radio name=comp onClick=MudaComp('G');><font class=text>".RetornaFraseDaLista($lista_frases, 53)."</font><br>\n");
+    echo("        <input type=\"radio\" name=\"comp\" onClick=\"MudaComp('G');\"><font class=\"text\">".RetornaFraseDaLista($lista_frases, 53)."</font><br>\n");
   else
-    echo("        <input type=radio name=comp onClick=MudaComp('A');><font class=text>".RetornaFraseDaLista($lista_frases, 54)."</font><br>\n");
+    echo("        <input type=\"radio\" name=\"comp\" onClick=\"MudaComp('A');\"><font class=\"text\">".RetornaFraseDaLista($lista_frases, 54)."</font><br>\n");
   }
   else
   {
-    echo("       <font class=text>".RetornaFraseDaLista($lista_frases, 51)."</font><br>\n");
-    echo("       <font class=text>".RetornaFraseDaLista($lista_frases, 52)."</font><br>\n");
+    echo("       <font class=\"text\">".RetornaFraseDaLista($lista_frases, 51)."</font><br>\n");
+    echo("       <font class=\"text\">".RetornaFraseDaLista($lista_frases, 52)."</font><br>\n");
     if($exercicio_grupo)
-       echo("        <font class=text>".RetornaFraseDaLista($lista_frases, 53)."</font><br>\n");
+       echo("        <font class=\"text\">".RetornaFraseDaLista($lista_frases, 53)."</font><br>\n");
     else
-       echo("        <font class=text>".RetornaFraseDaLista($lista_frases, 54)."</font><br>\n");
+       echo("        <font class=\"text\">".RetornaFraseDaLista($lista_frases, 54)."</font><br>\n");
   }
   echo("        </td>\n");
   echo("      </tr>\n");
@@ -718,24 +718,24 @@ else
   echo("    <div align=right width=100%>\n");
   // 11 - Enviar
   if((is_null($array_exercicio['existe'])) || ($array_exercicio['existe'] != false))
-    echo("      <input class=text type=submit value=".RetornaFraseDaLista($lista_frases_geral, 11).">\n");
+    echo("      <input class=\"text\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 11)."\">\n");
 
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
 
 
-  echo("  <input type=hidden name=cod_item value=".$cod_item.">\n");  // Diogo
+  echo("  <input type=\"hidden\" name=\"cod_item\"      value=\"".$cod_item."\">\n");  // Diogo
   if ((!$portfolio_grupo)&&(!$exercicio_grupo))
-    echo("  <input type=hidden name=cod_aluno value=".$cod_aluno.">\n");
+    echo("  <input type=\"hidden\" name=\"cod_aluno\" value=\"".$cod_aluno."\">\n");
   else
-    echo("  <input type=hidden name=cod_grupo value=".$cod_grupo.">\n");
-  echo("  <input type=hidden name=ferramenta value=".$dados['Ferramenta'].">\n");
-  echo($alteracao);        
-  echo("  <input type=hidden name=cod_nota value=".$cod_nota."> \n");
+    echo("  <input type=\"hidden\" name=\"cod_grupo\" value=".$cod_grupo.">\n");
+  echo("  <input type=\"hidden\" name=\"ferramenta\" value=\"".$dados['Ferramenta']."\">\n");
+  echo($alteracao);
+  echo("  <input type=\"hidden\" name=\"cod_nota\" value=\"".$cod_nota."\"> \n");
   echo("</form>\n");
   // 2 - Cancelar (ger)
-  //echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=self.close();>"); /*'location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";'>");*/
-    echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick='location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";'>");
+  //echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" onclick=\"self.close();\">"); /*\"location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";\">");*/
+    echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" onclick=\"location=\"cancelar_avaliacao_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=".$cod_aluno."&cod_grupo=".$cod_grupo."&portfolio_grupo=".$portfolio_grupo."&exercicio_grupo=".$exercicio_grupo."&cod_nota=".$cod_nota."\";\">");
   echo("    </div>\n");
 
   Desconectar($sock);

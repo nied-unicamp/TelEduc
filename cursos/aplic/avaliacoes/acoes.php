@@ -45,10 +45,10 @@
   include("avaliacoes.inc");
 
   $cod_ferramenta=22;
-  
+
   $cod_curso = $_GET["cod_curso"]; /* Por padrao se usa GET */
   if ($cod_curso == NULL) $cod_curso = $_POST["cod_curso"]; /* Ao passar a norma e a expressão usa-se POST */
-   
+
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock = Conectar("");
@@ -63,7 +63,7 @@
   $sock=MudarDB($sock, $cod_curso); 
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
-  
+
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
     Desconectar($sock);
@@ -74,14 +74,14 @@
 
   // acao da pagina "avaliacoes.php"
 
-if ($acao == "criarAvaliacaoExt"){  
-  	  $cod_atividade = RetornaProximoCodigoExterna($sock,'N');
-      $cod_avaliacao = IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'N', $tipo);
-      AtualizaFerramentasNova($sock,22,'T');
-      GravaResgistroAvaliacaoExterna($sock,$novo_titulo,$tipo);
+if ($acao == "criarAvaliacaoExt") {
+  $cod_atividade = RetornaProximoCodigoExterna($sock,'N');
+  $cod_avaliacao = IniciaCriacaoAvaliacao($sock, $tabela,$cod_atividade, $cod_usuario, 'N', $tipo);
+  AtualizaFerramentasNova($sock,22,'T');
+  GravaResgistroAvaliacaoExterna($sock,$novo_titulo,$tipo);
 
-      Desconectar($sock);
-      header("Location:ver.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacaoacao."&acao=criarAvaliacao&atualizacao=true");
+  Desconectar($sock);
+  header("Location:ver.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacao."&acao=criarAvaliacao&atualizacao=true");
 }
   // acao da pagina "ver.php"
   if($acao == "excluirAvaliacao")
@@ -102,4 +102,4 @@ if ($acao == "criarAvaliacaoExt"){
   Desconectar($sock);
 
   exit();
-   
+

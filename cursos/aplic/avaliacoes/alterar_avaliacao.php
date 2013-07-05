@@ -64,27 +64,27 @@
   echo("<html>\n");
   /* 1 - Avalia��es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
 
-  echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
   echo("\n");
 
 
   /****************** Fun��es JavaScript **************** */
    GeraJSVerificacaoData();
 
-  echo("  <script language=javascript>\n");
+  echo("  <script language=\"javascript\">\n");
 
   echo("  function Atualiza() {\n");
   echo("if (verifica_formulario())\n");
   echo("    document.atualizar.submit();\n");
   echo("  }\n");
-  
+
   echo("function verifica_formulario()\n");
   echo("{\n");
   echo("    var data_ini=document.avaliacao.data_inicio;\n");
   echo("    var data_fim=document.avaliacao.data_termino;\n");
-  
+
   echo("      if (data_inicial_maior(data_ini,data_fim)) \n");
   echo("      {\n");
   /* 2 - A data inicial da avalia��o deve ser menor ou igual a data final. Volte e corrija. */
@@ -134,7 +134,7 @@
   echo "           if (! DataValidaAux(document.avaliacao.data_termino)) {\n";
   echo "               return false;\n";
   echo "           } \n";
-   
+
   echo("  return (true);\n");
   echo("}\n");
 
@@ -203,23 +203,23 @@
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     /* 1 - Avalia��es*/
-    $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+    $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
     /* 8 - �rea restrita ao formador. */
-    $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b>";
+    $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b>";
     echo($cabecalho);
     /* 23 - Voltar (gen) */
-    echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+    echo("<form><input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\"></form>\n");
     echo("</body></html>\n");
     Desconectar($sock);
     exit;
   }
   else
   {
-    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
+    echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=\"self.focus();\">\n");
     /* 1 - Avalia��es*/
-    $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+    $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
     /* 9 - Cadastro de Avalia��o */
-    $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)."</b>";
+    $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,9)."</b>";
 /*
     if (!strcmp($dados['Ferramenta'],'B')) //Avaliacao no Forum
       $cod_pagina=4;
@@ -252,7 +252,7 @@
           {
             echo ("<br><p>");
             /* 10 - A Avalia��o j� est� sendo editada desde */
-            echo("<font class=text>".RetornaFraseDaLista($lista_frases,9));
+            echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,9));
 
             /* 57 - Por (gen)*/
             echo(Unixtime2DataHora($dados['Data']));
@@ -260,7 +260,7 @@
             echo(" ".RetornaFraseDaLista($lista_frases_geral,23)." ".NomeUsuario($sock,$dados['Cod_usuario']).".<br><br>");
 
             /* 23 - Voltar (gen) */
-            echo("<form><input type=button class=text value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+            echo("<form><input type=\"button\" class=\"text\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\"></form>\n");
             echo("</body></html>\n");
             Desconectar($sock);
             exit;
@@ -289,72 +289,72 @@
     if (!strcmp($dados['Ferramenta'],'F')) //Avaliacao no Forum
     {
       /* 12 - Frum */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,12).":</font>\n");
-      echo("    <font class=text> <i>".$titulo."</i>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,12).":</font>\n");
+      echo("    <font class=\"text\"> <i>".$titulo."</i>");
     }
     elseif (!strcmp($dados['Ferramenta'],'B')) //Avaliacao no Bate-Papo
     {
       /* 13 - Assunto da Sess�o */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,13).":</font>\n");
-      echo("    <font class=text> <i>".$titulo."</i>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,13).":</font>\n");
+      echo("    <font class=\"text\"> <i>".$titulo."</i>");
     }
     elseif (!strcmp($dados['Ferramenta'],'E')) //Avaliacao em Exercicio
     {
       /* 175 - Atividade em Exerc�cio */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,175).":</font>\n");
-      echo("    <font class=text> <i>".$titulo."</i>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,175).":</font>\n");
+      echo("    <font class=\"text\"> <i>".$titulo."</i>");
     }
     elseif (!strcmp($dados['Ferramenta'],'N')) //Avaliacao em Exercicio
     {
       /* 187 - Avaliacao Externa */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,187).":</font>\n");
-      echo("    <font class=text> <i>".$titulo."</i>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,187).":</font>\n");
+      echo("    <font class=\"text\"> <i>".$titulo."</i>");
     }                                 
     else //Avaliacao no portfolio
     {
       /* 14 - Atividade no Portflio */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,14).":</font>\n");
-      echo("    <font class=text> <i>".$titulo."</i>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,14).":</font>\n");
+      echo("    <font class=\"text\"> <i>".$titulo."</i>");
     }
 
     $valor=$dados['Valor'];
     $objetivos=$dados['Objetivos'];
     $criterios=$dados['Criterios'];
 
-    echo("<form name=avaliacao action=alterar_avaliacao2.php method=post onSubmit=\"return(verifica_formulario())\";>\n");
+    echo("<form name=\"avaliacao\" action=\"alterar_avaliacao2.php\" method=\"post\" onSubmit=\"return(verifica_formulario())\";>\n");
     echo(RetornaSessionIDInput());
     /* 15 - Forne�a abaixo os dados de avalia��o desta atividade. */
-    echo("  <font class=text>".RetornaFraseDaLista($lista_frases,15)."<br>\n");
+    echo("  <font class=\"text\">".RetornaFraseDaLista($lista_frases,15)."<br>\n");
     echo("    <br>\n");
 
     if (strcmp($dados['Ferramenta'],'B'))
     {
       echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
-      echo("  <tr class=colorfield>\n");
+      echo("  <tr class=\"colorfield\">\n");
       /* 16 - Data de in�cio*/
-      echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,16)."</td>\n");
+      echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,16)."</td>\n");
 
       /* 17 - Data de T�rmino */
-      echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
+      echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
 
       echo("  </tr>\n");
-      echo("  <tr class=wtfields>\n");
-      echo("    <td class=text>\n");
-      echo("      <input type=text maxlength=10 size=10 name=data_inicio value='".Unixtime2Data($dados['Data_inicio'])."' onChange=\"check=true;\" onBlur='DataValida(document.avaliacao.data_inicio,1);'>\n");
+      echo("  <tr class=\"wtfields\">\n");
+      echo("    <td class=\"text\">\n");
+      echo("      <input type=\"text\" maxlength=10 size=10 name=\"data_inicio\" value=\"".Unixtime2Data($dados['Data_inicio'])."\"   onChange=\"check=true;\" onBlur='DataValida(document.avaliacao.data_inicio,1);'>\n");
       echo("    </td>\n");
 
-      echo("    <td class=text>\n");
-      echo("      <input type=text maxlength=10 size=10 name=data_termino value='".Unixtime2Data($dados['Data_termino'])."' onChange=\"check=true;\" onBlur='DataValida(document.avaliacao.data_termino,1);'>\n");
+      echo("    <td class=\"text\">\n");
+      echo("      <input type=\"text\" maxlength=10 size=10 name=\"data_termino\" value=\"".Unixtime2Data($dados['Data_termino'])."\" onChange=\"check=true;\" onBlur='DataValida(document.avaliacao.data_termino,1);'>\n");
       echo("    </td>\n");
 
       echo("  </tr>\n");
 
-      echo("  <tr class=wtfields>\n");
+      echo("  <tr class=\"wtfields\">\n");
       /* 18 - dd/mm/aaaa */
-      echo("    <td class=textsmall>(".RetornaFraseDaLista($lista_frases,18).")</td>\n");
+      echo("    <td class=\"textsmall\">(".RetornaFraseDaLista($lista_frases,18).")</td>\n");
 
       /* 18 - dd/mm/aaaa */
-      echo("    <td class=textsmall>(".RetornaFraseDaLista($lista_frases,18).")</td>\n");
+      echo("    <td class=\"textsmall\">(".RetornaFraseDaLista($lista_frases,18).")</td>\n");
 
       echo("  </tr>\n");
       echo("</table>\n");
@@ -363,43 +363,43 @@
     }
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
-    echo("  <tr class=colorfield>\n");
+    echo("  <tr class=\"colorfield\">\n");
     /* 19 - Valor*/
-    echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,19)."</td>\n");
+    echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,19)."</td>\n");
     if ((!strcmp($dados['Ferramenta'],'P'))||(!strcmp($dados['Ferramenta'],'E')))
     /* 20 - Tipo da Atividade */
-      echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,20)."</td>\n");
+      echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,20)."</td>\n");
 
     echo("  </tr>\n");
     echo("      <tr>\n");
     if(strcmp($dados['Ferramenta'],'E'))
     {
       echo("        <td>\n");
-      echo("          <input type=text name=valor class=text size=6 maxlength=10 value='".stripslashes($valor)."' onChange=\"check=true;\" onBlur='verifica_valor(document.avaliacao.valor);'>\n");
+      echo("          <input type=\"text\" name=\"valor\" class=\"text\" size=6 maxlength=10 value=\"".stripslashes($valor)."\" onChange=\"check=true;\" onBlur='verifica_valor(document.avaliacao.valor);'>\n");
       echo("        </td>\n");
     }
     else
     {
       echo("        <td>\n");
-      echo("<font class='text'>".$valor."</font>");
-      echo("<input type=hidden name=valor value='".stripslashes($valor)."'>");
+      echo("<font class=\"text\">".$valor."</font>");
+      echo("<input type=\"hidden\" name=\"valor\" value=\"".stripslashes($valor)."\">");
       echo("        </td>\n");
 
     }
     if (!strcmp($dados['Ferramenta'],'P'))  /*Somente o portflio pode ter o tipo alterado*/
     {
       echo("        <td>\n");
-      echo(" <select name=tipo>\n");
+      echo(" <select name=\"tipo\">\n");
       /* 21 - Individual */
       echo("<option ");
       if (!strcmp($dados['Tipo'],'I'))
         echo ("selected");
-      echo(" value=I>".RetornaFraseDaLista($lista_frases,21)."</option>\n");
+      echo(" value=\"I\">".RetornaFraseDaLista($lista_frases,21)."</option>\n");
       /* 22 - Em Grupo */
       echo("<option ");
       if (!strcmp($dados['Tipo'],'G'))
         echo ("selected");
-      echo(" value=G>".RetornaFraseDaLista($lista_frases,22)."</option>\n");
+      echo(" value=\"G\">".RetornaFraseDaLista($lista_frases,22)."</option>\n");
       echo("</select>\n");
       echo("        </td>\n");
     }
@@ -409,14 +409,14 @@
       /* 21 - Individual */
       if (!strcmp($dados['Tipo'],'I'))
       {
-         echo("<font class='text'>".RetornaFraseDaLista($lista_frases,21)."</font>");
-         echo("<input type=hidden name=tipo value='I'>");
+         echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,21)."</font>");
+         echo("<input type=\"hidden\" name=\"tipo\" value='I'>");
       }
       /* 22 - Em Grupo */
       if (!strcmp($dados['Tipo'],'G'))
       {
-         echo("<font class='text'>".RetornaFraseDaLista($lista_frases,22)."</font>");
-         echo("<input type=hidden name=tipo value='G'>");
+         echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,22)."</font>");
+         echo("<input type=\"hidden\" name=\"tipo\" value='G'>");
       }
       echo("        </td>\n");
     }
@@ -425,53 +425,53 @@
     echo("    <br>\n");
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
-    echo("  <tr class=colorfield>\n");
+    echo("  <tr class=\"colorfield\">\n");
     /* 9 - Objetivos */
-    echo("    <td class=colorfield>Objetivos</td>\n");
+    echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,75)."</td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");
     echo("    <td>\n");
-    echo("      <textarea name=objetivos rows=4 cols=60 wrap=soft>".stripslashes($objetivos)."</textarea>\n");
+    echo("      <textarea name=\"objetivos\" rows=4 cols=60 wrap=soft>".stripslashes($objetivos)."</textarea>\n");
     echo("    </td>\n");
     echo("  </tr>\n");
     echo("</table>\n");
     echo("    <br>\n");
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
-    echo("  <tr class=colorfield>\n");
+    echo("  <tr class=\"colorfield\">\n");
     /* 23 - Crit�rios */
-    echo("    <td class=colorfield>".RetornaFraseDaLista($lista_frases,23)."</td>\n");
+    echo("    <td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,23)."</td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");
     echo("    <td>\n");
-    echo("      <textarea name=criterios rows=4 cols=60 wrap=soft>".stripslashes($criterios)."</textarea>\n");
+    echo("      <textarea name=\"criterios\" rows=4 cols=60 wrap=soft>".stripslashes($criterios)."</textarea>\n");
     echo("    </td>\n");
     echo("  </tr>\n");
     echo("</table>\n");
 
-    echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    echo("<input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-    echo("<input type=hidden name=ferramenta value=".$dados['Ferramenta'].">\n");
-    echo("<input type=hidden name=origem value=".$origem.">\n");
-    echo("<input type=hidden name=VeioDaAtividade value=".$VeioDaAtividade.">\n");
+    echo("<input type=\"hidden\" name=\"cod_curso\"       value=\"".$cod_curso."\">\n");
+    echo("<input type=\"hidden\" name=\"cod_avaliacao\"   value=\"".$cod_avaliacao."\">\n");
+    echo("<input type=\"hidden\" name=\"ferramenta\"      value=\"".$dados['Ferramenta']."\">\n");
+    echo("<input type=\"hidden\" name=\"origem\"          value=\"".$origem."\">\n");
+    echo("<input type=\"hidden\" name=\"VeioDaAtividade\" value=\"".$VeioDaAtividade."\">\n");
 
     if (!isset($origem))
       // a origem eh a pagina ver.php
-      echo("  <input type=hidden name=origem value=ver>\n");
+      echo("  <input type=\"hidden\" name=\"origem\" value=\"ver\">\n");
 
     echo("<div align=right width=100%>\n");
     // 11 - Enviar
-    echo("<input class=text type=submit value=".RetornaFraseDaLista($lista_frases_geral, 11).">\n");
+    echo("<input class=\"text\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 11)."\">\n");
 
     if ($VeioDaAtividade)
     {
       if (!strcmp($dados['Ferramenta'],'P'))
       {
         // 2 - Cancelar (ger)
-        echo("<input type=button class=text value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=Atualiza();self.close();>\n");
-        echo("<input type=hidden name=cod_atividade value=".$cod_atividade.">\n");
-        echo("<input type=hidden name=cod_topico value=".$cod_topico.">\n");
-        echo("<input type=hidden name=criacao_avaliacao value=".$criacao_avaliacao.">\n");
+        echo("<input type=\"button\" class=\"text\"             value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" onclick=\"Atualiza();self.close();\">\n");
+        echo("<input type=\"hidden\" name=\"cod_atividade\"     value=\"".$cod_atividade."\">\n");
+        echo("<input type=\"hidden\" name=\"cod_topico\"        value=\"".$cod_topico."\">\n");
+        echo("<input type=\"hidden\" name=\"criacao_avaliacao\" value=\"".$criacao_avaliacao."\">\n");
         echo("</div>\n");
         echo("</form>\n");
 
@@ -486,22 +486,22 @@
         }
         else
           $arquivo=$origem;
-        echo("<form name=atualizar action=".$arquivo.".php method=post>\n");
+        echo("<form name=\"atualizar\" action=\"".$arquivo.".php\" method=\"post\">\n");
         echo(RetornaSessionIDInput());
-        echo("  <input type=hidden name=cod_ferramenta value=3>\n");
-        echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-        echo("  <input type=hidden name=cancelar_edicao_avaliacao value=sim>\n");
-        echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-        echo("  <input type=hidden name=cod_topico value=".$cod_topico.">\n");
+        echo("  <input type=\"hidden\" name=\"cod_ferramenta\"            value=\"3\">\n");
+        echo("  <input type=\"hidden\" name=\"cod_curso\"                 value=\"".$cod_curso."\">\n");
+        echo("  <input type=\"hidden\" name=\"cancelar_edicao_avaliacao\" value=\"sim\">\n");
+        echo("  <input type=\"hidden\" name=\"cod_avaliacao\"             value=\"".$cod_avaliacao."\">\n");
+        echo("  <input type=\"hidden\" name=\"cod_topico\"                value=\"".$cod_topico."\">\n");
 
         if (!strcmp($origem,'../material/material'))
-          echo("  <input type=hidden name=origem value=".$origem.">\n");
+          echo("  <input type=\"hidden\" name=\"origem\" value=\"".$origem."\">\n");
         echo("</form>\n");
       }
       else
       {
         // 2 - Cancelar (ger)
-        echo("<input type=button class=text value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=alterar_avaliacao&cancelar_edicao_avaliacao=sim';\">");
+        echo("<input type=\"button\" class=\"text\" value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=alterar_avaliacao&cancelar_edicao_avaliacao=sim';\">");
         echo("    </div>\n");
         echo("</form>\n");
       }
@@ -512,13 +512,13 @@
       // veio de ver
       echo("</form>\n");
       echo("&nbsp;&nbsp;");
-      echo("<form action=ver.php> \n");
+      echo("<form action=\"ver.php\"> \n");
       echo(RetornaSessionIDInput());
-      echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-      echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-      echo("  <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+      echo("  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
+      echo("  <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
+      echo("  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
       // 2 - Cancelar (ger)
-      echo("  <input type=submit value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>");
+      echo("  <input type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>");
       echo("</form> \n");
       echo("</div> \n");
     }
@@ -527,23 +527,23 @@
       // veio de ver
       echo("</form>\n");
       echo("&nbsp;&nbsp;");
-     // echo("<form action=avaliacoes.php> \n");
+     // echo("<form action=\"avaliacoes.php\"> \n");
      // echo(RetornaSessionIDInput());
-     // echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    //  echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-   //   echo("  <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+     // echo("  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
+    //  echo("  <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
+   //   echo("  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
     // 2 - Cancelar (ger)
-      echo("<input type=button class=text value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"top.trabalho.location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=".$origem."&cancelar_edicao_avaliacao=sim';\">");
+      echo("<input type=\"button\" class=\"text\" value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"top.trabalho.location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=".$origem."&cancelar_edicao_avaliacao=sim';\">");
 
       // 2 - Cancelar (ger)
-//      echo("  <input type=submit value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>");
+//      echo("  <input type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>");
  //     echo("</form> \n");
       echo("</div> \n");
     }
     else
     {
       // 2 - Cancelar (ger)
-      echo("<input type=button class=text value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"top.trabalho.location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=".$origem."&cancelar_edicao_avaliacao=sim';\">");
+      echo("<input type=\"button\" class=\"text\" value='".RetornaFraseDaLista($lista_frases_geral,2)."' onclick=\"top.trabalho.location='index_avaliacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=".$origem."&cancelar_edicao_avaliacao=sim';\">");
       echo("    </div>\n");
       echo("</form>\n");
     }

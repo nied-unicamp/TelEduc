@@ -45,21 +45,21 @@
   include("avaliacoes.inc");
 
  require_once("../xajax_0.2.4/xajax.inc.php");
- 
+
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=5;
 
   include("../topo_tela.php");
   echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n<br>");
-  
+
   if ($SalvarEmArquivo)
   {
-          echo("    <style>\n");
-          include "../js-css/ambiente.css";
-          include "../js-css/tabelas.css";
-          include "../js-css/navegacao.css";
-          echo("    </style>\n");
+    echo("    <style>\n");
+    include "../js-css/ambiente.css";
+    include "../js-css/tabelas.css";
+    include "../js-css/navegacao.css";
+    echo("    </style>\n");
   }
   $lista_frases_biblioteca =RetornaListaDeFrases($sock,-2);
   // Verifica se o usuario eh formador.
@@ -67,7 +67,7 @@
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
   // Guarda dados da avaliação atual
   $dados_avaliacao = RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
- 
+
   echo("    <script type=\"text/javascript\">\n");
 
   echo("      var cod_curso='".$cod_curso."';\n");
@@ -77,20 +77,20 @@
   echo("      var cod_avaliacao='".$cod_avaliacao."';\n");
   echo("      var tela_avaliacao='".$tela_avaliacao."';\n");
 
-    echo("    function ImprimirRelatorio()\n");
-	echo("    {\n");
-  	echo("      if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
- 	echo("      {\n");
- 	echo("        self.print();\n");
- 	echo("      }\n");
- 	echo("      else\n");
- 	echo("      {\n");
+  echo("    function ImprimirRelatorio()\n");
+  echo("    {\n");
+  echo("      if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
+  echo("      {\n");
+  echo("        self.print();\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
   /* 51- Infelizmente n� foi poss�el imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
-  	echo("        alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
-  	echo("      }\n");
-  	echo("    }\n\n");
-  
-  
+  echo("        alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
+  echo("      }\n");
+  echo("    }\n\n");
+
+
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");
@@ -125,10 +125,10 @@
   echo ("     {");
   echo ("     startList();");
   echo ("     }");
- 
+
 
   echo("    </script>\n");
-  
+
   //echo("	<script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");
   // A variavel tela_avaliacao indica quais avaliacoes devem ser listadas: 'P'assadas, 'A'tuais ou 'F'uturas
   if (!isset($tela_avaliacao) || !in_array($tela_avaliacao, array('P', 'A', 'F')))
@@ -159,17 +159,17 @@
   // 120 - Ver Avalia��o
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, 120)."</h4>\n");
 
-  
+
   //<!----------------- Tabelao ----------------->
 
-  echo("    <form name=frmAvaliacao method=get>\n");
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"get\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a��es sobre ela.
-  echo("      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
   // $tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
-  echo("      <input type=hidden name=origem value=ver>\n");
-  echo("      <input type=hidden name=action value=null>\n"); 
+  echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
+  echo("      <input type=\"hidden\" name=\"origem\"         value=\"ver\">\n");
+  echo("      <input type=\"hidden\" name=\"action\"         value=null>\n"); 
   echo("    </form>\n");
 
   $tipo = "";
@@ -210,7 +210,7 @@
       $tipo= RetornaFraseDaLista($lista_frases, 185); 
     else
       $tipo= RetornaFraseDaLista($lista_frases, 186);
-  }  
+  }
 
   if ($dados_avaliacao['Objetivos'] == '')
   {
@@ -230,34 +230,34 @@
 
   $titulo = RetornaTituloAvaliacao($sock, $dados_avaliacao['Ferramenta'], $dados_avaliacao['Cod_atividade']);
   $valor = FormataNota($dados_avaliacao['Valor']);
-  $icone="<img src=../figuras/avaliacao.gif border=0> ";
+  $icone="<img src=\"../figuras/avaliacao.gif\" border=0> ";
   $obj = "<span id=\"text_obj\">".AjustaParagrafo($objetivos)."</span>";
   $crt = "<span id=\"text_crt\">".AjustaParagrafo($criterios)."</span>";
   $data_inicio = UnixTime2Data($dados_avaliacao['Data_inicio']);
   $data_fim = UnixTime2Data($dados_avaliacao['Data_termino']);
-   echo("    <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"Iniciar();\" >\n");
-   echo("<br>");
-   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-	echo("    <tr>\n");
-  	echo("      <td valign=\"top\">\n");
-  	echo("        <ul class=\"btAuxTabs\">\n");
-	if(!$SalvarEmArquivo){
-       	/* G 13 - Fechar */
-       	echo("    <li><span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
-        
-  	/* 22 - Salvar Em Arquivo */
-       	echo("    <li><span onclick=\"window.location='salvar_ver_avaliacao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."';\">".RetornaFraseDaLista($lista_frases, 208)."</span></li>\n");
+  echo("    <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"Iniciar();\" >\n");
+  echo("<br>");
+  echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+  echo("    <tr>\n");
+  echo("      <td valign=\"top\">\n");
+  echo("        <ul class=\"btAuxTabs\">\n");
+  if (!$SalvarEmArquivo) {
+    /* G 13 - Fechar */
+    echo("    <li><span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 
-       	/* G 14 - Imprimir */
-       	echo("    <li><span onclick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
-	}
-	echo("        </ul>\n");
-  	echo("      </td>\n");
-  	echo("    </tr>\n");
-	echo("    <tr>\n");
-        echo("      <td>\n");
-  
-  
+    /* 22 - Salvar Em Arquivo */
+    echo("    <li><span onclick=\"window.location='salvar_ver_avaliacao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."';\">".RetornaFraseDaLista($lista_frases, 208)."</span></li>\n");
+
+    /* G 14 - Imprimir */
+    echo("    <li><span onclick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  }
+  echo("        </ul>\n");
+  echo("      </td>\n");
+  echo("    </tr>\n");
+  echo("    <tr>\n");
+  echo("      <td>\n");
+
+
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -269,7 +269,7 @@
   // 19 - Valor
   echo("                    <td width=15% align=\"center\">".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
   echo("                  </tr>\n");
-  
+
   echo("                  <tr>\n");
   echo("                    <td align=left rowspan=\"3\">".$icone.$titulo."</td>\n");
   echo("                    <td align=\"center\">&nbsp;&nbsp;".$tipo."</td>\n");
@@ -310,7 +310,7 @@
   echo("    </table>\n"); 
   echo("  </body>\n");	
   echo("</html>\n");	
-  
+
 
   Desconectar($sock);
   exit;

@@ -191,7 +191,7 @@
   echo("  var elem=document.HistDsph.elements;\n");
   echo("  var nome_var_all='cod_grupo_all';\n");
  // echo("  if (funcao==2)\n");
-//  echo("    nome_var_all='cod_formador_all';\n");
+ // echo("    nome_var_all='cod_formador_all';\n");
   echo("  var i=0;\n");
   echo("  while (i < elem.length)\n");
   echo("  {\n");
@@ -206,15 +206,15 @@
    echo("  <html>\n");
   /* 1 - Avalia��es */
   echo("  <head><title>TelEduc - Avalia��es</title></head>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
   echo("\n");
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
   /* 1 - Avalia��es */
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
     /* 105 - Hist�rico de Desempenho dos participantes */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,105)."</b>";
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,105)."</b>";
 
    $cod_pagina=15;
   /* Cabecalho */
@@ -228,30 +228,30 @@
     {
       //$forum_linha = RetornaForum($sock,$linha['Cod_atividade']);
       /* 12 - F�rum */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,12).":</font>\n");
-      echo("    <font class=text> ".$titulo."");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,12).":</font>\n");
+      echo("    <font class=\"text\"> ".$titulo."");
     }
     elseif (!strcmp($linha['Ferramenta'],'B')) //Avaliacao no Bate-Papo
     {
       //$assunto_sessao = RetornaAssunto($sock,$linha['Cod_atividade']);
       /* 13 - Assunto da Sess�o */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,13).":</font>\n");
-      echo("    <font class=text> ".$titulo."");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,13).":</font>\n");
+      echo("    <font class=\"text\"> ".$titulo."");
     }
     else //Avaliacao no portfolio
     {
       //$atividade_linha = RetornaAtividade($sock,$linha['Cod_atividade']);
       /* 14 - Atividade no Portf�lio */
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,14).":</font>\n");
-      echo("    <font class=text> ".$titulo."<br>");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,14).":</font>\n");
+      echo("    <font class=\"text\"> ".$titulo."<br>");
       /* 20 - Tipo da Atividade*/
-      echo("    <font class=text>".RetornaFraseDaLista($lista_frases,20).":</font>\n");
+      echo("    <font class=\"text\">".RetornaFraseDaLista($lista_frases,20).":</font>\n");
       if (!strcmp($linha['Tipo'],'I'))
       /* 21 - Individual*/
-        echo("    <font class=text> ".RetornaFraseDaLista($lista_frases,21)."");
+        echo("    <font class=\"text\"> ".RetornaFraseDaLista($lista_frases,21)."");
       else
       /* 22 - Em Grupo*/
-        echo("    <font class=text> ".RetornaFraseDaLista($lista_frases,22)."");
+        echo("    <font class=\"text\"> ".RetornaFraseDaLista($lista_frases,22)."");
     }
 
     echo("<br>\n");
@@ -261,13 +261,13 @@
     echo("<p>\n");
     if (!$SalvarEmArquivo)
     /* 46 - Ver objetivos/crit�rios da avalia��o */
-      echo("        <a class=text href=# onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
+      echo("        <a class=\"text\" href=\"#\" onClick=\"window.open('ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&EhAtalho=1&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');return(false);\">".RetornaFraseDaLista($lista_frases,46)."</a><br><br>\n");
 
 
-  echo("  <form name=\"HistDsph\" action=exibir_historico_desempenho.php method=post target=HistoricoDesempenhoDisplay onSubmit=OpenWindow();\n");
+  echo("  <form name=\"HistDsph\" action=\"exibir_historico_desempenho.php\" method=\"post\" target=\"HistoricoDesempenhoDisplay\" onSubmit=\"OpenWindow();\"\n");
   echo(RetornaSessionIDInput());
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+  echo("<input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
 
   echo("<p>\n");
 
@@ -286,32 +286,32 @@
     if ($num_grupos > 0)
     {
       /* 3-Alunos */
-      echo("<font class=text><B>Grupos</b></font>\n");
+      echo("<font class=\"text\"><B>Grupos</b></font>\n");
 
       echo("  <table border=0 width=100% cellspacing=0>\n");
-      echo("    <tr class=colorfield>\n");
-      echo("      <td class=colorfield align=center width=5%><input type=checkbox name=cod_grupo_all value=1 onclick=\"CheckAllGrupos(1);\" ></td>\n");
+      echo("    <tr class=\"colorfield\">\n");
+      echo("      <td class=\"colorfield\" align=center width=5%><input type=\"checkbox\" name=\"cod_grupo_all\" value=\"1\" onclick=\"CheckAllGrupos(1);\" ></td>\n");
       /* 107 -Nome */
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><B>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
       /* 106 - Avaliado*/
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
       echo("    </tr>\n");
 
       foreach ($lista_grupos as $cod_grupo => $nome)
       {
         echo("  <tr>\n");
         echo("    <td align=center>\n");
-        echo("    <input type=checkbox name=cod_grupo[] value=".$cod_grupo." onclick=\"UnCheckHeaderGrupo(1);\">\n");
+        echo("    <input type=\"checkbox\" name=\"cod_grupo[]\" value=\"".$cod_grupo."\" onclick=\"UnCheckHeaderGrupo(1);\">\n");
         echo("    </td>\n");
         echo("    <td>");
-        echo("<a href=# onClick=\"return(AbreJanelaComponentes(".$cod_grupo."));\" class=text>".$nome."</a>");
+        echo("<a href=\"#\" onClick=\"return(AbreJanelaComponentes(".$cod_grupo."));\" class=\"text\">".$nome."</a>");
         echo("</td>\n");
         $foiavaliado=GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo);
         if(!$foiavaliado)
         {
           echo("    <td>");
           if ($usr_formador)
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>N�o</a>");
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">N�o</a>");
           else
             echo("&nbsp;\n");
           echo("</td>\n");
@@ -321,7 +321,7 @@
           if ($usr_formador)
           {
             echo("    <td>");
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Sim</a>");
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">Sim</a>");
             echo("</td>\n");
           }
           elseif ($usr_aluno)   //Aluno so pode ver nota compartilhada com ele
@@ -349,14 +349,14 @@
             if ($cont > 0)
             {
               echo("    <td>");
-              echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>Sim</a>");
+              echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">Sim</a>");
               echo("</td>\n");
             }
             else
             {
               echo("    <td>");
               echo("&nbsp;\n");
-             // echo("<a href=# onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=text>N�o</a>");
+             // echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">N�o</a>");
               echo("</td>\n");
             }
           }
@@ -366,7 +366,7 @@
       echo("  </table>\n");
 
       /* 108 - Mostrar Selecionados */
-      echo("  <input class=text type=submit value='".RetornaFraseDaLista($lista_frases,108)."'><br><br>\n");
+      echo("  <input class=\"text\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,108)."\"><br><br>\n");
     }
     else
     /* 77 - N�o h� grupos criados*/
@@ -379,15 +379,15 @@
     if ($total > 0)
     {
       /* 64 - Alunos */
-      echo("<font class=text><B>".RetornaFraseDaLista($lista_frases,64)."</b></font>\n");
+      echo("<font class=\"text\"><B>".RetornaFraseDaLista($lista_frases,64)."</b></font>\n");
 
       echo("  <table border=0 width=100% cellspacing=0>\n");
-      echo("    <tr class=colorfield>\n");
-      echo("      <td class=colorfield align=center width=5%><input type=checkbox name=cod_aluno_all value=1 onclick=\"CheckAll(1);\" ></td>\n");
+      echo("    <tr class=\"colorfield\">\n");
+      echo("      <td class=\"colorfield\" align=center width=5%><input type=\"checkbox\" name=\"cod_aluno_all\" value=\"1\" onclick=\"CheckAll(1);\" ></td>\n");
       /* 107 - Nome */
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><b>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
       /* 106 - Avaliado*/
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
       echo("    </tr>\n");
 
       foreach ($lista as $i => $dados)
@@ -395,17 +395,17 @@
       {
         echo("  <tr>\n");
         echo("    <td align=center>\n");
-        echo("    <input type=checkbox name=cod_aluno[] value=".$dados['cod_usuario']." onclick=\"UnCheckHeader(1);\">\n");
+        echo("    <input type=\"checkbox\" name=\"cod_aluno[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(1);\">\n");
         echo("    </td>\n");
         echo("    <td>");
-        echo("<a href=# onClick=\"return(AbrePerfil(".$dados['cod_usuario']."));\" class=text>".$dados['nome']."</a>");
+        echo("<a href=\"#\" onClick=\"return(AbrePerfil(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>");
         echo("</td>\n");
         $foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$dados['cod_usuario']);
         if(!$foiavaliado)
         {
           echo("    <td>");
           if ($usr_formador)
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>N�o</a>");
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">N�o</a>");
           else
             echo("&nbsp;\n");
           echo("</td>\n");
@@ -415,7 +415,7 @@
           if ($usr_formador)
           {
             echo("    <td>");
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Sim</a>");
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">Sim</a>");
             echo("</td>\n");
           }
           elseif ($usr_aluno)
@@ -441,14 +441,14 @@
             if ($cont > 0)
             {
               echo("    <td>");
-              echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Sim</a>");
+              echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">Sim</a>");
               echo("</td>\n");
             }
             else
             {
               echo("    <td>");
               echo("&nbsp;\n");
-              //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>N�o</a>");
+              //echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">N�o</a>");
               echo("</td>\n");
             }
           }
@@ -459,7 +459,7 @@
       echo("  </table>\n");
 
       /* 108 - Mostrar Selecionados */
-      echo("  <input class=text type=submit value='".RetornaFraseDaLista($lista_frases,108)."'><br><br>\n");
+      echo("  <input class=\"text\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,108)."\"><br><br>\n");
     }
 
     $dados_coord = ListaCoordenador($sock, $cod_curso);
@@ -471,15 +471,15 @@
     if (($total > 0) && ($usr_formador))
     {
       /* 156 - Formadores */
-      echo("<font class=text><B>".RetornaFraseDaLista($lista_frases,156)."</b></font>\n");
+      echo("<font class=\"text\"><B>".RetornaFraseDaLista($lista_frases,156)."</b></font>\n");
 
       echo("  <table border=0 width=100% cellspacing=0>\n");
-      echo("    <tr class=colorfield>\n");
-      echo("      <td class=colorfield align=center width=5%><input type=checkbox name=cod_aluno_all value=1 onclick=\"CheckAll(1);\" ></td>\n");
+      echo("    <tr class=\"colorfield\">\n");
+      echo("      <td class=\"colorfield\" align=center width=5%><input type=\"checkbox\" name=\"cod_aluno_all\" value=\"1\" onclick=\"CheckAll(1);\" ></td>\n");
       /* 107 - Nome */
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><B>".RetornaFraseDaLista($lista_frases,107)."</b></td>\n");
       /* 106 - Avaliado*/
-      echo("      <td class=colorfield align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
+      echo("      <td class=\"colorfield\" align=left width=65%><B>".RetornaFraseDaLista($lista_frases,106)."</b></td>\n");
       echo("    </tr>\n");
 
       foreach ($lista as $i => $dados)
@@ -489,16 +489,16 @@
         {
           echo("  <tr>\n");
           echo("    <td align=center>\n");
-          echo("    <input type=checkbox name=cod_aluno[] value=".$dados['cod_usuario']." onclick=\"UnCheckHeader(1);\">\n");
+          echo("    <input type=\"checkbox\" name=\"cod_aluno[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(1);\">\n");
           echo("    </td>\n");
           echo("    <td>");
-          echo("<a href=# onClick=\"return(AbrePerfil(".$dados['cod_usuario']."));\" class=text>".$dados['nome']."</a>");
+          echo("<a href=\"#\" onClick=\"return(AbrePerfil(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>");
           echo("</td>\n");
           $foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$dados['cod_usuario']);
           if(!$foiavaliado)
           {
             echo("    <td>");
-            echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>N�o</a>");
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">N�o</a>");
             echo("</td>\n");
           }
           else
@@ -506,7 +506,7 @@
           //  if ($usr_formador)
           //  {
               echo("    <td>");
-              echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Sim</a>");
+              echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">Sim</a>");
               echo("</td>\n");
           //  }
           /*  elseif ($usr_aluno)
@@ -532,14 +532,14 @@
               if ($cont > 0)
               {
                 echo("    <td>");
-                echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>Sim</a>");
+                echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">Sim</a>");
                 echo("</td>\n");
               }
               else
               {
                 echo("    <td>");
                 echo("&nbsp;\n");
-                //echo("<a href=# onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=text>N�o</a>");
+                //echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">N�o</a>");
                 echo("</td>\n");
               }
             }*/
@@ -550,16 +550,16 @@
       echo("  </table>\n");
 
       /* 108 - Mostrar Selecionados */
-      echo("  <input class=text type=submit value='".RetornaFraseDaLista($lista_frases,108)."'><br><br>\n");
+      echo("  <input class=\"text\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,108)."\"><br><br>\n");
     }
   }
 
     if ($VeioDaAtividade)
     /* 13 - Fechar (ger) */
-      echo("  &nbsp;<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onClick=self.close()>\n");
+      echo("  &nbsp;<input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">\n");
     else
     /* 23 - Voltar (gen) */
-    echo("<input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=\"location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."';\">");
+    echo("<input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."';\">");
 
   echo("</body>\n");
   echo("</html>\n");

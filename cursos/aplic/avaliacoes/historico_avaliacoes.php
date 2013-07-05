@@ -43,11 +43,11 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("avaliacoes.inc");
- 
+
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $cod_curso = $_GET['cod_curso'];
-  
+
   $sock = Conectar("");
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);  
 
@@ -112,12 +112,12 @@
   echo("  <body link=#0000ff vlink=#0000ff onLoad=\"Iniciar();\">\n");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  
+
   $tmp = RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
   $cod_atividade = $tmp['Cod_atividade'];
   $tipo_ferramenta = $tmp['Ferramenta'];
   $titulo=RetornaTituloAvaliacao($sock,$tipo_ferramenta,$cod_atividade);
-  
+
   /* Página Principal */
 
   // 1 - Avaliacoes
@@ -126,7 +126,7 @@
   $cabecalho.= (" - ".RetornaFraseDaLista($lista_frases,99)."</h4>\n");
   echo($cabecalho);
   echo ("<br />\n");
-  
+
       // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
   echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");

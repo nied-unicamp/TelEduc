@@ -39,15 +39,15 @@
 /*==========================================================
   ARQUIVO : cursos/aplic/avaliacoes/ajuda_media.php
   ========================================================== */
-  
+
   /* TODO - incluir topo tela e tela2 */
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("avaliacoes.inc");
-  
+
 
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
-  
+
   $sock=Conectar("");
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
 
@@ -75,7 +75,7 @@
   echo("    <meta name=\"copyright\" content=\"\" />\n");
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
   echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  
+
   if ($SalvarEmArquivo)
   {
     echo("    <style>\n");
@@ -83,13 +83,13 @@
     include "avaliacoes.css";
     echo("    </style>\n");
 
-    echo("    <script language=JavaScript>\n");
+    echo("    <script language=\"javascript\">\n");
   }
   else
   {
-    echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css> \n");
-    echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css> \n");
-    echo("    <script language=JavaScript>\n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\"> \n");
+    echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\"> \n");
+    echo("    <script language=\"javascript\">\n");
   }
 
   echo("      function Iniciar()\n");

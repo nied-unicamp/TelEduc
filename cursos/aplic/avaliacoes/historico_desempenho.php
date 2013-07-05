@@ -74,7 +74,7 @@
          $cod_grupo_mudarcomp=$cod_grupo;
       else
          $cod_grupo_mudarcomp=RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao);                                
-       
+
       $lista_integrantes=RetornaListaIntegrantes($sock,$cod_grupo_mudarcomp);
       $data=RetornaDataNota($sock,$cod_nota);
       foreach ($lista_integrantes as $cod_aluno => $linha)
@@ -98,8 +98,8 @@
        $cod_grupo_apagar=$cod_grupo;
      else
        $cod_grupo_apagar=RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao);
- 
-       
+
+
       $lista_integrantes=RetornaListaIntegrantes($sock,$cod_grupo_apagar);
       $data=RetornaDataNota($sock,$cod_nota);
       foreach ($lista_integrantes as $cod_aluno => $linha)
@@ -118,8 +118,8 @@
 
   if (!$SalvarEmArquivo)
   {
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
   }
   else
   {
@@ -131,7 +131,7 @@
 
   if(isset($cod_grupo))
     $cod_aluno=RetornaCodAlunodoGrupo($sock,$cod_avaliacao,$cod_grupo);
-  
+
   if ($VeiodePortfolio)
   {
     $lista=RetornaAssociacaoItemAvaliacao($sock,$cod_item);
@@ -161,8 +161,8 @@
     $cod_atividade=RetornaCodAtividade($sock,$cod_avaliacao);
 
   /* Fun��es JavaScript */
-  echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("<script language=\"javascript\">\n");
   echo("  if ((navigator.appName.indexOf(\"Netscape\") !=-1) && navigator.appVersion.charAt(0) <= '4') {\n");
   echo("      var isNav = true;\n");
   echo("      var isIE  = false;\n");
@@ -415,15 +415,15 @@
         $tipo= RetornaFraseDaLista($lista_frases, 186);        
      }
   }
-  
+
   if (! $SalvarEmArquivo)
   {
     echo(" <p>\n");
-    echo("  <table cellpadding=0 cellspacing=0 border=0  style=\"width: 100%;\" class=colorfield>\n");
+    echo("  <table cellpadding=0 cellspacing=0 border=0  style=\"width: 100%;\" class=\"colorfield\">\n");
     echo("  <tbody>\n");
     echo("    <tr>\n");
     // 46 - Ver objetivos/crit�rios da avalia��o
-    echo("      <td><center><a class=colorfield href=# onClick=VerObj();>".RetornaFraseDaLista($lista_frases, 46)."</a></center></td>\n");
+    echo("      <td><center><a class=\"colorfield\" href=\"#\" onClick=\"VerObj();\">".RetornaFraseDaLista($lista_frases, 46)."</a></center></td>\n");
     echo("    </tr>\n");
     echo("  </tbody>\n");
     echo("  </table>\n");
@@ -434,21 +434,21 @@
   echo("  <tbody>\n");
   echo("    <tr>\n");
   // imagem
-  echo("      <td width=1% class=colorfield>&nbsp;</td>\n");
+  echo("      <td width=1% class=\"colorfield\">&nbsp;</td>\n");
   // 123 - T�tulo
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
   // 113 - Tipo da Avalia��o
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
   // 19 - Valor
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
   echo("    </tr>\n");
   echo("    <tr>\n");
-  $img = !$SalvarEmArquivo ? "<img src=../figuras/avaliacao.gif border=0>" : "&nbsp;&nbsp;";
+  $img = !$SalvarEmArquivo ? "<img src=\"../figuras/avaliacao.gif\" border=0>" : "&nbsp;&nbsp;";
   echo("      <td width=1%>".$img."</td>\n");
-  echo("      <td class=text align=left>&nbsp;&nbsp;".$titulo."</td>\n");
-  // echo("      <td class=text align=left>&nbsp;&nbsp;".$ferramenta."</td>\n");
-  echo("      <td class=text align=left>&nbsp;&nbsp;".$tipo."</td>\n");
-  echo("      <td class=text align=left>&nbsp;&nbsp;".FormataNota($dados['Valor'])."</td>\n");
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$titulo."</td>\n");
+  // echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$ferramenta."</td>\n");
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$tipo."</td>\n");
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".FormataNota($dados['Valor'])."</td>\n");
   echo("    </tr>\n");
   echo("</table>\n");
   echo("<br>\n");
@@ -463,9 +463,9 @@
     else
     /*Aqui troquei a fun��o RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao) pela fun��o RetornaCodigoGrupoAvaliacao($sock,$cod,$linha['Cod_avaliacao']);, para pegar o codigo do grupo em que o aluno estava quando a avalia��o foi feita*/
       $cod_grupo_portfolio=RetornaCodigoGrupoAvaliacao($sock,$cod_aluno,$cod_avaliacao);
-      
+
     // $cod_aluno=RetornaCodAlunoMaisNotasnoGrupo($sock,$cod_avaliacao,$cod_grupo_portfolio);
-    
+
     /*Aqui havia um problema que ele permitia a variavel $cod_grupo_portfolio ficar nula, agora ele n�o deixa mais e exibe a frase 93 - Este grupo ainda n�o foi avaliado nesta atividade!
     */
     if (!$cod_grupo_portfolio)
@@ -483,21 +483,21 @@
   {
     /*
       // 47 - Participante:
-      echo("<font class=text>".RetornaFraseDaLista($lista_frases,47).": </font>"); */
+      echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,47).": </font>"); */
     if (!$SalvarEmArquivo)
-      $nome = "<a class=text href=# onClick=return(AbrePerfil(".$cod_aluno.")); class=text>".$nome."</a>";
+      $nome = "<a class=\"text\" href=\"#\" onClick=\"return(AbrePerfil(".$cod_aluno."));\">".$nome."</a>";
     else
-      $nome = "<font class=text>".$nome."</font>";
+      $nome = "<font class=\"text\">".$nome."</font>";
   }
   else
   {
     /*
       // 48 - Grupo
-      echo("<font class=text>".RetornaFraseDaLista($lista_frases,48).": </font>");  */
+      echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,48).": </font>");  */
     if (!$SalvarEmArquivo)
-      $nome = "<a class=text href=# onClick=return(AbreJanelaComponentes(".$cod_grupo_portfolio."));>".$nome."</a>";
+      $nome = "<a class=\"text\" href=\"#\" onClick=\"return(AbreJanelaComponentes(".$cod_grupo_portfolio."));\">".$nome."</a>";
     else
-      $nome = "<font class=text>".$nome."</font>";
+      $nome = "<font class=\"text\">".$nome."</font>";
   }
 
   if (!strcmp($ferramenta,'P'))
@@ -516,25 +516,25 @@
         {
           // echo("        .$num_participacoes."</a><br><br>\n");
           $num_participacoes =
-            "<a class=text href=# onClick=\"window.open('../portfolio/ver_itens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_avaliacao=".$cod_avaliacao."','ItensPortfolioParticipante','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
+            "<a class=\"text\" href=\"#\" onClick=\"window.open('../portfolio/ver_itens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_avaliacao=".$cod_avaliacao."','ItensPortfolioParticipante','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
             .$num_participacoes
             ."</a>";
         }
         else
         {
           $num_participacoes =
-            "<a class=text href=# onClick=\"window.open('../portfolio/ver_itens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario_portfolio=".$cod_aluno."&cod_avaliacao=".$cod_avaliacao."','ItensPortfolioParticipante','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
+            "<a class=\"text\" href=\"#\" onClick=\"window.open('../portfolio/ver_itens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario_portfolio=".$cod_aluno."&cod_avaliacao=".$cod_avaliacao."','ItensPortfolioParticipante','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
             .$num_participacoes
             ."</a>";
         }
       }
       else
       {
-        $num_participacoes = "<font class=text>".$num_participacoes."</font>";
+        $num_participacoes = "<font class=\"text\">".$num_participacoes."</font>";
       }
     }
     else
-      $num_participacoes = "<font class=text>"."0"."</font>";
+      $num_participacoes = "<font class=\"text\">"."0"."</font>";
   }
   else if ($ferramenta=='N')
   {
@@ -555,16 +555,16 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
       {
         if($portfolio_grupo)
         {
-          $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
+          $num_participacoes ="<a class=\"text\" href=\"#\" onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_grupo_portfolio."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
         }
         else
         {
-         $num_participacoes ="<a class=text href=# onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
+          $num_participacoes ="<a class=\"text\" href=\"#\" onClick=\"window.open('../exercicios/ver_aplicado_popup.php?&origem=avaliacao&cod_dono=".$cod_aluno."&cod_resolucao=".$modelo['cod_resolucao']."&cod_curso=".$cod_curso."' ,'ExercicioResolvido',".$param.");".$escondelayer."return(false);\">".$titulo."</a>";
         }
       }
       else
       {
-        $num_participacoes = "<font class=text>".$titulo."</font>";
+        $num_participacoes = "<font class=\"text\">".$titulo."</font>";
       }
     }
 
@@ -573,7 +573,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   {
 
     $nome_bak = $nome;
-     
+
     if (BatePapoExiste($sock,$cod_atividade))
     {
       $lista_usuarios=RetornaUsuarios($sock,$cod_curso);
@@ -591,28 +591,28 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
       if ( ($num_participacoes = (int)$msgs_total[$cod_aluno]) == 0 )
       {
         // zero participa��es
-        $num_participacoes = "<font class=text>"."0"."</font>";
+        $num_participacoes = "<font class=\"text\">"."0"."</font>";
       }
       else
       {
         if (!$SalvarEmArquivo)
         {
           $num_participacoes =
-          "<a class=text href=# onClick=\"window.open('../batepapo/ver_falas_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_assunto=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
+          "<a class=\"text\" href=\"#\" onClick=\"window.open('../batepapo/ver_falas_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_assunto=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">"
           .(int)$msgs_total[$cod_aluno]
           ."</a>";
         }
         else
         {
-          $num_participacoes = "<font class=text>".(int)$msgs_total[$cod_aluno]."</font>";
+          $num_participacoes = "<font class=\"text\">".(int)$msgs_total[$cod_aluno]."</font>";
         }
       }
     }
     else
-      $num_participacoes = "<font class=text>"."0"."</font>";
+      $num_participacoes = "<font class=\"text\">"."0"."</font>";
 
     $nome = $nome_bak;
-      
+
   }
   elseif (!strcmp($ferramenta,'F'))
   {
@@ -620,11 +620,11 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
     {
       $num_participacoes=RetornaNumMsgsParticipantesForum($sock,$cod_atividade,$cod_aluno);
       if (!$SalvarEmArquivo)
-        //echo("        <a class=text href=# onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>\n");
-        $num_participacoes="<a class=text href=# onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>";
+        //echo("        <a class=\"text\" href=\"#\" onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>\n");
+        $num_participacoes="<a class=\"text\" href=\"#\" onClick=\"window.open('../forum/ver_mensagens_aluno.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno=".$cod_aluno."&cod_forum=".$cod_atividade."&cod_avaliacao=".$cod_avaliacao."','VerParticipacao','width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');".$escondelayer."return(false);\">".$num_participacoes."</a><br><br>";
       else
-        //echo("<font class=text>".$num_participacoes."</font><br><br>\n");
-        $num_participacoes="<font class=text>".$num_participacoes."</font><br><br>";
+        //echo("<font class=\"text\">".$num_participacoes."</font><br><br>\n");
+        $num_participacoes="<font class=\"text\">".$num_participacoes."</font><br><br>";
     }
     else
     {
@@ -638,7 +638,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   // tabela com nome do participante e n�mero de participacoes
   echo("<p>");
   echo("<table width=100% border=0 cellpadding=0 cellspacing=0>\n");
-  echo("<tr class=colorfield> \n");
+  echo("<tr class=\"colorfield\"> \n");
   // 107 - Nome
   echo("<td>"."&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 107)."</td>\n");
   // 49 - Participa��es:
@@ -661,16 +661,16 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
     {
       if ($cod_grupo_portfolio!=0) 
       // 93 - Este grupo ainda n�o foi avaliado nesta atividade!
-         echo("<font class=text>".RetornaFraseDaLista($lista_frases,93)."</font> \n");
+         echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,93)."</font> \n");
       else
          /*183 - Esse aluno n�o fazia parte de nenhum grupo quando a avalia��o foi aplicada. */
-         echo("<font class=text>".RetornaFraseDaLista($lista_frases,183)."</font> \n");
+         echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,183)."</font> \n");
       echo("<br>");
     }
     else
     {
       // 98 - Este participante ainda n�o foi avaliado nesta atividade!
-      echo("<font class=text>".RetornaFraseDaLista($lista_frases,98)."</font>");
+      echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,98)."</font>");
       echo("<br>");
     }
   }
@@ -682,13 +682,13 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 
       $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod_grupo_portfolio);
     }
-    
+
     /*Altera��o que talvez resolva o problema da nota da avaliac��o que � registrada mais de uma vez*/
     else if ($dados['Ferramenta'] == 'E' && $dados['Tipo']=='G')
     {
        $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod);       
     }
-    
+
     else
     {
       $cod=$cod_aluno;
@@ -754,25 +754,25 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 
           echo("<p>\n");
           echo("<table border=0 width=100% cellspacing=0>\n");
-          echo("  <tr class=menu>\n");
+          echo("  <tr class=\"menu\">\n");
           // 60 - Nota:
-          echo("    <td align=center width=20%><font class=colorfield><b>".RetornaFraseDaLista($lista_frases,60)." ".$cont."</b></font></td>\n");
+          echo("    <td align=center width=20%><font class=\"colorfield\"><b>".RetornaFraseDaLista($lista_frases,60)." ".$cont."</b></font></td>\n");
           // 61 - Data da Avalia��o
-          echo("    <td align=center width=20%><font class=colorfield><b>".RetornaFraseDaLista($lista_frases,61)."</b></font></td>\n");
+          echo("    <td align=center width=20%><font class=\"colorfield\"><b>".RetornaFraseDaLista($lista_frases,61)."</b></font></td>\n");
           // 68 - Formador que avaliou
-          echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases, 68)."</td>\n");
+          echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases, 68)."</td>\n");
 
           $num_colunas = 3;
           if ($usr_formador)
           {
             // 50 - Compartilhar
-            echo("    <td align=center width=40%><font class=colorfield><b>".RetornaFraseDaLista($lista_frases,50)."</b></font></td>\n");
+            echo("    <td align=center width=40%><font class=\"colorfield\"><b>".RetornaFraseDaLista($lista_frases,50)."</b></font></td>\n");
             $num_colunas ++;
 
             if (!$SalvarEmArquivo)
             {
               // 1 - Apagar (gen)
-              echo("    <td align=center width=20%><a class=colorfield href=# onClick=return(Apagar(".$linha['cod_nota']."));>".RetornaFraseDaLista($lista_frases_geral,1)."</a></td>\n");
+              echo("    <td align=center width=20%><a class=\"colorfield\" href=\"#\" onClick=\"return(Apagar(".$linha['cod_nota']."));\">".RetornaFraseDaLista($lista_frases_geral,1)."</a></td>\n");
               $num_colunas ++;
             }
           }
@@ -780,7 +780,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 
           if (! $SalvarEmArquivo)
           {
-            $link_perfil1 = "<a href=# onClick='AbrePerfil(".$linha['cod_formador']."); return false;'>";
+            $link_perfil1 = "<a href=\"#\" onClick=\"AbrePerfil(".$linha['cod_formador']."); return false;\">";
             $link_perfil2 = "</a>";
           }
           else
@@ -790,45 +790,45 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
 
           echo("  <tr>\n");
           // a nota
-          echo("    <td align=center class=".$array_cores[$cor]."><font class=text>".FormataNota($linha['nota'])."</font></td>\n");
+          echo("    <td align=center class=\"".$array_cores[$cor]."\"><font class=\"text\">".FormataNota($linha['nota'])."</font></td>\n");
           // a data da avaliacao
-          echo("    <td align=center class=".$array_cores[$cor]."><font class=text>".UnixTime2Data($linha['data'])."</font></td>\n");
+          echo("    <td align=center class=\"".$array_cores[$cor]."\"><font class=\"text\">".UnixTime2Data($linha['data'])."</font></td>\n");
           // nome do formador que avaliou
 
 	       if($linha['cod_formador']==-2) // 66 (geral) - Sistema 
-	          echo("    <td align=center class=".$array_cores[$cor]."><font class=text>".RetornaFraseDaLista($lista_frases_geral, 66)."</font></td>\n");
+	          echo("    <td align=center class=\"".$array_cores[$cor]."\"><font class=\"text\">".RetornaFraseDaLista($lista_frases_geral, 66)."</font></td>\n");
 	       else
-	          echo("    <td align=center class=".$array_cores[$cor]."><font class=text>".$link_perfil1.NomeUsuario($sock,$linha['cod_formador']).$link_perfil2."</font></td>\n");
+	          echo("    <td align=center class=\"".$array_cores[$cor]."\"><font class=\"text\">".$link_perfil1.NomeUsuario($sock,$linha['cod_formador']).$link_perfil2."</font></td>\n");
           if ($usr_formador)
           {
             if (!$SalvarEmArquivo)
-              $compartilhamento="<a class=text href=# onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$linha['tipo_compartilhamento']."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>";
+              $compartilhamento="<a class=\"text\" href=\"#\" onMouseDown=\"js_cod_nota=".$cod_nota.";AtualizaComp('".$linha['tipo_compartilhamento']."');MostraLayer(cod_comp,140);return(false);\">".$compartilhamento."</a>";
             else
-              $compartilhamento = "<font class=text>".$compartilhamento."</font>";
-            echo("    <td align=center class=".$array_cores[$cor].">".$compartilhamento."</td>\n");
+              $compartilhamento = "<font class=\"text\">".$compartilhamento."</font>";
+            echo("    <td align=center class=\"".$array_cores[$cor]."\">".$compartilhamento."</td>\n");
 
              if (!$SalvarEmArquivo)
-               echo("    <td align=center class=".$array_cores[$cor].">&nbsp;</td>\n");
+               echo("    <td align=center class=\"".$array_cores[$cor]."\">&nbsp;</td>\n");
           }
           echo("  </tr>\n");
           // 163 - Justificativa
-          echo("  <tr><td class=colorfield colspan=".$num_colunas.">".RetornaFraseDaLista($lista_frases, 163)."</td></tr>\n");
+          echo("  <tr><td class=\"colorfield\" colspan=".$num_colunas.">".RetornaFraseDaLista($lista_frases, 163)."</td></tr>\n");
           if (($comentario = Space2Nbsp($linha['comentario'])) == "")
           {
             $comentario = "&nbsp;";
           }
-          echo("  <tr><td class=".$array_cores[$cor]." colspan=".$num_colunas."><font class=text>".$comentario."</font></td></tr>\n");
+          echo("  <tr><td class=\"".$array_cores[$cor]."\" colspan=".$num_colunas."><font class=\"text\">".$comentario."</font></td></tr>\n");
           echo("  </table>\n");
           echo("</p>\n");
 
           // $cor = ! $cor;
 
           /*
-            echo("    <font class=text>\n");
+            echo("    <font class=\"text\">\n");
             // 67 - Coment�rio
             echo("<b>".RetornaFraseDaLista($lista_frases,67).":</b> ".$linha['comentario']."</font><br>\n");
             $formador=NomeUsuario($sock,$linha['cod_formador']);
-            echo("    <font class=text>\n");
+            echo("    <font class=\"text\">\n");
             // 68 - Formador que avaliou
             echo("<b>".RetornaFraseDaLista($lista_frases,68).":</b> ".$formador."</font><br><br>\n"); */
         }
@@ -837,13 +837,13 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
           if ($portfolio_grupo)
           {
             // 93 - Este grupo ainda n�o foi avaliado nesta atividade!
-            echo("<font class=text>".RetornaFraseDaLista($lista_frases,93)."</font>");
+            echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,93)."</font>");
             echo("<br>");
           }
           else
           {
             // 98 - Este participante ainda n�o foi avaliado nesta atividade!
-            echo("<font class=text>".RetornaFraseDaLista($lista_frases,98)."</font>");
+            echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,98)."</font>");
             echo("<br>");
           }
           echo("<br>");
@@ -855,66 +855,66 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
   // Layer para Mudar Compartilhamento
   if (($usr_formador) && (!$SalvarEmArquivo))
   {
-    echo("<div id=comp class=block visibility=hidden onContextMenu=\"return(false);\">\n");
-    echo("<form method=post name=form_comp action=historico_desempenho.php>\n");
+    echo("<div id=\"comp\" class=\"block\" visibility=hidden onContextMenu=\"return(false);\">\n");
+    echo("<form name=\"form_comp\" action=\"historico_desempenho.php\" method=\"post\">\n");
     echo(RetornaSessionIDInput());
-    echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    echo("  <input type=hidden name=cod_nota value=\"\">\n");
-    echo("  <input type=hidden name=acao value=mudarcomp>\n");
-    echo("  <input type=hidden name=portfolio_grupo value=".$portfolio_grupo.">\n");
-    echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-    echo("  <input type=hidden name=cod_aluno value=".$cod_aluno.">\n");
-    echo("  <input type=hidden name=cod_atividade value=".$cod_atividade.">\n");
-    echo("  <input type=hidden name=ferramenta value=".$ferramenta.">\n");
+    echo("  <input type=\"hidden\" name=\"cod_curso\"       value=\"".$cod_curso."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_nota\"        value=\"\">\n");
+    echo("  <input type=\"hidden\" name=\"acao\"            value=\"mudarcomp\">\n");
+    echo("  <input type=\"hidden\" name=\"portfolio_grupo\" value=\"".$portfolio_grupo."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_avaliacao\"   value=\"".$cod_avaliacao."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_aluno\"       value=\"".$cod_aluno."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_atividade\"   value=\"".$cod_atividade."\">\n");
+    echo("  <input type=\"hidden\" name=\"ferramenta\"      value=\"".$ferramenta."\">\n");
 
     if ($ferramenta == 'P')
     {
-      echo("  <input type=hidden name=portfolio_grupo value=".$portfolio_grupo.">\n");
+      echo("  <input type=\"hidden\" name=\"portfolio_grupo\" value=".$portfolio_grupo.">\n");
       if (isset($cod_grupo_portfolio))
-        echo("  <input type=hidden name=cod_grupo value=".$cod_grupo_portfolio.">\n");
+        echo("  <input type=\"hidden\" name=\"cod_grupo\"       value=\"".$cod_grupo_portfolio."\">\n");
     }
-    echo("<table class=wtfield cellspacing=1 cellpadding=1 border=2>\n");
+    echo("<table class=\"wtfield\" cellspacing=1 cellpadding=1 border=2>\n");
     echo("  <tr>\n");
-    echo("    <td class=bgcolor align=right colspan=2><a href=# onClick=EscondeLayer(cod_comp);return(false);><img src=../figuras/x.gif border=0></a></td>\n");
+    echo("    <td class=\"bgcolor\" align=right colspan=2><a href=\"#\" onClick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../figuras/x.gif\" border=0></a></td>\n");
     echo("  </tr>\n");
     echo("  <tr>\n");
     echo("    <td>\n");
-    echo("      <table class=wtfield border=0>\n");
+    echo("      <table class=\"wtfield\" border=0>\n");
     echo("        <tr>\n");
     echo("          <td>\n");
-    echo("            <input type=radio name=tipo_comp value=\"T\" class=wtfield onClick=\"submit();\">\n");
+    echo("            <input type=\"radio\" name=\"tipo_comp\" value=\"T\" class=\"wtfield\" onClick=\"submit();\">\n");
     echo("          </td>\n");
     echo("          <td>\n");
     // 51 - Totalmente compartilhado
-    echo("            <font class=text><nobr>".RetornaFraseDaLista($lista_frases,51)."</nobr></font>\n");
+    echo("            <font class=\"text\"><nobr>".RetornaFraseDaLista($lista_frases,51)."</nobr></font>\n");
     echo("          </td>\n");
     echo("        </tr>\n");
     echo("        <tr>\n");
     echo("          <td>\n");
-    echo("            <input type=radio name=tipo_comp value=\"F\" class=wtfield onClick=\"submit();\">\n");
+    echo("            <input type=\"radio\" name=\"tipo_comp\" value=\"F\" class=\"wtfield\" onClick=\"submit();\">\n");
     echo("          </td>\n");
     echo("          <td>\n");
     // 52 - Compartilhado com formadores
-    echo("            <font class=text><nobr>".RetornaFraseDaLista($lista_frases,52)."</nobr></font>\n");
+    echo("            <font class=\"text\"><nobr>".RetornaFraseDaLista($lista_frases,52)."</nobr></font>\n");
     echo("          </td>\n");
     echo("        </tr>\n");
     echo("        <tr>\n");
     echo("          <td>\n");
     if ($portfolio_grupo)
     {
-      echo("            <input type=radio name=tipo_comp value=\"G\" class=wtfield onClick=\"submit();\">\n");
+      echo("            <input type=\"radio\" name=\"tipo_comp\" value=\"G\" class=\"wtfield\" onClick=\"submit();\">\n");
       echo("          </td>\n");
       echo("          <td>\n");
       // 53 - Compartilhado com Formadores e com o Grupo
-      echo("            <font class=text><nobr>".RetornaFraseDaLista($lista_frases,53)."</nobr></font>\n");
+      echo("            <font class=\"text\"><nobr>".RetornaFraseDaLista($lista_frases,53)."</nobr></font>\n");
     }
     else
     {
-      echo("            <input type=radio name=tipo_comp value=\"A\" class=wtfield onClick=\"submit();\">\n");
+      echo("            <input type=\"radio\" name=\"tipo_comp\" value=\"A\" class=\"wtfield\" onClick=\"submit();\">\n");
       echo("          </td>\n");
       echo("          <td>\n");
       /* 54 - Compartilhado com Formadores e com o Participante */
-      echo("            <font class=text><nobr>".RetornaFraseDaLista($lista_frases,54)."</nobr></font>\n");
+      echo("            <font class=\"text\"><nobr>".RetornaFraseDaLista($lista_frases,54)."</nobr></font>\n");
     }
     echo("          </td>\n");
     echo("        </tr>\n");
@@ -926,7 +926,7 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
     echo("</div>\n");
   }
 
-  echo("    <form name=frmHist method=post>\n");
+  echo("    <form name=\"frmHist\" method=\"post\">\n");
   echo("      <div align=right>\n");
   /*
     if (($usr_formador) && (!$SalvarEmArquivo))
@@ -935,36 +935,36 @@ $param = "'width=600,height=400,top=150,left=150,scrollbars=yes,status=yes,toolb
       {
         if ($portfolio_grupo)
         // 104 - Avaliar Grupo
-          echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases,104)."' onClick=AvaliarAlunoPortfolio(".$cod_aluno.");>\n");
+          echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases,104)."\" onClick=\"AvaliarAlunoPortfolio(".$cod_aluno.");\">\n");
         else
         // 95 - Avaliar Participante
-          echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases,95)."' onClick=AvaliarAlunoPortfolio(".$cod_aluno.");>\n");
+          echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases,95)."\" onClick=\"AvaliarAlunoPortfolio(".$cod_aluno.");\">\n");
       }
       else
       // 95 - Avaliar Participante
-        echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases,95)."' onClick=AvaliarAluno(".$cod_aluno.");>\n");
+        echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases,95)."\" onClick=\"AvaliarAluno(".$cod_aluno.");\">\n");
 
     } */
 
   if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
-    echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,50)."' onClick='SalvarHistoricoDesempenho();'>\n");
-    echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-    echo("  <input type=hidden name=cod_atividade value=".$cod_atividade.">\n");
-    echo("  <input type=hidden name=ferramenta value=".$ferramenta.">\n");
-    echo("  <input type=hidden name=cod_aluno value=".$cod_aluno.">\n");
-    // echo("  <input type=hidden name=cod_grupo value=".$cod_grupo.">\n");
-    echo("  <input type=hidden name=portfolio_grupo value=".$portfolio_grupo.">\n");
+    echo("  <input class=\"text\" type=\"button\"         value=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarHistoricoDesempenho();\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_atividade\" value=\"".$cod_atividade."\">\n");
+    echo("  <input type=\"hidden\" name=\"ferramenta\"    value=\"".$ferramenta."\">\n");
+    echo("  <input type=\"hidden\" name=\"cod_aluno\"     value=\"".$cod_aluno."\">\n");
+    //echo("  <input type=\"hidden\" name=\"cod_grupo\"     value=\"".$cod_grupo."\">\n");
+    echo("  <input type=\"hidden\" name=portfolio_grupo\" value=\"".$portfolio_grupo."\">\n");
   }
 
   /* 14 - Imprimir (geral) */
-  echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,14)."' onClick=ImprimirRelatorio();>\n");
+  echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">\n");
 
   // 13 - Fechar (ger)
   if (!$SalvarEmArquivo)
-    echo("  <input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onClick='window.opener.location.reload(); self.close();')>\n");
+    echo("  <input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"window.opener.location.reload(); self.close();\")>\n");
 
   echo("      </div>\n");
   echo("      <br>\n");

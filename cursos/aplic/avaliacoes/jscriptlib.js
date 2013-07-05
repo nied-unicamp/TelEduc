@@ -91,17 +91,17 @@ function EdicaoCampo(id, tag, valor){
     if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value=="")){
     	xajax_AlertaFraseFerramenta(229,22);
     }
-    
+
   	document.getElementById(tag+'_'+id).innerHTML=conteudo;
     document.getElementById(tag+'_'+id).className='';
 
-    
+
     /*if(navigator.appName.match("Opera")){
       document.getElementById(tag+'_'+id).onclick = AlteraCampo(tag,id);
     }else{
       document.getElementById(tag+'_'+id).onclick = function(){ AlteraCampo(tag,id); };
     }*/
-    
+
     document.getElementById(tag+'_'+id);
     //Cancela Edição
     if (!cancelarTodos){
@@ -117,11 +117,11 @@ function EdicaoCampo(id, tag, valor){
 //cria os links Ok E Cancelar
 function AlteraCampo(tag,id){
   if (editaTitulo==0){
-	 
+
     id_aux = id;
     tag_aux = tag;  
     CancelaTodos();
-    
+
     xajax_AbreEdicao(cod_curso, cod_avaliacao, cod_usuario, tela_avaliacao);
 
     conteudo = document.getElementById(tag+'_'+id).innerHTML;
@@ -143,7 +143,7 @@ function AlteraCampo(tag,id){
       createInput.setAttribute('size','8%');
 
     document.getElementById(tag+'_'+id).appendChild(createInput); 
-   
+
     //cria o elemento 'espaco' e adiciona na pagina
     espaco = document.createElement('span');
     espaco.innerHTML='&nbsp;&nbsp;'
@@ -185,9 +185,9 @@ function AlteraTexto(id){
     CancelaTodos();
 
     xajax_AbreEdicao(cod_curso, cod_avaliacao, cod_usuario, tela_avaliacao);
-   
+
     conteudo = document.getElementById('text_'+id).innerHTML;
-			
+
     writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     startList();
     //document.getElementById('text_'+id+'_text').focus();

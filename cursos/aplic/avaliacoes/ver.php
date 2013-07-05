@@ -40,12 +40,12 @@
   ARQUIVO : cursos/aplic/avaliacoes/ver.php
   ========================================================== */
 /* TODO - Adicionar feedback do alterar periodo */
-  $bibliotecas="../bibliotecas/";
+  $bibliotecas = "../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("avaliacoes.inc");
 
   require_once("../xajax_0.2.4/xajax.inc.php");
-       
+
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
@@ -57,16 +57,16 @@
   $objAjax->registerFunction("AbreEdicao");
   $objAjax->registerFunction("AcabaEdicaoDinamic");
   $objAjax->registerFunction("AlertaFraseFerramenta");
- 
+
 
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
-  
+
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=5;
   include("../topo_tela.php");
-  
+
   $lista_frases_biblioteca =RetornaListaDeFrases($sock,-2);
   // Verifica se o usuario eh formador.
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
@@ -81,11 +81,11 @@
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type='text/javascript' src='../bibliotecas/dhtmllib.js'></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
 
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
-  
+
   echo("    <script type=\"text/javascript\">\n");
 
   echo("      var cod_curso='".$cod_curso."';\n");
@@ -94,7 +94,7 @@
   echo("      var cod_atividade='".$dados_avaliacao['Cod_atividade']."';\n");
   echo("      var cod_avaliacao='".$cod_avaliacao."';\n");
   echo("      var tela_avaliacao='".$tela_avaliacao."';\n");
-  
+
   echo("      function startList() {\n");
   echo("        if (document.all && document.getElementById) {\n");
   echo("          nodes = document.getElementsByTagName(\"span\");\n");
@@ -167,9 +167,9 @@
       echo("          document.frmAvaliacao.submit();\n");
       echo("        }\n");
       echo("      }\n\n");
-                                                     
+
     }
-      
+
     echo("      function AvaliarParticipantes()\n");
     echo("      {\n");
     echo("        document.frmAvaliacao.action = 'avaliar_participantes.php';\n");
@@ -260,17 +260,18 @@
 
   echo ("     function Iniciar()");
   echo ("     {");
-  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  if (isset($_GET['acao']))
+    $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo ("     startList();");
   echo ("     }");
- 
+
 
   echo("    </script>\n");
-  
+
   $objAjax->printJavascript("../xajax_0.2.4/");
-  
-  echo("    <script type='text/javascript' src='jscriptlib.js'></script>\n");
-  //echo("	<script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
+  //echo("    <script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");
   // A variavel tela_avaliacao indica quais avaliacoes devem ser listadas: 'P'assadas, 'A'tuais ou 'F'uturas
   if (!isset($tela_avaliacao) || !in_array($tela_avaliacao, array('P', 'A', 'F')))
   {
@@ -288,20 +289,20 @@
     // 30 - Avalia��es Futuras
     $lista_avaliacoes = RetornaAvaliacoesFuturas($sock,$usr_formador);
 
-	include("../menu_principal.php");
+  include("../menu_principal.php");
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* Verificação se a avaliacao está em Edição */
   /* Se estiver, voltar a tela anterior, e disparar a tela de Em Edição... */
   $linha=RetornaStatusAvaliacao($sock, "Avaliacao", $cod_avaliacao);
 
-  if ($linha['status']=="E")
+  if ($linha['status'] == "E")
   {
     if (($linha['data']<(time()-1800)) || ($cod_usuario == $linha['cod_usuario'])){
       CancelaEdicaoAvaliacao($sock, "Avaliacao", $cod_avaliacao,$cod_usuario);
     }else{
       /* Está em edição... */
-      echo("          <script language=javascript>\n");
+      echo("          <script language=\"javascript\">\n");
       echo("            window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=ver','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
       echo("            window.location='avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacao."&operacao=".$cod_operacao."';\n");
       echo("          </script>\n");
@@ -325,10 +326,10 @@
   echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
-  
+
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   //<!----------------- Cabe�alho Acaba Aqui ----------------->
 
   //<!----------------- Tabelao ----------------->
@@ -343,19 +344,19 @@
   if ($usr_formador)
   {
     // 99 - Hist�rico
-    echo("                  <li><span onclick=return(Historico())>".RetornaFraseDaLista($lista_frases, 99)."</span></li>\n");
+    echo("                  <li><span onclick=\"return(Historico());\">".RetornaFraseDaLista($lista_frases, 99)."</span></li>\n");
     // 34 - Avaliar Participantes
     if($avaliacao_participante) /*Se permite avaliar participante*/
-    echo("                  <li><span onclick=\"javascript:AvaliarParticipantes()\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
+    echo("                  <li><span onclick=\"javascript:AvaliarParticipantes();\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
   }
   else
   {
    // 105 - Hist�rico do Desempenho
    echo("                  <li><span onclick=\"javascript:AvaliarParticipantes()\">".RetornaFraseDaLista($lista_frases, 105)."</span></li>\n");
   }
-  echo("    <form name=frmSalvar>\n");
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("    <form name=\"frmSalvar\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
     // G 209 - Salvar em Arquivo ou Imprimir
   echo("                 <li><span onclick=\"window.open('ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."&operacao=".$operacao."', 'Salva/Imprime' ,'width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases, 209)."</span></li>\n");
   if ($usr_formador){
@@ -363,7 +364,7 @@
   	echo("                 <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
   }
   echo("    </form>\n");
-  
+
   if ($dados_avaliacao['Ferramenta'] == 'P')
   {
     // 14 - Atividade no Portf�lio
@@ -388,19 +389,19 @@
   	else
   		echo("                  <li><span onclick=\"window.location='../batepapo/ver_sessoes_realizadas.php?cod_curso=".$cod_curso."'\">".RetornaFraseDaLista($lista_frases, 226)."</span></li>\n");
   }
-  
+
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  echo("    <form name=frmAvaliacao method=get>\n");
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"get\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a��es sobre ela.
-  echo("      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
   // $tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
-  echo("      <input type=hidden name=origem value=ver>\n");
-  echo("      <input type=hidden name=acao value=null>\n"); 
+  echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
+  echo("      <input type=\"hidden\" name=\"origem\"         value=\"ver\">\n");
+  echo("      <input type=\"hidden\" name=\"acao\"           value=null>\n"); 
   echo("    </form>\n");
 
   $tipo = "";
@@ -465,7 +466,7 @@
   }
     $valor = FormataNota($dados_avaliacao['Valor']);
   if($usr_formador){
-    $valor="<span id=\"valor_".$dados_avaliacao['Cod_atividade']."\" class=\"\" onclick='');\">".$valor."</span>";
+    $valor="<span id=\"valor_".$dados_avaliacao['Cod_atividade']."\" class=\"\" onclick=\"\">".$valor."</span>";
   }
   $obj = "<span id=\"text_obj\">".AjustaParagrafo($objetivos)."</span>";
   $crt = "<span id=\"text_crt\">".AjustaParagrafo($criterios)."</span>";
@@ -488,23 +489,23 @@
   echo("                  </tr>\n");
   echo("                  <tr id='tr_".$dados_avaliacao['Cod_atividade']."'>\n");
   echo("                    <td align=left rowspan=\"3\">".$titulo."</td>\n");
-  
+
   if($usr_formador)
   {
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
       echo("                      <ul>\n");
      // 230 - Renomear Título
       echo(  $titulo="<li><span onclick=\"AlteraCampo('tit',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,230)."</span></li>");
-           
+
       // 211 - Editar Criterios
       echo("                        <li><span onClick=\"AlteraTexto('crt');\">".RetornaFraseDaLista($lista_frases,211)."</span></li>\n");
 
       // 210 - Editar Objetivos
       echo("                        <li><span onClick=\"AlteraTexto('obj');\">".RetornaFraseDaLista($lista_frases,210)."</span></li>\n");
-      
+
       // 231 - Editar Valor
       echo(  "<li><span onclick=\"AlteraCampo('valor',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,231)."</span></li>");
-      
+
    // G 1 - Apagar
      // echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
       echo("                      </ul>\n");
@@ -524,24 +525,24 @@
   echo("                  <tr>\n");
   if($usr_formador)
   {
-    echo("                    <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action='' onsubmit=\"Valida(); return false;\">\n");
-    echo(" 				        <input type=hidden name=texto value=\"".RetornaFraseDaLista($lista_frases, 214)."\">\n");
-    echo("                      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-    echo("                      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-    echo("                      <input type=hidden name=cod_usuario value=".$cod_usuario.">\n");
-    echo("                      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+    echo("                    <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action=\"\" onsubmit=\"Valida(); return false;\">\n");
+    echo("                      <input type=\"hidden\" name=\"texto\"          value=\"".RetornaFraseDaLista($lista_frases, 214)."\">\n");
+    echo("                      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
+    echo("                      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
+    echo("                      <input type=\"hidden\" name=\"cod_usuario\"    value=\"".$cod_usuario."\">\n");
+    echo("                      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
   }
   /* 16 - Data de in�cio*/
   echo("                    <td>\n");
   if($usr_formador)
-    echo("                      <input type='text' id='data_inicio' name='data_inicio' size='10' maxlength='10' value='".$data_inicio."' class='input' /><img src='../imgs/ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" />\n");
+    echo("                      <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size='10' maxlength='10' value=\"".$data_inicio."\" class=\"input\" /><img src=\"../imgs/ico_calendario.gif\" alt=\"\" onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" />\n");
   else
     echo("                      ".$data_inicio);
   echo("                    </td>\n");
   /* 17 - Data de T�rmino */
   echo("                    <td>\n");
   if($usr_formador)
-    echo("                      <input type='text' id='data_fim' name='data_fim' size='10' maxlength='10' value='".$data_fim."' class='input' /><img src='../imgs/ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
+    echo("                      <input type=\"text\" id=\"data_fim\" name=\"data_fim\" size='10' maxlength='10' value=\"".$data_fim."\" class=\"input\" /><img src=\"../imgs/ico_calendario.gif\" alt=\"\" onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
   else
     echo("                      ".$data_fim);
   echo("                    </td>\n");
@@ -567,11 +568,11 @@
   echo("            </tr>\n");
   echo("          </table>\n");
   include("../tela2.php");
-  echo("        </td>\n");	
+  echo("        </td>\n");
   echo("      </tr>\n");
   echo("    </table>\n"); 
-  echo("  </body>\n");			
-  echo("</html>\n");	
+  echo("  </body>\n");
+  echo("</html>\n");
 
   Desconectar($sock);
   exit;

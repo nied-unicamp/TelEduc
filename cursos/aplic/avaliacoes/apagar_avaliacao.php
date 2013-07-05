@@ -59,8 +59,8 @@
   echo("<html>\n");
   /* 1 - Avalia��es*/
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
   echo("\n");
 
   echo("\n\n");
@@ -80,7 +80,7 @@
 
   // 1 - Avalia��es
   // 26 - Apagar Avalia��o
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b> - <b class=subtitulo>".RetornaFraseDaLista($lista_frases, 26)."</b>\n";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b> - <b class=\"subtitulo\">".RetornaFraseDaLista($lista_frases, 26)."</b>\n";
   $cod_pagina=1;
   /* Cabecalho */
   echo(PreparaCabecalho($cod_curso,$cabecalho,COD_AVALIACAO,$cod_pagina));
@@ -89,19 +89,19 @@
   if ($origem == "ver" || $origem == "avaliacoes")
   {
     // Avalia��o apagada com sucesso.
-    echo("<form name=frmApagar action=avaliacoes.php> \n");
+    echo("<form name=\"frmApagar\" action=\"avaliacoes.php\"> \n");
     echo(RetornaSessionIDInput());
-    echo("  <input type=hidden name=cod_curso value=".$cod_curso." \n");
-    echo("  <input type=hidden name=tela_avaliacao value=".$tela_avaliacao." \n");
+    echo("  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\"> \n");
+    echo("  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\"> \n");
     echo("</form> \n");
     if (ApagaAvaliacao($sock, $cod_avaliacao, $cod_usuario))
     {
-      echo("<script language=JavaScript>document.frmApagar.submit();</script>\n");
+      echo("<script language=\"javascript\">document.frmApagar.submit();</script>\n");
     }
     else
     {
       // 28 - Erro ao apagar a avalia��o.
-      echo("<script language=JavaScript> alert('".RetornaFraseDaLista($lista_frases, 28)."'); </script>\n");
+      echo("<script language=\"javascript\"> alert('".RetornaFraseDaLista($lista_frases, 28)."'); </script>\n");
     }
   }
   else

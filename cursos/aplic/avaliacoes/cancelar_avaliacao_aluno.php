@@ -49,7 +49,7 @@
 
   $lista_frases=RetornaListaDeFrases($sock,22);
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-  
+
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
@@ -61,7 +61,7 @@
   CORRETAMENTE A AVALIA��O*/
   if ( (!strcmp($ferramenta,'P')) || (!strcmp($ferramenta,'E')) ) 
   {
-     
+
     if ($portfolio_grupo || $exercicio_grupo)
     {
       $lista_integrantes=RetornaListaIntegrantes($sock,$cod_grupo);
@@ -80,12 +80,12 @@
   echo("<html>\n");
   /* 1 - Avalia��es */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../avaliacoes/avaliacoes.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../avaliacoes/avaliacoes.css\">\n");
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
   echo("");
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\">\n");
   echo("self.close();");
   echo("</script>\n");
 

@@ -63,17 +63,17 @@
   echo("<html>\n");
   /* 1 - Avalia��es  */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n"); 
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n"); 
   echo("\n");
 
   if (! EFormador($sock,$cod_curso,$cod_usuario))
   {
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     // 1 - Avalia��es
-    $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
+    $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
     // 94 - Usu�rio sem acesso
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
+    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
     echo(PreparaCabecalho($cod_curso, $cabecalho, COD_AVALIACAO, 1));
     echo("    <br>\n");
     echo("    <p>\n");
@@ -84,7 +84,7 @@
   }
   else
   {
-    echo("<script language=javascript>\n");
+    echo("<script language=\"javascript\">\n");
     echo("  function OpenWindowPerfil(funcao)\n");
     echo("  {\n");
     echo("    window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
@@ -96,9 +96,9 @@
 
     /* P�gina Principal */
     /* 1 - Avalia��es  */
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>");
     /* 99 - Hist�rico */
-    echo("<b class=text> - ".RetornaFraseDaLista($lista_frases,99)."</b><br>\n");
+    echo("<b class=\"text\"> - ".RetornaFraseDaLista($lista_frases,99)."</b><br>\n");
 
     $tmp = RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
     $cod_atividade = $tmp[Cod_atividade];
@@ -119,16 +119,16 @@
       $ferramenta=RetornaFraseDaLista($lista_frases,14);
 
 
-    echo("<img src=\"../figuras/avaliacao.gif\" border=0><font class=text>".$titulo."<font class=text> (".$ferramenta.")</font></font><br>\n");
+    echo("<img src=\"../figuras/avaliacao.gif\" border=0><font class=\"text\">".$titulo."<font class=\"text\"> (".$ferramenta.")</font></font><br>\n");
     echo("<p>\n");
     echo("<table border=0 width=100% cellspacing=0>\n");
     echo("  <tr>\n");
     /* 100 - A��o */
-    echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,100)."</td>\n");
+    echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases,100)."</td>\n");
     /* 101 - Data */
-    echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,101)."</td>\n");
+    echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases,101)."</td>\n");
     /* 102 - Usu�rio */
-    echo("    <td class=colorfield align=center>".RetornaFraseDaLista($lista_frases,102)."</td>\n");
+    echo("    <td class=\"colorfield\" align=center>".RetornaFraseDaLista($lista_frases,102)."</td>\n");
     echo("  </tr>\n");
 
     $res=RetornaResHistoricoDaAvaliacao($sock, $tabela, $cod_avaliacao);
@@ -144,7 +144,7 @@
 
       $linha=RetornaLinha($res);
       $num_linhas--;
-      $nome_usuario="<a href=# onclick=return(OpenWindowPerfil(".$linha['cod_usuario']."));>".NomeUsuario($sock, $linha['cod_usuario'])."</a>";
+      $nome_usuario="<a href=\"#\" onclick=\"return(OpenWindowPerfil(".$linha['cod_usuario']."));\">".NomeUsuario($sock, $linha['cod_usuario'])."</a>";
       $data=UnixTime2DataHora($linha['data']);
 
       if ($linha['acao']=="F")
@@ -246,9 +246,9 @@
       }
 
       echo("  <tr class=".$class.">\n");
-      echo("    <td align=center><font class=text>".$acao."</font></td>\n");
-      echo("    <td align=center><font class=text>".$data."</font></td>\n");
-      echo("    <td align=center><font class=text>".$nome_usuario."</font></td>\n");
+      echo("    <td align=center><font class=\"text\">".$acao."</font></td>\n");
+      echo("    <td align=center><font class=\"text\">".$data."</font></td>\n");
+      echo("    <td align=center><font class=\"text\">".$nome_usuario."</font></td>\n");
       echo("  </tr>\n");
 
     }
@@ -256,7 +256,7 @@
     echo("</table>\n");
 
     // 13 - Fechar
-    echo("<form><input type=button onClick=self.close(); value=".RetornaFraseDaLista($lista_frases_geral,13)."></form>\n");
+    echo("<form><input type=\"button\" onClick=\"self.close();\" value=\"".RetornaFraseDaLista($lista_frases_geral,13)."\"></form>\n");
 
     echo("</body>\n");
     echo("</html>\n");

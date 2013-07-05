@@ -61,22 +61,22 @@
     echo("<html>\n");
     /* 1 - Avalia��es*/
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
     $tabela="Avaliacao";
     $dir="Avaliacao";
 
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
 
     /* Verifica se a pessoa a editar �formador */
     if (!EFormador($sock,$cod_curso,$cod_usuario))
     {
       echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
       /* 1 - Avalia��es*/
-      echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+      echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
       /* 8 - �ea restrita ao formador. */
-      echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
+      echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
       /* 23 - Voltar (gen) */
-      echo("<form><input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+      echo("<form><input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\"></form>\n");
       echo("</body></html>\n");
       Desconectar($sock);
       exit;
@@ -93,15 +93,15 @@
   //$hora_fim='23';
   //$data_inicio=DataHora2Unixtime($data_inicio." ".$hora_inicio.":00");
   //$data_termino=DataHora2Unixtime($data_termino." ".$hora_fim.":59");
- 
+
   AtualizaCadastroAvaliacao($sock, $tabela, $cod_usuario, trim($objetivos), trim($criterios),$tipo,$valor,$data_inicio,$data_termino,$cod_avaliacao);
 
   AtualizaFerramentasNova($sock,22,'T');
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 9 - Cadastro de Avalia�o */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,9)." </b>";
 
   $cod_pagina=5;
   /* Cabecalho */
@@ -110,13 +110,13 @@
   echo("<br>\n");
   echo("<p>\n");
 
-  echo("<form action=../exercicios/index_modelo.php method=post>\n");
+  echo("<form action=\"../exercicios/index_modelo.php\" method=\"post\">\n");
   echo(RetornaSessionIDInput());
   /* 76 - Avalia�o incluida com sucesso. */
-  echo("<font class=text>".RetornaFraseDaLista($lista_frases,76)."<br><br>\n");
+  echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,76)."<br><br>\n");
   /* 23 - Voltar */
-  echo("  <input type=submit value='".RetornaFraseDaLista($lista_frases_geral,23)."' class=text>\n");
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" class=\"text\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso value\"=".$cod_curso.">\n");
 
   echo("</form>\n");
 

@@ -59,14 +59,14 @@
 
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario, COD_AVALIACAO);
 
-  if (EConvidado($sock, $cod_usuario) || EVisitante($sock, $cod_curso, $cod_usuario))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
     echo("<html>\n");
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     // 1 - Avalia��es
-    $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
+    $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
     // 94 - Usu�rio sem acesso
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
+    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
     echo(PreparaCabecalho($cod_curso, $cabecalho, COD_AVALIACAO, 1));
     echo("    <br>\n");
     echo("    <p>\n");
@@ -87,10 +87,10 @@
   }
   else
   {
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
     // funcoes JavaScript
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
 
     echo("  function Historico()\n");
     echo("  {\n");
@@ -243,40 +243,40 @@
   echo("  <p>\n");
   echo("  <table border=0 width=100%>\n");
   echo("    <tbody>\n");
-  echo("      <tr class=menu>\n");
+  echo("      <tr class=\"menu\">\n");
   // 29 - Avalia��es Passadas
-  echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('P')) class=menu><b>".RetornaFraseDaLista($lista_frases, 29)."</b></a></td>\n");
+  echo("        <td align=center><a href=\"#\" onClick=\"return(VerTelaAvaliacoes('P'));\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases, 29)."</b></a></td>\n");
   // 32 - Avalia��es Atuais
-  echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('A')) class=menu><b>".RetornaFraseDaLista($lista_frases, 32)."</b></a></td>\n");
+  echo("        <td align=center><a href=\"#\" onClick=\"return(VerTelaAvaliacoes('A'));\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases, 32)."</b></a></td>\n");
   // 30 - Avalia��es Futuras
-  echo("        <td align=center><a href=# onClick=return(VerTelaAvaliacoes('F')) class=menu><b>".RetornaFraseDaLista($lista_frases, 30)."</b></a></td>\n");
+  echo("        <td align=center><a href=\"#\" onClick=\"return(VerTelaAvaliacoes('F'));\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases, 30)."</b></a></td>\n");
   // 31 - Notas dos Participantes
-  echo("        <td align=center><a href=# onClick=return(VerTelaNotas()) class=menu><b>".RetornaFraseDaLista($lista_frases, 31)."</b></a></td>\n");
+  echo("        <td align=center><a href=\"#\" onClick=\"return(VerTelaNotas());\" class=\"menu\"><b>".RetornaFraseDaLista($lista_frases, 31)."</b></a></td>\n");
   // G 16 - Lixeira
-  echo("        <td align=center><a href=# onClick=return(VerTelaLixeira()) class=menu><font color=yellow><b>".RetornaFraseDaLista($lista_frases_geral, 16)."</b></font></a></td>\n");
+  echo("        <td align=center><a href=\"#\" onClick=\"return(VerTelaLixeira());\" class=\"menu\"><font color=yellow><b>".RetornaFraseDaLista($lista_frases_geral, 16)."</b></font></a></td>\n");
   echo("      </tr>\n");
   echo("    </tbody>\n");
   echo("  </table>\n");
 
   echo("<table border=0 width=100%;>\n");
   echo("  <tbody>\n");
-  echo("    <tr class=menu3>\n");
+  echo("    <tr class=\"menu3\">\n");
   // G 48 - Recuperar
-  echo("      <td align=center><a href=# class=menu3 onclick=return(Recuperar())>".RetornaFraseDaLista($lista_frases_geral, 48)."</a></td>\n");
+  echo("      <td align=center><a href=\"#\" class=\"menu3\" onclick=\"return(Recuperar());\">".RetornaFraseDaLista($lista_frases_geral, 48)."</a></td>\n");
   // G 12 - Excluir
-  echo("      <td align=center><a href=# class=menu3 onclick=return(Excluir())>".RetornaFraseDaLista($lista_frases_geral, 12)."</a></td>\n");
+  echo("      <td align=center><a href=\"#\" class=\"menu3\" onclick=\"return(Excluir())\">".RetornaFraseDaLista($lista_frases_geral, 12)."</a></td>\n");
   echo("    </tr>\n");
   echo("  </tbody>\n");
   echo("</table>\n");
-  echo("    <form name=frmAvaliacao method=post>\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"post\">\n");
   echo(RetornaSessionIDInput());
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a��es sobre ela.
-  echo("      <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
   // $tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
-  echo("      <input type=hidden name=operacao value=-1>\n");
-  echo("      <input type=hidden name=origem value=ver_lixeira>\n");
+  echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
+  echo("      <input type=\"hidden\" name=\"operacao\"       value=\"-1\">\n");
+  echo("      <input type=\"hidden\" name=\"origem\"         value=\"ver_lixeira\">\n");
   echo("    </form>\n");
 
   $dados_avaliacao = RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
@@ -323,66 +323,66 @@
   echo("<table border=0 width=100% cellspacing=0>\n");
   echo("  <tbody>\n");
   echo("    <tr>\n");
-  echo("      <td width=1% class=colorfield>&nbsp;</td>\n");
+  echo("      <td width=1% class=\"colorfield\">&nbsp;</td>\n");
   // 123 - T�tulo
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 123)."</td>\n");
   /*
     // ?? - Ferramenta
-    echo("      <td class=colorfield align=left>&nbsp;&nbsp;"."[Ferramenta]"."</td>\n");
+    echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;"."[Ferramenta]"."</td>\n");
     if ($existe_tipo)
       // ?? - Tipo
-       echo("      <td class=colorfield align=left>&nbsp;&nbsp;"."[Tipo]"."</td>\n"); */
+       echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;"."[Tipo]"."</td>\n"); */
 
   // 113 - Tipo de Avalia��o
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
   // 19 - Valor
-  echo("      <td class=colorfield align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
+  echo("      <td class=\"colorfield\" align=left>&nbsp;&nbsp;".RetornaFraseDaLista($lista_frases, 19)."</td>\n");
   echo("    </tr>\n");
 
   echo("    <tr>\n");
-  echo("      <td width=1%><img src=../figuras/avaliacao.gif border=0></td>\n");
-  echo("      <td class=text align=left>&nbsp;&nbsp;".$titulo."</td>\n");
+  echo("      <td width=1%><img src=\"../figuras/avaliacao.gif\" border=0></td>\n");
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$titulo."</td>\n");
   /*
-    echo("      <td class=text align=left>&nbsp;&nbsp;".$ferramenta."</td>\n");
+    echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$ferramenta."</td>\n");
     if ($existe_tipo)
-      echo("      <td class=text align=left>&nbsp;&nbsp;".$tipo."</td>\n"); */
-  echo("      <td class=text align=left>&nbsp;&nbsp;".$tipo."</td>\n");
-  echo("      <td class=text align=left>&nbsp;&nbsp;".$valor."</td>\n");
+      echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$tipo."</td>\n"); */
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$tipo."</td>\n");
+  echo("      <td class=\"text\" align=left>&nbsp;&nbsp;".$valor."</td>\n");
   echo("    </tr>\n");
   echo("</table>\n");
 
   echo("<P>\n");
   echo("<table border=0 width=100% cellspacing=0>\n");
   // 75 - Objetivos
-  echo("  <tr><td class=colorfield>".RetornaFraseDaLista($lista_frases,75)."</td></tr>\n");
-  echo("  <tr><td><font class=text>".AjustaParagrafo(Enter2Br(LimpaTags($objetivos)))."</font></td></tr>\n");
+  echo("  <tr><td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,75)."</td></tr>\n");
+  echo("  <tr><td><font class=\"text\">".AjustaParagrafo(Enter2Br(LimpaTags($objetivos)))."</font></td></tr>\n");
   echo("</table>\n");
   echo("    <br>\n");
 
   echo("<table border=0 width=100% cellspacing=0>\n");
   // 23 - Crit�rios
-  echo("  <tr><td class=colorfield>".RetornaFraseDaLista($lista_frases,23)."</td></tr>\n");
-  echo("  <tr><td><font class=text>".AjustaParagrafo(Enter2Br(LimpaTags($criterios)))."</font></td></tr>\n");
+  echo("  <tr><td class=\"colorfield\">".RetornaFraseDaLista($lista_frases,23)."</td></tr>\n");
+  echo("  <tr><td><font class=\"text\">".AjustaParagrafo(Enter2Br(LimpaTags($criterios)))."</font></td></tr>\n");
   echo("</table>\n");
   echo("</P>\n");
 
-  echo("<form name=frmVer>\n");
+  echo("<form name=\"frmVer\">\n");
   echo(RetornaSessionIDInput());
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-  echo("  <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
+  echo("  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
   echo("</form>\n");
 
   echo("<P>\n");
   echo("<div align=right>\n");
-  echo("<form name=frmSalvar>\n");
+  echo("<form name=\"frmSalvar\">\n");
   echo(RetornaSessionIDInput());
-  echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("  <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
+  echo("  <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+  echo("  <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
   // G 50 - Salvar em Arquivo
-  echo("  <input type=button value='".RetornaFraseDaLista($lista_frases_geral, 50)."' onClick='SalvarVerAvaliacao();'>\n");
+  echo("  <input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 50)."\" onClick=\"SalvarVerAvaliacao();\">\n");
   // G 14 - Imprimir
-  echo("  <input type=button value='".RetornaFraseDaLista($lista_frases_geral, 14)."' onClick='ImprimirRelatorio();'>\n");
+  echo("  <input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 14)."\" onClick=\"ImprimirRelatorio();\">\n");
   echo("</form>");
   echo("</div>\n");
   echo("</P>\n");

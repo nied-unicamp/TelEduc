@@ -72,15 +72,15 @@
   }
   else
   {
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
     echo("\n");
 
     /* Fun��es JavaScript */
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
 
     $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
-    
+
     echo("  var expressao;\n");   
     echo("  var expressao_orginal;\n");
     echo("  var media;\n");
@@ -118,7 +118,7 @@
     echo("    expressao=expressao.replace(new RegExp(/ROUND\(/g), 'Math.round(');\n");
     echo("    expressao=expressao.replace(new RegExp(/SIN\(/g), 'Math.sin(');\n");
     echo("    expressao=expressao.replace(new RegExp(/TAN\(/g), 'Math.tan(');\n");
-           
+
     // Fun��es em portugu�s
     echo("    expressao=expressao.replace(new RegExp(/RAIZ\(/g), 'Math.sqrt(');\n");
     echo("    expressao=expressao.replace(new RegExp(/POT�NCIA\(/g), 'Math.pow(');\n");
@@ -142,14 +142,14 @@
     echo("    expressao=expressao.replace(new RegExp(/ARRED\(/g), 'Math.round(');\n");
     echo("    expressao=expressao.replace(new RegExp(/SEN\(/g), 'Math.sin(');\n");
     echo("    expressao=expressao.replace(new RegExp(/TAN\(/g), 'Math.tan(');\n");
-    
+
     // Constantes
     echo("    expressao=expressao.replace(new RegExp(/PI/g), 'Math.PI');\n");
-    
+
     echo("  }\n\n");
- 
+
     echo("  function AvaliarExpressao() {\n");
-    
+
     $cont_batepapo=1;
     $cont_forum=1;
     $cont_portfolio=1;
@@ -194,7 +194,7 @@
     }
     echo("      ok=false;");
     echo("    }\n");
-    
+
     echo("      if (norma != '') {\n");
     echo("        media=nota;");
     echo("        nota=eval(norma);\n");
@@ -206,7 +206,7 @@
     echo("        }\n");
     echo("        ok=false;\n");
     echo("      }\n");
-    
+
     echo("    if (ok) {\n");
     echo("      document.getElementById('expFinal').innerHTML=expressao_original;\n");
     echo("      document.getElementById('normaFinal').innerHTML=norma;");
@@ -216,7 +216,7 @@
     echo("      document.getElementById('normaFinal').innerHTML='".RetornaFraseDaLista($lista_frases, 199)."';\n");
     echo("    }\n");
     echo("  }\n\n");
-   
+
     echo("  function isUndefined(a) {\n");
     echo("    return typeof a == 'undefined';\n");
     echo("  }\n");
@@ -225,7 +225,7 @@
     echo("    window.opener.location.reload();\n");
     echo("    self.close();\n");
     echo("  }\n");
-    
+
     echo("  function GravarExpressao() {\n");
     echo("    LoopAvaliarExpressao();\n");
     echo("    if (ok) {\n");
@@ -235,7 +235,7 @@
     echo("      document.frmExpressao.submit();\n");
     echo("    }\n");
     echo("  }\n");
-   
+
     echo("function AjudaMedia(ajuda, nome_janela)\n");
     echo("{\n");
     $param = "'width=450,height=300,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes'";
@@ -243,12 +243,12 @@
     echo("  window_handle.focus(); \n");
     echo("  return false;");
     echo("}\n"); 
-    
+
     echo("  function AdicionarLegenda(l) {\n");
     echo("    document.getElementById('exp').value=document.getElementById('exp').value+l;\n");
     echo("    document.getElementById('exp').focus();\n");
     echo("  }\n");
-    
+
     echo("</script>\n");
   }
 
@@ -256,37 +256,38 @@
   {
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     // 1 - Avalia��es
-    $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
+    $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
     // 94 - Usu�rio sem acesso
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
+    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 94)."</b>";
     echo(PreparaCabecalho($cod_curso, $cabecalho, COD_AVALIACAO, 1));
     echo("    <br>\n");
     /* 23 - Voltar (gen) */
-    echo("<form name=frmErro><input class=text type=button name=cmdVoltar value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+    echo("<form name=\"frmErro\"><input class=\"text\" type=\"button\" name=\"cmdVoltar\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\"></form>\n");
 
     echo("  </body>\n");
     echo("  </html>\n");
     exit();
   }
-  
-  echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad='LoopAvaliarExpressao();self.focus();'>\n");
-  $cabecalho ="<b class=titulo>Avalia��es</b>";
+
+  echo("<body link=#0000ff vlink=#0000ff bgcolor=white onLoad=\"LoopAvaliarExpressao();self.focus();\">\n");
+  /* 1 - Avalia��es */
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
 
   /* 190 - M�dias dos participantes */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 190)."</b>";
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 190)."</b>";
 
   $cod_pagina = 14;
   /* Cabecalho */
   echo(PreparaCabecalho($cod_curso,$cabecalho,COD_AVALIACAO,$cod_pagina));
 
 
-  echo("    <form name=frmAvaliacao method=post>\n");
+  echo("    <form name=\"frmAvaliacao\" method=\"post\">\n");
   echo(RetornaSessionIDInput());
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
   // Passa o cod_avaliacao para executar a��es sobre ela.
-  echo("      <input type=hidden name=cod_avaliacao value=-1>\n");
+  echo("      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"-1\">\n");
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
-  echo("      <input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n");
+  echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
   echo("    </form>\n");
 
   if (strcmp($gravar, "sim") == 0) {
@@ -297,19 +298,20 @@
      } else {
         // 196 - Ocorreu um erro ao gravar a express�o:
         // 195 - Norma
-        echo("<p><font class='text'>".RetornaFraseDaLista($lista_frases, 196).": ".$exp_gravar." (".RetornaFraseDaLista($lista_frases, 195).": $norma_gravar)</font></p>\n");
+        echo("<p><font class=\"text\">".RetornaFraseDaLista($lista_frases, 196).": ".$exp_gravar." (".RetornaFraseDaLista($lista_frases, 195).": $norma_gravar)</font></p>\n");
         // 13 - Fechar (ger)
-        echo("<input type='button' value='".RetornaFraseDaLista($lista_frases_geral, 13)."' onClick='self.close();'>");
+        echo("<input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onClick=\"self.close();\">");
      }
-     
+
      exit();
   }
 
   if (!$usr_formador) {
-    echo("<p><font class='text'>�rea Restrita ao Formador.</font></p>\n");
+    /* 8 - �rea Restrita ao Formador. */
+    echo("<p><font class='text'>".RetornaFraseDaLista($lista_frases, 8)."</font></p>\n");
     exit();
   }
-  
+
   $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
 
   if (count($lista_avaliacoes)>0)
@@ -370,9 +372,9 @@
                       UnixTime2Data($linha['Data_inicio'])." ".
                       RetornaFraseDaLista($lista_frases, 167)." ".
                       UnixTime2Data($linha['Data_termino'])
-        
+
          ); 
-                     
+
       }
       elseif (!strcmp($linha['Ferramenta'],'E'))
       {
@@ -409,97 +411,99 @@
   $media=RetornaInformacoesMedia($sock);
 
   // 203 - Express�o atual
-  echo("<font class='text'>".RetornaFraseDaLista($lista_frases, 203).":&nbsp;</font>\n");
-  echo("<font class='text' id='expFinal'>".$media['expressao']."</font><br>\n");
+  echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases, 203).":&nbsp;</font>\n");
+  echo("<font class=\"text\" id=\"expFinal\">".$media['expressao']."</font><br>\n");
   // 195 - Norma
-  echo("<font class='text'>".RetornaFraseDaLista($lista_frases, 195).":&nbsp;</font>\n");
-  echo("<font class='text' id='normaFinal'>".$media['norma']."</font><br><br>\n");
+  echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases, 195).":&nbsp;</font>\n");
+  echo("<font class=\"text\" id=\"normaFinal\">".$media['norma']."</font><br><br>\n");
 
   if ($usr_formador) {
-    echo("<form name='frmExpressao' method='post'>\n");
+    echo("<form name=\"frmExpressao\" method=\"post\">\n");
     echo(   RetornaSessionIDInput());
-    echo("  <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+    echo("  <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
     // Passa o cod_avaliacao para executar a��es sobre ela.
-    echo("  <input type='hidden' name='cod_avaliacao' value=".$cod_avaliacao.">\n");
-    echo("  <input type='hidden' name='origem' value='avaliacoes'>\n");
-    echo("  <input type='hidden' name='exp_gravar' id='exp_gravar'>\n");
-    echo("  <input type='hidden' name='norma_gravar' id='norma_gravar'>\n");
-    echo("  <input type='hidden' name='gravar' value='sim'>\n");
+    echo("  <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
+    echo("  <input type=\"hidden\" name=\"origem\"        value=\"avaliacoes\">\n");
+    echo("  <input type=\"hidden\" name=\"exp_gravar\"    id=\"exp_gravar\">\n");
+    echo("  <input type=\"hidden\" name=\"norma_gravar\"  id=\"norma_gravar\">\n");
+    echo("  <input type=\"hidden\" name=\"gravar\"        value=\"sim\">\n");
 
     echo("<table cellspacing=0 cellpadding=0 border=0 width=100%>\n");
     echo("  <tr>\n");
     // 202 - Express�o para c�lculo da m�dia
-    echo("    <td class=colorfield width=75%><font class='text'>&nbsp;".RetornaFraseDaLista($lista_frases, 202)."</font></td>\n");
+    echo("    <td class=\"colorfield\" width=75%><font class=\"text\">&nbsp;".RetornaFraseDaLista($lista_frases, 202)."</font></td>\n");
     // 201 - Opcional
     // 195 - Norma
-    echo("    <td class=colorfield width=25%><font class='text'>&nbsp;(".RetornaFraseDaLista($lista_frases, 201).")&nbsp;".RetornaFraseDaLista($lista_frases, 195)."</font></td>");
+    echo("    <td class=\"colorfield\" width=25%><font class=\"text\">&nbsp;(".RetornaFraseDaLista($lista_frases, 201).")&nbsp;".RetornaFraseDaLista($lista_frases, 195)."</font></td>");
     echo("  </tr>\n");
     echo("  <tr style='height: 40px;'>\n");
-    echo("    <td class=g1field>\n");
-    echo("        &nbsp;&nbsp;<input type='text' name='exp' id='exp' size=45 value='".$media['expressao']."'>
-    &nbsp;<a href='#' onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\">?</a>\n");
+    echo("    <td class=\"g1field\">\n");
+    echo("        &nbsp;&nbsp;<input type=\"text\" name=\"exp\" id=\"exp\" size=45 value=\"".$media['expressao']."\">");
+    echo("        &nbsp;<a href=\"#\" onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\">?</a>\n");
     echo("    </td>\n");
-    echo("    <td class=g1field>&nbsp;&nbsp;<input type='text' name='norma' id='norma' size=5 value=".$media['norma'].">
-    &nbsp;<a href='#' onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\">?</a></td>\n");
+    echo("    <td class=\"g1field\">\n");
+    echo("        &nbsp;&nbsp;<input type=\"text\" name=\"norma\" id=\"norma\" size=5 value=\"".$media['norma']."\">");
+    echo("        &nbsp;<a href=\"#\" onClick=\"AjudaMedia('norma', 'AjudaMediaNorma')\">?</a></td>\n");
     echo("  </tr>\n");
 
     echo("  <tr>\n");
     // 50 - Compartilhar
-    echo("    <td class='colorfield' colspan=2><font class='text'>&nbsp;".RetornaFraseDaLista($lista_frases, 50)."</font><br>\n");
+    echo("    <td class=\"colorfield\" colspan=2><font class=\"text\">&nbsp;".RetornaFraseDaLista($lista_frases, 50)."</font><br>\n");
     echo("  </tr>"); 
 
 
    if ($media['tipo_compartilhamento']=="F")
     {
-      $compf=" checked";
+      $compf="checked";
       $comptotal="";
       $compfp="";
-      echo("<input type=hidden name=tipo_compartilhamento_gravar value=F>\n");
+      echo("<input type=\"hidden\" name=\"tipo_compartilhamento_gravar\" value=\"F\">\n");
     }
     else if ($media['tipo_compartilhamento']=="T")
     {
       $compf="";
-      $comptotal=" checked";
+      $comptotal="checked";
       $compfp="";
-      echo("<input type=hidden name=tipo_compartilhamento_gravar value=T>\n");
+      echo("<input type=\"hidden\" name=\"tipo_compartilhamento_gravar\" value=\"T\">\n");
     }
     else if ($media['tipo_compartilhamento']=="A")
     {     
       $compf="";
       $comptotal="";
-      $compfp=" checked";
-      echo("<input type=hidden name=tipo_compartilhamento_gravar value=A>\n");;
+      $compfp="checked";
+      echo("<input type=\"hidden\" name=\"tipo_compartilhamento_gravar\" value=\"A\">\n");
     }
     else
     {     
       $compf="";
       $comptotal="";
       $compfp=" checked";
-      echo("<input type=hidden name=tipo_compartilhamento_gravar value=A>\n");;
-    }   
- 
+      echo("<input type=\"hidden\" name=\"tipo_compartilhamento_gravar\" value=\"A\">\n");
+    }
+
     echo("  <tr>");
-    echo("    <td class='g1field' colspan=2>");
+    echo("    <td class=\"g1field\" colspan=2>");
     // 51 - Totalmente Compartilhado
-    echo("    &nbsp;<input type='radio' name='compartilhamento' id='compartilhamento'".$comptotal." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='T';\"><font class='text'>".RetornaFraseDaLista($lista_frases,51)."</font><br>");
+    echo("    &nbsp;<input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\" ".$comptotal." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='T';\"><font class=\"text\">".RetornaFraseDaLista($lista_frases,51)."</font><br>");
     // 52 - Compartilhado com Formadores
-    echo("    &nbsp;<input type='radio' name='compartilhamento' id='compartilhamento'".$compf." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='F';\"><font class='text'>".RetornaFraseDaLista($lista_frases,52)."</font><br>");
+    echo("    &nbsp;<input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\" ".$compf." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='F';\"><font class=\"text\">".RetornaFraseDaLista($lista_frases,52)."</font><br>");
     // 54 - Compartilhado com Formadores e Com o Participante
-    echo("    &nbsp;<input type='radio' name='compartilhamento' id='compartilhamento'".$compfp." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='A';\"><font class='text'>".RetornaFraseDaLista($lista_frases,54)."</font>");
+    echo("    &nbsp;<input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\" ".$compfp." onClick=\"document.frmExpressao.tipo_compartilhamento_gravar.value='A';\"><font class=\"text\">".RetornaFraseDaLista($lista_frases,54)."</font>");
     echo("    </td>\n");
     echo("  </tr>\n");
-                        
+
     echo("  <tr>\n");
     echo("    <td colspan='2'>\n");
     // 193 - Gravar Express�o
-    echo("        <br><input type='button' onClick='GravarExpressao();' value='".RetornaFraseDaLista($lista_frases,193)."'>\n");
+    echo("        <br>\n");
+    echo("        <input type=\"button\" onClick=\"GravarExpressao();\" value=\"".RetornaFraseDaLista($lista_frases,193)."\">\n");
     // 2 - Cancelar (ger)
-    echo("        <input type='button' onClick='self.close();' value='".RetornaFraseDaLista($lista_frases_geral, 2)."'>\n");
+    echo("        <input type=\"button\" onClick=\"self.close();\" value=\"".RetornaFraseDaLista($lista_frases_geral, 2)."\">\n");
     echo("    </td>\n");
     echo("  </tr>\n");
     echo("</table></form><br>\n");
   }
-    
+
   $apresentar_legenda = (
        (is_array($legenda_batepapo)  && count($legenda_batepapo) > 0)
     || (is_array($legenda_forum)     && count($legenda_forum) > 0)
@@ -509,13 +513,13 @@
 
   if ($apresentar_legenda)
   {
-    echo("<table cellpadding=0 cellspacing=0 border=0 width=80% class=legenda_bg> \n");
+    echo("<table cellpadding=0 cellspacing=0 border=0 width=80% class=\"legenda_bg\">\n");
     // cabecalho
-    echo("<tr class=legenda_bg>\n");
+    echo("<tr class=\"legenda_bg\">\n");
     // celula vazia acima do codigo
-    echo("<td class=legenda_bg>&nbsp;</td>\n");
+    echo("<td class=\"legenda_bg\">&nbsp;</td>\n");
     // 116 - Legenda
-    echo("<td class=legenda_bg><font class=text><b>".RetornaFraseDaLista($lista_frases, 116)."</b></font></td>\n");
+    echo("<td class=\"legenda_bg\"><font class=\"text\"><b>".RetornaFraseDaLista($lista_frases, 116)."</b></font></td>\n");
 
     if (is_array($legenda_batepapo) && count($legenda_batepapo) > 0)
     {
@@ -526,7 +530,7 @@
          "<tr> \n".
          "<td colspan=2>&nbsp;</td> \n".
          // 168 - Per�odo
-         "<td><font class=text><b>".RetornaFraseDaLista($lista_frases, 168)."</b></font></td> \n".
+         "<td><font class=\"text\"><b>".RetornaFraseDaLista($lista_frases, 168)."</b></font></td> \n".
          "</tr> \n";
     }
     else
@@ -538,10 +542,10 @@
     }
 
     // coluna da data
-    echo("<td class=legenda_bg><font class=text><b>".$frase_data."</b></font></td>\n");
+    echo("<td class=\"legenda_bg\"><font class=\"text\"><b>".$frase_data."</b></font></td>\n");
 
     // coluna com a descricao da ferramenta
-    echo("<td class=legenda_bg><font class=text>&nbsp;</font></td>\n");
+    echo("<td class=\"legenda_bg\"><font class=\"text\">&nbsp;</font></td>\n");
     echo("</tr>\n");
 
     if (is_array($legenda_batepapo) && count($legenda_batepapo) > 0)
@@ -551,10 +555,10 @@
         echo("<tr>\n");
         echo("<td>&nbsp;</td>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
-        echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
+        echo("<td><font class=\"text\"><b><a href=\"#\" onClick=\"AdicionarLegenda(\"".$leg[0]."\");\">".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
+        echo("<td><font class=\"text\">".$linha_legenda['data']."</font></td>\n");
         // 146 - Sess�o de Batepapo
-        echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 146)."</font></td>\n");
+        echo("<td><font class=\"text\">".RetornaFraseDaLista($lista_frases, 146)."</font></td>\n");
         echo("</tr>\n");
       }
       echo("<tr><td colspan=4>&nbsp;</td></tr>\n");
@@ -569,10 +573,10 @@
         echo("<tr>\n");
         echo("<td>&nbsp;</td>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
-        echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
+        echo("<td><font class=\"text\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."');\">".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
+        echo("<td><font class=\"text\">".$linha_legenda['data']."</font></td>\n");
         // 145 - F�rum de discuss�o
-        echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 145)."</font></td>\n");
+        echo("<td><font class=\"text\">".RetornaFraseDaLista($lista_frases, 145)."</font></td>\n");
         echo("</tr>\n");
       }
       echo("<tr><td colspan=4>&nbsp;</td></tr>\n");
@@ -586,10 +590,10 @@
         echo("<tr>\n");
         echo("<td>&nbsp;</td>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
-        echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
+        echo("<td><font class=\"text\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."');\">".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
+        echo("<td><font class=\"text\">".$linha_legenda['data']."</font></td>\n");
         // 14 - Atividade no Portfolio
-        echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 14)."</font></td>\n");
+        echo("<td><font class=\"text\">".RetornaFraseDaLista($lista_frases, 14)."</font></td>\n");
         echo("</tr>\n");
       }
     }
@@ -602,14 +606,14 @@
           echo("<tr>\n");
           echo("<td>&nbsp;</td>\n");
           $leg=explode("\n",$linha_exercicio['leg']); 
-          echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_exercicio['titulo']."</font></td>\n");
-          echo("<td><font class=text>".$linha_exercicio['data']."</font></td>\n");
+          echo("<td><font class=\"text\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."');\">".$leg[0]."</a></b> - ".$linha_exercicio['titulo']."</font></td>\n");
+          echo("<td><font class=\"text\">".$linha_exercicio['data']."</font></td>\n");
           // 175 - Atividade em Exerc�cios
-          echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 175)."</font></td>\n");
+          echo("<td><font class=\"text\">".RetornaFraseDaLista($lista_frases, 175)."</font></td>\n");
           echo("</tr>\n");
         }
        }
-      
+
     if (is_array($legenda_avaliacao_externa) && count($legenda_avaliacao_externa) > 0)
     {
       echo($linha_data_forum);
@@ -618,10 +622,10 @@
         echo("<tr>\n");
         echo("<td>&nbsp;</td>\n");
         $leg=explode("\n",$linha_legenda['leg']);
-        echo("<td><font class=text><b><a href='#' onClick='AdicionarLegenda(\"".$leg[0]."\");'>".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
-        echo("<td><font class=text>".$linha_legenda['data']."</font></td>\n");
+        echo("<td><font class=\"text\"><b><a href=\"#\" onClick=\"AdicionarLegenda('".$leg[0]."');\">".$leg[0]."</a></b> - ".$linha_legenda['titulo']."</font></td>\n");
+        echo("<td><font class=\"text\">".$linha_legenda['data']."</font></td>\n");
         // 14 - Atividade no Portfolio
-        echo("<td><font class=text>".RetornaFraseDaLista($lista_frases, 187)."
+        echo("<td><font class=\"text\">".RetornaFraseDaLista($lista_frases, 187)."
         </font></td>\n");
         echo("</tr>\n");
       }
@@ -631,8 +635,8 @@
   echo("<br>\n");
 
   // 2 - Cancelar (ger)
-  echo("<p align='right'><input type='button' value='".RetornaFraseDaLista($lista_frases_geral, 2)."' onClick='self.close();'></p>\n");
-  
+  echo("<p align='right'><input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 2)."\" onClick=\"self.close();\"></p>\n");
+
   echo("</body>\n");
   echo("</html>\n");
 

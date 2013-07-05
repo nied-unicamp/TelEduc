@@ -62,17 +62,17 @@
     echo("<html>\n");
     /* 1 - Avalia��es */
     echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+    echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
 
 
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     /* 1 - Avalia��es */
-    echo("<b class=titulo> ".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\"> ".RetornaFraseDaLista($lista_frases,1)."</b>\n");
   /* 8 - �ea restrita ao formador. */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
-    echo("<form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+    echo("<form><input class=\"text\" type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
     echo("</body></html>\n");
     Desconectar($sock);
     exit;
@@ -81,15 +81,15 @@
   echo("<html>\n");
   /* 1 - Avalia��es */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
 
-   
+
   /*CONSISTENCIA PARA N�O DEIXAR O CAMPO NOTA DO BANCO DE 
   DADOS DE AVALIA��O DIFERENTE DO CAMPO NOTA DO BANCO DE DADOS DE EXERCICIOS*/
   $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
   $portfolio_grupo = ( ($dados['Ferramenta'] == 'P' || $dados['Ferramenta']=='N') && ($dados['Tipo'] == 'G') )||(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'));
-    
+
   if ($ferramenta == 'E')
   {
       if ($portfolio_grupo)
@@ -103,8 +103,8 @@
       }
   }
 
-                                       
-  
+
+
  $tabela="Avaliacao_notas";
   $virgula = strstr($nota, ",");
   if (strcmp($virgula,""))
@@ -162,9 +162,9 @@
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
   /* 1 - Avalia��es */
-  $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
   /* 33 - Avaliar participante */
-  $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,95)."</b>";
+  $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,95)."</b>";
 
   $cod_pagina=7;
   /* Cabecalho */
@@ -177,16 +177,16 @@
   {
      if($verifica)
     /* 55 - Grupo avaliado com sucesso! */
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,55)."<br><br>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,55)."<br><br>\n");
     else
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,189).NomeGrupo($sock,$cod_grupo).". <br><br>\n");    
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,189).NomeGrupo($sock,$cod_grupo).". <br><br>\n");    
   }
   else
      /* 56 - Participante avaliado com sucesso! */
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,56)."<br><br>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,56)."<br><br>\n");
 
   /* 13 - Fechar (ger) */
-  echo("  <form><input class=text type=button value='".RetornaFraseDaLista($lista_frases_geral,13)."' onClick='opener.top.trabalho.direita.location.reload();self.close();'></form>\n");
+  echo("  <form><input class=\"text\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"opener.top.trabalho.direita.location.reload();self.close();\"></form>\n");
 
   echo("</body>\n");
   echo("</html>\n");

@@ -63,8 +63,8 @@
   /* 1 - Avalia��es
   */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("    <link rel=stylesheet TYPE=text/css href=avaliacoes.css>\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("    <link rel=\"stylesheet\" type=\"text/css\" href=\"avaliacoes.css\">\n");
   echo("\n");
 
   echo("\n\n");
@@ -77,11 +77,11 @@
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     /* 1 - Avalia��es*/
-    echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 8 - �rea restrita ao formador. */
-    echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
+    echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,8)."</b><br>\n");
     /* 23 - Voltar (gen) */
-    echo("<form><input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+    echo("<form><input type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\"></form>\n");
     echo("</body></html>\n");
     Desconectar($sock);
     exit;
@@ -90,20 +90,20 @@
   {
     echo("<body link=#0000ff vlink=#0000ff bgcolor=white onload=self.focus();>\n");
     /* 1 - Avalia��es */
-    $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+    $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
     if ($operacao=="excluir")
     /* 80 - Excluir Avalia��o */
-      $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,80)." </b>";
+      $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,80)." </b>";
 
    /*COMO A LIXEIRA FOI EXCLUIDA DO AMBIENTE N�O HA MAIS NECESSIDADE DE TER COISAS REFERENTES A RECUPERAR NO CODIGO. POR ISSO FICARA TUDO COMENTADO AQUI.*/
-      
-      
+
+
     //elseif ($operacao=="recuperar")
     /* 81 - Recuperar Avalia��o */
-      //$cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,81)." </b>";
+      //$cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,81)." </b>";
 
     $cod_pagina=10; //codigo da lixeira
-    
+
     /* Cabecalho */
     echo(PreparaCabecalho($cod_curso,$cabecalho,22,$cod_pagina));
 
@@ -113,11 +113,11 @@
     // echo("    <form action=\"ver_lixeira_avaliacoes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&".time()."\" method=post>\n");
     if ($tela_avaliacao == "P" || $tela_avaliacao == "A" || $tela_avaliacao == "F")
     {
-      $form = "<form name=frmExcluir action=avaliacoes.php>\n";
+      $form = "<form name=\"frmExcluir\" action=\"avaliacoes.php\">\n";
       $form.= RetornaSessionIDInput();
-      $form.= "<input type=hidden name=cod_curso value=".$cod_curso.">\n";
-      $form.= "<input type=hidden name=tela_avaliacao value=".$tela_avaliacao.">\n";
-      
+      $form.= "<input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n";
+      $form.= "<input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n";
+
       /* 23 - Voltar */
       $submit = "<input type=submit value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n";
     }
@@ -134,28 +134,28 @@
       if (ExcluiAvaliacao($sock, $cod_avaliacao,$cod_usuario))
       {
         /* 82 - Avalia��o exclu�da com sucesso. */
-        echo("      <font class=text>".RetornaFraseDaLista($lista_frases,82)."</font>\n");
+        echo("      <font class=\"text\">".RetornaFraseDaLista($lista_frases,82)."</font>\n");
       }
       else
       {
         /* 83 - Erro ao se excluir a avalia��o. */
-        echo("      <font class=text>".RetornaFraseDaLista($lista_frases,83)."</font>\n");
+        echo("      <font class=\"text\">".RetornaFraseDaLista($lista_frases,83)."</font>\n");
       }
     }
 
     /*NAO EXISTE MAIS "RECUPERAR"*/
-    
+
     //else if ($operacao=="recuperar")
     //{
       //if (RecuperaAvaliacao($sock, $cod_avaliacao,$cod_usuario))
       //{
         /* 84 - Avalia��o recuperada com sucesso. */
-        //echo("      <font class=text>".RetornaFraseDaLista($lista_frases,84)."</font>\n");
+        //echo("      <font class=\"text\">".RetornaFraseDaLista($lista_frases,84)."</font>\n");
       //}
       //else
       //{
         /* 85 - Erro ao se recuperar a avalia��o. */
-        //echo("      <font class=text>".RetornaFraseDaLista($lista_frases,85)."</font>\n");
+        //echo("      <font class=\"text\">".RetornaFraseDaLista($lista_frases,85)."</font>\n");
       //}
     //}
     echo("      <p>\n");
