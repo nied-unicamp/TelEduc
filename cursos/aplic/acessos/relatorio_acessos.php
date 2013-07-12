@@ -129,22 +129,22 @@
 
     if (!$SalvarEmArquivo)
     {
-      echo("          <form action=salvar_arquivo.php method=get name=\"formSalvar\">\n");
-      echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-      echo("            <input type=hidden name=nome_arquivo value='relatorio_acessos.html' />\n");
-      echo("            <input type=hidden name=origem value='acessos' />\n");
+      echo("          <form action=\"salvar_arquivo.php\" method=\"get\" name=\"formSalvar\">\n");
+      echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+      echo("            <input type=\"hidden\" name=\"nome_arquivo\" value=\"relatorio_acessos.html\" />\n");
+      echo("            <input type=\"hidden\" name=\"origem\" value=\"acessos\" />\n");
       if (isset($check_ultimos))
-        echo("            <input type=hidden name=check_ultimos value=1 />\n");
+        echo("            <input type=\"hidden\" name=\"check_ultimos\" value=\"1\" />\n");
       if (isset($check_qtde))
-        echo("            <input type=hidden name=check_qtde value=1 />\n");
+        echo("            <input type=\"hidden\" name=\"check_qtde\"    value=\"1\" />\n");
       if (isset($check_local))
-        echo("            <input type=hidden name=check_local value=1 />\n");
+        echo("            <input type=\"hidden\" name=\"check_local\"   value=\"1\" />\n");
       if (isset($check_cidade))
-        echo("            <input type=hidden name=check_cidade value=1 />\n");
+        echo("            <input type=\"hidden\" name=\"check_cidade\"  value=\"1\" />\n");
       if (isset($check_estado))
-        echo("            <input type=hidden name=check_estado value=1 />\n");
+        echo("            <input type=\"hidden\" name=\"check_estado\"  value=\"1\" />\n");
       if (isset($radio_ord))
-        echo("            <input type=hidden name=radio_ord value=\"".$radio_ord."\" />\n");
+        echo("            <input type=\"hidden\" name=\"radio_ord\" value=\"".$radio_ord."\" />\n");
 
       echo("          </form>\n");
 
@@ -173,15 +173,19 @@
     /* 52 - Usuário */
     echo("              <td>".RetornaFraseDaLista($lista_frases,52)."</td>\n");
 
-    $coluna2 = (($check_local)||($check_cidade)||($check_estado));
-    $coluna3 = (($check_ultimos)||($check_qtde));
-    
+    $coluna2 = ((isset($check_local)  && $check_local)  ||
+                (isset($check_cidade) && $check_cidade) ||
+                (isset($check_estado) && $check_estado));
+
+    $coluna3 = ((isset($check_ultimos) && $check_ultimos) || 
+                (isset($check_qtde)    && $check_qtde));
+
     /* numero de colunas na tabela */
     $num_colunas = 1;
-    
+
     if ($coluna2){
       echo("              <td></td>\n");
-      $num_coluna++;
+      $num_colunas++;
     }
 
     if ($coluna3){
@@ -271,7 +275,7 @@
         }
   
         /* numero de acessos do usuario*/
-        if ($check_qtde)
+        if (isset($check_qtde) && $check_qtde)
         {
           $qtde_acessos = (isset($lista_acessos[$cod]) ? $lista_acessos[$cod]['num_acessos'] : 0);
           if ($max_qtde_acessos>0)

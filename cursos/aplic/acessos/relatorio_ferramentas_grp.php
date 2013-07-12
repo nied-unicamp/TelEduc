@@ -101,13 +101,13 @@
 
   if (!$SalvarEmArquivo)
   {
-    echo("                <form action=salvar_arquivo.php method=get>\n");
-    echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=hidden name=origem value='ferr_grp' />\n");
-    echo("                  <input type=hidden name=nome_arquivo value='relatorio_ferramentas_grp.html' />\n");
-    echo("                  <input type=hidden name=hora_iniUT value=\"".$hora_iniUT."\" />\n");
-    echo("                  <input type=hidden name=hora_fimUT value=\"".$hora_fimUT."\" />\n");
-    echo("                  <input type=hidden name=cod_grupo value=\"".$cod_grupo."\" />\n");
+    echo("                <form action=\"salvar_arquivo.php\" method=\"get\">\n");
+    echo("                  <input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"origem\"       value=\"ferr_grp\" />\n");
+    echo("                  <input type=\"hidden\" name=\"nome_arquivo\" value=\"relatorio_ferramentas_grp.html\" />\n");
+    echo("                  <input type=\"hidden\" name=\"hora_iniUT\"   value=\"".$hora_iniUT."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"hora_fimUT\"   value=\"".$hora_fimUT."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_grupo\"    value=\"".$cod_grupo."\" />\n");
     echo("                </form>\n");
     echo("                <ul class=\"btAuxTabs\">\n");  
     /* 22 - Salvar Em Arquivo */

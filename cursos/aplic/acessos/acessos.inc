@@ -134,6 +134,8 @@ function RetornaUsuarios($sock,$ordenacao, $cod_curso)
   $query.= "(binary UC.tipo_usuario='A' or ";
              //F - Formadores
   $query.= " binary UC.tipo_usuario='F' or ";
+             //Z - Colaboradores
+  $query.= " binary UC.tipo_usuario='Z' or ";
              //V - Visitantes
   $query.= " binary UC.tipo_usuario='V') ";
   $query.= "order by ".$ordenacao;
@@ -510,17 +512,36 @@ function RetornaNomeUnicoGrupo($sock,$cod_grupo)
 }
 
 /* *********************************************************************
+   HaColaboradores - retorna se ha colaboradores no curso.
+   entrada: $sock      - sock de conexao
+            $cod_curso - código do curso
+   saida: true  - ha colaboradores
+          false - nao ha
+*/
+function HaColaboradores($sock, $cod_curso)
+{
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query = "select cod_usuario from ".$dbnamebase.".Usuario_curso where tipo_usuario='Z' and cod_curso = '".$cod_curso."' limit 1";
+  $res   = Enviar ($sock, $query);
+
+  return ( RetornaNumLinhas($res) > 0);
+}
+
+/* *********************************************************************
    HaVisitantes - retorna se ha visitantes
-   entrada: $sock - sock de conexao
+   entrada: $sock      - sock de conexao
+            $cod_curso - código do curso
    saida: true  - Ha visitantes no curso
           false - Nao ha visitantes no curso
 */
-function HaVisitantes($sock)
+function HaVisitantes($sock, $cod_curso)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query = "select cod_usuario from ".$dbnamebase.".Usuario_curso where tipo_usuario='V' limit 1";
+  $query = "select cod_usuario from ".$dbnamebase.".Usuario_curso where tipo_usuario='V' and cod_curso = '".$cod_curso."' limit 1";
   $res   = Enviar($sock, $query);
   return (RetornaNumLinhas($res) > 0);
 }
@@ -914,7 +935,8 @@ function ExibeLinhaGrupoVerdadeiro($cod_grupo, $acessos_grupo, $tam_tabela, $dia
    entrada: $cod_grupo - nome do falso grupo:
                 -1 - grupo com alunos
                 -2 - grupo com formadores
-                -3 - grupo com visitantes
+                -3 - grupo com colaboradores
+                -4 - grupo com visitantes
             $tam_tabela - tamanho da tabela
             $coluna_total - booleano, se a tabela conta com uma coluna de total de acessos
 */
@@ -933,8 +955,10 @@ function ExibeLinhaFalsoGrupo($cod_grupo, $tam_tabela, $coluna_total)
     case -1: $nome = RetornaFraseDaLista($lista_frases, 61); break;
     // 62 - Formadores
     case -2: $nome = RetornaFraseDaLista($lista_frases, 62); break;
+    // 55 - Colaboradores
+    case -3: $nome = RetornaFraseDaLista($lista_frases, 55); break;
     // 57 - Visitantes
-    case -3: $nome = RetornaFraseDaLista($lista_frases, 57); break;
+    case -4: $nome = RetornaFraseDaLista($lista_frases, 57); break;
   }
 
   echo("            <tr class=\"head01\">\n");
@@ -1227,15 +1251,17 @@ function RetornaListaGrupos($sock, $alunos, $formadores, $cod_curso)
 /* *********************************************************************
    RetornaFalsosGrupos - retorna lista com falsos grupos. Servem para agrupar
                          alunos, formadores e visitantes
-   entrada: $alunos     - booleano, se montar grupo com alunos
-            $formadores - booleano, se montar grupo com formadores
-            $visitantes - booleano, se montar grupo com visitantes
+   entrada: $alunos        - booleano, se montar grupo com alunos
+            $formadores    - booleano, se montar grupo com formadores
+            $colaboradores - booleano, se montar grupo com colaboradores
+            $visitantes    - booleano, se montar grupo com visitantes
    saida:   array que agrupa os usuario em grupos, de acordo com seus tipo_usuario
               [-1] = array com os cod_usuario dos alunos
               [-2] = array com os cod_usuario dos formadores
-              [-3] = array com os cod_usuario dos visitantes
+              [-3] = array com os cod_usuario dos colaboradores
+              [-4] = array com os cod_usuario dos visitantes
 */
-function RetornaFalsosGrupos($sock, $alunos, $formadores, $visitantes, $cod_curso)
+function RetornaFalsosGrupos($sock, $alunos, $formadores, $colaboradores, $visitantes, $cod_curso)
 {
   // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -1246,6 +1272,8 @@ function RetornaFalsosGrupos($sock, $alunos, $formadores, $visitantes, $cod_curs
     $tipos[] = 'binary tipo_usuario=\'A\'';
   if ($formadores)
     $tipos[] = 'binary tipo_usuario=\'F\'';
+  if ($colaboradores)
+    $tipos[] = 'binary tipo_usuario=\'Z\'';
   if ($visitantes)
     $tipos[] = 'binary tipo_usuario=\'V\'';
 
@@ -1272,7 +1300,7 @@ function RetornaFalsosGrupos($sock, $alunos, $formadores, $visitantes, $cod_curs
       $res   = Enviar($sock, $query);
 
       // este array auxiliar nos ajuda a separar os usuarios em seus grupos
-      $separa = array('A' => -1, 'F' => -2, 'V' => -3);
+      $separa = array('A' => -1, 'F' => -2, 'Z' => -3, 'V' => -4);
 
       while ($linha = RetornaLinha($res))
       {
@@ -1293,16 +1321,18 @@ function RetornaFalsosGrupos($sock, $alunos, $formadores, $visitantes, $cod_curs
         $sock - sock de conexao
         $exibir_grupos - booleano. true  = retornar grupos do curso
                                    false = retornar falsos grupos, de alunos, formadores e visitantes
-        $exibir_alunos -     booleano, indica se retornar grupo com os alunos, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false). 
+        $exibir_alunos        - booleano, indica se retornar grupo com os alunos, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false). 
 
-        $exibir_formadores - booleano, indica se retornar grupo com os formadores, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
+        $exibir_formadores    - booleano, indica se retornar grupo com os formadores, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
 
-        $exibir_visitantes - booleano, indica se retornar grupo com os visitantes, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
+        $exibir_colaboradores - booleano, indica se retornar grupo com os colaboradores, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
+
+        $exibir_visitantes    - booleano, indica se retornar grupo com os visitantes, NO CASO DE RETORNAR FALSOS GRUPOS ($exibir_grupos = false)
 
     saida: array associativo multi-dimensional com os grupos do curso
         array[$cod_grupo] - ï¿½um array contendo os cod_usuario dos alunos do curso
 */
-function RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso)
+function RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $cod_curso)
 {
   if ($exibir_grupos)
   {
@@ -1311,7 +1341,7 @@ function RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores
 
     $sock = Conectar("");
 
-    $falsos_grupos = RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
+    $falsos_grupos = RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $cod_curso);
     if (is_array($falsos_grupos))
     {
       foreach ($falsos_grupos as $cod_grupo => $array_usuarios)
@@ -1323,7 +1353,7 @@ function RetornaGrupos($sock, $exibir_grupos, $exibir_alunos, $exibir_formadores
     return $grupos;
   }
   else
-    return RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
+    return RetornaFalsosGrupos($sock, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $cod_curso);
 }
 
 /* *********************************************************************
@@ -1393,17 +1423,18 @@ function RetornaTotaisUsuarios( $acessos_users )
 /* *********************************************************************
    RetornaAcessosDiarios - retorna o total de acessos em cada dia durante um periodo
    entrada
-        $sock               - sock de conexao
-        $cod_ferramenta     - ferramenta na qual verificar os acessos (null para entrada no ambiente)
-        $data_iniUT         - data de inicio do periodo
-        $data_fimUT         - data de final do periodo
-        $exibir_alunos      - bool, se exibir alunos
-        $exibir_formadores  - bool, se exibir formadores
-        $exibir_visitantes  - bool, se exibir visitantes
+        $sock                  - sock de conexao
+        $cod_ferramenta        - ferramenta na qual verificar os acessos (null para entrada no ambiente)
+        $data_iniUT            - data de inicio do periodo
+        $data_fimUT            - data de final do periodo
+        $exibir_alunos         - bool, se exibir alunos
+        $exibir_formadores     - bool, se exibir formadores
+        $exibir_colaboradores  - bool, se exibir colaboradores
+        $exibir_visitantes     - bool, se exibir visitantes
    saida: array associativo na data, contendo o numero de acessos no dia
        array [ data ] = numero de acessos no dia
 */
-function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $exibir_grupos, $cod_curso)
+function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $exibir_grupos, $cod_curso)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -1429,17 +1460,22 @@ function RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT,
   }
   if ($exibir_formadores && !$exibir_grupos)
   {
-      $tmp[] = "binary tipo_usuario='F'";
-      $bool = true;
+    $tmp[] = "binary tipo_usuario='F'";
+    $bool = true;
+  }
+  if ($exibir_colaboradores)
+  {
+    $tmp[] = "binary tipo_usuario='Z'";
+    $bool = true;
   }
   if ($exibir_visitantes)
   {
-      $tmp[] = "binary tipo_usuario='V'";
-      $bool = true;
+    $tmp[] = "binary tipo_usuario='V'";
+    $bool = true;
   }
   if ($bool)
     $tipo_usuario = " (".implode(" or ", $tmp).")";
-  
+
   $saida = array();
 
   if ($exibir_grupos)

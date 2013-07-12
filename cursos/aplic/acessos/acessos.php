@@ -58,7 +58,8 @@
 
   Desconectar($sock);
   $sock = Conectar("");
-  $ha_visitantes = HaVisitantes($sock);
+  $ha_visitantes    = HaVisitantes($sock, $cod_curso);
+  $ha_colaboradores = HaColaboradores($sock, $cod_curso);
   Desconectar($sock);
   $sock = Conectar($cod_curso);
 
@@ -135,6 +136,8 @@
 
   echo("        retorno = retorno || document.formFreq.check_grupos.checked; \n");
 
+  if ($ha_colaboradores)
+    echo("        retorno = retorno || document.formFreq.check_colaboradores.checked; \n");
   if ($ha_visitantes)
     echo("        retorno = retorno || document.formFreq.check_visitantes.checked; \n");
 
@@ -240,6 +243,14 @@
   echo("          {\n");
   echo("            saida+='&check_grupos=1';\n");
   echo("          }\n");
+  if ($ha_colaboradores)
+  {
+    // Verificando exibiï¿½o de colaboradores
+    echo("          if (document.formFreq.check_colaboradores.checked)\n");
+    echo("          {\n");
+    echo("            saida+='&check_colaboradores=1';\n");
+    echo("          }\n");
+  }
   if ($ha_visitantes)
   {
     // Verificando exibiï¿½o de visitantes
@@ -284,6 +295,10 @@
   echo("          {\n");
   echo("            saida+='&check_alunos=1';\n");
   echo("          }\n");
+  echo("          else if (tipo_usuario == 'Z')\n");
+  echo("          {\n");
+  echo("            saida+='&check_colaboradores=1';\n");
+  echo("          }\n");
   echo("          var cod_usu = document.formFreqInd.cod_aluno[index].value;\n");
   echo("          if (cod_usu >= 0)\n");
   echo("          {\n");
@@ -319,8 +334,8 @@
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  echo("                <form action=relatorio_acessos.php name=\"formAcessos\" method=get target=\"JanelaAcessos\">\n");
-  echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("                <form action=\"relatorio_acessos.php\" name=\"formAcessos\" method=\"get\" target=\"JanelaAcessos\">\n");
+  echo("                  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
   echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   /* 2 - RelatÃ³rio de Acessos */
   echo("                    <tr class=\"head\">\n");
@@ -332,9 +347,9 @@
   echo("                      <td class=\"alLeft\" style=\"border-right:2pt solid #DCDCDC;\" width=20%>\n");
   /* 6 - Ãšltimos acessos */
   echo("                        <ul>\n");
-  echo("                          <li><input type=checkbox name=check_ultimos checked />".RetornaFraseDaLista($lista_frases,6)."</li>\n");
+  echo("                          <li><input type=\"checkbox\" name=\"check_ultimos\" checked />".RetornaFraseDaLista($lista_frases,6)."</li>\n");
   /* 7 - Quantidade de acessos */
-  echo("                          <li><input type=checkbox name=check_qtde />".RetornaFraseDaLista($lista_frases,7)."</li>\n");
+  echo("                          <li><input type=\"checkbox\" name=\"check_qtde\" />".RetornaFraseDaLista($lista_frases,7)."</li>\n");
   echo("                        </ul>\n");
   echo("                      </td>\n");
   
@@ -344,11 +359,11 @@
   /* 6 - Ãšltimos acessos */
   echo("                        <ul>\n");
   /* 9 - Local de trabalho */
-  echo("                          <li><input type=checkbox name=check_local checked />".RetornaFraseDaLista($lista_frases,9)."</li>\n");
+  echo("                          <li><input type=\"checkbox\" name=\"check_local\"  checked />".RetornaFraseDaLista($lista_frases,9)."</li>\n");
   /* 10 - Cidade */
-  echo("                          <li><input type=checkbox name=check_cidade checked />".RetornaFraseDaLista($lista_frases,10)."</li>\n");
+  echo("                          <li><input type=\"checkbox\" name=\"check_cidade\" checked />".RetornaFraseDaLista($lista_frases,10)."</li>\n");
   /* 11 - Estado */
-  echo("                          <li><input type=checkbox name=check_estado checked />".RetornaFraseDaLista($lista_frases,11)."</li>\n");
+  echo("                          <li><input type=\"checkbox\" name=\"check_estado\" checked />".RetornaFraseDaLista($lista_frases,11)."</li>\n");
   echo("                        </ul>\n");
   echo("                      </td>\n");
   
@@ -357,13 +372,13 @@
   /* 13 - Nome */
   echo("                      <td class=\"alLeft\" width=20%>\n");
   echo("                        <ul>\n");
-  echo("                          <li><input type=radio name=radio_ord name=\"radio_ord[0]\" value=\"nome\" checked />".RetornaFraseDaLista($lista_frases,13)."</li>\n");
+  echo("                          <li><input type=\"radio\" name=\"radio_ord\" name=\"radio_ord[0]\" value=\"nome\" checked />".RetornaFraseDaLista($lista_frases,13)."</li>\n");
   /* 9 - Local de trabalho */
-  echo("                          <li><input type=radio name=radio_ord name=\"radio_ord[1]\" value=\"local\" />".RetornaFraseDaLista($lista_frases,9)."</li>\n");
+  echo("                          <li><input type=\"radio\" name=\"radio_ord\" name=\"radio_ord[1]\" value=\"local\" />".RetornaFraseDaLista($lista_frases,9)."</li>\n");
   /* 10 - Cidade */
-  echo("                          <li><input type=radio name=radio_ord name=\"radio_ord[2]\" value=\"cidade\" />".RetornaFraseDaLista($lista_frases,10)."</li>\n");
+  echo("                          <li><input type=\"radio\" name=\"radio_ord\" name=\"radio_ord[2]\" value=\"cidade\" />".RetornaFraseDaLista($lista_frases,10)."</li>\n");
   /* 11 - Estado */
-  echo("                          <li><input type=radio name=radio_ord name=\"radio_ord[3]\" value=\"estado\" />".RetornaFraseDaLista($lista_frases,11)."</li>\n");
+  echo("                          <li><input type=\"radio\" name=\"radio_ord\" name=\"radio_ord[3]\" value=\"estado\" />".RetornaFraseDaLista($lista_frases,11)."</li>\n");
   echo("                        </ul>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
@@ -401,7 +416,7 @@
   echo("                            <div>\n");
   echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,25)."</div>\n");
   /* a data de inicio da pesquisa hÃ¡ 15 dias contando de hoje */
-  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_ini\" name=\"data_ini\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
+  echo("                                <input class=\"input\" type=\"text\" size=10 maxlength=10 id=\"data_ini\" name=\"data_ini\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
   echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini'),'dd/mm/yyyy',this);\" />\n");
   echo("                            </div>\n");
   echo("                          </li>\n");
@@ -416,8 +431,8 @@
   echo("                          </li>\n");
   echo("                        </ul>\n");
   echo("                      </td>\n");
-  
-  
+
+
   /* 27 - Exibir: */
   echo("                      <td><b>".RetornaFraseDaLista($lista_frases,27)."</b></td>\n");
   /* 25 - InÃ­cio: */
@@ -428,28 +443,33 @@
   $sock = Conectar($cod_curso);
   if(ExistemGrupos($sock))
     // 14 - Grupos
-    echo("                          <li><input type=checkbox name=\"check_grupos\" />".RetornaFraseDaLista($lista_frases, 14)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_grupos\" />".RetornaFraseDaLista($lista_frases, 14)."</li>\n");
   else
     // 69 - (Nï¿½ hï¿½grupos)
-    echo("                          <li><input type=checkbox name=\"check_grupos\" disabled />".RetornaFraseDaLista($lista_frases, 14)." ".RetornaFraseDaLista($lista_frases, 69)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_grupos\" disabled />".RetornaFraseDaLista($lista_frases, 14)." ".RetornaFraseDaLista($lista_frases, 69)."</li>\n");
 
   Desconectar($sock);
   $sock = Conectar("");
   if(ExistemAlunos($sock, $cod_curso))
     //61 - Alunos
-    echo("                          <li><input type=checkbox name=\"check_alunos\" checked />".RetornaFraseDaLista($lista_frases, 61)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_alunos\" checked />".RetornaFraseDaLista($lista_frases, 61)."</li>\n");
   else
     // 70 - (NÃ£o hÃ¡ alunos)
-    echo("                          <li><input type=checkbox name=\"check_alunos\" disabled />".RetornaFraseDaLista($lista_frases, 61)." ".RetornaFraseDaLista($lista_frases, 70)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_alunos\" disabled />".RetornaFraseDaLista($lista_frases, 61)." ".RetornaFraseDaLista($lista_frases, 70)."</li>\n");
   // 62 - Formadores
-  echo("                            <li><input type=checkbox name=\"check_formadores\" checked />".RetornaFraseDaLista($lista_frases, 62)."</li>\n");
-
+  echo("                            <li><input type=\"checkbox\" name=\"check_formadores\" checked />".RetornaFraseDaLista($lista_frases, 62)."</li>\n");
+  if ($ha_colaboradores)
+    // 55 - Colaboradores
+    echo("                          <li><input type=\"checkbox\" name=\"check_colaboradores\" />".RetornaFraseDaLista($lista_frases, 55)."</li>\n");
+  else
+    // 63 - (Não há colaboradores)
+    echo("                          <li><input type=\"checkbox\" name=\"check_colaboradores\" disabled />".RetornaFraseDaLista($lista_frases, 55)." ".RetornaFraseDaLista($lista_frases, 63)."</li>\n");
   if ($ha_visitantes)
     // 57 - Visitantes
-    echo("                          <li><input type=checkbox name=\"check_visitantes\" />".RetornaFraseDaLista($lista_frases, 57)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_visitantes\" />".RetornaFraseDaLista($lista_frases, 57)."</li>\n");
   else
     // 64 - (Nï¿½ hï¿½visitantes)
-    echo("                          <li><input type=checkbox name=\"check_visitantes\" disabled />".RetornaFraseDaLista($lista_frases, 57)." ".RetornaFraseDaLista($lista_frases, 64)."</li>\n");
+    echo("                          <li><input type=\"checkbox\" name=\"check_visitantes\" disabled />".RetornaFraseDaLista($lista_frases, 57)." ".RetornaFraseDaLista($lista_frases, 64)."</li>\n");
 
   echo("                        </ul>\n");
   echo("                      </td>\n");
@@ -458,7 +478,7 @@
   echo("                      <td><b>".RetornaFraseDaLista($lista_frases,16)."</b></td>\n");
   /* 25 - InÃ­cio: */
   echo("                      <td>\n");
-  echo("                        <select name=cod_ferramenta size=10 style=\"width:300\">\n");
+  echo("                        <select name=\"cod_ferramenta\" size=10 style=\"width:300\">\n");
   /* 29 - Entrada no ambiente */
   echo("                          <option selected>".RetornaFraseDaLista($lista_frases,29)."\n");
   foreach ($ordem_ferramentas as $cod=>$linha)
@@ -505,7 +525,7 @@
   echo("                            <div>\n");
   echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,25)."</div>\n");
   /* a data de inicio da pesquisa hÃ¡ 15 dias contando de hoje */
-  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_ini_i\" name=\"data_ini_i\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
+  echo("                                <input class=\"input\" type=\"text\" size=10 maxlength=10 id=\"data_ini_i\" name=\"data_ini_i\" value=\"".UnixTime2Data(time()-(15*24*3600))."\" />\n");
   echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini_i'),'dd/mm/yyyy',this);\" />\n");
   echo("                            </div>\n");
   echo("                          </li>\n");
@@ -514,7 +534,7 @@
   echo("                            <div>\n");
   echo("                              <div style=\"width:50px; padding-top:5px; float:left\">".RetornaFraseDaLista($lista_frases,26)."</div>\n");
   // a busca vai até hoje 
-  echo("                                <input class=\"input\" type=text size=10 maxlength=10 id=\"data_fim_i\" name=\"data_fim_i\" value=\"".UnixTime2Data(time())."\" />\n");
+  echo("                                <input class=\"input\" type=\"text\" size=10 maxlength=10 id=\"data_fim_i\" name=\"data_fim_i\" value=\"".UnixTime2Data(time())."\" />\n");
   echo("                                <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim_i'),'dd/mm/yyyy',this);\" />\n");
   echo("                            </div>\n");
   echo("                          </li>\n");
@@ -522,11 +542,11 @@
   echo("                      </td>\n");
 
   $ordem_usuarios = RetornaUsuarios($sock, "nome", $cod_curso);
-  /* ? - Aluno/Formador: */
-  echo("                      <td width=12%><b>".RetornaFraseDaLista($lista_frases,61)."/".RetornaFraseDaLista($lista_frases,62).":</b></td>\n");
+  /* 18 - Usuario: */
+  echo("                      <td width=12%><b>".RetornaFraseDaLista($lista_frases,18)."</b></td>\n");
   /* 25 - Início: */
   echo("                      <td width=25%>\n");
-  echo("                        <select name=cod_aluno size=10 style=\"width:200px\">\n");
+  echo("                        <select name=\"cod_aluno\" size=10 style=\"width:200px\">\n");
 
   // Mostra o primeiro usuário da lista. O primeiro usuario será sempre 
   // o logado exceto se for o administrador, pois a função RetornaUsuarios

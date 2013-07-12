@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/acessos/relatorio_frequencia.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½cia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distâcia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Ncleo de Informï¿½ica Aplicada ï¿½Educaï¿½o
+    Nied - Ncleo de Informáica Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitï¿½ia "Zeferino Vaz"
+    Cidade Universitáia "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -40,14 +40,14 @@
   ARQUIVO : cursos/aplic/acessos/relatorio_frequencia.php
   ========================================================== */
 
-/* CÃ³digo principal */
+/* Código principal */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("acessos.inc");
   //include("acessos_aux.inc");
 
-  // CorreÃ§Ã£o provisÃ³ria para exibiÃ§Ã£o das datas
+  // Correção provisória para exibição das datas
   if(isset($data_ini))
     $data_iniUT = Data2UnixTime($data_ini);
   if(isset($data_ini))
@@ -60,7 +60,7 @@
     $data_ini = Unixtime2Data($data_iniUT);
   if(isset($data_fimUT))
     $data_fim = Unixtime2Data($data_fimUT);
-  // Fim da correÃ§Ã£o
+  // Fim da correção
 
   $cod_ferramenta = 18;
   include("../topo_tela.php");
@@ -71,7 +71,7 @@
 
   if (!$SalvarEmArquivo)
   {
-      echo("    <script type=\"text/javascript\">\n");
+    echo("    <script type=\"text/javascript\">\n");
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
     echo("         window.open('../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
@@ -113,7 +113,7 @@
     echo("        }\n");
     echo("        else\n");
     echo("        {\n");
-    /* 51- Infelizmente nï¿½ foi possï¿½el imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
+    /* 51- Infelizmente não foi possível imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
     echo("          alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
     echo("        }\n");
     echo("      }\n");
@@ -145,7 +145,7 @@
 
   /* 1 - Acessos */
   $cabecalho ="<h4>".RetornaFraseDaLista($lista_frases,1);
-  /* 54 - Exibir RelatÃ³rio de FreqÃ¼Ãªncia */
+  /* 54 - Exibir Relatório de Freqüência */
   $cabecalho.=" - ".RetornaFraseDaLista($lista_frases,54)." - ".$nome_ferramenta."</h4>";
   echo("    <br /><br />".$cabecalho."\n");
   echo("    <br />\n");
@@ -161,34 +161,37 @@
   echo("      <tr>\n");
   echo("        <td valign=\"top\">\n");
 
-  $exibir_grupos     = false;//isset ($check_grupos);
-  $exibir_alunos     = isset ($check_alunos);
-  $exibir_formadores = isset ($check_formadores);
-  $exibir_visitantes = isset ($check_visitantes);
+  $exibir_grupos        = false;//isset ($check_grupos);
+  $exibir_alunos        = isset ($check_alunos);
+  $exibir_formadores    = isset ($check_formadores);
+  $exibir_colaboradores = isset ($check_colaboradores);
+  $exibir_visitantes    = isset ($check_visitantes);
 
 /*  if (! $SalvarEmArquivo)
   {  
 
     echo("          <form action=\"salvar_arquivo.php\" name=\"formSalvar\">\n");
-    echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("            <input type=hidden name=origem value='freq' />\n");
-    echo("            <input type=hidden name=nome_arquivo value='relatorio_frequencia.html' />");
+    echo("            <input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\" />\n");
+    echo("            <input type=\"hidden\" name=\"origem\"       value=\"freq\" />\n");
+    echo("            <input type=\"hidden\" name=\"nome_arquivo\" value=\"relatorio_frequencia.html\" />");
     /*if (isset($cod_ferramenta))
-      echo("            <input type=hidden name=cod_ferramenta value=\"".$cod_ferramenta."\" />\n");*/
+      echo("            <input type=\"hidden\" name=\"cod_ferramenta\"       value=\"".$cod_ferramenta."\" />\n");*/
 /*    if(isset($data_ini))
-      echo("            <input type=hidden name=data_ini value=\"".$data_ini."\" />\n");
+      echo("            <input type=\"hidden\" name=\"data_ini\"             value=\"".$data_ini."\" />\n");
     if(isset($data_fim))
-      echo("            <input type=hidden name=data_fim value=\"".$data_fim."\" />\n");
+      echo("            <input type=\"hidden\" name=\"data_fim\"             value=\"".$data_fim."\" />\n");
     if (isset($check_part) && $check_part)
-      echo("            <input type=hidden name=check_part value=1 />\n");
+      echo("            <input type=\"hidden\" name=\"check_part\"           value=\"1\" />\n");
     if (isset($check_grupos) && $check_grupos)
-      echo("            <input type=hidden name=check_grupos value=1 />\n");
+      echo("            <input type=\"hidden\" name=\"check_grupos\"         value=\"1\" />\n");
+    if (isset($exibir_colaboradores) && $exibir_colaboradores)
+      echo("            <input type=\"hidden\" name=\"exibir_colaboradores\" value=\"1\" />\n");
     if (isset($check_formadores) && $check_formadores)
-      echo("            <input type=hidden name=check_formadores value=1 />\n");  
+      echo("            <input type=\"hidden\" name=\"check_formadores\"     value=\"1\" />\n");  
     if (isset($check_alunos) && $check_alunos)
-      echo("            <input type=hidden name=check_alunos value=1 />\n");  
+      echo("            <input type=\"hidden\" name=\"check_alunos\"         value=\"1\" />\n");  
     if (isset($exibir_visitantes) && $exibir_visitantes)
-      echo("            <input type=hidden name=check_visitantes value=1 />\n");
+      echo("            <input type=\"hidden\" name=\"check_visitantes\"     value=\"1\" />\n");
     echo("          </form>\n");
 */
     echo("          <ul class=\"btAuxTabs\">\n");  
@@ -218,7 +221,7 @@
   Desconectar($sock);
   $sock = Conectar("");
 
-  $lista_grupos   = RetornaGrupos($sock, false, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $cod_curso);
+  $lista_grupos   = RetornaGrupos($sock, false, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $cod_curso);
   //$exibir_so_grupos=(!(($exibir_grupos)||($exibir_alunos)||($exibir_formadores)));
   $lista_nomes    = RetornaNomesUsuarios($sock,$cod_curso);
   Desconectar($sock);
@@ -234,7 +237,7 @@
 
       Desconectar($sock);
       $sock = Conectar("");
-      $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_visitantes, $exibir_grupos, $cod_curso);
+      $totais_diarios = RetornaAcessosDiarios($sock, $cod_ferramenta, $data_iniUT, $data_fimUT, $exibir_alunos, $exibir_formadores, $exibir_colaboradores, $exibir_visitantes, $exibir_grupos, $cod_curso);
 
       // definindo o numero de dias em uma tabela como uma constante
       define("NUM_DIAS_TABELA", 14, FALSE);
@@ -269,8 +272,6 @@
         {
           foreach ($lista_grupos as $cod_grupo => $linha_grupo)
           {
-              //print_r($lista_grupos);
-              //exit();
                 // exibe linha com os acessos diarios do grupo
                 ExibeLinhaGrupo($cod_grupo, $acessos_grupos[ $cod_grupo ], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $nomes_grupos[$cod_grupo], $exibir_alunos || $exibir_formadores, ($cod_grupo+1), $data_iniUT);
                 if (is_array ($linha_grupo))
@@ -281,7 +282,7 @@
                       //foreach($ferramenta_do_sistema as $key => $value){
                           if($cod_usuario == $_GET['cod_aluno_relatorio']){
                             // Exibe linha com os acessos do usuario em cada dia
-                            //echo("cod_usuario:".."\n Cï¿½digo Certo:".$_POST['cod_aluno_relatorio']);
+                            //echo("cod_usuario:".."\n Código Certo:".$_POST['cod_aluno_relatorio']);
                             ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT);
                             $cor_linha++;
                             break;
@@ -292,7 +293,7 @@
                 else
                 {
               // se nao for detalhar os participantes dos grupos, precisa ainda tratar as mudancas de cor na linha
-                  // CUIDADO !!! NÃ£o caia na tentaÃ§Ã£o de juntar esse comando com a mudanca de cor na linha acima, os tratamentos sao diferentes !
+                  // CUIDADO !!! Não caia na tentação de juntar esse comando com a mudanca de cor na linha acima, os tratamentos sao diferentes !
                   $cor_linha++;
                 }
 
@@ -312,7 +313,7 @@
       ****************************************************************************** */
       if ($exibir_grupos)
       {
-        /* 45 - Obs.: O nÃºmero total de acessos nÃ£o corresponderÃ£o Ã  soma da coluna caso haja algum aluno em mais de um grupo. Cada Aluno Ã© contado somente uma vez no total. */
+        /* 45 - Obs.: O número total de acessos não corresponderão à soma da coluna caso haja algum aluno em mais de um grupo. Cada Aluno é contado somente uma vez no total. */
         echo("          <b>".RetornaFraseDaLista($lista_frases,45)."</b>\n");
       }
 
@@ -325,7 +326,7 @@
   echo("  </body>\n");
   echo("</html>");
 
-  // Correï¿½o provisï¿½ia para exibiï¿½o das datas
+  // Correção provisória para exibição das datas
   $data_invertida_g=$dig;
 
 ?>
