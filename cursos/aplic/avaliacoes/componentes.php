@@ -141,7 +141,7 @@
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td colspan=3>\n");    
+  echo("        <td colspan=3>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
   /*48 - Grupo*/
