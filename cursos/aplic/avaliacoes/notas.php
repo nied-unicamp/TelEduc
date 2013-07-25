@@ -312,7 +312,7 @@
          }
 
 //         if ($j == 1) { 
-//			echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
+//           echo("     ".$linha['Ferramenta'].$contador."v[0] = ".$linha['Valor'].";\n");
 //         }
 
         }//Fim: foreach ($lista_avaliacoes as $cont => $linha)

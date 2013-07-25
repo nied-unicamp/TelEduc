@@ -1878,7 +1878,7 @@ else
 
             // coluna do compartilhamento
             if (!$SalvarEmArquivo)
-            $compartilhamento=$marcaib."<span name=\"comp_".$cod_nota."\" class=\"link\" onMouseDown=\"js_cod_nota=".$cod_nota.";js_cod_grupo='".$cod_grupo."';js_cod_aluno='".$cod."';AtualizaComp('".$tipo_compartilhamento."','comp_".$cod_nota."');MostraLayer(cod_comp,".$ajuste.");return(false);\">".$compartilhamento."</span>".$marcafb;
+              $compartilhamento=$marcaib."<span name=\"comp_".$cod_nota."\" class=\"link\" onMouseDown=\"js_cod_nota=".$cod_nota.";js_cod_grupo='".$cod_grupo."';js_cod_aluno='".$cod."';AtualizaComp('".$tipo_compartilhamento."','comp_".$cod_nota."');MostraLayer(cod_comp,".$ajuste.");return(false);\">".$compartilhamento."</span>".$marcafb;
             echo("                    <td align=center>".$compartilhamento."</td>\n");
           }
         }
