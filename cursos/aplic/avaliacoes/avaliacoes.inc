@@ -508,21 +508,21 @@ function AlteraCadastroAvaliacao2($sock, $tabela, $cod_formador, $objetivos, $cr
 */
 function RetornaAvaliacaoCadastrada($sock, $cod_avaliacao)
 {
-   $query="select cod_atividade,cod_usuario,objetivos,criterios,ferramenta,tipo,valor,status,data,data_inicio,data_termino from Avaliacao where cod_avaliacao=".$cod_avaliacao."";
-   $res=Enviar($sock,$query);
-   $linha=RetornaLinha($res);
-   $retorno['Cod_atividade']=$linha['cod_atividade'];
-   $retorno['Cod_usuario']=$linha['cod_usuario'];
-   $retorno['Objetivos']=$linha['objetivos'];
-   $retorno['Criterios']=$linha['criterios'];
-   $retorno['Ferramenta']=$linha['ferramenta'];
-   $retorno['Tipo']=$linha['tipo'];
-   $retorno['Valor']=$linha['valor'];
-   $retorno['Status']=$linha['status'];
-   $retorno['Data']=$linha['data'];
-   $retorno['Data_inicio']=$linha['data_inicio'];
-   $retorno['Data_termino']=$linha['data_termino'];
-   return $retorno;
+  $query="select cod_atividade,cod_usuario,objetivos,criterios,ferramenta,tipo,valor,status,data,data_inicio,data_termino from Avaliacao where cod_avaliacao=".$cod_avaliacao."";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  $retorno['Cod_atividade']=$linha['cod_atividade'];
+  $retorno['Cod_usuario']=$linha['cod_usuario'];
+  $retorno['Objetivos']=$linha['objetivos'];
+  $retorno['Criterios']=$linha['criterios'];
+  $retorno['Ferramenta']=$linha['ferramenta'];
+  $retorno['Tipo']=$linha['tipo'];
+  $retorno['Valor']=$linha['valor'];
+  $retorno['Status']=$linha['status'];
+  $retorno['Data']=$linha['data'];
+  $retorno['Data_inicio']=$linha['data_inicio'];
+  $retorno['Data_termino']=$linha['data_termino'];
+  return $retorno;
 }
 
 /* ******************************************************
@@ -2507,17 +2507,17 @@ else
 */
 function UltimaPosicaoLivreTopico($sock, $cod_topico)
 {
-$consulta="select posicao_topico from Portfolio_topicos where cod_topico_pai=".$cod_topico." order by posicao_topico desc limit 1";
-$res=Enviar($sock, $consulta);
-$num=RetornaNumLinhas($res);
-if ($num>0)
-{
- $linha=RetornaLinha($res);
- $linha['posicao_topico']++;
- return($linha['posicao_topico']);
-}
-else
- return(1);
+  $consulta="select posicao_topico from Portfolio_topicos where cod_topico_pai=".$cod_topico." order by posicao_topico desc limit 1";
+  $res=Enviar($sock, $consulta);
+  $num=RetornaNumLinhas($res);
+  if ($num>0)
+  {
+    $linha=RetornaLinha($res);
+    $linha['posicao_topico']++;
+    return($linha['posicao_topico']);
+  }
+  else
+    return(1);
 }
 
 
@@ -2529,12 +2529,12 @@ Saida: true se �avaliacao futura, false caso contr�io
 */
 function EhAvaliacaoFutura($sock,$cod_avaliacao)
 {
-  $consulta="select * from Avaliacao ".
-            "where data_inicio > ".time()." and ".
-                 " status!='A' and ".
-                 " status!='C' and ".
-                 " status!='X' and ".
-                 " cod_avaliacao=".$cod_avaliacao;
+  $consulta = "select * from Avaliacao ";
+  $consulta.= "where data_inicio > ".time()." and ";
+  $consulta.= "      status!='A' and ";
+  $consulta.= "      status!='C' and ";
+  $consulta.= "      status!='X' and ";
+  $consulta.= "      cod_avaliacao=".$cod_avaliacao;
   $res=Enviar($sock, $consulta);
   if (RetornaNumLinhas($res) > 0)
     return true;
@@ -2566,13 +2566,13 @@ function FormataNota($nota)
 */
 function RetornaListaItensAvaliacaoPortfolio($sock, $cod_avaliacao, $cod_aluno_grupo)
 {
-  $query = "select distinct(PI.cod_item), PI.titulo, PI.data, PI.tipo_compartilhamento, PIA.status".
-          "  from Portfolio_itens PI, Portfolio_itens_avaliacao PIA, Avaliacao A".
-          " where PI.cod_item=PIA.cod_item".
-          "   and A.cod_avaliacao=PIA.cod_avaliacao".
-          "   and PIA.cod_avaliacao=".$cod_avaliacao.
-          "   and ((A.tipo='I' and PI.cod_usuario=".$cod_aluno_grupo.")".
-          "     or (A.tipo='G' and PI.cod_grupo=".$cod_aluno_grupo."))";
+  $query  = "select distinct(PI.cod_item), PI.titulo, PI.data, PI.tipo_compartilhamento, PIA.status";
+  $query .= "  from Portfolio_itens PI, Portfolio_itens_avaliacao PIA, Avaliacao A ";
+  $query .= "where PI.cod_item=PIA.cod_item and ";
+  $query .= "      A.cod_avaliacao=PIA.cod_avaliacao and ";
+  $query .= "      PIA.cod_avaliacao=".$cod_avaliacao." and ";
+  $query .= "      ((A.tipo='I' and PI.cod_usuario=".$cod_aluno_grupo.") or ";
+  $query .= "       (A.tipo='G' and PI.cod_grupo=".$cod_aluno_grupo."))";
 
   $res   = Enviar($sock, $query);
   $lista = RetornaArrayLinhas($res);
@@ -2589,10 +2589,10 @@ function RetornaListaItensAvaliacaoPortfolio($sock, $cod_avaliacao, $cod_aluno_g
 */
 function RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao)
 {
-  $query = "select G.cod_grupo from Avaliacao_notas A, Grupos_usuario G where
-            A.cod_avaliacao=".$cod_avaliacao.
-            " and A.cod_grupo=G.cod_grupo
-              and G.cod_usuario=".$cod_aluno;
+  $query  = "select G.cod_grupo from Avaliacao_notas A, Grupos_usuario G ";
+  $query .= "where A.cod_avaliacao=".$cod_avaliacao." and ";
+  $query .= "      A.cod_grupo=G.cod_grupo and ";
+  $query .= "      G.cod_usuario=".$cod_aluno;
   $res  = Enviar($sock, $query);
   $linha = RetornaLinha($res);
   return $linha[0];
@@ -3604,8 +3604,7 @@ function SelecionaExerciciosNaoCorrigidos($cod_usuario, $view, $permissao, $data
     $strSQL = "select Exercicios_modelo.titulo, Exercicios_modelo.cod_usuario as dono_modelo, Exercicios_resolucao.cod_modelo, Usuario.nome, ";
     $strSQL.= "Exercicios_aplicado.dt_limite_submissao, Exercicios_resolucao.compartilhada, ";
     $strSQL.= "Exercicios_aplicado.avaliacao, Exercicios_resolucao.status,Exercicios_aplicado.objetiva, ";
-    $strSQL.= "Exercicios_aplicado.dt_disponibilizacao, Usuario.cod_usuario, Exercicios_resolucao.cod_resolucao from Usuario
-, ";
+    $strSQL.= "Exercicios_aplicado.dt_disponibilizacao, Usuario.cod_usuario, Exercicios_resolucao.cod_resolucao from Usuario, ";
     $strSQL.= "Exercicios_resolucao, Exercicios_aplicado, Exercicios_modelo WHERE ";
     $strSQL.= "(Exercicios_resolucao.cod_modelo=Exercicios_aplicado.cod_modelo AND ";
     $strSQL.= "Exercicios_aplicado.tp_aplicacao='".$view."' AND ";
