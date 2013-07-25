@@ -311,7 +311,8 @@
         {
           echo("    <td>");
           if ($usr_formador)
-            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">Nï¿½o</a>");
+            /* 36 - Não */
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">".RetornaFraseDaLista($lista_frases_geral,36)."</a>");
           else
             echo("&nbsp;\n");
           echo("</td>\n");
@@ -321,7 +322,8 @@
           if ($usr_formador)
           {
             echo("    <td>");
-            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">Sim</a>");
+            /* 35 - Sim */
+            echo("<a href=\"#\" onClick=\"return(OpenWindowLink(".$cod_grupo."));\" class=\"text\">".RetornaFraseDaLista($lista_frases_geral,35)."</a>");
             echo("</td>\n");
           }
           elseif ($usr_aluno)   //Aluno so pode ver nota compartilhada com ele
@@ -379,7 +381,7 @@
     if ($total > 0)
     {
       /* 64 - Alunos */
-      echo("<font class=\"text\"><B>".RetornaFraseDaLista($lista_frases,64)."</b></font>\n");
+      echo("<font class=\"text\"><b>".RetornaFraseDaLista($lista_frases,64)."</b></font>\n");
 
       echo("  <table border=0 width=100% cellspacing=0>\n");
       echo("    <tr class=\"colorfield\">\n");
