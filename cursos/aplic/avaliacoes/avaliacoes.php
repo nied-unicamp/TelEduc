@@ -74,62 +74,6 @@
     $tela_avaliacao = 'A';
   }
 
-  /* 														*/
-  /* Coloca nos exercicios que ja passaram da data a nota 0 */
-  /* 														*/
-
-// Comentando parte de exercicios:
-//if ($tela_avaliacao == 'A') {
-//	if (VerificaExerciciosNaoCorrigidos($sock)) {
-//		$coordenador = ListaCoordenadorAvaliacao($sock, $cod_curso);
-//		$lista_avaliacoes = RetornaAvaliacoesExercicios($sock, $coordenador['cod_usuario']);
-//		$lista_usuarios = ListaTodosUsuarios($sock);
-//
-//		if ($lista_avaliacoes != 0) {
-//			foreach ($lista_avaliacoes as $cod => $linha) {
-//
-//				if ($linha['tipo'] == 'I') {
-//					foreach ($lista_usuarios as $codigo) {
-//						$strresolucao = SelecionaExerciciosNaoCorrigidos($codigo['cod_usuario'], i, todos, sim);
-//						$res = Enviar($sock, $strresolucao);
-//						$resolucoes = RetornaArrayLinhas($res);
-//						if (count($resolucoes) > 0) {
-//							foreach ($resolucoes as $resolucao) {
-//								if ($linha['Cod_avaliacao'] != '' && $resolucao['cod_resolucao'] != '') {
-//									CorrigeExercicioNaoEntregueAvaliacao($sock, $resolucao['dt_limite_submissao'], $resolucao['status'], $resolucao['cod_modelo'], $resolucao['cod_resolucao']);
-//								}
-//							}
-//						}
-//					}
-//				} else {
-//					/*
-//					   Colocar no caso de Exercicio em grupo. � quase igual o c�digo acima cima por�m deve-se obter o codigo do grupo
-//					   e no lugar do i colocar g na SelecionaExercicios.
-//					*/
-//					$lista_grupos = RetornaListaGrupos($sock);
-//					if (count($lista_grupos) > 0) {
-//						foreach ($lista_grupos as $codigo => $nome) {
-//							$strresolucao = SelecionaExerciciosNaoCorrigidos($codigo, g, todos, sim);
-//							$res = Enviar($sock, $strresolucao);
-//							$resolucoes = RetornaArrayLinhas($res);
-//
-//							if (count($resolucoes) > 0) {
-//								foreach ($resolucoes as $resolucao) {
-//									if ($linha['Cod_avaliacao'] != '' && $resolucao['cod_resolucao'] != '') {
-//										CorrigeExercicioNaoEntregueAvaliacao($sock, $resolucao['dt_limite_submissao'], $resolucao['status'], $resolucao['cod_modelo'], $resolucao['cod_resolucao']);
-//									}
-//								}
-//							}
-//						}
-//					}
-//
-//					$grupo = 1;
-//				}
-//			}
-//		}
-//	}
-//}
-
   switch ($tela_avaliacao) {
     case 'P' :
       $lista_avaliacoes = RetornaAvaliacoesAnteriores($sock, $usr_formador);
@@ -167,11 +111,11 @@
 //  echo("      document.onmousemove = TrataMouse;\n\n");
 
   /* Verificação do browser sendo usado */
-  echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
-  echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
-  echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
-  echo("			document.attachEvent('onmousemove', TrataMouse);\n");
-  echo("		}\n");
+  echo("      if (document.addEventListener) {\n");	/* Caso do FireFox */
+  echo("        document.addEventListener('mousemove', TrataMouse, false);\n");
+  echo("      } else if (document.attachEvent){\n");	/* Caso do IE */
+  echo("        document.attachEvent('onmousemove', TrataMouse);\n");
+  echo("      }\n");
 
   echo("      function TrataMouse(e)\n");
   echo("      {\n");
@@ -295,50 +239,6 @@
   echo("        document.frmAvaliacao.submit();\n");
   echo("      }\n\n");
 
-  echo("      function VerNotas(id)\n");
-  echo("      {\n");
-  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
-  echo("        document.frmAvaliacao.action = 'ver_notas.php'; \n");
-  echo("        document.frmAvaliacao.submit();\n");
-  echo("      }\n\n");
-
-  echo("      function HistoricodoDesempenho(id)\n");
-  echo("      {\n");
-  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
-  echo("        document.frmAvaliacao.action = 'historico_desempenho_todos.php'; \n");
-  echo("        document.frmAvaliacao.submit();\n");
-  echo("      }\n\n");
-
-  echo("      function VerificarParticipacao(id)\n");
-  echo("      {\n");
-  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
-  echo("        document.frmAvaliacao.action = 'ver_participacao.php';\n");
-  echo("        document.frmAvaliacao.submit();\n");
-  echo("      }\n\n");
-
-  // o script avaliar_participantes eh a tela 'Avaliar Participantes' para o formador e
-  // eh a tela 'Histrico do Desempenho' para o Aluno
-  echo("      function AvaliarParticipantes(id)\n");
-  echo("      {\n");
-  echo("        document.frmAvaliacao.cod_avaliacao.value = id;\n");
-  echo("        document.frmAvaliacao.action = 'avaliar_participantes.php'; \n");
-  echo("        document.frmAvaliacao.submit(); \n");
-  echo("      }\n\n");
-
-  echo("      function ExcluirAvaliacao(id)\n");
-  echo("      {\n");
-  /* 129 - Voc� tem certeza de que deseja excluir esta avalia��o? */
-  /* 130 - (a avalia��o ser� exclu�da definitivamente) */
-  echo("        if(confirm('" . RetornaFraseDaLista($lista_frases, 129) . RetornaFraseDaLista($lista_frases, 130) . "'))");
-  echo("        {\n");
-  echo("          document.frmAvaliacao.cod_avaliacao.value = id; \n");
-  echo("          document.frmAvaliacao.operacao.value='excluir'; \n");
-  echo("          document.frmAvaliacao.action = 'excluir_avaliacao.php'; \n");
-  // echo("        document.frmAvaliacao.tela_avaliacao.value = '".$tela_avaliacao."'; \n"); 
-  echo("          document.frmAvaliacao.submit();\n");
-  echo("        }\n");
-  echo("      }\n\n");
-
   echo("      function VerTelaAvaliacoes(tela)\n");
   echo("      {\n");
   echo("        document.frmAvaliacao.action = 'avaliacoes.php';\n");
@@ -353,29 +253,6 @@
   echo("        document.frmAvaliacao.submit();\n");
   echo("        return false;\n");
   echo("      }\n");
-
-  if ($usr_formador) 
-  {
-    echo("      function VerTelaLixeira()\n");
-    echo("      {\n");
-    echo("        document.frmAvaliacao.action = 'lixeira.php';\n");
-    echo("        document.frmAvaliacao.submit();\n");
-    echo("        return false;\n");
-    echo("      }\n");
-
-    echo("      function Apagar(id)\n");
-    echo("      {\n");
-    // 117 - Deseja realmente apagar a avalia��oo selecionada? (Esta atividade deixaria de ser avaliada e a avalia��oo seria movida para a lixeira DAS AVALIA��ES)*/
-    echo("        if(confirm('" . RetornaFraseDaLista($lista_frases, 117) . "'))");
-    echo("        {\n");
-    echo("          document.frmAvaliacao.cod_avaliacao.value = id;\n");
-    echo("          document.frmAvaliacao.action = 'apagar_avaliacao.php'; \n");
-    echo("          document.frmAvaliacao.origem.value = 'avaliacoes'; \n");
-    echo("          document.frmAvaliacao.submit();\n");
-    echo("        }\n");
-    echo("      }\n\n");
-  }
-
 
   echo("    </script>\n");
 
@@ -426,17 +303,17 @@ $cor_link2[$tela_avaliacao] = "</font>";
   echo("              <td class=\"btAuxTabs\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 29 - Avalia��es Passadas */
-  echo("		      <li><span onClick=\"return(VerTelaAvaliacoes('P'))\">".RetornaFraseDaLista($lista_frases, 29)."</span></li>\n");
+  echo("                  <li><span onClick=\"return(VerTelaAvaliacoes('P'));\">".RetornaFraseDaLista($lista_frases, 29)."</span></li>\n");
   /* 32 - Avalia��es Atuais*/
-  echo("		      <li><span onClick=\"return(VerTelaAvaliacoes('A'))\">".RetornaFraseDaLista($lista_frases, 32)."</span></li>\n");
+  echo("                  <li><span onClick=\"return(VerTelaAvaliacoes('A'));\">".RetornaFraseDaLista($lista_frases, 32)."</span></li>\n");
   /* 30 - Avalia��es Futuras*/
-  echo("		      <li><span onClick=return(VerTelaAvaliacoes('F'))>".RetornaFraseDaLista($lista_frases, 30)."</span></li>\n");
+  echo("                  <li><span onClick=\"return(VerTelaAvaliacoes('F'));\">".RetornaFraseDaLista($lista_frases, 30)."</span></li>\n");
   /* 31 - Notas dos participantes */
-  echo("	              <li><span onClick='return(VerTelaNotas());'>".RetornaFraseDaLista($lista_frases, 31)."</span></li>");
+  echo("                  <li><span onClick=\"return(VerTelaNotas());\">".RetornaFraseDaLista($lista_frases, 31)."</span></li>");
   echo("              </ul></td>\n");
   echo("            </tr>\n");
   echo("            <tr>\n");
-  echo("              <td>\n");  
+  echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs03\">\n");
   if ($usr_formador)
   {
@@ -445,19 +322,19 @@ $cor_link2[$tela_avaliacao] = "</font>";
   }
   echo("                </ul>\n");
   echo("              </td>");
-  echo("            </tr>\n");	
+  echo("            </tr>\n");
   echo("            <tr>\n");
   echo("          <td valign=\"top\">\n");
   echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");
   echo("          <tr class=\"head\">\n");
-  echo("                    <td width=\"66%\" align=left style=\"cursor:pointer\">$frase_avaliacoes</td>\n");
+  echo("                <td width=\"66%\" align=left style=\"cursor:pointer\">$frase_avaliacoes</td>\n");
   /* 113 -Tipo da Avalia��o */
-  echo("	            <td width=\"14%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
+  echo("                <td width=\"14%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases, 113)."</td>\n");
   /* 16 - Data de in�cio*/
-  echo("		    <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,16)."</td>\n");
+  echo("                <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,16)."</td>\n");
   /* 17 - Data de T�rmino */
-  echo("	            <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
-  echo("		  </tr>\n");
+  echo("                <td width=\"10%\" align=\"center\" style=\"cursor:pointer\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
+  echo("          </tr>\n");
   if (count($lista_avaliacoes) > 0)
   {
     foreach ($lista_avaliacoes as $cod => $linha)
@@ -537,7 +414,7 @@ $cor_link2[$tela_avaliacao] = "</font>";
     echo("                  </tr>\n");
   }
   echo("                </table>\n");
-  echo("              </td>\n"); 
+  echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
 
@@ -587,7 +464,7 @@ $cor_link2[$tela_avaliacao] = "</font>";
     echo("            </div>\n\n");
   }
 
-  include("../tela2.php");  
+  include("../tela2.php");
   echo ("</body>\n");
   echo ("</html>\n");
 

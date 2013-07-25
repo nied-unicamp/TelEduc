@@ -136,11 +136,11 @@
 
   if ($SalvarEmArquivo)
   {
-          echo("    <style>\n");
-          include "../js-css/ambiente.css";
-          include "../js-css/tabelas.css";
-          include "../js-css/navegacao.css";
-          echo("    </style>\n");
+    echo("    <style>\n");
+    include "../js-css/ambiente.css";
+    include "../js-css/tabelas.css";
+    include "../js-css/navegacao.css";
+    echo("    </style>\n");
   }
   else
   {
@@ -162,8 +162,8 @@
       /* 130 - (a avaliaï¿½ï¿½o serï¿½ excluï¿½da definitivamente) */
       echo("        if(confirm('".RetornaFraseDaLista($lista_frases,129).RetornaFraseDaLista($lista_frases,130)."'))\n");
       echo("        {\n");
-      echo("          document.frmAvaliacao.action = 'acoes.php'; \n");
-      echo("          document.frmAvaliacao.acao.value= 'excluirAvaliacao'; \n");
+      echo("          document.frmAvaliacao.action = 'acoes.php';\n");
+      echo("          document.frmAvaliacao.acao.value= 'excluirAvaliacao';\n");
       echo("          document.frmAvaliacao.submit();\n");
       echo("        }\n");
       echo("      }\n\n");
@@ -175,12 +175,6 @@
     echo("        document.frmAvaliacao.action = 'avaliar_participantes.php';\n");
     echo("        document.frmAvaliacao.submit();\n");
     //echo("    return false;\n");
-    echo("      }\n");
-
-    echo("      function SalvarVerAvaliacao()\n");
-    echo("      {\n");
-    echo("        document.frmSalvar.action = 'salvar_ver_avaliacao.php'; \n");
-    echo("        document.frmSalvar.submit();\n");
     echo("      }\n");
 
   }
@@ -298,10 +292,17 @@
 
   if ($linha['status'] == "E")
   {
-    if (($linha['data']<(time()-1800)) || ($cod_usuario == $linha['cod_usuario'])){
-      CancelaEdicaoAvaliacao($sock, "Avaliacao", $cod_avaliacao,$cod_usuario);
+    if (
+      // Se a edição anterior foi iniciada a mais de meia hora atrás ou...
+      ($linha['inicio_edicao']<(time()-1800)) ||
+      // Se o usuário que solicita ver a avaliação é o mesmo que começou a edição.
+      ($cod_usuario == $linha['cod_usuario'])
+    ){
+      // Cancelar a edição atual em favor da (provável) nova edição do usuario
+      // que solicitou a página.
+      CancelaEdicaoAvaliacao($sock, "Avaliacao", $cod_avaliacao, $cod_usuario);
     }else{
-      /* EstÃ¡ em ediÃ§Ã£o... */
+      // Mostrar ao usuário que esta avaliação ainda está em edição.
       echo("          <script language=\"javascript\">\n");
       echo("            window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=ver','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
       echo("            window.location='avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacao."&operacao=".$cod_operacao."';\n");
@@ -360,8 +361,8 @@
     // G 209 - Salvar em Arquivo ou Imprimir
   echo("                 <li><span onclick=\"window.open('ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao=".$cod_avaliacao."&operacao=".$operacao."', 'Salva/Imprime' ,'width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases, 209)."</span></li>\n");
   if ($usr_formador){
-  	//Frase #1: Apagar
-  	echo("                 <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
+    //Frase #1: Apagar
+    echo("                 <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
   }
   echo("    </form>\n");
 
@@ -383,11 +384,11 @@
   }
   else if ($dados_avaliacao['Ferramenta'] == 'B')
   {
-  	// 146 - Sessï¿½o de Bate-Papo
-  	if ($tela_avaliacao == 'F')
-  		echo("                  <li><span onclick=\"window.location='../batepapo/ver_sessoes_marcadas.php?cod_curso=".$cod_curso."'\">".RetornaFraseDaLista($lista_frases, 226)."</span></li>\n");
-  	else
-  		echo("                  <li><span onclick=\"window.location='../batepapo/ver_sessoes_realizadas.php?cod_curso=".$cod_curso."'\">".RetornaFraseDaLista($lista_frases, 226)."</span></li>\n");
+    // 146 - Sessï¿½o de Bate-Papo
+    if ($tela_avaliacao == 'F')
+      echo("                  <li><span onclick=\"window.location='../batepapo/ver_sessoes_marcadas.php?cod_curso=".$cod_curso."'\">".RetornaFraseDaLista($lista_frases, 226)."</span></li>\n");
+    else
+      echo("                  <li><span onclick=\"window.location='../batepapo/ver_sessoes_realizadas.php?cod_curso=".$cod_curso."'\">".RetornaFraseDaLista($lista_frases, 226)."</span></li>\n");
   }
 
   echo("                </ul>\n");

@@ -145,7 +145,7 @@
                 $foiavaliado=GrupoFoiAvaliado($sock,$linha['Cod_avaliacao'],$codigo);
              } else {
                 $grupo=0;
-                $codigo=$cod; 
+                $codigo=$cod;
              }
           } else {
              $codigo=$cod;
@@ -252,7 +252,7 @@
             //$DadosExercicios=RetornaDadosExercicioAvaliado($sock, $linha['Cod_avaliacao'], $codigo, $grupo);
 
          if ( $foiavaliado && $linha['Ferramenta']!='E' ) {
-            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);             
+            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
@@ -326,7 +326,7 @@
     echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
     echo("      var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
     echo("      var Xpos, Ypos;\n");
-    echo("      var expressao;\n");   
+    echo("      var expressao;\n");
     echo("      var expressao_orginal;\n");
     echo("      var media;\n");
     echo("      var norma;");
@@ -359,7 +359,7 @@
   echo("        }\n");
 
   if($usr_formador)
-  { 
+  {
 
     echo("        function RetornaFraseComp(comp)\n");
     echo("        {\n");
@@ -388,7 +388,7 @@
     echo("            spanElements[i].onclick = function() { js_cod_nota=codNota;js_cod_grupo=codGrupo;js_cod_aluno=codAluno;AtualizaComp(tipoComp,spanName);MostraLayer(cod_comp,100); }\n");
     echo("          }\n");
     echo("        }\n");
-  }                
+  }
 
   if($usr_formador)
   {  
@@ -415,7 +415,7 @@
     echo("          {\n");
     echo("            brokenId = id.split(\"_\");\n");
     echo("            codNota = parseInt(brokenId[0]);\n");
-    echo("            i = parseInt(brokenId[1]);\n");  
+    echo("            i = parseInt(brokenId[1]);\n");
     echo("            codAluno = parseInt(brokenId[2]);\n");
     echo("            codGrupo = parseInt(brokenId[3]);\n");
     echo("            xajax_ApagarAvalicaoDinamic(".$cod_curso.",codAvaliacao,codNota,codAluno,codGrupo,'',trPaiId);");
@@ -431,7 +431,7 @@
     echo("                tableElement = document.getElementById(arrayId[i]);\n");
     echo("                tdElement = tableElement.parentNode;\n");
     echo("                tdElement.removeChild(tableElement.nextSibling);\n");//remove <br>
-    echo("                tdElement.removeChild(tableElement);\n");  
+    echo("                tdElement.removeChild(tableElement);\n");
     echo("              }\n");
     echo("            }\n");
     echo("            else\n");
@@ -500,7 +500,7 @@
   echo("            newTrConteiner = document.createElement('tr');\n");
   echo("            newTrConteiner.setAttribute('id', id+'_hist');\n");
   //echo("            newTrConteiner.setAttribute(\"class\", \"altColor0\");\n");
-  echo("			newTrConteiner.className=\"altColor0\";");
+  echo("            newTrConteiner.className=\"altColor0\";");
   echo("            newTdConteiner = document.createElement('td');\n");
   echo("            newTdConteiner.colSpan = js_colSpan;\n");
   echo("            newTdConteiner.appendChild(CriarBotaoParticipacao(".$cod_curso.",codAvaliacao,codAluno,codGrupo));\n");
@@ -510,9 +510,9 @@
   echo("            newTdConteiner.appendChild(newBr);\n");
   echo("            newTdConteiner.appendChild(CriarDivCabecalhoHistoricoDesempenho());\n");
   echo("            newBr = document.createElement('br');\n");
-  echo("            newTdConteiner.appendChild(newBr);\n"); 
+  echo("            newTdConteiner.appendChild(newBr);\n");
   echo("            for(i=0;i<tamTabela;i++)\n");
-  echo("            {\n");  
+  echo("            {\n");
   echo("              codFormador = arrayConteudo[i][5];\n");
   echo("              codNota = arrayConteudo[i][6];\n");
   echo("              tipoComp = arrayConteudo[i][7];\n");
@@ -538,7 +538,7 @@
   {
     echo("                else if( j == 4)\n");
     echo("                  newTd.width = '10%';\n");
-    echo("                if(j != 4)\n  ");
+    echo("                if(j != 4)\n");
   }
   echo("                newTd.innerHTML=js_arrayCab[j];\n");
   if($usr_formador)
@@ -568,7 +568,7 @@
   echo("              {\n");
   echo("                newTd = document.createElement('td');\n");
   echo("                if(j == 2 || j == 3)\n");
-  echo("                {\n");  
+  echo("                {\n");
   echo("                  newSpan = document.createElement('span');\n");
   echo("                  newSpan.innerHTML=arrayConteudo[i][j];\n");
   echo("                  newSpan.className='link';\n");
@@ -592,7 +592,7 @@
   echo("              newTd = document.createElement('td');\n");
   echo("              newTd.colSpan = 5;\n");
   echo("              newTd.align = 'left';\n");
-  echo("              newTd.innerHTML='".RetornaFraseDaLista($lista_frases,163)."';\n"); 
+  echo("              newTd.innerHTML='".RetornaFraseDaLista($lista_frases,163)."';\n");
   echo("              newTrJust.appendChild(newTd);\n");
   // Botao de Resposta	
   // Ticket 254 - Tozo nao terminou antes de sair do NiED.
@@ -632,11 +632,11 @@
   echo("              newTable.appendChild(tbody);");
   echo("              newTdConteiner.appendChild(newTable);\n");
   echo("              newBr = document.createElement('br');\n");
-  echo("              newTdConteiner.appendChild(newBr);\n");               
+  echo("              newTdConteiner.appendChild(newBr);\n");
   echo("            }\n");
   echo("            if(i == 0)\n");
   // 98 - Este participante ainda n�o foi avaliado nesta atividade!
-  echo("              newTdConteiner.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases,98)."'));\n"); 
+  echo("              newTdConteiner.appendChild(CriarSpanSimples('".RetornaFraseDaLista($lista_frases,98)."'));\n");
   echo("            newTrConteiner.appendChild(newTdConteiner);\n");
   echo("            newTrConteiner.appendChild(CriarTdFechar(id+'_hist'));\n");
   echo("            tableElement.insertBefore(newTrConteiner,trElement);\n");
@@ -740,14 +740,14 @@
 //    echo("      }\n");
 //    echo("      document.onmousemove = TrataMouse;\n\n");
 
-  	/* Verificação do browser sendo usado */
-  	echo("		if (document.addEventListener) {\n");	/* Caso do FireFox */
-  	echo("			document.addEventListener('mousemove', TrataMouse, false);\n");
-  	echo("		} else if (document.attachEvent){\n");	/* Caso do IE */
-  	echo("			document.attachEvent('onmousemove', TrataMouse);\n");
-  	echo("		}\n");
+    /* Verificação do browser sendo usado */
+    echo("      if (document.addEventListener) {\n");	/* Caso do FireFox */
+    echo("        document.addEventListener('mousemove', TrataMouse, false);\n");
+    echo("      } else if (document.attachEvent){\n");	/* Caso do IE */
+    echo("        document.attachEvent('onmousemove', TrataMouse);\n");
+    echo("      }\n");
 
-  	echo("      function TrataMouse(e)\n");
+    echo("      function TrataMouse(e)\n");
     echo("      {\n");
     echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
     echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
@@ -861,7 +861,7 @@
     // verificamos se a norma tem virgula, se tiver, convertemos para ponto
     echo("        norma=norm.replace(/\,/, '.');\n");
     echo("        expressao_original=expressao;\n");
-    echo("        CorrigeExpressao();\n");    
+    echo("        CorrigeExpressao();\n");
     echo("        for (var i = 0; i <= j; i++) {\n");
     echo("          AvaliarExpressao(i);\n");
     echo("        }\n");
@@ -929,7 +929,7 @@
        foreach ($lista_avaliacoes as $index => $avaliacao) {
           if (!strcmp($avaliacao['Ferramenta'], 'B')) {
              $cont=$cont_batepapo;
-             $cont_batepapo++; 
+             $cont_batepapo++;
           } elseif (!strcmp($avaliacao['Ferramenta'], 'F')) {
              $cont=$cont_forum;
              $cont_forum++;
@@ -1031,16 +1031,12 @@
 
     echo("        function HistoricodoDesempenho(funcao,codAvaliacao,id,codNota)\n");
     echo("        {\n");
-    /*echo("    window.open(\"historico_desempenho.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_atividade=".$dados['Cod_atividade']."&cod_avaliacao=".$cod_avaliacao."&ferramenta=".$dados['Ferramenta']."&cod_aluno=\"+funcao,\"AvaliarParticipante\",".$param.");\n");
-    echo("    return(false);\n");*/
     echo("          xajax_MostrarAvaliacoesDinamic(".$cod_curso.",codAvaliacao,funcao,'','',id,codNota);\n");
     echo("          js_cod_aluno = funcao;\n");
     echo("        }\n");
 
     echo("        function HistoricodoDesempenhoPortfolio(funcao,codAvaliacao,id,codNota)\n");
     echo("        {\n");
-    /*echo("    window.open(\"historico_desempenho.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeiodePortfolio=0&portfolio_grupo=".$portfolio_grupo."&cod_atividade=".$dados['Cod_atividade']."&ferramenta=".$dados['Ferramenta']."&cod_avaliacao=".$cod_avaliacao."&cod_aluno=\"+funcao,\"HistoricoDesempenho\",".$param.");\n");
-    echo("    return(false);\n");*/
     echo("          xajax_MostrarAvaliacoesDinamic(".$cod_curso.",codAvaliacao,funcao,'','',id,codNota);\n");
     echo("          js_cod_aluno = funcao;\n");
     echo("        }\n");
@@ -1067,13 +1063,13 @@
 
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
-    echo("  window.open('../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=60,left=60,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+    echo("        window.open('../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=60,left=60,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
     echo("        return(false);\n");
     echo("      }\n\n");
 
     echo("      function AbreJanelaComponentes(cod_grupo)\n");
     echo("      {\n\n");
-    echo("  window.open('componentes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_grupo='+cod_grupo,'Componentes','width=400,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+    echo("        window.open('componentes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_grupo='+cod_grupo,'Componentes','width=400,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
     echo("        return false;\n");
     echo("      }\n\n");
 
@@ -1104,30 +1100,11 @@
     echo("        return false;\n");
     echo("      }\n\n");
 
-    if ($usr_formador)
-    {
-      echo("      function VerTelaLixeira()\n");
-      echo("      {\n");
-      echo("        document.frmAvaliacao.action = 'lixeira.php';\n");
-      echo("        document.frmAvaliacao.submit();\n");
-      echo("        return false;\n");
-      echo("      }\n\n");
-
-      echo("      function VerPopupMedia()\n");
-      echo("      {\n");
-      $param = "'width=600,height=450,top=100,left=180,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes'";
-      $nome_janela = "'ExpressaoMedia'";
-      echo("        window_handle = window.open('medias_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."', ".$nome_janela.", ".$param.");\n");
-      echo("        window_handle.focus(); \n");
-      echo("        return false;\n");
-      echo("      }\n\n");
-    }
-	/** TODO: Alterar textos abaixo, hardcoded **/
-	/* 'Ocultar Legenda' e 'Exibir Legenda' */
     echo("      function ExibirLegenda()\n");
     echo("      {\n");
     echo("        spanElement = document.getElementById('span_legenda');\n");
-    echo("        spanElement.innerHTML = \"Ocultar Legenda\";\n");
+    /* 232 - Ocultar Legenda */
+    echo("        spanElement.innerHTML = \"".RetornaFraseDaLista($lista_frases,232)."\";\n");
     echo("        spanElement.onclick = function(){ OcultarLegenda(); };\n");
     echo("        tableElement = document.getElementById('table_legenda');\n");
     echo("        tableElement.style.display = \"\";\n");
@@ -1136,7 +1113,8 @@
     echo("      function OcultarLegenda()\n");
     echo("      {\n");
     echo("        spanElement = document.getElementById('span_legenda');\n");
-    echo("        spanElement.innerHTML = \"Exibir Legenda\";\n");
+    /* 207 - Exibir Legenda */ 
+    echo("        spanElement.innerHTML = \"".RetornaFraseDaLista($lista_frases,207)."\";\n");
     echo("        spanElement.onclick = function(){ ExibirLegenda(); };\n");
     echo("        tableElement = document.getElementById('table_legenda');\n");
     echo("        tableElement.style.display = \"none\";\n");
@@ -1384,11 +1362,11 @@
             else
             {
               $grupo=0;
-              $codigo=$cod; 
-            }                   
-          } 
+              $codigo=$cod;
+            }
+          }
           else
-          {  
+          {
             $codigo=$cod;
             $foiavaliado=FoiAvaliado($sock,$linha['Cod_avaliacao'],$cod);
           }
@@ -1663,7 +1641,7 @@
               if ($linha['Ferramenta']=='E' && $linha['Data_termino']<=time() )
               {
                 echo("                    <td align=center>\n");
-                echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));\">");    
+                echo("<a href=\"#\" onClick=\"return(HistoricodoDesempenho(".$cod.",".$linha['Cod_avaliacao'].",'tr_formador_".$cod."','".$cod_nota."'));\">");
                 $nota=" 0.00 ";
                 echo($nota."</a></td>\n");
               }
@@ -1680,7 +1658,7 @@
   else
   {
     // 115 - Nenhuma avalia��o foi criada !
-        echo("                  <tr>\n");
+    echo("                  <tr>\n");
     echo("                    <td>".RetornaFraseDaLista($lista_frases,115)."</td>\n");
     echo("                  </tr>\n");
   }
@@ -1737,7 +1715,7 @@
     || (is_array($legenda_exercicio) && count($legenda_exercicio) > 0)
     || (is_array($legenda_avaliacao_externa) && count($legenda_avaliacao_externa)>0));
 
-  $mostraLegenda = ($SalvarEmArquivo) ? 'table' : 'none';  
+  $mostraLegenda = ($SalvarEmArquivo) ? 'table' : 'none';
   if ($apresentar_legenda)
   {
     echo("          <table id=\"table_legenda\" border=\"0\" cellpadding=\"5\" cellspacing=\"1\" bgcolor=\"#DCDCDC\" style=\"display: ".$mostraLegenda.";\">\n");
@@ -1870,7 +1848,7 @@
     echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(lay_muda_expressao);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
     echo("              <div class=\"int_popup\">\n");
     echo("                <form name=\"form_muda_expressao\" id=\"form_muda_expressao\" method=\"post\" action=\"acoes.php\" onsubmit=\"return(GravarExpressao());\">\n");
-    echo("                <div class=\"ulPopup\">\n");    
+    echo("                <div class=\"ulPopup\">\n");
     // 202 - Express�o para c�lculo da m�dia
     echo("                <b>".RetornaFraseDaLista($lista_frases,202)."</b><br />\n");
     echo("                  <input class=\"input\" type=\"text\" name=\"nova_expressao\" id=\"nova_expressao\" value=\"".$media['expressao']."\" maxlength=\"100\" size=\"25\" /><a href='#' onClick=\"AjudaMedia('expressao', 'AjudaMediaExpressao')\"><img src=\"../imgs/icAjuda.gif\" alt=\"Ajuda\" border=\"0\" align=\"absmiddle\" /></a><br /><br />\n");
@@ -1913,11 +1891,11 @@
     // 52 - Compartilhado com Formadores
     echo("                  <input type=\"radio\" name=\"compartilhamento\" id=\"compartilhamento\"".$compf." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='F';\">".RetornaFraseDaLista($lista_frases,52)."<br>");
     // 54 - Compartilhado com Formadores e Com o Participante
-    echo("                  <input type=\"radio\"  name=\"compartilhamento\" id=\"compartilhamento\"".$compfp." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='A';\">".RetornaFraseDaLista($lista_frases,54)."<br><br />");   
+    echo("                  <input type=\"radio\"  name=\"compartilhamento\" id=\"compartilhamento\"".$compfp." onClick=\"document.form_muda_expressao.tipo_compartilhamento.value='A';\">".RetornaFraseDaLista($lista_frases,54)."<br><br />");
     echo("                  <input type=\"hidden\" name=\"cod_curso\"        value=\"".$cod_curso."\" />\n");
     echo("                  <input type=\"hidden\" name=\"action\"           value=\"alterarExpressao\" />\n");
     echo("                  <input type=\"hidden\" name=\"cod_usuario\"      value=\"".$cod_usuario."\">\n");
-    echo("                  <input type=\"hidden\" name=\"tela_avaliacao\"   value=\"".$tela_avaliacao."\" />\n"); 
+    echo("                  <input type=\"hidden\" name=\"tela_avaliacao\"   value=\"".$tela_avaliacao."\" />\n");
     /* 18 - Ok (gen) */
     echo("                  <input type=\"button\" id=\"ok_novaexpressao\" class=\"input\" onClick=\"EscondeLayer(lay_muda_expressao);GravarExpressao();\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\">\n");
     /* 2 - Cancelar (gen) */
@@ -1955,7 +1933,7 @@
     echo("                  <span id=\"tipo_comp_P\" class=\"check\"></span>\n");
     echo("                  <span id=\"tipo_comp_frase\"></span>\n");
     echo("                </li>\n");
-    echo("              </ul>\n");    
+    echo("              </ul>\n");
     echo("            </form>\n");
     echo("            </div>\n");
     echo("          </div>\n");
@@ -1964,7 +1942,7 @@
   include("../tela2.php");
   echo("        </td>\n");
   echo("      </tr>\n");
-  echo("    </table>\n");  
+  echo("    </table>\n");
   echo("  </body>\n");
   echo("</html>\n");
 

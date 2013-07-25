@@ -187,7 +187,7 @@ function RetornaAvaliacoesAtuais($sock, $usr_formador)
       elseif (!strcmp($linha['ferramenta'],'E'))
         $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'N'))
-         $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade']; 
+         $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];
       else
       {
         $consulta="select titulo from Atividade_itens where cod_item=".$linha['cod_atividade'];
@@ -241,7 +241,7 @@ function RetornaAvaliacoesFuturas($sock, $usr_formador)
       elseif (!strcmp($linha['ferramenta'],'E'))
         $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'N'))
-        $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];               
+        $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];
       else
       {
         $consulta="select titulo from Atividade_itens where cod_item=".$linha['cod_atividade'];
@@ -295,7 +295,7 @@ function RetornaAvaliacoesAnteriores($sock, $usr_formador)
       elseif (!strcmp($linha['ferramenta'],'E'))
         $consulta="select titulo from Exercicios_modelo where cod_exercicio=".$linha['cod_atividade'];
       elseif (!strcmp($linha['ferramenta'],'N'))
-        $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];  
+        $consulta="select titulo from Avaliacao_externa where codigo=".$linha['cod_atividade'];
       else
       {
         $consulta="select titulo from Atividade_itens where cod_item=".$linha['cod_atividade'];
@@ -452,7 +452,7 @@ function AlteraCadastroAvaliacaoExercicio($sock, $tabela, $cod_formador, $objeti
   $hora_i=explode(":",$hr_inicio);
   /* Calculo em segundos do horario de inicio do exercicio 
                               Horas            Minutos          Segundos */
-  $horainicio_timestamp = 3600 * $hora_i[0] + 60 * $hora_i[1] + $hora_i[2]; 
+  $horainicio_timestamp = 3600 * $hora_i[0] + 60 * $hora_i[1] + $hora_i[2];
 
   $hr_fim = UnixTime2Hora($datas['dt_limite_submissao']);
   $hora_f=explode(":",$hr_fim);
@@ -1347,7 +1347,7 @@ function RetornaUltimaPosicaoHistoricoAvaliacao ($sock, $tabela, $cod_avaliacao)
 
    Saida: true se a edi�o foi cancelada corretamente
 */
-function CancelaEdicaoAvaliacao ($sock, $tabela, $cod_avaliacao,$cod_usuario)
+function CancelaEdicaoAvaliacao ($sock, $tabela, $cod_avaliacao, $cod_usuario)
 {
   $linha=RetornaStatusAvaliacao($sock, $tabela, $cod_avaliacao);
 
@@ -1380,7 +1380,7 @@ function CancelaEdicaoAvaliacao ($sock, $tabela, $cod_avaliacao,$cod_usuario)
 */
 function RetornaStatusAvaliacao($sock, $tabela, $cod_avaliacao)
 {
-  $query="select status from ".$tabela." where cod_avaliacao=".$cod_avaliacao;
+  $query="select status, cod_usuario from ".$tabela." where cod_avaliacao=".$cod_avaliacao;
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   return($linha);
@@ -1549,7 +1549,7 @@ function RetornaListaIntegrantes($sock,$cod_grupo) {
     $saida[$linha['cod_aluno']]['tipo_usuario']=$Dados['tipo_usuario'];
   }
   $sock = MudarDB($sock, $_GET['cod_curso']);
-  return $saida; 
+  return $saida;
 }
 
 /* ********************************************************************************
@@ -2258,7 +2258,7 @@ function IniciaCriacaoAvaliacaoExercicio ($sock, $tabela, $cod_atividade, $cod_f
   $res=Enviar($sock, $consulta);
   $consulta="insert into ".$tabela."_historicos values (".$cod_avaliacao.", ".$cod_formador.", ".time().", 'C')";
   $res=Enviar($sock, $consulta);
-  $query = "update Exercicios_aplicado set avaliacao=".$cod_avaliacao." where cod_modelo=".$cod_atividade;      
+  $query = "update Exercicios_aplicado set avaliacao=".$cod_avaliacao." where cod_modelo=".$cod_atividade;
   $res=Enviar($sock, $query);
   return($cod_avaliacao);
 }
@@ -2678,7 +2678,7 @@ function RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_aluno_grupo,$
             " where ER.cod_modelo=EM.cod_modelo".
             "   and EA.cod_modelo=EM.cod_modelo".
             "   and EA.avaliacao=".$cod_avaliacao.
-            "   and ER.cod_usuario=".$cod_aluno_grupo;   
+            "   and ER.cod_usuario=".$cod_aluno_grupo;
   }
   $res   = Enviar($sock, $query);
   $lista = RetornaLinha($res);
@@ -2698,7 +2698,7 @@ function RetornaDadosExercicioAvaliado($sock, $cod_avaliacao, $cod_aluno_grupo,$
 function RetornaDadosNotaExercicio($sock, $cod_avaliacao, $cod_aluno_grupo,$grupo)
 {
   if ($grupo)
-    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_grupo=".$cod_aluno_grupo; //and status='F'"; 
+    $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_grupo=".$cod_aluno_grupo; //and status='F'";
   else
     $query = "select nota, comentario from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and cod_aluno=".$cod_aluno_grupo; //and status='F'";
   $res = Enviar($sock, $query);
@@ -3696,7 +3696,7 @@ function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$co
 
   $query="select MAX(data_alteracao) from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao;
   $res=Enviar($sock,$query);
-  $data=RetornaLinha($res);  
+  $data=RetornaLinha($res);
   if ($data[0])
   {
     $query="select cod_aluno from Avaliacao_notas where cod_grupo=".$cod_grupo." and cod_avaliacao=".$cod_avaliacao." and data_alteracao<=".$data[0];
@@ -3706,7 +3706,7 @@ function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$co
   else
   {
     $query="select GU.cod_usuario from Grupos_usuario GU where GU.cod_grupo=".$cod_grupo;
-    $res=Enviar($sock,$query);          
+    $res=Enviar($sock,$query);
     $lista=RetornaArrayLinhas($res);
     $x=0;
     foreach($lista as $cod_aluno => $lista_codigo)
@@ -3726,7 +3726,7 @@ function RetornaListaIntegrantesMomentoAvaliacao($sock,$cod_curso,$cod_grupo,$co
   }
 
   $sock = MudarDB($sock, $_SESSION['cod_curso']);
-  return $saida; 
+  return $saida;
 }
 
 /* ************************************************************************
@@ -3785,7 +3785,7 @@ function GravaResgistroAvaliacaoExterna($sock, $titulo, $status)
 {
   $query="INSERT INTO `Avaliacao_externa` (`titulo` , `status` ) ".
          "VALUES ('".$titulo."','".$status."')";
-  $res=Enviar($sock,$query);  
+  $res=Enviar($sock,$query);
 }
 
 /* ********************************************************************************
@@ -3924,7 +3924,7 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
     /* Feedback é sempre bom né? */
     $cod_texto = 220;
     $cod_ferramenta = 22;
-    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
     $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
     /*Atualiza o titulo*/
@@ -3959,7 +3959,7 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
     /* Feedback é sempre bom né? */
     $cod_ferramenta = 22;
     $cod_texto = 215;
-    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
     $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
   }
   $sock=Conectar($cod_curso);
@@ -4039,7 +4039,7 @@ function EditarTexto ($cod_curso, $cod_atividade, $novo_nome, $cod_usuario, $cod
 
   /* Feedback é sempre bom né? */
   $cod_ferramenta = 22;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   $sock=Conectar($cod_curso);
@@ -4166,7 +4166,7 @@ function AcabaEdicaoDinamic($cod_curso, $cod_avaliacao, $cod_usuario, $acao){
   if ($acao){
     $consulta="insert into Avaliacao_historicos values ('".$cod_avaliacao."', '".$cod_usuario."', '".$data."', 'F')";
   }else{
-    $consulta="insert into Avaliacao_historicos values ('".$cod_avaliacao."', '".$cod_usuario."', '".$data."', 'D')";  
+    $consulta="insert into Avaliacao_historicos values ('".$cod_avaliacao."', '".$cod_usuario."', '".$data."', 'D')";
   }
 
   $res=Enviar($sock, $consulta);
@@ -4199,7 +4199,7 @@ function AbreEdicao($cod_curso, $cod_avaliacao, $cod_usuario, $tela_avaliacao){
 
   $linha_historico=RetornaUltimaPosicaoHistoricoAvaliacao($sock, "Avaliacao", $cod_avaliacao);
 
-  if (($linha['status']=="E")&&($cod_usuario!=$linha_historico['cod_usuario'])){
+  if (($linha['status']=="E") && ($cod_usuario!=$linha_historico['cod_usuario'])){
     $objResponse->addScript("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&origem=ver','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
 
     $objResponse->addScript("document.location='avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&cod_avaliacao=".$cod_avaliacao."&tela_avaliacao=".$tela_avaliacao."';");
@@ -4235,7 +4235,7 @@ function AlterarPeriodoDinamic($dadosForm){
   $cod_curso = $dadosForm['cod_curso'];
   $cod_usuario = $dadosForm['cod_usuario'];
   $cod_avaliacao = $dadosForm['cod_avaliacao'];
-  $tela_avaliacao = $dadosForm['tela_avaliacao']; 
+  $tela_avaliacao = $dadosForm['tela_avaliacao'];
   $data_inicio=Data2UnixTime($dadosForm['data_inicio']);
 
   /* Aqui contamos que o dia acaba no ultimo segundo (23h59m59s)*/
@@ -4300,7 +4300,7 @@ function MudarCompartilhamentoDinamic($dadosForm,$novo_comp)
     if ($cod_grupo != '' && $cod_grupo != -1)
       $cod_grupo_mudarcomp=$cod_grupo;
     else
-      $cod_grupo_mudarcomp=RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao);                                  
+      $cod_grupo_mudarcomp=RetornaCodGrupoPortfolioAvaliacao($sock,$cod_aluno,$cod_avaliacao);
     $lista_integrantes=RetornaListaIntegrantes($sock,$cod_grupo_mudarcomp);
     $data=RetornaDataNota($sock,$cod_nota);
     foreach ($lista_integrantes as $cod_aluno => $linha)
@@ -4321,7 +4321,7 @@ function MudarCompartilhamentoDinamic($dadosForm,$novo_comp)
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;
   $cod_texto = 217;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
@@ -4352,7 +4352,7 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock = Conectar("");
-  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);  
+  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
 
   $sock=Conectar($cod_curso);
 
@@ -4384,7 +4384,7 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
 
     /*Aqui havia um problema que ele permitia a variavel $cod_grupo_portfolio ficar nula, agora ele n�o deixa mais e exibe a frase 93 - Este grupo ainda n�o foi avaliado nesta atividade!*/
     if (!$cod_grupo_portfolio)
-      $cod_grupo_portfolio=0; 
+      $cod_grupo_portfolio=0;
 
     if ($cod_grupo != '' && $cod_grupo != -1)
       //seta cod_aluno
@@ -4412,7 +4412,7 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
     }
     else if ($dados['Ferramenta'] == 'N' && $dados['Tipo']=='G')
     {
-      $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod_grupo);       
+      $avaliacao_atual=RetornarAvaliacaoGrupo($sock,$cod_avaliacao,$cod_grupo);
     }
     else
     {
@@ -4478,8 +4478,8 @@ function MostrarAvaliacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_grup
 
           // 163 - Justificativa
           if (($comentario = Space2Nbsp($linha['comentario'])) == "")
-            //?? - Nao definido
-            $comentario = "Nao definido";
+            //200 - Nao definido
+            $comentario = RetornaFraseDaLista($lista_frases,200);
 
           // a nota
           $matrizConteudo[$i][0] = FormataNota($linha['nota']);
@@ -4578,7 +4578,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
 
     /*Aqui havia um problema que ele permitia a variavel $cod_grupo_portfolio ficar nula, agora ele n�o deixa mais e exibe a frase 93 - Este grupo ainda n�o foi avaliado nesta atividade!*/
     if (!$cod_grupo_portfolio)
-      $cod_grupo_portfolio=0; 
+      $cod_grupo_portfolio=0;
   }
 
   if (!strcmp($ferramenta,'P'))
@@ -4676,7 +4676,7 @@ function MostrarParticipacoesDinamic($cod_curso,$cod_avaliacao,$cod_aluno,$cod_g
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;
   $cod_texto = 223;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
 
   if ($script != "")
     $objResponse->addScript($script);
@@ -4772,7 +4772,7 @@ function ApagarAvalicaoDinamic($cod_curso,$cod_avaliacao,$cod_nota,$cod_aluno,$c
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;
   $cod_texto = 219;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
@@ -5030,7 +5030,7 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;
   $cod_texto = 216;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
@@ -5062,7 +5062,7 @@ function GravarExpressaoDinamic($dadosForm)
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 22;
   $cod_texto = 218;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse

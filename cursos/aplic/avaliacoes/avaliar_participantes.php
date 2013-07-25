@@ -40,6 +40,9 @@
   ARQUIVO : cursos/aplic/avaliacoes/avaliar_participantes.php
   ========================================================== */
 
+// o script avaliar_participantes eh a tela 'Avaliar Participantes' para o formador e
+// eh a tela 'Histrico do Desempenho' para o Aluno
+
 $bibliotecas = "../bibliotecas/";
 include($bibliotecas."geral.inc");
 include("avaliacoes.inc");
@@ -235,16 +238,12 @@ if (!$SalvarEmArquivo)
 
     echo("        function AvaliarAluno(funcao, nome, id)\n");
     echo("        {\n");
-    /*echo("    window_handle = window.open('avaliar_atividade.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&cod_aluno='+funcao ,".$nome_janela.",".$param.");\n");
-     echo("    window_handle.focus(); \n");*/
     echo("          xajax_AvaliarDinamic(".$cod_curso.", ".$cod_avaliacao.", funcao, ".$exercicio_grupo.", id);\n");
     echo("          return(false);\n");
     echo("        }\n");
 
     echo("        function AvaliarAlunoGrupo(funcao, grupo, nome, id)\n");
     echo("        {\n");
-    /*echo("    window_handle = window.open(\"avaliar_atividade.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&cod_grupo=\"+grupo,".$nome_janela.",".$param.");\n");
-     echo("    window_handle.focus(); \n");*/
     echo("          xajax_AvaliarDinamic(".$cod_curso.", ".$cod_avaliacao.", grupo, ".$exercicio_grupo.", id);\n");
     echo("          return(false);\n");
     echo("        }\n");

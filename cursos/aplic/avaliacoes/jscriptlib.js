@@ -68,13 +68,13 @@ function AjustePosMenuIE()
 function EdicaoTexto(codigo, id, valor){
 
   if (valor=='ok'){
-	  eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
-      xajax_EditarTexto(cod_curso, cod_atividade, conteudo, cod_usuario, cod_avaliacao, id);
-    }
+    eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
+    xajax_EditarTexto(cod_curso, cod_atividade, conteudo, cod_usuario, cod_avaliacao, id);
+  }
   else{
       //Cancela Edição
-      if (!cancelarTodos)
-        xajax_AcabaEdicaoDinamic(cod_curso, cod_avaliacao, cod_usuario, 0);
+    if (!cancelarTodos)
+      xajax_AcabaEdicaoDinamic(cod_curso, cod_avaliacao, cod_usuario, 0);
   }
   document.getElementById(id).innerHTML=conteudo;
   editaTexto=0;
@@ -106,7 +106,7 @@ function EdicaoCampo(id, tag, valor){
     //Cancela Edição
     if (!cancelarTodos){
       xajax_AcabaEdicaoDinamic(cod_curso, cod_avaliacao, cod_usuario, 0);
-  	}
+    }
   }
   editaTitulo=0;
   cancelarElemento=null;
@@ -119,7 +119,7 @@ function AlteraCampo(tag,id){
   if (editaTitulo==0){
 
     id_aux = id;
-    tag_aux = tag;  
+    tag_aux = tag;
     CancelaTodos();
 
     xajax_AbreEdicao(cod_curso, cod_avaliacao, cod_usuario, tela_avaliacao);
@@ -142,7 +142,7 @@ function AlteraCampo(tag,id){
     if(tag == 'valor')
       createInput.setAttribute('size','8%');
 
-    document.getElementById(tag+'_'+id).appendChild(createInput); 
+    document.getElementById(tag+'_'+id).appendChild(createInput);
 
     //cria o elemento 'espaco' e adiciona na pagina
     espaco = document.createElement('span');
@@ -197,7 +197,7 @@ function AlteraTexto(id){
     		});
     cancelarElemento=document.getElementById('CancelaEdita');
     editaTexto++;
-  }				
+  }
 }
 
 function CancelaTodos(){

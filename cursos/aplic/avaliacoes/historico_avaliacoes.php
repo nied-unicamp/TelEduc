@@ -171,39 +171,39 @@
   $res=RetornaResHistoricoDaAvaliacao($sock, $tabela, $cod_avaliacao);
   $num_linhas=RetornaNumLinhas($res);
 
-    while ($num_linhas>0)
-    {
-      $linha=RetornaLinha($res);
-      $num_linhas--;
-      $nome_usuario="<a href=# onclick=return(OpenWindowPerfil(".$linha['cod_usuario']."));>".NomeUsuario($sock, $linha['cod_usuario'], $cod_curso)."</a>";
-      $data=UnixTime2DataHora($linha['data']);
+  while ($num_linhas>0)
+  {
+    $linha=RetornaLinha($res);
+    $num_linhas--;
+    $nome_usuario="<a href=# onclick=\"return(OpenWindowPerfil(".$linha['cod_usuario']."));\">".NomeUsuario($sock, $linha['cod_usuario'], $cod_curso)."</a>";
+    $data=UnixTime2DataHora($linha['data']);
 
-      switch ($linha['acao']){
+    switch ($linha['acao']){
 
-                  /* 149 - Cria�o */
-        case ('C'): $acao=RetornaFraseDaLista($lista_frases,149); break;
-                  /* 150 - Edi�o Cancelada */
-        case ('D'): $acao=RetornaFraseDaLista($lista_frases,150); break;
-                  /* 154 - Em Edi�o */
-        case ('E'): $acao=RetornaFraseDaLista($lista_frases,154); break;
-                  /* 147 - Edi�o Finalizada */
-        case ('F'): $acao=RetornaFraseDaLista($lista_frases,147); break;
-                  /* 151 - Exclus�o*/
-        case ('A'): $acao=RetornaFraseDaLista($lista_frases,151); break;
-                  /* 152 - Recupera��o*/
-        case ('R'): $acao=RetornaFraseDaLista($lista_frases,152); break;
-                  /* 153 - Exclu�da definitivamente*/
-        case ('X'): $acao=RetornaFraseDaLista($lista_frases,153); break;
-                  /* 148 - Desconhecida */
-        default: $acao=RetornaFraseDaLista($lista_frases,148); break;
-      }
-
-      echo("            <tr>\n");
-      echo("              <td align=center><font class=text>".$acao."</font></td>\n");
-      echo("              <td align=center><font class=text>".$data."</font></td>\n");
-      echo("              <td align=center><font class=text>".$nome_usuario."</font></td>\n");
-      echo("            </tr>\n");
+                /* 149 - Cria�o */
+      case ('C'): $acao=RetornaFraseDaLista($lista_frases,149); break;
+                /* 150 - Edi�o Cancelada */
+      case ('D'): $acao=RetornaFraseDaLista($lista_frases,150); break;
+                /* 154 - Em Edi�o */
+      case ('E'): $acao=RetornaFraseDaLista($lista_frases,154); break;
+                /* 147 - Edi�o Finalizada */
+      case ('F'): $acao=RetornaFraseDaLista($lista_frases,147); break;
+                /* 151 - Exclus�o*/
+      case ('A'): $acao=RetornaFraseDaLista($lista_frases,151); break;
+                /* 152 - Recupera��o*/
+      case ('R'): $acao=RetornaFraseDaLista($lista_frases,152); break;
+                /* 153 - Exclu�da definitivamente*/
+      case ('X'): $acao=RetornaFraseDaLista($lista_frases,153); break;
+                /* 148 - Desconhecida */
+      default: $acao=RetornaFraseDaLista($lista_frases,148); break;
     }
+
+    echo("            <tr>\n");
+    echo("              <td align=center><font class=\"text\">".$acao."</font></td>\n");
+    echo("              <td align=center><font class=\"text\">".$data."</font></td>\n");
+    echo("              <td align=center><font class=\"text\">".$nome_usuario."</font></td>\n");
+    echo("            </tr>\n");
+  }
 
   echo("          </table>\n");
   echo("        </td>\n");

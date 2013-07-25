@@ -71,8 +71,8 @@
     echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
     /* 1 - Avaliacoes */
     $cabecalho = "  <br /><br /><h5>".RetornaFraseDaLista($lista_frases, 1);
-    /* 25 - ï¿½rea restrita ao formador. */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 25)."</h5>";
+    /* 505 - ï¿½rea restrita ao formador. */
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases_geral, 505)."</h5>";
     echo($cabecalho);
     echo("    <br />\n");
     echo("  </body>\n");
@@ -84,7 +84,7 @@
   {
     echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"); echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
     echo("<html lang=\"pt\">\n");
-    /* 1 - Avalicaoes */
+    /* 1 - Avaliações */
     echo("  <head>\n");
     echo("    <title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
     echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
@@ -93,10 +93,10 @@
 
     /* PÃ¡gina Principal */
 
-    /*1 - Avaliacoes */
+    /* 1 - Avaliacoes */
     $cabecalho = ("<br /><br /><h4>".RetornaFraseDaLista ($lista_frases, 1));
-    /*?? - Em edicao */
-    $cabecalho.= (" - Em edicao</h4>\n");
+    /* 154 - Em edicao */
+    $cabecalho.= (" - ".RetornaFraseDaLista ($lista_frases, 154)."</h4>\n");
     echo($cabecalho);
 
     echo ("<br />\n");
@@ -145,7 +145,7 @@
 
     $linha=RetornaLinha($res);
     $num_linhas--;
-    $nome_usuario=NomeUsuario($sock, $linha['cod_usuario']);
+    $nome_usuario=NomeUsuario($sock, $linha['cod_usuario'], $cod_curso);
     $data=UnixTime2DataHora($linha['data']);
 
     if ($linha['acao']=="E")

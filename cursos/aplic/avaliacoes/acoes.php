@@ -59,7 +59,7 @@
 
   $tabela = "Avaliacao";
 
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);   
+  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   $sock=MudarDB($sock, $cod_curso); 
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
@@ -90,12 +90,12 @@ if ($acao == "criarAvaliacaoExt") {
     {
       /* 83 - Erro ao se excluir a avalia��o. */
       Desconectar($sock);
-       header("Location:avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&tela_avaliacao=".$tela_avaliacao."&acao=excluirAvaliacao&atualizacao=false");
+      header("Location:avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&tela_avaliacao=".$tela_avaliacao."&acao=excluirAvaliacao&atualizacao=false");
     }
     else
     {
-       Desconectar($sock);
-       header("Location:avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&tela_avaliacao=".$tela_avaliacao."&acao=excluirAvaliacao&atualizacao=true"); 
+      Desconectar($sock);
+      header("Location:avaliacoes.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=22&tela_avaliacao=".$tela_avaliacao."&acao=excluirAvaliacao&atualizacao=true"); 
     }
   }
 

@@ -121,12 +121,6 @@
   echo("        }\n");
   echo("      }\n\n"); 
 
-  echo ("     function Iniciar()");
-  echo ("     {");
-  echo ("     startList();");
-  echo ("     }");
-
-
   echo("    </script>\n");
 
   //echo("	<script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");
@@ -305,11 +299,11 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
-  echo("        </td>\n");	
+  echo("        </td>\n");
   echo("      </tr>\n");
-  echo("    </table>\n"); 
-  echo("  </body>\n");	
-  echo("</html>\n");	
+  echo("    </table>\n");
+  echo("  </body>\n");
+  echo("</html>\n");
 
 
   Desconectar($sock);

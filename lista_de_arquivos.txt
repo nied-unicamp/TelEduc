@@ -81,6 +81,8 @@ acessos
 administracao
 agenda
 ajuda
+avaliacoes
+batepapo
 bibliotecas
 busca
 configurar
@@ -89,6 +91,7 @@ diario
 dinamica
 enquete
 estrutura
+exercicios
 extracao
 forum
 grupos
@@ -96,6 +99,7 @@ imgs
 index2.php
 index_novo.php
 index.php
+intermap
 js-css
 logout.php
 material
@@ -172,6 +176,25 @@ ver_linha.php
 ajuda.inc
 ajuda.php
 salvar_arquivo.php
+
+./cursos/aplic/avaliacoes:
+acoes.php
+ajuda_media.php
+avaliacoes.css
+avaliacoes.inc
+avaliacoes.php
+avaliar_participantes.php
+componentes.php
+em_edicao.php
+historico_avaliacoes.php
+historico_desempenho_todos.php
+jscriptlib.js
+notas.php
+salvar_avaliar_participantes.php
+salvar_todas_as_notas.php
+salvar_ver_avaliacao.php
+ver.php
+ver_popup.php
 
 ./cursos/aplic/bibliotecas:
 acesso_php.inc
