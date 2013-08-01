@@ -67,7 +67,7 @@
 ?>
 
 <link rel="stylesheet" href="./templates/sk15_purple/main.css" type="text/css">
-<script type=text/javascript language="JavaScript">
+<script type=text/javascript language="javascript">
 // Lista as mensagem do sistema Imprimindo-as
 // N�O RETIRE ESSAS LINHAS DO TEMPLATE !!!
 

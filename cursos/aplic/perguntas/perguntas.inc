@@ -198,11 +198,11 @@ function RetornaAssunto($sock, $cod_assunto)
 
 function ListaAssuntos($sock, $cod_assunto_pai)
 {
-   $query = "select nome, cod_assunto from Pergunta_assuntos ";
-   $query .= "where cod_assunto_pai = ".$cod_assunto_pai." order by nome";
-   $res = Enviar($sock, $query);
-   $tuplas = RetornaArrayLinhas($res);
-   return($tuplas);
+  $query  = "select nome, cod_assunto from Pergunta_assuntos ";
+  $query .= "where cod_assunto_pai = ".$cod_assunto_pai." order by nome";
+  $res = Enviar($sock, $query);
+  $tuplas = RetornaArrayLinhas($res);
+  return($tuplas);
 }
 
 

@@ -46,13 +46,13 @@
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
   if (!isset($cod_curso)){
-  	if (isset($_GET['cod_curso'])){
-  		$cod_curso = $_GET['cod_curso'];
-  	} else if (isset($_POST['cod_curso'])){
-  		$cod_curso = $_POST['cod_curso'];
-  	}
+    if (isset($_GET['cod_curso'])){
+      $cod_curso = $_GET['cod_curso'];
+    } else if (isset($_POST['cod_curso'])){
+      $cod_curso = $_POST['cod_curso'];
+    }
   }
-  	
+
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
 
@@ -65,9 +65,9 @@
   
   
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
-  
+
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
-   
+
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $tela_ordem_ferramentas=RetornaOrdemFerramentas($sock);
   $tela_lista_ferramentas=RetornaListaFerramentas($sock);
@@ -119,33 +119,32 @@
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n");
   echo("    <link rel=\"shortcut icon\" href=\"../../../favicon.ico\" />\n");
   
-  $estilos_css = array(	"../js-css/ambiente.css",
-  						"../js-css/navegacao.css",
-  						"../js-css/tabelas.css",
-  						"../js-css/dhtmlgoodies_calendar.css",
-                        "../js-css/chat.css");
-  
-  $codigos_js = array(	"../bibliotecas/dhtmllib.js",
-  						"../js-css/dhtmlgoodies_calendar.js",
-  						"../js-css/jscript.js",
-  						"../js-css/chat.js");
-  
+  $estilos_css = array("../js-css/ambiente.css",
+                       "../js-css/navegacao.css",
+                       "../js-css/tabelas.css",
+                       "../js-css/dhtmlgoodies_calendar.css");
+
+  $codigos_js = array("../bibliotecas/dhtmllib.js",
+                      "../js-css/dhtmlgoodies_calendar.js",
+                      "../js-css/jscript.js",
+                      "../js-css/chat.js");
+
   /* Se estamos salvando a pagina em um arquivo, manter o css inline e sem javascript.
    * Caso contrario podemos servi-los normalmente sob a forma de links.
    */
   if ($SalvarEmArquivo) {
-  	
-  	array_push($estilos_css, "../js-css/salvaremarquivo.css");
-  	echo("<style>".RetornaCSSInline($estilos_css)."</style>");
-  	
+
+    array_push($estilos_css, "../js-css/salvaremarquivo.css");
+    echo("<style>".RetornaCSSInline($estilos_css)."</style>");
+
   } else {
-  	
-  	foreach ($estilos_css as $css){
-  		echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
-  	}
-  	
-  	foreach ($codigos_js as $js){
-  		echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
-  	}
-  	
+
+    foreach ($estilos_css as $css){
+      echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
+    }
+
+    foreach ($codigos_js as $js){
+      echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
+    }
+
   }

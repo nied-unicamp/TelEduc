@@ -78,12 +78,12 @@ echo ("      }\n\n");
 
 echo ("      function Importar()\n");
 echo ("      {\n");
-echo("			if(confirm('" . RetornaFraseDaLista($lista_frases, 19) . "'))");
-echo ("      	{\n");
-echo ("        		document.frmImportar.action = \"acoes_linha.php\"\n");
-echo("  	  		document.frmImportar.acao.value = \"importarItem\";\n");
-echo ("        		document.frmImportar.submit();\n");
-echo ("      	}\n\n");
+echo ("        if(confirm('" . RetornaFraseDaLista($lista_frases, 19) . "'))");
+echo ("        {\n");
+echo ("          document.frmImportar.action = \"acoes_linha.php\"\n");
+echo ("          document.frmImportar.acao.value = \"importarItem\";\n");
+echo ("          document.frmImportar.submit();\n");
+echo ("        }\n\n");
 echo ("      }\n\n");
 
 echo ("      function CancelarImportacao()\n");

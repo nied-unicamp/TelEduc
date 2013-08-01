@@ -76,23 +76,22 @@
   echo("        window.location = 'importar_curso.php?cod_curso=".$cod_curso."';\n");
   echo("      }\n\n");
 
-  echo("    </script>\n\n");	
+  echo("    </script>\n\n");
 
-  include("../menu_principal.php");	
+  include("../menu_principal.php");
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 1 - Dinamica do Curso */
-  echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)."</h4>\n");	
+  echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
   echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-  echo("          </div>\n");		
+  echo("          </div>\n");
 
-  /*Voltar*/			
-   /* 509 - Voltar */
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   if (ExisteDinamica($sock,$cod_curso,$diretorio_arquivos)=='N')
@@ -109,18 +108,18 @@
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
     echo("                <ul class=\"btAuxTabs\">\n");	
-    echo("              	<li><span onclick='IncAltDinam();'>".$frase."</span></li>\n");
+    echo("                  <li><span onclick='IncAltDinam();'>".$frase."</span></li>\n");
     /* 36 - Importar Dinamica*/
-    echo("              	<li><span onclick='ImportarDinam();'>".RetornaFraseDaLista($lista_frases, 36)."</span></li>\n");	
+    echo("                  <li><span onclick='ImportarDinam();'>".RetornaFraseDaLista($lista_frases, 36)."</span></li>\n");	
     echo("                </ul>\n");	
     echo("              </td>\n");
     echo("            </tr>\n");
   }
   echo("            <tr>\n");
   echo("              <td>\n");
-  /* Tabela Interna */	
+  /* Tabela Interna */
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-	
+
   /* Conteudo */
 
   $linha_item=RetornaDadosDinamica($sock);
@@ -169,18 +168,18 @@
     echo("                  </tr>\n");
   }	
 
-  /*Fim tabela interna*/		
+  /*Fim tabela interna*/
   echo("                </table>\n");
-    
+  
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
-  echo("    	  </table>\n");
-  echo("        </td>\n");	
-  echo("      </tr>\n");	
+  echo("          </table>\n");
+  echo("        </td>\n");
+  echo("      </tr>\n");
   include("../tela2.php");
-  echo("  </body>\n");			
-  echo("</html>\n");	
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
 
 ?>

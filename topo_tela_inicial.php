@@ -41,20 +41,20 @@
   ========================================================== */
 
   $sock=Conectar("");
-  
+
   if (isset($cod_lin))
      MudancaDeLingua($sock,$cod_lin);
 
-// Comentado parte do codigo abaixo, pois estava sempre mudando a lingua do usuario para o padrao       
+// Comentado parte do codigo abaixo, pois estava sempre mudando a lingua do usuario para o padrao
 //  else if(!empty($_SESSION['login_usuario_s']))
 //  {
-//  	$cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
-//  	MudancaDeLingua($sock,$cod_lin);
+//    $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
+//    MudancaDeLingua($sock,$cod_lin);
 //  }
 
   /*$abv_lingua variavel utilizada para determinar o atributo lang do HTML*/
   $abv_lingua = AbreviaturaLingua($cod_lin);
-  
+
   $lista_frases=RetornaListaDeFrases($sock,-3);
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
@@ -63,7 +63,7 @@
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   $tela_raiz_www = $linha[0];
-  
+
   $query="select valor from Config where item = 'host'";
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
@@ -81,26 +81,25 @@
   echo("    <meta name=\"copyright\" content=\"\" />\n");
   echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
   echo("    <link rel=\"shortcut icon\" href=\"../favicon.ico\" />\n");
-  
-  $estilos_css = array(	"../cursos/aplic/js-css/ambiente.css",
-  						"../cursos/aplic/js-css/navegacao.css",
-  						"../cursos/aplic/js-css/tabelas.css",
-  						"../cursos/aplic/js-css/dhtmlgoodies_calendar.css");
-  
-  $codigos_js = array(	"../cursos/aplic/bibliotecas/dhtmllib.js",
-  						"../cursos/aplic/js-css/dhtmlgoodies_calendar.js",
-  						"../cursos/aplic/js-css/jscript.js");
-  
+
+  $estilos_css = array("../cursos/aplic/js-css/ambiente.css",
+                       "../cursos/aplic/js-css/navegacao.css",
+                       "../cursos/aplic/js-css/tabelas.css",
+                       "../cursos/aplic/js-css/dhtmlgoodies_calendar.css");
+
+  $codigos_js = array("../cursos/aplic/bibliotecas/dhtmllib.js",
+                       "../cursos/aplic/js-css/dhtmlgoodies_calendar.js",
+                       "../cursos/aplic/js-css/jscript.js");
+
   /* Se estamos salvando a pagina em um arquivo, manter o css inline e sem javascript.
    * Caso contrario podemos servi-los normalmente sob a forma de links.
    */
   foreach ($estilos_css as $css){
-  	echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
+    echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
   }
-  
+
   foreach ($codigos_js as $js){
-  	echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
+    echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
   }
-  	
-  
-  
+
+

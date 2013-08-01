@@ -285,34 +285,34 @@
   		header("Location:importar_curso.php?cod_ferramenta=".$cod_ferramenta."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_categoria=".$cod_categoria."&acao_feedback=falhaImportacao&atualizacao=false");
   	
   }else if ($acao == "importarItem"){
-  	
-  	$cod_curso_destino = $cod_curso;
-  	$cod_topico_destino = $_SESSION['cod_topico_destino'];
-  	$cod_usuario;
-  	$cod_curso_origem = $_SESSION['cod_curso_origem'];
-  	$flag_curso_extraido = $_SESSION['flag_curso_extraido'];
-  	$flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
-  	$array_topicos_origem = $cod_topicos_import;
-  	$array_itens_origem = $cod_itens_import;
-  	$dirname = $dir;
-  	$nome_tabela = $tabela;
-  	$sock=Conectar("");
-  	if ($curso_extraido)
-		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Montagem');
-	else
-		$diretorio_arquivos_origem = RetornaDiretorio($sock, 'Arquivos');
-  	$diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
-	$diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
 
- 	$sock = MudarDB($sock, $cod_curso);
-	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
-	$sock = MudarDB($sock, "");
-	
-	ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
+    $cod_curso_destino = $cod_curso;
+    $cod_topico_destino = $_SESSION['cod_topico_destino'];
+    $cod_usuario;
+    $cod_curso_origem = $_SESSION['cod_curso_origem'];
+    $flag_curso_extraido = $_SESSION['flag_curso_extraido'];
+    $flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
+    $array_topicos_origem = $cod_topicos_import;
+    $array_itens_origem = $cod_itens_import;
+    $dirname = $dir;
+    $nome_tabela = $tabela;
+    $sock=Conectar("");
+    if ($curso_extraido)
+      $diretorio_arquivos_origem = RetornaDiretorio($sock, 'Montagem');
+    else
+      $diretorio_arquivos_origem = RetornaDiretorio($sock, 'Arquivos');
+    $diretorio_arquivos_destino = RetornaDiretorio($sock, 'Arquivos');
+    $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+
+    $sock = MudarDB($sock, $cod_curso);
+    AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+    $sock = MudarDB($sock, "");
+
+    ImportarMateriais($cod_curso_destino, $cod_topico_destino, $cod_usuario,
                       $cod_curso_origem, $flag_curso_extraido, $flag_curso_compartilhado,
                       $array_topicos_origem, $array_itens_origem, $nome_tabela,
                       $dirname, $diretorio_arquivos_destino, $diretorio_arquivos_origem);
-                      
+    
     header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_topico_destino."&acao=".$acao."&atualizacao=true");
   }
 

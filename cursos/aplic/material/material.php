@@ -166,10 +166,10 @@
 
   $objMaterial->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-  echo("		function redirecionaDownloadAnexos(url){\n");
-  echo("			window.location=url;\n");
-  echo("		}\n");
-  echo(" 	</script>\n");
+  echo("        function redirecionaDownloadAnexos(url){\n");
+  echo("            window.location=url;\n");
+  echo("        }\n");
+  echo("    </script>\n");
   if($eformador){
 
     /**************** ajax ****************/
@@ -610,7 +610,7 @@
                 7: Importar Parada Obrigat�ria
         */
     if(($cod_topico_raiz < 2))
-    	echo("                    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_ferramenta=".$cod_ferramenta."\">".RetornaFraseDaLista($lista_frases,105)."</a></li>\n");
+      echo("                    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_ferramenta=".$cod_ferramenta."\">".RetornaFraseDaLista($lista_frases,105)."</a></li>\n");
 
         /* 9 - Nova Pasta */
     echo("                    <li><span onclick=\"MostraLayer(cod_novo_top,150, event);document.getElementById('nome_novo_topico').focus();document.getElementById('nome_novo_topico').value='';\" title=\"".RetornaFraseDaLista($lista_frases,9)."\">".RetornaFraseDaLista($lista_frases,9)."</span></li>\n");
@@ -823,14 +823,14 @@
     }
     // testa se � raiz e se tem itens para habilitar o download de todos os anexos
     if(($cod_topico_raiz < 2) && !((empty($lista_topicos)) && ((empty($lista_itens) || (!ExistemItensVisiveis($sock, $tabela, $cod_topico_raiz, $eformador)))))){
-    	echo("					<div id=\"downloadAnexos\">");
-    	echo("                  <ul class=\"btAuxTabs\">\n");
-    	/* 151 - Baixar todos os anexos */
-    	echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos."','".$tabela."','".$bibliotecas."','".$nome_ferramenta."','".$diretorio_temp."');\">".RetornaFraseDaLista($lista_frases,151)."</span></li>\n");
-    	echo("                  </ul>\n");
-    	echo("					</div>");       
+      echo("                <div id=\"downloadAnexos\">");
+      echo("                  <ul class=\"btAuxTabs\">\n");
+      /* 151 - Baixar todos os anexos */
+      echo("                    <li><span onclick=\"xajax_CriaZipDinamic('".$cod_topico_raiz."','".$dir_tmp_ferramenta."',".$cod_curso.",".$cod_ferramenta.",'".$diretorio_arquivos."','".$tabela."','".$bibliotecas."','".$nome_ferramenta."','".$diretorio_temp."');\">".RetornaFraseDaLista($lista_frases,151)."</span></li>\n");
+      echo("                  </ul>\n");
+      echo("                </div>");
     }
-    echo("          <br />\n");    
+    echo("          <br />\n");
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
         echo("        </td>\n");

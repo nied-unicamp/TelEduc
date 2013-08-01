@@ -90,7 +90,7 @@
   }
   /* FIM nav3nivel */
   echo("          </ul>\n");
-  
+
   /* Area Restrita
    * Se nao estiver logado ou se for admtele, permite link para a administracao
    * cod_texto=17: Administracao 
@@ -112,16 +112,16 @@
   /*Se nao estiver logado, deixa link pra se cadastrar*/
   if(empty($_SESSION['login_usuario_s']))
     if($cod_curso != NULL){
-    	//179 - Cadastre-se
-	    echo("            <li><a href=\"".$link."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+      //179 - Cadastre-se
+      echo("            <li><a href=\"".$link."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
     }else{
-	  	//179 - Cadastre-se
-	    echo("            <li><a href=\"".$link."cadastro.php\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+      //179 - Cadastre-se
+      echo("            <li><a href=\"".$link."cadastro.php\">".RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
     }
   /*Se estiver logado e nao for o admtele, mostra links para o usuario acessar seus dados e seus cursos*/
   else if($_SESSION['cod_usuario_global_s'] != -1)
   {
-  	echo("			  </ul><ul id=\"nav\">");
+    echo("			  </ul><ul id=\"nav\">");
     //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,187)."</a></li>\n");
     echo("            <div class=\"navCabecalho\">".RetornaFraseDaLista($lista_frases,187)."</div>\n");
     if(PreencheuDadosPessoais($sock))

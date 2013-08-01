@@ -117,7 +117,7 @@ echo ("       {\n");
 echo ("         if(Validacheck())\n");
 echo ("         {\n");
 echo ("           document.frmImportar.action = 'acoes.php';\n");
-    echo("  	  document.frmImportar.acao.value = \"importarItem\";\n");
+echo ("           document.frmImportar.acao.value = \"importarItem\";\n");
 echo ("           document.frmImportar.submit();\n");
 echo ("         }\n");
 echo ("       }\n\n");

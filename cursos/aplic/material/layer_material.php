@@ -69,7 +69,7 @@
   echo("          <input type=\"hidden\" name=\"tipo_comp\" id=\"tipo_comp\" value=\"\" />\n");
   echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
   echo("          <input type=\"hidden\" name=\"cod_pagina\" id=\"cod_pagina\" value=\"\" />\n");
-  //148
+  /* 131 - Compartilhamento alterado com sucesso*/
   echo("          <input type=\"hidden\" name=\"texto\" id=\"texto\" value=\"".RetornaFraseDaLista($lista_frases,131)."\" />\n");
   echo("          <ul class=\"ulPopup\">\n");
   echo("            <li onclick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamento(xajax.getFormValues('form_comp'),'".$tabela."','".RetornaFraseDaLista($lista_frases,17)."'); EscondeLayers();\">\n");

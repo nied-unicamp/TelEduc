@@ -97,18 +97,20 @@
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type='text/javascript' src='../bibliotecas/dhtmllib.js'></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");	
-  echo("      var cod_ferramenta='".$cod_ferramenta."';\n");
-  echo("      var cod_item='".$cod_item."';\n");
-  echo("      var cod_curso='".$cod_curso."';\n");
-  echo("      var cod_usuario='".$cod_usuario."';\n");
-  echo("      var origem='".$origem."';\n");
-  echo("      var num_apagados = '0';\n");
+  echo("      var cod_ferramenta ='".$cod_ferramenta."';\n");
+  echo("      var cod_item       ='".$cod_item."';\n");
+  echo("      var cod_curso      ='".$cod_curso."';\n");
+  echo("      var cod_usuario    ='".$cod_usuario."';\n");
+  echo("      var origem         ='".(isset($origem)?$origem:"")."';\n");
+  echo("      var num_apagados   = '0';\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
-  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  if (isset($_GET['acao']) && isset($_GET['atualizacao'])) {
+    $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  }
   echo("        startList();\n");
   echo("      }\n\n");
 
@@ -301,7 +303,8 @@
 
         foreach($lista_arq as $cod => $linha)
         {
-          $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");	
+          if (function_exists('mb_convert_encoding'))
+            $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");	
           if (!($linha['Arquivo']=="" && $linha['Diretorio']==""))
           {
             $nivel_anterior=$nivel;

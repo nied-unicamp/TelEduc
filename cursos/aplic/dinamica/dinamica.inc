@@ -384,7 +384,6 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
     $sock = Conectar($cod_curso_origem, $tmp);
 
     $arquivos_apag = $diretorio_arquivos_destino."/".$cod_curso_destino."/dinamica/";
-//  echo $arquivos_apag;
     if (substr($arquivos_apag, -1)!="/")
     {
       $arquivos_apag .="/";
@@ -392,12 +391,12 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
     $dir = opendir($arquivos_apag); // Abre o diret�rio
     $files = Array(); // Array que conter� todos os objetos do diret�rio
     $result = Array();
-  // Toda vez que a fun��o readdir � chamada, ela retorna o objeto e 'move' para o pr�ximo, caso exista.
+    // Toda vez que a fun��o readdir � chamada, ela retorna o objeto e 'move' para o pr�ximo, caso exista.
     while ($file = readdir($dir))
     {
       $files[] = $file;
     }
-   // Agora eu lerei todos os objetos do diret�rio e selecionarei apenas os que forem arquivos. Eu verifico isso usando a fun��o 'is_file'
+    // Agora eu lerei todos os objetos do diret�rio e selecionarei apenas os que forem arquivos. Eu verifico isso usando a fun��o 'is_file'
     for ($i=0; $i<count($files); $i++)
     {
       if (is_file(addslashes(realpath($arquivos_apag.$files[$i]))))
@@ -407,7 +406,6 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
     }
     sort($result); // Ordena os arquivos em ordem alfab�tica
     closedir($dir);
-  //    var_dump($result);
 
 //    $i = sizeof($result);
 //    for ($itemp=0;$itemp!=$i;$itemp++)
@@ -430,7 +428,6 @@ function ImportarDinamica($cod_curso_destino, $cod_usuario, $cod_curso_origem,
 
 
     if (!$texto) {
-//      echo("FUNICONOU ARQUIVO");
       Desconectar($sock);
       // Importa para a base de dados do CURSO destino
       $sock = Conectar($cod_curso_destino);

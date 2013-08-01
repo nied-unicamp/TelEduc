@@ -220,51 +220,51 @@
   
   echo("  function HabilitaBotoes(){");
   if ($usr_formador){
-  	if ($cod_assunto_pai == 2){ /* TÃ¡ na lixeira? */
-  		echo("		document.getElementById('mExcluir_Selec').className=\"menuUp02\";");
-  		echo("      document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionadas(); };\n");
-  		echo("		document.getElementById('mRecuperar_Selec').className=\"menuUp02\";");
-  		echo("      document.getElementById('mRecuperar_Selec').onclick=function(){ MostraLayer(layer_estrutura_recuperar,this); };\n");
-  	} else {
-  		echo("		document.getElementById('mApagar_Selec').className=\"menuUp02\";");
-  		echo("      document.getElementById('mApagar_Selec').onclick=function(){ ApagarSelecionadas(); };\n");
-  		echo("		document.getElementById('mMover_Selec').className=\"menuUp02\";");
-  		echo("      document.getElementById('mMover_Selec').onclick=function(){ MostraLayer(layer_estrutura_mover,this); };\n");
-  	}
+    if ($cod_assunto_pai == 2){ /* TÃ¡ na lixeira? */
+      echo("      document.getElementById('mExcluir_Selec').className=\"menuUp02\";");
+      echo("      document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionadas(); };\n");
+      echo("      document.getElementById('mRecuperar_Selec').className=\"menuUp02\";");
+      echo("      document.getElementById('mRecuperar_Selec').onclick=function(){ MostraLayer(layer_estrutura_recuperar,this); };\n");
+    } else {
+      echo("      document.getElementById('mApagar_Selec').className=\"menuUp02\";");
+      echo("      document.getElementById('mApagar_Selec').onclick=function(){ ApagarSelecionadas(); };\n");
+      echo("      document.getElementById('mMover_Selec').className=\"menuUp02\";");
+      echo("      document.getElementById('mMover_Selec').onclick=function(){ MostraLayer(layer_estrutura_mover,this); };\n");
+    }
   }
-  echo("		if (PerguntasAbertas > 0) HabilitaBotaoFechar() ;");
-  echo("		document.getElementById('mExibir_Selec').className=\"menuUp02\";");
+  echo("        if (PerguntasAbertas > 0) HabilitaBotaoFechar() ;");
+  echo("        document.getElementById('mExibir_Selec').className=\"menuUp02\";");
   echo("        document.getElementById('mExibir_Selec').onclick=function(){ ExibirSelecionadas(); };\n");
   
   echo("}");
   echo("function HabilitaBotaoFechar(){");
-  echo("		document.getElementById('mFechar_Selec').className=\"menuUp02\";");
+  echo("        document.getElementById('mFechar_Selec').className=\"menuUp02\";");
   echo("        document.getElementById('mFechar_Selec').onclick=function(){ FecharSelecionadas(); };\n");
   echo("}");
   
   
   echo("  function DesabilitaBotoes(){");
   if ($usr_formador){
-  	if ($cod_assunto_pai == 2){ /* TÃ¡ na lixeira? */
-  		echo("		document.getElementById('mExcluir_Selec').className=\"menuUp\";");
-  		echo("      document.getElementById('mExcluir_Selec').onclick=function(){};\n");
-  		echo("		document.getElementById('mRecuperar_Selec').className=\"menuUp\";");
-  		echo("      document.getElementById('mRecuperar_Selec').onclick=function(){};\n");
-  	} else {
-  		echo("		document.getElementById('mApagar_Selec').className=\"menuUp\";");
-  		echo("      document.getElementById('mApagar_Selec').onclick=function(){};\n");
-  		echo("		document.getElementById('mMover_Selec').className=\"menuUp\";");
-  		echo("      document.getElementById('mMover_Selec').onclick=function(){};\n");
-  	}
+    if ($cod_assunto_pai == 2){ /* TÃ¡ na lixeira? */
+      echo("      document.getElementById('mExcluir_Selec').className=\"menuUp\";");
+      echo("      document.getElementById('mExcluir_Selec').onclick=function(){};\n");
+      echo("      document.getElementById('mRecuperar_Selec').className=\"menuUp\";");
+      echo("      document.getElementById('mRecuperar_Selec').onclick=function(){};\n");
+    } else {
+      echo("      document.getElementById('mApagar_Selec').className=\"menuUp\";");
+      echo("      document.getElementById('mApagar_Selec').onclick=function(){};\n");
+      echo("      document.getElementById('mMover_Selec').className=\"menuUp\";");
+      echo("      document.getElementById('mMover_Selec').onclick=function(){};\n");
+    }
   }
-  echo("  		document.getElementById('mExibir_Selec').className=\"menuUp\";");
-  echo("      	document.getElementById('mExibir_Selec').onclick=function(){};\n");
-  echo("		DesabilitaBotaoFechar();");
+  echo("      document.getElementById('mExibir_Selec').className=\"menuUp\";");
+  echo("      document.getElementById('mExibir_Selec').onclick=function(){};\n");
+  echo("      DesabilitaBotaoFechar();");
   echo("}");
   
   echo("function DesabilitaBotaoFechar(){");
-  echo("  		document.getElementById('mFechar_Selec').className=\"menuUp\";");
-  echo("      	document.getElementById('mFechar_Selec').onclick=function(){};\n");
+  echo("      document.getElementById('mFechar_Selec').className=\"menuUp\";");
+  echo("      document.getElementById('mFechar_Selec').onclick=function(){};\n");
   echo("}");
   
   
@@ -289,7 +289,7 @@
   echo("  function MostraLayer(cod_layer, obj)\n");
   echo("  {\n");
   echo("    EscondeLayers();\n");
-  echo("	existelayer=true;");
+  echo("    existelayer=true;");
   /* Se o browser for Netscape alinhe com a link. */
   echo("    if ((isNav) && (versao<'5.0'))\n");
   echo("    {\n");	
@@ -298,9 +298,9 @@
   echo("      if (cod_layer == layer_estrutura)\n");
   echo("        moveLayerTo(cod_layer, obj.x + img_icone.height, obj.y + img_icone.height);\n");
   echo("      else\n");
-  echo("    	{\n");
-  echo("        	moveLayerTo(cod_layer, obj.x , obj.y + img_icone.height);\n");
-  echo("    	}\n");
+  echo("      {\n");
+  echo("        moveLayerTo(cod_layer, obj.x , obj.y + img_icone.height);\n");
+  echo("      }\n");
   echo("    }\n");
   echo("    else\n");
   echo("      moveLayerTo(cod_layer, Xpos, Ypos + AjustePosMenuIE());\n");
@@ -629,9 +629,9 @@
 
   //echo("  <br>\n");
   
-  echo("  <span class=\"btsNav2\"><a href=# onClick='MostraLayer(layer_estrutura,this);return(false);'><img src=../imgs/estrutura.gif border=0></a>\n");
-  //echo("  <a href=# onMouseDown='MostraLayer(lay_estrutura,0);return(false);'><img src=../figuras/estrutura.gif border=0></a>\n");
-  echo("    <font class=text>".RetornaLinkCaminhoAssunto($sock, $cod_assunto_pai, $cod_curso, "perguntas"));
+  echo("  <span class=\"btsNav2\"><a href=\"#\" onClick='MostraLayer(layer_estrutura,this);return(false);'><img src=../imgs/estrutura.gif border=0></a>\n");
+  //echo("  <a href=\"#\" onMouseDown='MostraLayer(lay_estrutura,0);return(false);'><img src=../figuras/estrutura.gif border=0></a>\n");
+  echo("    <font class=\"text\">".RetornaLinkCaminhoAssunto($sock, $cod_assunto_pai, $cod_curso, "perguntas"));
   echo("    </font></span>\n");
   echo("  \n");
 
@@ -645,46 +645,63 @@
     echo("  <table border=0 width=100% cellspacing=2>\n");
     echo("    <tr>\n");
     // 6 - Descriï¿½ï¿½o
-    echo("      <td valign=top width=1% class=textsmall><i>".RetornaFraseDaLista($lista_frases, 6));
+    echo("      <td valign=top width=1% class=\"textsmall\"><i>".RetornaFraseDaLista($lista_frases, 6));
     echo("</i>:</td>\n");
-    echo("      <td class=textsmall>\n");
+    echo("      <td class=\"textsmall\">\n");
     echo(Space2Nbsp(Enter2BR(LimpaTags($dados_assunto_pai['descricao'])))."\n");
     echo("      </td>\n");
     echo("    </tr>\n");
     echo("  </table>\n");
   }
 
-  $lista_assuntos = ListaAssuntos($sock, $cod_assunto_pai);
-  echo("  <form method=post name=frm_pergunta>");
+  $lista_assuntos  = ListaAssuntos($sock, $cod_assunto_pai);
+  $lista_perguntas = ListaPerguntas($sock, $cod_assunto_pai);
+  echo("  <form method=\"post\" name=\"frm_pergunta\">\n");
+  //echo(RetornaSessionIDInput());
+  echo("    <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
+  echo("    <input type=\"hidden\" name=\"acao\"      value=\"\">\n");
   
+  echo("    <input type=\"hidden\" name=\"cod_assunto_pai\" value=\"".$cod_assunto_pai."\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_assunto_dest\" value=\"\">\n");
+  /* Especifica o documento da pagina principal, o qual chamou o    */
+  /* ver_pergunta.php. Isto eh necessario para atualizar a pagina   */
+  /* principal que pode ser perguntas.php ou exibir_todas.php.      */
+  echo("    <input type=\"hidden\" name=\"pagprinc\" value=\"perguntas\">\n");
   
-  echo("          <table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-  echo("              <tr>\n");
-  echo("              <!-- Botoes de Acao -->\n");
-  echo("                <td class=\"btAuxTabs\">\n");
-  echo("                  <ul class=\"btAuxTabs\">\n");
+  if ($cod_assunto_pai == 2)
+    /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
+    /* assunto anterior a visualizaï¿½ao da lixeira.                  */
+    echo("    <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_anterior."\">\n");
+  else
+    echo("    <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_pai."\">\n");
+  
+  echo("    <table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+  echo("      <tr>\n");
+  echo("        <!-- Botoes de Acao -->\n");
+  echo("        <td class=\"btAuxTabs\">\n");
+  echo("          <ul class=\"btAuxTabs\">\n");
  
   /* Se o usuario FOR Formador entao exibe os controles. */
   if ($usr_formador)
   {
-    //echo("    <td align=center class=menu width=1%><input type=checkbox name=\"todas\" onClick=\"MarcaOuDesmarcaTodos();\"></td>\n");
+    //echo("        <td align=center class=\"menu\" width=1%><input type=\"checkbox\" name=\"todas\" onClick=\"MarcaOuDesmarcaTodos();\"></td>\n");
     /* Se NAO estiver na lixeira possibilita a inserï¿½ï¿½o de assunto. */
     if ($cod_assunto_pai != 2)
     {
-	  if($cod_assunto_pai != 1)
-	    /* 23 - Voltar */
-        echo("      <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
-	  
-	  /* 2 - Inserir Assunto */
-      echo("      <li><span onClick=\"MostraLayer(layer_novo_assunto, this);document.getElementById('nome_novo_assunto').focus();document.getElementById('nome_novo_assunto').value=''; \">".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
- 	  /* 25 - Editar Assunto */
-      echo("      <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
+      if($cod_assunto_pai != 1)
+        /* 23 - Voltar */
+        echo("            <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
+
+      /* 2 - Inserir Assunto */
+      echo("            <li><span onClick=\"MostraLayer(layer_novo_assunto, this);document.getElementById('nome_novo_assunto').focus();document.getElementById('nome_novo_assunto').value=''; \">".RetornaFraseDaLista($lista_frases,2)."</span></li>\n");
+       /* 25 - Editar Assunto */
+      echo("            <li><a href=\"editar_assunto.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,25)."</a></li>\n");
       /* 63 - Importar Perguntas Frequentes*/
-      echo("    <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,63)."</a></li>\n");
+      echo("            <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,63)."</a></li>\n");
       /* Se NAO estiver na lixeira possibilita a inserï¿½ï¿½o de */
-      /* perguntas.                                                            */
-        /* 3 - Inserir Pergunta */
-        echo("      <li><span onClick=\"MostraLayer(layer_nova_pergunta, this);document.getElementById('nome_novo_pergunta').focus();document.getElementById('nome_novo_pergunta').value='';\">".RetornaFraseDaLista($lista_frases,3)."</span></li>\n");        
+      /* perguntas.                                              */
+      /* 3 - Inserir Pergunta */
+      echo("            <li><span onClick=\"MostraLayer(layer_nova_pergunta, this);document.getElementById('nome_novo_pergunta').focus();document.getElementById('nome_novo_pergunta').value='';\">".RetornaFraseDaLista($lista_frases,3)."</span></li>\n");        
     }
   }
 
@@ -693,278 +710,237 @@
   if ($cod_assunto_pai != 2)
   {
     /* 4 - Exibir todas */
-    echo("      <li><a href=\"exibir_todas.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
+    echo("            <li><a href=\"exibir_todas.php?cod_curso=".$cod_curso."&cod_assunto_pai=".$cod_assunto_pai."\">".RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
   }
 
   if ($usr_formador)
   {
-  echo("    <input type=hidden name=origem value=perguntas>\n");
+    echo("            <input type=\"hidden\" name=\"origem\" value=\"perguntas\">\n");
     if ($cod_assunto_pai == 2)
     {
       /* ? - Voltara exibiï¿½ï¿½o normal */
       /* 56 - Voltar para perguntas frequentes*/
-      echo("      <li><span onClick=\"history.go(-1);\">".RetornaFraseDaLista($lista_frases, 56)."</span></li>\n");
+      echo("            <li><span onClick=\"history.go(-1);\">".RetornaFraseDaLista($lista_frases, 56)."</span></li>\n");
     }
     else
     {
       /* 16 - Lixeira */
-      echo("      <li><span href=# onClick='Abrir(2); return(false);'>".RetornaFraseDaLista($lista_frases_geral,16)."</span></li>\n");
+      echo("            <li><span href=\"#\" onClick='Abrir(2); return(false);'>".RetornaFraseDaLista($lista_frases_geral,16)."</span></li>\n");
     }
   }
 
-  echo("    </tr>\n");
-  
-
-     
-  
-  /* Se estiver na Lixeira o formulario submete as informaï¿½oes para */
-  /* ver_pergunta_lixeira.php, do contrario, para ver_pergunta.php  */
-  echo("  <form method=post name=frm_pergunta action=");
-  if ($cod_assunto_pai == 2)
-    echo("ver_pergunta_lixeira.php");
-  else
-    echo("ver_pergunta.php");
-
-// talvez nao precise mais?
-// echo(" target='pergunta' onsubmit='return(MostrarSelecionadas());'>\n");
-  
-  echo("  <form method=post name=frm_pergunta target='pergunta'>");
-
-  //echo(RetornaSessionIDInput());
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=acao value=\"\">\n");
-
-  echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-  echo("    <input type=hidden name=cod_assunto_dest value=\"\">\n");
-  /* Especifica o documento da pagina principal, o qual chamou o    */
-  /* ver_pergunta.php. Isto eh necessario para atualizar a pagina   */
-  /* principal que pode ser perguntas.php ou exibir_todas.php.      */
-  echo("    <input type=hidden name=pagprinc value=perguntas>\n");
-
-  if ($cod_assunto_pai == 2)
-    /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
-    /* assunto anterior a visualizaï¿½ao da lixeira.                  */
-    echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
-  else
-    echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
+  echo("          </ul>\n");
+  echo("        </td>\n");
+  echo("      </tr>\n");
 
   /* Especifica o documento da pagina principal, o qual chamou o    */
   /* perguntas.php, mas com o cod_assunto_pai = 2 (lixeira). Isto   */
-  /* eh necessario para voltar ao modo de visualizaï¿½ao anterior.    */
+  /* eh necessario para voltar ao modo de visualizaï¿½ao anterior.  */
   if (isset($pagprinc))
   /* Se jah estiver setada entao usa o valor default. Isto eh     */
   /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
-  /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
-    echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
+  /* eh preciso voltar ao modo de visualizaï¿½ao anterior.        */
+    echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"".$pag_anterior."\">\n");
   else
-    echo("    <input type=hidden name=pag_anterior value=perguntas>\n");
+    echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"perguntas\">\n");
 
 
-  echo("              <tr>\n");
-  echo("                <td valign=\"top\">\n");
-  echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");  
-  echo("                    <tr class=\"head\">\n");
+  echo("      <tr>\n");
+  echo("        <td valign=\"top\">\n");
+  echo("        <table cellpadding=\"0\" cellspacing=\"0\" class=\"sortable tabInterna\">\n");  
+  echo("          <tr class=\"head\">\n");
   
-  echo("                      <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
+  echo("            <td width=\"2%\" class=\"sorttable_nosort\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"CheckTodos();\" /></td>\n");
 
   /* 55 - Assunto */
-  echo("					<td class=alLeft style=\"cursor:pointer\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,55)."</td>");
-  echo("					</tr>");
-  
-  /* 67 - Nï¿½o hï¿½ nenhuma pergunta freqï¿½ente. */
-  if((count($lista_assuntos) == 0) && ($cod_assunto_pai == 1)) {
-     echo("  <tr class=text>\n"); 
-     echo("  	<td>&nbsp;</td>\n");
-     echo("  	<td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td>\n");
-     echo("  </tr>\n");
+  echo("            <td class=\"alLeft\" style=\"cursor:pointer\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,55)."</td>\n");
+  echo("          </tr>\n");
+
+  // Se não há nenhum assunto, nenhuma pergunta e também estamos na pasta raiz, é porque não há 
+  // nenhuma pergunta cadastrada na ferramenta, e devemos então mostrar essa mensagem ao usuário.
+  if((count($lista_assuntos) == 0) && (count($lista_perguntas) == 0) && ($cod_assunto_pai == 1)) {
+     echo("          <tr class=\"text\">\n"); 
+     echo("            <td>&nbsp;</td>\n");
+     /* 67 - Nï¿½o hï¿½ nenhuma pergunta freqï¿½ente. */
+     echo("            <td class=\"text\" colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td>\n");
+     echo("          </tr>\n");
   }
 
   // Mostra os assuntos (pastas e sub-pastas)
   $contador = 0;
-  if (count($lista_assuntos) > 0)	  
-	  foreach ($lista_assuntos as $cod => $linha_assunto)
-	  {
-	    $contador++;
-
-	    
-	    if (!$usr_formador)
-	    {
-	      /* Se NAO for o formador cria links para SOMENTE abrir os assuntos. */
-	      /* Insere o nome do assunto truncado para acima de 40 caracteres e */
-	      /* cria um link para o menu.                                       */
-	    echo("        <td width=1%>\n");
-        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() />");
-        echo("        </td>\n");
-        
-	      echo("        <td colspan=3 class=alLeft><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=text href=# onClick=");
-	      echo("'Abrir(".$linha_assunto['cod_assunto'].");return(false);'>");
-	      echo(TruncaString($linha_assunto['nome'], 80)."</a>\n");
-
-	    }
-	    else
-	    {
-//		  echo("      <tr>\n");
-//	      /* Apenas para alinhamento */
-//	      echo("        <td class=wtfield width=1%><a class=text href=# onClick=");
-//	      echo("'Abrir(".$linha_assunto['cod_assunto'].");  return(false);'>");
-//	      echo("<img src=\"../figuras/assunto.gif\" border=0></a>");
-//	      echo("        </td>\n");
-	    echo("      <tr >\n");
-        /* Coloca uma caixa de seleï¿½ao para exibiï¿½ao multipla de perguntas */
-        echo("        <td  width=1%>\n");
-        echo("          <input type=checkbox name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=VerificaCheck() />");
-        echo("        </td>\n");
-        
-		  /* Se for Formador oferece exibiï¿½ao de opï¿½oes. */
-	      /* Insere o nome do assunto truncado para acima de 40 caracteres e */
-	      /* cria um link para o menu.                                       */
-	      echo("        <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=text href=# onClick='");
-	      echo("selected_item=".$linha_assunto['cod_assunto'].";");
-	      echo("Abrir(".$linha_assunto['cod_assunto'].");return(false);'>");
-	      echo(TruncaString($linha_assunto['nome'], 80)."</a>\n");
-	    }
-//      echo($linha_assunto['cod_assunto']);
-      echo("<font class=text><i>(".RetornaNumPerguntasAssunto($sock, $linha_assunto['cod_assunto']).")</i></font>");
-      echo("        </td>\n");
-	  echo("      </tr>\n");
-	  }
-
-   	$lista_perguntas = ListaPerguntas($sock, $cod_assunto_pai);
-   	if (count($lista_perguntas) > 0)
-   	{
-    	// a acao a tomar se o usuario clicar no link da pergunta varia entre formador
-      	// e aluno, lixeira ou nao
-   	  	if (!$usr_formador)
-     	  	{
-       		// apenas ver a pergunta
-       		$acao_link_abre = "<a class=text href=# onClick='Ver(";
-       
-       		// aqui no meio vai o codigo da pergunta a ver
-       		$acao_link_fecha= ");  return false;'>";
-       
-     		}
-     		else if ($cod_assunto_pai != 2)
-     		{
-       		$acao_link_abre = "<a class=text href=# onClick='selected_item=";
-       
-       		// aqui no meio vai o codigo da pergunta a ver
-       		$acao_link_fecha= " ;MostraLayer(lay_pergunta, this);  return false;'>";
-     		}
-     		else
-     		{
-     			$acao_link_abre = "<a class=text href=# onClick='selected_item=";
-       		// aqui no meio vai o codigo da pergunta a ver
-       		$acao_link_fecha= "  ;MostraLayer(lay_lixeira_pergunta, this);  return false;'>";
-     		}
-      	// Mostra as perguntas:
-      	foreach ($lista_perguntas as $c => $linha_pergunta)
-      	{
-			$teste_pergunta = RetornaPergunta($sock, $linha_pergunta['cod_pergunta']);
-        	$questao_pergunta = $teste_pergunta['pergunta'];
-        	$resposta_pergunta = $teste_pergunta['resposta'];
-			echo("      <tr>\n");
-        	/* Coloca uma caixa de seleï¿½ao para exibiï¿½ao multipla de perguntas */
-        	echo("        <td width=1%>\n");
-        	echo("          <input type=checkbox name=cod_pergunta[] value=".$linha_pergunta['cod_pergunta']." onclick=VerificaCheck() />");
-        	echo("        </td>\n");
-        	echo("        <td colspan=3 class=alLeft>\n");
-        	echo("			<img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=text href=# onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>\n");
-        	echo("		  </td>\n");         
-        	echo("		  <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />");
-        	echo("      </tr>\n");
-        	echo("      <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
-        	echo("        <td align=left><b>".RetornaFraseDaLista($lista_frases, 11).":</b>&nbsp;&nbsp;\n");
-        	echo("			<div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div>\n");
-        	echo("		  </td>\n");
-			//      	echo("         <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
-        
-        	if ($tela_formador)
-        	{
-	        	echo("			<td align=\"left\" valign=\"top\" class=\"botao2\">\n");
-	        	echo("             <ul>\n");
-	        	/* 9 - Editar */
-				echo("              <li><span onclick=\"AlteraTexto(".$linha_pergunta['cod_pergunta'].");\">".RetornaFraseDaLista($lista_frases_geral,9)."</span></li>\n");
-	        	echo("			   </ul>\n");
-				echo("          </td>\n");
-	       	}
-	       	/* 13 - Fechar (ger) */
-			echo("			<td><a href=# onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>".RetornaFraseDaLista($lista_frases_geral,13)."</a></td>\n");
-			echo("      </tr>\n");
-	    }
-   	}
-	else if (count($lista_assuntos) == 0)
+  if (count($lista_assuntos) > 0)
+    foreach ($lista_assuntos as $cod => $linha_assunto)
     {
-		echo("      <tr >\n");
-	   	echo("		  <td></td>");
-		echo("        <td  colspan=3>\n");
-	   	/* 17 - Nï¿½o hï¿½ perguntas neste assunto. */
-	   	echo("          <font class=text>".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
-	   	echo("        </td>\n");
-	   	echo("      </tr>\n");
-	}
- 	 
-	echo("    </table>\n");
-  	echo(" <ul>\n");
-    /* 16 - Exibir selecionadas ff*/ 
-//  	if ($cod_assunto_pai != 1) {
-    echo("    <li id=\"mExibir_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,16)."</span></li>\n");
-    echo("    <li id=\"mFechar_Selec\" class=\"menuUp\"><span name=exibir onClick=''>".RetornaFraseDaLista($lista_frases,83)."</span></li>\n");
-//  	}
-    /* 69 - Apagar selecionadas */
-    if ($usr_formador){ 
-      
-      
-      /* Se nï¿½o estï¿½ na lixeira, exibe o botï¿½o de Mover */
-      if ($cod_assunto_pai != 2){
-      	echo("    <li id=\"mApagar_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
-      	echo("    <li id=\"mMover_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,71)."</span></li>\n");
-      } else {
-      	echo("    <li id=\"mExcluir_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,68)."</span></li>\n");
-		echo("    <li id=\"mRecuperar_Selec\" class=\"menuUp\"><span name=apagar onClick=''>".RetornaFraseDaLista($lista_frases,72)."</span></li>\n");      	
+      $contador++;
+
+      if (!$usr_formador)
+      {
+        /* Se NAO for o formador cria links para SOMENTE abrir os assuntos.*/
+        /* Insere o nome do assunto truncado para acima de 40 caracteres e */
+        /* cria um link para o menu.                                       */
+        echo("            <td width=1%>\n");
+        echo("              <input type=\"checkbox\" name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=\"VerificaCheck();\" />\n");
+        echo("            </td>\n");
+
+        echo("            <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=\"text\" href=\"#\" onClick=");
+        echo("'Abrir(".$linha_assunto['cod_assunto'].");return(false);'>");
+        echo(TruncaString($linha_assunto['nome'], 80)."</a>\n");
       }
+      else
+      {
+//        echo("            <tr>\n");
+//        /* Apenas para alinhamento */
+//        echo("              <td class=\"wtfield\" width=1%><a class=\"text\" href=\"#\" onClick=");
+//        echo("'Abrir(".$linha_assunto['cod_assunto'].");  return(false);'>");
+//        echo("                <img src=\"../figuras/assunto.gif\" border=0></a>");
+//        echo("              </td>\n");
+        echo("            <tr>\n");
+        /* Coloca uma caixa de seleï¿½ao para exibiï¿½ao multipla de perguntas */
+        echo("              <td  width=1%>\n");
+        echo("                <input type=\"checkbox\" name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onclick=\"VerificaCheck();\" />\n");
+        echo("              </td>\n");
 
-      	
-    } else {
-      	 
+        /* Se for Formador oferece exibiï¿½ao de opï¿½oes. */
+        /* Insere o nome do assunto truncado para acima de 40 caracteres e */
+        /* cria um link para o menu.                                       */
+        echo("            <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=\"text\" href=\"#\" onClick='");
+        echo("selected_item=".$linha_assunto['cod_assunto'].";");
+        echo("Abrir(".$linha_assunto['cod_assunto'].");return(false);'>");
+        echo(TruncaString($linha_assunto['nome'], 80)."</a>\n");
+      }
+//      echo($linha_assunto['cod_assunto']);
+      echo("                <font class=\"text\"><i>(".RetornaNumPerguntasAssunto($sock, $linha_assunto['cod_assunto']).")</i></font>\n");
+      echo("              </td>\n");
+      echo("            </tr>\n");
     }
-    
-    echo(" </ul>\n");
-  
-  echo("	</td>");
-  echo("  </tr>");
-  echo("</table>");
 
-  /* 67 - Nï¿½o hï¿½ nenhuma pergunta frequente. */
-//  if( (count($lista_assuntos) == 0) && (count($lista_perguntas) > 0) )
- //       echo("  <tr class=text> <td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
+  if (count($lista_perguntas) > 0)
+  {
+    // a acao a tomar se o usuario clicar no link da pergunta varia entre formador
+    // e aluno, lixeira ou nao
+    if (!$usr_formador)
+    {
+      // apenas ver a pergunta
+      $acao_link_abre = "<a class=\"text\" href=\"#\" onClick='Ver(";
+      
+      // aqui no meio vai o codigo da pergunta a ver
+      $acao_link_fecha= ");  return false;'>";
+      
+    }
+    else if ($cod_assunto_pai != 2)
+    {
+      $acao_link_abre = "<a class=\"text\" href=\"#\" onClick='selected_item=";
+
+      // aqui no meio vai o codigo da pergunta a ver
+      $acao_link_fecha= " ;MostraLayer(lay_pergunta, this);  return false;'>";
+    }
+    else
+    {
+      $acao_link_abre = "<a class=\"text\" href=\"#\" onClick='selected_item=";
+      // aqui no meio vai o codigo da pergunta a ver
+      $acao_link_fecha= "  ;MostraLayer(lay_lixeira_pergunta, this);  return false;'>";
+    }
+    // Mostra as perguntas:
+    foreach ($lista_perguntas as $c => $linha_pergunta)
+    {
+      $teste_pergunta = RetornaPergunta($sock, $linha_pergunta['cod_pergunta']);
+      $questao_pergunta = $teste_pergunta['pergunta'];
+      $resposta_pergunta = $teste_pergunta['resposta'];
+      echo("            <tr>\n");
+      /* Coloca uma caixa de seleï¿½ao para exibiï¿½ao multipla de perguntas */
+      echo("              <td width=1%>\n");
+      echo("                <input type=\"checkbox\" name=cod_pergunta[] value=\"".$linha_pergunta['cod_pergunta']."\" onclick=\"VerificaCheck();\" />\n");
+      echo("              </td>\n");
+      echo("              <td colspan=3 class=\"alLeft\">\n");
+      echo("                <img border=\"0\" alt=\"\" src=\"../imgs/icEnquete.jpg\"/>&nbsp;&nbsp;<a class=\"text\" href=\"#\" onClick=AlternaMensagem('".$linha_pergunta['cod_pergunta']."');>".LimpaTags(TruncaString($linha_pergunta['pergunta'], 80))."</a>\n");
+      echo("              </td>\n");
+      echo("              <input type='hidden' id='aberto_".$linha_pergunta['cod_pergunta']."' value=0 />\n");
+      echo("            </tr>\n");
+      echo("            <tr style=\"display:none;\" id=\"tr_msg_".$linha_pergunta['cod_pergunta']."\" name=\"tr_msg\"><td>&nbsp;</td>\n");
+      echo("              <td align=left><b>".RetornaFraseDaLista($lista_frases, 11).":</b>&nbsp;&nbsp;\n");
+      echo("                <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\">".$resposta_pergunta."</div>\n");
+      echo("              </td>\n");
+//        echo("              <div id=\"text_".$linha_pergunta['cod_pergunta']."\" class=\"divRichText\" style=\"width:500px;height:100px;overflow:auto;border:1px solid;\";>".$resposta_pergunta."</div></td>\n");
+
+      if ($tela_formador)
+      {
+        echo("              <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
+        echo("                <ul>\n");
+        /* 9 - Editar */
+        echo("                  <li><span onclick=\"AlteraTexto(".$linha_pergunta['cod_pergunta'].");\">".RetornaFraseDaLista($lista_frases_geral,9)."</span></li>\n");
+        echo("                </ul>\n");
+        echo("              </td>\n");
+      }
+      /* 13 - Fechar (ger) */
+      echo("              <td><a href=\"#\" onclick=FechaMensagem('".$linha_pergunta['cod_pergunta']."');>".RetornaFraseDaLista($lista_frases_geral,13)."</a></td>\n");
+      echo("            </tr>\n");
+    }
+  }
+  // Se não há nenhum assunto, nenhuma pergunta, mas não estamos na pasta raiz, é porque não há 
+  // nenhuma pergunta cadastrada nesse assunto, e devemos então mostrar essa mensagem ao usuário.
+  else if ((count($lista_assuntos) == 0) && ($cod_assunto_pai != 1))
+  {
+    echo("            <tr>\n");
+    echo("              <td></td>");
+    echo("              <td  colspan=3>\n");
+    /* 17 - Nï¿½o hï¿½ perguntas neste assunto. */
+    echo("                <font class=\"text\">".RetornaFraseDaLista($lista_frases, 17)."</font>\n");
+    echo("              </td>\n");
+    echo("            </tr>\n");
+  }
+
+  echo("          </table>\n");
+  echo("          <ul>\n");
+  /* 16 - Exibir selecionadas ff*/ 
+//    if ($cod_assunto_pai != 1) {
+  echo("            <li id=\"mExibir_Selec\" class=\"menuUp\"><span name=\"exibir\" onClick=''>".RetornaFraseDaLista($lista_frases,16)."</span></li>\n");
+  echo("            <li id=\"mFechar_Selec\" class=\"menuUp\"><span name=\"exibir\" onClick=''>".RetornaFraseDaLista($lista_frases,83)."</span></li>\n");
+//    }
+  /* 69 - Apagar selecionadas */
+  if ($usr_formador){ 
+
+    /* Se nï¿½o estï¿½ na lixeira, exibe o botï¿½o de Mover */
+    if ($cod_assunto_pai != 2){
+      echo("            <li id=\"mApagar_Selec\" class=\"menuUp\"><span name=\"apagar\" onClick=''>".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
+      echo("            <li id=\"mMover_Selec\" class=\"menuUp\"><span name=\"apagar\" onClick=''>".RetornaFraseDaLista($lista_frases,71)."</span></li>\n");
+    } else {
+      echo("            <li id=\"mExcluir_Selec\" class=\"menuUp\"><span name=\"apagar\" onClick=''>".RetornaFraseDaLista($lista_frases,68)."</span></li>\n");
+      echo("            <li id=\"mRecuperar_Selec\" class=\"menuUp\"><span name=\"apagar\" onClick=''>".RetornaFraseDaLista($lista_frases,72)."</span></li>\n");      	
+    }
+
+  }
+  echo("          </ul>\n");
+  echo("        </td>\n");
+  echo("      </tr>\n");
+  echo("    </table>\n");
 
   echo("  </form>\n\n");
-    echo("          <br />\n");    
-    /* 509 - voltar, 510 - topo */
-    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-    echo("  <form name=frmAssuntoAcao method=post>\n");
+  echo("          <br />\n");
+  /* 509 - voltar, 510 - topo */
+  echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
+  echo("  <form name=\"frmAssuntoAcao\" method=\"post\">\n");
   /* Passa o 'cod_assunto_pai', necessario para atualizar a pagina */
   /* principal.                                                    */
- 
-  //echo(RetornaSessionIDInput());
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
 
-  echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
+  //echo(RetornaSessionIDInput());
+  echo("    <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+
+  echo("    <input type=\"hidden\" name=\"cod_assunto_pai\" value=\"".$cod_assunto_pai."\">\n");
   /* Passa o 'cod_assunto', necessario para efetuar as aï¿½oes. */
-  echo("    <input type=hidden name=cod_assunto value=-1>\n");
+  echo("    <input type=\"hidden\" name=\"cod_assunto\" value=\"-1\">\n");
 
   if ($usr_formador)
   {
     /* Passa o 'cod_assunto_dest', necessario para mover o assunto. */
-    echo("    <input type=hidden name=cod_assunto_dest value=-1>\n");
+    echo("    <input type=\"hidden\" name=\"cod_assunto_dest\" value=\"-1\">\n");
 
 
     if ($cod_assunto_pai == 2)
       /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
       /* assunto anterior a visualizaï¿½ao da lixeira.                  */
-      echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
+      echo("    <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_anterior."\">\n");
     else
-      echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
+      echo("    <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_pai."\">\n");
 
 
     /* Especifica o documento da pagina principal, o qual chamou o    */
@@ -974,9 +950,9 @@
     /* Se jah estiver setada entao usa o valor default. Isto eh     */
     /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
     /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
-      echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
+      echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"".$pag_anterior."\">\n");
     else
-      echo("    <input type=hidden name=pag_anterior value=\"perguntas\">\n");
+      echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"perguntas\">\n");
 
   }
   echo("  </form>\n\n");
@@ -986,10 +962,10 @@
   /* Se o usuario FOR Formador entao cria os layers e os formularios de aï¿½oes. */
   if ($usr_formador)
   {
-    echo("  <form name=frmPerguntaAcao method=post>\n");
+    echo("  <form name=\"frmPerguntaAcao\" method=\"post\">\n");
 
     //echo(RetornaSessionIDInput());
-    echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
+    echo("<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
 
 
     /* Passa o 'cod_assunto_pai', necessario para atualizar a pagina  */
@@ -1166,43 +1142,44 @@
 ////    echo("  </div>\n\n");
 ////
   }
-      /* Layer: Nova Pergunta */
-  	echo("    <div id=\"layer_nova_pergunta\" class=\"popup\">\n");
-  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(layer_nova_pergunta);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  	echo("      <div class=\"int_popup ulPopup\">\n");
-  	echo("        <form name=\"form_novo_top\" method=\"post\" action=\"acoes.php\" onsubmit=\"return(VerificaNovoItemTopico(document.form_novo_top.novo_nome)); \">\n");
-  	echo("			<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  	echo("			<input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-  	echo("			<input type=hidden name=acao value=\"novaPergunta\">\n");
-  	/* 21 - Digite o nome da pasta a ser criada aqui: */
-  	echo("          ".RetornaFraseDaLista($lista_frases,86)."<br />\n");
-  	echo("          <input class=\"input\" type=\"text\" name=\"novo_nome\" id=\"nome_novo_pergunta\" value=\"\" maxlength=\"150\" /><br />\n");
-  	/* 18 - Ok (gen) */
-  	echo("          <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  	/* 2 - Cancelar (gen) */
-  	echo("          &nbsp; &nbsp; <input class=\"input\" type=\"button\" onclick=\"EscondeLayer(layer_nova_pergunta);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-  	echo("        </form>\n");
-  	echo("      </div>\n");
-  	echo("    </div>\n");
-  
-    /* Layer: Novo Assunto */
-  	echo("    <div id=\"layer_novo_assunto\" class=\"popup\">\n");
-  	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(layer_novo_assunto);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  	echo("      <div class=\"int_popup ulPopup\">\n");
-  	echo("        <form name=\"form_novo_top\" method=\"post\" action=\"acoes.php\" onsubmit=\"return (VerificaNovoItemTopico(document.form_novo_top.novo_nome));\">\n");
-  	echo("			<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  	echo("			<input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-  	echo("			<input type=hidden name=acao value=\"novoAssunto\">\n");
-  	/* 21 - Digite o nome da pasta a ser criada aqui: */
-  	echo("          ".RetornaFraseDaLista($lista_frases,84)."<br />\n");
-  	echo("          <input class=\"input\" type=\"text\" name=\"novo_nome\" id=\"nome_novo_assunto\" value=\"\" maxlength=\"150\" /><br />\n");
-  	/* 18 - Ok (gen) */
-  	echo("          <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  	/* 2 - Cancelar (gen) */
-  	echo("          &nbsp; &nbsp; <input class=\"input\" type=\"button\" onclick=\"EscondeLayer(layer_novo_assunto);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-  	echo("        </form>\n");
-  	echo("      </div>\n");
-  	echo("    </div>\n");
+
+  /* Layer: Nova Pergunta */
+  echo("    <div id=\"layer_nova_pergunta\" class=\"popup\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(layer_nova_pergunta);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=\"int_popup ulPopup\">\n");
+  echo("        <form name=\"form_novo_top\" method=\"post\" action=\"acoes.php\" onsubmit=\"return(VerificaNovoItemTopico(document.form_novo_top.novo_nome)); \">\n");
+  echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("          <input type=\"hidden\" name=\"cod_assunto_pai\" value=\"".$cod_assunto_pai."\">\n");
+  echo("          <input type=\"hidden\" name=\"acao\" value=\"novaPergunta\">\n");
+  /* 21 - Digite o nome da pasta a ser criada aqui: */
+  echo("          ".RetornaFraseDaLista($lista_frases,86)."<br />\n");
+  echo("          <input class=\"input\" type=\"text\" name=\"novo_nome\" id=\"nome_novo_pergunta\" value=\"\" maxlength=\"150\" /><br />\n");
+  /* 18 - Ok (gen) */
+  echo("          <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  /* 2 - Cancelar (gen) */
+  echo("          &nbsp; &nbsp; <input class=\"input\" type=\"button\" onclick=\"EscondeLayer(layer_nova_pergunta);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
+
+  /* Layer: Novo Assunto */
+  echo("    <div id=\"layer_novo_assunto\" class=\"popup\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(layer_novo_assunto);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=\"int_popup ulPopup\">\n");
+  echo("        <form name=\"form_novo_top\" method=\"post\" action=\"acoes.php\" onsubmit=\"return (VerificaNovoItemTopico(document.form_novo_top.novo_nome));\">\n");
+  echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("          <input type=\"hidden\" name=\"cod_assunto_pai\" value=\"".$cod_assunto_pai."\">\n");
+  echo("          <input type=\"hidden\" name=\"acao\" value=\"novoAssunto\">\n");
+  /* 21 - Digite o nome da pasta a ser criada aqui: */
+  echo("          ".RetornaFraseDaLista($lista_frases,84)."<br />\n");
+  echo("          <input class=\"input\" type=\"text\" name=\"novo_nome\" id=\"nome_novo_assunto\" value=\"\" maxlength=\"150\" /><br />\n");
+  /* 18 - Ok (gen) */
+  echo("          <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+  /* 2 - Cancelar (gen) */
+  echo("          &nbsp; &nbsp; <input class=\"input\" type=\"button\" onclick=\"EscondeLayer(layer_novo_assunto);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
   
   /* Layer: Estrutura */
   echo("  <div id=\"layer_estrutura\" class=\"popup\" visibility=hidden onContextMenu='return(false);'>\n");
@@ -1228,7 +1205,7 @@
   echo("      </div>\n");
   echo("  </div>\n\n");
   
-    /* Layer: Estrutura-Recuperar */
+  /* Layer: Estrutura-Recuperar */
   echo("  <div id=\"layer_estrutura_recuperar\" class=\"popup\" visibility=hidden onContextMenu='return(false);'>\n");
   echo("    <div class=\"posX\"><span onclick=\"EscondeLayer(layer_estrutura_recuperar);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("      <div class=\"int_popup\">\n");

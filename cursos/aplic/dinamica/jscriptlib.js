@@ -140,22 +140,22 @@ function EdicaoArq(i){
 }
 
 function AcrescentarBarraFile(apaga){
-    
-    if (input==1) return;
-    CancelaTodos();
-    	
-    conteudo = document.getElementById('text_'+cod_item).innerHTML;
-    if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
-	/* 29 - A din�mica n�o pode ter texto e arquivos simultaneamente. */ 	
-	alert(lista_frases.msg29);
-	return false;
-    }
-						
-    document.getElementById('input_files').style.visibility='visible';
-    document.getElementById('divArquivoEdit').className='';
-    document.getElementById('divArquivo').className='divHidden';
 
-    cancelarElemento=document.getElementById('cancFile');
+  if (input==1) return;
+  CancelaTodos();
+
+  conteudo = document.getElementById('text_'+cod_item).innerHTML;
+  if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
+    /* 29 - A din�mica n�o pode ter texto e arquivos simultaneamente. */
+    alert(lista_frases.msg29);
+    return false;
+  }
+
+  document.getElementById('input_files').style.visibility='visible';
+  document.getElementById('divArquivoEdit').className='';
+  document.getElementById('divArquivo').className='divHidden';
+
+  cancelarElemento=document.getElementById('cancFile');
 }
 
 function CancelaTodos(){

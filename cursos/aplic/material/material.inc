@@ -2858,9 +2858,10 @@ function InsereAvaliacaoDinamic ($data_inicio, $data_termino, $valor, $tipo_ativ
   /* Pega o texto de Feedback */
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 3;
-  $cod_texto = 148;
+  $cod_texto = 153;
+  /* 153 - A avaliação foi incluída com sucesso. */
   $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
-  
+
   /* Adiciona a chamada do feedback a resposta do xajax */
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
   
@@ -2895,8 +2896,9 @@ function ApagaAvaliacaoPortfolioDinamic ($cod_item, $cod_curso, $cod_usuario)
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
   $cod_ferramenta = 3;
   $cod_texto = 149;
+  /* 149 - A avaliação foi apagada com sucesso. */
   $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
-  
+
   /* Adiciona a chamada do feedback a resposta do xajax */
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
