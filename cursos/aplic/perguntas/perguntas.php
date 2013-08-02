@@ -83,11 +83,11 @@
     $cod_assunto_pai = 1;
     
   echo("<script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("<script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("<script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   
-  echo("<script language=JavaScript>\n\n");
+  echo("<script language=\"javascript\">\n\n");
   
   echo("  img_icone = new Image();\n");
   echo("  img_icone.src = \"../figuras/assunto.gif\";\n\n");
@@ -203,17 +203,17 @@
   echo("			}\n");
   echo("	}");
   
-  echo("   function FecharSelecionadas(){\n");
-  echo("	");
-  echo("  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
-  echo("  	var nPerguntas = Perguntas.length;\n");
-  echo("  	var i = 0;\n");
-  echo("	"); 	
-  echo("  		for (i = 0; i < nPerguntas; i++)\n");
-  echo("  			if (Perguntas[i].checked){\n");
-  echo("  				FechaMensagem(Perguntas[i].value);\n");
-  echo("			}\n");
-  echo("	");
+  echo("  function FecharSelecionadas(){\n");
+  echo("  \n");
+  echo("    var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
+  echo("    var nPerguntas = Perguntas.length;\n");
+  echo("    var i = 0;\n");
+  echo("    \n");
+  echo("      for (i = 0; i < nPerguntas; i++)\n");
+  echo("        if (Perguntas[i].checked){\n");
+  echo("          FechaMensagem(Perguntas[i].value);\n");
+  echo("      }\n");
+  echo("  \n");
   echo("  }\n");
   
 
@@ -970,14 +970,14 @@
 
     /* Passa o 'cod_assunto_pai', necessario para atualizar a pagina  */
     /* principal.                                                     */
-    echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
+    echo("    <input type=\"hidden\" name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
     /* Passa o 'cod_pergunta' para execu��o das a�oes.                */
-    echo("    <input type=hidden name=cod_pergunta value=-1>\n");
+    echo("    <input type=\"hidden\" name=cod_pergunta value=-1>\n");
     /* Especifica o documento de origem para 'exibir_todas'. Isto eh  */
     /* necessario, pois tanto 'exibir_todas.php', 'perguntas.php' e   */
     /* 'ver_pergunta.php' chamam a fun�oes apagar, mover, editar,     */
     /* recuperar e excluir.   */
-    echo("    <input type=hidden name=origem value=perguntas>\n");
+    echo("    <input type=\"hidden\" name=origem value=perguntas>\n");
 
     /* Especifica o documento da pagina principal, o qual chamou o    */
     /* ver_pergunta.php. Isto eh necessario para atualizar a pagina   */
@@ -986,20 +986,20 @@
       /* Se jah estiver setada entao usa o valor default. Isto eh     */
       /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
       /* eh preciso voltar ao modo de visualiza�ao anterior.          */
-      echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
+      echo("    <input type=\"hidden\" name=pag_anterior value=".$pag_anterior.">\n");
     else
-      echo("    <input type=hidden name=pag_anterior value=perguntas>\n");
+      echo("    <input type=\"hidden\" name=pag_anterior value=perguntas>\n");
 
     if ($cod_assunto_pai == 2)
       /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
       /* assunto anterior a visualiza�ao da lixeira.                  */
-      echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
+      echo("    <input type=\"hidden\" name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
     else
-      echo("    <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
+      echo("    <input type=\"hidden\" name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
 
 
     /* Passa o 'cod_assunto_dest', necessario para mover a pergunta.  */
-    echo("    <input type=hidden name=cod_assunto_dest value=-1>\n");
+    echo("    <input type=\"hidden\" name=cod_assunto_dest value=-1>\n");
     echo("  </form>\n\n");
     
 ////    /* layer_pergunta */

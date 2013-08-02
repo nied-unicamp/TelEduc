@@ -79,7 +79,7 @@
   $feedbackObject->addAction("apagarSelecionados", 128, 0);
   $feedbackObject->addAction("moveritem", 130, 0);
   $feedbackObject->addAction("movertopico", 130, 0);
-  $feedbackObject->addAction("importarItem", 148, 0);
+  $feedbackObject->addAction("importarItem", 148, 113);
 
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 1;

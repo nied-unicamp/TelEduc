@@ -93,7 +93,7 @@
   $dir_item_temp=CriaLinkVisualizar($sock, $dirname, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
   if ($acao=="apagarItem"){
- 
+
     ApagarItem($sock, $tabela, $cod_item, $cod_usuario);
     if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))
     {
@@ -106,16 +106,17 @@
     Desconectar($sock);
     header("Location:material.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_topico=".$cod_topico_raiz."&acao=".$acao."&atualizacao=true");
     exit();
+
   }
   else if ($acao=="novotopico")
   {
     if (NaoExisteTop($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario))
     {
       $cod_topico=CriarTopico($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario);
-			AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+      AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
       Desconectar($sock);
       header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico."&acao=".$acao."&statusAcao=true");
-	  exit();
+      exit();
     }
     else
     {
@@ -132,14 +133,13 @@
 
     if ($cod_itens!=""){
 
-
       foreach ($cod_itens_array as $cod => $linha){
-		ApagarItem($sock, $tabela, $linha, $cod_usuario);
-		
-        if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))          
-        {          
+        ApagarItem($sock, $tabela, $linha, $cod_usuario);
+
+        if (($cod_ferramenta==3) && ($AcessoAvaliacaoM))
+        {
           if (AtividadeEhAvaliacao($sock,$linha))
-          {            
+          {
             $cod_avaliacao=RetornaCodAvaliacao($sock,$linha);
             ApagaAvaliacaoPortfolio($sock,$cod_avaliacao,$cod_usuario);
           }
@@ -163,17 +163,17 @@
   /* ação = Anexar Arquivo - origem = ver.php */
   else if ($acao=='anexar'){
 
-	// Verifica se o nome do arquivo tem acentos ou chars estranhos.
+    // Verifica se o nome do arquivo tem acentos ou chars estranhos.
     $nome_arquivo = $_FILES['input_files']['name'];
 
     // Se possuir acentos ou outros caracteres problematicos
     if (VerificaAnexo($nome_arquivo) == 0)
     {
-    	// Nao realiza upload de arquivos com acentos
-    	$acao = "nomeAnexo";
-    	$atualizacao = "false";
-		header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
-    	exit;
+      // Nao realiza upload de arquivos com acentos
+      $acao = "nomeAnexo";
+      $atualizacao = "false";
+      header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
+      exit;
     }
 
     /* Verifica a existência do diretório a ser movido o arquivo */
@@ -197,11 +197,10 @@
     }
 
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
-	$atualizacao='true';
-	AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
-	header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
+    $atualizacao='true';
+    AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+    header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
   }
-  
 
   else if ($acao=="moveritem")
   {
@@ -215,21 +214,24 @@
   
   else if ($acao=="movertopico")
   {
+
     if (MoverTopico($sock, $tabela, $cod_topico, $cod_usuario, $cod_topico_raiz))
       ArrumaPosicoesTopicos($sock, $tabela, $cod_topico_ant);
   
     Desconectar($sock);
     header("Location:material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=true");
     exit();
+
   }  /* ação = Criar Item - origem = portfolio.php */
   else if ($acao=="criarItem"){
 
     $cod_item=IniciaCriacao($sock, $tabela, $cod_topico_raiz, $cod_usuario, $cod_curso, $dirname, $diretorio_temp, $novo_nome);
-	$atualizacao = 'true';
-	 AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
-	  Desconectar($sock);
-  header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=".$atualizacao);
-  exit;
+    $atualizacao = 'true';
+    AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
+    Desconectar($sock);
+    header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=".$atualizacao);
+    exit;
+
   }else if ($acao=="descompactar"){
 
     $dir_tmp=$dir_item_temp['diretorio'];
@@ -250,40 +252,39 @@
 
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
     
-  	header("Location:ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=descompactar&atualizacao=true");  
+    header("Location:ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=descompactar&atualizacao=true");  
 
   }
   else if ($acao == "validarImportacao"){
- 	$sock = MudarDB($sock, "");
- 	
-  	$cod_cursos = explode(";", $cod_curso_todos);
-  	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
-  	$cod_curso_origem = $cod_cursos[1];
-  	
-  	$tipo_curso = $_GET['tipo_curso'];
-  	$cod_categoria = $_GET['cod_categoria'];
-  	
-  	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
-  	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
-  	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
-  	
-  	if($cod_curso_origem)
-  	{
-	  	$cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
-	  	
-	  	if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
-	  		$_SESSION['flag_curso_compartilhado'] = TRUE;
-	  		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1");
-	  	} else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
-	  		$_SESSION['flag_curso_compartilhado'] = FALSE;
-	  		header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem);
-	  	} else {
-	  		header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."&acao_feedback=".$acao."&atualizacao=false");
-	  	}
-  	}
-  	else
-  		header("Location:importar_curso.php?cod_ferramenta=".$cod_ferramenta."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_categoria=".$cod_categoria."&acao_feedback=falhaImportacao&atualizacao=false");
-  	
+    $sock = MudarDB($sock, "");
+
+    $cod_cursos = explode(";", $cod_curso_todos);
+    $tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extra�do
+    $cod_curso_origem = $cod_cursos[1];
+    
+    $tipo_curso = $_GET['tipo_curso'];
+    $cod_categoria = $_GET['cod_categoria'];
+    
+    $_SESSION['cod_topico_destino'] = $cod_topico_raiz;
+    $_SESSION['cod_curso_origem'] = $cod_curso_origem;
+    $_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
+
+    if($cod_curso_origem)
+    {
+      $cod_usuario_import = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+      
+      if ( FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+        $_SESSION['flag_curso_compartilhado'] = TRUE;
+        header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_curso_origem=".$cod_curso_origem."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1");
+      } else if ( $cod_usuario_import != NULL && EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
+        $_SESSION['flag_curso_compartilhado'] = FALSE;
+        header("Location:importar_material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=1&cod_topico_raiz=".$cod_topico_raiz."&cod_curso_origem=".$cod_curso_origem);
+      } else {
+        header("Location:importar_curso.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico_raiz."&acao_feedback=".$acao."&atualizacao=false");
+      }
+    }
+    else
+      header("Location:importar_curso.php?cod_ferramenta=".$cod_ferramenta."&cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&tipo_curso=".$tipo_curso."&cod_categoria=".$cod_categoria."&acao_feedback=falhaImportacao&atualizacao=false");
   }else if ($acao == "importarItem"){
 
     $cod_curso_destino = $cod_curso;
