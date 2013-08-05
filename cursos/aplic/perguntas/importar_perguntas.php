@@ -142,76 +142,67 @@
   echo("  EscondeLayers();\n");
   echo("  }\n\n");
 
-  echo("  function VerificaCheck(){\n
-  			var cod_assunto = document.getElementsByName('cod_assunto[]');\n
-  			var cod_pergunta = document.getElementsByName('cod_pergunta[]');\n
-  			
-  			/* Se tiver ao menos 1 checkbox, seja assunto ou */ 
-  			/* pergunta tickado, mostra os botoes */
-  			var i = 0;
-  			for (i = 0; i < cod_assunto.length; i++)
-  				if (cod_assunto[i].checked){
-  					return HabilitaBotoes();
-  				}
-  				
-  			i = 0;
-  			for (i = 0; i < cod_pergunta.length; i++)
-  				if (cod_pergunta[i].checked){
-  					return HabilitaBotoes();
-  				}
-  				
-  			return DesabilitaBotoes();
-  	 	  }
-  ");
+  echo("  function VerificaCheck(){\n");
+  echo("    var cod_assunto = document.getElementsByName('cod_assunto[]');\n");
+  echo("    var cod_pergunta = document.getElementsByName('cod_pergunta[]');\n");
+  echo("    \n");		
+  /* Se tiver ao menos 1 checkbox, seja assunto ou */
+  /* pergunta tickado, mostra os botoes */
+  echo("    var i = 0;\n");
+  echo("    for (i = 0; i < cod_assunto.length; i++)\n");
+  echo("      if (cod_assunto[i].checked){\n");
+  echo("        return HabilitaBotoes();\n");
+  echo("      }\n");
+  echo("    \n");
+  echo("    i = 0;\n");
+  echo("    for (i = 0; i < cod_pergunta.length; i++)\n");
+  echo("      if (cod_pergunta[i].checked){\n");
+  echo("        return HabilitaBotoes();\n");
+  echo("      }\n");
+  echo("    \n");
+  echo("    return DesabilitaBotoes();\n");
+  echo("  }\n\n");
   
   echo("  var PerguntasAbertas = 0;\n");
-  echo("
-  function ExibirSelecionadas(){\n
-  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n
-  	var nPerguntas = Perguntas.length;\n
-  	var i = 0;\n
-  	
-  		for (i = 0; i < nPerguntas; i++)\n
-  			if (Perguntas[i].checked){\n
-  				ExibirMensagem(Perguntas[i].value);\n
-  			}\n
-  	}
+  echo("  function ExibirSelecionadas(){\n");
+  echo("    var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
+  echo("    var nPerguntas = Perguntas.length;\n");
+  echo("    var i = 0;\n");
+  echo("    \n");
+  echo("      for (i = 0; i < nPerguntas; i++)\n");
+  echo("        if (Perguntas[i].checked){\n");
+  echo("          ExibirMensagem(Perguntas[i].value);\n");
+  echo("        }\n");
+  echo("    }\n\n");
   
-  ");
+  echo("  function FecharSelecionadas(){\n");
+  echo("    var Perguntas = document.getElementsByName('cod_pergunta[]');\n");
+  echo("    var nPerguntas = Perguntas.length;\n");
+  echo("    var i = 0;\n");
+  echo("    \n");
+  echo("      for (i = 0; i < nPerguntas; i++)\n");
+  echo("        if (Perguntas[i].checked){\n");
+  echo("          FechaMensagem(Perguntas[i].value);\n");
+  echo("        }\n");
+  echo("    \n");
+  echo("}\n\n");
   
-    echo("
-  function FecharSelecionadas(){\n
-
-  	var Perguntas = document.getElementsByName('cod_pergunta[]');\n
-  	var nPerguntas = Perguntas.length;\n
-  	var i = 0;\n
- 	
-  		for (i = 0; i < nPerguntas; i++)\n
-  			if (Perguntas[i].checked){\n
-  				FechaMensagem(Perguntas[i].value);\n
-			}\n
-    
-  }\n
-  
-  ");
-  
-  echo("  function HabilitaBotoes(){");
-  echo("        if (PerguntasAbertas > 0) HabilitaBotaoFechar() ;");
+  echo("  function HabilitaBotoes(){\n");
+  echo("        if (PerguntasAbertas > 0) HabilitaBotaoFechar();");
   if ($cod_assunto_pai != 1){
   echo("        document.getElementById('mExibir_Selec').className=\"menuUp02\";");
   echo("        document.getElementById('mExibir_Selec').onclick=function(){ ExibirSelecionadas(); };\n");
   }
   echo("        document.getElementById('mImportar_Selec').className=\"menuUp02\";");
   echo("        document.getElementById('mImportar_Selec').onclick=function(){ ImportarSelecionadas(); };\n");
+  echo("  }\n");
   
-  echo("}");
-  echo("function HabilitaBotaoFechar(){");
+  echo("  function HabilitaBotaoFechar(){\n");
   echo("        document.getElementById('mFechar_Selec').className=\"menuUp02\";");
   echo("        document.getElementById('mFechar_Selec').onclick=function(){ FecharSelecionadas(); };\n");
-  echo("}");
+  echo("  }\n");
   
-  
-  echo("  function DesabilitaBotoes(){");
+  echo("  function DesabilitaBotoes(){\n");
   if ($cod_assunto_pai != 1){
   echo("        document.getElementById('mExibir_Selec').className=\"menuUp\";");
   echo("        document.getElementById('mExibir_Selec').onclick=function(){};\n");
@@ -219,12 +210,12 @@
   }
   echo("        document.getElementById('mImportar_Selec').className=\"menuUp\";");
   echo("        document.getElementById('mImportar_Selec').onclick=function(){};\n");
-  echo("}");
+  echo("  }\n");
   
-  echo("function DesabilitaBotaoFechar(){");
-  echo("  		document.getElementById('mFechar_Selec').className=\"menuUp\";");
-  echo("      	document.getElementById('mFechar_Selec').onclick=function(){};\n");
-  echo("}");
+  echo("  function DesabilitaBotaoFechar(){\n");
+  echo("    document.getElementById('mFechar_Selec').className=\"menuUp\";");
+  echo("    document.getElementById('mFechar_Selec').onclick=function(){};\n");
+  echo("  }\n");
   
   
   echo("  function EscondeLayer(cod_layer)\n");
@@ -240,11 +231,10 @@
     echo("    hideLayer(layer_novo_assunto);\n");
     echo("    hideLayer(layer_estrutura_mover);\n");
     echo("    hideLayer(layer_estrutura_recuperar);\n");
-    echo("    hideLayer(layer_nova_pergunta);\n");  
+    echo("    hideLayer(layer_nova_pergunta);\n");
   }
   echo("  }\n\n");
 
-  
   echo("  function MostraLayer(cod_layer, obj)\n");
   echo("  {\n");
   echo("    EscondeLayers();\n");
@@ -257,9 +247,9 @@
   echo("      if (cod_layer == layer_estrutura)\n");
   echo("        moveLayerTo(cod_layer, obj.x + img_icone.height, obj.y + img_icone.height);\n");
   echo("      else\n");
-   echo("    {\n");
+  echo("      {\n");
   echo("        moveLayerTo(cod_layer, obj.x , obj.y + img_icone.height);\n");
-   echo("    }\n");
+  echo("      }\n");
   echo("    }\n");
   echo("    else\n");
   echo("      moveLayerTo(cod_layer, Xpos, Ypos + AjustePosMenuIE());\n");
@@ -273,117 +263,116 @@
   echo("    document.frmAssuntoAcao.submit();\n");
   echo("  }\n\n");
   
- //fun��o que talvez num precise mais
+//fun��o que talvez num precise mais
 /*  echo("  function MostrarSelecionadas()\n");
   echo("  {\n");
-   echo(" verificador=Validacheck();");
-   echo("if(verificador==true)\n");
-    echo("    {\n");
-       echo("    window.open('','pergunta','width=600,height=400,top=50,left=50,scrollbars=yes,");
-       echo("status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-    echo("    }\n");
-  echo("  }\n\n");   */
+  echo("    verificador=Validacheck();");
+  echo("    if(verificador==true)\n");
+  echo("    {\n");
+  echo("      window.open('','pergunta','width=600,height=400,top=50,left=50,scrollbars=yes,");
+  echo("status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("    }\n");
+  echo("  }\n\n");*/
   
-    echo("function Envia(assunto)");
-    echo("  {\n");
-    echo(" verificador=Validacheck();\n");
-    echo("if(verificador==true)\n");
-    echo("  {\n");
-    echo("    window.open('','pergunta','width=600,height=400,top=50,left=50,scrollbars=yes,");
-    echo("status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-    echo("if(assunto==2)\n");
-    echo("  document.frm_pergunta.action = \"ver_pergunta_lixeira.php\";\n");
-    echo("else\n");
-    echo("  document.frm_pergunta.action = \"ver_pergunta.php?cod_curso=".$cod_curso."\";\n");
-    echo("  document.frm_pergunta.target = 'pergunta';\n");
-    echo("  document.frm_pergunta.submit();\n");
-    echo("  return true;\n");
-    echo("    }\n");
-    echo("  return false;\n");
-    echo("  }\n\n");
+  echo("  function Envia(assunto)\n");
+  echo("  {\n");
+  echo("    verificador=Validacheck();\n");
+  echo("    if(verificador==true)\n");
+  echo("    {\n");
+  echo("      window.open('','pergunta','width=600,height=400,top=50,left=50,scrollbars=yes,");
+  echo("status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("      if(assunto==2)\n");
+  echo("        document.frm_pergunta.action = \"ver_pergunta_lixeira.php\";\n");
+  echo("      else\n");
+  echo("        document.frm_pergunta.action = \"ver_pergunta.php?cod_curso=".$cod_curso."\";\n");
+  echo("        document.frm_pergunta.target = 'pergunta';\n");
+  echo("        document.frm_pergunta.submit();\n");
+  echo("      return true;\n");
+  echo("    }\n");
+  echo("    return false;\n");
+  echo("  }\n\n");
 
-    echo("   function Validacheck()\n");
-    echo("   {\n");
-    echo("      var cont=false;\n");
-    echo("      var e;\n");
-    echo("      for (var i=0;i<document.frm_pergunta.elements.length;i++)\n");
-    echo("      {\n");
-    echo("        e = document.frm_pergunta.elements[i];\n");
-    echo("        if (e.checked==true)\n");
-    echo("        {\n");
-    echo("         cont=true;\n");
-    echo("        }\n");
-    echo("      }\n");
-    echo("     if (cont==true)\n");
-    echo("     {\n");
-    echo("     return true;\n");
-    echo("     }\n");
-    echo("     else\n");
-    echo("     {\n");
-    echo("     alert('".RetornaFraseDaLista($lista_frases, 50)."');\n");
-    echo("     return false;\n");
-    echo("     }\n");
-    echo("  }\n");
+  echo("   function Validacheck()\n");
+  echo("   {\n");
+  echo("      var cont=false;\n");
+  echo("      var e;\n");
+  echo("      for (var i=0;i<document.frm_pergunta.elements.length;i++)\n");
+  echo("      {\n");
+  echo("        e = document.frm_pergunta.elements[i];\n");
+  echo("        if (e.checked==true)\n");
+  echo("        {\n");
+  echo("         cont=true;\n");
+  echo("        }\n");
+  echo("      }\n");
+  echo("     if (cont==true)\n");
+  echo("     {\n");
+  echo("     return true;\n");
+  echo("     }\n");
+  echo("     else\n");
+  echo("     {\n");
+  echo("     alert('".RetornaFraseDaLista($lista_frases, 50)."');\n");
+  echo("     return false;\n");
+  echo("     }\n");
+  echo("  }\n");
 
 
-    echo("   function MarcaOuDesmarcaTodos()\n");
-    echo("{\n");
-    echo("  var e;\n");
-    echo("  var CabecalhoMarcado=document.frm_pergunta.checkMenu.checked;\n");
-    echo("  for (var i=0;i<document.frm_pergunta.elements.length;i++)\n");
-    echo("  {\n");
-    echo("    e = document.frm_pergunta.elements[i];\n");
-    echo("    if (e.name=='cod_assunto[]' || e.name=='cod_pergunta[]')\n");
-    echo("    {\n");
-    echo("      e.checked=CabecalhoMarcado;\n");
-    echo("    }\n");
-    echo("  }\n");
-    echo("}\n");
-        
-    echo("      function ExibirMensagem(cod_mural)\n");
-    echo("      {\n");
-    echo("        PerguntasAbertas++;\n");
-    echo("        VerificaCheck();");
-    echo("        var browser=navigator.appName;\n\n");
-    echo("        var totalMsgs=document.getElementsByName('tr_msg').length;\n");
-    echo("        var vLink = document.getElementById('tr_msg_'+cod_mural);\n");
+  echo("  function MarcaOuDesmarcaTodos()\n");
+  echo("  {\n");
+  echo("    var e;\n");
+  echo("    var CabecalhoMarcado=document.frm_pergunta.checkMenu.checked;\n");
+  echo("    for (var i=0;i<document.frm_pergunta.elements.length;i++)\n");
+  echo("    {\n");
+  echo("      e = document.frm_pergunta.elements[i];\n");
+  echo("      if (e.name=='cod_assunto[]' || e.name=='cod_pergunta[]')\n");
+  echo("      {\n");
+  echo("        e.checked=CabecalhoMarcado;\n");
+  echo("      }\n");
+  echo("    }\n");
+  echo("  }\n");
+  
+  echo("      function ExibirMensagem(cod_mural)\n");
+  echo("      {\n");
+  echo("        PerguntasAbertas++;\n");
+  echo("        VerificaCheck();");
+  echo("        var browser=navigator.appName;\n\n");
+  echo("        var totalMsgs=document.getElementsByName('tr_msg').length;\n");
+  echo("        var vLink = document.getElementById('tr_msg_'+cod_mural);\n");
 
-    echo("        if((vLink.style.display == 'table-row') || (vLink.style.display == 'block'))");
-    echo("        {");
-    echo("          vLink.style.display='none';");
-//    echo("          mensagens_abertas--;");
-    echo("        }");
-    echo("        else");
-    echo("        {");
-    echo("          if (browser==\"Microsoft Internet Explorer\")\n");
-    echo("            vLink.style.display=\"block\";\n");
-    echo("          else\n");
-    echo("            vLink.style.display=\"table-row\";\n");
-//    echo("        mensagens_abertas++;\n");
-    echo("        }");
+  echo("        if((vLink.style.display == 'table-row') || (vLink.style.display == 'block'))");
+  echo("        {");
+  echo("          vLink.style.display='none';");
+//  echo("          mensagens_abertas--;");
+  echo("        }");
+  echo("        else");
+  echo("        {");
+  echo("          if (browser==\"Microsoft Internet Explorer\")\n");
+  echo("            vLink.style.display=\"block\";\n");
+  echo("          else\n");
+  echo("            vLink.style.display=\"table-row\";\n");
+//  echo("        mensagens_abertas++;\n");
+  echo("        }");
 
-    echo("        if(totalMsgs <= 10){\n");
-    //echo("          VerificaAbertas();\n");
-    echo("        }\n");
-    echo("      }\n\n");
-    
-    echo("      function FechaMensagem(cod_mural){\n");
-    echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
-    echo("          PerguntasAbertas--;");
-    echo("          if (PerguntasAbertas == 0) DesabilitaBotaoFechar();");
-    echo("      }\n");
+  echo("        if(totalMsgs <= 10){\n");
+  //echo("          VerificaAbertas();\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
+  echo("      function FechaMensagem(cod_mural){\n");
+  echo("          document.getElementById('tr_msg_'+cod_mural).style.display=\"none\";\n");
+  echo("          PerguntasAbertas--;");
+  echo("          if (PerguntasAbertas == 0) DesabilitaBotaoFechar();");
+  echo("      }\n");
 
-    
-    
-    echo("	function ImportarSelecionadas(){");
-    echo("        document.frm_pergunta.action ='acoes.php';\n");
-    echo("        document.frm_pergunta.acao.value = \"importarItem\";\n");
-    echo("        document.frm_pergunta.submit();\n");
-    echo("}");
+  
+  echo("  function ImportarSelecionadas(){");
+  echo("        document.frm_pergunta.action ='acoes.php';\n");
+  echo("        document.frm_pergunta.acao.value = \"importarItem\";\n");
+  echo("        document.frm_pergunta.submit();\n");
+  echo("  }\n");
 
-    echo("</script>\n\n");
+  echo("</script>\n\n");
 
-    $objPerguntas->printJavascript("../xajax_0.2.4/");
+  $objPerguntas->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
   $sock = MudarDB($sock, $cod_curso_origem);
@@ -405,7 +394,7 @@
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
   /* 1 - Perguntas Freq�entes */
-  $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
 
   //echo("  <br>\n");
   
@@ -427,7 +416,7 @@
     // 6 - Descri��o
     echo("      <td valign=top width=1% class=\"textsmall\"><i>".RetornaFraseDaLista($lista_frases, 6));
     echo("</i>:</td>\n");
-    echo("      <td class=textsmall>\n");
+    echo("      <td class=\"textsmall\">\n");
     echo(Space2Nbsp(Enter2BR(LimpaTags($dados_assunto_pai['descricao'])))."\n");
     echo("      </td>\n");
     echo("    </tr>\n");
@@ -475,7 +464,7 @@
   
   /* Se estiver na Lixeira o formulario submete as informa�oes para */
   /* ver_pergunta_lixeira.php, do contrario, para ver_pergunta.php  */
-  echo("  <form method=post name=frm_pergunta action=");
+  echo("  <form method=\"post\" name=\"frm_pergunta\" action=");
   if ($cod_assunto_pai == 2)
     echo("ver_pergunta_lixeira.php");
   else
@@ -528,7 +517,7 @@
   
   /* 67 - N�o h� nenhuma pergunta freq�ente. */
   if((count($lista_assuntos) == 0) && ($cod_assunto_pai == 1))
-     echo("  <tr class=text> <td class=text colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
+     echo("  <tr class=\"text\"> <td class=\"text\" colspan=4>".RetornaFraseDaLista($lista_frases,67)."</td></tr>\n");
 
   // Mostra os assuntos (pastas e sub-pastas)
   $contador = 0;
@@ -547,7 +536,7 @@
         echo("          <input type=\"checkbox\" name=cod_assunto[] value=".$linha_assunto['cod_assunto']." onClick=\"VerificaCheck();\">");
         echo("        </td>\n");
 
-        echo("        <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=text href=# onClick=");
+        echo("        <td colspan=3 class=\"alLeft\"><img border=\"0\" alt=\"\" src=\"../imgs/pasta.gif\"/>&nbsp;&nbsp;<a class=\"text\" href=\"#\" onClick=");
         echo("'Abrir(".$linha_assunto['cod_assunto'].");return(false);'>");
         echo(TruncaString($linha_assunto['nome'], 80)."</a>\n");
 
@@ -680,7 +669,7 @@
     echo("          <br />\n");    
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-    echo("  <form name=frmAssuntoAcao method=post>\n");
+    echo("  <form name=\"frmAssuntoAcao\" method=\"post\">\n");
   /* Passa o 'cod_assunto_pai', necessario para atualizar a pagina */
   /* principal.                                                    */
  
@@ -807,7 +796,7 @@
   echo("  <div id=\"layer_estrutura\" class=\"popup\" visibility=hidden onContextMenu='return(false);'>\n");
   echo("    <div class=\"posX\"><span onclick=\"EscondeLayer(layer_estrutura);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("      <div class=\"int_popup\">\n");
-  echo("        <div class=\"ulPopup\">\n"); 
+  echo("        <div class=\"ulPopup\">\n");
 
   echo("          ".EstruturaDeAssuntos($sock, $cod_assunto_pai, $usr_formador));
 
@@ -831,7 +820,7 @@
   echo("  <div id=\"layer_estrutura_recuperar\" class=\"popup\" visibility=hidden onContextMenu='return(false);'>\n");
   echo("    <div class=\"posX\"><span onclick=\"EscondeLayer(layer_estrutura_recuperar);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("      <div class=\"int_popup\">\n");
-  echo("        <div class=\"ulPopup\">\n"); 
+  echo("        <div class=\"ulPopup\">\n");
 
   echo("          ".EstruturaRecuperarAssunto($sock, 0, $usr_formador));
 
