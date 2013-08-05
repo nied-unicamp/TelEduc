@@ -47,25 +47,32 @@ include ("material.inc");
 include ("../topo_tela.php");
 Desconectar($sock);
 
+Desconectar($sock);
+$sock = Conectar("");
+
+$lista_frases_biblioteca = RetornaListaDeFrases($sock,-2);
+
+Desconectar($sock);
+
 $sock = Conectar($cod_curso);
 
 switch ($cod_ferramenta) {
-	case 3 :
-		$tabela = "Atividade";
-		$dir = "atividades";
-		break;
-	case 4 :
-		$tabela = "Apoio";
-		$dir = "apoio";
-		break;
-	case 5 :
-		$tabela = "Leitura";
-		$dir = "leituras";
-		break;
-	case 7 :
-		$tabela = "Obrigatoria";
-		$dir = "obrigatoria";
-		break;
+  case 3 :
+    $tabela = "Atividade";
+    $dir = "atividades";
+    break;
+  case 4 :
+    $tabela = "Apoio";
+    $dir = "apoio";
+    break;
+  case 5 :
+    $tabela = "Leitura";
+    $dir = "leituras";
+    break;
+  case 7 :
+    $tabela = "Obrigatoria";
+    $dir = "obrigatoria";
+    break;
 }
 
 $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -73,7 +80,7 @@ $cod_pagina_ajuda = 1;
 
 $sock = MudarDB($sock, $cod_curso_origem);
     
-echo ("    <script type=\"text/javascript\" language=\"JavaScript\" defer>\n\n");
+echo ("    <script type=\"text/javascript\" language=\"javascript\" defer>\n\n");
 
 echo ("      function Iniciar(){\n");
 echo ("        startList();\n");
@@ -107,7 +114,7 @@ echo ("           return true;\n");
 echo ("         else\n");
 echo ("         {\n");
 /*58(biblioteca) - Selecione pelo menos um item*/
-echo ("           alert('" . RetornaFraseDaLista($lista_frases, 153) . "');\n");
+echo ("           alert('" . RetornaFraseDaLista($lista_frases_biblioteca, 58) . "');\n");
 echo ("           return false;\n");
 echo ("         }\n");
 echo ("       }\n");
@@ -169,9 +176,9 @@ echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
 	echo ("          </div>\n");
 
-   /* 509 - Voltar */
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-		/* 1 - Perguntas Freq�entes */
+  /* 1 - Perguntas Freq�entes */
   $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
 
 echo ("            <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -188,8 +195,8 @@ echo ("                <td>\n");
 echo ("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo ("                    <tr class=\"head\">\n");
 echo ("                      <td align=\"center\" width=\"20px\"><input type=\"checkbox\" id='select_all' name=\"select_all\" onClick=\"CheckAll()\"/></td>\n");
-// 114 - "Assunto:
-echo ("                      <td class=\"alLeft\" colspan=\"3\">Assunto</td>\n");
+/* 89 - Selecionar todos */
+echo ("                      <td class=\"alLeft\" colspan=\"3\">".RetornaFraseDaLista($lista_frases_geral,89)."</td>\n");
 echo ("                    </tr>\n");
 
 /*verificar status... confirmar.. e verificar c eh necessario cancelar a edicao!*/

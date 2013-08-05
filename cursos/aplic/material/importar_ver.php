@@ -101,8 +101,6 @@
   Desconectar($sock);
   $sock=Conectar("");
 
-  $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
-
   if ($curso_extraido)
     $diretorio_arquivos=RetornaDiretorio($sock, 'Montagem');
   else

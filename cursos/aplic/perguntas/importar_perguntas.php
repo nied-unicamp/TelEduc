@@ -81,7 +81,7 @@
   if (!isset($cod_assunto_pai) || !ExisteAssunto($sock, $cod_assunto_pai))
   /* Lista os assuntos do assunto raiz */
     $cod_assunto_pai = 1;
-    
+
 
   echo("<script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("<script language=\"javascript\">\n\n");
@@ -522,7 +522,8 @@
   
   echo("                      <td width=\"2%\"><input type=\"checkbox\" id=\"checkMenu\" onclick=\"MarcaOuDesmarcaTodos();VerificaCheck();\" /></td>\n");
 
-  echo("                      <td class=alLeft colspan=\"3\">Assunto</td>");
+  /* 89 - Selecionar todos */
+  echo("                      <td class=alLeft colspan=\"3\">".RetornaFraseDaLista($lista_frases_geral,89)."</td>");
   echo("                    </tr>");
   
   /* 67 - N�o h� nenhuma pergunta freq�ente. */
