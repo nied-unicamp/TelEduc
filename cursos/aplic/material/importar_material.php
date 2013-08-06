@@ -165,28 +165,28 @@ include ("../menu_principal.php");
 $sock = MudarDB($sock, $cod_curso_origem);
 echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 // 1 - "Material"
-	$cabecalho = ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
-	/*107 - Importando "Material" */
-	$cabecalho .= (" - " . RetornaFraseDaLista($lista_frases, 107) . "</h4>\n");
-	echo ($cabecalho);
+$cabecalho = ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
+/*107 - Importando "Material" */
+$cabecalho .= (" - " . RetornaFraseDaLista($lista_frases, 107) . "</h4>\n");
+echo ($cabecalho);
 
-	echo ("          <div id=\"mudarFonte\">\n");
-	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-	echo ("          </div>\n");
+echo ("          <div id=\"mudarFonte\">\n");
+echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+echo ("          </div>\n");
 
-  /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  /* 1 - Perguntas Freq�entes */
-  $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+/* 509 - Voltar */
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+/* 1 - Perguntas Freq�entes */
+$cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
 
 echo ("            <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo ("              <tr>\n");
 echo ("                <td valign=\"top\">\n");
 echo ("                  <ul class=\"btAuxTabs\">\n");
 /* 2 - Cancelar (geral) */
-echo("      <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
+echo ("      <li><span onClick=\"history.go(-1);\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>");
 echo ("                </ul>\n");
 echo ("                </td>\n");
 echo ("              </tr>\n");
@@ -203,98 +203,94 @@ echo ("                    </tr>\n");
 
 $lista_topicos = RetornaTopicosDoTopico($sock, $tabela, $cod_topico_raiz);
 $lista_itens = RetornaItensDoTopico($sock, $tabela, $cod_topico_raiz);
-echo("  <form method=post name=frmImportar>");
-echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-echo("<input type=hidden name=acao value=\"\">\n");
-echo("    <input type=hidden name=cod_item value=".$cod_item.">\n");
-echo("    <input type=hidden name=cod_topico_raiz value=".$cod_topico_raiz.">\n");
-echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-echo("    <input type=hidden name=cod_assunto_dest value=\"\">\n");
-echo("    <input type=hidden name=cod_ferramenta value=".$cod_ferramenta.">\n");
-echo("    <input type=hidden name=tabela value=".$tabela.">\n");
-echo("    <input type=hidden name=dir value=".$dir.">\n");
+echo("  <form method=\"post\" name=\"frmImportar\">");
+echo("    <input type=\"hidden\" name=\"cod_curso\"        value=\"".$cod_curso."\">\n");
+echo("    <input type=\"hidden\" name=\"acao\"             value=\"\">\n");
+echo("    <input type=\"hidden\" name=\"cod_item\"         value=\"".$cod_item."\">\n");
+echo("    <input type=\"hidden\" name=\"cod_topico_raiz\"  value=\"".$cod_topico_raiz."\">\n");
+echo("    <input type=\"hidden\" name=\"cod_assunto_pai\"  value=\"".$cod_assunto_pai."\">\n");
+echo("    <input type=\"hidden\" name=\"cod_assunto_dest\" value=\"\">\n");
+echo("    <input type=\"hidden\" name=\"cod_ferramenta\"   value=\"".$cod_ferramenta."\">\n");
+echo("    <input type=\"hidden\" name=\"tabela\"           value=\"".$tabela."\">\n");
+echo("    <input type=\"hidden\" name=\"dir\"              value=\"".$dir."\">\n");
 
 if (((count($lista_topicos) < 1) || ($lista_topicos == "")) && ((count($lista_itens) < 1) || ($lista_itens == ""))) {
-	echo ("                    <tr>\n");
-	/* 15 - 3: Nao ha nenhuma atividade
-	          4: Nao ha nenhum material de apoio
-	          5: Nao ha nenhuma leitura
-	          7: Nao ha nenhuma parada obrigatória
-	  */
-	echo ("                      <td colspan=\"5\" align=\"center\">" . RetornaFraseDaLista($lista_frases, 15) . "</td>\n");
-	echo ("                    </tr>\n");
+  echo ("                    <tr>\n");
+  /* 15 - 3: Nao ha nenhuma atividade
+          4: Nao ha nenhum material de apoio
+          5: Nao ha nenhuma leitura
+          7: Nao ha nenhuma parada obrigatória
+   */
+  echo ("                      <td colspan=\"5\" align=\"center\">" . RetornaFraseDaLista($lista_frases, 15) . "</td>\n");
+  echo ("                    </tr>\n");
 } else {
 
-	$top_index = 0;
-	$itens_index = 0;
-	for ($i = 0; $i < ((count($lista_topicos)) + (count($lista_itens))); $i++) {
-		if ((!isset ($lista_topicos[$top_index]['posicao_topico'])) || (isset ($lista_itens[$itens_index]['posicao_item']) && ($lista_topicos[$top_index]['posicao_topico'] > $lista_itens[$itens_index]['posicao_item']))) {
-			$lista_unificada[$i] = $lista_itens[$itens_index];
-			$itens_index++;
-		} else {
-			//este if é para não alterar a estrutura dos portfólios antigos
-			if ((isset ($lista_itens[$top_index]['posicao_item'])) && ($lista_topicos[$top_index]['posicao_topico'] == $lista_itens[$itens_index]['posicao_item'])) {
-				$lista_itens[$itens_index]['posicao_item']++;
-			}
-			$lista_unificada[$i] = $lista_topicos[$top_index];
-			$top_index++;
-		}
-	}
+  $top_index = 0;
+  $itens_index = 0;
+  for ($i = 0; $i < ((count($lista_topicos)) + (count($lista_itens))); $i++) {
+    if ((!isset ($lista_topicos[$top_index]['posicao_topico'])) || (isset ($lista_itens[$itens_index]['posicao_item']) && ($lista_topicos[$top_index]['posicao_topico'] > $lista_itens[$itens_index]['posicao_item']))) {
+      $lista_unificada[$i] = $lista_itens[$itens_index];
+      $itens_index++;
+    } else {
+      //este if é para não alterar a estrutura dos portfólios antigos
+      if ((isset ($lista_itens[$top_index]['posicao_item'])) && ($lista_topicos[$top_index]['posicao_topico'] == $lista_itens[$itens_index]['posicao_item'])) {
+      	$lista_itens[$itens_index]['posicao_item']++;
+      }
+      $lista_unificada[$i] = $lista_topicos[$top_index];
+      $top_index++;
+    }
+  }
 
-	foreach ($lista_unificada as $cod => $linha) {
-			//se é tópico...
-		if (isset ($linha['posicao_topico'])) {
-			echo ("                    <tr>\n");
-			echo ("                      <td>\n");
-			echo ("                        <input type=\"checkbox\" id=\"chktop_" . $linha['cod_topico'] . "\" name=\"cod_topicos_import[]\" value=\"" . $linha['cod_topico'] . "\" />\n");
-			echo ("                      </td>\n");
-			echo ("                      <td width=\"72%\" class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"MudarTopico('" . $linha['cod_topico'] . "');\">" . $linha['topico'] . "</span></td>\n");
-			echo ("                    </tr>\n");
-		} //é item
+  foreach ($lista_unificada as $cod => $linha) {
+    //se é tópico...
+    if (isset ($linha['posicao_topico'])) {
+      echo ("                    <tr>\n");
+      echo ("                      <td>\n");
+      echo ("                        <input type=\"checkbox\" id=\"chktop_" . $linha['cod_topico'] . "\" name=\"cod_topicos_import[]\" value=\"" . $linha['cod_topico'] . "\" />\n");
+      echo ("                      </td>\n");
+      echo ("                      <td width=\"72%\" class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"MudarTopico('" . $linha['cod_topico'] . "');\">" . $linha['topico'] . "</span></td>\n");
+      echo ("                    </tr>\n");
+    }
+    //é item
+    else if (isset ($linha['posicao_item'])) {
 
-		else
-			if (isset ($linha['posicao_item'])) {
+      $data = UnixTime2Data($linha['data']);
+      if ($linha['tipo_compartilhamento'] == "T") {
+        /* 16 - Totalmente Compartilhado */
+        $compartilhamento = RetornaFraseDaLista($lista_frases, 16);
+      } else {
+        /* 17 - Compartilhado com Formadores */
+        $compartilhamento = RetornaFraseDaLista($lista_frases, 17);
+      }
+      if ($data_acesso < $linha['data']) {
+        $marcatr = " class=\"novoitem\"";
+      } else {
+        $marcatr = "";
+      }
 
-				$data = UnixTime2Data($linha['data']);
-				if ($linha['tipo_compartilhamento'] == "T") {
-					/* 16 - Totalmente Compartilhado */
-					$compartilhamento = RetornaFraseDaLista($lista_frases, 16);
-				} else {
-					/* 17 - Compartilhado com Formadores */
-					$compartilhamento = RetornaFraseDaLista($lista_frases, 17);
-				}
-				if ($data_acesso < $linha['data']) {
-					$marcatr = " class=\"novoitem\"";
-				} else {
-					$marcatr = "";
-				}
+      if ($linha['status'] == "E") {
+        $linha_historico = RetornaUltimaPosicaoHistorico($sock, $tabela, $linha['cod_item']);
+        if ($linha['inicio_edicao'] < (time() - 1800) || $cod_usuario == $linha_historico['cod_usuario']) {
+          CancelaEdicao($sock, $tabela, $dir, $linha['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp, $criacao_avaliacao);
 
-				if ($linha['status'] == "E") {
-					$linha_historico = RetornaUltimaPosicaoHistorico($sock, $tabela, $linha['cod_item']);
-					if ($linha['inicio_edicao'] < (time() - 1800) || $cod_usuario == $linha_historico['cod_usuario']) {
-						CancelaEdicao($sock, $tabela, $dir, $linha['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp, $criacao_avaliacao);
+          $titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"ExibirItem('" . $linha['cod_item'] . "');\">" . $linha['titulo'] . "</span>";
+        } else {
+          /* 18 - Em Edicao */
+          $data = "<span class=\"link\" onClick=\"window.open('em_edicao.php?cod_curso=" . $cod_curso . "&cod_item=" . $linha['cod_item'] . "&origem=material&cod_ferramenta=" . $cod_ferramenta . "','EmEdicao','width=300,height=220,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">" . RetornaFraseDaLista($lista_frases, 18) . "</a>";
 
-						$titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"ExibirItem('" . $linha['cod_item'] . "');\">" . $linha['titulo'] . "</span>";
+          $titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;" . $linha['titulo'];
+        }
+      } else {
+        $titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"ExibirItem('" . $linha['cod_item'] . "');\">" . $linha['titulo'] . "</span>";
+      }
+  
+      echo ("                    <tr" . $marcatr . " id=\"tr_" . $linha['cod_item'] . "\">\n");
+      echo ("                      <td width=\"2%\"><input type=\"checkbox\" id=\"chkitm_" . $linha['cod_item'] . "\" name=\"cod_itens_import[]\" value=\"" . $linha['cod_item'] . "\" /></td>\n");
+      echo ("                      <td width=\"72%\" class=\"alLeft\">" . $titulo . "</td>\n");
+      echo ("                    </tr>\n");
 
-					} else {
-
-						/* 18 - Em Edicao */
-						$data = "<span class=\"link\" onClick=\"window.open('em_edicao.php?cod_curso=" . $cod_curso . "&cod_item=" . $linha['cod_item'] . "&origem=material&cod_ferramenta=" . $cod_ferramenta . "','EmEdicao','width=300,height=220,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">" . RetornaFraseDaLista($lista_frases, 18) . "</a>";
-
-						$titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;" . $linha['titulo'];
-					}
-				} else {
-
-					$titulo = "<img src=\"../imgs/arqp.gif\" border=\"0\" />&nbsp;&nbsp;<span class=\"link\" onClick=\"ExibirItem('" . $linha['cod_item'] . "');\">" . $linha['titulo'] . "</span>";
-				}
-
-				echo ("                    <tr" . $marcatr . " id=\"tr_" . $linha['cod_item'] . "\">\n");
-				echo ("                      <td width=\"2%\"><input type=\"checkbox\" id=\"chkitm_" . $linha['cod_item'] . "\" name=\"cod_itens_import[]\" value=\"" . $linha['cod_item'] . "\" /></td>\n");
-				echo ("                      <td width=\"72%\" class=\"alLeft\">" . $titulo . "</td>\n");
-				echo ("                    </tr>\n");
-
-			} //else
-	}
+    } //else
+  }
 
 } // else - count(lista_topicos), count(lista_itens)
 
@@ -304,7 +300,11 @@ echo ("              </tr>\n");
 echo ("              <tr>\n");
 echo ("                <td valign=\"top\">\n");
 echo ("                  <ul class=\"btAuxTabs\">\n");
-/* 54(biblioteca) - Importar Selecionados */
+/* 105 - 3: Importar Atividade
+         4: Importar Material de Apoio
+         5: Importar Leitura
+         7: Importar Parada Obrigat�ria
+*/
 echo ("                    <li><span onClick=\"Importar()\">" . RetornaFraseDaLista($lista_frases, 105) . "</span></li>\n");
 echo ("                  </ul>\n");
 echo ("                </td>\n");

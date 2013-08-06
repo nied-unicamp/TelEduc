@@ -135,7 +135,7 @@
   {
 
   /* Fun��es JavaScript */
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function ExcluirSelecionados(){\n");
     /* 6 - Voc� tem certeza de que deseja excluir esta atividade? */

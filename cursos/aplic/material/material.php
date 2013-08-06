@@ -349,7 +349,7 @@
     }else{
       $numero = 7;
     }
-    echo("          if (confirm(\"".RetornaFraseDaLista($lista_frases,115)."\\n(".RetornaFraseDaLista($lista_frases,$numero).")\")){\n");
+    echo("          if (confirm(\"".RetornaFraseDaLista($lista_frases,115)."\\n".RetornaFraseDaLista($lista_frases,$numero)."\")){\n");
     echo("            document.form_dados.action='acoes.php';\n");
     echo("            document.form_dados.method='POST';\n");
     echo("            document.getElementById('acao_form').value='apagarSelecionados';\n");

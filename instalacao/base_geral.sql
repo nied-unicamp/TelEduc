@@ -2022,7 +2022,7 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 (114, 1, 3, 'Atividades do curso:'),
 (115, 1, 3, 'Você tem certeza de que deseja apagar as atividades selecionadas?'),
 (116, 1, 3, '(as atividades serão movidas para a lixeira)'),
-(117, 1, 3, 'as atividades serão movidas para a lixeira e se houver alguma avaliação relacionada, as avaliações também serão movidas para a lixeira DAS AVALIAÇÕES'),
+(117, 1, 3, '(as atividades serão movidas para a lixeira e se houver alguma avaliação relacionada, ela também será movida para a lixeira DAS AVALIAÇÕES)'),
 (118, 1, 3, 'Renomear Pasta'),
 (119, 1, 3, 'Item'),
 (120, 1, 3, 'Editar texto'),
