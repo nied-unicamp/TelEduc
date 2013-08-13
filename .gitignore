@@ -1,0 +1,6 @@
+# arquivo de configuração da instalação do TelEduc
+cursos/aplic/bibliotecas/teleduc.inc
+
+cursos/diretorio/*
+*.DS_Store*
+*.metadata*
