@@ -33,18 +33,18 @@ O TelEduc é um ambiente de <em>e-learning</em> para a criação, participação
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
-    <a href="http://www.nied.unicamp.br" title="http://www.nied.unicamp.br">http://www.nied.unicamp.br</a>
-    <a href="nied@unicamp.br">nied@unicamp.br</a>
+    http://www.nied.unicamp.br
+    nied@unicamp.br
 
     Você também pode falar com equipe de desenvolvimento através do seguinte endereço:
-    <a href="mailto:equipe.teleduc@gmail.com">equipe.teleduc@gmail.com</a>
+    equipe.teleduc@gmail.com
 
 ------------------------------------------------------------------------------
 
     Para realizar a instalação do TelEduc, utilize o guia de instalação fornecido
     nos links abaixo:
     
-    <a href="http://fenix.nied.unicamp.br/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc">http://fenix.nied.unicamp.br/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc</a>
+    http://fenix.nied.unicamp.br/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc
    
 
 ------------------------------------------------------------------------------
