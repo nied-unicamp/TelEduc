@@ -44,7 +44,7 @@ $bibliotecas="cursos/aplic/bibliotecas/";
 include($bibliotecas."geral.inc");
 
 echo("<html>\n");
-echo("<script language=javascript>\n");
+echo("<script language=\"javascript\">\n");
 echo("  document.location='pagina_inicial/index.php';\n");
 echo("</script>\n");
 echo("</html>\n");
