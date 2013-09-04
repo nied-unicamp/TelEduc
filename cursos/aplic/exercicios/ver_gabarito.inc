@@ -39,7 +39,7 @@
 /*==========================================================
   ARQUIVO : cursos/aplic/exercicios/ver_gabarito.inc
   ========================================================== */
-/***********************************************************************
+/* **********************************************************************
    VerificaResolucaoO - Verifica se a quest�o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
    Entrada: $cod_usuario - c�digo do usuario
             $cod_curso - c�digo do curso
@@ -53,14 +53,14 @@ function VerificaResolucaoO($cod_curso,$cod_questao,$cod_resolucao)
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   //Desconectar($sock);
-  
+
   if($linha != NULL)
-  	return $linha['nota'];
+    return $linha['nota'];
   else
     return "";
 }
 
-/***********************************************************************
+/* **********************************************************************
    VerificaResolucaoM - Verifica se a quest�o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
    Entrada: $cod_usuario - c�digo do usuario
             $cod_curso - c�digo do curso
@@ -74,17 +74,17 @@ function VerificaResolucaoM($cod_curso,$cod_questao,$cod_resolucao)
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   //Desconectar($sock);
-  
+
   if($linha != NULL)
-  	return $linha['nota'];
+    return $linha['nota'];
   else
     return "";
 }
 
-/***********************************************************************
+/* **********************************************************************
    VerificaResolucaoD - Verifica se a quest�o ja possui uma resolucao, ou seja, foi corrigido pelo formador 
    Entrada: $cod_usuario - c�digo do usuario
-   			$cod_curso - c�digo do curso
+            $cod_curso - c�digo do curso
             $cod_resolucao - c�digo da resolucao do exercicio
    Saida: a nota caso o exercicio tenha sido corrigido, "" caso contrario           
 */
@@ -95,18 +95,18 @@ function VerificaResolucaoD($cod_curso,$cod_questao,$cod_resolucao)
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   //Desconectar($sock);
-  
+
   if($linha != NULL)
-  	return $linha['nota'];
+    return $linha['nota'];
   else
     return "";
-    
+
 }
 
-/***********************************************************************
+/* **********************************************************************
    VerificaComentario - Verifica se o exercicio dissertativo possui coment�rio
    Entrada: $cod_usuario - c�digo do usuario
-   			$cod_curso - c�digo do curso
+            $cod_curso - c�digo do curso
             $cod_resolucao - c�digo da resolucao do exercicio
    Saida: string caso o exercicio tenha sido comentado, false caso contrario           
 */
@@ -117,20 +117,19 @@ function VerificaComentario($cod_curso,$cod_questao,$cod_resolucao)
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   //Desconectar($sock);
-  
+
   if($linha != NULL)
-  	return $linha['comentario'];
+    return $linha['comentario'];
   else
     return false;
 }
 
-/***********************************************************************
+/* **********************************************************************
    VerificaGabaritoD - Verifica se o exercicio dissertativo possui gabarito
    Entrada: $cod_questao - c�digo da quest�o
             $cod_resolucao - c�digo da resolucao do exercicio
             $cod_curso - c�digo do curso
-            
-   Saida: string caso o exercicio tenha gabarito, false caso contrario           
+   Saida: string caso o exercicio tenha gabarito, false caso contrario
 */
 function VerificaGabaritoD($cod_curso,$cod_questao)
 {
@@ -139,28 +138,28 @@ function VerificaGabaritoD($cod_curso,$cod_questao)
   $res = Enviar($sock, $consulta);
   $linha = RetornaLinha($res);
   //Desconectar($sock);
-  
+
   if($linha != NULL)
-  	return $linha['gabarito'];
+    return $linha['gabarito'];
   else
     return false;
 }
 
-/***********************************************************************
+/* **********************************************************************
    RespostaQuestao - Entrega a string de resposta da quest�o
    Entrada: $cod_questao - c�digo da quest�o
-   			$cod_curso - c�digo do curso
+            $cod_curso - c�digo do curso
    Saida: string de resposta caso o exercicio tenha gabarito, false caso contrario           
 */
 function RespostaQuestao($cod_curso,$cod_questao)
 {
-	$sock=Conectar($cod_curso);
-    $consulta = "select gabarito from Exercicios_questao_obj where cod_questao=".$cod_questao;
-    $res=Enviar($sock, $consulta);
-    $gabarito=RetornaLinha($res);
-	if($gabarito != NULL)
-		return $gabarito['gabarito'];
-	return false;
+  $sock=Conectar($cod_curso);
+  $consulta = "select gabarito from Exercicios_questao_obj where cod_questao=".$cod_questao;
+  $res=Enviar($sock, $consulta);
+  $gabarito=RetornaLinha($res);
+  if($gabarito != NULL)
+    return $gabarito['gabarito'];
+  return false;
 }
 
 

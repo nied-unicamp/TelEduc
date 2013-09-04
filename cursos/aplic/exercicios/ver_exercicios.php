@@ -55,8 +55,8 @@ $objAjax->processRequests();
 
 $cod_ferramenta = 23;
 $visualizar = $_GET['visualizar'];
-  $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda=1;
+$cod_ferramenta_ajuda = $cod_ferramenta;
+$cod_pagina_ajuda=1;
 
 include("../topo_tela.php");
 
@@ -66,28 +66,28 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 //adicionar as acoes possiveis, 1o parametro 
 $feedbackObject->addAction("entregarExercicio", 191, 0);
 
- 
+
 if($visualizar != "I" && $visualizar != "G")
-	$visualizar = "I";
+  $visualizar = "I";
 
 
 $eformador = EFormador($sock,$cod_curso,$cod_usuario);
 $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
 
 if($visualizar == "I"){
-	
-	$cod_usuario_exercicio = $_GET['cod'];
-	
-	AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
-	$exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
-	
+
+  $cod_usuario_exercicio = $_GET['cod'];
+
+  AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario_exercicio);
+  $exercicios = RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_usuario_exercicio);
+
 } else if($visualizar == "G"){
-	
-	$cod_grupo_exercicio = $_GET['cod'];
-	if ($cod_grupo_exercicio != NULL){
-		AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
-		$exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
-	}
+
+  $cod_grupo_exercicio = $_GET['cod'];
+  if ($cod_grupo_exercicio != NULL){
+    AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
+    $exercicios = RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio);
+  }
 }
 $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 // verificamos se a ferramenta de Avaliacoes está disponivel
@@ -95,9 +95,9 @@ $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 
 
 /*********************************************************/
 /* in�io - JavaScript */
-echo("  <script  type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+echo("  <script  type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
 echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
-echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
+echo("  <script  type=\"text/javascript\" language=\"javascript\">\n\n");
 
 echo("    var js_cod_item;\n");
 echo("    var js_comp = new Array();\n");
@@ -179,15 +179,15 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
 if($visualizar == "I")
 {
-	/* Frase #1 - Exercicios */
-	/* Frase #109 - Exercicios Individuais */
-	$frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 109);
+  /* Frase #1 - Exercicios */
+  /* Frase #109 - Exercicios Individuais */
+  $frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 109);
 }
 else if($visualizar == "G")
 {
-	/* Frase #1 - Exercicios */
-	/* Frase #110 - Exercicios em Grupo */
-	$frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 110);
+  /* Frase #1 - Exercicios */
+  /* Frase #110 - Exercicios em Grupo */
+  $frase = RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 110);
 }
 
 echo("          <h4>".$frase."</h4>\n");
@@ -197,60 +197,60 @@ echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" heigh
 echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
 echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
 echo("          </div>\n");
- 
+
 /* Frase #5 - Voltar */
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
- 
+
 if($visualizar=="G")
 {
-	if ($cod_grupo_exercicio != NULL){
-		$nome=NomeGrupo($sock,$cod_grupo_exercicio);
+  if ($cod_grupo_exercicio != NULL){
+    $nome=NomeGrupo($sock,$cod_grupo_exercicio);
 
-		//Figura de Grupo
-		$fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
+    //Figura de Grupo
+    $fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
 
-		echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
-	}
+    echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$cod_grupo_exercicio.");\">".$nome."</span>");
+  }
 }
 else
 {
-	$nome=NomeUsuario($sock,$cod_usuario_exercicio,$cod_curso);
+  $nome=NomeUsuario($sock,$cod_usuario_exercicio,$cod_curso);
 
-	// Selecionando qual a figura a ser exibida ao lado do nome
-	$fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
+  // Selecionando qual a figura a ser exibida ao lado do nome
+  $fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
 
-	echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$cod_usuario_exercicio.");\" > ".$nome."</span>");
+  echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$cod_usuario_exercicio.");\" > ".$nome."</span>");
 }
- 
+
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 
 echo("                <ul class=\"btAuxTabs\">\n");
- 
+
 if($eformador)
 {
-		/* Frase #109 - Exercicios Individuais */
+    /* Frase #109 - Exercicios Individuais */
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");
-    
+
     /* Frase #110 - Exercicios em Grupo */
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 
-  	/* Frase #111 - Biblioteca de Exercicios */
+    /* Frase #111 - Biblioteca de Exercicios */
     echo("                  <li><a href='exercicios.php?cod_curso=".$cod_curso."&visualizar=E'>".RetornaFraseDaLista($lista_frases, 111)."</a></li>\n");
-  	
+
     /* Frase #112 - Biblioteca de Questoes */
     echo("                  <li><a href='questoes.php?cod_curso=".$cod_curso."&visualizar=Q'>".RetornaFraseDaLista($lista_frases, 112)."</a></li>\n");
-	
+
 } else {
-	
-		if($visualizar != "I"){
-			/* Frase #109 - Exercicios Individuais */
-    	echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A&cod=".$cod_usuario."'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");	
-		}
-		/* Frase #110 - Exercicios em Grupo */
-  	echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
+
+    if($visualizar != "I"){
+      /* Frase #109 - Exercicios Individuais */
+      echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A&cod=".$cod_usuario."'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");	
+    }
+    /* Frase #110 - Exercicios em Grupo */
+    echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=G&agrupar=G'>".RetornaFraseDaLista($lista_frases, 110)."</a></li>\n");
 }
 
 //echo("                  <li><a href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."''>Ver resoluo</a></li>\n");
@@ -278,102 +278,102 @@ echo("                  </tr>\n");
 
 if(count($exercicios) > 0 && $exercicios != null)
 {
-	foreach ($exercicios as $cod => $linha_item)
-	{
-		if ($cod_usuario_exercicio == $cod_usuario) $varTmp="P";
-		else if ($eformador) $varTmp="F";
-		else $varTmp="T";
+  foreach ($exercicios as $cod => $linha_item)
+  {
+    if ($cod_usuario_exercicio == $cod_usuario) $varTmp="P";
+    else if ($eformador) $varTmp="F";
+    else $varTmp="T";
 
-		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-		$aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
+    $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+    $aplicado = RetornaDadosExercicioAplicado($sock,$linha_item['cod_exercicio']);
 
-		/* Frase #6 - Compartilhado com formadores */
-		if($linha_item['compartilhada'] == "F")
-		$compartilhamento = RetornaFraseDaLista($lista_frases, 6);
-		/* Frase #7 - Totalmente compartilhado */
-		else if($linha_item['compartilhada'] == "T")
-		$compartilhamento = RetornaFraseDaLista($lista_frases, 7);
-		/* Frase #8 - Nao Compartilhado */
-		else
-		$compartilhamento = RetornaFraseDaLista($lista_frases, 8);
+    /* Frase #6 - Compartilhado com formadores */
+    if($linha_item['compartilhada'] == "F")
+    $compartilhamento = RetornaFraseDaLista($lista_frases, 6);
+    /* Frase #7 - Totalmente compartilhado */
+    else if($linha_item['compartilhada'] == "T")
+    $compartilhamento = RetornaFraseDaLista($lista_frases, 7);
+    /* Frase #8 - Nao Compartilhado */
+    else
+    $compartilhamento = RetornaFraseDaLista($lista_frases, 8);
 
-		if($eformador) $compartilhamento = "<span id=\"comp_".$linha_item['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$linha_item['cod_resolucao'].";AtualizaComp('".$linha_item['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
+    if($eformador) $compartilhamento = "<span id=\"comp_".$linha_item['cod_resolucao']."\" class=\"link\" onclick=\"js_cod_item=".$linha_item['cod_resolucao'].";AtualizaComp('".$linha_item['compartilhada']."');MostraLayer(cod_comp,140,event);return(false);\">".$compartilhamento."</span>";
 
 
-		$num_comentarios=RetornaNumComentariosExercicio($sock,$cod_usuario,$linha_item['cod_resolucao']);
+    $num_comentarios=RetornaNumComentariosExercicio($sock,$cod_usuario,$linha_item['cod_resolucao']);
 
-		$comentarios = "&nbsp";
-		if ($num_comentarios['num_comentarios_alunos']>0)
-		$comentarios .= "<span class=\"cAluno\">(c)</span>";
-		if ($num_comentarios['num_comentarios_formadores']>0)
-		$comentarios .= "<span class=\"cForm\">(c)</span>";
-		if ($num_comentarios['num_comentarios_usuario']>0)
-		$comentarios .= "<span class=\"cMim\">(c)</span>";
-		if ($num_comentarios['data_comentarios']>$data_acesso)
-		$comentarios .= "<span class=\"cNovo\">*</span>";
+    $comentarios = "&nbsp";
+    if ($num_comentarios['num_comentarios_alunos']>0)
+    $comentarios .= "<span class=\"cAluno\">(c)</span>";
+    if ($num_comentarios['num_comentarios_formadores']>0)
+    $comentarios .= "<span class=\"cForm\">(c)</span>";
+    if ($num_comentarios['num_comentarios_usuario']>0)
+    $comentarios .= "<span class=\"cMim\">(c)</span>";
+    if ($num_comentarios['data_comentarios']>$data_acesso)
+    $comentarios .= "<span class=\"cNovo\">*</span>";
 
-		if($aplicado['avaliacao'] > 0)
-		/* Frase #76 - Sim */
-		/* Frase #77 - Nao */
-		$avaliacao = RetornaFraseDaLista($lista_frases, 76);
-		else
-		$avaliacao = RetornaFraseDaLista($lista_frases, 77);
+    if($aplicado['avaliacao'] > 0)
+    /* Frase #76 - Sim */
+    /* Frase #77 - Nao */
+    $avaliacao = RetornaFraseDaLista($lista_frases, 76);
+    else
+    $avaliacao = RetornaFraseDaLista($lista_frases, 77);
 
-		$situacao = "";
-		if($linha_item['submetida'] == 'S')
-		$situacao .= "<span class=\"\">(e)</span>";
-		if($linha_item['corrigida'] == 'S')
-		$situacao .= "<span class=\"avaliada\">(a)</span>";
+    $situacao = "";
+    if($linha_item['submetida'] == 'S')
+    $situacao .= "<span class=\"\">(e)</span>";
+    if($linha_item['corrigida'] == 'S')
+    $situacao .= "<span class=\"avaliada\">(a)</span>";
 
-		$cod_resolucao = $linha_item['cod_resolucao'];
-		
-		echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
-		
-		
-		/* O Redirecionamento:
-		 * 
-		 * Formador:
-		 * Se o Exercicio j� estiver entregue, manda para a pagina de correcao (corrigir_exercicio)
-		 * 
-		 * Aluno:
-		 * Se o Exercicio ja estiver corrigido, manda para a pagina de gabarito/correcao (ver_gabarito)
-		 * Se o Exercicio n�o estiver nem entregue nem corrigido, manda para a pagina de resolucao (resolver)
-		 * 
-		 */
-		
-		if($linha_item['corrigida'] == 'S'){
-			echo("                    <td align=\"left\">".$icone."<a class=\"antigo\"  href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>".$linha_item['titulo']."</a>");
-			if($eformador){
-				echo (" - <a class=\"antigo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\"> (Recorrigir)</a> ");
-			}
-			echo("</td>\n");
-		// se o aluno ja submeteu mas o formador ainda nao corrigiu, destaca com bold	
-		} else  if($linha_item['submetida'] == 'S' && $eformador){
-			echo("                    <td align=\"left\">".$icone."<a class=\"novo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
-		}
-		// se ja estiver submetida, nao destaca com bold
-		else if($linha_item['submetida'] == 'S'){
-			echo("                    <td align=\"left\">".$icone."<a class=\"antigo\" href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
-		}
-		// se nao estiver submetida, destaca com bold
-		else {
-			echo("                    <td align=\"left\">".$icone."<a class=\"novo\"  href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
-		}
-		
-		echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
-		echo("                    <td>".$compartilhamento."</td>\n");
-		echo("                    <td>".$comentarios."</td>\n");
-		echo("                    <td>".$avaliacao."</td>\n");
-		echo("                    <td>".$situacao."</td>\n");
-		echo("                  </tr>\n");
-	}
+    $cod_resolucao = $linha_item['cod_resolucao'];
+
+    echo("                  <tr id=\"trResolucao_".$linha_item['cod_resolucao']."\">\n");
+
+
+    /* O Redirecionamento:
+     * 
+     * Formador:
+     * Se o Exercicio j� estiver entregue, manda para a pagina de correcao (corrigir_exercicio)
+     * 
+     * Aluno:
+     * Se o Exercicio ja estiver corrigido, manda para a pagina de gabarito/correcao (ver_gabarito)
+     * Se o Exercicio n�o estiver nem entregue nem corrigido, manda para a pagina de resolucao (resolver)
+     * 
+     */
+
+    if($linha_item['corrigida'] == 'S'){
+      echo("                    <td align=\"left\">".$icone."<a class=\"antigo\"  href='ver_gabarito.php?cod_curso=".$cod_curso."&visualizar=I&cod=".$cod_usuario_exercicio."&cod_resolucao=".$cod_resolucao."'>".$linha_item['titulo']."</a>");
+      if($eformador){
+        echo (" - <a class=\"antigo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\"> (Recorrigir)</a> ");
+      }
+      echo("</td>\n");
+    // se o aluno ja submeteu mas o formador ainda nao corrigiu, destaca com bold  
+    } else  if($linha_item['submetida'] == 'S' && $eformador){
+      echo("                    <td align=\"left\">".$icone."<a class=\"novo\" href=\"corrigir_exercicio.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+    }
+    // se ja estiver submetida, nao destaca com bold
+    else if($linha_item['submetida'] == 'S'){
+      echo("                    <td align=\"left\">".$icone."<a class=\"antigo\" href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+    }
+    // se nao estiver submetida, destaca com bold
+    else {
+      echo("                    <td align=\"left\">".$icone."<a class=\"novo\"  href=\"resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$linha_item['cod_resolucao']."\">".$linha_item['titulo']."</a>");
+    }
+
+    echo("                    <td>".UnixTime2DataHora($aplicado['dt_limite_submissao'])."</td>\n");
+    echo("                    <td>".$compartilhamento."</td>\n");
+    echo("                    <td>".$comentarios."</td>\n");
+    echo("                    <td>".$avaliacao."</td>\n");
+    echo("                    <td>".$situacao."</td>\n");
+    echo("                  </tr>\n");
+  }
 }
 else
 {
-	echo("                  <tr>\n");
-	/* Frase #118 - Nao ha nenhum exercicio */
-	echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
-	echo("                  </tr>\n");
+  echo("                  <tr>\n");
+  /* Frase #118 - Nao ha nenhum exercicio */
+  echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 118)."</td>\n");
+  echo("                  </tr>\n");
 }
 
 echo("                </table>\n");
@@ -407,38 +407,38 @@ include("../tela2.php");
 
 if($tela_formador)
 {
-	/* Mudar Compartilhamento */
-	echo("    <div class=popup id=\"comp\">\n");
-	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-	echo("      <div class=int_popup>\n");
-	echo("        <script type=\"text/javaScript\">\n");
-	echo("        </script>\n");
-	echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
-	echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-	echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
-	echo("          <input type=hidden name=cod_item value=\"\" />\n");
-	echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
-	echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
-	echo("          <ul class=ulPopup>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
-	/* Frase #7 - Totalmente compartilhado */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 7)."</span>\n");
-	echo("            </li>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
-	/* Frase #6 - Compartilhado com formadores */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
-	echo("            </li>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-	/* Frase #8 - Nao Compartilhado */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
-	echo("            </li>\n");
-	echo("          </ul>\n");
-	echo("        </form>\n");
-	echo("      </div>\n");
-	echo("    </div>\n");
+  /* Mudar Compartilhamento */
+  echo("    <div class=\"popup\" id=\"comp\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=\"int_popup\">\n");
+  echo("        <script type=\"text/javaScript\">\n");
+  echo("        </script>\n");
+  echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  echo("          <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("          <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("          <input type=\"hidden\" name=cod_item value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=tipo_comp id=tipo_comp value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=texto id=texto value=\"Texto\" />\n");
+  echo("          <ul class=\"ulPopup\">\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
+  /* Frase #7 - Totalmente compartilhado */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 7)."</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  /* Frase #6 - Compartilhado com formadores */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  /* Frase #8 - Nao Compartilhado */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
+  echo("            </li>\n");
+  echo("          </ul>\n");
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
 }
 
 echo("  </body>\n");

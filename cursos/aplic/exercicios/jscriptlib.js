@@ -62,7 +62,7 @@ function AtualizaComp(js_tipo_comp)
     document.form_comp.cod_item.value=js_cod_item;
     var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P'));
   }
-  var imagem="<img src='../imgs/checkmark_blue.gif'>"
+  var imagem="<img src='../imgs/checkmark_blue.gif'>";
   if (js_tipo_comp=='T') {
     tipo_comp[0].innerHTML=imagem;
     tipo_comp[1].innerHTML="&nbsp;";

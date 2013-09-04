@@ -43,20 +43,20 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
- 
+
   $cod_usuario=VerificaAutenticacao($cod_curso);
-  
+
   $sock=Conectar("");
- 
+
   $diretorio_arquivos=RetornaDiretorio($sock,'Arquivos');
   $diretorio_temp=RetornaDiretorio($sock,'ArquivosWeb');
 
   Desconectar($sock);
 
   $cod_ferramenta = 23;
-  
+
   include("../topo_tela.php");
-  
+
   echo("    <script type=\"text/javascript\">\n");
   echo("      function OpenWindowPerfil(funcao)\n");
   echo("      {\n");
@@ -73,7 +73,7 @@
   /* Frase #56 - Historico */
   /* Frase #177 - questão */
   $cabecalho = "<br /><br /><h4>";
-	$cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56)." ".RetornaFraseDaLista($lista_frases, 177);
+  $cabecalho .= RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases, 56)." ".RetornaFraseDaLista($lista_frases, 177);
   $cabecalho.= ("</h4>\n");
   echo($cabecalho);
   echo ("<br />\n");
@@ -88,7 +88,7 @@
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td colspan=3>\n");    
+  echo("        <td colspan=3>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
   /* Frase #177 - Questï¿½o */
@@ -124,11 +124,11 @@
 
       switch ($linha['acao']){
 
-     	/* Frase #503 - Criacao de Alternativa */
-      	case ('A'): $acao=RetornaFraseDaLista($lista_frases,503); break;
-      	/* Frase #136 - Criacao */
+        /* Frase #232 - Criacao de Alternativa */
+        case ('A'): $acao=RetornaFraseDaLista($lista_frases,232); break;
+        /* Frase #136 - Criacao */
         case ('C'): $acao=RetornaFraseDaLista($lista_frases,136); break;
-       	/* Frase #140 - Edicao Cancelada */
+        /* Frase #140 - Edicao Cancelada */
         case ('D'): $acao=RetornaFraseDaLista($lista_frases,140); break;
         /* Frase #141 - Em Edicao */
         case ('E'): $acao=RetornaFraseDaLista($lista_frases,141); break;

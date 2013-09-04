@@ -127,11 +127,11 @@ echo("    }\n\n");
 echo("    function Iniciar()\n");
 echo("    {\n");
 if ($tela_formador){
-	echo("      cod_comp = getLayer(\"comp\");\n");
-	echo("      startList();\n");	
+  echo("      cod_comp = getLayer(\"comp\");\n");
+  echo("      startList();\n");
 }
 foreach ($questoes as $cod => $linha_item)
-	echo("AbreResposta(".$linha_item['cod_questao'].");");
+  echo("AbreResposta(".$linha_item['cod_questao'].");");
 echo("    }\n\n");
 
 echo("    function WindowOpenVer(id)\n");
@@ -146,49 +146,49 @@ echo("      return(false);\n");
 echo("    }\n");
 
 if ($tela_formador){
-	echo("    function EscondeLayers()\n");
-	echo("    {\n");
-	echo("      hideLayer(cod_comp);\n");
-	echo("    }\n");
+  echo("    function EscondeLayers()\n");
+  echo("    {\n");
+  echo("      hideLayer(cod_comp);\n");
+  echo("    }\n");
 
-	echo("    function MostraLayer(cod_layer, ajuste)\n");
-	echo("    {\n");
-	echo("      EscondeLayers();\n");
-	echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
-	echo("      showLayer(cod_layer);\n");
-	echo("    }\n");
+  echo("    function MostraLayer(cod_layer, ajuste)\n");
+  echo("    {\n");
+  echo("      EscondeLayers();\n");
+  echo("      moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());\n");
+  echo("      showLayer(cod_layer);\n");
+  echo("    }\n");
 
-	echo("    function EscondeLayer(cod_layer)\n");
-	echo("    {\n");
-	echo("      hideLayer(cod_layer);\n");
-	echo("    }\n");
+  echo("    function EscondeLayer(cod_layer)\n");
+  echo("    {\n");
+  echo("      hideLayer(cod_layer);\n");
+  echo("    }\n");
 
-	echo("      function AtualizaComp(js_tipo_comp)\n");
-	echo("      {\n");
-	echo("        if ((isNav) && (!isMinNS6)) {\n");
-	echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
-	echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
-	echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'),document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
-	echo("        } else {\n");
-	echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
-	echo("            document.form_comp.cod_item.value=js_cod_item;\n");
-	echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'),document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
-	echo("        }\n");
-	echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
-	echo("        if (js_tipo_comp=='T') {\n");
-	echo("          tipo_comp[0].innerHTML=imagem;\n");
-	echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
-	echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
-	echo("        }else if (js_tipo_comp=='F'){\n");
-	echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
-	echo("          tipo_comp[1].innerHTML=imagem;\n");
-	echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
-	echo("        }else{\n");
-	echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
-	echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
-	echo("          tipo_comp[2].innerHTML=imagem;\n");
-	echo("        }\n");
-	echo("      }\n\n");
+  echo("      function AtualizaComp(js_tipo_comp)\n");
+  echo("      {\n");
+  echo("        if ((isNav) && (!isMinNS6)) {\n");
+  echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'),document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_N'));\n");
+  echo("        } else {\n");
+  echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'),document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_N'));\n");
+  echo("        }\n");
+  echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\"\n");
+  echo("        if (js_tipo_comp=='T') {\n");
+  echo("          tipo_comp[0].innerHTML=imagem;\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        }else if (js_tipo_comp=='F'){\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=imagem;\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        }else{\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=imagem;\n");
+  echo("        }\n");
+  echo("      }\n\n");
 }
 echo("    function AbreResposta(cod_questao)\n");
 echo("    {\n");
@@ -212,13 +212,14 @@ echo("        else\n");
 echo("          resposta = resposta + \"0\";\n");
 echo("      }\n");
 /* Frase #171 - Resposta gravada */
-echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",\"O\");\n");
+/* Frase #167 - Respondida */
+echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",\"O\",\"".RetornaFraseDaLista($lista_frases, 167)."\");\n");
 echo("    }\n");
 
 echo("    function AlteraTexto(id){\n");
 echo("      if (editaTexto==-1 || editaTexto != id){\n");
 if ($tela_formador){
-	echo("        CancelaTodos();\n");
+  echo("        CancelaTodos();\n");
 }
 //echo("        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
 echo("        conteudo = document.getElementById('text_'+id).innerHTML;\n");
@@ -286,20 +287,20 @@ echo("          <h4>".$frase."</h4>\n");
 
 if($resolucao['cod_grupo'] != null)
 {
-	$nome=NomeGrupo($sock,$resolucao['cod_grupo']);
-	//Figura de Grupo
-	$fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
+  $nome=NomeGrupo($sock,$resolucao['cod_grupo']);
+  //Figura de Grupo
+  $fig_exercicio = "<img alt=\"\" src=\"../imgs/icGrupo.gif\" border=\"0\" />";
 
-	echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$resolucao['cod_grupo'].");\">".$nome."</span>");
+  echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"AbreJanelaComponentes(".$resolucao['cod_grupo'].");\">".$nome."</span>");
 }
 else
 {
-	$nome=NomeUsuario($sock,$resolucao['cod_usuario'],$cod_curso);
+  $nome=NomeUsuario($sock,$resolucao['cod_usuario'],$cod_curso);
 
-	// Selecionando qual a figura a ser exibida ao lado do nome
-	$fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
+  // Selecionando qual a figura a ser exibida ao lado do nome
+  $fig_exercicio = "<img alt=\"\" src=\"../imgs/icPerfil.gif\" border=\"0\" />";
 
-	echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$resolucao['cod_usuario'].");\" > ".$nome."</span>");
+  echo("          ".$fig_exercicio." <span class=\"link\" onclick=\"OpenWindowPerfil(".$resolucao['cod_usuario'].");\" > ".$nome."</span>");
 }
 
 echo("          <div id=\"mudarFonte\">\n");
@@ -316,7 +317,7 @@ echo("                <ul class=\"btAuxTabs\">\n");
 $cod = $resolucao['cod_usuario'];
 if($resolucao['cod_grupo'] != null)
 {
-	$cod = $resolucao['cod_grupo'];
+  $cod = $resolucao['cod_grupo'];
 }
 
 /* Frase #5 - Voltar */
@@ -387,53 +388,53 @@ $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_exercicio_temp['link']);
 
 if(count($lista_arq) > 0 || $lista_arq != null)
 {
-	echo("                  <tr class=\"head\">\n");
-	/* Frase #12 - Arquivos */
-	echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr>\n");
-	echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
+  echo("                  <tr class=\"head\">\n");
+  /* Frase #12 - Arquivos */
+  echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
+  echo("                  </tr>\n");
+  echo("                  <tr>\n");
+  echo("                    <td colspan=\"6\" class=\"alLeft\">\n");
 
-	foreach ($lista_arq as $cod => $linha_arq)
-	{
-		$caminho_arquivo = $dir_exercicio_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
-		//converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
-		//ISO-8859-1 para ser exibido corretamente na página.
-		$caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
-		 
-		$linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
-		if(eregi(".zip$", $linha_arq['Arquivo'])) {
-			// arquivo zip
-			$imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
-			$tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\">";
-		}else{
-			// arquivo comum
-			// imagem
-			if((eregi(".jpg$",$linha_arq['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
-				//doc
-			}else if(eregi(".doc$",$linha_arq['Arquivo'])){
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqdoc.gif\" \"border=\"0\" />";
-				//pdf
-			}else if(eregi(".pdf$",$linha_arq['Arquivo'])){
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqpdf.gif\" border=\"0\" />";
-				//html
-			}else if((eregi(".html$",$linha_arq['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
-			}else if((eregi(".mp3$",$linha_arq['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
-			}else{
-				$imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
-			}
+  foreach ($lista_arq as $cod => $linha_arq)
+  {
+    $caminho_arquivo = $dir_exercicio_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
+    //converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
+    //ISO-8859-1 para ser exibido corretamente na página.
+    $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
 
-			$tag_abre = "<span class=\"link\" id=\"nomeArq_" .$conta_arq ."\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\">";
-		}
+    $linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
+    if(eregi(".zip$", $linha_arq['Arquivo'])) {
+      // arquivo zip
+      $imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
+      $tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\">";
+    }else{
+      // arquivo comum
+      // imagem
+      if((eregi(".jpg$",$linha_arq['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
+        //doc
+      }else if(eregi(".doc$",$linha_arq['Arquivo'])){
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqdoc.gif\" \"border=\"0\" />";
+        //pdf
+      }else if(eregi(".pdf$",$linha_arq['Arquivo'])){
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqpdf.gif\" border=\"0\" />";
+        //html
+      }else if((eregi(".html$",$linha_arq['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
+      }else if((eregi(".mp3$",$linha_arq['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
+      }else{
+        $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
+      }
 
-		$tag_fecha = "</span>";
-		echo ("                      ".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."<br />");
-	}
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
+      $tag_abre = "<span class=\"link\" id=\"nomeArq_" .$conta_arq ."\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\">";
+    }
+
+    $tag_fecha = "</span>";
+    echo ("                      ".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."<br />");
+  }
+  echo("                    </td>\n");
+  echo("                  </tr>\n");
 }
 
 echo("                  <tr class=\"head\">\n");
@@ -458,225 +459,225 @@ echo("                  </tr>\n");
 
 if ((count($questoes)>0)&&($questoes != null))
 {
-	foreach ($questoes as $cod => $linha_item)
-	{
-		$icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
-		$icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
-		$icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
-		$icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
-		$tipo = $linha_item['tp_questao'];
-		if($tipo == 'O'){
-			$tipo_ext = RetornaFraseDaLista($lista_frases, 159);
-		} elseif ($tipo == 'M') {
-			$tipo_ext = RetornaFraseDaLista($lista_frases, 212);
-		} elseif($tipo == 'D'){
-			$tipo_ext = RetornaFraseDaLista($lista_frases, 160);
-		}
-		$titulo = $linha_item['titulo'];
-		$topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
-		if($tipo == 'O'){
-			$nota = VerificaResolucaoO($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-			$respostaCorreta = RetornaGabaritoQuestaoObj($sock,$linha_item['cod_questao']);
-		} elseif ($tipo == 'M') {
-			$nota = VerificaResolucaoM($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-			$respostaCorreta = RetornaGabaritoQuestaoMult($sock,$linha_item['cod_questao']);
-		}
-		else if($tipo == 'D')
-			$nota = VerificaResolucaoD($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-		else
-			$nota = "";
+  foreach ($questoes as $cod => $linha_item)
+  {
+    $icone = "<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+    $icone_correto = " <img src=\"../imgs/certo.png\" alt=\"resposta certa\" border=\"0\" /> ";
+    $icone_errado = " <img src=\"../imgs/errado.png\" alt=\"resposta errada\" border=\"0\" /> ";
+    $icone_vazio = " <img src=\"../imgs/branco.png\" alt=\"alternativa certa\" border=\"0\" /> ";
+    $tipo = $linha_item['tp_questao'];
+    if($tipo == 'O'){
+      $tipo_ext = RetornaFraseDaLista($lista_frases, 159);
+    } elseif ($tipo == 'M') {
+      $tipo_ext = RetornaFraseDaLista($lista_frases, 212);
+    } elseif($tipo == 'D'){
+      $tipo_ext = RetornaFraseDaLista($lista_frases, 160);
+    }
+    $titulo = $linha_item['titulo'];
+    $topico = RetornaNomeTopico($sock,$linha_item['cod_topico']);
+    if($tipo == 'O'){
+      $nota = VerificaResolucaoO($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
+      $respostaCorreta = RetornaGabaritoQuestaoObj($sock,$linha_item['cod_questao']);
+    } elseif ($tipo == 'M') {
+      $nota = VerificaResolucaoM($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
+      $respostaCorreta = RetornaGabaritoQuestaoMult($sock,$linha_item['cod_questao']);
+    }
+    else if($tipo == 'D')
+      $nota = VerificaResolucaoD($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
+    else
+      $nota = "";
 
-		$valor = $linha_item['valor'];
-		if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M'){
-			//$sock2 = Conectar($cod_curso);
-			//$alternativas = RetornaAlternativas($sock2,$linha_item['cod_questao']);
-			$alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
-		    //Desconectar($sock2);
-		}
+    $valor = $linha_item['valor'];
+    if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M'){
+      //$sock2 = Conectar($cod_curso);
+      //$alternativas = RetornaAlternativas($sock2,$linha_item['cod_questao']);
+      $alternativas = RetornaAlternativas($sock,$linha_item['cod_questao']);
+      //Desconectar($sock2);
+    }
 
-		$resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
+    $resposta = RetornaRespostaQuestao($sock,$cod_resolucao,$linha_item['cod_questao'],$linha_item['tp_questao']);
 
-		$dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
-		$lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
+    $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $linha_item['cod_questao'], $diretorio_arquivos, $diretorio_temp, "questao");
+    $lista_arq = RetornaArquivosQuestao($cod_curso, $dir_questao_temp['link']);
 
-		/* Frase #166 - Nao respondida */
-		/* Frase #167 - Respondida */
-		if($resposta == null)
-			$status = RetornaFraseDaLista($lista_frases, 166);
-		else
-			$status = RetornaFraseDaLista($lista_frases, 167);
+    /* Frase #166 - Nao respondida */
+    /* Frase #167 - Respondida */
+    if($resposta == null)
+      $status = RetornaFraseDaLista($lista_frases, 166);
+    else
+      $status = RetornaFraseDaLista($lista_frases, 167);
 
-		echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
-		echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span>");
-		/* Se existir nota e for diferente do valor*/
-		if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota != $valor && $nota != ""){
-			echo($icone_errado."</td>\n");
-			echo("                <td>".$nota."</td>\n");
-		}
-		/* Se existir nota e for igual ao valor*/
-		else if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota == $valor && $nota != ""){
-			echo($icone_correto."</td>\n");
-			echo("                <td>".$nota."</td>\n");
-		}
-		else if($linha_item['tp_questao'] == 'D' && $nota == $valor && $nota != ""){
-			echo($icone_correto."</td>\n");
-			echo("                <td>".$nota."</td>\n");
-		}
-		else if($linha_item['tp_questao'] == 'D' && $nota != $valor && $nota != ""){
-			echo($icone_errado."</td>\n");
-			echo("                <td>".$nota."</td>\n");
-		}
-		else{
-			echo("                </td>\n");
-			echo("                <td></td>\n");
-		}
+    echo("                  <tr id=\"trQuestao_".$linha_item['cod_questao']."\">\n");
+    echo("                    <td align=left>".$icone."<span class=\"link\" onclick=\"AbreResposta(".$linha_item['cod_questao'].");\">".$titulo."</span>");
+    /* Se existir nota e for diferente do valor*/
+    if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota != $valor && $nota != ""){
+      echo($icone_errado."</td>\n");
+      echo("                <td>".$nota."</td>\n");
+    }
+    /* Se existir nota e for igual ao valor*/
+    else if( ($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M') && $nota == $valor && $nota != ""){
+      echo($icone_correto."</td>\n");
+      echo("                <td>".$nota."</td>\n");
+    }
+    else if($linha_item['tp_questao'] == 'D' && $nota == $valor && $nota != ""){
+      echo($icone_correto."</td>\n");
+      echo("                <td>".$nota."</td>\n");
+    }
+    else if($linha_item['tp_questao'] == 'D' && $nota != $valor && $nota != ""){
+      echo($icone_errado."</td>\n");
+      echo("                <td>".$nota."</td>\n");
+    }
+    else{
+      echo("                </td>\n");
+      echo("                <td></td>\n");
+    }
 
-		echo("                    <td>".$valor."</td>\n");
-		echo("                    <td>".$tipo_ext."</td>\n");
-		echo("                    <td>".$topico."</td>\n");
-		echo("                    <td>".$status."</td>\n");
-		echo("                  </tr>\n");
-		echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
-		echo("                    <td colspan=\"5\" align=\"left\">\n");
-		echo("                      <dl class=\"portlet\">\n");
-		/* Frase #17 - Enunciado */
-		echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 17)."</dt>\n");
-		echo("                          <dd class=\"portletItem\">".$linha_item['enunciado']."</dd>\n");
+    echo("                    <td>".$valor."</td>\n");
+    echo("                    <td>".$tipo_ext."</td>\n");
+    echo("                    <td>".$topico."</td>\n");
+    echo("                    <td>".$status."</td>\n");
+    echo("                  </tr>\n");
+    echo("                  <tr id=\"trResposta_".$linha_item['cod_questao']."\" style=\"display:none;\">\n");
+    echo("                    <td colspan=\"5\" align=\"left\">\n");
+    echo("                      <dl class=\"portlet\">\n");
+    /* Frase #17 - Enunciado */
+    echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 17)."</dt>\n");
+    echo("                          <dd class=\"portletItem\">".$linha_item['enunciado']."</dd>\n");
 
-		if(count($lista_arq) > 0 || $lista_arq != null)
-		{
-			/* Frase #12 - Arquivos */
-			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 12)."</dt>\n");
-			echo("                          <dd class=\"portletItem\">\n");
-			foreach ($lista_arq as $cod => $linha_arq)
-			{
-				$caminho_arquivo = $dir_questao_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
-				//converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
-				//ISO-8859-1 para ser exibido corretamente na página.
-				$caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
-				$linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
-				if(eregi(".zip$", $linha_arq['Arquivo'])) {
-			  // arquivo zip
-			  $imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
-			  $tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\">";
-				}else{
-			  // arquivo comum
-			  // imagem
-			  if((eregi(".jpg$",$linha_arq['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
-			  	//doc
-			  }else if(eregi(".doc$",$linha_arq['Arquivo'])){
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqdoc.gif\" \"border=\"0\" />";
-			  	//pdf
-			  }else if(eregi(".pdf$",$linha_arq['Arquivo'])){
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqpdf.gif\" border=\"0\" />";
-			  	//html
-			  }else if((eregi(".html$",$linha_arq['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
-			  }else if((eregi(".mp3$",$linha_arq['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
-			  }else{
-			  	$imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
-			  }
+    if(count($lista_arq) > 0 || $lista_arq != null)
+    {
+      /* Frase #12 - Arquivos */
+      echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 12)."</dt>\n");
+      echo("                          <dd class=\"portletItem\">\n");
+      foreach ($lista_arq as $cod => $linha_arq)
+      {
+        $caminho_arquivo = $dir_questao_temp['link'] . ConverteUrl2Html($linha_arq['Diretorio'] . "/" . $linha_arq['Arquivo']);
+        //converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
+        //ISO-8859-1 para ser exibido corretamente na página.
+        $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
+        $linha_arq['Arquivo'] = mb_convert_encoding($linha_arq['Arquivo'], "ISO-8859-1", "UTF-8");
+        if(eregi(".zip$", $linha_arq['Arquivo'])) {
+          // arquivo zip
+          $imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
+          $tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\">";
+        }else{
+          // arquivo comum
+          // imagem
+          if((eregi(".jpg$",$linha_arq['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
+            //doc
+          }else if(eregi(".doc$",$linha_arq['Arquivo'])){
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqdoc.gif\" \"border=\"0\" />";
+            //pdf
+          }else if(eregi(".pdf$",$linha_arq['Arquivo'])){
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqpdf.gif\" border=\"0\" />";
+            //html
+          }else if((eregi(".html$",$linha_arq['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
+          }else if((eregi(".mp3$",$linha_arq['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
+          }else{
+            $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
+          }
 
-			  $tag_abre = "<span class=\"link\" id=\"nomeArq_" .$conta_arq ."\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\">";
-				}
+          $tag_abre = "<span class=\"link\" id=\"nomeArq_" .$conta_arq ."\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\">";
+        }
 
-				$tag_fecha = "</span>";
-				echo ("                            ".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."<br />");
-			}
-			echo("                          </dd>\n");
-		}
+        $tag_fecha = "</span>";
+        echo ("                            ".$imagem.$tag_abre.$linha_arq['Arquivo'].$tag_fecha."<br />");
+      }
+      echo("                          </dd>\n");
+    }
 
-		if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M')
-		{
-			/* Frase #18 - Alternativas */
-			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 18)."</dt>\n");
-			echo("                          <dd class=\"portletItem\">\n");
-			foreach ($alternativas as $cod => $linha_alt)
-			{
-				if($resposta != null && $resposta[$cod] == "1")
-				$selected = "checked";
-				else
-				$selected = "";
-				if($respostaCorreta){
-					if($respostaCorreta[$cod] == $resposta[$cod]){
-						if ($respostaCorreta[$cod] == 1)
-							echo($icone_correto);
-						else
-							echo($icone_vazio);
-						if($linha_item['tp_questao'] == 'O')
-							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-						if($linha_item['tp_questao'] == 'M')
-							echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-						echo("                            <br />\n");
-					}
-					else{
-						if ($respostaCorreta[$cod] == 1)
-							echo($icone_correto);
-						else 
-							echo($icone_errado);
-						if($linha_item['tp_questao'] == 'O')
-							echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-						if($linha_item['tp_questao'] == 'M')
-							echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-						echo("                            <br />\n");
-					}
-				}
-				else{
-					if($linha_item['tp_questao'] == 'O')
-						echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-					if($linha_item['tp_questao'] == 'M')
-						echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
-					echo("                            <br />\n");
-				}
-			}
-			echo("                          </dd>\n");
-		}
-		else if($linha_item['tp_questao'] == 'D')
-		{
-			/* Frase #20 - Resposta */
-			echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 20)."</dt>\n");
-			echo("                          <dd class=\"portletItem\">\n");
-			echo("                            <div class=\"divRichText\">\n");
-			echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
-			if($resposta != null)
-			echo($resposta);
-			echo("                              </span>\n");
-			echo("                            </div>\n");
-			$gabarito = VerificaGabaritoD($cod_curso,$linha_item['cod_questao']);
-			if($gabarito){
-					/* Frase #103 - Gabarito */
-			    echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 103)."</dt>\n");
-			    echo("                          <dd class=\"portletItem\">\n");
-			    echo($gabarito);
-			    echo("                          </dd>\n");
-			}
-			$comentario = VerificaComentario($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
-			if($comentario != null){
-				/* Frase #168 - Comentario */
-				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
-			    echo("                          <dd class=\"portletItem\">\n");
-			    echo($comentario);
-			    echo("                          </dd>\n");
-			}
-			else{
-					/* Frase #168 - Comentario */
-				echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
-			    echo("                          <dd class=\"portletItem\">\n");
-			    echo(RetornaFraseDaLista($lista_frases, 194));
-			    echo("                          </dd>\n");
-			}
-			echo("                          </dd>\n");
-			
-			//echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
-		}
-		echo("                      </dl>\n");
-		echo("                    </td>\n");
-		echo("                    <td><span class=\"link\" onclick=\"FechaResposta(".$linha_item['cod_questao'].");\">Fechar</span></td>\n");
-		echo("                  </tr>\n");
+    if($linha_item['tp_questao'] == 'O' || $linha_item['tp_questao'] == 'M')
+    {
+      /* Frase #18 - Alternativas */
+      echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 18)."</dt>\n");
+      echo("                          <dd class=\"portletItem\">\n");
+      foreach ($alternativas as $cod => $linha_alt)
+      {
+        if($resposta != null && $resposta[$cod] == "1")
+          $selected = "checked";
+        else
+          $selected = "";
+        if($respostaCorreta){
+          if($respostaCorreta[$cod] == $resposta[$cod]){
+            if ($respostaCorreta[$cod] == 1)
+              echo($icone_correto);
+            else
+              echo($icone_vazio);
+            if($linha_item['tp_questao'] == 'O')
+              echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+            if($linha_item['tp_questao'] == 'M')
+              echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+            echo("                            <br />\n");
+          }
+          else{
+            if ($respostaCorreta[$cod] == 1)
+              echo($icone_correto);
+            else
+              echo($icone_errado);
+            if($linha_item['tp_questao'] == 'O')
+              echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+            if($linha_item['tp_questao'] == 'M')
+              echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+            echo("                            <br />\n");
+          }
+        }
+        else{
+          if($linha_item['tp_questao'] == 'O')
+            echo("                            <input  type=\"radio\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+          if($linha_item['tp_questao'] == 'M')
+            echo("                            <input  type=\"checkbox\" size=\"2\" name=\"resposta_".$linha_item['cod_questao']."\" disabled=\"disabled\" onclick=\"SelecionaAlternativa(".$linha_item['cod_questao'].",".$cod.",".count($alternativas).");\" ".$selected.">&nbsp;&nbsp;&nbsp;".$linha_alt['texto']."\n");
+          echo("                            <br />\n");
+        }
+      }
+      echo("                          </dd>\n");
+    }
+    else if($linha_item['tp_questao'] == 'D')
+    {
+      /* Frase #20 - Resposta */
+      echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 20)."</dt>\n");
+      echo("                          <dd class=\"portletItem\">\n");
+      echo("                            <div class=\"divRichText\">\n");
+      echo("                              <span id=\"text_".$cod_resolucao."_".$linha_item['cod_questao']."\">");
+      if($resposta != null)
+        echo($resposta);
+      echo("                              </span>\n");
+      echo("                            </div>\n");
+      $gabarito = VerificaGabaritoD($cod_curso,$linha_item['cod_questao']);
+      if($gabarito){
+        /* Frase #103 - Gabarito */
+        echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 103)."</dt>\n");
+        echo("                          <dd class=\"portletItem\">\n");
+        echo($gabarito);
+        echo("                          </dd>\n");
+      }
+      $comentario = VerificaComentario($cod_curso,$linha_item['cod_questao'],$cod_resolucao);
+      if($comentario != null){
+        /* Frase #168 - Comentario */
+        echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
+        echo("                          <dd class=\"portletItem\">\n");
+        echo($comentario);
+        echo("                          </dd>\n");
+      }
+      else{
+          /* Frase #168 - Comentario */
+        echo("                        <dt class=\"portletHeader\">".RetornaFraseDaLista($lista_frases, 168)."</dt>\n");
+        echo("                          <dd class=\"portletItem\">\n");
+        echo(RetornaFraseDaLista($lista_frases, 194));
+        echo("                          </dd>\n");
+      }
+      echo("                          </dd>\n");
 
-	}
+      //echo("                          <dd class=\"portletFooter\" id=\"resp_".$cod_resolucao."_".$linha_item['cod_questao']."\"><span class=\"link\" onclick=\"Responder('".$cod_resolucao."_".$linha_item['cod_questao']."');\">Editar resposta</span></dd>\n");
+    }
+    echo("                      </dl>\n");
+    echo("                    </td>\n");
+    echo("                    <td><span class=\"link\" onclick=\"FechaResposta(".$linha_item['cod_questao'].");\">Fechar</span></td>\n");
+    echo("                  </tr>\n");
+
+  }
 }
 echo("                </table>\n");
 if($resolucao['submetida'] == 'N')
@@ -684,7 +685,7 @@ if($resolucao['submetida'] == 'N')
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
-    echo("          <br />\n");    
+    echo("          <br />\n");
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
 
@@ -697,41 +698,39 @@ include("../tela2.php");
 
 if($tela_formador)
 {
-	/* Mudar Compartilhamento */
-	echo("    <div class=popup id=\"comp\">\n");
-	echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-	echo("      <div class=int_popup>\n");
-	echo("        <script type=\"text/javaScript\">\n");
-	echo("        </script>\n");
-	echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
-	echo("          <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-	echo("          <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
-	echo("          <input type=hidden name=cod_item value=\"\" />\n");
-	echo("          <input type=hidden name=tipo_comp id=tipo_comp value=\"\" />\n");
-	echo("          <input type=hidden name=texto id=texto value=\"Texto\" />\n");
-	echo("          <ul class=ulPopup>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
-	/* Frase #7 - Totalmente compartilhado */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 7)."</span>\n");
-	echo("            </li>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
-	/* Frase #6 - Compartilhado com formadores */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
-	echo("            </li>\n");
-	echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
-	echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
-	/* Frase #8 - Nao Compartilhado */
-	echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
-	echo("            </li>\n");
-	echo("          </ul>\n");
-	echo("        </form>\n");
-	echo("      </div>\n");
-	echo("    </div>\n");
+  /* Mudar Compartilhamento */
+  echo("    <div class=\"popup\" id=\"comp\">\n");
+  echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("      <div class=\"int_popup\">\n");
+  echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
+  echo("          <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("          <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("          <input type=\"hidden\" name=cod_item value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=tipo_comp id=tipo_comp value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=texto id=texto value=\"Texto\" />\n");
+  echo("          <ul class=\"ulPopup\">\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Totalmente Compartilhado', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_T\" class=\"check\"></span>\n");
+  /* Frase #7 - Totalmente compartilhado */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 7)."</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Compartilhado com formadores', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
+  /* Frase #6 - Compartilhado com formadores */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
+  echo("            </li>\n");
+  echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), 'Nao Compartilhado', 'R'); EscondeLayers();\">\n");
+  echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");
+  /* Frase #8 - Nao Compartilhado */
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 8)."</span>\n");
+  echo("            </li>\n");
+  echo("          </ul>\n");
+  echo("        </form>\n");
+  echo("      </div>\n");
+  echo("    </div>\n");
 }
 }else{
-	  	header("Location:resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao);
+  header("Location:resolver.php?cod_curso=".$cod_curso."&cod_resolucao=".$cod_resolucao);
 }
 echo("  </body>\n");
 echo("</html>\n");
