@@ -87,12 +87,12 @@
     // 1 - 1 usuario, 1 dia
     // 2 - 1 usuario, periodo
     // 3 - varios usuarios, 1 dia
-    echo("      function AbreRelatorioUsuario(usuario,diaUT,data_iniUT,data_fimUT,opcao)\n");
+    echo("      function AbreRelatorioUsuario(usuario,diaUT,data_iniUT,data_fimUT,opcao,cod_ferramenta_relatorio)\n");
     // variavel opcao: 1 = tratar 1 usuario, em 1 dia inteiro, das zero as 24 horas do dia diaUT
     //                 2 = tratar 1 usuario em 1 periodo limitado pelas vars data_iniUT e data_fimUT
     //                 3 = tratar varios usuarios em um unico dia diaUT  
     echo("      {\n");
-    echo("         window.open('relatorio_frequencia2.php?cod_curso=".$cod_curso."&usuario='+usuario+'&diaUT='+diaUT+'&data_iniUT='+data_iniUT+'&data_fimUT='+data_fimUT+'&cod_ferramenta_relatorio=".$cod_ferramenta_relatorio."&opcao='+opcao,'JanelaFreq','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+    echo("         window.open('relatorio_frequencia2.php?cod_curso=".$cod_curso."&usuario='+usuario+'&diaUT='+diaUT+'&data_iniUT='+data_iniUT+'&data_fimUT='+data_fimUT+'&cod_ferramenta_relatorio='+cod_ferramenta_relatorio+'&opcao='+opcao,'JanelaFreq','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
     echo("      }\n");
 
     // opcoes de visualizacao
@@ -266,7 +266,7 @@
         $sock = Conectar("");
         $titulo = RetornaFraseDaLista($lista_frases_ferramentas,$lista_ferramentas[$cod_ferramenta]['cod_texto_nome']);
 
-        ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $diaUT, $SalvarEmArquivo, ($coluna_total = (0 == $num_tabelas)),$titulo);
+        ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $diaUT, $SalvarEmArquivo, ($coluna_total = (0 == $num_tabelas)),$titulo,$cod_ferramenta);
 
         if (is_array ($lista_grupos))
         {
@@ -283,7 +283,7 @@
                           if($cod_usuario == $_GET['cod_aluno_relatorio']){
                             // Exibe linha com os acessos do usuario em cada dia
                             //echo("cod_usuario:".."\n Código Certo:".$_POST['cod_aluno_relatorio']);
-                            ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT);
+                            ExibeLinhaUsuario($cod_usuario, $lista_nomes[$cod_usuario], $acessos_users[$cod_usuario], $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $totais_users[$cod_usuario], $data_iniUT, $data_fimUT, $cod_ferramenta);
                             $cor_linha++;
                             break;
                           }

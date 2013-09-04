@@ -713,17 +713,20 @@ function ExibeCabecalho($tam_tabela, $num_tabelas, $data_iniUT, $SalvarEmArquivo
 }
 
 /* *********************************************************************
-   ExibeCabecalho - cria o cabecalho de cada tabela menor.
+   ExibeCabecalhoIndividual - cria o cabecalho de cada tabela menor.
    entrada: $tam_tabela - numero de dias na tabela
             $num_tabelas - eh o numero de tabelas menos um.
                Se for zero, precisamos colocar uma coluna a mais na tabela, para constar os totais do periodo
             $data_iniUT - primeiro dia da tabela
             $SalvarEmArquivo - booleano, indica se deve salvar em arquivo
             $coluna_total - booleano, indica se a tabela conta com uma coluna de total de acessos
+            $cod_ferramenta - código da ferramenta que aparecerá no relatório do usuário,
+                              que aparece ao clicarmos no total de acessos daquele usuário.
+                              Se for nulo, a ferramenta que aparecerá será "Entrada no ambiente".
    saida: nenhuma
    OBS: O cabecalho contem duas linhas, uma com o nome dos meses abrangidos, outra com os dias do mes
 */
-function ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $data_iniUT, $SalvarEmArquivo, $coluna_total, $string)
+function ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $data_iniUT, $SalvarEmArquivo, $coluna_total, $string, $cod_ferramenta = NULL)
 {
   global $data_invertida_g, $lista_frases;
 
@@ -808,7 +811,7 @@ function ExibeCabecalhoIndividual($tam_tabela, $num_tabelas, $data_iniUT, $Salva
     if (!$SalvarEmArquivo)
     {
       // chamar a funcao JS para todos os acessos naquele dia. Somente interessa o segundo e o quinto parametros, os outros sao dummies
-      $link_abre ="<span class=\"link\" style=\"color:".$cor.";\" onClick=\"AbreRelatorioUsuario(0,'".$tmpUT."','','',3);\">";
+      $link_abre ="<span class=\"link\" style=\"color:".$cor.";\" onClick=\"AbreRelatorioUsuario(0,'".$tmpUT."','','',3, ".$cod_ferramenta.");\">";
       $link_fecha="</span>";
     }
     else
@@ -1015,9 +1018,11 @@ function ExibeLinhaGrupo($cod_grupo, $acessos_grupo, $tam_tabela, $diaUT, $Salva
             $acessos_totais  - total de acessos do usuario no periodo
             data_iniUT       - data de inicio do periodo mostrado na tabela
             data_fimUT       - data de fim do periodo mostrado na tabela
+            $cod_ferramenta  - código da ferramenta que aparecerá no relatório do usuário,
+                               que aparece ao clicarmos no total de acessos daquele usuário.
    saida: nenhuma
 */
-function ExibeLinhaUsuario($cod_usuario, $nome, $acessos_user, $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $acessos_totais, $data_iniUT, $data_fimUT)
+function ExibeLinhaUsuario($cod_usuario, $nome, $acessos_user, $tam_tabela, $diaUT, $SalvarEmArquivo, $coluna_total, $cor_linha, $acessos_totais, $data_iniUT, $data_fimUT, $cod_ferramenta = NULL)
 {
   $cor = $cor_linha%2;
   echo("            <tr class=\"altColor".$cor."\" align=center>\n");
@@ -1047,14 +1052,22 @@ function ExibeLinhaUsuario($cod_usuario, $nome, $acessos_user, $tam_tabela, $dia
     //inverter a data para o formato YYYY/mm/dd para consertar erro na exibiÃ§Ã£o, pois as datas iniciadas com 0 (zero) sÃ£o interpretadas erradamente (octais)
     $data = UnixTime2Data($tmpUT=Data2UnixTime( ($diaST[0] + $c)."/".$diaST[1]."/".$diaST[2]));
     $dataTmp = explode("/", $data);  
-    $data_tmp = $dataTmp[2].$dataTmp[1].$dataTmp[0];    
+    $data_tmp = $dataTmp[2].$dataTmp[1].$dataTmp[0];
 
     if (isset($acessos_user[$data_tmp]))
     {
       if (! $SalvarEmArquivo)
       {
-          // a janela aberta vai tratar um unico usuario, no dia $tmpUT, das zero as 24 horas. Os outros valores sao dummies
-          $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'".$tmpUT."','0','0',1);\">";
+          // A janela aberta vai tratar um unico usuario, no dia $tmpUT, das
+          // zero as 24 horas. Na janela, a ferramenta que aparecerá será a 
+          // especificada pelo parâmentro $cod_ferramenta, se o relatório 
+          // for individual, ou pelo $cod_ferramenta da url da página de 
+          // relatórios, se o relatório for por ferramenta.
+          // Os outros valores sao dummies.
+          if (isset($cod_ferramenta))
+            $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'".$tmpUT."','0','0',1, ".$cod_ferramenta.");\">";
+          else
+            $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'".$tmpUT."','0','0',1);\">";
           $link_acesso_fecha="</span>";
       }
       else
@@ -1078,8 +1091,16 @@ function ExibeLinhaUsuario($cod_usuario, $nome, $acessos_user, $tam_tabela, $dia
     {
       if (! $SalvarEmArquivo)
       {
-        // a janela aberta vai tratar um unico usuario, no dia $tmpUT, das zero as 24 horas. Os outros valores sao dummies
-        $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'','".$data_iniUT."','".$data_fimUT."',2);\">";
+        // A janela aberta vai tratar um unico usuario, no dia $tmpUT, das
+        // zero as 24 horas. Na janela, a ferramenta que aparecerá será a 
+        // especificada pelo parâmentro $cod_ferramenta, se o relatório 
+        // for individual, ou pelo $cod_ferramenta da url da página de 
+        // relatórios, se o relatório for por ferramenta.
+        // Os outros valores sao dummies.
+        if (isset($cod_ferramenta))
+          $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'".$tmpUT."','0','0',2, ".$cod_ferramenta.");\">";
+        else
+          $link_acesso_abre ="<span class=\"link\" onClick=\"AbreRelatorioUsuario(".$cod_usuario.",'".$tmpUT."','0','0',2, ".$cod_ferramenta.");\">";
         $link_acesso_fecha="</span>";
       }
       else

@@ -175,9 +175,9 @@
   echo("      <tr>\n");
   echo("        <td>\n");
   
-  if (isset($cod_ferramenta_relatorio) && $cod_ferramenta != ""){
-  	$sock = Conectar("");
-    $nome_ferramenta = RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$cod_ferramenta_relatorio]['cod_texto_nome']);//TODO:Aparece "falta o texto"
+  if (isset($cod_ferramenta_relatorio) && $cod_ferramenta_relatorio != ""){
+    $sock = Conectar("");
+    $nome_ferramenta = RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$cod_ferramenta_relatorio]['cod_texto_nome']);
     $sock = Conectar($cod_curso);
   }else{
     /* 29 - Entrada no ambiente */
