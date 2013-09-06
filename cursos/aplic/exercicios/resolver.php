@@ -281,7 +281,7 @@ if ($resolucao['corrigida'] == 'N'){
  * Funcao que chama um xajax para gravar as resposta no BD.
  */
 echo("    function SalvaRespostaQuestao(cod_questao, resposta, tipo_questao){\n");
-/* Frase #171 - Resposta gravada */
+/* Frase #171 - Resposta incluída com sucesso */
 /* Frase #167 - Respondida */
 echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",tipo_questao,\"".RetornaFraseDaLista($lista_frases, 167)."\");\n");
 echo("    }\n");

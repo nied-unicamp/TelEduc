@@ -210,7 +210,7 @@ echo("          resposta = resposta + \"1\";\n");
 echo("        else\n");
 echo("          resposta = resposta + \"0\";\n");
 echo("      }\n");
-/* Frase #171 - Resposta gravada */
+/* Frase #171 - Resposta incluída com sucesso */
 /* Frase #167 - Respondida */
 echo("      xajax_AtualizaRespostaDoUsuarioDinamic(".$cod_curso.",".$cod_resolucao.",cod_questao,resposta,\"".RetornaFraseDaLista($lista_frases, 171).".\",\"O\",\"".RetornaFraseDaLista($lista_frases, 167)."\");\n");
 echo("    }\n");
