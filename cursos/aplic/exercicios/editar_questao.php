@@ -142,10 +142,6 @@
     echo("    var gabarito = new Array();\n\n");
   }
 
-
-
-
-
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
   echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
@@ -167,6 +163,12 @@
   echo("    var cancelarTodos = 0;\n");
   echo("    var lay_novo_topico;");
   echo("    var conteudo;\n\n");
+  /* (ger) 18 - Ok */
+  // Texto do botão Ok do ckEditor
+  echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do botão Cancelar do ckEditor
+  echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   if ( ($tp_questao == 'O' || $tp_questao == 'M') && (count($alternativas)>0) && ($alternativas != null))
   {

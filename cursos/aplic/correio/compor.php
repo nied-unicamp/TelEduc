@@ -125,7 +125,7 @@
   echo("      function MarcaOuDesmarcaTodos(tipoUser){\n");
   echo("        var i;\n");
   echo("        var flag;\n");
-  echo("        var tipoSelect = \"chkTodos\"+tipoUser;\n");  
+  echo("        var tipoSelect = \"chkTodos\"+tipoUser;\n");
   echo("        marcados = document.getElementById(tipoSelect).checked;\n");
   echo("        var arrayUsers = document.getElementsByName('chk'+tipoUser+'[]');\n");
   echo("        for(i = 0; i < arrayUsers.length; i++){\n");
@@ -167,12 +167,12 @@
   echo("      function MostraEscondeUsers(tipoUser){\n");
   echo("        if(document.getElementById('mostra'+tipoUser).getAttribute('ver') == 'sim' ){\n");
   echo("          document.getElementById('mostra'+tipoUser).innerHTML = '[ + ]'\n");
-  echo("          document.getElementById('mostra'+tipoUser).setAttribute('ver', 'nao') \n"); 
+  echo("          document.getElementById('mostra'+tipoUser).setAttribute('ver', 'nao') \n");
   echo("          document.getElementById('ulUser'+tipoUser).style.display='none';\n");
   echo("        }else{\n");
   echo("          document.getElementById('mostra'+tipoUser).innerHTML = '[ - ]'\n");
-  echo("          document.getElementById('mostra'+tipoUser).setAttribute('ver', 'sim')\n"); 
-  echo("          document.getElementById('ulUser'+tipoUser).style.display='';\n"); 
+  echo("          document.getElementById('mostra'+tipoUser).setAttribute('ver', 'sim')\n");
+  echo("          document.getElementById('ulUser'+tipoUser).style.display='';\n");
   echo("        }\n");
   echo("      }\n");
 
@@ -192,7 +192,7 @@
   echo("			var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
   echo("			if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
   echo("				return false;\n");
-  echo("      return true;\n");		
+  echo("      return true;\n");
   echo("    }\n");
 
   /* ************************************************************************
@@ -205,11 +205,11 @@
    * Frase 141 (ferramenta 11):
    */
   echo("    function EdicaoArq(id_name, id_num){\n");
-  echo("	  var num = id_num+'';\n"); 
+  echo("      var num = id_num+'';\n");
   echo("      var nomeArq = getfilename(document.getElementById(id_name+num).value);\n");
   echo("      if (ArquivoValido(nomeArq) == false){\n");
-  echo("		alert('".RetornaFraseDaLista($lista_frases, 141)."');\n");
-  echo("		removeInputFile(id_num);\n");
+  echo("        alert('".RetornaFraseDaLista($lista_frases, 141)."');\n");
+  echo("        removeInputFile(id_num);\n");
   echo("      }\n");
   echo("    }\n\n");
 
@@ -367,9 +367,9 @@
   echo("      <tr>\n");
   echo("        <td width=\"100%\">\n");
   echo("          <form enctype=\"multipart/form-data\" name=\"enviarMsg\" id=\"enviarMsg\" method=\"post\" action=\"compor2.php\" onsubmit=\"return(submitForm());\">\n");
-  echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("            <input type=hidden name=codMsgAnt value=\"".$codMsgAnt."\" />\n");
-  echo("            <input type=hidden name=acao value=".$acao." />\n");
+  echo("            <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
+  echo("            <input type=\"hidden\" name=codMsgAnt value=\"".$codMsgAnt."\" />\n");
+  echo("            <input type=\"hidden\" name=acao value=".$acao." />\n");
 
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
 
@@ -398,7 +398,7 @@
 
   echo("                    </tr>\n");
 
-  echo("                    <tr class=\"altColor0\">\n");  
+  echo("                    <tr class=\"altColor0\">\n");
   echo("                      <td class=\"alRight\">\n");
       /* 20 - Assunto */
   echo("                        ".RetornaFraseDaLista($lista_frases,20)."\n");
@@ -438,10 +438,10 @@
 	 * 	$listaArq = array com os arquivos anexados na mensagem anterior*/
     $listaArq = RetornaArrayDiretorio($dir_arq_ant);
     if(count($listaArq) > 0){
-    	$countArq = 0;
-    	foreach($listaArq as $cod => $linha){
-          echo("                      <input type=\"checkbox\" id=\"chkArqAnexo\" name=\"chkArqAnexo[]\" value=".$linha['Caminho']." checked=\"checked\" style=\"margin-left:65px;\" /><a   href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=blank> ".$linha['Arquivo']." </a><br />\n");
-      	}
+      $countArq = 0;
+      foreach($listaArq as $cod => $linha){
+        echo("                      <input type=\"checkbox\" id=\"chkArqAnexo\" name=\"chkArqAnexo[]\" value=".$linha['Caminho']." checked=\"checked\" style=\"margin-left:65px;\" /><a   href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=blank> ".$linha['Arquivo']." </a><br />\n");
+      }
     }
 
   /*95 - Anexar Arquivo */
@@ -450,20 +450,20 @@
   echo("                      </td>\n");
   echo("                    </tr>\n");
 
-  echo("                    <tr>\n");  
+  echo("                    <tr>\n");
   echo("                      <td colspan=\"2\">\n");
   echo("                        <script type=\"text/javascript\">\n");
   echo("                          writeRichText('msg_corpo', '".VerificaStringQuery(Enter2Br($mensagem))."', 610, 200, true, false);\n");
   echo("                        </script>\n");
-  echo("                      </td>\n");  
+  echo("                      </td>\n");
   echo("                    </tr>\n");
 
   if($eformador){
-	  echo("                    <tr class=\"head01\">\n");
-	  echo("                      <td colspan=\"2\" class=\"alLeft\">\n");
-	  echo("                        <input type=\"checkbox\" name=\"msgExterna\" id=\"msgExterna\" value=1 /> <label for=\"msgExterna\"> ".RetornaFraseDaLista($lista_frases,112)."</label>\n");
-	  echo("                      </td>\n");
-	  echo("                    </tr>\n");
+    echo("                    <tr class=\"head01\">\n");
+    echo("                      <td colspan=\"2\" class=\"alLeft\">\n");
+    echo("                        <input type=\"checkbox\" name=\"msgExterna\" id=\"msgExterna\" value=1 /> <label for=\"msgExterna\"> ".RetornaFraseDaLista($lista_frases,112)."</label>\n");
+    echo("                      </td>\n");
+    echo("                    </tr>\n");
   }
   
   echo("                  </table>\n");/* fecha tabInterna */

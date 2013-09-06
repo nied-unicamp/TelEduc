@@ -88,9 +88,9 @@
   echo("    document.avaliacao.submit();\n");
   echo("  }\n\n");
 
-  echo("  function Iniciar()\n"); 
+  echo("  function Iniciar()\n");
   echo("  {\n");
-  echo("	startList();\n");
+  echo("    startList();\n");
   echo("  }\n");
 
   echo("</script>\n");
@@ -158,18 +158,18 @@
     $status = RetornaFraseDaLista($lista_frases, 212);
 
   echo("                <form name=\"avaliacao\" method=\"post\" action=\"avaliar_curso3.php\">\n");
-  echo("                  <input type=hidden name=opcao value=nenhuma />\n");
-  echo("                  <input type=hidden name=cod_curso value=".$cod_curso." />\n");
-  echo("                  <input type=hidden name=cod value=".$cod." />\n");
+  echo("                  <input type=\"hidden\" name=\"opcao\"     value=\"nenhuma\" />\n");
+  echo("                  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"cod\"       value=\"".$cod."\" />\n");
   if(isset($todos))
-    echo("                  <input type=hidden name=todos value=".$todos." />\n");
+    echo("                  <input type=\"hidden\" name=\"todos\"     value=\"".$todos."\" />\n");
   echo("                </form>\n");
 
   echo("                <form name=\"Navega\" method=\"post\" action=\"avaliar_curso2.php\">\n");
-  echo("                  <input type=hidden name=onde  value=\"\"/>\n");
-  echo("                  <input type=hidden name=cod value=".$cod." />\n");
+  echo("                  <input type=\"hidden\" name=\"onde\"  value=\"\"/>\n");
+  echo("                  <input type=\"hidden\" name=\"cod\"   value=\"".$cod."\" />\n");
   if(isset($todos))
-    echo("                  <input type=hidden name=todos value=".$todos." />\n");
+    echo("                  <input type=\"hidden\" name=todos     value=\"".$todos."\" />\n");
 
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   /* 91 - Dados do Curso */
@@ -253,10 +253,10 @@
   echo("                          <td style=\"text-align:left;border:none;\">\n");
   echo(								$curso['email_contato']);
   if(!$confirmado){
-  	/*Aten��o-email n�o confirmado pelo usu�rio)*/
-  	 echo("							<font color=red>".RetornaFrasedaLista($lista_frases,533)."</font>");
+    /*Aten��o-email n�o confirmado pelo usu�rio)*/
+    echo("                            <font color=red>".RetornaFrasedaLista($lista_frases,533)."</font>");
   }
-  echo("						</td>\n");
+  echo("                          </td>\n");
   echo("                        </tr>\n");
 
   $data_req=UnixTime2DataHora($curso['data']);
@@ -294,7 +294,7 @@
     {
       /* 226 - Pr�ximo>> */
       echo("                          <td style=\"text-align:left;border:none;\"><b>\n");
-      echo("<a class=text href=# onClick=return(Submissao('prox'));>".LimpaTags(RetornaFraseDaLista($lista_frases, 226))."</a></b></td>\n");
+      echo("<a class=\"text\" href=\"#\" onClick=return(Submissao('prox'));>".LimpaTags(RetornaFraseDaLista($lista_frases, 226))."</a></b></td>\n");
     }
     else
     {
@@ -313,9 +313,9 @@
   echo("                          <td style=\"border:0;text-align:center;\" colspan=\"2\">\n");
   /* 227 - Aceitar */
   if(!$confirmado)
-  	echo("                              <input class=\"input\" type=button value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','N')>&nbsp;&nbsp;\n");
+  	echo("                              <input class=\"input\" type=\"button\" value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','N')>&nbsp;&nbsp;\n");
   else
-	echo("                              <input class=\"input\" type=button value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','S')>&nbsp;&nbsp;\n");
+	echo("                              <input class=\"input\" type=\"button\" value='".RetornaFraseDaLista($lista_frases, 227)."' onClick=SubmeteForm('Aceitar','S')>&nbsp;&nbsp;\n");
   if ($curso['avaliado'] == 'N')
   {
     /* 228 - Rejeitar */

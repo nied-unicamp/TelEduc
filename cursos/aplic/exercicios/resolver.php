@@ -81,7 +81,7 @@ echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibl
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 
-echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+echo("    <script type=\"text/javascript\" language=\"javascript\">\n\n");
 
 echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
 echo("    var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
@@ -94,6 +94,12 @@ echo("    var editaTexto = 0;\n");
 echo("    var conteudo;\n");
 echo("    var cancelarElemento = null;\n");
 echo("    var cancelarTodos = 0;\n\n");
+/* (ger) 18 - Ok */
+// Texto do botão Ok do ckEditor
+echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+/* (ger) 2 - Cancelar */
+// Texto do botão Cancelar do ckEditor 
+echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
 echo("    if (isNav)\n");
 echo("    {\n");

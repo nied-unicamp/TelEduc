@@ -55,8 +55,8 @@
   /* Inicio do JavaScript */
   echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../cursos/aplic/bibliotecas/javacrypt.js\"></script>\n");
-  echo("    <script type=text/javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../cursos/aplic/bibliotecas/javacrypt.js\"></script>\n");
+  echo("    <script type=\"text/javascript\">\n");
 
   /**********************************************************************
   Funcao Envia - JavaScript. Altera atributos do formul�rio para submiss�o � p�gina seguinte ou anterior.
@@ -171,10 +171,10 @@
   }
 
   echo("          <form name=\"enviar\" method=\"post\" action=\"avaliar_curso4.php\" onsubmit=\"updateRTE('mensagem');\">\n");
-  echo("            <input type=hidden name=cod value=".$cod.">\n");
-  echo("            <input type=hidden name=todos value=".$todos.">\n");
-  echo("            <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("            <input type=hidden name=opcao value=".$opcao.">\n");
+  echo("            <input type=\"hidden\" name=\"cod\"       value=\"".$cod."\">\n");
+  echo("            <input type=\"hidden\" name=\"todos\"     value=\"".$todos."\">\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("            <input type=\"hidden\" name=\"opcao\"     value=\"".$opcao."\">\n");
   echo("          <!-- Tabelao -->\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -207,13 +207,13 @@
   echo("                      <td style=\"border:0;\">\n");
   /* 238 - Titulo: */
   echo("                      <br>".RetornaFraseDaLista($lista_frases,238)."<br />\n");
-  echo("                      <input class=\"input\" type=text size=60 name=\"assunto\" value='".$assunto."'><br /><br />\n");
+  echo("                      <input class=\"input\" type=\"text\" size=60 name=\"assunto\" value='".$assunto."'><br /><br />\n");
   /* 48 - Mensagem: */
   echo("                      ".RetornaFraseDaLista($lista_frases,48)."\n");
   echo("                      <div align=\"center\"><script type=\"text/javascript\">\n");
   echo("                        writeRichText('mensagem', '".$mensagem."', 520, 200, true, false, false);\n");
   echo("                      </script></div>\n");
-  echo("                      <font class=text color=red>".RetornaFraseDaLista($lista_frases,239)."</font>\n");
+  echo("                      <font class=\"text\" color=red>".RetornaFraseDaLista($lista_frases,239)."</font>\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
   echo("                </table>\n");

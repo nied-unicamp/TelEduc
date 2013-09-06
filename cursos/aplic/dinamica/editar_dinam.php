@@ -85,7 +85,7 @@
 
   if (ExisteDinamica($sock,$cod_curso,$diretorio_arquivos)=='N')
   {
-    IniciaCriacaoDinamica($sock,$cod_usuario); 
+    IniciaCriacaoDinamica($sock,$cod_usuario);
   }
 
   $dir_name = "dinamica";
@@ -98,13 +98,19 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\">\n\n");	
+  echo("    <script type=\"text/javascript\">\n\n");
   echo("      var cod_ferramenta ='".$cod_ferramenta."';\n");
   echo("      var cod_item       ='".$cod_item."';\n");
   echo("      var cod_curso      ='".$cod_curso."';\n");
   echo("      var cod_usuario    ='".$cod_usuario."';\n");
   echo("      var origem         ='".(isset($origem)?$origem:"")."';\n");
   echo("      var num_apagados   = '0';\n");
+  /* (ger) 18 - Ok */
+  // Texto do bot„o Ok do ckEditor
+  echo("      var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do bot„o Cancelar do ckEditor
+  echo("      var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
@@ -129,7 +135,7 @@
   echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
 
   include("../menu_principal.php");
-		
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* Impede o acesso a algumas secoes aos usu√°rios que n√£o s√£o formadores. */
@@ -139,7 +145,7 @@
     /* 73 - Acao exclusiva a formadores. */
     echo("    - ".RetornaFraseDaLista($lista_frases_geral, 76)."</h4>");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
@@ -209,8 +215,8 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
  
-  /*Voltar*/			
-   /* 509 - Voltar */
+  /*Voltar*/
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
       
   /* Tabela Externa */
@@ -218,14 +224,14 @@
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
-  /* 23(ger) - Voltar */	
-  echo("              	 <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
-  echo("                </ul>\n");	
+  /* 23(ger) - Voltar */
+  echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("            <tr>\n");
-  echo("              <td>\n");		
-  /* Tabela Interna */	
+  echo("              <td>\n");
+  /* Tabela Interna */
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   /* 49 - Conteudo  */
@@ -236,7 +242,7 @@
     echo("                  <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,51)."</td>\n");
   }
     /*50 - Data */
-  echo("                    <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,50)."</td>\n");	
+  echo("                    <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,50)."</td>\n");
   echo("                  </tr>\n");
   
   /*Conteudo da Dinamica*/
@@ -251,7 +257,7 @@
 
   /*Se houver, cria um iframe para exibi-lo*/
   if(($linha_item['texto']=="")&&($arquivo_entrada!=""))
-    $conteudo="<span id=\"text_".$linha_item['cod_dinamica']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"auto\"></iframe></span>"; 
+    $conteudo="<span id=\"text_".$linha_item['cod_dinamica']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"auto\"></iframe></span>";
   /*Senaum, exibe o texto da dinamica*/
   else
     $conteudo="<span id=\"text_".$linha_item['cod_dinamica']."\">".AjustaParagrafo($linha_item['texto'])."</span>";
@@ -304,7 +310,7 @@
         foreach($lista_arq as $cod => $linha)
         {
           if (function_exists('mb_convert_encoding'))
-            $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");	
+            $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
           if (!($linha['Arquivo']=="" && $linha['Diretorio']==""))
           {
             $nivel_anterior=$nivel;
@@ -378,7 +384,7 @@
                 // pasta
                 $imagem    = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
                 echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
-                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n"); 
+                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
                 if ($usr_formador){
                   echo("                        ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\" />\n");
                 }
@@ -445,7 +451,7 @@
     echo("                  </tr>\n");
   }
 
-  /*Fim tabela interna*/		
+  /*Fim tabela interna*/
   echo("                </table>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -465,12 +471,12 @@
     echo("            </tr>\n");
   }
   /*Fim tabela externa*/
-  echo("    	  </table>\n");	
-  echo("        </td>\n");	
+  echo("          </table>\n");
+  echo("        </td>\n");
   echo("      </tr>\n");
   include("../tela2.php");
-  echo("  </body>\n");			
-  echo("</html>\n");	
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
 ?>
  

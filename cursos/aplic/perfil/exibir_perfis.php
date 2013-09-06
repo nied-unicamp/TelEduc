@@ -49,11 +49,11 @@ Programa Principal
   include($bibliotecas."geral.inc");
   include("perfil.inc");
   require_once("../xajax_0.2.4/xajax.inc.php");
-  
+
 
 //   Global $cod_lingua_s;
   $cod_lingua = $_SESSION['cod_lingua_s'];
-  
+
   // Estancia o objeto XAJAX
   $objMudarComp = new xajax();
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
@@ -72,18 +72,18 @@ Programa Principal
   $feedbackObject->addAction("enviarFoto", 106, 107);
   $feedbackObject->addAction("apagarFoto", 128, 129);
 
-  
-  
+
+
   $sock=Conectar("");
-  
-  
+
+
   $curso_info = RetornaDadosCurso($sock, $cod_curso);
-  
+
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION["cod_usuario_global_s"], $cod_curso);
 
-  
+
   $curso_info = RetornaDadosCurso($sock, $cod_curso);
-  
+
   $diretorio_arquivo=RetornaDiretorio($sock,"Arquivos");
   $diretorio_temp=RetornaDiretorio($sock,"ArquivosWeb");
 
@@ -95,7 +95,7 @@ Programa Principal
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  
+
   /*
   ==================
   Funcoes JavaScript
@@ -105,8 +105,14 @@ Programa Principal
   echo("      var cod_ferramenta='".$cod_ferramenta."';\n");
   echo("      var cod_curso='".$cod_curso."';\n");
   echo("      var cod_usuario='".$cod_usuario."';\n");
-  echo("        var editando=-2;\n");
-  
+  echo("      var editando=-2;\n");
+  /* (ger) 18 - Ok */
+  // Texto do botão Ok do ckEditor
+  echo("      var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do botão Cancelar do ckEditor
+  echo("      var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
+
   /*
   Funcao Open Window - Abre a janela que ira mostrar os perfis
     Entrada:  id. Nome da pagina a abrir na nova janela
@@ -117,7 +123,7 @@ Programa Principal
   echo("         window.open(id,\"JanelaDados\",\"width=600,height=400,top=110,left=110,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("        return false;\n");
   echo("      }\n\n");
-  
+
   echo("      function Submissao(pagina)\n");
   echo("      {\n");
   echo("        document.frmPerfil.action = pagina;\n");
@@ -152,7 +158,7 @@ Programa Principal
     echo("        }\n");
     echo("      }\n\n");
   }
-  
+
   /*echo("      function EditarPerfil(cod){\n");
   echo("        if(editando!=-2) return;\n");
   echo("        document.getElementById('orientacao').style.display=\"\";\n");
@@ -161,7 +167,7 @@ Programa Principal
   echo("		CKEDITOR.replace('msg_corpo');\n");
   echo("		document.getElementById('OKComent').style.display=\"\";\n ");
   echo("		document.getElementById('cancComent').style.display=\"\";\n ");
-  
+
   //echo("		if(document.getElementById('msg_corpo') != null){\n");
   echo("			document.getElementById('msg_corpo').style.display=\"\";");
   //echo("		}");
@@ -176,44 +182,44 @@ Programa Principal
   echo("        writeRichTextOnJS('text_'+cod+'_text', conteudo, 520, 200, true, false, cod);\n");
   echo("        editando=cod;\n");
   echo("      }\n");
-  
+
   echo("      function EdicaoTexto(codigo, id, valor){\n");
   echo("        if (valor=='ok'){\n");
-  echo("			eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
-  echo("        	xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
+  echo("          eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+  echo("          xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
   echo("        }\n");
   //echo("        document.getElementById('text_'+codigo).innerHTML= '$campo'+conteudo;\n");
   //echo("        document.getElementById('text_'+codigo).innerHTML= conteudo+'$campo'+conteudo+'</textarea>';\n");
-  echo("		document.getElementById(id).innerHTML=conteudo;");
+  echo("        document.getElementById(id).innerHTML=conteudo;");
   echo("        document.getElementById('orientacao').style.display=\"none\";\n");
   echo("        editando=-2;\n");
-  //echo("		document.getElementById(id).innerHTML=conteudo;");
-  //echo("		CKEDITOR.remove('cke_msg_corpo');");
+  //echo("        document.getElementById(id).innerHTML=conteudo;");
+  //echo("        CKEDITOR.remove('cke_msg_corpo');");
   echo("      }\n\n");
 
   /*echo("      function CancelarNovaMsg(cod){\n");
-  echo("		alert(cod);");
+  echo("        alert(cod);");
   echo("        clearRTE(cod);\n");
-  echo("		document.getElementById('cke_'+cod+'_text').style.display=\"none\";");
-  echo("		document.getElementById('OKComent').style.display=\"none\";\n ");
-  echo("		document.getElementById('cancComent').style.display=\"none\";\n ");
+  echo("        document.getElementById('cke_'+cod+'_text').style.display=\"none\";");
+  echo("        document.getElementById('OKComent').style.display=\"none\";\n ");
+  echo("        document.getElementById('cancComent').style.display=\"none\";\n ");
   echo("      }\n\n");*/
- 
+
   echo("    </script>\n");
-  
+
   $objMudarComp->printJavascript("../xajax_0.2.4/");
   /*
   =============================
   Retorno ao programa principal
   =============================
   */
-  
+
   echo("  </head>\n");
   if($_GET['imprimir'] == 1){
-  		echo("  <body bgcolor=\"white\" onload=\"Iniciar();self.print();\">\n");
+    echo("  <body bgcolor=\"white\" onload=\"Iniciar();self.print();\">\n");
   }
   else{
-  		echo("  <body bgcolor=\"white\" onload=\"Iniciar();\">\n");
+    echo("  <body bgcolor=\"white\" onload=\"Iniciar();\">\n");
   }
   echo("    <a name=\"topo\"></a>\n");
   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
@@ -242,7 +248,7 @@ Programa Principal
     unset($cod_coordenador);
     unset($cod_convidado);
     unset($cod_visitante);
-    
+
     if (isset($alunocod))
       $cod_aluno = explode("_", $alunocod);
     if (isset($formadorcod))
@@ -258,7 +264,7 @@ Programa Principal
   // Aqui se tratam os arrays passados direto de perfil.php atravï¿½ do submit, e os convertidos no if acima
   $i=0;
   unset ($perfil_Cod_usuario);
-  
+
   if (count($cod_aluno)>0)
     foreach($cod_aluno as $cod => $valor)
       $perfil_Cod_usuario[$i++]=$valor;
@@ -266,15 +272,15 @@ Programa Principal
   if (is_array ($cod_visitante))
     foreach($cod_visitante as $valor)
       $perfil_Cod_usuario[$i++] = $valor;
-      
+
   if (is_array ($cod_convidado))
     foreach($cod_convidado as $cod => $valor)
       $perfil_Cod_usuario[$i++] = $valor;
-      
+
   if (count($cod_formador)>0)
     foreach($cod_formador as $cod => $valor)
       $perfil_Cod_usuario[$i++]=$valor;
-      
+
   if (count($cod_coordenador)>0)
     foreach($cod_coordenador as $cod => $valor)
       $perfil_Cod_usuario[$i++] = $valor;
@@ -326,7 +332,7 @@ Programa Principal
     }
 
     $num=0;
-    
+
     while($num < count($perfil_Cod_usuario))
     {
       $cod_usuario_ficha = $perfil_Cod_usuario[$num];
@@ -351,12 +357,12 @@ Programa Principal
       echo("                <td align=\"center\">\n");
       echo("                  <ul class=\"btAuxTabs\">\n");
       $nome_foto = CaminhoFoto($cod_curso,$cod_usuario_ficha,$diretorio_arquivo,$diretorio_temp);
-      
+
       /* Se o curso estiver encerrado e for um aluno, nï¿½ pode mais editar o contedo */
       if (($cod_usuario_ficha == $cod_usuario) && !(($status_curso=='E') && (!EFormador($sock,$cod_curso,$cod_usuario))))
       {
         /* dono do perfil */
-  
+
         if ($perfil_existe) /* se o perfil existe */
         {
           /* 21 - Alterar Perfil */
@@ -367,11 +373,11 @@ Programa Principal
           /* 24 - Preencher Perfil*/
           $frase = RetornaFraseDaLista($lista_frases,24);
         }
-        
+
         echo("                    <li><span onclick=\"EditarPerfil(".$cod_usuario_ficha.");\">".$frase."</span></li>\n");
         /* 23 - Enviar/Atualizar Foto */
         echo("                    <li><span onclick=\"return(Submissao('enviar_foto.php'));\">".RetornaFraseDaLista($lista_frases,23)."</span></li>\n");
-        
+
         if ($nome_foto != "")
         {
           /* 125 - Apagar Foto */
@@ -402,15 +408,15 @@ Programa Principal
       if($_GET['imprimir'] == 0){
       	echo("            <br />\n");
       }
-      
-      echo("            <table border=\"0\" width=\"100%\" cellspacing=\"0\">\n");
-      
-      
 
-      
+      echo("            <table border=\"0\" width=\"100%\" cellspacing=\"0\">\n");
+
+
+
+
       echo("              <tr>\n");
       echo("                <td>\n");
-      
+
       if ($eformador) /* se eh formador */
       {
         echo("                  <div class=\"divHidden\" id=\"dados2_".$cod_usuario_ficha."\">\n");
@@ -492,21 +498,21 @@ Programa Principal
         echo("                        </center>\n");
       }
       echo("                      </td>\n");
-      echo("                    </tr>\n"); 
+      echo("                    </tr>\n");
       echo("                  </table>\n");
-      
+
       if($cod_usuario_ficha == $cod_usuario){
         echo("                    <tr>\n");
         echo("                      <td>\n");
         $orientacao_perfil=Enter2BR(RetornaOrientacaoPerfil($sock, $cod_lingua));
-        echo("                        <p id=\"orientacao\" style=\"display:none;\">".$orientacao_perfil."</p>\n"); 
+        echo("                        <p id=\"orientacao\" style=\"display:none;\">".$orientacao_perfil."</p>\n");
         echo("                      </td>\n");
         echo("                    </tr>\n");
       }
 
       echo("            </table>\n");
       if($_GET['imprimir'] == 0){
-      	echo("            <br />\n");
+        echo("            <br />\n");
       }
       echo("            <div class=\"divRichText\" id=\"text_".$cod_usuario_ficha."\">\n");
       							//echo($campo);
@@ -535,7 +541,7 @@ Programa Principal
     }
     echo("          </form>\n");
   }
-  echo("        </td>\n");  
+  echo("        </td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
   echo("  </body>\n");

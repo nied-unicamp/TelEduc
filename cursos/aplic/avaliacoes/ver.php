@@ -94,6 +94,12 @@
   echo("      var cod_atividade='".$dados_avaliacao['Cod_atividade']."';\n");
   echo("      var cod_avaliacao='".$cod_avaliacao."';\n");
   echo("      var tela_avaliacao='".$tela_avaliacao."';\n");
+  /* (ger) 18 - Ok */
+  // Texto do botão Ok do ckEditor
+  echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do botão Cancelar do ckEditor
+  echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   echo("      function startList() {\n");
   echo("        if (document.all && document.getElementById) {\n");

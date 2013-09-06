@@ -97,7 +97,7 @@
   $dono_diario = VerificaDonoDiario ($sock, $cod_curso, $cod_usuario, $cod_propriet);
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
-echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
 
   echo("  <script type=\"text/javascript\">\n\n");
   echo("    var js_tabela = '".$tabela."';\n");
@@ -105,15 +105,15 @@ echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckedito
   echo("    var js_cod_usuario = ".$cod_usuario.";\n");
   echo("    var js_cod_curso = ".$cod_curso.";\n");
   echo("    var conteudo='';");
-
-  /* (ger) 18 - Ok  */
-  echo("    var msg_ger_18 = '".RetornaFraseDaLista($lista_frases_geral,18)."';\n");
-  /* (ger) 2 - Cancelar  */
-  echo("    var msg_ger_2 = '".RetornaFraseDaLista($lista_frases_geral,2)."';\n");
-
   echo("    var editaTexto=0; \n");
   echo("    var editaTitulo=0; \n");
   echo("    var cancelarElemento=null; \n");
+  /* (ger) 18 - Ok */
+  // Texto do botão Ok do ckEditor
+  echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do botão Cancelar do ckEditor
+  echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   // Iniciliza os layers. Se o usuario for o proprietario do diario entao 
   // atribui layer_renomear ï¿½ variavel lay_renomear.                      
@@ -231,7 +231,7 @@ echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckedito
   echo("        createSpan.className=\"link\"; \n");
   echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 1); }; \n");
   echo("        createSpan.setAttribute(\"id\", \"OkEdita\"); \n");
-  echo("        createSpan.innerHTML=msg_ger_18; \n");
+  echo("        createSpan.innerHTML=textoOk; \n");
   echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
 
     //cria o elemento 'espaco' e adiciona na pagina
@@ -243,7 +243,7 @@ echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckedito
   echo("        createSpan.className=\"link\"; \n");
   echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 0); }; \n");
   echo("        createSpan.setAttribute(\"id\", \"CancelaEdita\"); \n");
-  echo("        createSpan.innerHTML=msg_ger_2; \n");
+  echo("        createSpan.innerHTML=textoCancelar; \n");
   echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
 
     //cria o elemento 'espaco' e adiciona na pagina

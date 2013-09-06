@@ -74,7 +74,7 @@
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("<script type=\"text/javascript\">\n");
+  echo("    <script type=\"text/javascript\">\n");
 
   /* ************************************
        AbrePerfil - abre o perfil do usuario em nova janela
@@ -82,57 +82,56 @@
          do qual abrir o perfil
        saida: false - para nao mudar a pagina atual
   */
-  echo("function AbrePerfil(cod_usuario)\n");
-  echo("{\n");
-  echo("  window.open('../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
-  echo("  return(false);\n");
-  echo("}\n");
+  echo("      function AbrePerfil(cod_usuario)\n");
+  echo("      {\n");
+  echo("        window.open('../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+  echo("        return(false);\n");
+  echo("      }\n");
 
 
-  echo("function ImprimirRelatorio(){ \n");
-  echo("  if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
-  echo("  {\n");
-  echo("    self.print();\n");
-  echo("  }\n");
-  echo("  else\n");
-  echo("  {\n");
+  echo("      function ImprimirRelatorio(){ \n");
+  echo("        if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
+  echo("        {\n");
+  echo("          self.print();\n");
+  echo("        }\n");
+  echo("        else\n");
+  echo("        {\n");
   /* 51- Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
-  echo("      alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
-  echo("  }\n");
-  echo("}\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
+  echo("        }\n");
+  echo("      }\n");
 
-  echo("function Resposta(acao,cod_msg, selec){\n");
-  echo("  window.open('compor.php?cod_curso=" .$cod_curso. "&cod_msg_ant='+cod_msg+'&acao='+acao+'&selec='+selec, 'mensagem', 'top=50,left=100,scrollbars=yes, status=no,toolbar=no,menubar=no,resizable=yes');\n");
-
-  echo("}\n\n");
+  echo("      function Resposta(acao,cod_msg, selec){\n");
+  echo("        window.open('compor.php?cod_curso=" .$cod_curso. "&cod_msg_ant='+cod_msg+'&acao='+acao+'&selec='+selec, 'mensagem', 'top=50,left=100,scrollbars=yes, status=no,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("      }\n\n");
 
   if ($modoVisualizacao == 'L'){
-    echo("function ConfirmaExcluir()\n");
-    echo("{\n");
+    echo("      function ConfirmaExcluir()\n");
+    echo("      {\n");
     /* 103 - Voce tem certeza de que deseja excluir definitivamente esta mensagem ? */
-    echo("  if(confirm('".RetornaFraseDalista($lista_frases,103)."')){\n");
-    echo("    document.getElementById('formApagar').acao.value=\"excluir\";\n");
-    echo("    document.getElementById('formApagar').submit();\n");
-    echo("  }\n");
-    echo("}\n\n");
+    echo("        if(confirm('".RetornaFraseDalista($lista_frases,103)."')){\n");
+    echo("          document.getElementById('formApagar').acao.value=\"excluir\";\n");
+    echo("          document.getElementById('formApagar').submit();\n");
+    echo("        }\n");
+    echo("      }\n\n");
 
-    echo("function ConfirmaRecuperar()\n");
-    echo("{\n");
+    echo("      function ConfirmaRecuperar()\n");
+    echo("      {\n");
     /* 104 - Voce tem certeza de que deseja recuperar esta mensagem ? */
-    echo("  if(confirm('".RetornaFraseDaLista($lista_frases,104)."')){\n");
-    echo("    document.getElementById('formApagar').acao.value=\"recuperar\";\n");
-    echo("    document.getElementById('formApagar').submit();\n");
-    echo("  }\n");
-    echo("}\n\n");
+    echo("        if(confirm('".RetornaFraseDaLista($lista_frases,104)."')){\n");
+    echo("          document.getElementById('formApagar').acao.value=\"recuperar\";\n");
+    echo("          document.getElementById('formApagar').submit();\n");
+    echo("        }\n");
+    echo("      }\n\n");
   }
   else
   {
-    echo("function ConfirmaApagar()\n");
-    echo("{\n");
+    echo("      function ConfirmaApagar()\n");
+    echo("      {\n");
     /* 106 - Voce tem certeza de que deseja mover esta mensagem para a Lixeira? */
-    echo("  if(confirm('".RetornaFraseDaLista($lista_frases,106)."')){;\n");
-    echo("    document.getElementById('formApagar').submit()};\n");
-    echo("}\n\n");
+    echo("        if(confirm('".RetornaFraseDaLista($lista_frases,106)."')){;\n");
+    echo("          document.getElementById('formApagar').submit()};\n");
+    echo("      }\n\n");
   }
   echo("      function Iniciar(){\n");
   echo("        var tamY =".$tamY.";\n");
@@ -146,7 +145,7 @@
   echo("        startList();\n");
   echo("      }\n");
 
-  echo("</script>\n");
+  echo("    </script>\n");
 
   echo("</head>\n");
 
@@ -230,11 +229,11 @@
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
     echo("                <form name=\"formApagar\" id=\"formApagar\" action=\"acoes.php\" method=\"post\">\n");
-    echo("                  <input type=hidden name=cod_msg value=".$cod_msg." />\n");    
-    echo("                  <input type=hidden name=acao value=\"apagar\" />\n");
-    echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=hidden name=status_mensagem value=\"".$modoVisualizacao."\" />\n");
-    echo("                  <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+    echo("                  <input type=\"hidden\" name=cod_msg value=".$cod_msg." />\n");    
+    echo("                  <input type=\"hidden\" name=acao value=\"apagar\" />\n");
+    echo("                  <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=status_mensagem value=\"".$modoVisualizacao."\" />\n");
+    echo("                  <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
     echo("                </form>\n");
   
     echo("                <ul class=\"btAuxTabs\">\n");

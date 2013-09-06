@@ -63,12 +63,10 @@
   if(isset($_POST['c_email'])){
   	AtualizaEmailUsuario(Conectar(''),$cod_curso,$_POST['c_usuario'],$_POST['c_email']);
   }
-	$sock=Conectar($cod_curso);
-	VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
+  $sock=Conectar($cod_curso);
+  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
-  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n");
 
   if($opcao == "dados")
   {
@@ -274,7 +272,7 @@
 
         /* 112 - Inscri��o aceita */
         $assunto=RetornaFraseDaLista($lista_frases,112);
-		$assunto.=$dados_curso['nome_curso'];
+        $assunto.=$dados_curso['nome_curso'];
         /* 99 - Sua inscri��o como aluno para o curso */
         /* 100 - foi aceita. */
         /* 65 - Visite a p�gina do curso para obter informa��es sobre o seu in�cio */
@@ -711,9 +709,9 @@
 																			</div>");
 		} else
 		*/
-			echo("                              ".$dados['email']."\n");
-		echo("                          </td>\n");
-		echo("                        </tr>\n");
+        echo("                              ".$dados['email']."\n");
+        echo("                          </td>\n");
+        echo("                        </tr>\n");
         /* 122 - Telefone: */
         echo("                        <tr>\n");
         echo("                          <td style=\"border:none; text-align:right;\">\n");

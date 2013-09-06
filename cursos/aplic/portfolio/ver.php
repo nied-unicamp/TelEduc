@@ -122,7 +122,7 @@ echo ("</script>");
 
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
 echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-echo ("    <script type=\"text/javascript\">\n");
+echo("    <script type=\"text/javascript\">\n");
 
 /* (ger) 26 - Anexar Arquivos */
 /* 59 - Pressione o bot√£o Browse (ou Procurar) abaixo para selecionar o arquivo a ser anexado; em seguida, pressione OK para prosseguir. */
@@ -155,6 +155,12 @@ echo ("      var cod_topico_ant='" . $cod_topico_raiz . "';\n");
 echo ("      var cod_topico_raiz='" . $cod_topico_raiz . "';\n");
 echo ("      var cod_usuario_portfolio='" . $cod_usuario_portfolio . "';\n");
 echo ("      var cod_grupo_portfolio='" . $cod_grupo_portfolio . "';\n");
+/* (ger) 18 - Ok */
+// Texto do bot„o Ok do ckEditor
+echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+/* (ger) 2 - Cancelar */
+// Texto do bot„o Cancelar do ckEditor
+echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
 /*
  * Funcao que atualiza as listas de avitidades a serem associadas ao Portolio.

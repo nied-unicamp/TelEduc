@@ -574,6 +574,8 @@
       echo("function TemCertezaApagar(varios)\n");
       echo("{\n");
       echo("  if (varios)\n");
+      /* 115 - Você tem certeza de que deseja apagar as atividades selecionadas? */
+      /* 116 - (as atividades serão movidas para a lixeira) */
       echo("    return(confirm(\"".RetornaFraseDaLista($lista_frases,115)."\\n".RetornaFraseDaLista($lista_frases,116)."\"));\n");
       echo("  else\n");
       /* 6 - Vocï¿½tem certeza de que deseja apagar esta atividade? */

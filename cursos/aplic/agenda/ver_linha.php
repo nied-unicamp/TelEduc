@@ -100,6 +100,12 @@
   echo("      var cod_usuario='".$cod_usuario."';\n");
   echo("      var origem='".$origem."';\n");
   echo("      var num_apagados = '0';\n");
+  /* (ger) 18 - Ok */
+  // Texto do bot„o Ok do ckEditor
+  echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do bot„o Cancelar do ckEditor
+  echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   echo("      function TemCertezaAtivar()\n");
   echo("      {\n");
@@ -188,11 +194,11 @@
   {
   	/* 1 - Agenda */
     /*2 - Agendas Anteriores*/ 
-    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,2)."</h4>"; 
+    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,2)."</h4>";
   } else {
   	/* 1 - Agenda */
   	/* 111 - Editar Agenda*/
-    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,111)."</h4>"; 
+    $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,111)."</h4>";
   }
   echo($cabecalho);
 
@@ -235,8 +241,8 @@
   /*34 - Hist√≥rico */
   echo("              	<li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
   if($origem == "ver_editar"){
-  	/*34 - Ativar */
-  	echo("              	<li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
+    /*34 - Ativar */
+    echo("              	<li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
   }
   /*34 - Apagar */
   echo("              	<li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
@@ -346,7 +352,7 @@
 
   /*Se houver, cria um iframe para exibi-lo*/
   if(($linha_item['texto']=="")&&($arquivo_entrada!=""))
-    $conteudo="<span id=\"text_".$linha_item['cod_item']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"Auto\"></iframe></span>"; 
+    $conteudo="<span id=\"text_".$linha_item['cod_item']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"Auto\"></iframe></span>";
   /*Senaum, exibe o texto da agenda*/
   else
   {
@@ -464,7 +470,7 @@
                 // pasta
                 $imagem    = "<img alt=\"\" src=../imgs/pasta.gif border=0 />";
                 echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
-                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n"); 
+                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
                 if(($usr_formador) && ($linha_item['situacao'] != "H")){
                   echo("                        ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onClick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\">\n");
                 }
@@ -555,9 +561,9 @@
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
-  echo("    	  </table>\n");
-  include("../tela2.php");	
+  echo("          </table>\n");
+  include("../tela2.php");
   echo("  </body>\n");
-  echo("</html>\n");	
+  echo("</html>\n");
   Desconectar($sock);
 ?>

@@ -91,12 +91,12 @@
 
   /* Se o tipo de ordenacao nao for especificada, usa arvore */
   if ((!isset($_SESSION['ordem']) || $_SESSION['ordem'] == "") && (!isset($_GET['ordem']) || $_GET['ordem'] == "")) {
-  	$ordem = 'arvore';
+    $ordem = 'arvore';
   } else {
-  	/* Se o usu�rio tentar atualizar a ordenacao, grava na $_SESSION */
-  	if (isset($_GET['ordem']))
-  		$_SESSION['ordem'] = $_GET['ordem'];
-  	$ordem = $_SESSION['ordem'];
+    /* Se o usu�rio tentar atualizar a ordenacao, grava na $_SESSION */
+    if (isset($_GET['ordem']))
+      $_SESSION['ordem'] = $_GET['ordem'];
+    $ordem = $_SESSION['ordem'];
   }
 
   /* Obt� a data e hora do penltimo acesso para comparar com as datas das   */
@@ -180,13 +180,13 @@
                      chamada da fun��o
   */
   echo("    <script type=\"text/javascript\">\n\n");
-  echo("function OpenWindowLink(status) \n");
-  echo("{\n");
-  	echo("if(status == 1) ");
-    	echo("  	window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&status=".$status."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-	echo("else");
-		echo("  	window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("}\n\n");
+  echo("      function OpenWindowLink(status) \n");
+  echo("      {\n");
+  echo("        if(status == 1) ");
+  echo("          window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&status=".$status."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("        else");
+  echo("          window.open(\"imprimir_forum.php?&cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&ordem=".$_SESSION['ordem']."\",\"ImprimirDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("      }\n\n");
   echo("    </script>\n\n");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
@@ -228,7 +228,7 @@
   echo("            }\n");
   echo("          }\n");
   echo("        }\n");
-  echo("      }\n\n");  
+  echo("      }\n\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
@@ -261,7 +261,7 @@
   echo("        for (i=1; i<final; i++){\n");
   echo("          if (!tabela.rows[i]) break;\n");
   echo("          tabela.rows[i].style.display=\"none\";\n");
-  echo("        }\n\n"); 
+  echo("        }\n\n");
      /* 71 - Exibir todas */
   echo("        document.getElementById('exibir_paginacao').innerHTML = \"".RetornaFraseDaLista($lista_frases,71)."\";\n");
   echo("        document.getElementById('exibir_paginacao').onclick = function(){ ExibirTodasMsgs(); };\n");
@@ -278,7 +278,7 @@
   echo("        for (i=inicio; i<final; i++){\n");
   echo("          if (!tabela.rows[i]) break;\n");
   echo("          tabela.rows[i].style.display=\"none\";\n");
-  echo("        }\n\n");  
+  echo("        }\n\n");
   echo("        var browser=navigator.appName;\n\n");
   
   echo("        inicio = (((pagina-1)*".$msg_por_pag.")*2)+1;\n");
@@ -294,9 +294,9 @@
   echo("          }\n");
   echo("        }\n\n");
   
-  echo("        document.getElementById('prim_msg_index').innerHTML=(inicio-1)/2 + 1;\n"); 
-  echo("        if (!iTmp) document.getElementById('ult_msg_index').innerHTML=final/2;\n"); 
-  echo("        else document.getElementById('ult_msg_index').innerHTML=(i-2)/2;\n\n"); 
+  echo("        document.getElementById('prim_msg_index').innerHTML=(inicio-1)/2 + 1;\n");
+  echo("        if (!iTmp) document.getElementById('ult_msg_index').innerHTML=final/2;\n");
+  echo("        else document.getElementById('ult_msg_index').innerHTML=(i-2)/2;\n\n");
   
   echo("        if (browser==\"Microsoft Internet Explorer\")\n");
   echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
@@ -383,8 +383,8 @@
   echo("          if (idTemp[1] !='msg') contador++;\n");
   echo("        }\n\n");
 
-  echo("        document.getElementById('prim_msg_index').innerHTML=1;\n"); 
-  echo("        document.getElementById('ult_msg_index').innerHTML=contador-1;\n\n"); 
+  echo("        document.getElementById('prim_msg_index').innerHTML=1;\n");
+  echo("        document.getElementById('ult_msg_index').innerHTML=contador-1;\n\n");
 
   echo("        controle=1;\n");
   echo("        while (controle<=5){\n");
@@ -433,7 +433,7 @@
 
     echo("        document.getElementById('divNovaMsg').className=\"\";\n");
     echo("        document.getElementById('tdNovaMsg').appendChild(document.getElementById('divNovaMsg'));\n");
-    echo("		  writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
+    echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
     echo("        document.getElementById('acao').value='nova_msg';\n");
     //echo("        document.getElementById('tdNovaMsg').style.width=\"525px\";\n");
     echo("        document.formCompor.msg_titulo.focus();\n");
@@ -456,7 +456,7 @@
     echo("          tdElement.removeChild(document.getElementById('spanRespondeMsg'));\n");
     echo("        }\n");
     echo("        respondendoMsg = -1;\n");
-    echo("		clearRTE('msg_corpo');");
+    echo("        clearRTE('msg_corpo');");
     echo("      }\n\n");
 
     echo("      function TestaNome(form){\n");
@@ -481,7 +481,7 @@
     /* 8 - A mensagem deve ter um conteúdo. */
     echo("            alert('".RetornaFraseDaLista($lista_frases, 16)."');\n");
     echo("          document.formCompor.msg_corpo.focus();\n");
-    echo("            return(false);\n");  
+    echo("            return(false);\n");
     echo("          }\n");
     echo("        }\n");
     echo("        return(true);\n");
@@ -504,13 +504,13 @@
       echo("        tdElement = document.getElementById('td_msg_'+cod_msg);\n");
       echo("        newSpan = document.createElement('span');\n");
       echo("        newSpan.setAttribute('id', 'spanRespondeMsg');\n");
-      echo("        newSpan.setAttribute('name', 'span_resp_'+cod_msg);\n");    
+      echo("        newSpan.setAttribute('name', 'span_resp_'+cod_msg);\n");
       echo("        newSpan.innerHTML='<br /><br />';\n");
       echo("        tdElement.appendChild(newSpan);\n");
       echo("        tdElement.appendChild(document.getElementById('divNovaMsg'));\n");
       echo("        document.getElementById('divNovaMsg').className=\"\";\n");
-	  echo("		writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
-	  echo("        document.getElementById('acao').value = 'responde_mensagem';\n");
+      echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, false, false, 'divRTE', true);\n");
+      echo("        document.getElementById('acao').value = 'responde_mensagem';\n");
       echo("        document.getElementById('codRespondeMensagem').value = cod_msg;\n");
       echo("        document.getElementById('msg_titulo').value='Re: '+document.getElementById('titulo_'+cod_msg).innerHTML;\n");
       echo("      }\n");
@@ -574,7 +574,7 @@
     echo("      function AlteraRelevLayer(cod_msg, n_relev)\n");
     echo("      {\n");
     echo("        spans = document.getElementsByTagName('span');\n");
-    echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif'>\"\n");  
+    echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif'>\"\n");
     echo("        for (i=0; i<spans.length; i++){\n");
     echo("          idTmp = spans[i].id.split('_');\n");
     echo("          if((idTmp[0])=='relevancia')\n");
@@ -598,19 +598,19 @@
     echo("      function ExibirMensagem(cod_msg)\n");
     echo("      {\n");
     echo("        var browser=navigator.appName;\n\n");
-    echo("		  var sts = document.getElementById('tr_msg_'+cod_msg).style.display;\n");
-    echo("		  if ((sts == 'table-row') || (sts == 'block'))\n");
-    echo("		  {\n");
-	echo("			FecharMsg(cod_msg);");
-    echo("		  }");
-    echo("		  else\n");
-    echo("		  {\n");
-    echo("        	if (browser==\"Microsoft Internet Explorer\")\n");
-    echo("          	document.getElementById('tr_msg_'+cod_msg).style.display=\"block\";\n");
-    echo("  	    else\n");
-    echo("      	    document.getElementById('tr_msg_'+cod_msg).style.display=\"table-row\";\n");
-    echo("        mensagens_abertas++;\n");
-    echo("		  }");
+    echo("        var sts = document.getElementById('tr_msg_'+cod_msg).style.display;\n");
+    echo("        if ((sts == 'table-row') || (sts == 'block'))\n");
+    echo("        {\n");
+    echo("          FecharMsg(cod_msg);");
+    echo("        }");
+    echo("        else\n");
+    echo("        {\n");
+    echo("          if (browser==\"Microsoft Internet Explorer\")\n");
+    echo("            document.getElementById('tr_msg_'+cod_msg).style.display=\"block\";\n");
+    echo("          else\n");
+    echo("            document.getElementById('tr_msg_'+cod_msg).style.display=\"table-row\";\n");
+    echo("          mensagens_abertas++;\n");
+    echo("        }");
     echo("        if(totalMsgs <= 10){\n");
     echo("          VerificaAbertas();\n");
     echo("        }\n");
@@ -733,7 +733,7 @@
   }
   
   /* 7 - Ver fórum */
-  echo(" - ".RetornaFraseDaLista($lista_frases, 7)." - ".$forum_dados['nome']);  
+  echo(" - ".RetornaFraseDaLista($lista_frases, 7)." - ".$forum_dados['nome']);
 
   if (($forum_dados['status'] == 'L') || (($forum_dados['status'] == 'R') && (! $permitido)) )
   {
@@ -803,11 +803,11 @@
   }
   
   if(isset($status)){
-  	/*  137 - Imprimir */
-  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
+    /*  137 - Imprimir */
+    echo("                  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
   }
   else{
-  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
+    echo("                  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 137)."</a></li>");
   }
   
   echo("                </ul>\n");
@@ -844,15 +844,15 @@
     /* 14 - Mensagem */
     echo("                          <b>".RetornaFraseDaLista($lista_frases,14)."</b><br />\n");
     echo("                          <div id=\"text_divRTE\">\n");
-    //echo("								<textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>\n");
-    echo("							</div>\n");
+    //echo("                            <textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>\n");
+    echo("                          </div>\n");
 
     echo("                          <br />\n");
     echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"nova_msg\" />\n");
     echo("                          <input type=\"hidden\" name=\"codRespondeMensagem\" id=\"codRespondeMensagem\" value=\"\" />\n");
     echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
   
-    echo("                          <input type=\"hidden\" name=\"cod_forum\" value=\"".$cod_forum."\" />\n");  
+    echo("                          <input type=\"hidden\" name=\"cod_forum\" value=\"".$cod_forum."\" />\n");
     /* 18 - Ok */
     echo("                          <input type=\"submit\" class=\"input\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" style=\"margin-bottom:5px;\" />\n");
     /* 2 - Cancela */
@@ -1056,8 +1056,8 @@
 
     }
   }else{
-  	echo("<script>");
-    echo("        	writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
+    echo("<script>");
+    echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
     echo("</script>");
     
     echo("            <tr>\n");
@@ -1089,7 +1089,7 @@
   /* página, possibilita a criação de links para a página anterior e posterior */
   /* (se existirem) e links para demais páginas.                               */
 
-  echo("                  <tr>\n");  
+  echo("                  <tr>\n");
   echo("                    <td colspan=\"5\" align=\"right\" class=\"paginacao\">\n");
   echo("                      <span id=\"paginacao_first\"></span> <span id=\"paginacao_back\"></span>\n");
   $controle=1;
@@ -1144,7 +1144,7 @@
   echo("          </div>\n");
 
   echo("        </td>\n");
-  echo("      </tr>\n"); 
+  echo("      </tr>\n");
 
   include("../tela2.php");
   echo("  </body>\n");

@@ -969,37 +969,6 @@ function podeVerIdentidadeEnquete($sock,$ator, $enquete, $criadorEnquete){
 }
 
 /*==========================================================
-  ========================================================== */
-
-/* *******************************************************************
-   getTipoAtor - retorna sigla do ator
-   entrada: $sock - sock de conexao
-            $cod_curso- codigo do curso
-            $cod_usuario - codigo do usuario
-   saida:   'R' se for Coordenador
-            'F' se for Formador
-            'A' se for Aluno
-            'V' se for Visitante
-            'C' se for Convidado
-   
-function getTipoAtor($sock, $cod_curso, $cod_usuario){
-    if (ECoordenador($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'R';
-    } elseif (EFormador($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'F';
-    } elseif (EAluno($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'A';
-    } elseif (EVisitante($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'V';
-    } elseif (EConvidado($sock, $cod_usuario)){
-          $sigla= 'Z';
-    } 
-    
-    return $sigla;
-
-}
-*/
-/*==========================================================
   Fun�es para preencher a tele de edi�o de enquete
   ========================================================== */
 

@@ -142,6 +142,12 @@
   echo("    var conteudoPasta = new Array();\n");
   echo("    var cancelarTodos = 0;\n");
   echo("    var conteudo;\n\n");
+  /* (ger) 18 - Ok */
+  // Texto do botão Ok do ckEditor
+  echo("    var textoOk = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
+  /* (ger) 2 - Cancelar */
+  // Texto do botão Cancelar do ckEditor
+  echo("    var textoCancelar = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
   echo("    if (document.addEventListener) {\n");/* Caso do FireFox */
   echo("      document.addEventListener('mousemove', TrataMouse, false);\n");
