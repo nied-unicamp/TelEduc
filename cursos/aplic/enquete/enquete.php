@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/enquete/enquete.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½cia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distâcia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Nucleo de Informï¿½ica Aplicada ï¿½Educaï¿½o
+    Nied - Nucleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitï¿½ia "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -51,7 +51,7 @@
 
   switch($categ)
   {
-          /* 39 -  Enquetes nï¿½ aplicadas */
+          /* 39 - Enquetes não aplicadas */
           case 0: $cod_pagina_ajuda = 1; break;
           /* 40 - Enquetes em andamento  */
           case 1: $cod_pagina_ajuda = 2; break;
@@ -65,24 +65,24 @@
 
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
-  //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
+  //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   // 14 - Enquete criada com sucesso.
-  // 15 - Erro na criaÃ§Ã£o da Enquete.
+  // 15 - Erro na criação da Enquete.
   $feedbackObject->addAction("criarEnquete", 14, 15);
   // 102 - Enquete recuperada com sucesso.
-  // 103 - Erro na recuperaÃ§Ã£o da enquete.
+  // 103 - Erro na recuperação da enquete.
   $feedbackObject->addAction("recuperarEnquete", 102, 103);
   // 79 - Enquete finalizada com sucesso.
-  // 80 - Erro na finalizaÃ§Ã£o da Enquete.
+  // 80 - Erro na finalização da Enquete.
   $feedbackObject->addAction("finalizarEnquete", 79, 80);
   // 101 - Enquete apagada com sucesso. A enquete foi movida para a lixeira.
   // 100 - Erro ao apagar a enquete.
   $feedbackObject->addAction("apagarEnquete", 101, 100);
   // 73 - Enquete aplicada com sucesso. Agora ela se encontra em andamento.
-  // 74 - Erro na aplicaÃ§Ã£o da Enquete.
+  // 74 - Erro na aplicação da Enquete.
   $feedbackObject->addAction("aplicarEnquete", 73, 74);
   // 91 - Voto inserido com sucesso.
-  // 92 - Erro na inserÃ§Ã£o do voto.
+  // 92 - Erro na inserção do voto.
   $feedbackObject->addAction("votarEnquete", 91, 92);
   // 76 - Enquete excluida com sucesso.
   // 77 - Erro ao excluir enquete.
@@ -117,7 +117,7 @@
 
   /*******************************************
   CATEGORIAS 
-  0 - nï¿½ aplicadas
+  0 - não aplicadas
   1 - em andamento (default)
   2 - encerradas
   ********************************************/
@@ -125,7 +125,7 @@
 
   switch($categ)
   {
-          /* 39 -  Enquetes nï¿½ aplicadas */
+          /* 39 - Enquetes não aplicadas */
           case 0: $categoria = RetornaFraseDaLista($lista_frases,39); break;
           /* 40 - Enquetes em andamento  */
           case 1: $categoria = RetornaFraseDaLista($lista_frases,40) ; break;
@@ -135,7 +135,7 @@
           case 3: $categoria = RetornaFraseDaLista($lista_frases,97); break;
   } 
 
-  /* Impede o acesso a algumas secoes aos usuÃ¡rios que nï¿½o sï¿½o formadores. */
+  /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
   if ((!$tela_formador) && ($categ != '1') && ($categ != '2'))
   {
     /* 1 - Enquete */
@@ -143,7 +143,7 @@
     /* 114 - Acao exclusiva a formadores. */
     echo("    - ".RetornaFraseDaLista($lista_frases, 114)."</h4>");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
@@ -171,7 +171,7 @@
   GeraJSComparacaoDatas();
   
   /*********************************************************/
-  /* inï¿½io - JavaScript */
+  /* início - JavaScript */
   echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n\n");
 
@@ -199,20 +199,20 @@
   echo("    var selected_item;\n");
 
   echo("      function getPageScrollY()\n");
-   echo("      {\n");
-   echo("        if (isNav)\n");
-   echo("          return(window.pageYOffset);\n");
-   echo("        if (isIE){\n");
-   echo("          if(document.documentElement.scrollLeft>=0){\n");
-   echo("            return document.documentElement.scrollTop;\n");
-   echo("          }else if(document.body.scrollLeft>=0){\n");
-   echo("            return document.body.scrollTop;\n");
-   echo("          }else{\n");
-   echo("            return window.pageYOffset;\n");
-   echo("          }\n");
-   echo("        }\n");
-   echo("      }\n");
-  
+  echo("      {\n");
+  echo("        if (isNav)\n");
+  echo("          return(window.pageYOffset);\n");
+  echo("        if (isIE){\n");
+  echo("          if(document.documentElement.scrollLeft>=0){\n");
+  echo("            return document.documentElement.scrollTop;\n");
+  echo("          }else if(document.body.scrollLeft>=0){\n");
+  echo("            return document.body.scrollTop;\n");
+  echo("          }else{\n");
+  echo("            return window.pageYOffset;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("      }\n");
+
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
   echo("    {\n");
@@ -221,34 +221,34 @@
   echo("      lay_nova_enquete = getLayer('layer_nova_enquete');\n");
   switch($categ)
   {
- 	//case 0: echo("      lay_naoaplicada = getLayer('layer_naoaplicada');\n"); break;
- 	case 1: //echo("      lay_andamento = getLayer('layer_andamento');\n"); 
+    //case 0: echo("      lay_naoaplicada = getLayer('layer_naoaplicada');\n"); break;
+    case 1: //echo("      lay_andamento = getLayer('layer_andamento');\n"); 
                 //echo("      lay_andamento_vota = getLayer('layer_andamento_vota');\n");
                 if ($tela_formador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n");
                 if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-  	case 2:	//if ($tela_formador) echo("      lay_encerrada = getLayer('layer_encerrada');\n");
+    case 2: //if ($tela_formador) echo("      lay_encerrada = getLayer('layer_encerrada');\n");
                 if ($tela_formador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n"); 
                 if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-        //case 3:	echo("      lay_lixeira = getLayer('layer_lixeira');\n"); break;
+    //case 3: echo("      lay_lixeira = getLayer('layer_lixeira');\n"); break;
   }
   echo("    }\n\n");
 
   echo("      function MostraLayer(cod_layer, ajuste, ev){\n");
-   echo("        EscondeLayers();\n");
-   echo("        ev = ev || window.event;\n");
-   echo("        if(ev.pageX || ev.pageY){\n");
-   echo("          Xpos = ev.pageX;\n");
-   echo("          Ypos = ev.pageY;\n");
-   echo("        }else{\n");
-   echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
-   echo("          Ypos = ev.clientY + getPageScrollY();\n");
-   echo("        }\n");
-   echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
-   echo("        showLayer(cod_layer);\n");
-   echo("      }\n\n");
-  
+  echo("        EscondeLayers();\n");
+  echo("        ev = ev || window.event;\n");
+  echo("        if(ev.pageX || ev.pageY){\n");
+  echo("          Xpos = ev.pageX;\n");
+  echo("          Ypos = ev.pageY;\n");
+  echo("        }else{\n");
+  echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
+  echo("          Ypos = ev.clientY + getPageScrollY();\n");
+  echo("        }\n");
+  echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
+  echo("        showLayer(cod_layer);\n");
+  echo("      }\n\n");
+
   // Esconde o layer especificado por cod_layer.
   echo("    function EscondeLayer(cod_layer)\n");
   echo("    {\n");
@@ -256,29 +256,29 @@
   echo("      mostrando=0;\n");
   echo("    }\n\n");
 
-  /* Esconde todos os layers. Se o usuario for o proprietï¿½io do diï¿½io   */
-  /* visualizado entï¿½ esconde o layer para renomear o item.              */
+  /* Esconde todos os layers. Se o usuario for o proprietário do diï¿½io   */
+  /* visualizado então esconde o layer para renomear o item.              */
   echo("    function EscondeLayers()\n");
   echo("    {\n");
   switch($categ)
   {
- 	//case 0:	echo("      hideLayer(lay_naoaplicada);\n"); break;
- 	case 1: //echo("      hideLayer(lay_andamento);\n");
+    //case 0: echo("      hideLayer(lay_naoaplicada);\n"); break;
+    case 1: //echo("      hideLayer(lay_andamento);\n");
                 //echo("      hideLayer(lay_andamento_vota);\n"); 
                 if ($tela_formador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
                 if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-  	case 2:	//if ($tela_formador) echo("      hideLayer(lay_encerrada);\n"); 
+    case 2: //if ($tela_formador) echo("      hideLayer(lay_encerrada);\n"); 
                 if ($tela_formador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
                 if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-        //case 3:	echo("      hideLayer(lay_lixeira);\n"); break;
+    //case 3: echo("      hideLayer(lay_lixeira);\n"); break;
   }
   echo("    }\n\n");
 
 
   /***************************************************************
-  JAVASCRIPTS para as aï¿½es dos layers
+  JAVASCRIPTS para as ações dos layers
   ***************************************************************/
   
   /* Visualiza uma enquete */
@@ -289,7 +289,7 @@
 
   if ($categ == 1) //enquete em ANDAMENTO
   {  
-    // Vai para a pï¿½gina de votaï¿½ï¿½o
+    // Vai para a página de votação
     echo("    function Votar()\n");
     echo("    {\n");
     echo("      document.location.href='vota_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
@@ -298,10 +298,10 @@
 
   if (($tela_formador) && ($categ == 0)) // enquete NAO_REALIZADA na visï¿½o do formador
   {
-    // Vai para a pï¿½gina de ediï¿½ï¿½o da enquete
+    // Vai para a página de edição da enquete
     echo("    function Editar()\n");
     echo("    {\n");
-    echo("      	document.location.href='editar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
+    echo("      document.location.href='editar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("    }\n\n");
 
     // Torna a enquete em andamento
@@ -309,26 +309,26 @@
     echo("    {\n");
     // 86 - Tem certeza que deseja aplicar a enquete?
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases, 86)."')){");
-    echo("      	document.location.href='aplicar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
+    echo("        document.location.href='aplicar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("      }\n");
     echo("    }\n\n");
-  }  
+  }
   
   if (($tela_formador) && ($categ == 1)) // enquete em ANDAMENTO na visï¿½o do formador
-  {  
+  {
     // Finaliza a enquete
     echo("    function Finalizar()\n");
     echo("    {\n");
     // 42 - Tem certeza que deseja finalizar a enquete? 
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases, 42)."')){");
-    echo("      	document.location.href='finalizar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
+    echo("        document.location.href='finalizar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("      }\n");
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visï¿½o do formador 
+  if (($tela_formador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visão do formador 
   {
-    // Carrega data e hora final da enquete atual no formulï¿½rio para  Adiantada/Prorrogada
+    // Carrega data e hora final da enquete atual no formulário para  Adiantada/Prorrogada
     echo("    function CarregaDataHora()\n");
     echo("    {\n"); 
     echo("      document.form_adiantar_prorrogar.data_fim.value = data_fim;\n");
@@ -345,7 +345,7 @@
     echo("      if (!DataValidaAux(d_fim))\n");
     echo("        return false;\n");
     echo("      if (! hora_valida(h_fim)){\n");
-    // 110 - Horï¿½rio de tï¿½rmino invï¿½lido.
+    // 110 - Horário de término inválido.
     echo("        alert('".RetornaFraseDaLista($lista_frases,110)."');\n");
     echo("        return false;\n");
     echo("      }\n");
@@ -359,7 +359,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && ($categ != 3)) // enquete fora da LIXEIRA e ï¿½ formador
+  if (($tela_formador) && ($categ != 3)) // enquete fora da LIXEIRA e é formador
   {
     // Apaga a enquete , movendo-a para a lixeira
     echo("    function Apagar()\n");
@@ -401,44 +401,43 @@
   
   if ($tela_formador)
   {
-	switch($categ)
-	{
-		case 0: 
-			$lista_enquetes=getTodasEnquetesNaoAplicadas($sock);
-			break;
-		case 1: 
-			$lista_enquetes=getTodasEnquetesEmAndamento($sock, $cod_curso);
-			break;
-		case 2: 
-			$lista_enquetes=getTodasEnquetesEncerradas($sock);
-			break;
-        case 3: 
-			$lista_enquetes=getTodasEnquetesLixeira($sock);
-			break;
-	}
-
+    switch($categ)
+    {
+      case 0:
+        $lista_enquetes=getTodasEnquetesNaoAplicadas($sock);
+        break;
+      case 1:
+        $lista_enquetes=getTodasEnquetesEmAndamento($sock, $cod_curso);
+        break;
+      case 2:
+        $lista_enquetes=getTodasEnquetesEncerradas($sock);
+        break;
+      case 3:
+        $lista_enquetes=getTodasEnquetesLixeira($sock);
+        break;
+    }
   }
   else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EConvidado($sock, $cod_usuario, $cod_curso)))
   {
-	// Inï¿½cio da Pï¿½gina do Aluno, Visitante e Convidado
-	switch($categ)
-	{
-		case 1:  
-			$lista_enquetes = getEnquetesAndamento($sock, $ator); 
-			break;
-		case 2: 
-			$lista_enquetes = getEnquetesEncerradas($sock, $ator);  
-			/*******************************************
-			Nao Ha LAYER neste caso, o clique leva direito a pagina de visulizacao de enquete 
-			*******************************************/
-			break;
-	}
+    // Início da Página do Aluno, Visitante e Convidado
+    switch($categ)
+    {
+      case 1:
+        $lista_enquetes = getEnquetesAndamento($sock, $ator); 
+        break;
+      case 2:
+        $lista_enquetes = getEnquetesEncerradas($sock, $ator);  
+        /*******************************************
+        Nao Ha LAYER neste caso, o clique leva direito a pagina de visulizacao de enquete 
+        *******************************************/
+        break;
+    }
   }
 
   // 1 - Enquete
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".$categoria."</h4>\n");
 
-  // Voltar			
+  // Voltar
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
@@ -488,7 +487,7 @@
 
   if (($tela_formador) || ($categ == 1))
   {
-    // 116 - Opï¿½ï¿½es
+    // 116 - Opções
     echo("                    <td width=\"140px\">".RetornaFraseDaLista($lista_frases,116)."</td>\n");
   }
 
@@ -503,7 +502,7 @@
 
   if (empty($lista_enquetes))
   {
-    echo("                  <tr>\n");	
+    echo("                  <tr>\n");
     // 51 - Nao ha 
     echo("                    <td colspan=\"5\">".RetornaFraseDaLista($lista_frases,51)."</td>\n");
     echo("                  </tr>\n");
@@ -526,8 +525,8 @@
       $tr = "";
       
       if ((!$votou) && ($vota) && (strcmp(getStatusEnquete($sock, $lista_enquetes[$num]), "ANDAMENTO") == 0))
-      {      	
-        $bi = "novo";      
+      {
+        $bi = "novo";
       } 
       /***************************************/
 
@@ -536,84 +535,87 @@
       echo("                  <tr class=\"altColor".($cor)."\">\n");
       echo("                    <td class=\"alLeft\"><a class=\"".$bi."\" id=\"link_enquete_".$lista_enquetes[$num]['idEnquete']."\" href='ver_enquete.php?cod_curso=".$cod_curso."&amp;idEnquete=".$lista_enquetes[$num]['idEnquete']."' >".$titulo."</a></td>\n");
 
-      // Se o usuï¿½rio for formador entï¿½o cria links com acesso as opï¿½ï¿½es
+      // Se o usuário for formador então cria links com acesso as opções
       if ($tela_formador)
       {
-	switch($categ)
-	{
-		case 0: 
-			echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
-			echo("                      <ul>\n");
-			// 21 - Ver
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
-			// 9 - Editar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Editar();'>".RetornaFraseDaLista($lista_frases_geral, 9)."</span></li>\n");
-			// 44 - Aplicar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Aplicar();'>".RetornaFraseDaLista($lista_frases, 44)."</span></li>\n");
-			// 1 (gen) - Apagar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
-			echo("                      </ul>\n");
-			echo("                    </td>\n");
+        switch($categ)
+        {
+          case 0:
+            echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
+            echo("                      <ul>\n");
+            // 21 - Ver
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
+            // 9 - Editar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Editar();'>".RetornaFraseDaLista($lista_frases_geral, 9)."</span></li>\n");
+            // 44 - Aplicar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Aplicar();'>".RetornaFraseDaLista($lista_frases, 44)."</span></li>\n");
+            // 1 (gen) - Apagar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
+            echo("                      </ul>\n");
+            echo("                    </td>\n");
+            break;
 
-			break;
-		case 1: 
-			echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
-			echo("                      <ul>\n");
-			// 21 - Ver
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
-			// 45 - Votar
-			echo("                        <li><span ".(($vota) ? "onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Votar();'" : "style=\"color:#AAAAAA; cursor:default;\"") .">".RetornaFraseDaLista($lista_frases, 45)."</span></li>\n");
-			// 46 - Adiantar / Prorrogar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; data_fim = \"".UnixTime2Data($lista_enquetes[$num]['data_fim'])."\" ; hora_fim = \"".UnixTime2Hora($lista_enquetes[$num]['data_fim'])."\" ; CarregaDataHora(); MostraLayer(lay_adiantar_prorrogar, 0, event)'>".RetornaFraseDaLista($lista_frases, 46)."</span></li>\n");
-			// 47 - Finalizar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Finalizar();'>".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
-			// 1 (gen) - Apagar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
-			echo("                      </ul>\n");
-			echo("                    </td>\n");
+          case 1:
+            echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
+            echo("                      <ul>\n");
+            // 21 - Ver
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
+            // 45 - Votar
+            echo("                        <li><span ".(($vota) ? "onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Votar();'" : "style=\"color:#AAAAAA; cursor:default;\"") .">".RetornaFraseDaLista($lista_frases, 45)."</span></li>\n");
+            // 46 - Adiantar / Prorrogar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; data_fim = \"".UnixTime2Data($lista_enquetes[$num]['data_fim'])."\" ; hora_fim = \"".UnixTime2Hora($lista_enquetes[$num]['data_fim'])."\" ; CarregaDataHora(); MostraLayer(lay_adiantar_prorrogar, 0, event)'>".RetornaFraseDaLista($lista_frases, 46)."</span></li>\n");
+            // 47 - Finalizar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Finalizar();'>".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
+            // 1 (gen) - Apagar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
+            echo("                      </ul>\n");
+            echo("                    </td>\n");
+            break;
 
-			break;
-		case 2: 
-			echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
-			echo("                      <ul>\n");
-			// 21 - Ver
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
-			// 113 - Prorrogar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; data_fim = \"".UnixTime2Data(time())."\" ; hora_fim = \"".UnixTime2Hora(time())."\" ; CarregaDataHora(); MostraLayer(lay_adiantar_prorrogar, 0, event)'>".RetornaFraseDaLista($lista_frases, 113)."</span></li>\n");
-			// 1 (gen) - Apagar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
-			echo("                      </ul>\n");
-			echo("                    </td>\n");
-			break;
-                case 3: 
-			echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
-			echo("                      <ul>\n");
-			// 21 - Ver
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
-			// 98- Recuperar
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Recuperar();'>".RetornaFraseDaLista($lista_frases, 98)."</span></li>\n");
-			// 99 - Excluir
-			echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Excluir();'>".RetornaFraseDaLista($lista_frases, 99)."</span></li>\n");
-			echo("                      </ul>\n");
-			echo("                    </td>\n");
-			break;
-	}
+          case 2:
+            echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
+            echo("                      <ul>\n");
+            // 21 - Ver
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
+            // 113 - Prorrogar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; data_fim = \"".UnixTime2Data(time())."\" ; hora_fim = \"".UnixTime2Hora(time())."\" ; CarregaDataHora(); MostraLayer(lay_adiantar_prorrogar, 0, event)'>".RetornaFraseDaLista($lista_frases, 113)."</span></li>\n");
+            // 1 (gen) - Apagar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Apagar();'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
+            echo("                      </ul>\n");
+            echo("                    </td>\n");
+            break;
+
+                case 3:
+            echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
+            echo("                      <ul>\n");
+            // 21 - Ver
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
+            // 98- Recuperar
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Recuperar();'>".RetornaFraseDaLista($lista_frases, 98)."</span></li>\n");
+            // 99 - Excluir
+            echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Excluir();'>".RetornaFraseDaLista($lista_frases, 99)."</span></li>\n");
+            echo("                      </ul>\n");
+            echo("                    </td>\n");
+            break;
+        }
       }
-      else if ($categ == 1) //Nï¿½o formadores
+      else if ($categ == 1) //Não formadores
       {
-		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
-		echo("                      <ul>\n");
-		// 21 - Ver
-		echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
-		// 45 - Votar
-		echo("                        <li><span ".(($vota) ? "onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Votar();'" : "style=\"color:#AAAAAA; cursor:default;\"") .">".RetornaFraseDaLista($lista_frases, 45)."</span></li>\n");
-		echo("                      </ul>\n");
-		echo("                    </td>\n");
+        echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
+        echo("                      <ul>\n");
+        // 21 - Ver
+        echo("                        <li><span onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Ver();'>".RetornaFraseDaLista($lista_frases_geral, 21)."</span></li>\n");
+        // 45 - Votar
+        echo("                        <li><span ".(($vota) ? "onclick='selected_item=".$lista_enquetes[$num]['idEnquete']."; Votar();'" : "style=\"color:#AAAAAA; cursor:default;\"") .">".RetornaFraseDaLista($lista_frases, 45)."</span></li>\n");
+        echo("                      </ul>\n");
+        echo("                    </td>\n");
       }
 
       echo("                    <td align=\"center\">".UnixTime2Data($lista_enquetes[$num]['data_inicio'])."</td>\n");
       echo("                    <td align=\"center\">".UnixTime2Data($lista_enquetes[$num]['data_fim'])."</td>\n");
-      echo("                    <td align=\"center\">".($votou ? RetornaFraseDaLista(RetornaListaDeFrases($sock,-5),509) : RetornaFraseDaLista(RetornaListaDeFrases($sock,-5),510))."</td>\n");
+      /* (ger) 35 - Sim */
+      /* (ger) 36 - Não */
+      echo("                    <td align=\"center\">".($votou ? RetornaFraseDaLista($lista_frases_geral,35) : RetornaFraseDaLista($lista_frases_geral,36))."</td>\n");
       echo("                  </tr>\n");
 
       // Incrementa o contador.
@@ -626,17 +628,17 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
-    echo("          <br />\n");    
-    /* 509 - voltar, 510 - topo */
-    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-    echo("        </td>\n");
+  echo("          <br />\n");
+  /* 509 - voltar, 510 - topo */
+  echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
+  echo("        </td>\n");
   echo("      </tr>\n"); 
 
   include("../tela2.php");
 
   include("layer.php");
 
-  echo("      <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("      <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("        Iniciar();\n");
   echo("      </script>\n");
 
