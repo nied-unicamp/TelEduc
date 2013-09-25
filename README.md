@@ -44,7 +44,7 @@ O TelEduc é um ambiente de <em>e-learning</em> para a criação, participação
     Para realizar a instalação do TelEduc, utilize o guia de instalação fornecido
     nos links abaixo:
     
-    http://fenix.nied.unicamp.br/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc
+    http://fenix.nied.unicamp.br/redmine/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc
    
 
 ------------------------------------------------------------------------------
