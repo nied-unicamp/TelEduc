@@ -73,7 +73,7 @@ function PreparaCabecalhoAdmin($lista_frases)
 */
 function PreparaCabecalhoOpcao($texto)
 {
-  echo("<b><font face=Verdana,Arial,Helvetica color=#990000 SIZE=3>".$texto."</FONT></B><br><br>\n");
+  echo("<b><font face=Verdana,Arial,Helvetica color=#990000 SIZE=3>".$texto."</font></b><br><br>\n");
 }
 
 /* **********************************************************************
@@ -389,7 +389,7 @@ function MontaCursoResumo2($sock, $codigo)
   if(ErroSql($sock))
     return($ferr);
 
-  $texto = "id_curso=".$dados['codigo']."\n";
+  $texto  = "id_curso=".$dados['codigo']."\n";
   $texto .= "nome_curso=".$dados['nome']."\n";
   $texto .= "curso_categoria=".$dados['categoria']."\n";
   $texto .= "curso_inicio=".$dados['curso_inicio']."\n";
@@ -589,20 +589,19 @@ function ApagaReferencias($cod_curso)
   if (function_exists("ApagaReferenciasFachada"))
   {
     return(ApagaReferenciasFachada($cod_curso));
-    
   }
 
   $sock = Conectar("");
 
   $query = "delete from Cursos_compart where cod_curso = ".$cod_curso;
   EnviarNC($sock, $query);
-   if(ErroSql($sock)!=0)
-   return(-1);
- 
+  if(ErroSql($sock)!=0)
+    return(-1);
+
   $query = "delete from Cursos where cod_curso = ".$cod_curso;
   EnviarNC($sock,$query);
   if(ErroSql($sock)!=0)
-  return(-2);
+    return(-2);
 
   return (true);
 }
@@ -617,19 +616,17 @@ function ApagaReferencias2($sock,$cod_curso)
   if (function_exists("ApagaReferenciasFachada2"))
   {
     return(ApagaReferenciasFachada2($sock,$cod_curso));
-    
   }
-
 
   $query = "delete from Cursos_compart where cod_curso = ".$cod_curso;
   EnviarNC($sock, $query);
-   if(ErroSql($sock)!=0)
-   return(-1);
+  if(ErroSql($sock)!=0)
+    return(-1);
 
   $query = "delete from Cursos where cod_curso = ".$cod_curso;
   EnviarNC($sock,$query);
   if(ErroSql($sock)!=0)
-  return(-2);
+    return(-2);
 
   return (true);
 }
@@ -643,8 +640,8 @@ function ApagaReferencias2($sock,$cod_curso)
 */
 function RemovedaBase($sock,$dbnamecurso,$cod_curso)
 {
- $query = "drop database ".$dbnamecurso.$cod_curso;
- EnviarNC($sock,$query);
+  $query = "drop database ".$dbnamecurso.$cod_curso;
+  EnviarNC($sock,$query);
 }
 
 /* *********************************************************************
@@ -655,10 +652,10 @@ function RemovedaBase($sock,$dbnamecurso,$cod_curso)
 */
 function RetornadadosParaLog($sock,$cod_curso)
 {
- $query = "select  cdisc, cturma from Curso_espelho where cod_curso=".$cod_curso;
- $res = EnviarNC($sock,$query);
- $linha = RetornaLinha($res);
- return $linha;
+  $query = "select  cdisc, cturma from Curso_espelho where cod_curso=".$cod_curso;
+  $res = EnviarNC($sock,$query);
+  $linha = RetornaLinha($res);
+  return $linha;
 }
 
 /* *********************************************************************
@@ -688,16 +685,16 @@ function RetornaProximoCodigoExtracao($sock,$tabela)
     if(ErroSql($sock))
       return(-1);
   }
-    $query="select cod from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-    $res=EnviarNC($sock,$query);
-    if(ErroSql($sock))
-      return(-1);
-    $linha=RetornaLinha($res);
-    $query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-    $res=EnviarNC($sock,$query);
-    if(ErroSql($sock))
-      return(-1);
-    return ($linha[0]);
+  $query="select cod from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
+  $res=EnviarNC($sock,$query);
+  if(ErroSql($sock))
+    return(-1);
+  $linha=RetornaLinha($res);
+  $query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
+  $res=EnviarNC($sock,$query);
+  if(ErroSql($sock))
+    return(-1);
+  return ($linha[0]);
 }
 
 ?>
