@@ -58,8 +58,8 @@
   echo("    <script language=\"javascript\"  type=\"text/javascript\">\n");
 
   echo("      function Iniciar() {\n");
-    				$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo("	 		startList();\n");
+                $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("        startList();\n");
   echo("      }\n");
 
   echo("    </script>\n");

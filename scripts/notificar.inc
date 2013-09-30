@@ -243,11 +243,11 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   // Se for visitante ou o participante ainda n�o foi autorizado
   // pelo coordenador do curso , nunca h� novidade 
   if ((EVisitante($sock,$cod_curso,$cod_usuario)) || 
-  	  (!EAluno($sock, $cod_curso, $cod_usuario) && 
-  	   !EFormador($sock, $cod_curso, $cod_usuario) && 
-  	   !EConvidado($sock, $cod_usuario, $cod_curso)
-  	  )
-  	 )
+      (!EAluno($sock, $cod_curso, $cod_usuario) && 
+       !EFormador($sock, $cod_curso, $cod_usuario) && 
+       !EConvidado($sock, $cod_usuario, $cod_curso)
+      )
+     )
   {
     return null;
   }
@@ -388,12 +388,12 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   // Verifica se tem novidade nas Pastas
   if (RetornaNumLinhas($res2) > 0)
   {
-  	$linha2 = RetornaLinha($res2);
-  	if ($linha2['data'] > $linha1['data'])
-  	{
-    	$saida[5]['data'] = $linha2['data'];
-    	$saida[5]['cod_usuario'] = $linha2['cod_usuario'];
-  	}
+    $linha2 = RetornaLinha($res2);
+    if ($linha2['data'] > $linha1['data'])
+    {
+      $saida[5]['data'] = $linha2['data'];
+      $saida[5]['cod_usuario'] = $linha2['cod_usuario'];
+    }
   }
 
 /********************************************************************
@@ -477,8 +477,8 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
    	      
   if (! $formador)
   {
-  	$query1 .= "where (status != 'X' and status != 'D') ";
-  	$query2 .= "where (status != 'X' and status != 'D') ";
+    $query1 .= "where (status != 'X' and status != 'D') ";
+    $query2 .= "where (status != 'X' and status != 'D') ";
   }
   $query1 .= "order by data desc limit 1";
   $query2 .= "order by data desc limit 1";
@@ -513,9 +513,9 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   	$linha = RetornaLinha($res);
     if ($linha['data'] > $saida[9]['data'])
     {
-    	$saida[9]['data'] = $linha['data'];
-    	// na tabela nao ha info do cod_usuario
-    	$saida[9]['cod_usuario'] = -1;	
+      $saida[9]['data'] = $linha['data'];
+      // na tabela nao ha info do cod_usuario
+      $saida[9]['cod_usuario'] = -1;
     }
   }
 
@@ -713,12 +713,12 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
     $res = Enviar($sock, $query2);
     if (RetornaNumLinhas($res) > 0)
     {
-    	$linha = RetornaLinha($res);
-    	if ($linha['data'] > $saida[23]['data'])
-    	{
-       		$saida[23]['data'] = $linha['data'];
-      		$saida[23]['cod_usuario'] = -1;
-    	}
+      $linha = RetornaLinha($res);
+      if ($linha['data'] > $saida[23]['data'])
+      {
+        $saida[23]['data'] = $linha['data'];
+        $saida[23]['cod_usuario'] = -1;
+      }
     }
   
 /********************************************************************
@@ -741,8 +741,8 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   $res = Enviar($sock, $query);
   if (RetornaNumLinhas($res) > 0)
   {
-  	$linha_q2 = RetornaLinha($res);
-  	$saida[24]['data'] = $linha_q2['data'];
+    $linha_q2 = RetornaLinha($res);
+    $saida[24]['data'] = $linha_q2['data'];
     $saida[24]['cod_usuario'] = -1;
   }
   
@@ -780,7 +780,7 @@ function RetornaListaFerramentas($sock)
         $lista1[$valor['cod_lingua']][0]['texto'] = $adm_dados['texto'];
     }
   }
-  return ($lista1);																																							
+  return ($lista1);
 }
 
 /* *********************************************************************

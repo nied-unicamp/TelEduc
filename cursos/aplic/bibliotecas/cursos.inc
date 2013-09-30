@@ -238,7 +238,7 @@ function PreparaAjuda($sock, $cod_curso,$cod_ferramenta,$cod_pagina=null, $cod_u
     if (EFormador($sock,$cod_curso,$cod_usuario))
       $arquivo=$cod_lingua_s."_".$cod_ferramenta."_f.html";
     else
-      $arquivo=$cod_lingua_s."_".$cod_ferramenta."_a.html";  
+      $arquivo=$cod_lingua_s."_".$cod_ferramenta."_a.html";
 
     if (file_exists($bibliotecas."../ajuda/".$arquivo))
     {
@@ -249,7 +249,6 @@ function PreparaAjuda($sock, $cod_curso,$cod_ferramenta,$cod_pagina=null, $cod_u
       $html_link.="<li>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</li>";
     }
   }
-  
   return $html_link;
 }
 

@@ -350,10 +350,10 @@ function FraseTipoAgrupamento($nome_pagina,$agrupar)
 
   /* Principal */
 
-  echo("              <form name=\"frmAgrupar\" method=post action=".$nome_pagina.">\n");
+  echo("              <form name=\"frmAgrupar\" method=\"post\" action=".$nome_pagina.">\n");
 
   // 180 - Clique aqui
-  echo("              <a class=text href=# onClick=return(Submissao());>".RetornaFraseDaLista($lista_frases,180)."</a>\n");
+  echo("              <a class=\"text\" href=\"#\" onClick=return(Submissao());>".RetornaFraseDaLista($lista_frases,180)."</a>\n");
 
 
   if (!isset($agrupar) || $agrupar==0)

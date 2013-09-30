@@ -53,7 +53,7 @@
   $origem = $_GET["origem"];
 
   if($origem == "confirmacao")
-  	$destino = "inscricao";
+    $destino = "inscricao";
 
   
   if(!isset($ordem))
@@ -67,7 +67,7 @@
 
   if (!empty ($_SESSION['login_usuario_s']))
   {
-  header("Location: exibe_cursos.php");
+    header("Location: exibe_cursos.php");
   }
 
   $pag_atual = "autenticacao_cadastro.php";
@@ -97,8 +97,7 @@
   // Esse $destino � utilizado como verifica��o para execu��o do
   // feedback hardcoded abaixo (com link na mensagem)
   //if($destino == "inscricao")
-  	//echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
-  	
+    //echo("      mostraFeedback('".RetornaFraseDaLista($lista_frases, 201)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."&acao=".$destino."\">".RetornaFraseDaLista($lista_frases, 203)."</a> ".RetornaFraseDaLista($lista_frases, 202)."', false);\n");
   //echo("        document.getElementById('login').focus();\n");
   echo("        startList();\n");
   echo("      }\n\n");
@@ -123,7 +122,7 @@
   echo("          if (Campo_senha == ''){\n");
   echo("            alert('".html_entity_decode((RetornaFraseDaLista($lista_frases, 182)))."');\n");
   echo("          document.formAutentica.senha.focus();\n");
-  echo("            return(false);\n");  
+  echo("            return(false);\n");
   echo("          }\n");
   echo("        }\n");
   echo("        return(true);\n");
@@ -131,20 +130,20 @@
 
   /*on focus do Login*/ 
   echo("      function Login_onfocus(obj){\n");
-  echo("		 obj.className='estiloPadrao';\n");
-  echo("		 if (obj.value==\"$fraseLoginPadrao\"){\n");
-  echo("		   obj.value=\"\";\n");
+  echo("         obj.className='estiloPadrao';\n");
+  echo("         if (obj.value==\"$fraseLoginPadrao\"){\n");
+  echo("           obj.value=\"\";\n");
   echo("         }\n");
   echo("      }\n\n");
-  
+
   /*on blur (perde o foco) do Login*/
   echo("      function Login_onblur(obj){\n");
-  echo("		 if (obj.value==\"\"){\n");
-  echo("	  	   obj.className='valorExemplo';\n");
-  echo("		   obj.value=\"$fraseLoginPadrao\";\n");
+  echo("         if (obj.value==\"\"){\n");
+  echo("           obj.className='valorExemplo';\n");
+  echo("           obj.value=\"$fraseLoginPadrao\";\n");
   echo("         }\n");
   echo("      }\n\n");
-  
+
   echo("    </script>\n\n");
 
   include("../menu_principal_tela_inicial.php");
@@ -152,9 +151,9 @@
   // 183 -  Autenticacao
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   if($destino == "inscricao"){
-  	echo("          <h4>".RetornaFraseDaLista($lista_frases,183)." - ".RetornaFraseDaLista($lista_frases,159)."</h4>\n");
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,183)." - ".RetornaFraseDaLista($lista_frases,159)."</h4>\n");
   }else{
-  	echo("          <h4>".RetornaFraseDaLista($lista_frases,183)."</h4>\n");
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,183)."</h4>\n");
   }
   
   // 3 A's - Muda o Tamanho da fonte
@@ -167,7 +166,7 @@
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     if($destino == "inscricao" && $origem==NULL){
-  	echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
+      echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
     }
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -191,7 +190,7 @@
   echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
   echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
   echo("                          <input type=\"hidden\" name=\"cod_lingua\" value=\"".$_SESSION['cod_lingua_s']."\" />\n");
-  
+
   if(isset($tipo_curso))
     echo("                          <input type=\"hidden\" name=\"tipo_curso\" value=\"".$tipo_curso."\" />\n");
   if(isset($destino))
@@ -201,35 +200,35 @@
   /* Login
    * Frase cod_texto=215 e cod_ferramenta=-3: Login
    */
-  echo("                          	<tr>\n");
-  echo("                          	  <td style=\"border:none; text-align:right;\">\n");
-  echo("                          	    <b>".RetornaFraseDaLista($lista_frases,215)."</b>\n");
-  echo("                          	  </td>\n");
-  echo("                          	  <td style=\"border:none\">\n");
-  echo("                          	    <input class=\"valorExemplo\" type=\"text\" id=\"login\" name=\"login\" size=\"25\" maxlength=\"100\" value='".$login."' onfocus=Login_onfocus(document.formAutentica.login); onblur=Login_onblur(document.formAutentica.login);>\n");
-  echo("                          	  </td>\n");
-  echo("                          	</tr>\n");
+  echo("                            <tr>\n");
+  echo("                              <td style=\"border:none; text-align:right;\">\n");
+  echo("                                <b>".RetornaFraseDaLista($lista_frases,215)."</b>\n");
+  echo("                              </td>\n");
+  echo("                              <td style=\"border:none\">\n");
+  echo("                                <input class=\"valorExemplo\" type=\"text\" id=\"login\" name=\"login\" size=\"25\" maxlength=\"100\" value='".$login."' onfocus=Login_onfocus(document.formAutentica.login); onblur=Login_onblur(document.formAutentica.login);>\n");
+  echo("                              </td>\n");
+  echo("                            </tr>\n");
   /* Senha
    * Frase cod_texto=158 e cod_ferramenta=-3: Senha
    */
-  echo("                          	<tr>\n");
-  echo("                          	  <td style=\"border:none; text-align:right;\">\n");
-  echo("                          	    <b>".RetornaFraseDaLista($lista_frases,158)."</b>\n");
-  echo("                          	  </td>\n");
-  echo("                          	  <td style=\"border:none\">\n");
+  echo("                            <tr>\n");
+  echo("                              <td style=\"border:none; text-align:right;\">\n");
+  echo("                                <b>".RetornaFraseDaLista($lista_frases,158)."</b>\n");
+  echo("                              </td>\n");
+  echo("                              <td style=\"border:none\">\n");
   echo("                                    <input type=\"password\" id=\"senha\" name=\"senha\" size=\"25\" maxlength=\"100\" style=\"border: 2px solid #9bc;\" />\n");
-  echo("                          	  </td>\n");
-  echo("                          	</tr>\n");
+  echo("                              </td>\n");
+  echo("                            </tr>\n");
   /* Botao Entrar do formulario de login
    * Frase cod_texto=18 e cod_ferramenta=-3: ?
    */
-  echo("                          	<tr>\n");
-  echo("                          	  <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
-  echo("                          	  <td style=\"border:none\">\n");
+  echo("                            <tr>\n");
+  echo("                              <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
+  echo("                              <td style=\"border:none\">\n");
   echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao Entrar Login\" onfocus value=\"".RetornaFraseDaLista($lista_frases,55)."\" />\n");
   //echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao OK Login\" onfocus value=\"Login\" />\n");
-  echo("                          	  </td>\n");
-  echo("                          	</tr>\n");
+  echo("                              </td>\n");
+  echo("                            </tr>\n");
   echo("                          </table>\n");
   echo("                        </form>\n");
   /*=== FIM - Formulario de Autenticacao (login) ===*/
@@ -249,15 +248,15 @@
   
   echo("                    </td>\n");
   
-  echo("					<td class=\"divide_meio\">\n");
+  echo("                    <td class=\"divide_meio\">\n");
   if($cod_curso != NULL){
-  	  // 90 - Se n�o tiver cadastro,
-	  // 101 - clique aqui!
-	  echo("                    ".RetornaFrase($sock, 90, -2)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFrase($sock, 101, -2)."</a><br />");
+    // 90 - Se n�o tiver cadastro,
+    // 101 - clique aqui!
+    echo("                    ".RetornaFrase($sock, 90, -2)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".RetornaFrase($sock, 101, -2)."</a><br />");
   }else{
-	  // 90 - Se n�o tiver cadastro,
-	  // 101 - clique aqui!
-	  echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 101, -2)."</a><br />");
+    // 90 - Se n�o tiver cadastro,
+    // 101 - clique aqui!
+    echo("                    ".RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".RetornaFrase($sock, 101, -2)."</a><br />");
   }
   // 67 - Se esqueceu seu login,
   // 101 - clique aqui!
@@ -271,7 +270,7 @@
   // 101 - clique aqui!
   echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 101, -2)."</a><br/>");
   
-  echo("					</td>\n");
+  echo("                    </td>\n");
   
   echo("                  </tr>\n");
   echo("                </table>\n");

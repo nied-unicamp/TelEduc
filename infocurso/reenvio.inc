@@ -45,7 +45,7 @@
 */
 function PreparaCabecalhoReenvio($lista_frases)
 {
-   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
   echo("<html lang=\"pt\">\n");
   echo("<head>\n");
   /* 1- Administra��o */
@@ -222,26 +222,26 @@ function ListaDadosCursos ($lista)
   for ($j = 0; $j < $total; $j++)
   {
     $cod_curso = $lista[$j]['cod_curso'];
-	$query = "select Cp.pasta from ".$dbnamebase.".Cursos C,".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and Cp.cod_pasta=C.cod_pasta";
+    $query = "select Cp.pasta from ".$dbnamebase.".Cursos C,".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and Cp.cod_pasta=C.cod_pasta";
     $res = Enviar($sock, $query);
     $linha = RetornaLinha($res);
-	// testa se retornou uma linha vazia
+    // testa se retornou uma linha vazia
     if($linha){
-    	$query = "select C.cod_curso, C.nome_curso, Cp.pasta, U.nome, U.email from ";
-    	$query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC, ".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador and Cp.cod_pasta=C.cod_pasta";
-    	$res = Enviar($sock, $query);
-    	$linha = RetornaLinha($res);
-    	$jao_array[] = $linha;
+      $query = "select C.cod_curso, C.nome_curso, Cp.pasta, U.nome, U.email from ";
+      $query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC, ".$dbnamebase.".Cursos_pastas Cp where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador and Cp.cod_pasta=C.cod_pasta";
+      $res = Enviar($sock, $query);
+      $linha = RetornaLinha($res);
+      $jao_array[] = $linha;
     }
     // se retornou linha vazia, eh porque o curso nao tem categoria, dai tem que usar uma query diferente
     else{
-    	$query = "select C.cod_curso, C.nome_curso, U.nome, U.email from ";
-    	$query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador";
-    	$res = Enviar($sock, $query);
-    	$linha = RetornaLinha($res);
-    	$jao_array[] = $linha;
-    }    
-  }      	
+      $query = "select C.cod_curso, C.nome_curso, U.nome, U.email from ";
+      $query .= $dbnamebase.".Usuario U, ".$dbnamebase.".Cursos C,".$dbnamebase.".Usuario_curso UC where C.cod_curso=".$cod_curso." and UC.cod_curso=C.cod_curso and UC.cod_usuario_global=U.cod_usuario and UC.cod_usuario=C.cod_coordenador";
+      $res = Enviar($sock, $query);
+      $linha = RetornaLinha($res);
+      $jao_array[] = $linha;
+    }
+  }
   Desconectar($sock);
   return ($jao_array);
 }
@@ -252,7 +252,7 @@ function ListaDadosCursos ($lista)
             $cod_curso - codigo do curso onde o coordenador ser� o destinat�rio do e-mail
    Saida:  vetor contendo os dados buscados
 */
-Function ListaDadosParaEmail($sock,$cod_curso) 
+Function ListaDadosParaEmail($sock,$cod_curso)
 {
   $query = "select U.cod_usuario, U.login, U.nome, U.email, C.nome_curso from Usuario U, Usuario_curso UC, Cursos C where UC.cod_curso = ".$cod_curso." and UC.cod_curso = C.cod_curso and UC.cod_usuario = C.cod_coordenador and U.cod_usuario = UC.cod_usuario_global";
 
@@ -328,7 +328,7 @@ Function MandaMsgcomDados($cod_curso)
    Saida: vetor contendo informa��es sobre o curso cujo cod_curso foi passado
 */
 function BuscaInfoCursos($cod_curso){
-   // 2Session
+  // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
   
   $sock =Conectar("");
