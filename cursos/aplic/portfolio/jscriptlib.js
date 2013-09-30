@@ -16,7 +16,7 @@ var input=0;
 var cancelarElemento=null;
 var cancelarTodos=0;
 var lista_frases=new Array();
-var lista_frases_geral = new Array();
+var lista_frases_geral=new Array();
 var cod_avaliacao="";
 var valor_radios = new Array();
 
@@ -156,25 +156,6 @@ function EdicaoTexto(codigo, id, valor){
 
 var controle=0;
 
-function EditaTituloEnter(campo, evento, id)
-{
-  var tecla;
-  CheckTAB=true;
-  if(navigator.userAgent.indexOf("MSIE")== -1)
-  {
-    tecla = evento.which;
-  }
-  else
-  {
-    tecla = evento.keyCode;
-  }
-  if ( tecla == 13 )
-  {
-    EdicaoTitulo(id,'tit_'+id,'ok');
-  }
-  return true;
-}
-
 function EdicaoTitulo(codigo, id, valor){
   if ((valor=='ok')&&(document.getElementById(id+'_text').value!="")){
     conteudo = document.getElementById(id+'_text').value;
@@ -200,70 +181,6 @@ function EdicaoTitulo(codigo, id, valor){
   cancelarElemento=null;
 }
 
-function AlteraTitulo(id){
-  if (editaTitulo==0){
-    CancelaTodos();
-
-    id_aux = id;
-
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
-
-    conteudo = document.getElementById('tit_'+id).innerHTML;
-    document.getElementById('tit_'+id).className="";
-    document.getElementById('tr_'+id).className="";
-
-    createInput = document.createElement('input');
-    document.getElementById('tit_'+id).innerHTML='';
-    document.getElementById('tit_'+id).onclick=function(){ };
-
-    createInput.setAttribute('type', 'text');
-    createInput.setAttribute('style', 'border: 2px solid #9bc');
-    createInput.setAttribute('id', 'tit_'+id+'_text');
-//     createInput.onkeypress = function(event) {EditaTituloEnter(this, event, id_aux);}
-    if (createInput.addEventListener){; //not IE
-    createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
-    } else if (createInput.attachEvent){; //IE
-    createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
-    };
-
-    document.getElementById('tit_'+id).appendChild(createInput);    
-    xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
-    createSpan.setAttribute('id', 'OkEdita');
-    createSpan.innerHTML=lista_frases_geral.msg_ger18;
-    document.getElementById('tit_'+id).appendChild(createSpan);
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
-    createSpan.setAttribute('id', 'CancelaEdita');
-    createSpan.innerHTML=lista_frases_geral.msg_ger2;
-    document.getElementById('tit_'+id).appendChild(createSpan);
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    startList();
-    cancelarElemento=document.getElementById('CancelaEdita');
-    document.getElementById('tit_'+id+'_text').select();
-    editaTitulo++;
-  }
-}
 
 function LimparTexto(id)
 {
