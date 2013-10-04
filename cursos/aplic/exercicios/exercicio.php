@@ -83,34 +83,28 @@
   $total_ex_entregues = count($ex_entregues);
   $total_ex_corrigidos = count($ex_corrigidos);
   $total_titulos = count($titulos);
-
-
+  
   /* Coloca o numero de exercicios entregues e tambem corridos
    * No array titulos, que contem o nome dos usuarios/ grupos.
    * Assim na hora de exibicao podemos fazer a conta com o 
    * numero total de exercicios.
    */
-  $i_titulos = 0;
-  $i_ex_entregues = 0;
-  $i_ex_corrigidos = 0;
-
-  while ($i_titulos < $total_titulos){
-
-    if ($titulos[$i_titulos]['cod'] != $ex_entregues[$i_ex_entregues]['cod']){
-      $titulos[$i_titulos]['entregues'] = 0;
-    } else {
-      $titulos[$i_titulos]['entregues'] = $ex_entregues[$i_ex_entregues]['num'];
-      $i_ex_entregues++;
+  for($i_titulos=0; $i_titulos<$total_titulos; $i_titulos++){
+    $titulos[$i_titulos]['entregues'] = 0;
+      for ($i_ex_entregues=0; $i_ex_entregues<$total_ex_entregues; $i_ex_entregues++){
+        if ($titulos[$i_titulos]['cod'] == $ex_entregues[$i_ex_entregues]['cod']){
+          $titulos[$i_titulos]['entregues']=$ex_entregues[$i_ex_entregues]['num'];
+      }
     }
-
-    if ($titulos[$i_titulos]['cod'] != $ex_corrigidos[$i_ex_corrigidos]['cod']){
-      $titulos[$i_titulos]['corrigidos'] = 0;
-    } else {
-      $titulos[$i_titulos]['corrigidos'] = $ex_corrigidos[$i_ex_corrigidos]['num'];
-      $i_ex_corrigidos++;
-    }
-
-    $i_titulos++;
+ }
+  
+  for($i_titulos=0; $i_titulos<$total_titulos; $i_titulos++){
+   $titulos[$i_titulos]['corrigidos'] = 0;
+   for ($i_ex_corrigidos=0; $i_ex_corrigidos<$total_ex_corrigidos; $i_ex_corrigidos++){
+      if ($titulos[$i_titulos]['cod'] == $ex_corrigidos[$i_ex_corrigidos]['cod']){
+        $titulos[$i_titulos]['corrigidos']=$ex_corrigidos[$i_ex_corrigidos]['num'];
+      }
+   }
   }
 
   /*********************************************************/
