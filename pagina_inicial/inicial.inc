@@ -315,7 +315,7 @@ function CadastraUsuario($sock,$cod_usuario_global,$cod_curso)
 {
   $cod_usuario_prox = RetornaProximoCodigoUsuarioNoCurso($sock,$cod_usuario_global,$cod_curso);
 
-  $query = "insert into Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values (".VerificaNumeroQuery($cod_usuario_global).",".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).",'a',".time().")";
+  $query = "insert into Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values (".VerificaNumeroQuery($cod_usuario_global).",".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).",'i',".time().")";
   Enviar($sock,$query);
 
   $query = "insert into Usuario_config (cod_usuario,cod_curso) values (".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).")";
