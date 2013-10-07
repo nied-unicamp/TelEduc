@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/bibliotecas/Javascript.inc
+    Arquivo : cursos/aplic/bibliotecas/javascript.inc
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /* ==========================================================
-   ARQUIVO : cursos/aplic/bibliotecas/Javascript.inc
+   ARQUIVO : cursos/aplic/bibliotecas/javascript.inc
    ========================================================== */
 
 /*
@@ -45,183 +45,64 @@
   Autor: Leonel Aguilar Gayard
 */
 
+$palavras_reservadas_js = array(
+  "break",
+  "case",
+  "catch",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "else",
+  "finally",
+  "for",
+  "function",
+  "if",
+  "in",
+  "instanceof",
+  "new",
+  "null",
+  "return",
+  "switch",
+  "this",
+  "throw",
+  "try",
+  "typeof",
+  "var",
+  "void",
+  "while",
+  "with",
+);
+
 /* *********************************************************************
-   GeraJSVerificacaoData - Echo que gera funï¿½ï¿½es JavaScript de verificacao de campos de data
-   entrada: nenhuma
+   GeraVariaveis - Echo que gera variáveis JavaScript
+   entrada: $variaveis_js - um array associativo com formato chave-valor 
    saida:   nenhuma
    Obs: - a funï¿½ï¿½o jï¿½ gera as tags <script> e </script>
-     Funï¿½ï¿½es JS geradas:
-       - Bissexto(ano):    retorna true se o ano passado ï¿½ bissexto, false caso contrï¿½rio.
-       - TemCaracteresEstranhos(valor_data) - retorna true se valor_data contiver caracteres que nao sejam digitos ou barra '/', false caso contrario.
-       - PadronizaValorData(valor_data) - padroniza valor_data para o formato DD/MM/AAAA. 
-       - DataValida(campo_data) - verifica se o campo de data passado estï¿½ corretamente preenchido.
 */
-function GeraJSVerificacaoData()
+function GeraVariaveis($variaveis_js)
 {
-  echo("<script type=\"text/javascript\">\n");
-  echo("var ndias=new Array(31,28,31,30,31,30,31,31,30,31,30,31);\n");
-  echo("var divisor=20; //divisor de janela de tempo\n");
-
-  echo("function Bissexto(ano) \n");
-  echo("{\n");
-  echo("  return ((ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 ==0))) ;\n");
-  echo("}\n");
-
-  echo("function TemCaracteresEstranhos(valor_data) \n");
-  echo("{\n");
-  echo("  var bool_erro=false;\n");
-  echo("  var i=0;\n");
-  echo("  var c='';\n");
-  echo("  while (i<valor_data.length && !bool_erro)\n");
-  echo("  {\n");
-  echo("    c=valor_data.charAt(i);\n");
-  echo("    if ((c<'0' || c>'9') && c!='/') \n");
-  echo("      bool_erro=true;\n");
-  echo("    i++; \n");
-  echo("  }\n");
-  echo("  return(bool_erro);\n");
-  echo("}\n");
-
-  echo("function PadronizaValorData(campo_data)\n");
-  echo("{\n");
-  echo("  var valor_data=campo_data.value;\n");
-  echo("  var i=0;\n");
-  echo("  var novovalor_data='';\n");
-  echo("  var tmpvalor_data='';\n");
-  echo("  var numbarras=0;\n");
-  echo("  while (i<valor_data.length) \n");
-  echo("  {\n");
-  echo("    c=valor_data.charAt(i);\n");
-  echo("    if (c=='-')\n");
-  echo("      c='/';\n");
-  echo("    if (c=='/')\n");
-  echo("      numbarras++;\n");
-  echo("    if (c!=' ')\n");
-  echo("      tmpvalor_data+=c;\n");
-  echo("    i++; \n");
-  echo("  }\n");
-  echo("  if (numbarras==2)\n");
-  echo("  {\n");
-  echo("    b1=tmpvalor_data.indexOf('/');\n");
-  echo("    b2=tmpvalor_data.indexOf('/',b1+1);\n");
-  echo("    dia=tmpvalor_data.substring(0,b1);\n");
-  echo("    intdia=dia*1;\n");
-  echo("    ano=tmpvalor_data.substring(b2+1,valor_data.length)*1;\n");
-  echo("    mes=tmpvalor_data.substring(b1+1,b2)*1;\n");
-  echo("    intmes=mes*1;\n");
-  echo("    if (ano>=0 && ano<divisor)\n");
-  echo("      ano+=2000;\n");
-  echo("    if (ano>=divisor && ano<=100)\n");
-  echo("      ano+=1900;\n");
-  echo("    if (intdia>=1 && intdia<10)\n");
-  echo("      dia='0'+intdia;\n");
-  echo("    if (intmes>=1 && intmes<10)\n");
-  echo("      mes='0'+intmes;\n");
-  echo("    novovalor_data=dia+'/'+mes+'/'+ano;\n");
-  echo("    campo_data.value=novovalor_data;\n");
-  echo("    return(novovalor_data);\n");
-  echo("  }\n");
-  echo("  else \n");
-  echo("  {\n");
-  echo("    campo_data.value=valor_data;\n");
-  echo("    return(valor_data);\n");
-  echo("  }\n");
-  echo("}\n");
-
-  echo("function DataValida(campo_data) \n");
-  echo("{\n");
-  echo("  var data = campo_data.value;\n");
-  echo("  if (data=='') \n");
-  echo("  {\n");
-  //  Voce deixou um campo_data de data vazio. Por favor preencha-o com uma data.\n");
-  //  alert('".RetornaFraseDaLista($lista_frases,??)."');\n");
-  echo("    alert('Vocï¿½ deixou um campo de data vazio. Por favor preencha-o com uma data.');\n");
-  echo("    return(false);\n");
-  echo("  }\n");
-  echo("  else \n");
-  echo("  {\n");
-  echo("    data=PadronizaValorData(campo_data);\n");
-  echo("    if (TemCaracteresEstranhos(data)) \n");
-  echo("    {\n");
-  // Vocï¿½ digitou caracteres estranhos nesta data.\nUse apenas dï¿½gitos de 0 a 9 e a barra ( / ) para separar dia, mï¿½s e ano (exemplo: 31/01/2000).\nPor favor retorne e corrija.\n");
-  // alert('".RetornaFraseDaLista($lista_frases,??)."');\n");
-  echo("      alert('Vocï¿½ digitou caracteres estranhos nesta data.\\nUse apenas dï¿½gitos de 0 a 9 e a barra ( / ) para separar dia, mï¿½s e ano (exemplo: 31/01/2000).\\nPor favor retorne e corrija.');\n");
-  echo("      return(false);\n");
-  echo("    }\n");
-  echo("    else \n");
-  echo("    {\n");
-  echo("      campo_data.value=data;\n");
-  echo("      b1=data.indexOf('/');\n");
-  echo("      b2=data.indexOf('/',b1+1);\n");
-  echo("      dia=data.substring(0,b1)*1;\n");
-  echo("      mes=data.substring(b1+1,b2)*1;\n");
-  echo("      ano=data.substring(b2+1,data.length)*1;\n");
-  echo("      if (ano>=0 && ano<divisor)   ano=ano+2000;\n");
-  echo("      if (ano>=divisor && ano<=99) ano+=1900;\n");
-  echo("      if (Bissexto(ano)) \n");
-  echo("        ndias[1]=29;\n");
-  echo("      else \n");
-  echo("        ndias[1]=28;\n");
-  echo("      if (ano<1900 || ano>2100 || mes<1 || mes>12) \n");
-  echo("      {\n");
-  // Data invï¿½lida: \n");
-  // . Por favor retorne e corrija.\n");
-  // alert('".RetornaFraseDaLista($lista_frases,??)."'+data+'".RetornaFraseDaLista($lista_frases,??)."');\n");
-  echo("        alert('Data invï¿½lida: '+data+'. Por favor retorne e corrija.');\n");
-  echo("        return(false);\n");
-  echo("      } \n");
-  echo("      else \n");
-  echo("      {\n");
-  echo("        if (dia<1 || dia>ndias[mes-1]) \n");
-  echo("        {\n");
-  // Data invï¿½lida: \n");
-  // . Por favor retorne e corrija.\n");
-  // alert('".RetornaFraseDaLista($lista_frases,??)."'+data+'".RetornaFraseDaLista($lista_frases,??)."');\n");
-  echo("          alert('Data invï¿½lida: '+data+'. Por favor retorne e corrija.');\n");
-  echo("          return(false);\n");
-  echo("        }\n");
-  echo("      }\n");
-  echo("    }\n");
-  echo("  } \n");
-  echo("  return(true);\n");
-  echo("}\n");
-  echo("</script>\n");
-}
-
-/* *********************************************************************
-   GeraJSComparacaoDatas - Echo que gera pacote JS de funï¿½ï¿½es de comparaï¿½ï¿½o de datas
-   entrada: nenhuma
-   saida:   nenhuma
-   Funcoes geradas:
-     - AnoMesDia(data) - retorna a data passada no formato AAAA/MM/DD, para fazer comparacoes cronologicas.
-     - ComparaData(campo_data1,campo_data2) - retorna -1 se 1 < 2, 0 se 1 == 2, 1 se 1 > 2
-*/
-
-function GeraJSComparacaoDatas()
-{
-  echo("<script type=\"text/javascript\">\n");
-  echo("function AnoMesDia(data)\n");
-  echo("{\n");
-  echo("  alert('estou em anomesdia');");
-  echo("  b1=data.indexOf('/');\n");
-  echo("  b2=data.indexOf('/',b1+1);\n");
-  echo("  dia=data.substring(0,b1);\n");
-  echo("  ano=data.substring(b2+1,data.length);\n");
-  echo("  mes=data.substring(b1+1,b2);\n");
-  echo("  return(ano+'/'+mes+'/'+dia);\n");
-  echo("}\n");
-  echo("function ComparaData(campo_data1,campo_data2)\n");
-  echo("{\n");
-  echo("  var data1 = AnoMesDia(campo_data1.value);\n");
-  echo("  var data2 = AnoMesDia(campo_data2.value);\n");
-  echo("  alert('compara data');\n");
-  echo("  if (data1 < data2)\n");
-  echo("    return -1;\n");
-  echo("  else if (data1 > data2)\n");
-  echo("    return 1;\n");
-  echo("  else if (data1 == data2)\n");
-  echo("    return 0;\n");
-  echo("}\n");
-  echo("</script>\n");
+  // Aqui tornamos disponível qualquer variável que
+  // a página tenha colocado em $variaveis_js para todas
+  // as funções JavaScript definidas subsequentemente.
+  if (is_array($variaveis_js) && count($variaveis_js)) {
+    echo("    <script type=\"text/javascript\">\n");
+    foreach ($variaveis_js as $nome_var => $valor) {
+      if (!empty($nome_var) && is_string($nome_var) && $valor !== "") {
+        $nome_var = trim($nome_var);
+        // O nome deve ser válido e
+        if (preg_match('/^[a-zA-Z_\$][\w\$]*$/', $nome_var) &&
+        // o nome não pode ser uma palavra reservada e
+        !in_array($nome_var, $palavras_reservadas_js)          &&
+        // deve ter um valor simples.
+        !is_array($valor) && !is_object($valor))
+        {
+          echo("      var ".$nome_var." = ".$valor.";\n");
+        }
+      }
+    }
+    echo("    </script>\n");
+  }
 }
 ?>
