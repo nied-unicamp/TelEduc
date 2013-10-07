@@ -688,8 +688,8 @@ function HaDadosFaltando($sock,$cod_usuario)
     return false;
 
   $query  = "select UC.tipo_usuario,U.rg,U.data_nasc,U.sexo,U.endereco,U.cidade,U.estado,U.pais ";
-  $query .= "from ".$dbnamebase.".Usuario_curso UC
-  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
   $query .= "where UC.cod_usuario='".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso=".$_SESSION['cod_curso_s'];
 
   $res    = Enviar($sock,$query);
@@ -858,13 +858,13 @@ function RetornaCodLinguaUsuario($sock,$cod_usuario)
 function PreencheuDadosPessoais($sock)
 {
   $query  = "select cod_usuario from Usuario ";
-  $query  = "where cod_usuario = ".$_SESSION['cod_usuario_global_s']." and ";
+  $query .= "where cod_usuario = ".$_SESSION['cod_usuario_global_s']." and ";
   $query .= "rg is not NULL and ";
-  $query  = "data_nasc is not NULL and ";
-  $query  = "endereco is not NULL and ";
-  $query  = "cidade is not NULL and ";
-  $query  = "estado is not NULL and ";
-  $query  = "pais is not NULL";
+  $query .= "data_nasc is not NULL and ";
+  $query .= "endereco is not NULL and ";
+  $query .= "cidade is not NULL and ";
+  $query .= "estado is not NULL and ";
+  $query .= "pais is not NULL";
 
   $res    = Enviar($sock,$query);
   $res    = RetornaLinha($res);

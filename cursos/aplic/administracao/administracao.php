@@ -170,8 +170,8 @@
   echo("                    </td>\n");
   echo("                    <td align=\"left\">\n");
 
-  echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=N\">");
-  /* 74 - Gerenciamento de Inscriï¿½ï¿½es */
+  echo("                      <a href=\"gerenciamento_inscricoes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=i\">");
+  /* 74 - Gerenciamento de Inscrições */
   echo($bold_tag[$ferr_alt[3]][0].RetornaFraseDaLista($lista_frases,74).$bold_tag[$ferr_alt[3]][1]."</a><br />\n");
 
   echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=A\">");

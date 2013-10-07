@@ -562,7 +562,7 @@ function CadastrarUsuario($sock, $cod_curso, $dados, $lista_frases, $cod_usuario
   /* 63 - TelEduc: Inscriï¿½ï¿½o */
   $assunto=RetornaFraseDaLista($lista_frases,63);
 
-  if ($dados['tipo_usuario']=="A")
+  if ($dados['tipo_usuario'] == 'A')
   {
     /* 64 - Vocï¿½ foi inscrito como aluno para o curso */
     $mensagem ="<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
@@ -781,12 +781,14 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
 
   /*busca no banco os registros a serem mostrados*/
   $sock=Conectar("");
-  $lista_usuarios = RetornaListaUsuarios($sock,$cod_curso,$tipo_usuario,$ordem);
-  $mostra_portfolio = false;
-  $num=count($lista_usuarios);
+  $lista_usuarios   = RetornaListaUsuarios($sock,$cod_curso,$tipo_usuario,$ordem);
+  // Se o tipo de usuário que estamos paginando é algum papel desligado que
+  // tenha portfólio, devemos mostrar a opcao de ativar ou não o portfolio.
+  $mostra_portfolio = ($tipo_usuario == 'a' || $tipo_usuario == 'f' || $tipo_usuario == 'z');
+  $num              = count($lista_usuarios);
 
-  /* comeï¿½a a preparar ate onde pegaremos, ou seja, se for a ultima pagina vai ate o fim, caso contrario
-   * pega vai ate um multiplo de 10
+  /* Começa a preparar até onde pegaremos, ou seja, se for a ultima pagina
+   * vai ate o fim, caso contrario pega vai ate um multiplo de 10.
    */
 
   $limite=((int)$pag_atual*10);
@@ -805,11 +807,7 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
   $control=1;
   foreach($lista_usuarios as $cod_usuario_l => $linha){
     if($control>=$i && $control<=$limite){
-      // Se o tipo de usuário que estamos paginando é o 
-      // aluno com a inscição rejeitada, devemos mostrar
-      // a opcao de ativar ou não  
-      if($tipo_usuario=='a'){
-        $mostra_portfolio = true;
+      if($mostra_portfolio) {
         if($linha['portfolio'] == "ativado")
           $frase_port=$frase_ativado;
         else

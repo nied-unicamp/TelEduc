@@ -335,7 +335,7 @@
     echo("            </tr>\n");
   }
 
-  /* Cï¿½digo de montagem do conteï¿½do a partir daqui */
+  /* C�digo de montagem do conte�do a partir daqui */
   $lista_usuarios = RetornaListaUsuarios($sock, $cod_curso, $tipo_usuario, $ordem);
 
   /* Sistema de Paginacao */
@@ -452,12 +452,14 @@
 
   }
 
-
-  if (isset($frase_desligar))
-    echo("                  <li id=\"mDesligar_Selec\" class=\"menuUp\"><span>".$frase_desligar."</span></li>\n");
-
-  if (isset($frase_religar))
-    echo("                  <li id=\"Religar\" class=\"menuUp\"><span>".$frase_religar."</span></li>\n");
+  // Apenas Coordenadores podem Ligar/Desligar Formadores.
+  if ((($tipo_usuario != 'F') && ($tipo_usuario != 'f')) || $ecoordenador) {
+    if (isset($frase_desligar))
+      echo("                  <li id=\"mDesligar_Selec\" class=\"menuUp\"><span>".$frase_desligar."</span></li>\n");
+  
+    if (isset($frase_religar))
+      echo("                  <li id=\"Religar\" class=\"menuUp\"><span>".$frase_religar."</span></li>\n");
+  }
 
   // Ativar / Desativar Portfolio
   if($gerenciar_portfolio) {
