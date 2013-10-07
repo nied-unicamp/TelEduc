@@ -54,7 +54,6 @@
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
   // P�gina Principal
   /* 1 - Administra��o */

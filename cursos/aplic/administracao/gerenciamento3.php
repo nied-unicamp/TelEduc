@@ -49,17 +49,6 @@
 
   include("../topo_tela.php");
 
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,0);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
   if (!isset($ordem))
   {
     $ordem="nome";
