@@ -92,13 +92,13 @@ function EliminaEspacos($frase)
 
 function RetornaCursosNaoIniciados($sock,$cod_usuario)
 {
-  $query = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario
-	    FROM Usuario USU
-	    INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-	    INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'
-            AND (CUR.curso_inicio > ".time()." OR CUR.curso_inicio is NULL)
-	    ORDER BY CUR.nome_curso";
+  $query  = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."' AND ";
+  $query .= "      (CUR.curso_inicio > ".time()." OR CUR.curso_inicio is NULL) ";
+  $query .= "ORDER BY CUR.nome_curso";
 
   $res = Enviar($sock, $query);
   $total = RetornaNumLinhas($res);
@@ -154,23 +154,24 @@ function RetornaCursosNaoIniciadosSemUsuario($sock)
 function RetornaCursosEmAndamento($sock,$cod_usuario)
 {
   /*
-    a - Aluno inscrito
-    z - convidado passivo
-    f - Formador rejeitado
+    I - aluno inv�ido ou inexistente
+    i - Aluno inscrito
+    a - Aluno desligado
     r - Aluno rejeitado
-    t - convidado com inscricao cancelada
-    y - visitante com inscricao cancelada
+    f - Formador desligado
+    v - Visitante desligado
+    z - Colaborador desligado
   */
 
-  $query = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario
-	    FROM Usuario USU
-	    INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-	    INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'
-            AND CUR.curso_inicio <= '".time()."'
-            AND CUR.curso_fim >= '".time()."'
-            AND binary USUC.tipo_usuario not in ('X', 'f', 'r', 't', 'y', 'a')
-	    ORDER BY CUR.nome_curso";
+  $query  = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."' AND ";
+  $query .= "      CUR.curso_inicio <= '".time()."' AND ";
+  $query .= "      CUR.curso_fim >= '".time()."' AND ";
+  $query .= "      binary USUC.tipo_usuario not in ('I', 'i', 'a', 'r', 'f', 'v', 'z') ";
+  $query .= "ORDER BY CUR.nome_curso";
 
   $res = Enviar($sock, $query);
   $total = RetornaNumLinhas($res);
@@ -209,7 +210,7 @@ function RetornaCursosEmAndamentoSemUsuario($sock)
   else
     $lista_saida=$lista;
 
-  return ($lista_saida);	
+  return ($lista_saida);
 }
 /********************************************************************
   Fun�ao ApagaMensagem - Atribue a flag de X (Deletado) ao campo
@@ -227,22 +228,23 @@ function RetornaCursosPassados($sock,$cod_usuario)
   $ontem=$hoje - 86400;
 
   /*
-    a - Aluno inscrito
-    z - convidado passivo
-    f - Formador rejeitado
+    I - aluno inv�ido ou inexistente
+    i - Aluno inscrito
+    a - Aluno desligado
     r - Aluno rejeitado
-    t - convidado com inscricao cancelada
-    y - visitante com inscricao cancelada
+    f - Formador desligado
+    v - Visitante desligado
+    z - Colaborador desligado
   */
 
-  $query = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario
-	    FROM Usuario USU
-	    INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-	    INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'
-            AND CUR.curso_fim < '".$ontem."'
-            AND binary USUC.tipo_usuario not in ('X', 'f', 'r', 't', 'y', 'a')
-	    ORDER BY CUR.nome_curso";
+  $query  = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."' AND ";
+  $query .= "      CUR.curso_fim < '".$ontem."' AND ";
+  $query .= "      binary USUC.tipo_usuario not in ('I', 'i', 'a', 'r', 'f', 'v', 'z') ";
+  $query .= "ORDER BY CUR.nome_curso";
 
   $res = Enviar($sock, $query);
   $total = RetornaNumLinhas($res);
@@ -282,7 +284,7 @@ function RetornaCursosPassadosSemUsuario($sock,$cod_usuario)
   else
     $lista_saida=$lista;
 
-  return ($lista_saida);	
+  return ($lista_saida);
 }
 
 /* **********************************************************************
@@ -328,18 +330,29 @@ function RetornaCursosInscricaoSemUsuario($sock)
 
 function RetornaCursosInscAbertas($sock,$cod_usuario)
 {
+
+  /*
+    I - aluno inv�ido ou inexistente
+    i - Aluno inscrito
+    a - Aluno desligado
+    r - Aluno rejeitado
+    f - Formador desligado
+    v - Visitante desligado
+    z - Colaborador desligado
+  */
+
   $hoje=time();
   $ontem=$hoje - 86400;
 
-  $query = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario
-	    FROM Usuario USU
-	    INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-	    INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'
-            AND CUR.inscricao_inicio <= '".$hoje."'
-            AND CUR.inscricao_fim >= '".$ontem."'
-            AND binary USUC.tipo_usuario not in ('X', 'f', 'r', 't', 'y', 'a')
-	    ORDER BY CUR.nome_curso";
+  $query  = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."' AND ";
+  $query .= "      CUR.inscricao_inicio <= '".$hoje."' AND ";
+  $query .= "      CUR.inscricao_fim >= '".$ontem."' AND ";
+  $query .= "      binary USUC.tipo_usuario not in ('I', 'i', 'a', 'r', 'f', 'v', 'z') ";
+  $query .= "ORDER BY CUR.nome_curso";
 
   $res = Enviar($sock, $query);
   $total = RetornaNumLinhas($res);

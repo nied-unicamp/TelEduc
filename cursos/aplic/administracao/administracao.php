@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/administracao/administracao.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - N�cleo de Inform�tica Aplicada � Educa��o
+    Nied - Núcleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universit�ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -74,7 +74,7 @@
   echo("            startList();\n");
   echo("          }\n\n");
   echo("        </script>\n");
-  
+
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -83,7 +83,7 @@
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."</h4>\n");
   echo($cabecalho);
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
@@ -160,46 +160,40 @@
   /* 51 - Inscrever Alunos */
   echo(RetornaFraseDaLista($lista_frases,51)."</a><br />\n");
 
-  // 164 - Inscrever Convidados
+  // 164 - Inscrever Colaboradores
   echo("                      <a href=\"inscrever.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z\">".RetornaFraseDaLista($lista_frases, 164)."</a><br />\n");
   // aqui, a variavel origem indica que a proxima pagina veio de administracao.php
 
-  
   // 182 - Inscrever visitantes
-  echo("    <a href=\"inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=z&origem=1\">".RetornaFraseDaLista($lista_frases,182)."</a><br /><br />\n");
-  
+  echo("    <a href=\"inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=V\">".RetornaFraseDaLista($lista_frases,182)."</a><br /><br />\n");
+
   echo("                    </td>\n");
   echo("                    <td align=\"left\">\n");
+
   echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=N\">");
   /* 74 - Gerenciamento de Inscri��es */
   echo($bold_tag[$ferr_alt[3]][0].RetornaFraseDaLista($lista_frases,74).$bold_tag[$ferr_alt[3]][1]."</a><br />\n");
-  echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=A\">");
 
+  echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=A\">");
   /* 102 - Gerenciamento de Alunos */
   echo(RetornaFraseDaLista($lista_frases,102));
-  if ($ecoordenador)
-    /* 108 - Tranformar em Formador */
-    echo(" / ".RetornaFraseDaLista($lista_frases,108));
   echo("</a><br />\n");
 
-  echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=F\">");
-
+  echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=F\">");
   // 103 - Gerenciamento de Formadores
   echo(RetornaFraseDaLista($lista_frases,103));
-  if ($ecoordenador)
-    // 107 - Tranformar em Aluno
-    echo(" / ".RetornaFraseDaLista($lista_frases,107));
   echo("</a><br />\n");
 
-  if ($ecoordenador)
-   // 258 - Gerenciamento de Formadores desligados
-    echo("                      <a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=G\">".RetornaFraseDaLista($lista_frases, 258)."</a><br />\n");
+  // 165 - Gerenciamento de Convidados
+  echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z\">");
+  echo(RetornaFraseDaLista($lista_frases, 165));
+  echo("</a><br />\n");
 
-  // 165 - Gerenciamento de convidados
-  echo("                      <a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 165)."</a><br />\n");
-  
   // 179 - Gerenciamento de Visitantes
-  echo("                      <a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=a\">".RetornaFraseDaLista($lista_frases, 179)."</a><br />\n");
+  echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=V\">");
+  echo(RetornaFraseDaLista($lista_frases, 179));
+  echo("</a><br />\n");
+
   echo("                    </td>\n");
   echo("                  </tr>\n");
   echo("                  <tr class=\"head\">\n");
@@ -232,13 +226,13 @@
   $query = "select valor from Config where item='extrator'";
   $res = Enviar($sock, $query);
   $linha = RetornaLinha($res);
-  $extrator = $linha['valor'];  
+  $extrator = $linha['valor'];
 
   if ($extrator == 'sim') {
     if ($ecoordenador) {
       echo("                      <a href=\"extracao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."\">");
       /* 212 - Agendar Extra��o do Curso */
-      echo(RetornaFraseDaLista($lista_frases, 212)."</a><br />\n"); 
+      echo(RetornaFraseDaLista($lista_frases, 212)."</a><br />\n");
 
       echo("                      <a href=\"remover_extracao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."\">");
       /* 213 - Listar / Remover Extra��o do Curso */
@@ -250,7 +244,7 @@
   }
   else
     /*238 - Secao atualmente inexistente*/
-    echo("                      ".RetornaFraseDaLista($lista_frases, 238)."\n");  
+    echo("                      ".RetornaFraseDaLista($lista_frases, 238)."\n");
 
   echo("                    </td>\n");
   echo("                  </tr>\n");

@@ -47,7 +47,7 @@
   $action = $_POST['action'];
   $action_js = $_POST['action_js'];
   
-   $cod_usuario_global=VerificaAutenticacao($cod_curso);
+  $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");
 
@@ -73,33 +73,6 @@
 
   $msgErro = "";
 
-  //nao foi achado em nenhum lugar do ambiente
-  /*if($action == "alterarEmail")
-  {
-    $email=LimpaTags($email);
-    if (ExisteEmail($sock,$cod_curso,$email,$cod_usuario_val))
-    {
-      if(!AtualizaEmailUsuario($sock,$cod_curso,$cod_usuario_val,$email))
-      {
-        /* 163 - Erro ao alterar e-mail. */
-      /*  $msgErro = RetornaFraseDaLista($lista_frases,163);
-      }
-      else
-      {
-        Desconectar($sock);
-        header("Location:gerenciamento2.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&acao=".$acao."&ordem=".$ordem."&opcao=dados&origem=acoes");
-      }
-    }
-    else
-    {
-        /* 163 - Erro ao alterar e-mail. */
-      /*echo("    <script type=\"text/javascript\">\n");
-      echo("      alert('Erro ao alterar e-mail. E-mail existente em nossa base de dados.');\n");
-      echo("      window.location = 'gerenciamento2.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&acao=".$acao."&ordem=".$ordem."&opcao=dados&origem=acoes'\n");
-      echo("    </script>");
-    }
-  }*/
-
   if($action_ger == "transformar")
   {
     if ($opcao == "formador")
@@ -110,73 +83,29 @@
 
     else if ($opcao == "colaborador")
       $tipo_usuario="Z";
-      
+
     else if ($opcao == "visitante")
-      $tipo_usuario="z";
+      $tipo_usuario="V";
 
     foreach($cod_usu as $cod => $cod_usuario)
-      MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario);
+      MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario); 
 
-    if($origem == "convidado")
-      $origem = "gerenciamento4.php";
-    else if($origem == "gerenciamento")
-      $origem = "gerenciamento.php";
-    else if ($origem == "visitante")
-      $origem = "gerenciamento5.php";
-    else
-      $origem = "gerenciamento_visitantes.php"; 
-
-    $confirma='true';
     Desconectar($sock);
-    header("Location:".$origem."?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action_ger."&atualizacao=".$confirma."");
+    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action_ger."&atualizacao=true");
   }
 
   if($action_ger == "trocar_coordenador"){
     TrocaCoordenador($sock, $cod_curso, $cod_usu[0]);
-    header("Location:".$origem.".php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action_ger."&atualizacao=true");
-  }
-
-
-  if($action_js == "mudarinteracao")
-  {
-  	$tipo_usu = $_POST['tipo_usu'];
-    $interacao_atual  = RetornaListaConvidados ($sock,$cod_curso, 'a', "nome", $tipo_usu);
-
-    // array com os convidados que estavam na tela anterior
-    $convidados_mudar = $cod_usu;
-  	
-    
-    
-    //var_dump($tipo_usu);
-    //exit(1);
-        
-    if (!isset($interacao))
-     $interacao=array();
-
-    // de todos os convidados que escolhemos para trocar a interacao, verificamos quais realmente estao sendo alterados
-    if (is_array($convidados_mudar))
-    {
-      foreach ($convidados_mudar as $cod_convidado)
-      {
-      	$valor_novo = ($tipo_usu == 'Z' ? 0 : 1);
-        //$valor_novo  = !($interacao_atual[ $cod_convidado ][ 'interacao' ]);
-        AlterarConvidado ($sock,$cod_curso, $cod_convidado, $valor_novo);
-      }
-    }
-    $confirma='true';
-    Desconectar($sock);
-    if ($tipo_usu == 'Z') header("Location:gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action."&atualizacao=".$confirma."");
-    else if ($tipo_usu == 'z') header("Location:gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$acao."&acao_fb=".$action."&atualizacao=".$confirma."");
-    	
+    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=F&acao_fb=".$action_ger."&atualizacao=true");
   }
 
   if($action == "inscrever_cadastrado")
   {
 
-	$codigos_usu_global_aux = $_POST['codigos_usu_global'];
-	$codigos_usu_global = explode(",", $codigos_usu_global_aux);
+    $codigos_usu_global_aux = $_POST['codigos_usu_global'];
+    $codigos_usu_global = explode(",", $codigos_usu_global_aux);
 
-   $linha = Array();
+    $linha = Array();
     foreach($codigos_usu_global as $cod)
     {
       $linha['cod_usuario_global'] = $cod;
@@ -188,95 +117,73 @@
 
     $cod_usu_global = "";
 
-    if($tipo_usuario == "z")
-    {
-      $dest = "gerenciamento4.php";
-      $tipo_usuario = "a";
-    }
-    else
-      $dest = "gerenciamento.php";
-
-    $confirma='true';
     Desconectar($sock);
-    header("Location:".$dest."?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."&acao_fb=".$action."&atualizacao=".$confirma."");
+    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action."&atualizacao=true");
   }
 
   if($action == "inscrever")
   {
-  	for($i=0;$i < count($nome);$i++)
-  	{
-  		if($nome[$i] != "")
-  		{
-  			$dados_preenchidos_s[$i]['nome'] =$nome[$i];
-  			$dados_preenchidos_s[$i]['login']=$login[$i];
-  			$dados_preenchidos_s[$i]['email']=$email[$i];
-  		}
-  	}
-  	 
-  	$logins=RetornaLoginsInscricao($sock);
-  	$emails=RetornaEmailsInscricao($sock);
+    for($i=0;$i < count($nome);$i++)
+    {
+      if($nome[$i] != "")
+      {
+        $dados_preenchidos_s[$i]['nome'] =$nome[$i];
+        $dados_preenchidos_s[$i]['login']=$login[$i];
+        $dados_preenchidos_s[$i]['email']=$email[$i];
+      }
+    }
+    
+    $logins=RetornaLoginsInscricao($sock);
+    $emails=RetornaEmailsInscricao($sock);
 
-  	// booleano que indica se um login passado jah estah sendo usado por outro usuario
-  	$login_existente = false;
+    // booleano que indica se um login passado jah estah sendo usado por outro usuario
+    $login_existente = false;
 
-  	// percorre os dados preenchidos e verifica se estah tentando inscrever usuario com login repetido
-  	foreach($dados_preenchidos_s as $cod => $linha) {
-  		if ($logins[strtoupper($linha['login'])]==1 && $emails[strtoupper($linha['email'])]!=1) {
-  			// se o email nao eh repetido e o login eh repetido, erro pois nao pode ter login jah existente
-  			$dados_preenchidos_s[$cod]['status_login']=1;
-  			$dados_preenchidos_s[$cod]['login']=GeraLogin($sock,$linha['email']);
-  			$login_existente=true;
-  		}
-  		if ($logins[strtoupper($linha['login'])]==1 && $emails[strtoupper($linha['email'])]==1) {
-  			// se o login jah existe e o email tbm, estah inscrevendo usuario jah cadastrado no ambiente.
-  			$dados_preenchidos_s[$cod]['cadastrado']=1;			// flag que indica se usuario jah esta cadastrado no ambiente
-  		}
-  	}
+    // percorre os dados preenchidos e verifica se estah tentando inscrever usuario com login repetido
+    foreach($dados_preenchidos_s as $cod => $linha) {
+      if ($logins[strtoupper($linha['login'])]==1 && $emails[strtoupper($linha['email'])]!=1) {
+        // se o email nao eh repetido e o login eh repetido, erro pois nao pode ter login jah existente
+        $dados_preenchidos_s[$cod]['status_login']=1;
+        $dados_preenchidos_s[$cod]['login']=GeraLogin($sock,$linha['email']);
+        $login_existente=true;
+      }
+      if ($logins[strtoupper($linha['login'])]==1 && $emails[strtoupper($linha['email'])]==1) {
+        // se o login jah existe e o email tbm, estah inscrevendo usuario jah cadastrado no ambiente.
+        $dados_preenchidos_s[$cod]['cadastrado']=1; // flag que indica se usuario jah esta cadastrado no ambiente
+      }
+    }
 
-  	// se o login jah existe, volta para tela de inscricao, exibe msg de erro de inscricao e sugere um login previamente gerado
-  	if(($login_existente == true)) {
-  		$_SESSION['array_inscricao']=$dados_preenchidos_s;
-  		header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
-  	} else {
-  		// percorre os dados preenchidos e inscreve o usuario
-  		foreach($dados_preenchidos_s as $cod => $linha) {
-  			$linha['tipo_usuario']=$tipo_usuario;
-  			$linha['senha']=GeraSenha();
-  			if($linha['cadastrado']==1) {
-  				$inscrito=CadastradoCurso($sock,$linha['status_email'],$linha['login'],$cod_curso);
-  				if(!$inscrito) {
-  					// se usuario jah estah cadastrado no ambiente e nao estah inscrito no curso, soh faz a inscricao
-  					$sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);
-  				} else {
-  					// se usuario jah estah cadastrado no ambiente e tbm no curso, gera msg de erro
-  					Desconectar($sock);
-  					header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=erroUsuarioCadastrado&atualizacao=false");
-  					exit();
-  				}
-  			} else {
-  				// senao, faz cadastro e inscricao
-  				$sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
-  			}
-  		}
+    // se o login jah existe, volta para tela de inscricao, exibe msg de erro de inscricao e sugere um login previamente gerado
+    if(($login_existente == true)) {
+      $_SESSION['array_inscricao']=$dados_preenchidos_s;
+      header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=dadosPreenchidosLogin&atualizacao=false");
+    } else {
+      // percorre os dados preenchidos e inscreve o usuario
+      foreach($dados_preenchidos_s as $cod => $linha) {
+        $linha['tipo_usuario']=$tipo_usuario;
+        $linha['senha']=GeraSenha();
+        if($linha['cadastrado']==1) {
+          $inscrito = LoginCadastradoCurso($sock, $linha['login'], $cod_curso);
+          if(!$inscrito) {
+            // se usuario jah estah cadastrado no ambiente e nao estah inscrito no curso, soh faz a inscricao
+            $sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);
+          } else {
+            // se usuario jah estah cadastrado no ambiente e tbm no curso, gera msg de erro
+            Desconectar($sock);
+            header("Location:inscrever.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0&tipo_usuario=".$tipo_usuario."&acao=erroUsuarioCadastrado&atualizacao=false");
+            exit();
+          }
+        } else {
+          // senao, faz cadastro e inscricao
+          $sock=CadastrarUsuario($sock,$cod_curso,$linha, $lista_frases, $cod_usuario);
+        }
+      }
 
-  		$dados_preenchidos_s = "";
+      $dados_preenchidos_s = "";
 
-  		if($tipo_usuario == "Z")
-  		{
-  			$dest = "gerenciamento4.php";
-  			$tipo_usuario = "a";
-  		}
-  		else if($tipo_usuario == "z"){
-  			$dest = "gerenciamento5.php";
-  			$tipo_usuario = "a";
-  		}
-  		else
-  		$dest = "gerenciamento.php";
-  		$confirma='true';
-
-  		Desconectar($sock);
-  		header("Location:".$dest."?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."&acao_fb=".$action."&atualizacao=".$confirma."");
-  	}
+      Desconectar($sock);
+      header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action."&atualizacao=true");
+    }
   }
 
 
@@ -471,18 +378,4 @@
 
   Desconectar($sock);
   
- /* if($msgErro != "")
-  {
-    echo("    <script type=\"text/javascript\">\n");
- 
-    $msgErro .= "Contate o suporte para resolver o problema.";
-    echo("      alert('".$msgErro."')\n");
-    echo("      window.location = 'administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=0'\n");
-    echo("    </script>");
-  }
-
-  echo("  </body>");
-  echo("</html>");
-  exit();*/
 ?>
- 

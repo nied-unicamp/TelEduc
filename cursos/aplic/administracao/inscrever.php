@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/administracao/inscrever.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - N�cleo de Inform�tica Aplicada � Educa��o
+    Nied - Núcleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universit�ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -45,44 +45,52 @@
   include("administracao.inc");
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  
+
   require_once("../xajax_0.2.4/xajax.inc.php");
-  	$objAjax = new xajax();
-  	//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  	$objAjax->registerFunction("SugerirLoginDinamic");
-  	$objAjax->processRequests();
-  
+  $objAjax = new xajax();
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->registerFunction("SugerirLoginDinamic");
+  $objAjax->processRequests();
+
   switch($tipo_usuario)
   {
-    case 'z':
-    //convidado
-    $cod_pagina_ajuda = 14;
-    break;
+    case 'F':
+      //formador
+      $cod_pagina_ajuda = 6;
+      break;
     case 'A':
-    //aluno
-    $cod_pagina_ajuda = 7;
-    break;
+      //aluno
+      $cod_pagina_ajuda = 7;
+      break;
+    case 'Z':
+      //colaborador
+      $cod_pagina_ajuda = 14;
+      break;
+    case 'V':
+      //visitante
+      //$cod_pagina_ajuda = ;
+      break;
   }
 
-    include("../topo_tela.php");
-    
+  include("../topo_tela.php");
+
   // instanciar o objeto, passa a lista de frases por parametro
- $feedbackObject =  new FeedbackObject($lista_frases);
+  $feedbackObject =  new FeedbackObject($lista_frases);
 
   //adicionar as acoes possiveis, 1o parametro é
   $feedbackObject->addAction("dadosPreenchidosLogin", 0, 281);
   $feedbackObject->addAction("erroUsuarioCadastrado", 0, 308);
-  
+
   /*Funcao JavaScript*/
-  echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src='../bibliotecas/dhtmllib.js'></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src='../js-css/tablednd.js'></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
-  
-  
+
+
   echo("      var numLogins = 4;");
   echo("      var flagOnDivSugs=0;");
-  
+
   echo("      var Xpos,Ypos;\n");
   echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("      var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
@@ -91,16 +99,16 @@
   echo("      if (isNav){\n");
   echo("        document.captureEvents(Event.MOUSEMOVE);\n");
   echo("      }\n");
-       
+
   echo("\n");
   echo("      function Iniciar()\n");
   echo("      {\n");
-  echo("		cod_sugestao= getLayer(\"sugestao\");\n");
-  echo("		Popula_campo();\n");
+  echo("        cod_sugestao= getLayer(\"sugestao\");\n");
+  echo("        Popula_campo();\n");
   echo("        startList();\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("      }\n\n");
-  
+
   echo("function Popula_campo(){\n");
   $j=0; 
   echo("var i=0;");
@@ -108,88 +116,88 @@
   echo("var email=document.getElementsByName('email[]');\n");
   echo("var login=document.getElementsByName('login[]');\n");
   echo("tabela=document.getElementsByClassName('tabInterna');\n");
-  
+
   //pega a $_SESSION correspondente ao retorno caso exista algum problema de login logo depois mata a $_SESSION
   //para evitar que os dados permane�am na mem�ria por muito tempo
-  	
+
   $dados_pree=$_SESSION['array_inscricao'];
   unset($_SESSION['array_inscricao']);
-  
+
   //percorre a variavel(matriz) correspondentes aos campos retornados, evitando que o usu�rio tenha que preencher 
   //novamente
   foreach($dados_pree as $cod => $linha){
-  	
-  			 $nome=$linha['nome'];
-  	  		 $email=$linha['email'];
-  		  	 $login=$linha['login'];
-  		  	 if($j<=4){
-  		  	 		echo("nome[i].value=\"$nome\";\n");
-  		  	 		echo("email[i].value=\"$email\";\n");
-  		  	 		echo("login[i].value=\"$login\";\n");	
-  					if($linha['status_login']==1){
-  								echo("var td_login=document.getElementById('login_'+$j);\n");
-  								echo("td_login.innerHTML='<span class=\"asterisco\">* </span>'+td_login.innerHTML;\n");
-  								echo("login[i].value=\"$login\";\n");	
-  				 	}
-  				 	echo("i++\n");
-  				 	$j++;
-  			}
-  			else{
-  				echo("linha=document.createElement('tr');\n");
-  				echo("td_numlinha=document.createElement('td');\n");
-  				echo("td_nome=document.createElement('td');\n");
-  				echo("td_email=document.createElement('td');\n");
-  				echo("td_login=document.createElement('td');\n");
-  				echo("td_numlinha=document.createElement('td');\n");
-  				echo("tr_addlogin=document.getElementById('addLogin');\n");
-  				
-  				echo("td_numlinha.innerHTML=\"<b>$j</b>\";\n");
-  				
-  				echo("nome=document.createElement('input');\n");
-  				echo("nome.setAttribute(\"name\",\"nome[]\");\n");
-  				echo("nome.setAttribute(\"type\",\"text\");\n");
-  				echo("nome.setAttribute(\"size\",\"20\");\n");
-  				echo("nome.setAttribute(\"maxlength\",\"127\");\n");
-  				echo("nome.className=\"input\";\n");
-  				echo("nome.value=\"$nome\";\n");
-  			  				
-  				echo("email=document.createElement('input');\n");
-  				echo("email.setAttribute(\"name\",\"email[]\");\n");
-  				echo("email.setAttribute(\"type\",\"text\");\n");
-  				echo("email.setAttribute(\"size\",\"30\");\n");
-  				echo("email.setAttribute(\"maxlength\",\"127\");\n");
-  				echo("email.className=\"input\";\n");
-  				echo("email.value=\"$email\";\n");
-  				
-  				echo("login=document.createElement('input');\n");
-  				echo("login.setAttribute(\"name\",\"login[]\");\n");
-  				echo("login.setAttribute(\"type\",\"text\");\n");
-  				echo("login.setAttribute(\"size\",\"10\");\n");
-  				echo("login.setAttribute(\"maxlength\",\"20\");\n");
-  				echo("login.className=\"input\";\n");
-  				echo("login.value=\"$login\";\n");
-  				
-  				echo("td_nome.appendChild(nome);\n");
-  				echo("td_email.appendChild(email);\n");
-  				echo("td_login.appendChild(login);\n");
-  				
-  				if($linha['status_login']==1){
-  					echo("td_login.innerHTML='<span class=\"asterisco\">* </span> <input type=\"text\" name=\"login[]\" class=\"input\" maxlength=\"20\" size=\"10\" value=\"$login\">';\n");	
-  				}
-  				
-  				echo("linha.appendChild(td_numlinha);\n");
-  				echo("linha.appendChild(td_email);\n");
-  				echo("linha.appendChild(td_nome);\n");
-  				echo("linha.appendChild(td_login);\n");
-  				
-  				echo("tr_addlogin.parentNode.insertBefore(linha,tr_addlogin);\n");
-  				
-  				$j++;
-  				
-  			} 
+
+    $nome=$linha['nome'];
+    $email=$linha['email'];
+    $login=$linha['login'];
+    if($j<=4){
+      echo("nome[i].value=\"$nome\";\n");
+      echo("email[i].value=\"$email\";\n");
+      echo("login[i].value=\"$login\";\n");	
+      if($linha['status_login']==1){
+        echo("var td_login=document.getElementById('login_'+$j);\n");
+        echo("td_login.innerHTML='<span class=\"asterisco\">* </span>'+td_login.innerHTML;\n");
+        echo("login[i].value=\"$login\";\n");	
+      }
+      echo("i++\n");
+      $j++;
+    }
+    else{
+      echo("linha=document.createElement('tr');\n");
+      echo("td_numlinha=document.createElement('td');\n");
+      echo("td_nome=document.createElement('td');\n");
+      echo("td_email=document.createElement('td');\n");
+      echo("td_login=document.createElement('td');\n");
+      echo("td_numlinha=document.createElement('td');\n");
+      echo("tr_addlogin=document.getElementById('addLogin');\n");
+
+      echo("td_numlinha.innerHTML=\"<b>$j</b>\";\n");
+
+      echo("nome=document.createElement('input');\n");
+      echo("nome.setAttribute(\"name\",\"nome[]\");\n");
+      echo("nome.setAttribute(\"type\",\"text\");\n");
+      echo("nome.setAttribute(\"size\",\"20\");\n");
+      echo("nome.setAttribute(\"maxlength\",\"127\");\n");
+      echo("nome.className=\"input\";\n");
+      echo("nome.value=\"$nome\";\n");
+
+      echo("email=document.createElement('input');\n");
+      echo("email.setAttribute(\"name\",\"email[]\");\n");
+      echo("email.setAttribute(\"type\",\"text\");\n");
+      echo("email.setAttribute(\"size\",\"30\");\n");
+      echo("email.setAttribute(\"maxlength\",\"127\");\n");
+      echo("email.className=\"input\";\n");
+      echo("email.value=\"$email\";\n");
+
+      echo("login=document.createElement('input');\n");
+      echo("login.setAttribute(\"name\",\"login[]\");\n");
+      echo("login.setAttribute(\"type\",\"text\");\n");
+      echo("login.setAttribute(\"size\",\"10\");\n");
+      echo("login.setAttribute(\"maxlength\",\"20\");\n");
+      echo("login.className=\"input\";\n");
+      echo("login.value=\"$login\";\n");
+
+      echo("td_nome.appendChild(nome);\n");
+      echo("td_email.appendChild(email);\n");
+      echo("td_login.appendChild(login);\n");
+
+      if($linha['status_login']==1){
+        echo("td_login.innerHTML='<span class=\"asterisco\">* </span> <input type=\"text\" name=\"login[]\" class=\"input\" maxlength=\"20\" size=\"10\" value=\"$login\">';\n");	
+      }
+
+      echo("linha.appendChild(td_numlinha);\n");
+      echo("linha.appendChild(td_email);\n");
+      echo("linha.appendChild(td_nome);\n");
+      echo("linha.appendChild(td_login);\n");
+
+      echo("tr_addlogin.parentNode.insertBefore(linha,tr_addlogin);\n");
+
+      $j++;
+
+    }
   }
   echo("}\n");
-  
+
   echo("      function verificar()\n");
   echo("      {\n");
   echo("        var nome,email,login;\n");
@@ -287,11 +295,11 @@
   echo("        inputNome.setAttribute(\"name\", \"nome[]\");\n");
   echo("        inputNome.setAttribute(\"class\", \"input\");\n");
   echo("        inputNome.setAttribute(\"maxlength\", \"127\");\n");
-  
-  echo("		email=document.getElementsByName('email[]');\n");
-   
-  echo("		elementoTdEmail.innerHTML=\"<input autocomplete='off' class='input' type='text' id='email' name='email[]' size='30' maxlength='127' onkeyup=xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 520)."',\"+email.length+\"); onblur=TesteBlur();>;\"\n");
-  
+
+  echo("        email=document.getElementsByName('email[]');\n");
+
+  echo("        elementoTdEmail.innerHTML=\"<input autocomplete='off' class='input' type='text' id='email' name='email[]' size='30' maxlength='127' onkeyup=xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 316)."',\"+email.length+\"); onblur=TesteBlur();>;\"\n");
+
   echo("        inputLogin=document.createElement('input');\n");
   echo("        inputLogin.setAttribute(\"type\", \"text\");\n");
   echo("        inputLogin.setAttribute(\"size\", \"10\");\n");
@@ -307,40 +315,40 @@
   echo("        elementoTr.appendChild(elementoTdLogin);\n");
   echo("        elementoTrOldAddLogin.parentNode.insertBefore(elementoTr, elementoTrOldAddLogin);\n");
   echo("      }\n\n");
-  
-  
+
+
   echo("function XajaxMostraLayer(pos){\n");
-  echo("	MostraLayer(cod_sugestao,pos);\n");
+  echo("  MostraLayer(cod_sugestao,pos);\n");
   echo("}\n");
-  
+
   echo("function XajaxEscondeLayer(){\n");
-  echo("	EscondeLayer(cod_sugestao);\n");
+  echo("  EscondeLayer(cod_sugestao);\n");
   echo("}\n");
-  
+
   echo("function getY( oElement ){\n");
   echo("   var iReturnValue = 0;\n");
   echo("   while( oElement != null ){\n");
-  echo("   		iReturnValue += oElement.offsetTop;\n");
-  echo("   		oElement = oElement.offsetParent;\n");
-  echo(" }\n");
-  echo("   return iReturnValue;\n");
-  echo("}\n");
-  
-  echo("function getX( oElement ){\n");
-  echo("   var iReturnValue = 0;\n");
-  echo("   while( oElement != null ){\n");
-  echo("   		iReturnValue += oElement.offsetLeft;\n");
-  echo("   		oElement = oElement.offsetParent;\n");
+  echo("     iReturnValue += oElement.offsetTop;\n");
+  echo("     oElement = oElement.offsetParent;\n");
   echo(" }\n");
   echo("   return iReturnValue;\n");
   echo("}\n");
 
-  
+  echo("function getX( oElement ){\n");
+  echo("   var iReturnValue = 0;\n");
+  echo("   while( oElement != null ){\n");
+  echo("     iReturnValue += oElement.offsetLeft;\n");
+  echo("     oElement = oElement.offsetParent;\n");
+  echo(" }\n");
+  echo("   return iReturnValue;\n");
+  echo("}\n");
+
+
   echo("      function MostraLayer(cod_layer,pos){\n");
   echo("        EscondeLayer(cod_layer);\n");
-  echo("		email=document.getElementsByName('email[]');\n");
-  echo("		Xpos=getX(email[pos]);\n");
-  echo("		Ypos=getY(email[pos]);\n");	 
+  echo("        email=document.getElementsByName('email[]');\n");
+  echo("        Xpos=getX(email[pos]);\n");
+  echo("        Ypos=getY(email[pos]);\n");	 
   echo("        moveLayerTo(cod_layer,Xpos,Ypos+30);\n");
   echo("        showLayer(cod_layer);\n");
   echo("      }\n\n");
@@ -348,7 +356,7 @@
   echo("     function EscondeLayer(cod_layer) {\n");
   echo("        hideLayer(cod_layer);\n");
   echo("     }\n");
-    
+
   echo("    function TesteBlur()");
   echo("    {\n");
   echo("      if(flagOnDivSugs == 0)\n");
@@ -358,23 +366,23 @@
   echo("    }\n");
 
   echo("    </script>\n\n");
-  
+
   $objAjax->printJavascript("../xajax_0.2.4/");
-  
+
   $sock=Conectar($cod_curso);
   include("../menu_principal.php");
-  Desconectar($sock);	 
+  Desconectar($sock);
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -387,18 +395,18 @@
     Desconectar($sock);
     exit();
   }
-  
+
   echo("    <form name=\"formul\" action=\"acoes.php\" method=\"post\" onsubmit=\"return(verificar());\">\n");
-  echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
-  echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
-  echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=".$tipo_usuario.">\n");
-  echo("      <input type=\"hidden\" name=\"action\" value='inscrever'>\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\">\n");
+  echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
+  echo("      <input type=\"hidden\" name=\"action\" value=\"inscrever\">\n");
 
   // P�gina Principal
   /* 1 - Administra��o */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
 
-  if ($tipo_usuario=="F")
+  if ($tipo_usuario == 'F')
   {
     /* 50 - Inscrever Formadores */
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 50)."</h4>";
@@ -409,11 +417,11 @@
     // 164 - Inscrever Colaboradores
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>";
 
-    // 166 - N� de Convidados:
+    // 166 - N� de Colaboradores:
     $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
     $cod_pagina=14;
   }
-  else if ($tipo_usuario == 'z')
+  else if ($tipo_usuario == 'V')
   {
     // 182 - Inscrever Visitantes
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 182)."</h4>";
@@ -436,7 +444,7 @@
     echo("]<br>\n");
     Desconectar($sock);
     die();
-  }  
+  }
 
   echo($cabecalho);
 
@@ -447,10 +455,10 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -458,28 +466,28 @@
   /* 23 - Voltar (geral)*/
   echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
     /* 82 - Cadastrar por Arquivo*/
-  
+
   echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,82)."</a></li>\n");
-    /* Botão de Gerenciamento de usuário*/
-  if ($tipo_usuario=="F")
+  /* Botão de Gerenciamento de usuário*/
+  if ($tipo_usuario == "F")
   {
     /* 87 - Gerenciamento de formadores */
-	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,87)."</a></li>\n");
+    echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,87)."</a></li>\n");
   }
   else if ($tipo_usuario == 'Z')
   {
     // 85 - Gerenciamento de Colaboradores
-	echo("                  <li><a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
+    echo("                  <li><a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
   }
-  else if ($tipo_usuario == 'z')
+  else if ($tipo_usuario == 'V')
   {
     // 88 - Gerenciamento de Visitantes
-	echo("                  <li><a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,88)."</a></li>\n");
+    echo("                  <li><a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,88)."</a></li>\n");
   }
   else if ($tipo_usuario == 'A')
   {
     /* 86 - Gerenciamento de Alunos */
-	echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,86)."</a></li>\n");
+    echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,86)."</a></li>\n");
   }
   echo("                </ul>\n");
   echo("              </td>\n");
@@ -508,7 +516,7 @@
     {
       echo("                  <tr>\n");
       echo("                    <td><b>".$i.".</b></td>\n");
-      echo("                    <td><input autocomplete=\"off\" class=\"input\" type=\"text\" id=\"email\" size=\"30\" maxlength=\"127\" onkeyup=\"xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 520)."',$i);\" onblur=\"TesteBlur();\" name=\"email[]\" ></td>\n");
+      echo("                    <td><input autocomplete=\"off\" class=\"input\" type=\"text\" id=\"email\" size=\"30\" maxlength=\"127\" onkeyup=\"xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 316)."',$i);\" onblur=\"TesteBlur();\" name=\"email[]\" ></td>\n");
       echo("                    <td><input class=\"input\" type=\"text\" id=\"nome\" name=\"nome[]\" size=\"20\" maxlength=\"127\"></td>\n");
       echo("                    <td id=\"login_$i\"><input class=\"input\" type=text id=\"login\" name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
       echo("                  </tr>\n");
@@ -555,15 +563,15 @@
   echo("  </body>\n");
   echo("</html>\n");
 /*layers sugestões de usuários*/
-  
+
   echo("  <div id=\"sugestao\" class=\"popup\">\n");
   echo("  <div class=\"posX\"><span onclick=\"EscondeLayer(cod_sugestao);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("     <div id=\"divSugs\" style=\"display:none;background-color:#FFF;position:absolute;border:1pt solid #EEE;padding:5px; margin-top:-22px;\" onmouseover=\"flagOnDivSugs=1;\" onmouseout=\"flagOnDivSugs=0;\" class=\"int_popup ulPopup\">\n");
   echo("     </div>\n");
   echo("  </div>\n");
   echo("  </div>\n");
-  
-  
+
+
   Desconectar($sock);
 
 ?>

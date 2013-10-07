@@ -45,18 +45,18 @@
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              BASE DO CURSO         
              $cod_curso - Cï¿½igo do curso 
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
    Saida: I - aluno invï¿½ido ou inexistente
-          a - Aluno inscrito
+          i - Aluno inscrito
+          a - Aluno desligado
           r - Aluno rejeitado
           A - Aluno Aceito
+          f - Formador desligado
           F - Formador
-          f - Formador rejeitado
+          v - Visitante desligado
           V - Visitante
-          t - convidado com inscricao cancelada
-          y - visitante com inscricao cancelada
-          z - convidado passivo
-          Z - convidado ativo
+          z - Colaborador desligado
+          Z - Colaborador
    OBS.: Esta funï¿½o retorna o status real do usuï¿½io. 
          Checar se nï¿½ ï¿½um formador querendo ter a visï¿½ do aluno com
          $_SESSION['visao_aluno_s']==true
@@ -69,9 +69,7 @@ function RetornaStatusUsuario($sock,$cod_curso,$cod_usuario)
   /* Se administrador, retorna como Formador */
   if ($cod_usuario==-1)
     return ("F");
-  //if (ECoordenadorMesmo($sock,$cod_curso,$cod_usuario)){
-  //  return ("C");
-  //}
+
   $query="select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaNumeroQuery($cod_curso);
   $res=Enviar($sock,$query);
   if (RetornaNumLinhas($res)>0)
@@ -79,7 +77,7 @@ function RetornaStatusUsuario($sock,$cod_curso,$cod_usuario)
     $linha=RetornaLinha($res);
     return ($linha[0]);
   }
-  else 
+  else
   {
     return ("I");
   }
@@ -97,19 +95,22 @@ function RetornaStatusUsuario($sock,$cod_curso,$cod_usuario)
             'C' se for Convidado
 */   
 function getTipoAtor($sock, $cod_curso, $cod_usuario){
-    if (ECoordenador($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'R';
-    } elseif (EFormador($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'F';
-    } elseif (EAluno($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'A';
-    } elseif (EVisitante($sock, $cod_curso, $cod_usuario)){
-          $sigla= 'V';
-    } elseif (EConvidado($sock, $cod_usuario, $cod_curso)){
-          $sigla= 'Z';
-    } 
-    
-    return $sigla;
+
+  if (ECoordenador($sock, $cod_curso, $cod_usuario)){
+    $sigla= 'R';
+  } elseif (EFormador($sock, $cod_curso, $cod_usuario)){
+    $sigla= 'F';
+  } elseif (EAluno($sock, $cod_curso, $cod_usuario)){
+    $sigla= 'A';
+  } elseif (EVisitante($sock, $cod_curso, $cod_usuario)){
+    $sigla= 'V';
+  } elseif (EColaborador($sock, $cod_usuario, $cod_curso)){
+    $sigla= 'Z';
+  }/* elseif (EConvidado($sock, $cod_usuario, $cod_curso)){
+    $sigla= 'Z';
+  }*/
+
+  return $sigla;
 
 }
 
@@ -133,7 +134,7 @@ function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
   // Definida em 'cursos.inc'
   $status_curso=RetornaStatusCurso($sock,$cod_curso);
   // os usuï¿½ios com status nesse array nï¿½ devem entrar no curso 
-  $array_status = array('a', 'f', 'r', 'I', 't', 'y');
+  $array_status = array('i', 'r', 'a', 'f', 'z', 'v', 'I');
   //se for administrador, possui acesso ao curso
   if($_SESSION['cod_usuario_global_s'] == -1)
     $adm = true;
@@ -151,10 +152,10 @@ function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
     if ($status_curso=="N" && $status!="F")
       // 30 - O curso ainda nï¿½ foi iniciado. 
       $mensagem.=RetornaFrase($sock,30,-2);
-    else if ($status=="a")
+    else if ($status == 'i')
       // 14 - Sua inscriï¿½o ainda nï¿½ foi avaliada. Um e-mail lhe serï¿½enviado quando a avaliaï¿½o de sua inscriï¿½o for feita. 
       $mensagem.=RetornaFrase($sock,14,-2);
-    else if ($status=="r" || $status == 'f' || $status == 'y' || $status == 't')
+    else if ($status == 'r' || $status == 'a' || $status == 'f' || $status == 'z' || $status == 'v')
       // 15 - Sua inscriï¿½o nï¿½ foi aceita. Vocï¿½nï¿½ tem acesso a esse curso. 
       $mensagem.=RetornaFrase($sock,15,-2);
     else if ($status=="I")
@@ -297,7 +298,7 @@ function EFormador($sock,$cod_curso,$cod_usuario)
   {
     if (isset($_SESSION['visao_aluno_s']) && $_SESSION['visao_aluno_s'])
       return false;
-      
+
     return true;
   }
   else
@@ -398,8 +399,8 @@ function ECoordenador($sock,$cod_curso,$cod_usuario)
    ECoordenadorMesmo - Retorna true se usuï¿½io for coordenador ou se for administrador do ambiente
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              $cod_curso - Cï¿½igo do curso 
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
-   Saida: true se ï¿½coordenador, false caso contrï¿½io 
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
+   Saida: true se ï¿½coordenador, false caso contrï¿½io
 */
 function ECoordenadorMesmo($sock,$cod_curso,$cod_usuario)
 {
@@ -418,8 +419,6 @@ function ECoordenadorMesmo($sock,$cod_curso,$cod_usuario)
   }
   return false;
 }
-
-
 
 /* *********************************************************************
    EVisitante - Retorna true se visitante for aluno
@@ -566,11 +565,12 @@ function NomeUsuario($sock,$cod_usuario, $cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  if ($cod_usuario==-2)
+  if ($cod_usuario == -2)
     return ("Visitante");
-  $query="select U.nome
-          from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = ".VerificaStringQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso).")";
+
+  $query  = "select U.nome ";
+  $query .= "from ".$dbnamebase.".Usuario U ";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = ".VerificaStringQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso).")";
 
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
@@ -687,12 +687,13 @@ function HaDadosFaltando($sock,$cod_usuario)
   if ($cod_usuario<0)
     return false;
 
-  $query="select UC.tipo_usuario,U.rg,U.data_nasc,U.sexo,U.endereco,U.cidade,U.estado,U.pais
-          from ".$dbnamebase.".Usuario_curso UC
-          inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-          where UC.cod_usuario='".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso=".$_SESSION['cod_curso_s'];
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
+  $query  = "select UC.tipo_usuario,U.rg,U.data_nasc,U.sexo,U.endereco,U.cidade,U.estado,U.pais ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
+  $query .= "where UC.cod_usuario='".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso=".$_SESSION['cod_curso_s'];
+
+  $res    = Enviar($sock,$query);
+  $linha  = RetornaLinha($res);
 
   if ($linha['tipo_usuario']=='F' && $linha['rg']=="")
     return true;
@@ -737,11 +738,13 @@ function RetornaLinguaUsuario($sock,$cod_usuario, $cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.cod_lingua
-          from ".$dbnamebase.".Usuario_curso UC
-          inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-          where UC.cod_usuario=".VerificaNumeroQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso);
-  $res=Enviar($sock,$query);
+  $query  = "select U.cod_lingua ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario=".VerificaNumeroQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso);
+
+  $res    = Enviar($sock,$query);
+
   if (RetornaNumLinhas($res)>0)
   {
     $linha=RetornaLinha($res);
@@ -755,6 +758,28 @@ function RetornaLinguaUsuario($sock,$cod_usuario, $cod_curso)
 }
 
 /* *********************************************************************
+   EColaborador - Retorna se o usuario eh colaborador
+   entrada: $sock - sock de conexao
+            $cod_usuario - codigo do usuario a verificar
+   saida: true - o usuario eh colaborador.
+          false - o usuario nao eh colaborador.
+*/
+function EColaborador($sock, $cod_usuario, $cod_curso)
+{
+
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+  $query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaStringQuery($cod_curso);
+  $res   = Enviar ($sock, $query);
+  $linha = RetornaLinha ($res);
+  return ($linha ['tipo_usuario'] == 'Z');
+}
+
+/* *********************************************************************
+ * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
+ * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
+ * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
+/* *********************************************************************
    EConvidado - Retorna se o usuario eh convidado
    entrada: $sock - sock de conexao
             $cod_usuario - codigo do usuario a verificar
@@ -764,7 +789,7 @@ function RetornaLinguaUsuario($sock,$cod_usuario, $cod_curso)
 function EConvidado ($sock, $cod_usuario, $cod_curso)
 {
 
-   // 2Session
+  // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
   $query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaStringQuery($cod_curso);
   $res   = Enviar ($sock, $query);
@@ -772,6 +797,10 @@ function EConvidado ($sock, $cod_usuario, $cod_curso)
   return ($linha ['tipo_usuario'] == 'Z' || $linha['tipo_usuario'] == 'z' || $linha['tipo_usuario'] == 'V');
 }
 
+/* *********************************************************************
+ * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
+ * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
+ * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
 /* *********************************************************************
    EConvidadoAtivo - Retorna se o usuario eh convidado com interacao (tipo_usuario 'Z' maiusculo)
    entrada: $sock - sock de conexao
@@ -791,6 +820,10 @@ function EConvidadoAtivo ($sock, $cod_usuario, $cod_curso)
   return ($linha ['tipo_usuario'] == 'Z');
 }
 
+/* *********************************************************************
+ * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
+ * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
+ * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
 /* *********************************************************************
    EConvidadoPassivo - Retorna se o usuario eh convidado sem interacao (tipo_usuario 'z' minusculo)
    entrada: $sock - sock de conexao
@@ -824,43 +857,23 @@ function RetornaCodLinguaUsuario($sock,$cod_usuario)
 */
 function PreencheuDadosPessoais($sock)
 {
-  $query="select cod_usuario from Usuario where cod_usuario=".$_SESSION['cod_usuario_global_s']."
-          and rg is not NULL
-          and data_nasc is not NULL
-          and endereco is not NULL
-          and cidade is not NULL
-          and estado is not NULL
-          and pais is not NULL";
-  $res=Enviar($sock,$query);
+  $query  = "select cod_usuario from Usuario ";
+  $query  = "where cod_usuario = ".$_SESSION['cod_usuario_global_s']." and ";
+  $query .= "rg is not NULL and ";
+  $query  = "data_nasc is not NULL and ";
+  $query  = "endereco is not NULL and ";
+  $query  = "cidade is not NULL and ";
+  $query  = "estado is not NULL and ";
+  $query  = "pais is not NULL";
 
-  $res = RetornaLinha($res);
+  $res    = Enviar($sock,$query);
+  $res    = RetornaLinha($res);
 
   if($res != "")
     return true;
   else
     return false;
 }
-
-/* *********************************************************************
-   RetornaEmailUsuario - Retorna email de um unico usuario
-   entrada: $sock - sock de conexao
-            $cod_usuario - codigo do usuario
-   saida:   array ['email'] - email do usuario
-*/
-/*function RetornaEmailUsuario($cod_usuario)
-{
-  $sock=Conectar("");
-  var_dump($sock);
-   // 2Session
-  //$dbnamebase = $_SESSION['dbnamebase'];
-
-  //$cod_usuario_global = RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso);
-  $query="select email from TelEducRichard1a.Usuario where cod_usuario=".$cod_usuario;
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  Desconectar($sock);
-  return $linha;
-}*/
 
 /* *********************************************************************
    RetornaEmailUsuario - Retorna o email do usuario
@@ -884,25 +897,25 @@ function RetornaEmailUsuario1($cod_usuario)
  * @param $cod_usuario - codigo do usuario a ser atualizado
  */
 function AtualizaVisita($sock, $cod_usuario) {
-	$agora = time();
+  $agora = time();
 
-	// caso do admtele
-	if($cod_usuario < 0) {
-		return false;
-	}
+  // caso do admtele
+  if($cod_usuario < 0) {
+    return false;
+  }
 
-	// pega a data de ultimo acesso do usuario no curso
-	$query = "select ultimo_acesso from Usuarios_online where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
-	$res=Enviar($sock,$query);
-	$linha=RetornaLinha($res);
+  // pega a data de ultimo acesso do usuario no curso
+  $query = "select ultimo_acesso from Usuarios_online where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
 
-	// se o usuario jah estava inserido na tabela, faz um update, senao faz um insert
-	if($linha["ultimo_acesso"]) {
-		$query = "update Usuarios_online set ultimo_acesso = ".$agora.", logado = 1 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
-	} else {
-		$query = "insert into Usuarios_online values (".VerificaNumeroQuery($cod_usuario).", ".$agora.", 1)";
-	}
-	Enviar($sock,$query);
+  // se o usuario jah estava inserido na tabela, faz um update, senao faz um insert
+  if($linha["ultimo_acesso"]) {
+    $query = "update Usuarios_online set ultimo_acesso = ".$agora.", logado = 1 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+  } else {
+    $query = "insert into Usuarios_online values (".VerificaNumeroQuery($cod_usuario).", ".$agora.", 1)";
+  }
+  Enviar($sock,$query);
 }
 
 /**
@@ -911,14 +924,14 @@ function AtualizaVisita($sock, $cod_usuario) {
  * @param $cod_usuario - codigo do usuario a ser deslogado
  */
 function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
-	$objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse('ISO-8859-1');
 
-	$sock=Conectar($cod_curso);
-	$query = "update Usuarios_online set logado = 0 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
-	$res=Enviar($sock,$query);
-	Desconectar($sock);
+  $sock=Conectar($cod_curso);
+  $query = "update Usuarios_online set logado = 0 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+  $res=Enviar($sock,$query);
+  Desconectar($sock);
 
-	return $objResponse->getXML();
+  return $objResponse->getXML();
 }
 
 /**
@@ -927,13 +940,13 @@ function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
  * @param $time_out - tempo que o usuario eh considerado online
  */
 function RetornaUsuariosOnline($sock, $time_out) {
-	$agora=time();
+  $agora=time();
 
-	$query="select cod_usuario from Usuarios_online where (".VerificaNumeroQuery($agora)." - ultimo_acesso < ".VerificaNumeroQuery($time_out).") and logado = 1";
-	$res=Enviar($sock,$query);
-	$linha=RetornaArrayLinhas($res);
+  $query="select cod_usuario from Usuarios_online where (".VerificaNumeroQuery($agora)." - ultimo_acesso < ".VerificaNumeroQuery($time_out).") and logado = 1";
+  $res=Enviar($sock,$query);
+  $linha=RetornaArrayLinhas($res);
 
-	return $linha;
+  return $linha;
 }
 
 ?>

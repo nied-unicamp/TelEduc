@@ -149,7 +149,7 @@
 
       foreach($lista as $cod => $linha)
       {
-      	$cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $linha['cod_curso']);
+        $cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $linha['cod_curso']);
         Desconectar($sock);
         $tem_acesso_curso = ParticipaDoCurso($linha['cod_curso']);
         //$rejeitado_curso = RejeitadoDoCurso($linha['cod_curso']);

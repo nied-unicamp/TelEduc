@@ -209,8 +209,8 @@
       switch ($lista_cursos[$num]['tipo_usuario'])
       {
         //58 - Formador (geral) // 178 - Usuário
-	case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
-	default: echo "".RetornaFraseDaLista($lista_frases,178)."";
+        case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
+        default: echo "".RetornaFraseDaLista($lista_frases,178)."";
       }
 
       echo("                    </td>\n");
@@ -262,8 +262,8 @@
       switch ($lista_cursos[$num]['tipo_usuario'])
       {
         //58 - Formador (geral) // 178 - Usuário
-	case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
-	default: echo "".RetornaFraseDaLista($lista_frases,178)."";
+        case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
+        default: echo "".RetornaFraseDaLista($lista_frases,178)."";
       }
 
       echo("                    </td>\n");
@@ -315,8 +315,8 @@
       switch ($lista_cursos[$num]['tipo_usuario'])
       {
         //58 - Formador (geral) // 178 - Usuário
-	case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
-	default: echo "".RetornaFraseDaLista($lista_frases,178)."";
+        case "F": echo "".RetornaFraseDaLista($lista_frases_geral,58).""; break;
+        default: echo "".RetornaFraseDaLista($lista_frases,178)."";
       }
 
       echo("                    </td>\n");
