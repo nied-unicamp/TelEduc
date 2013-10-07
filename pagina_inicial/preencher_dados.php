@@ -140,32 +140,26 @@
   echo("      }\n");
 
    // Verificação da Data.
-  echo("      var ErroData = 0;\n");
 
   // Formato da data é valido?
   echo("      var DataValida = /^((0[1-9]|[12]\d)\/(0[1-9]|1[0-2])|30\/(0[13-9]|1[0-2])|31\/(0[13578]|1[02]))\/\d{4}$/;\n");
   echo("      if (!DataValida.test(data)){\n");
-  echo("        ErroData = 1;\n");
+  /* 71 - Data Invalida */
+  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,71).".');\n");
+  echo("        document.formulario.data.focus();\n");
+  echo("        return false;\n");
   echo("      }\n");
-  echo("      var data = data.split(\"/\");\n");
-  echo("      var Hoje = new Date();\n");
-
   // Data no futuro?
-  echo("      if (Hoje.getFullYear() < data[2]){\n");
-  echo("        ErroData = 2;\n");
-  echo("      } else if ((Hoje.getFullYear() == data[2]) && (Hoje.getMonth() <= data[1])){\n");
-  echo("        ErroData = 2;\n");
-  echo("      }\n");
-  // 1 = Data Invalida
-  // 2 = Data Nascimento no Futuro
-  echo("      if (ErroData == 1){\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,3).".');\n");
-  echo("        document.formulario.data.focus();\n");
-  echo("        return false;\n");
-  echo("      } else if (ErroData == 2){\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases_configurar,3).".');\n");
-  echo("        document.formulario.data.focus();\n");
-  echo("        return false;\n");
+  echo("      else{\n");
+  echo("        var data = data.split(\"/\");\n");
+  echo("        var Hoje = new Date();\n");
+  echo("        var DataNascimento = new Date(data[2], data[1]-1, data[0]);\n");
+  echo("        if (DataNascimento > Hoje){\n");
+  /* 80 - Data de Nascimento no Futuro */
+  echo("          alert('".RetornaFraseDaLista($lista_frases_configurar,80).".');\n");
+  echo("          document.formulario.data.focus();\n");
+  echo("          return false;\n");
+  echo("        }\n");
   echo("      }\n");
 
   // Verifica se o e-mail é valido

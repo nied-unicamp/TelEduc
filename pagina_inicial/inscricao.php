@@ -69,7 +69,7 @@
 
   $dados_curso=RetornaDadosMostraCurso($sock,$cod_curso);
   Desconectar($sock);
-      
+  
   include("../topo_tela_inicial.php");
   echo("    <script type=\"text/javascript\">\n\n");
 
@@ -122,7 +122,7 @@
   else if(!ParticipaDoCurso($cod_curso))
   {
     $sock = Conectar("");
-    $cod_usuario = CadastraUsuario($sock,$_SESSION["cod_usuario_global_s"],$cod_curso); 
+    $cod_usuario = CadastraUsuario($sock,$_SESSION["cod_usuario_global_s"],$cod_curso);
 
     $dados_usuario = RetornaDadosUsuario($sock,$_SESSION["cod_usuario_global_s"]);
     /* Tudo ok */
@@ -152,10 +152,10 @@
     /* Endere�o do Link de gerenciamento */
     $link_gerenciamento = "<a href='";
     $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
- 	$link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
- 	$link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
- 	$link_gerenciamento.= "&cod_ferramenta=0&acao=N";
- 	$link_gerenciamento.= "'> Gerenciamento de Inscri��es </a>";
+    $link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
+    $link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
+    $link_gerenciamento.= "&cod_ferramenta=0&acao=N";
+    $link_gerenciamento.= "'> Gerenciamento de Inscri��es </a>";
     
     /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */
@@ -174,7 +174,7 @@
     /* Enviar mensagem para coordenador */
     $destino = $remetente;
 
-    $remetente = RetornaDadosConfig('adm_email'); 
+    $remetente = RetornaDadosConfig('adm_email');
     $mensagem_envio = MontaMsg($host, $raiz_www, $cod_curso, $mensagem_coord, $assunto, -1, $linha['nome_coordenador']);
     MandaMsg($linha['email'], $destino,$assunto,$mensagem_envio);
     /* 108 - Seu pedido de matr�cula no curso */
@@ -195,13 +195,13 @@
     echo("                    <td>\n");
     
     if(RejeitadoDoCurso($cod_curso)){
-    	/* 221 - Desculpe-nos, mas voc� j� solicitou inscri��o para este curso no dia */
-    	/* 222 - e seu pedido foi rejeitado.*/
-    	echo("						".RetornaFraseDaLista($lista_frases,221)." ".RetornaDataInscricao($cod_curso)." ".RetornaFraseDaLista($lista_frases,222)."\n");	
+      /* 221 - Desculpe-nos, mas voc� j� solicitou inscri��o para este curso no dia */
+      /* 222 - e seu pedido foi rejeitado.*/
+      echo("                      ".RetornaFraseDaLista($lista_frases,221)." ".RetornaDataInscricao($cod_curso)." ".RetornaFraseDaLista($lista_frases,222)."\n");
     }
     else{
-	    // 160 - Usuario ja participa deste curso!
-    	echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
+      // 160 - Usuario ja participa deste curso!
+      echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
     }
     echo("                    </td>\n");
     echo("                  </tr>\n");
