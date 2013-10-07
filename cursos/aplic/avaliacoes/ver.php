@@ -50,7 +50,8 @@
   $objAjax = new xajax();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->registerFunction("EditarTexto");
-  $objAjax->registerFunction("EditarCampo");
+  $objAjax->registerFunction("EditarValor");
+  $objAjax->registerFunction("EditarTitulo");
   $objAjax->registerFunction("AlterarPeriodoDinamic");
   $objAjax->registerFunction("DecodificaString");
   $objAjax->registerFunction("RetornaFraseGeralDinamic");
@@ -238,7 +239,8 @@
   echo("          }  \n");
   echo("          return true;\n");
   echo("        }  \n");
-
+  
+  
   echo ("     function EditaTituloEnter(campo, evento, id, tag)\n");
   echo ("     {\n");
   echo ("         var tecla;\n");
@@ -257,15 +259,111 @@
   echo ("         }\n\n");
   echo ("         return true;\n");
   echo ("     }\n\n");
+  
+  echo("	function AlteraCampo(tag,id){\n");
+  echo("    	if (editaTitulo==0){\n");
+  echo("		id_aux = id;\n");
+  echo("		tag_aux = tag;\n");
+  echo("		CancelaTodos();\n");
 
-  echo ("     function Iniciar()");
-  echo ("     {");
-  if (isset($_GET['acao']))
-    $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo ("     startList();");
-  echo ("     }");
+  echo("		xajax_AbreEdicao(".$cod_curso.", ".$cod_avaliacao.", ".$cod_usuario.", '".$tela_avaliacao."');\n");
 
+  echo("		conteudo = document.getElementById(tag+'_'+id).innerHTML;\n");
+  echo("		document.getElementById(tag+'_'+id).className=\"\";\n");
+  echo("		document.getElementById('tr_'+id).className=\"\";\n");
 
+  echo("		createInput = document.createElement('input');\n");
+  echo("		document.getElementById(tag+'_'+id).innerHTML='';\n");
+  //echo("      document.getElementById(tag+'_'+id).onclick=function(){ };\n");
+  echo("		document.getElementById(tag+'_'+id).setAttribute('onclick', '');\n");
+
+  echo("		/*cria o campo para digitar o campo*/\n");
+  echo("		createInput.setAttribute('type', 'text');\n");
+  echo("		createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+  echo("		createInput.setAttribute('id', tag+'_'+id+'_text');\n");
+  echo("		createInput.setAttribute('onkeypress', 'EditaTituloEnter(this, event, id_aux, tag_aux)');\n");
+  echo("		createInput.setAttribute('value', conteudo);\n");
+  
+  echo("		if(tag == 'valor')\n");
+  echo("			createInput.setAttribute('size','8%');\n");
+
+  echo("		document.getElementById(tag+'_'+id).appendChild(createInput);\n");
+
+  echo("		/*cria o elemento 'espaco' e adiciona na pagina*/\n");
+  echo("		espaco = document.createElement('span');\n");
+  echo("		espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("		document.getElementById(tag+'_'+id).appendChild(espaco);\n");
+
+  echo("		createSpan = document.createElement('span');\n");
+  echo("		createSpan.className='link';\n");
+  echo("		createSpan.onclick= function(){ EdicaoCampo(id, tag, 'ok'); };\n"); //TODO
+  echo("		createSpan.setAttribute('id', 'OkEdita');\n");
+  echo("		createSpan.innerHTML = '".RetornaFraseDaLista($lista_frases_geral, 18)."';\n");
+  echo("		document.getElementById(tag+'_'+id).appendChild(createSpan);\n");
+
+  echo("		/*cria o elemento 'espaco' e adiciona na pagina*/\n");
+  echo("		espaco = document.createElement('span');\n");
+  echo("		espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("		document.getElementById(tag+'_'+id).appendChild(espaco);\n");
+  
+  echo("		createSpan = document.createElement('span');\n");
+  echo("		createSpan.className='link';\n");
+  echo("		createSpan.onclick= function(){ EdicaoCampo(id, tag, 'canc'); };\n"); //TODO
+  echo("		createSpan.setAttribute('id', 'CancelaEdita');\n");
+  echo("		createSpan.innerHTML = '".RetornaFraseDaLista($lista_frases_geral, 2)."';\n");
+  echo("		document.getElementById(tag+'_'+id).appendChild(createSpan);\n");
+
+  echo("		/*cria o elemento 'espaco' e adiciona na pagina*/\n");
+  echo("		espaco = document.createElement('span');\n");
+  echo("		espaco.innerHTML='&nbsp;&nbsp;'\n");
+  echo("		document.getElementById(tag+'_'+id).appendChild(espaco);\n");
+
+  echo("		startList();\n");
+  echo("		cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("		document.getElementById(tag+'_'+id+'_text').select();\n");
+  echo("		editaTitulo++;\n");
+  echo("		}\n");
+  echo("	}\n\n");
+  
+  echo("	function EdicaoCampo(id, tag, valor){\n");
+  echo("		if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value!=\"\")&&(VerificaNota(tag,document.getElementById(tag+'_'+id+'_text').value))){\n");
+  echo("			conteudo = document.getElementById(tag+'_'+id+'_text').value;\n");
+  echo("			if (tag=='valor'){\n");
+  echo("              xajax_EditarValor(".$cod_curso.", conteudo, ".$cod_usuario.", '".$dados_avaliacao['Ferramenta']."', ".$dados_avaliacao['Cod_atividade'].", ".$cod_avaliacao.");\n");
+  echo("			  }else{\n");
+  echo("			  	xajax_EditarTitulo(".$cod_curso.", conteudo, ".$cod_usuario.", '".$dados_avaliacao['Ferramenta']."', ".$dados_avaliacao['Cod_atividade'].", ".$cod_avaliacao.");\n");
+  echo("			  }\n");
+  echo("		}else{\n");
+  echo("			/* frase #229 - O campo n�o pode ser vazio. */\n");
+  echo("			if ((valor=='ok')&&(document.getElementById(tag+'_'+id+'_text').value==\"\"))\n");
+  echo("				xajax_AlertaFraseFerramenta(229,22);\n");
+
+  echo("			document.getElementById(tag+'_'+id).innerHTML=conteudo;\n");
+  echo("			document.getElementById(tag+'_'+id).className='';\n");
+  
+  //echo("		  if(navigator.appName.match("Opera")){\n");
+  //echo("          document.getElementById(tag+'_'+id).onclick = AlteraCampo(tag,id);\n");
+  //echo("          }else{
+  //echo("             document.getElementById(tag+'_'+id).onclick = function(){ AlteraCampo(tag,id); };\n");
+  //echo("         }\n");
+  
+  echo("			document.getElementById(tag+'_'+id);\n");
+  echo("			/*Cancela Edição*/\n");
+  echo("			if (!cancelarTodos){\n");
+  echo("				xajax_AcabaEdicaoDinamic(".$cod_curso.", ".$cod_avaliacao.", ".$cod_usuario.", 0);\n");
+  echo("			}\n");
+  echo("		}\n");
+  echo("		editaTitulo=0;\n");
+  echo("		cancelarElemento=null;\n");
+  echo("	}\n\n");
+  
+  echo (" function Iniciar()");
+  echo (" {");
+    if (isset($_GET['acao']))
+      $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo (" startList();");
+  echo (" }");
+ 
   echo("    </script>\n");
 
   $objAjax->printJavascript("../xajax_0.2.4/");
@@ -502,7 +600,7 @@
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
       echo("                      <ul>\n");
      // 230 - Renomear Título
-      echo(  $titulo="<li><span onclick=\"AlteraCampo('tit',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,230)."</span></li>");
+      echo(  $titulo="<li><span onclick=\"AlteraCampo('tit', ".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,230)."</span></li>");
 
       // 211 - Editar Criterios
       echo("                        <li><span onClick=\"AlteraTexto('crt');\">".RetornaFraseDaLista($lista_frases,211)."</span></li>\n");
@@ -511,7 +609,7 @@
       echo("                        <li><span onClick=\"AlteraTexto('obj');\">".RetornaFraseDaLista($lista_frases,210)."</span></li>\n");
 
       // 231 - Editar Valor
-      echo(  "<li><span onclick=\"AlteraCampo('valor',".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,231)."</span></li>");
+      echo(  "<li><span onclick=\"AlteraCampo('valor', ".$dados_avaliacao['Cod_atividade'].");\">".RetornaFraseDaLista($lista_frases,231)."</span></li>");
 
    // G 1 - Apagar
      // echo("                        <li><span onClick=\"return(ExcluirAvaliacao());\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");

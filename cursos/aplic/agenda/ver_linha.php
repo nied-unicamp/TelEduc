@@ -152,7 +152,71 @@
   echo ("         }\n\n");
   echo ("         return true;\n");
   echo ("     }\n\n");
+  
+  echo("      function AlteraTitulo(id){\n");
+  echo("        var id_aux = id;\n");
+  echo("        if (editaTitulo==0){\n");
+  echo("          CancelaTodos();\n");
+    
+  echo("          xajax_AbreEdicao(".$cod_curso.", ".$cod_item.", ".$cod_usuario.", origem);\n");
+    
+  echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+  echo("          document.getElementById('tr_'+id).className='';\n");
+  echo("          document.getElementById('tit_'+id).className='';\n");
 
+  echo("          createInput = document.createElement('input');\n");
+  echo("          document.getElementById('tit_'+id).innerHTML='';\n");
+  //echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
+  //echo("          document.getElementById('renomear_'+id).setAttribute('onclick', '');\n");
+
+  echo("          createInput.setAttribute('type', 'text');\n");
+  echo("          createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+  echo("          createInput.setAttribute('id', 'tit_'+id+'_text');\n\n");
+  echo("          if (createInput.addEventListener){\n"); //not IE
+  echo("            createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
+  echo("          } else if (createInput.attachEvent){\n"); //IE
+  echo("            createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
+  echo("          }\n");
+
+  echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
+  echo("          xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n\n");
+
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n");
+
+  echo("          createSpan = document.createElement('span');\n");
+  echo("          createSpan.className='link';\n");
+  echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
+  echo("          createSpan.setAttribute('id', 'OkEdita');\n");
+  echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,18)."';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
+
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
+    
+  echo("          createSpan = document.createElement('span');\n");
+  echo("          createSpan.className='link';\n");
+  echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
+  echo("          createSpan.setAttribute('id', 'CancelaEdita');\n");
+  echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,2)."';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
+
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
+ 
+  echo("          startList();\n");
+  echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("          document.getElementById('tit_'+id+'_text').select();\n");
+  echo("          editaTitulo++;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
   echo("    </script>\n\n");
   $objAjax->printJavascript("../xajax_0.2.4/");
   echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");

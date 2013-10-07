@@ -3831,6 +3831,8 @@ function MudaStatusAvaliacaoParaF($sock,$data)
 function EditarTitulo($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_atividade, $cod_avaliacao)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $cod_lingua = (int) $_SESSION['cod_lingua_s'];
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -3864,11 +3866,16 @@ function EditarTitulo($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
 
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_atividade, "className", "novoitem");
-  $objResponse->addAssign("tit_".$cod_atividade, "innerHTML", VerificaStringQuery($novo_nome));
-  $objResponse->addAssign("tit_".$cod_atividade, "className", "linkTexto");
-  $objResponse->addEvent("tit_".$cod_atividade, "onClick", "AlteraTitulo('".$cod_atividade."');");
+  $objResponse->addAssign("tit_".$cod_atividade, "innerHTML", htmlentities($novo_nome));
+  //$objResponse->addAssign("tit_".$cod_atividade, "className", "linkTexto");
+  //$objResponse->addEvent("tit_".$cod_atividade, "onClick", "AlteraCampo('".$tag."','".$cod_atividade."');");
 
   AcabaEdicaoDinamic($cod_curso, $cod_avaliacao, $cod_usuario, 1);
+  
+   $cod_texto = 220;
+   $cod_ferramenta = 22;
+   $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
+   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
@@ -3892,17 +3899,16 @@ function RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto){
 }
 
 /* *********************************************************************
-   EditarCampo - Edita o campo (titulo ou nota), dinâmicamente
+   EditarValor - Edita a nota dinâmicamente
    Entrada: $cod_curso - código do curso, para conectar ao banco de dados
             $novo_nome - novo título do item
             $cod_usuario - código do usuário que está utilizando
             $ferramenta - ferramenta a que pertence a avaliacao
             $cod_atividade - codigo da atividade
             $cod_avaliacao - codigo da avaliacao
-            $tag - variavel para diferenviar se estamos lidando com o campo titulo ('tit') ou nota
    Saida: XML da função Ajax
 */
-function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_atividade, $cod_avaliacao, $tag)
+function EditarValor ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_atividade, $cod_avaliacao)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -3910,58 +3916,11 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
 
-  if ($tag == "tit")
-    $campo = "titulo";
-  else
-  {
-    $campo = "valor";
-    $novo_nome = FormataNota($novo_nome);
-  }
+  $novo_nome = FormataNota($novo_nome);
 
-  if ($tag == "tit")
-  {
-    /* Feedback é sempre bom né? */
-    $cod_texto = 220;
-    $cod_ferramenta = 22;
-    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
-    $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
-
-    /*Atualiza o titulo*/
-    if (!strcmp($ferramenta,'B'))
-    {
-      if ($campo == 'titulo') $campo = 'assunto';
-      $query="update Batepapo_assuntos set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_assunto=".$cod_atividade;
-    }
-    elseif (!strcmp($ferramenta,'F'))
-    {
-      if ($campo == 'titulo') $campo = 'nome';
-        $query="update Forum set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_forum=".$cod_atividade;
-    }
-    elseif (!strcmp($ferramenta,'E'))
-    {
-      $query="update Exercicios_modelo set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_exercicio=".$cod_atividade;
-    }
-    elseif (!strcmp($ferramenta,'N'))
-    {
-      $query="update Avaliacao_externa set ".$campo."='".VerificaStringQuery($novo_nome)."' where codigo=".$cod_atividade;
-    }
-    else
-    {
-      $query="update Atividade_itens set ".$campo."='".VerificaStringQuery($novo_nome)."' where cod_item=".$cod_atividade;
-    }
-  }
-  else
-  {
-    /*Atualiza a nota*/
-    $query="update Avaliacao set valor='".VerificaStringQuery($novo_nome)."' where cod_avaliacao=".$cod_avaliacao;
-
-    /* Feedback é sempre bom né? */
-    $cod_ferramenta = 22;
-    $cod_texto = 215;
-    $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
-    $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
-  }
   $sock=Conectar($cod_curso);
+  /*Atualiza a nota*/
+  $query="update Avaliacao set valor='".VerificaStringQuery($novo_nome)."' where cod_avaliacao=".VerificaNumeroQuery($cod_avaliacao);
 
   $res=Enviar($sock, $query);
 
@@ -3969,11 +3928,17 @@ function EditarCampo ($cod_curso, $novo_nome, $cod_usuario, $ferramenta, $cod_at
 
   // Imprime no div valores do formul?io
   $objResponse->addAssign("tr_".$cod_atividade, "className", "novoitem");
-  $objResponse->addAssign($tag."_".$cod_atividade, "innerHTML", VerificaStringQuery($novo_nome));
-  //$objResponse->addAssign($tag."_".$cod_atividade, "className", "linkTexto");
-  //$objResponse->addEvent($tag."_".$cod_atividade, "onClick", "AlteraCampo('".$tag."','".$cod_atividade."');");
-
+  $objResponse->addAssign("valor_".$cod_atividade, "innerHTML", htmlentities($novo_nome));
+  //$objResponse->addAssign("valor_".$cod_atividade, "className", "linkTexto");
+  //$objResponse->addEvent("valor_".$cod_atividade, "onClick", "AlteraNota('".$tag."','".$cod_atividade."');");
+ 
   AcabaEdicaoDinamic($cod_curso, $cod_avaliacao, $cod_usuario, 1);
+  
+  /* Feedback é sempre bom né? */
+  $cod_ferramenta = 22;
+  $cod_texto = 215;
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
+  $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();

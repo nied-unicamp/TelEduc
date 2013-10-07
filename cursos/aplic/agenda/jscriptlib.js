@@ -23,8 +23,6 @@ var valor_radios = new Array();
 xajax_RetornaFraseDinamic('lista_frases');
 xajax_RetornaFraseGeralDinamic('lista_frases_geral');
 
-
-
 if (isNav)
 {
   document.captureEvents(Event.MOUSEMOVE);
@@ -167,7 +165,7 @@ function EdicaoTitulo(codigo, id, valor){
     if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
       alert(lista_frases.msg15);
 	
-    document.getElementById(id).innerHTML=novoconteudo;
+    document.getElementById(id).innerHTML=conteudo;
     
     if(navigator.appName.match("Opera")){
       document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);
@@ -181,75 +179,6 @@ function EdicaoTitulo(codigo, id, valor){
   }
   editaTitulo=0;
   cancelarElemento=null;
-}
-
-function AlteraTitulo(id){
-  if (editaTitulo==0){
-    CancelaTodos();
-
-    id_aux = id;
-
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
-
-    conteudo = document.getElementById('tit_'+id).innerHTML;
-    document.getElementById('tit_'+id).className="";
-    document.getElementById('tr_'+id).className="";
-
-    createInput = document.createElement('input');
-    document.getElementById('tit_'+id).innerHTML='';
-    //document.getElementById('renomear_'+id).onclick=function (){ };
-    document.getElementById('renomear_'+id).setAttribute('onclick', '');
-    
-    //cria o Input para o Título
-    createInput.setAttribute('type', 'text');
-    createInput.setAttribute('style', 'border: 2px solid #9bc');
-    createInput.setAttribute('id', 'tit_'+id+'_text');
-    if (createInput.addEventListener){ //not IE
-      createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
-    } else if (createInput.attachEvent){ //IE
-      createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
-    }
-    
-    document.getElementById('tit_'+id).appendChild(createInput);
-    xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');
-
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    //cria o elemento Ok e add na pagina;
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
-    createSpan.setAttribute('id', 'OkEdita');
-    createSpan.innerHTML=lista_frases_geral.msg_ger18;
-    document.getElementById('tit_'+id).appendChild(createSpan);
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    //cria o elemento 'cancela' e add na pag;
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
-    createSpan.setAttribute('id', 'CancelaEdita');
-    createSpan.innerHTML=lista_frases_geral.msg_ger2;
-    document.getElementById('tit_'+id).appendChild(createSpan);
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;'
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    startList();
-    cancelarElemento=document.getElementById('CancelaEdita');
-    document.getElementById('tit_'+id+'_text').select();
-    editaTitulo++;
-  }
 }
 
 function AlteraTexto(id){
