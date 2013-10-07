@@ -63,7 +63,7 @@
 */
 function RetornaCadastroUsuario($sock, $cod_usuario)
 {
-  $query = "select nome, email, telefone, endereco, cidade, estado, pais, data_nasc,";
+  $query  = "select nome, email, telefone, endereco, cidade, estado, pais, data_nasc,";
   $query .= " sexo, local_trab, profissao, cod_escolaridade, informacoes, login from";
   $query .= " Usuario where cod_usuario = ".VerificaNumeroQuery($cod_usuario)." order by";
   $query .= " ASCII(tipo_usuario) limit 1";
@@ -449,20 +449,21 @@ function RetornaDadosConfig($item)
 function RetornaCursosUsuario($sock)
 {
   /*
-    a - Aluno inscrito
-    z - convidado passivo
-    f - Formador rejeitado
+    I - aluno invï¿½ido ou inexistente
+    i - Aluno inscrito
+    a - Aluno desligado
     r - Aluno rejeitado
-    t - convidado com inscricao cancelada
-    y - visitante com inscricao cancelada
+    f - Formador desligado
+    v - Visitante desligado
+    z - Colaborador desligado
   */
 
-  $query = "SELECT CUR.cod_curso
-        FROM Usuario USU
-        INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-        INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'
-            AND binary USUC.tipo_usuario not in ('X', 'f', 'r', 't', 'y', 'a')";
+  $query  = "SELECT CUR.cod_curso ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."' ";
+  $query .= "AND binary USUC.tipo_usuario not in ('I', i', 'r', 'a', 'f', 'z', 'v')";
 
   $res = Enviar($sock, $query);
 
@@ -587,11 +588,13 @@ function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
 ********************************************************************/
 function RetornaTodosCursosUsuario($sock)
 {
-  $query = "SELECT CUR.cod_curso
-        FROM Usuario USU
-        INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-        INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
+  $query  = "SELECT CUR.cod_curso ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";// and ";
+  // Se o usuário tentou se incriver em um curso, mas sua inscrição foi cancelada, ele não possui vínculo com aquele curso.
+  //$query .= "      USUC.tipo_usuario <> 'r'";
 
   $res = Enviar($sock, $query);
 
@@ -605,11 +608,11 @@ function RetornaTodosCursosUsuario($sock)
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
 function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
 {
-  $query = "SELECT CUR.cod_curso, USUC.tipo_usuario
-        FROM Usuario USU
-        INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-        INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
+  $query  = "SELECT CUR.cod_curso, USUC.tipo_usuario ";
+  $query .= "FROM Usuario USU ";
+  $query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
 
   $res = Enviar($sock, $query);
 
@@ -623,11 +626,12 @@ function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
 ********************************************************************/
 
 function RetornaDataInscricao($cod_curso){
+
   $sock = Conectar("");
-  $query = "SELECT data_inscricao 
-            FROM Usuario_curso 
-            WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' 
-            AND cod_curso = '".$cod_curso."'";
+  $query  = "SELECT data_inscricao ";
+  $query .= "FROM Usuario_curso ";
+  $query .= "WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' AND ";
+  $query .= "      cod_curso = '".$cod_curso."'";
 
   $res = Enviar($sock, $query);
   $data = RetornaLinha($res);
@@ -646,13 +650,12 @@ function RetornaDataInscricao($cod_curso){
 
 function RetornaTipoUsuario($sock, $cod_curso){
 
-  $query = "SELECT tipo_usuario 
-            FROM Usuario_curso 
-            WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' 
-            AND cod_curso = '".$cod_curso."'";
+  $query  = "SELECT tipo_usuario ";
+  $query .= "FROM Usuario_curso ";
+  $query .= "WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' AND ";
+  $query .= "      cod_curso = '".$cod_curso."'";
 
   $res = Enviar($sock, $query);
-
 
   return RetornaLinha($res);
 }
@@ -670,22 +673,36 @@ function StatusUsuarioNoCurso($sock, $cod_curso){
     return RetornaFraseDaLista($lista_frases,232); 
 
   switch ($status_usuario['tipo_usuario']){
-    case "a":
+    case "i":
+      /* 224 - Aluno Inscrito */
       return RetornaFraseDaLista($lista_frases,224);
+    case "a":
+      /* 234 - Aluno desligado */
+      return RetornaFraseDaLista($lista_frases,234);
     case "r":
+      /* 225 - Aluno não aceito */
       return RetornaFraseDaLista($lista_frases,225);
     case "A":
+      /* 226 - Aluno aceito */
       return RetornaFraseDaLista($lista_frases,226);
-    case "F":
-      return RetornaFraseDaLista($lista_frases,227);
     case "f":
+      /* 228 - Formador desligado */
       return RetornaFraseDaLista($lista_frases,228);
-    case "t":
-      return RetornaFraseDaLista($lista_frases,229);
+    case "F":
+      /* 227 - Formador */
+      return RetornaFraseDaLista($lista_frases,227);
     case "z":
-      return RetornaFraseDaLista($lista_frases,230);
+      /* 229 - Colaborador desligado*/
+      return RetornaFraseDaLista($lista_frases,229);
     case "Z":
+      /* 231 - Colaborador */
       return RetornaFraseDaLista($lista_frases,231);
+    case "v":
+      /* 233 - Vistante desligado */
+      return RetornaFraseDaLista($lista_frases,233);
+    case "V":
+      /* 230 - Visitante */
+      return RetornaFraseDaLista($lista_frases,230);
   }
 }
 
@@ -712,7 +729,7 @@ function ParticipaDoCurso($cod_curso)
     if($_SESSION['cod_usuario_global_s'] == -1)
       $tem_acesso_curso = true;
     else
-    { 
+    {
       for($i=0;$i<count($meus_cursos);$i++)
       {
         if($meus_cursos[$i]['cod_curso'] == $cod_curso)
@@ -876,7 +893,7 @@ function AtualizaFichaUsuario($sock,$cod_usuario,$nome,$endereco,$cidade,$estado
 
 /* *********************************************************************
    RetornaLoginUsuario - Retorna o login do usuario
-   Entradas: $sock - sock aberto para a base geral      
+   Entradas: $sock - sock aberto para a base geral
    Saida: login
 */
 function RetornaLoginUsuario($sock)

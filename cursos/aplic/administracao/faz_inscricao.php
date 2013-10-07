@@ -93,28 +93,27 @@
 				$dados_preenchidos_s[$cod]['status_email']=0;
   }
   foreach($dados_preenchidos_s as $cod => $linha){
-      		if ($logins[strtoupper($linha['login'])]==1 && $linha['status_email']==0){
-      			$dados_preenchidos_s[$cod]['status_login']=1;
-        		$dados_preenchidos_s[$cod]['novo_login']=GeraLogin($sock,$linha['email']);
-        		$dados_preenchidos_s[$cod]['senha']=GeraSenha();
-        		$dados_preenchidos_s[$cod]['tipo_usuario']=$tipo_usuario;
-        		$login_existente=true;
-      		}
-   }
+    if ($logins[strtoupper($linha['login'])]==1 && $linha['status_email']==0){
+      $dados_preenchidos_s[$cod]['status_login']=1;
+      $dados_preenchidos_s[$cod]['novo_login']=GeraLogin($sock,$linha['email']);
+      $dados_preenchidos_s[$cod]['senha']=GeraSenha();
+      $dados_preenchidos_s[$cod]['tipo_usuario']=$tipo_usuario;
+      $login_existente=true;
+    }
+  }
   foreach($dados_preenchidos_s as $cod => $linha){
-  		if($dados_preenchidos_s[$cod]['status_login']!=1){
-    			$linha['tipo_usuario']=$tipo_usuario;
-    			$linha['senha']=GeraSenha();
-  				if($linha['status_email']==1){
-        				$cadastrado=CadastradoCurso($sock,$linha['status_email'],$linha['login'],$cod_curso);
-        				if($cadastrado==false) 
-         					$sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);	
-        		}
-        				else
-        					$sock=CadastrarUsuario($sock,$cod_curso,$linha,$lista_frases,$cod_usuario);
-        
-      	}
-  	}	
+    if($dados_preenchidos_s[$cod]['status_login']!=1){
+      $linha['tipo_usuario']=$tipo_usuario;
+      $linha['senha']=GeraSenha();
+      if($linha['status_email']==1){
+        $cadastrado=LoginCadastradoCurso($sock, $linha['login'], $cod_curso);
+        if($cadastrado==false)
+          $sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);
+      }
+      else
+        $sock=CadastrarUsuario($sock,$cod_curso,$linha,$lista_frases,$cod_usuario);
+    }
+  }
   
   
 //     $dados_preenchidos_s = "";

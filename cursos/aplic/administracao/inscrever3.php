@@ -86,206 +86,203 @@
 
   echo("      function Iniciar()\n");
   echo("      {\n");
-  echo("      	ExibePagina(1);\n"); 
+  echo("        ExibePagina(1);\n"); 
   echo("        startList();\n");
   echo("      }\n\n");
 
-  echo("
-  function ExibePagina(pagina)
-  {
-  	index_ini = (pagina - 1) * itens_por_pagina + 1;
-  	index_fim = pagina * itens_por_pagina;
-  	if (index_fim > total_usuarios)
-  		index_fim = total_usuarios;
-  	
-  	document.getElementById('prim_usr_index').innerHTML = index_ini;
-  	document.getElementById('ult_usr_index').innerHTML = index_fim;
-  	
-  	xajax_ListaUsuariosPaginaDinamic(pagina,".$itens_por_pagina.",".$cod_curso.",'".$busca."');
-  }
-  
-  function ExibeControles(pagina)
-  {
-  	pagina = parseInt(pagina);
-  	
-  	var pagina_aux;
-    var fim = pagina * itens_por_pagina;
-  	var ultima_pag = Math.ceil(total_usuarios / itens_por_pagina);
-  	
-  	if (pagina == 1) {
-  		document.getElementById('paginacao_first').onclick = '';
-  		document.getElementById('paginacao_first').className = '';
-  		document.getElementById('paginacao_back').onclick = '';
-  		document.getElementById('paginacao_back').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_first').onclick = function(){ ExibePagina(1); };
-  		document.getElementById('paginacao_first').className = 'link';
-  		document.getElementById('paginacao_back').onclick = function(){ ExibePagina(pagina - 1); };
-  		document.getElementById('paginacao_back').className = 'link';
-  	}
-  	
-  	if (fim >= total_usuarios) {
-  		document.getElementById('paginacao_last').onclick = '';
-  		document.getElementById('paginacao_last').className = '';
-  		document.getElementById('paginacao_fwd').onclick = '';
-  		document.getElementById('paginacao_fwd').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_last').onclick = function(){ ExibePagina(ultima_pag); };
-  		document.getElementById('paginacao_last').className = 'link';
-  		document.getElementById('paginacao_fwd').onclick = function(){ ExibePagina(pagina + 1); };
-  		document.getElementById('paginacao_fwd').className = 'link';
-  	}
-  	
-  	pagina_aux = pagina - 2;
-  	if (pagina_aux < 1) {
-  		document.getElementById('paginacao_1').innerHTML = '';
-  		document.getElementById('paginacao_1').onclick = '';
-  		document.getElementById('paginacao_1').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_1').innerHTML = pagina_aux + ' ';
-  		document.getElementById('paginacao_1').onclick = function(){ ExibePagina(pagina - 2); };
-  		document.getElementById('paginacao_1').className = 'link';
-  	}
-  	
-  	pagina_aux = pagina - 1;
-	if (pagina_aux < 1) {
-		document.getElementById('paginacao_2').innerHTML = '';
-  		document.getElementById('paginacao_2').onclick = '';
-  		document.getElementById('paginacao_2').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_2').innerHTML = pagina_aux + ' ';
-  		document.getElementById('paginacao_2').onclick = function(){ ExibePagina(pagina - 1); };
-  		document.getElementById('paginacao_2').className = 'link';
-  	}
-  	
-  	document.getElementById('paginacao_3').innerHTML = '<b>[' + pagina + '] </b>';
-  	
-  	pagina_aux = pagina + 1;
-	if (pagina_aux > ultima_pag) {
-		document.getElementById('paginacao_4').innerHTML = '';
-  		document.getElementById('paginacao_4').onclick = '';
-  		document.getElementById('paginacao_4').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_4').innerHTML = pagina_aux + ' ';
-  		document.getElementById('paginacao_4').onclick = function(){ ExibePagina(pagina + 1); };
-  		document.getElementById('paginacao_4').className = 'link';
-  	}
-  	
-  	pagina_aux = pagina + 2;
-	if (pagina_aux > ultima_pag) {
-		document.getElementById('paginacao_5').innerHTML = '';
-  		document.getElementById('paginacao_5').onclick = '';
-  		document.getElementById('paginacao_5').className = '';
-  	}
-  	else {
-  		document.getElementById('paginacao_5').innerHTML = pagina_aux + ' ';
-  		document.getElementById('paginacao_5').onclick = function(){ ExibePagina(pagina + 2); };
-  		document.getElementById('paginacao_5').className = 'link';
-  	}
-  }
-  
-  function IncluiUsuarioTabela(cod, nome, login, email, flag, i)
-  {
-  	tbody = document.getElementById('tabInterna').children[0];
-  	tr = document.createElement('tr');
-	td_check = document.createElement('td');
-	td_nome = document.createElement('td');
-	td_login = document.createElement('td');
-	td_email = document.createElement('td');
-  	if(flag == 'L'){
-		td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\";
-		//Se o nome estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.
-		td_nome.innerHTML = (nome=='')?'&nbsp;':nome;
-		//td_nome.innerHTML = nome;
-	}
-	
-	//Se o email estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.
-	td_email.innerHTML = (email=='')?'&nbsp;':email;
-	td_login.innerHTML = login;
-	if(flag == 'B'){
-		td_check.innerHTML = '&nbsp;';
-		td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuário já cadastrado no curso)</span>';	//TODO:Mensagem hard-coded. Colocar no BD.
-	}
-	tr.appendChild(td_check);
-	tr.appendChild(td_nome);
-	tr.appendChild(td_email);
-	tr.appendChild(td_login);
-	tr.setAttribute('id','user_'+i);	/* seta o id da linha para saber qual linha apagar. */
-	
-  	tbody.appendChild(tr);
-  }
-  
-  function IncluiControlePaginacao()
-  {
-  	tbody = document.getElementById('tabInterna').children[0];
-  	
-  	tr = document.createElement('tr');
-  	td = document.createElement('td');
-  	span1 = document.createElement('span');
-  	span2 = document.createElement('span');
-  	span31 = document.createElement('span');
-  	span32 = document.createElement('span');
-  	span33 = document.createElement('span');
-  	span34 = document.createElement('span');
-  	span35 = document.createElement('span');
-  	span4 = document.createElement('span');
-  	span5 = document.createElement('span');
-  	
-  	
-  	tr.setAttribute('id','controle_pag');
-  	td.setAttribute('align','right');
-  	td.setAttribute('colSpan','5');
-  	span1.setAttribute('id','paginacao_first');
-  	span1.innerHTML = '<<';
-  	span2.setAttribute('id','paginacao_back');
-  	span2.innerHTML = '<';
-  	span31.setAttribute('id','paginacao_1');
-  	span32.setAttribute('id','paginacao_2');
-  	span33.setAttribute('id','paginacao_3');
-  	span34.setAttribute('id','paginacao_4');
-  	span35.setAttribute('id','paginacao_5');
-  	span4.setAttribute('id','paginacao_fwd');
-  	span4.innerHTML = '>';
-  	span5.setAttribute('id','paginacao_last');
-  	span5.innerHTML = '>>';
-  	
-  	td.appendChild(span1);
-  	td.appendChild(span2);
-  	td.appendChild(span31);
-  	td.appendChild(span32);
-  	td.appendChild(span33);
-  	td.appendChild(span34);
-  	td.appendChild(span35);
-  	td.appendChild(span4);
-  	td.appendChild(span5);
-  	tr.appendChild(td);
-  	tbody.appendChild(tr);
-  }
-  
-  function RemovePaginaAntiga()
-  {
-  
-  	tbody = document.getElementById('tabInterna').children[0];
-	//users = document.getElementsByName('tr', 'user');
-	//var tam = users.length;
+  echo("      function ExibePagina(pagina)\n");
+  echo("      {\n");
+  echo("        index_ini = (pagina - 1) * itens_por_pagina + 1;\n");
+  echo("        index_fim = pagina * itens_por_pagina;\n");
+  echo("        if (index_fim > total_usuarios)\n");
+  echo("          index_fim = total_usuarios;\n\n");
 
+  echo("        document.getElementById('prim_usr_index').innerHTML = index_ini;\n");
+  echo("        document.getElementById('ult_usr_index').innerHTML = index_fim;\n\n");
 
-	/* Apaga os usuarios da tabela. */
-	for (i = 0; document.getElementById('user_'+i) != null; i++) {
-		//tbody.removeChild(users[0]);
-		tbody.removeChild(document.getElementById('user_'+i));
-	} 
+  echo("        xajax_ListaUsuariosPaginaDinamic(pagina,".$itens_por_pagina.",".$cod_curso.",'".$busca."');\n");
+  echo("      }\n");
+  
+  echo("      function ExibeControles(pagina)\n");
+  echo("      {\n");
+  echo("        pagina = parseInt(pagina);\n\n");
 
-	cp = document.getElementById('controle_pag');
-	tbody.removeChild(cp); 
-  }
-  ");
- 
+  echo("        var pagina_aux;\n");
+  echo("        var fim = pagina * itens_por_pagina;\n");
+  echo("        var ultima_pag = Math.ceil(total_usuarios / itens_por_pagina);\n\n");
+
+  echo("        if (pagina == 1) {\n");
+  echo("          document.getElementById('paginacao_first').onclick = '';\n");
+  echo("          document.getElementById('paginacao_first').className = '';\n");
+  echo("          document.getElementById('paginacao_back').onclick = '';\n");
+  echo("          document.getElementById('paginacao_back').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_first').onclick = function(){ ExibePagina(1); };\n");
+  echo("          document.getElementById('paginacao_first').className = 'link';\n");
+  echo("          document.getElementById('paginacao_back').onclick = function(){ ExibePagina(pagina - 1); };\n");
+  echo("          document.getElementById('paginacao_back').className = 'link';\n");
+  echo("        }\n\n");
+
+  echo("        if (fim >= total_usuarios) {\n");
+  echo("          document.getElementById('paginacao_last').onclick = '';\n");
+  echo("          document.getElementById('paginacao_last').className = '';\n");
+  echo("          document.getElementById('paginacao_fwd').onclick = '';\n");
+  echo("          document.getElementById('paginacao_fwd').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_last').onclick = function(){ ExibePagina(ultima_pag); };\n");
+  echo("          document.getElementById('paginacao_last').className = 'link';\n");
+  echo("          document.getElementById('paginacao_fwd').onclick = function(){ ExibePagina(pagina + 1); };\n");
+  echo("          document.getElementById('paginacao_fwd').className = 'link';\n");
+  echo("        }\n\n");
+
+  echo("        pagina_aux = pagina - 2;\n");
+  echo("        if (pagina_aux < 1) {\n");
+  echo("          document.getElementById('paginacao_1').innerHTML = '';\n");
+  echo("          document.getElementById('paginacao_1').onclick = '';\n");
+  echo("          document.getElementById('paginacao_1').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_1').innerHTML = pagina_aux + ' ';\n");
+  echo("          document.getElementById('paginacao_1').onclick = function(){ ExibePagina(pagina - 2); };\n");
+  echo("          document.getElementById('paginacao_1').className = 'link';\n");
+  echo("        }\n\n");
+
+  echo("        pagina_aux = pagina - 1;\n");
+  echo("        if (pagina_aux < 1) {\n");
+  echo("          document.getElementById('paginacao_2').innerHTML = '';\n");
+  echo("          document.getElementById('paginacao_2').onclick = '';\n");
+  echo("          document.getElementById('paginacao_2').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_2').innerHTML = pagina_aux + ' ';\n");
+  echo("          document.getElementById('paginacao_2').onclick = function(){ ExibePagina(pagina - 1); };\n");
+  echo("          document.getElementById('paginacao_2').className = 'link';\n");
+  echo("        }\n\n");
+
+  echo("        document.getElementById('paginacao_3').innerHTML = '<b>[' + pagina + '] </b>';\n\n");
+
+  echo("        pagina_aux = pagina + 1;\n");
+  echo("        if (pagina_aux > ultima_pag) {\n");
+  echo("          document.getElementById('paginacao_4').innerHTML = '';\n");
+  echo("          document.getElementById('paginacao_4').onclick = '';\n");
+  echo("          document.getElementById('paginacao_4').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_4').innerHTML = pagina_aux + ' ';\n");
+  echo("          document.getElementById('paginacao_4').onclick = function(){ ExibePagina(pagina + 1); };\n");
+  echo("          document.getElementById('paginacao_4').className = 'link';\n");
+  echo("        }\n\n");
+
+  echo("        pagina_aux = pagina + 2;\n");
+  echo("        if (pagina_aux > ultima_pag) {\n");
+  echo("          document.getElementById('paginacao_5').innerHTML = '';\n");
+  echo("          document.getElementById('paginacao_5').onclick = '';\n");
+  echo("          document.getElementById('paginacao_5').className = '';\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          document.getElementById('paginacao_5').innerHTML = pagina_aux + ' ';\n");
+  echo("          document.getElementById('paginacao_5').onclick = function(){ ExibePagina(pagina + 2); };\n");
+  echo("          document.getElementById('paginacao_5').className = 'link';\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+  echo("      function IncluiUsuarioTabela(cod, nome, login, email, flag, i)\n");
+  echo("      {\n");
+  echo("        tbody = document.getElementById('tabInterna').children[0];\n");
+  echo("        tr = document.createElement('tr');\n");
+  echo("        td_check = document.createElement('td');\n");
+  echo("        td_nome = document.createElement('td');\n");
+  echo("        td_login = document.createElement('td');\n");
+  echo("        td_email = document.createElement('td');\n");
+  echo("        if(flag == 'L'){\n");
+  echo("          td_check.innerHTML = \"<input type='checkbox' value='\"+cod+\"' onclick='VerificaCheck();' name='cod_usu_global[]' class='input'/>\"\n");
+  echo("          //Se o nome estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.\n");
+  echo("          td_nome.innerHTML = (nome=='')?'&nbsp;':nome\n");
+  echo("          //td_nome.innerHTML = nome\n");
+  echo("        }\n\n");
+
+  echo("        //Se o email estiver vazio, colocar '&nbsp;' para que nao ocorra quebra na borda da tabela.\n");
+  echo("        td_email.innerHTML = (email=='')?'&nbsp;':email\n");
+  echo("        td_login.innerHTML = login\n");
+  echo("        if(flag == 'B'){\n");
+  echo("          td_check.innerHTML = '&nbsp;'\n");
+  //TODO:Mensagem hard-coded. Colocar no BD.
+  echo("          td_nome.innerHTML = nome+ '  <span class=\"aviso\">(Usuário já cadastrado no curso)</span>';\n");
+  echo("        }\n");
+  echo("        tr.appendChild(td_check)\n");
+  echo("        tr.appendChild(td_nome)\n");
+  echo("        tr.appendChild(td_email)\n");
+  echo("        tr.appendChild(td_login)\n");
+  echo("        tr.setAttribute('id','user_'+i);	/* seta o id da linha para saber qual linha apagar. */\n\n");
+
+  echo("        tbody.appendChild(tr)\n");
+  echo("      }\n\n");
+
+  echo("      function IncluiControlePaginacao()\n");
+  echo("      {\n");
+  echo("        tbody = document.getElementById('tabInterna').children[0];\n\n");
+
+  echo("        tr = document.createElement('tr');\n");
+  echo("        td = document.createElement('td');\n");
+  echo("        span1 = document.createElement('span');\n");
+  echo("        span2 = document.createElement('span');\n");
+  echo("        span31 = document.createElement('span');\n");
+  echo("        span32 = document.createElement('span');\n");
+  echo("        span33 = document.createElement('span');\n");
+  echo("        span34 = document.createElement('span');\n");
+  echo("        span35 = document.createElement('span');\n");
+  echo("        span4 = document.createElement('span');\n");
+  echo("        span5 = document.createElement('span');\n\n");
+
+  echo("        tr.setAttribute('id','controle_pag');\n");
+  echo("        td.setAttribute('align','right');\n");
+  echo("        td.setAttribute('colSpan','5');\n");
+  echo("        span1.setAttribute('id','paginacao_first');\n");
+  echo("        span1.innerHTML = '<<';\n");
+  echo("        span2.setAttribute('id','paginacao_back');\n");
+  echo("        span2.innerHTML = '<';\n");
+  echo("        span31.setAttribute('id','paginacao_1');\n");
+  echo("        span32.setAttribute('id','paginacao_2');\n");
+  echo("        span33.setAttribute('id','paginacao_3');\n");
+  echo("        span34.setAttribute('id','paginacao_4');\n");
+  echo("        span35.setAttribute('id','paginacao_5');\n");
+  echo("        span4.setAttribute('id','paginacao_fwd');\n");
+  echo("        span4.innerHTML = '>';\n");
+  echo("        span5.setAttribute('id','paginacao_last');\n");
+  echo("        span5.innerHTML = '>>';\n\n");
+
+  echo("        td.appendChild(span1);\n");
+  echo("        td.appendChild(span2);\n");
+  echo("        td.appendChild(span31);\n");
+  echo("        td.appendChild(span32);\n");
+  echo("        td.appendChild(span33);\n");
+  echo("        td.appendChild(span34);\n");
+  echo("        td.appendChild(span35);\n");
+  echo("        td.appendChild(span4);\n");
+  echo("        td.appendChild(span5);\n");
+  echo("        tr.appendChild(td);\n");
+  echo("        tbody.appendChild(tr);\n");
+  echo("      }\n\n");
+  
+  echo("      function RemovePaginaAntiga()\n");
+  echo("      {\n\n");
+
+  echo("        tbody = document.getElementById('tabInterna').children[0];\n");
+  echo("        //users = document.getElementsByName('tr', 'user');\n");
+  echo("        //var tam = users.length;\n\n");
+
+  echo("        /* Apaga os usuarios da tabela. */\n");
+  echo("        for (i = 0; document.getElementById('user_'+i) != null; i++) {\n");
+  echo("          //tbody.removeChild(users[0]);\n");
+  echo("          tbody.removeChild(document.getElementById('user_'+i));\n");
+  echo("        }\n\n");
+
+  echo("        cp = document.getElementById('controle_pag');\n");
+  echo("        tbody.removeChild(cp);\n");
+  echo("      }\n\n");
+
   echo("      function verifica_submit(e)\n");
   echo("      {\n");
   echo("        var keynum;\n\n");
@@ -316,9 +313,7 @@
   echo("        document.formul.action='acoes.php';\n");
   echo("        document.getElementById('codigos_usu_global').value=array_itens;\n");
   echo("        document.formul.submit();\n");
-  echo("      }\n");
-
-
+  echo("      }\n\n");
 
   echo("      function VerificaCheck(){\n");
   echo("        var i;\n");
@@ -344,13 +339,13 @@
   
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");

@@ -141,8 +141,9 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  //if ($dados_curso['inscricao_inicio']<=$hoje && $dados_curso['inscricao_fim']>=$ontem && !ParticipaDoCurso($cod_curso) && !empty($_SESSION['login_usuario_s']))
-  if ($dados_curso['inscricao_inicio']<=$hoje && $dados_curso['inscricao_fim']>=$ontem && !ParticipaDoCurso($cod_curso))
+  if ($dados_curso['inscricao_inicio']<=$hoje &&
+      $dados_curso['inscricao_fim']>=$ontem   &&
+      !ParticipaDoCurso($cod_curso))
   {
     echo("            <tr>\n");
     echo("              <td align=right>\n");
@@ -151,14 +152,6 @@
     echo("              </td>\n");
     echo("            </tr>\n");
   }
-  //else{
-  	//echo("            <tr>\n");
-    //echo("              <td align=right>\n");
-    ///* 67 - Inscreva-se! */
-    //echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,67)."\" onclick=\"document.location='autenticacao_cadastro.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."';\" type=\"button\" />\n");
-    //echo("              </td>\n");
-    //echo("            </tr>\n");
-  //}
 
   echo("          </table>\n");
   echo("        </td>\n");

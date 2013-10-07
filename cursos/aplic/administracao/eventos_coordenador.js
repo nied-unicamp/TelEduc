@@ -1,0 +1,145 @@
+/*
+<!--
+-------------------------------------------------------------------------------
+
+    Arquivo : cursos/aplic/administracao/eventos_coordenador.js
+
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
+    Copyright (C) 2001  NIED - Unicamp
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2 as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    You could contact us through the following addresses:
+
+    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
+    Unicamp - Universidade Estadual de Campinas
+    Cidade Universitï¿½ria "Zeferino Vaz"
+    Bloco V da Reitoria - 2o. Piso
+    CEP:13083-970 Campinas - SP - Brasil
+
+    http://www.nied.unicamp.br
+    nied@unicamp.br
+
+------------------------------------------------------------------------------
+-->
+*/
+
+/*==========================================================
+  ARQUIVO : cursos/aplic/administracao/eventos_coordenador.js
+  ========================================================== */
+
+/*
+ * Este arquivo contém as funções que adicionam os eventos aos botões de ação das
+ * páginas de gerenciamento para coordenadores. Como coordenadores possuem mais 
+ * ações disponíveis, a mesma função deve ser definida em arquivos diferentes, e
+ * o arquivo correto deve ser chamado dentro da página dependendo do papel do
+ * usuário.
+ */
+
+/*
+ * Função que adiciona os eventos aos botões de ação das páginas de gerenciamento.
+ */
+function AdicionaEventos(coordenadorSelecionado) {
+
+  document.getElementById('mDados_Selec').className = "menuUp02";
+  document.getElementById('mDados_Selec').onclick   = function() { SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'dados', ''); };
+
+  if(!coordenadorSelecionado) {
+    if (document.getElementById('mAluno_Selec') != null) {
+      document.getElementById('mAluno_Selec').className = "menuUp02";
+      document.getElementById('mAluno_Selec').onclick   = function(){ SubmitAcao('acoes.php', 'transformar','aluno'); };
+    }
+    if (document.getElementById('mCoordenador_Selec') != null) {
+      document.getElementById('mCoordenador_Selec').className = "menuUp02";
+      document.getElementById('mCoordenador_Selec').onclick   = function(){ SubmitAcao('acoes.php', 'trocar_coordenador'); Alerta('','trocar_coordenador'); };
+    }
+    if (document.getElementById('mFormador_Selec') != null) {
+      document.getElementById('mFormador_Selec').className = "menuUp02";
+      document.getElementById('mFormador_Selec').onclick   = function(){ SubmitAcao('acoes.php', 'transformar','formador'); };
+    }
+    if (document.getElementById('mColaborador_Selec') != null) {
+      document.getElementById('mColaborador_Selec').className = "menuUp02";
+      document.getElementById('mColaborador_Selec').onclick   = function() { SubmitAcao('acoes.php', 'transformar', 'colaborador'); };
+    }
+    if (document.getElementById('mVisitante_Selec') != null) {
+      document.getElementById('mVisitante_Selec').className = "menuUp02";
+      document.getElementById('mVisitante_Selec').onclick   = function(){ SubmitAcao('acoes.php', 'transformar', 'visitante'); };
+    }
+    if (document.getElementById('mDesligar_Selec') != null) {
+      document.getElementById('mDesligar_Selec').className = "menuUp02";
+      document.getElementById('mDesligar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'desligar_usuario', ''); };
+    }
+    if (document.getElementById('mReligar') != null) {
+      document.getElementById('Religar').className = "menuUp02";
+      document.getElementById('Religar').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'religar_usuario', ''); };
+    }
+    if (document.getElementById('mAtivarPort_Selec') != null) {
+      document.getElementById('mAtivarPort_Selec').className = "menuUp02";
+      document.getElementById('mAtivarPort_Selec').onclick   = function(){ AtivaDesativaPort('ativar_port'); };
+    }
+    if (document.getElementById('mDesativarPort_Selec') != null) {
+      document.getElementById('mDesativarPort_Selec').className = "menuUp02";
+      document.getElementById('mDesativarPort_Selec').onclick   = function(){ AtivaDesativaPort('desativar_port'); };
+    }
+  }
+
+}
+
+/*
+ * Função que remove os eventos aos botões de ação das páginas de gerenciamento.
+ */
+function RemoveEventos()
+{
+
+  document.getElementById('mDados_Selec').className = "menuUp";
+  document.getElementById('mDados_Selec').onclick   = null;
+
+  if (document.getElementById('mAluno_Selec') != null) {
+    document.getElementById('mAluno_Selec').className = "menuUp";
+    document.getElementById('mAluno_Selec').onclick   = null;
+  }
+  if (document.getElementById('mCoordenador_Selec') != null) {
+    document.getElementById('mCoordenador_Selec').className = "menuUp";
+    document.getElementById('mCoordenador_Selec').onclick   = null;
+  }
+  if (document.getElementById('mFormador_Selec') != null) {
+    document.getElementById('mFormador_Selec').className = "menuUp";
+    document.getElementById('mFormador_Selec').onclick   = null;
+  }
+  if (document.getElementById('mColaborador_Selec') != null) {
+    document.getElementById('mColaborador_Selec').className = "menuUp";
+    document.getElementById('mColaborador_Selec').onclick   = null;
+  }
+  if (document.getElementById('mVisitante_Selec') != null) {
+    document.getElementById('mVisitante_Selec').className = "menuUp";
+    document.getElementById('mVisitante_Selec').onclick   = null;
+  }
+  if (document.getElementById('mDesligar_Selec') != null) {
+    document.getElementById('mDesligar_Selec').className = "menuUp";
+    document.getElementById('mDesligar_Selec').onclick   = null;
+  }
+  if (document.getElementById('mReligar') != null) {
+    document.getElementById('Religar').className = "menuUp";
+    document.getElementById('Religar').onclick   = null;
+  }
+  if (document.getElementById('mAtivarPort_Selec') != null) {
+    document.getElementById('mAtivarPort_Selec').className = "menuUp";
+    document.getElementById('mAtivarPort_Selec').onclick   = null;
+  }
+  if (document.getElementById('mDesativarPort_Selec') != null) {
+    document.getElementById('mDesativarPort_Selec').className = "menuUp";
+    document.getElementById('mDesativarPort_Selec').onclick   = null;
+  }
+
+}

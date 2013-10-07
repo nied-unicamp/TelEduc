@@ -44,18 +44,17 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
-   if($_SESSION['login_existente']==true){
-   		$sock=Conectar($cod_curso);
-  		foreach ($_SESSION['dados'] as $cod => $linha){
-  			if($linha['status_login']==1){
-  				$linha['login']=$linha['novo_login'];
-  				$sock=CadastrarUsuario($sock,$cod_curso,$linha,$_SESSION['lista_frases'],$cod_usuario);
-  			}
-  			
-  		}
-  		Desconectar($sock);
-  		unset($_SESSION['login_existente']);
-   }
+  if($_SESSION['login_existente']==true){
+    $sock=Conectar($cod_curso);
+    foreach ($_SESSION['dados'] as $cod => $linha){
+      if($linha['status_login']==1){
+        $linha['login']=$linha['novo_login'];
+        $sock=CadastrarUsuario($sock,$cod_curso,$linha,$_SESSION['lista_frases'],$cod_usuario);
+      }
+    }
+    Desconectar($sock);
+    unset($_SESSION['login_existente']);
+  }
 
   require_once("../xajax_0.2.4/xajax.inc.php");
 
@@ -124,7 +123,7 @@
   // 269 - Portfolio(s) ativado(s) com sucesso.
   $frase1=RetornaFraseDaLista($lista_frases,269);
   // 270 - Portfolio(s) desativado(s) com sucesso.
-  $frase2=RetornaFraseDaLista($lista_frases,270); 
+  $frase2=RetornaFraseDaLista($lista_frases,270);
   $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n";
 
   
@@ -212,14 +211,14 @@
    
   /*Funcao JavaScript*/
   echo("    <script type=\"text/javascript\">\n\n");
-  echo("      var pag_atual = ".$pag_atual.";\n\n"); 
+  echo("      var pag_atual = ".$pag_atual.";\n\n");
    
   echo("      function Iniciar()\n");
-  echo("     {\n");
+  echo("      {\n");
                 $feedbackObject->returnFeedback($_GET['acao_fb'], $_GET['atualizacao']);
   echo("        startList();\n");
-  echo("	    xajax_IniciaPaginacaoDinamic(".$cod_curso.",'".$tipo_usuario."','".$ordem."');\n");
-  echo("     }\n\n");
+  echo("        xajax_IniciaPaginacaoDinamic(".$cod_curso.",'".$tipo_usuario."','".$ordem."');\n");
+  echo("      }\n\n");
 
   echo("      function MarcaOuDesmarcaTodos()\n");
   echo("      {\n");
@@ -234,9 +233,7 @@
   echo("          }\n");
   echo("        }\n");
   echo("        VerificaCheck();\n");
-  echo("      }\n");
-  
-  
+  echo("      }\n\n");
 
   echo("      function VerificaCheck(){\n");
   echo("        var i;\n");
@@ -246,8 +243,8 @@
   echo("        var Cabecalho = document.getElementById('check_all');\n");
   echo("        for (i=0; i < cod_itens.length; i++){\n");
   echo("          if (cod_itens[i].checked){\n");
-  echo("            if(cod_itens[i].value == '".$cod_coordenador."')");
-  echo("              coordenador=true;");
+  echo("            if(cod_itens[i].value == '".$cod_coordenador."')\n");
+  echo("              coordenador=true;\n");
   echo("            j++;\n");
   echo("          }\n");
   echo("        }\n");
@@ -256,40 +253,40 @@
   echo("        if(j > 0){\n");
   echo("          document.getElementById('mDados_Selec').className=\"menuUp02\";\n");
   echo("          document.getElementById('mDados_Selec').onclick=function(){ Alerta('dados',''); };\n");
-  echo("          if(!coordenador){");
-//   echo("          document.getElementById('mApagar_Selec').className=\"menuUp02\";\n");
-//   echo("          document.getElementById('mApagar_Selec').onclick=function(){ Apagar(); };\n");
+  echo("          if(!coordenador){\n");
+  //echo("            document.getElementById('mApagar_Selec').className=\"menuUp02\";\n");
+  //echo("            document.getElementById('mApagar_Selec').onclick=function(){ Apagar(); };\n");
   if($acao == "R" || $acao == "N")
   {
-    echo("          document.getElementById('mAceitar_Selec').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mAceitar_Selec').onclick=function(){ Alerta('aceitar',''); };\n");
-    echo("          document.getElementById('mAceitarVis_Selec').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mAceitarVis_Selec').onclick=function(){ Alerta('aceitar_vis',''); };\n");
+    echo("            document.getElementById('mAceitar_Selec').className=\"menuUp02\";\n");
+    echo("            document.getElementById('mAceitar_Selec').onclick=function(){ Alerta('aceitar',''); };\n");
+    //echo("          document.getElementById('mAceitarVis_Selec').className=\"menuUp02\";\n");
+    //echo("          document.getElementById('mAceitarVis_Selec').onclick=function(){ Alerta('aceitar_vis',''); };\n");
     if($acao == "R")
     {
-      echo("          document.getElementById('mAtivarPort_Selec').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mAtivarPort_Selec').onclick=function(){ AtivaDesativaPort('ativar_port'); };\n");
-      echo("          document.getElementById('mDesativarPort_Selec').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mDesativarPort_Selec').onclick=function(){ AtivaDesativaPort('desativar_port'); };\n");
+      echo("            document.getElementById('mAtivarPort_Selec').className=\"menuUp02\";\n");
+      echo("            document.getElementById('mAtivarPort_Selec').onclick=function(){ AtivaDesativaPort('ativar_port'); };\n");
+      echo("            document.getElementById('mDesativarPort_Selec').className=\"menuUp02\";\n");
+      echo("            document.getElementById('mDesativarPort_Selec').onclick=function(){ AtivaDesativaPort('desativar_port'); };\n");
     }
   }
   if($acao == "N")
   {
-    echo("          document.getElementById('mRejeitar_Selec').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mRejeitar_Selec').onclick=function(){ Alerta('rejeitar',''); };\n");
+    echo("            document.getElementById('mRejeitar_Selec').className=\"menuUp02\";\n");
+    echo("            document.getElementById('mRejeitar_Selec').onclick=function(){ Alerta('rejeitar',''); };\n");
   }
   if($acao == "C")
   {
-    echo("          document.getElementById('mRejeitar2_Selec').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mRejeitar2_Selec').onclick=function(){ Alerta('rejeitarVisitantes',''); };\n");
+    echo("            document.getElementById('mRejeitar2_Selec').className=\"menuUp02\";\n");
+    echo("            document.getElementById('mRejeitar2_Selec').onclick=function(){ Alerta('rejeitarVisitantes',''); };\n");
   }
   if($ecoordenador){
     if($acao == 'A' || $acao == 'F')
     {
-      echo("          document.getElementById('mColaborador_Selec').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mColaborador_Selec').onclick=function(){ Alerta('colaborador','transformar'); };\n");
-      echo("          document.getElementById('mVisitante_Selec').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mVisitante_Selec').onclick=function(){ Alerta('visitante','transformar'); };\n");
+      echo("            document.getElementById('mColaborador_Selec').className=\"menuUp02\";\n");
+      echo("            document.getElementById('mColaborador_Selec').onclick=function(){ Alerta('colaborador','transformar'); };\n");
+      echo("            document.getElementById('mVisitante_Selec').className=\"menuUp02\";\n");
+      echo("            document.getElementById('mVisitante_Selec').onclick=function(){ Alerta('visitante','transformar'); };\n");
       if($acao == 'A')
       {
         echo("          document.getElementById('mFormador_Selec').className=\"menuUp02\";\n");
@@ -323,8 +320,8 @@
   echo("        }if(j <= 0){\n");
   echo("          document.getElementById('mDados_Selec').className=\"menuUp\";\n");
   echo("          document.getElementById('mDados_Selec').onclick=function(){ };\n");
-  echo("         }\n");
-  echo("         if((j <= 0) || (coordenador)){");
+  echo("        }\n");
+  echo("        if((j <= 0) || (coordenador)){\n");
 //   echo("          document.getElementById('mApagar_Selec').className=\"menuUp\";\n");
 //   echo("          document.getElementById('mApagar_Selec').onclick=function(){ };\n");
   if($acao == "R" || $acao == "N")
@@ -386,14 +383,13 @@
         echo("          document.getElementById('Religar').onclick=function(){ };\n");
       }
   }
-  echo("          }\n"); 
   echo("        }\n");
-
+  echo("      }\n\n");
 
   echo("      function DesmarcaCabecalho()\n");
   echo("      {\n");
   echo("        document.gerenc.check_all.checked=false;\n");
-  echo("      }\n");
+  echo("      }\n\n");
 
   echo("      function AtivaDesativaPort(tipo)\n");
   echo("      {\n");
@@ -407,7 +403,7 @@
   echo("          }\n");
   echo("        }\n");
   echo("        xajax_AtivarDesativarPortDinamic(".$cod_curso.",cod_usu_array,tipo,'".$frase1."','".$frase2."');\n");
-  echo("      }\n");
+  echo("      }\n\n");
 
   echo("      function Alerta(tipo,action)\n");
   echo("      {\n");
@@ -432,17 +428,17 @@
   echo("          document.gerenc.action_ger.value=action;\n");
   echo("          document.gerenc.submit();\n");
   echo("        }\n");
-  echo("      }\n");
+  echo("      }\n\n");
 
 //   echo("      function ApagarUsuarios(){\n");
 //   echo("        var j=0;\n");
 //   echo("        var elementos = document.getElementsByName('cod_usu[]')\n");
 //   echo("        elementosSelecionados = new Array();\n");
 //   echo("          for(i=0 ; i < elementos.length; i++){\n");
-//   echo("            if(elementos[i].checked){\n"); 
-//   echo("              elementosSelecionados[j] = elementos[i].value\n");   
-//   echo("              j++\n"); 
-//   echo("            }\n"); 
+//   echo("            if(elementos[i].checked){\n");
+//   echo("              elementosSelecionados[j] = elementos[i].value\n");
+//   echo("              j++\n");
+//   echo("            }\n");
 //   echo("          }\n");
 //   echo("        document.location='acoes.php?origem=gerenciamento.php&acao=".$acao."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&action_ger=ApagaUsuario&elementos='+elementosSelecionados+'';\n");
 //   echo("      }\n");
@@ -461,7 +457,7 @@
   echo("        alert('".RetornaFraseDaLista($lista_frases, 114)."');\n");
   echo("        return false;\n");
 
-  echo("      }\n");
+  echo("      }\n\n");
   
   /*func�o responsavel por apagar os registros da pagina atual
    * se flag==T apaga a pagina inteira
@@ -469,27 +465,26 @@
    * � necessario as vezes apagar so o navegador quando paginamos para frente ou para tras
   */
   
-  echo("var qtdPag=1;\n");
-  echo("var intervalo=1;\n");
-  echo("var atual=1;\n");
-  echo("var aux='T';\n");
+  echo("      var qtdPag=1;\n");
+  echo("      var intervalo=1;\n");
+  echo("      var atual=1;\n");
+  echo("      var aux='T';\n");
   
-  
-	/**
-	 * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
-	 */  
-	echo("function getElementsByName_iefix(tag, name) {\n");
-	echo("	var elem = document.getElementsByTagName(tag);\n");
-	echo("	var arr = new Array();\n");
-	echo("	for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
-	echo("		var att = elem[i].getAttribute('name');\n");
-	echo("		if(att == name) {\n");
-	echo("			arr[iarr] = elem[i];\n");
-	echo("			iarr++;\n");
-	echo("		}\n");
-	echo("	}\n");
-	echo("	return arr;\n");
-	echo("}\n");
+  /**
+   * Como no IE getElementsByName() não funciona, usar a funcao abaixo. 
+   */  
+  echo("function getElementsByName_iefix(tag, name) {\n");
+  echo("	var elem = document.getElementsByTagName(tag);\n");
+  echo("	var arr = new Array();\n");
+  echo("	for(var i = 0, iarr = 0; i < elem.length; i++) {\n");
+  echo("		var att = elem[i].getAttribute('name');\n");
+  echo("		if(att == name) {\n");
+  echo("			arr[iarr] = elem[i];\n");
+  echo("			iarr++;\n");
+  echo("		}\n");
+  echo("	}\n");
+  echo("	return arr;\n");
+  echo("}\n");
 
   echo("function ApagaPagina(flag)\n");
   echo("{\n");
@@ -504,7 +499,7 @@
   echo("   }\n");
   echo(" }");
 
-  echo("}\n");
+  echo("}\n\n");
   
   echo("function MarcaPaginaAtual(pagina){\n");
   echo("	var indice = document.getElementById(pagina);\n");
@@ -521,7 +516,7 @@
   echo("	check.type=\"checkbox\";\n");
   echo("	check.setAttribute('name','cod_usu[]');\n");
   echo("	check.setAttribute('value',cod);\n");
-  echo("	check.onclick=new Function(\"VerificaCheck()\");\n"); 
+  echo("	check.onclick=new Function(\"VerificaCheck()\");\n");
   echo("	td_check.appendChild(check);\n");
   echo("	var td_nome=document.createElement('td');\n");
   echo("	td_nome.align=\"left\";\n");
@@ -531,7 +526,7 @@
   echo("	var td_dados=document.createElement('td');\n");
   echo("		td_dados.innerHTML=\"<a href=gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=\"+cod+\"\>".RetornaFraseDaLista($lista_frases,79)."</a>\";\n");
   echo("	var tr_ger=document.createElement('tr');\n");
-  echo("	tr_ger.setAttribute('name','germen');\n"); 
+  echo("	tr_ger.setAttribute('name','germen');\n");
   echo("	tr_ger.id=\"ger\";\n");
   echo("	tr_ger.appendChild(td_check);\n");
   echo("	tr_ger.appendChild(td_nome);\n");
@@ -590,7 +585,7 @@
   echo("		span_last.onclick=function(){xajax_MudaDinamic(intervalo,'L',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
   echo("		span_prox.className=\"paginacao\";\n");
   echo("		span_prox.onclick=function(){xajax_MudaDinamic(intervalo,'P',".$cod_curso.",'".$tipo_usuario."','".$ordem."');};\n");
-  echo("		aux='LF';\n");	
+  echo("		aux='LF';\n");
   echo("	}\n");
   
   echo("if(status== 'BF'){\n");
@@ -602,7 +597,7 @@
   echo("		span_last.onclick=\"none\";\n");
   echo("		span_prox.className=\"none\";\n");
   echo("		span_prox.onclick=\"none\";\n");
-  echo("		aux='BF';\n");	
+  echo("		aux='BF';\n");
   echo("	}");
   
   echo("if(status== 'B'){\n");
@@ -614,7 +609,7 @@
   echo("		span_last.onclick=\"none\";\n");
   echo("		span_prox.className=\"none\";\n");
   echo("		span_prox.onclick=\"none\";\n");
-  echo("		aux='B';\n");	
+  echo("		aux='B';\n");
   echo("	}");
     
   echo("	td_pagina.appendChild(span_first);\n");
@@ -644,7 +639,7 @@
   echo("	td_pagina.appendChild(span_last);\n");
   
   echo("	var tr_span=document.createElement('tr');\n");
-  echo("	tr_span.setAttribute('name','germen');\n"); 
+  echo("	tr_span.setAttribute('name','germen');\n");
   echo("	tr_span.id=\"control\";\n");
   echo("	tr_span.appendChild(td_pagina);\n");
   echo("	tbody.appendChild(tr_span);\n");
@@ -662,7 +657,7 @@
   echo("}\n");
   
   
-     
+  
   /*inicial a pagina��o dinamica, criando os controladores de pagina��o*/
   
   echo("function Inicial(limit,flag){\n");
@@ -709,7 +704,7 @@
    echo("	last.className=\"none\";\n");
    echo("	prox.onclick=\"none\";\n");
    echo("	last.onclick=\"none\";\n");
-   echo("	aux= 'B';\n");	
+   echo("	aux= 'B';\n");
    echo("}\n");
 //  
 //  /*paginando os indices iniciais, at� 5, ou at� o fim das mensagens*/
@@ -719,7 +714,7 @@
   echo("	GerSpan.id=i;\n");
   echo("	if (atual==i){\n");
   echo("		GerSpan.className=\"paginaAtual\";\n");
-  echo("		GerSpan.onclick=\"none\";");	
+  echo("		GerSpan.onclick=\"none\";");
   echo("	}\n");
   echo("	else{\n");
   echo("		GerSpan.className=\"paginacao\";\n");
@@ -731,13 +726,13 @@
   echo("coluna.appendChild(prox);\n");
   echo("coluna.appendChild(last);\n");
   echo("var linha=document.createElement('tr');\n");
-  echo("linha.setAttribute('name','germen');\n"); 
+  echo("linha.setAttribute('name','germen');\n");
   echo("linha.id=\"control\";\n");
   echo("linha.appendChild(coluna);\n");
   echo("tbody.appendChild(linha);\n");
   echo("tab.appendChild(tbody);\n");
   echo("};\n");
-  echo("}\n");  
+  echo("}\n");
 
 //   echo("      function Apagar()\n");
 //   echo("      {\n");
@@ -754,13 +749,12 @@
   
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -799,7 +793,7 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
@@ -839,9 +833,9 @@
     echo("            </tr>\n");
   }
   
- 
   
-   
+  
+  
   $lista_usuarios = RetornaListaUsuariosDoGerenciamento($sock,$cod_curso,$tipo_usuario,$ordem);
 
   /* Sistema de Paginacao */
@@ -852,7 +846,7 @@
   /* Calcula o numero de paginas geradas.*/
   $total_pag = ceil($num / $msg_por_pag);
 
-   /* Se a pagina atual nao estiver setada entao, por padrao, atribui-lhe o valor 1. */
+  /* Se a pagina atual nao estiver setada entao, por padrao, atribui-lhe o valor 1.  */
   /* Se estiver setada, verifica se a pagina eh maior que o total de paginas, se for */
   /* atribui o valor de $total_pag  a $pag_atual.                                    */
    if ((!isset($pag_atual))or($pag_atual=='')or($pag_atual==0))
@@ -908,27 +902,27 @@
   {
     foreach($lista_usuarios as $cod_usuario_l => $linha)
     { 
-     if ($msg_por_pag>=1){
-          echo("                  <tr name=\"germen\" id=\"ger\" style=\"display: table-row;\">\n");
-          echo("                    <td width=\"1%\"><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
-          echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
-          echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
-          /* 79 - Dados */
-          echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
-	  // Portfolio
-	  if($acao == "R"){
-	  	echo("                <td id=\"status_port".$cod_usuario_l."\">");
-		if($linha['portfolio'] == "ativado")
-			echo RetornaFraseDaLista($lista_frases, 208);// 208 - Ativado
-		else
-			echo RetornaFraseDaLista($lista_frases, 209);//209 - Desativado
-	  	echo("                    </td>\n");
-	  }
-	echo("                  </tr>\n");
-     }
-    $msg_por_pag--;
+      if ($msg_por_pag>=1){
+        echo("                  <tr name=\"germen\" id=\"ger\" style=\"display: table-row;\">\n");
+        echo("                    <td width=\"1%\"><input type=\"checkbox\" name=\"cod_usu[]\" onclick=\"VerificaCheck();\" value=".$cod_usuario_l."></td>\n");
+        echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
+        echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
+        /* 79 - Dados */
+        echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
+        // Portfolio
+        if($acao == "R"){
+          echo("                <td id=\"status_port".$cod_usuario_l."\">");
+          if($linha['portfolio'] == "ativado")
+            echo RetornaFraseDaLista($lista_frases, 208);// 208 - Ativado
+          else
+            echo RetornaFraseDaLista($lista_frases, 209);//209 - Desativado
+          echo("                    </td>\n");
+        }
+        echo("                  </tr>\n");
+      }
+      $msg_por_pag--;
     }
-   echo("                </table>\n");
+    echo("                </table>\n");
   }
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -945,15 +939,15 @@
     echo("                  <li id=\"mAceitar_Selec\" class=\"menuUp\"><span id=\"aceitar\">".RetornaFraseDaLista($lista_frases,80)."</span></li>\n");
      
     // 187 - Aceitar como visitante
-//    echo("                  <li id=\"mAceitarVis_Selec\" class=\"menuUp\"><span id=\"aceitar_vis\">".RetornaFraseDaLista($lista_frases,187)."</span></li>\n");
+    //echo("                  <li id=\"mAceitarVis_Selec\" class=\"menuUp\"><span id=\"aceitar_vis\">".RetornaFraseDaLista($lista_frases,187)."</span></li>\n");
       
     // Ativar / Desativar Portfolio
     if($acao == "R"){
       echo("                  <li id=\"mAtivarPort_Selec\" class=\"menuUp\"><span id=\"ativar_port\">".RetornaFraseDaLista($lista_frases,206)."</span></li>\n");
       
       echo("                  <li id=\"mDesativarPort_Selec\" class=\"menuUp\"><span id=\"desativar_port\">".RetornaFraseDaLista($lista_frases,207)."</span></li>\n");
-       
-    }    
+      
+    }
   }
 
   if ($acao=="N"){
@@ -977,9 +971,9 @@
       echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,108)."</span></li>\n");
         
     if ($acao == 'A' || $acao == 'F'){
-      // 176 - Transformar em colaborador
+      // 315 - Transformar em colaborador
       echo("                  <li id=\"mColaborador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,315)."</span></li>\n");
-      // 176 - Transformar em visitante
+      // 314 - Transformar em visitante
       echo("                  <li id=\"mVisitante_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,314)."</span></li>\n");
     }
     if ($acao == 'A')
