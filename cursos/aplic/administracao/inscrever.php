@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/administracao/inscrever.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a DistÃ¢ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - NÃºcleo de InformÃ¡tica Aplicada Ã  EducaÃ§Ã£o
+    Nied - Núcleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade UniversitÃ¡ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -77,7 +77,7 @@
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
 
-  //adicionar as acoes possiveis, 1o parametro Ã©
+  //adicionar as acoes possiveis, 1o parametro é
   $feedbackObject->addAction("dadosPreenchidosLogin", 0, 281);
   $feedbackObject->addAction("erroUsuarioCadastrado", 0, 308);
 
@@ -118,12 +118,12 @@
   echo("tabela=document.getElementsByClassName('tabInterna');\n");
 
   //pega a $_SESSION correspondente ao retorno caso exista algum problema de login logo depois mata a $_SESSION
-  //para evitar que os dados permaneï¿½am na memï¿½ria por muito tempo
+  //para evitar que os dados permaneçam na memória por muito tempo
 
   $dados_pree=$_SESSION['array_inscricao'];
   unset($_SESSION['array_inscricao']);
 
-  //percorre a variavel(matriz) correspondentes aos campos retornados, evitando que o usuï¿½rio tenha que preencher 
+  //percorre a variavel(matriz) correspondentes aos campos retornados, evitando que o usuário tenha que preencher 
   //novamente
   foreach($dados_pree as $cod => $linha){
 
@@ -238,7 +238,7 @@
   echo("              return true;\n");
   echo("            }\n");
   echo("            else {\n");
-  // 225 - Existem logins repetidos. Especifique logins diferentes para cada usuï¿½rio.
+  // 225 - Existem logins repetidos. Especifique logins diferentes para cada usuário.
   echo("              alert('".RetornaFraseDaLista($lista_frases, 225)."');\n");
   echo("              return false;\n");
   echo("            }\n");
@@ -402,8 +402,8 @@
   echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
   echo("      <input type=\"hidden\" name=\"action\" value=\"inscrever\">\n");
 
-  // Pï¿½gina Principal
-  /* 1 - Administraï¿½ï¿½o */
+  // Página Principal
+  /* 1 - Administração */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
 
   if ($tipo_usuario == 'F')
@@ -460,7 +460,7 @@
     /* 82 - Cadastrar por Arquivo*/
 
   echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,82)."</a></li>\n");
-  /* BotÃ£o de Gerenciamento de usuÃ¡rio*/
+  /* Botão de Gerenciamento de usuário*/
   echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."\">\n");
   if ($tipo_usuario == "F")
   {
@@ -490,7 +490,7 @@
   echo("              <td>\n");
   echo("                <table  cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head alLeft\">\n");
-  /* 58 - Preencha os dados abaixo para cadastrï¿½-los. */
+  /* 58 - Preencha os dados abaixo para cadastrá-los. */
   echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
   echo("                  </tr>\n"); 
   echo("                  <tr class=\"head01\">\n");
@@ -540,10 +540,10 @@
 
   echo("                </table>\n");
   if (isset($dados_preenchidos_s))
-    /* 247 - Preencha os Logins e E-mails em branco novamente e com novos valores, pois os anteriormente fornecidos jÃ¡ existem.*/
+    /* 247 - Preencha os Logins e E-mails em branco novamente e com novos valores, pois os anteriormente fornecidos já existem.*/
     echo("                <font color=\"red\">* ".RetornaFraseDaLista($lista_frases,247)."</font><br>");
 
-  /* 54 - Todas as colunas sï¿½o obrigatï¿½rias (nome, e-mail e login). Preencha apenas as linhas necessï¿½rias. */
+  /* 54 - Todas as colunas são obrigatórias (nome, e-mail e login). Preencha apenas as linhas necessárias. */
   echo("                * ".RetornaFraseDaLista($lista_frases,54)."<br>\n");
   /* 59 - Inscrever */
   echo("                <div align=\"right\"><br><input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases,59)."'></div>\n");
@@ -556,7 +556,7 @@
   include("../tela2.php");
   echo("  </body>\n");
   
-  /*layers sugestÃµes de usuÃ¡rios*/
+  /*layers sugestões de usuários*/
   
   echo("  <div id=\"sugestao\" class=\"popup\">\n");
   echo("  <div class=\"posX\"><span onclick=\"EscondeLayer(cod_sugestao);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span>\n");
