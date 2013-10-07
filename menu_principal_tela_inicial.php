@@ -121,15 +121,14 @@
   /*Se estiver logado e nao for o admtele, mostra links para o usuario acessar seus dados e seus cursos*/
   else if($_SESSION['cod_usuario_global_s'] != -1)
   {
-    echo("			  </ul><ul id=\"nav\">");
+    echo("          </ul><ul id=\"nav\">");
     //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,187)."</a></li>\n");
     echo("            <div class=\"navCabecalho\">".RetornaFraseDaLista($lista_frases,187)."</div>\n");
     if(PreencheuDadosPessoais($sock))
       echo("            <li><a href=\"".$link."exibe_cursos.php\">".RetornaFraseDaLista($lista_frases,132)."</a></li>\n");
     echo("            <li><a href=\"".$link."dados.php\">".RetornaFraseDaLista($lista_frases_configurar,1)."</a></li>\n");
   }
-  echo("			</ul><ul id=\"nav\">");
-  //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_todos_cursos.php\">".RetornaFraseDaLista($lista_frases,5)."</a></li>\n");
+  echo("          </ul><ul id=\"nav\">");
   echo("            <div class=\"navCabecalho\">".RetornaFraseDaLista($lista_frases,5)."</div>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=I\">".RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
   echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=N\">".RetornaFraseDaLista($lista_frases,192)."</a></li>\n");
