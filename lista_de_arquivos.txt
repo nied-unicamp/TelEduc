@@ -145,6 +145,7 @@ gerenciamento2.php
 gerenciamento3.php
 gerenciamento.js
 gerenciamento.php
+gerenciamento_inscricoes.php
 gerenciamento_usuarios.php
 inscrever3.php
 inscrever_arquivo.php

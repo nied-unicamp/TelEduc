@@ -251,8 +251,9 @@
     echo("              <tr>\n");
     echo("                <td>\n");
 
+    // Ações que mandam emails de notificação aos usuários gerenciados.
     //if ($action_ger == "aceitar" || $action_ger == "rejeitar" || $action_ger == "desligar_usuario" || $action_ger == "religar_usuario")
-    if ($action_ger == "aceitar" || $action_ger =="rejeitar" || $action_ger == "aceitar_vis" || $action_ger == "remover_aluno" || $action_ger == "remover_form" || $action_ger == "encerrarConvite" || $action_ger == "rejeitarVisitantes"|| $action_ger == "religar_form" || $action_ger == "religar_aluno")
+    if ($action_ger == "aceitar" || $action_ger =="rejeitar" || $action_ger == "desligar_usuario" || $action_ger == "religar_usuario" || $action_ger == "aceitar_vis" || $action_ger == "remover_aluno" || $action_ger == "remover_form" || $action_ger == "encerrarConvite" || $action_ger == "rejeitarVisitantes"|| $action_ger == "religar_form" || $action_ger == "religar_aluno")
     {
       echo("                  <form action=\"gerenciamento3.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."\" name=\"gerenc\" method=\"post\" onsubmit=\"return(updateRTE('mensagem'));\">\n");
       echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -261,6 +262,7 @@
 
       if ($action_ger == "aceitar")
       {
+
         /* 90 - Aceitar Inscriï¿½ï¿½es */
         $titulo=RetornaFraseDaLista($lista_frases,90);
 
@@ -283,31 +285,10 @@
         $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
         $mensagem.="</font>";
 
-
-      }
-      else if ($action_ger == "aceitar_vis")
-      {
-        /* 90 - Aceitar Inscriï¿½ï¿½es */
-        $titulo=RetornaFraseDaLista($lista_frases,90);
-
-        /* 112 - Inscriï¿½ï¿½o aceita */
-        $assunto=RetornaFraseDaLista($lista_frases,112).$dados_curso['nome_curso'];
-
-        /* 188 - Vocï¿½ foi inscrito como visitante para o curso */
-        /* 65 - Visite a pï¿½gina do curso para obter informaï¿½ï¿½es sobre o seu inï¿½cio */
-        /* 101 - Agradecemos sinceramente o seu interesse */
-        /* 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso */
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,188);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,65).".</p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,101).".</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
       }
       else if ($action_ger == "rejeitar")
       {
+
         /* 91 - Rejeitar Inscriï¿½ï¿½es */
         $titulo=RetornaFraseDaLista($lista_frases,91);
 
@@ -326,149 +307,184 @@
         $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,66);
         $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
         $mensagem.="</font>";
-      }
-
-      else if($action_ger == "remover_form")
-      {
-        // 199 - Desligar Formador
-        $titulo=RetornaFraseDaLista($lista_frases,199);
-
-        // 200 - Desligamento de formador
-        $assunto=RetornaFraseDaLista($lista_frases, 200);
-
-        // 201 - Infelizmente vocï¿½ foi desligado como Formador do curso
-        // 98 - Agradecemos sinceramente o seu interesse e recomendamos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
-        // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 201);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 98)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
-      }
-      else if($action_ger == "religar_form")
-      {
-        // 260 - Religar Formador
-        $titulo=RetornaFraseDaLista($lista_frases,260);
-
-        // 267 - Religamento de formador
-        $assunto=RetornaFraseDaLista($lista_frases, 267);
-
-        // 264 -Voce foi religado como Formador do curso
-        // 265 - Seu login e senha nÃ£o foram alterados
-        // 266 - Acesse o curso:
-        // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
-
- 
-        
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 264);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
 
       }
-      else if($action_ger == "religar_aluno")
+      else if($action_ger == "religar_usuario")
       {
-        // 285 - Religar Aluno
-        $titulo=RetornaFraseDaLista($lista_frases,285);
 
-        // 286 - Religamento de Aluno
-        $assunto=RetornaFraseDaLista($lista_frases, 286);
-
-        // 287 -Voce foi religado como Aluno do curso
-        // 265 - Seu login e senha nÃ£o foram alterados
-        // 266 - Acesse o curso:
-        // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
-
- 
-        
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 287);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
+        switch ($tipo_usuario) {
+          case 'A':
+            // 285 - Religar Aluno
+            $titulo=RetornaFraseDaLista($lista_frases,285);
+          
+            // 286 - Religamento de Aluno
+            $assunto=RetornaFraseDaLista($lista_frases, 286);
+          
+            // 287 -Voce foi religado como Aluno do curso
+            // 265 - Seu login e senha nÃ£o foram alterados
+            // 266 - Acesse o curso:
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 287);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'F':
+            // 260 - Religar Formador
+            $titulo=RetornaFraseDaLista($lista_frases,260);
+            
+            // 267 - Religamento de formador
+            $assunto=RetornaFraseDaLista($lista_frases, 267);
+            
+            // 264 -Voce foi religado como Formador do curso
+            // 265 - Seu login e senha nÃ£o foram alterados
+            // 266 - Acesse o curso:
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 264);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'Z':
+            // 329 - Religar Colaborador
+            $titulo=RetornaFraseDaLista($lista_frases,329);
+            
+            // 286 - Religamento de colaborador
+            $assunto=RetornaFraseDaLista($lista_frases, 331);
+            
+            // 333 -Voce foi religado como Colaborador do curso
+            // 265 - Seu login e senha nÃ£o foram alterados
+            // 266 - Acesse o curso:
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 333);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'V':
+            // 330 - Religar Visitante
+            $titulo=RetornaFraseDaLista($lista_frases,330);
+            
+            // 286 - Religamento de visitante
+            $assunto=RetornaFraseDaLista($lista_frases, 332);
+            
+            // 334 -Voce foi religado como Visitante do curso
+            // 265 - Seu login e senha nÃ£o foram alterados
+            // 266 - Acesse o curso:
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 334);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 265)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+        }
 
       }
-      else if($action_ger == "remover_aluno")
+      else if($action_ger == "desligar_usuario")
       {
-        // 288 - Desligar Aluno
-        $titulo=RetornaFraseDaLista($lista_frases,288);
 
-        // 289 - Desligamento de Aluno
-        $assunto=RetornaFraseDaLista($lista_frases, 289);
+        switch ($tipo_usuario) {
+          case 'A':
+            // 288 - Desligar Aluno
+            $titulo=RetornaFraseDaLista($lista_frases,288);
+            
+            // 289 - Desligamento de Aluno
+            $assunto=RetornaFraseDaLista($lista_frases, 289);
+            
+            // 290 - Infelizmente vocï¿½ foi desligado como Aluno do curso
+            // 98 - Agradecemos sinceramente o seu interesse e recomendamos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 290);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 98)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'F':
+            // 199 - Desligar Formador
+            $titulo=RetornaFraseDaLista($lista_frases,199);
+            
+            // 200 - Desligamento de formador
+            $assunto=RetornaFraseDaLista($lista_frases, 200);
+            
+            // 201 - Infelizmente vocï¿½ foi desligado como Formador do curso
+            // 98 - Agradecemos sinceramente o seu interesse e recomendamos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 201);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 98)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'Z':
+            /* 91 - Rejeitar Inscriï¿½ï¿½es */
+            $titulo=RetornaFraseDaLista($lista_frases,91);
+            
+            // 195 - Inscriï¿½ï¿½o encerrada.
+            $assunto=RetornaFraseDaLista($lista_frases,195);
+            
+            // 183 - Sua inscriï¿½ï¿½o como colaborador para o curso
+            // 194 - foi encerrada
+            // 98 - Agradecemos o seu interesse e sugerimos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
+            // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 183);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong> ";
+            $mensagem.=RetornaFraseDaLista($lista_frases, 194)."</p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases,98)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+          case 'V':
+            /* 91 - Rejeitar Inscriï¿½ï¿½es */
+            $titulo=RetornaFraseDaLista($lista_frases,91);
+            
+            // 195 - Inscricao encerrada
+            $assunto=RetornaFraseDaLista($lista_frases,195);
+            
+            // 185 - Sua inscriï¿½ï¿½o como visitante para o curso
+            // 194 - foi encerrada
+            // 98 - Agradecemos a sua participaï¿½ï¿½o e sugerimos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
+            /* 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso */
+            $mensagem ="<font size=\"2\">";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases,185);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong> ";
+            $mensagem.=RetornaFraseDaLista($lista_frases, 194)."</p>";
+            $mensagem.="<p>".RetornaFraseDaLista($lista_frases,98)."</p><br />";
+            $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
+            $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
+            $mensagem.="</font>";
+            break;
+        }
 
-        // 290 - Infelizmente vocï¿½ foi desligado como Aluno do curso
-        // 98 - Agradecemos sinceramente o seu interesse e recomendamos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
-        // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 290);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong></p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 98)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
-      }
-      
-      else if($action_ger == "encerrarConvite")
-      {
-        /* 91 - Rejeitar Inscriï¿½ï¿½es */
-        $titulo=RetornaFraseDaLista($lista_frases,91);
-
-        // 195 - Inscriï¿½ï¿½o encerrada.
-        $assunto=RetornaFraseDaLista($lista_frases,195);
-
-        // 183 - Sua inscriï¿½ï¿½o como convidado para o curso
-        // 194 - foi encerrada
-        // 98 - Agradecemos o seu interesse e sugerimos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
-        // 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases, 183);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong> ";
-        $mensagem.=RetornaFraseDaLista($lista_frases, 194)."</p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,98)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
-      }
-
-      else if($action_ger == "rejeitarVisitantes")
-      {
-        /* 91 - Rejeitar Inscriï¿½ï¿½es */
-        $titulo=RetornaFraseDaLista($lista_frases,91);
-  
-        // 195 - Inscricao encerrada
-        $assunto=RetornaFraseDaLista($lista_frases,195);
-  
-        // 185 - Sua inscriï¿½ï¿½o como visitante para o curso
-        // 194 - foi encerrada
-        // 98 - Agradecemos a sua participaï¿½ï¿½o e sugerimos a visita periï¿½dica do ambiente para a verificaï¿½ï¿½o de novos cursos agendados.
-    
-    
-        /* 66 - Atenciosamente, Coordenaï¿½ï¿½o do curso */
-        $mensagem ="<font size=\"2\">";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,185);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong> ";
-        $mensagem.=RetornaFraseDaLista($lista_frases, 194)."</p>";
-        $mensagem.="<p>".RetornaFraseDaLista($lista_frases,98)."</p><br />";
-        $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases, 66);
-        $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
-        $mensagem.="</font>";
       }
 
       echo("                    <tr class=\"head\">\n");
       echo("                      <td colspan=\"6\"><b>".$titulo."</b></td>\n");
       echo("                    </tr>\n");
       echo("                    <tr class=\"head01\">\n");
-      echo("                      <td colspan=\"3\" style=\"border:0; text-align:right;\">\n");
+      echo("                      <td colspan=\"3\" style=\"border:0; text-align:center;\">\n");
+
       $cod_coordenador = RetornaCodigoCoordenador ($sock, $cod_curso);
 
-      if ($action_ger=="aceitar")
+      if ($action_ger == "aceitar")
       {
         /* 113 - Ao enviar a mensagem, estarï¿½ confirmando a aceitaï¿½ï¿½o das inscriï¿½ï¿½es de: */
         echo("                      ".RetornaFraseDaLista($lista_frases,113)."\n");
@@ -478,61 +494,68 @@
         /* 92 - Ao enviar a mensagem, estarï¿½ confirmando a rejeiï¿½ï¿½o das inscriï¿½ï¿½es de: */
         echo("                      ".RetornaFraseDaLista($lista_frases,92)."\n");
       }
-      else if ($action_ger == "aceitar_vis")
-      {
-        /* 189 - Ao enviar a mensagem, estarï¿½ inscrevendo como Visitantes: */
-        echo("                      ".RetornaFraseDaLista($lista_frases,189)."\n");
+      else if ($action_ger == 'religar_usuario') {
+        switch ($tipo_usuario){
+          case 'A':
+            // 291 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes alunos:
+            echo("                      ".RetornaFraseDaLista($lista_frases,291)."\n");
+            break;
+          case 'F':
+            // 263 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes formadores:
+            echo("                      ".RetornaFraseDaLista($lista_frases,263)."\n");
+            break;
+          case 'Z':
+            // 335 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes colaboradores:
+            echo("                      ".RetornaFraseDaLista($lista_frases,335)."\n");
+            break;
+          case 'V':
+            // 189 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes visitantes:
+            echo("                      ".RetornaFraseDaLista($lista_frases,189)."\n");
+            break;
+        }
       }
-      else if($action_ger == "encerrarConvite")
+      else if($action_ger == "desligar_usuario")
       {
-        // 184 - Ao enviar a mensagem, estarï¿½ confirmando o cancelamento dos seguintes convidados:
-        echo("                      ".RetornaFraseDaLista($lista_frases,184)."\n");
+        switch ($tipo_usuario){
+          case 'A':
+            // 292 - Ao enviar a mensagem, estará confirmando o desligamento dos seguintes alunos:
+            echo("                      ".RetornaFraseDaLista($lista_frases,292)."\n");
+            break;
+          case 'F':
+            // 245 - Ao enviar a mensagem, estará confirmando o desligamento dos seguintes formadores:
+            echo("                      ".RetornaFraseDaLista($lista_frases,245)."\n");
+            break;
+          case 'Z':
+            // 184 - Ao enviar a mensagem, estará confirmando o desligamento dos seguintes colaboradores:
+            echo("                      ".RetornaFraseDaLista($lista_frases,184)."\n");
+            break;
+          case 'V':
+            // 186 - Ao enviar a mensagem, estarï¿½ confirmando o desligamento dos seguintes visitantes:
+            echo("                      ".RetornaFraseDaLista($lista_frases,186)."\n");
+            break;
+        }
       }
-      else if ($action_ger == "rejeitarVisitantes")
-      {
-        // 186 - Ao enviar a mensagem, estarï¿½ confirmando o cancelamento dos seguintes visitantes:
-        echo("                      ".RetornaFraseDaLista($lista_frases,186)."\n");
-      }
-      else if($action_ger == "remover_form")
-      {
-        // 245 - Ao enviar a mensagem, estarï¿½ confirmando o desligamento dos seguintes formadores:
-        echo("                      ".RetornaFraseDaLista($lista_frases,245)."\n");
-      }
-      else if($action_ger == "religar_form")
-      {
-        // 263 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes formadores:
-        echo("                      ".RetornaFraseDaLista($lista_frases,263)."\n");
-      }
-      else if($action_ger == "religar_aluno")
-      {
-        // 291 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes alunos:
-        echo("                      ".RetornaFraseDaLista($lista_frases,291)."\n");
-      }
-      
-      else if($action_ger == "remover_aluno")
-      {
-        // 292 - Ao enviar a mensagem, estarï¿½ confirmando o desligamento dos seguintes alunos:
-        echo("                      ".RetornaFraseDaLista($lista_frases,292)."\n");
-      }
-      echo("                      <td colspan=\"3\" width=\"50%\" style=\"border:none;text-align:left;\">\n");
+      echo("                      </td>\n");
+      echo("                    </tr>\n");
+      echo("                    <tr class=\"head01\">\n");
+      echo("                      <td colspan=\"3\" width=\"50%\" style=\"border:none;text-align:center;\">\n");
       foreach($cod_usu as $cod => $linha)
       {
         if($cod != 0)
-          echo(", \n");
-        else
-          echo("\n");
-        echo("                        ".NomeUsuario($sock,$linha, $cod_curso)."\n");
+          echo(",&nbsp;");
+        echo("                        ".NomeUsuario($sock, $linha, $cod_curso)."\n");
         echo("                        <input type=\"hidden\" name=\"cod_usu[]\" value='".$linha."'>\n");
       }
       echo("                      </td>\n");
       echo("                    </tr>\n");
       echo("                    <tr>\n");
       echo("                      <td width=\"25%\" style=\"border:0;\">&nbsp;</td>\n");
-      echo("                      <td colspan=\"4\" style=\"border:0;\">\n");
-      echo("                        <input type=\"hidden\" name=\"action_ger\" value=\"".$action_ger."\">\n");
-      echo("                        <input type=\"hidden\" name=\"opcao\"      value=\"".$opcao."\">\n");
-      echo("                        <input type=\"hidden\" name=\"ordem\"      value=\"".$ordem."\">\n");
-      echo("                        <input type=\"hidden\" name=\"origem\"     value=\"".$redireciona."\">\n");
+      echo("                      <td style=\"border:0;\">\n");
+      echo("                        <input type=\"hidden\" name=\"action_ger\"   value=\"".$action_ger."\">\n");
+      echo("                        <input type=\"hidden\" name=\"opcao\"        value=\"".$opcao."\">\n");
+      echo("                        <input type=\"hidden\" name=\"ordem\"        value=\"".$ordem."\">\n");
+      echo("                        <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
+      echo("                        <input type=\"hidden\" name=\"origem\"       value=\"".$redireciona."\">\n");
      
       /* 83 - Titulo: */
       echo("                      <br>".RetornaFraseDaLista($lista_frases,83)."<br />\n");
@@ -736,7 +759,7 @@
     else
     {
       echo("<big>Ação inválida inesperada !</big><br>\n");
-      var_dump ($opcao);
+      var_dump ($action_ger);
       exit();
     }
      echo("                </td>\n");

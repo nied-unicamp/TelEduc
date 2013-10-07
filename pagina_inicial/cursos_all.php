@@ -200,9 +200,8 @@
         }
         *******************/
         if(!empty($_SESSION['cod_usuario_global_s'])){
-        		echo("					  <td id=\"status_cel\"> ".StatusUsuarioNoCurso($sock, $linha['cod_curso'])." </td>");
+          echo("                    <td id=\"status_cel\"> ".StatusUsuarioNoCurso($sock, $linha['cod_curso'])." </td>");
         }
-        
         
         if($tem_acesso_curso){
 //        	if($rejeitado_curso){

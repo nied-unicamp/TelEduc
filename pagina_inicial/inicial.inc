@@ -734,6 +734,7 @@ function ParticipaDoCurso($cod_curso)
       {
         if($meus_cursos[$i]['cod_curso'] == $cod_curso)
           $tem_acesso_curso = true;
+          break;
       }
     }
 

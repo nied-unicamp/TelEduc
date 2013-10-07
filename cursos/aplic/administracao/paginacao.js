@@ -177,7 +177,7 @@ function CriaElementoTab(nome,dtins,dados,cod,mostraPortifolio,frasePort){
   var td_data=document.createElement('td');
   td_data.innerHTML=dtins;
   var td_dados=document.createElement('td');
-  td_dados.innerHTML="<a href=\"gerenciamento2.php?cod_curso="+cod_curso+"&amp;cod_usuario="+cod_usuario+"&amp;cod_ferramenta="+cod_ferramenta+"&amp;acao=A&amp;ordem="+ordem+"&amp;opcao=dados&amp;cod_usu[]="+cod+"\">"+fraseDados+"</a>";
+  td_dados.innerHTML="<a href=\"gerenciamento2.php?cod_curso="+cod_curso+"&amp;cod_usuario="+cod_usuario+"&amp;cod_ferramenta="+cod_ferramenta+"&amp;ordem="+ordem+"&amp;action_ger=dados&amp;cod_usu[]="+cod+"\">"+fraseDados+"</a>";
   var tr_ger=document.createElement('tr');
   tr_ger.setAttribute('name','germen');
   tr_ger.id="ger";
