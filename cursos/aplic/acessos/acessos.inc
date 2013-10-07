@@ -1198,9 +1198,9 @@ function RetornaListaGrupos($sock, $alunos, $formadores, $cod_curso)
   $sock = Conectar("");
   $tipos = array();
   if ($alunos)
-    $tipos[] = 'USUC.tipo_usuario=\'A\'';
+    $tipos[] = "binary USUC.tipo_usuario='A'";
   if ($formadores)
-    $tipos[] = 'USUC.tipo_usuario=\'F\'';
+    $tipos[] = "binary USUC.tipo_usuario='F'";
 
   $retorno = array();
 
