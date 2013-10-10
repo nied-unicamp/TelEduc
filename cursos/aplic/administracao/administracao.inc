@@ -1144,7 +1144,7 @@ function RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca="")
 
 /* *********************************************************************
    RetornaListaUsuariosSenha - Retorna a lista de usuarios p/
-                               a tela gerenciamento.php
+                               as telas de gerenciamento
    Entrada: $sock - BASE DO CURSO
    Saida: array com [$cod_usuario]['nome']
                     [$cod_usuario]['login']

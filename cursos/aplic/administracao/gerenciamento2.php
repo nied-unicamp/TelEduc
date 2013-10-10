@@ -559,7 +559,7 @@
       echo("                        <input type=\"hidden\" name=\"opcao\"        value=\"".$opcao."\">\n");
       echo("                        <input type=\"hidden\" name=\"ordem\"        value=\"".$ordem."\">\n");
       echo("                        <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
-      echo("                        <input type=\"hidden\" name=\"origem\"       value=\"".$redireciona."\">\n");
+      echo("                        <input type=\"hidden\" name=\"origem\"       value=\"".$origem."\">\n");
      
       /* 83 - Titulo: */
       echo("                      <br>".RetornaFraseDaLista($lista_frases,83)."<br />\n");

@@ -170,7 +170,7 @@
     echo("              <td valign=\"top\">\n");
     /* 1 - Administração */
     echo("              <ul class=\"btAuxTabs\">\n");
-    echo("                <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;opcao=".$opcao."&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,1)."</a></li>\n");
+    echo("                <li><a href=\"".$origem."?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,1)."</a></li>\n");
     echo("              </ul>\n");
     echo("            </tr>");
     echo("            <tr>");

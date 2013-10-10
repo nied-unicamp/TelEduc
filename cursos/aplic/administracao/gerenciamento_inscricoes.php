@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/administracao/gerenciamento.php
+    Arquivo : cursos/aplic/administracao/gerenciamento_inscricoes.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : cursos/aplic/administracao/gerenciamento.php
+  ARQUIVO : cursos/aplic/administracao/gerenciamento_inscricoes.php
   ========================================================== */
 
   $bibliotecas="../bibliotecas/";
@@ -263,7 +263,7 @@
   echo("                      ".$frase_qtde." ".$num."\n");
   echo("                    </td>\n");
   echo("                    <td colspan=\"2\" align=right>");
-  echo("                      ".RetornaFraseDaLista($lista_frases,146)." <select name=\"ordem\" onChange=\"document.location='gerenciamento.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem='+this[this.selectedIndex].value;\" style=\"margin:5px 0 0 0;\">\n");
+  echo("                      ".RetornaFraseDaLista($lista_frases,146)." <select name=\"ordem\" onChange=\"document.location='gerenciamento_inscricoes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;ordem='+this[this.selectedIndex].value;\" style=\"margin:5px 0 0 0;\">\n");
   $tmp = ($ordem == "nome" ? " selected" : "");
   // 147 - nome
   echo("                        <option value=\"nome\"".$tmp.">".RetornaFraseDaLista($lista_frases,147)."\n");
