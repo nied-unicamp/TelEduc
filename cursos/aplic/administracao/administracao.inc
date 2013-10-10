@@ -208,7 +208,7 @@ function HouveAlteracoes($sock,$cod_curso,$cod_usuario)
 
   /* Verifica se hï¿½ uma nova requisiï¿½ï¿½o de inscriï¿½ï¿½o.               */
   unset($tupla);
-  $query = "select max(data_inscricao) 'data' from ".$dbnamebase.".Usuario_curso where tipo_usuario = 'a' and cod_curso='".$cod_curso."'";
+  $query = "select max(data_inscricao) 'data' from ".$dbnamebase.".Usuario_curso where binary tipo_usuario = 'a' and cod_curso='".$cod_curso."'";
   $res = Enviar($sock, $query);
   $tupla = RetornaLinha($res);
   if ($tupla['data'] > $penultac)
@@ -391,15 +391,17 @@ function RetornaListaLogins($sock,$cod_curso)
   $query.= "from ".$dbnamebase.".Usuario_curso UC ";
   $query.= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
   // Não incluir usuários com inscrições rejeitadas 
-  $query.= "where UC.tipo_usuario<>'t' ";
-  $query.= "and UC.tipo_usuario<>'r' ";
-  $query.= "and UC.tipo_usuario<>'y' ";
-  $query.= "and UC.cod_curso='".$cod_curso."'";
+  $query.= "where binary UC.tipo_usuario <> 'a' and ";
+  $query.=       "binary UC.tipo_usuario <> 'r' and ";
+  $query.=       "binary UC.tipo_usuario <> 'f' and ";
+  $query.=       "binary UC.tipo_usuario <> 'z' and ";
+  $query.=       "binary UC.tipo_usuario <> 'v' and ";
+  $query.=       "UC.cod_curso='".$cod_curso."'";
 
   $res=Enviar($sock,$query);
   while ($linha = RetornaLinha($res))
   {
-    $saida[strtoupper($linha['login'])]=1;
+    $saida[strtoupper($linha['login'])] = 1;
   }
   return $saida;
 }
@@ -565,22 +567,22 @@ function CadastrarUsuario($sock, $cod_curso, $dados, $lista_frases, $cod_usuario
   if ($dados['tipo_usuario'] == 'A')
   {
     /* 64 - Vocï¿½ foi inscrito como aluno para o curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'F')
   {
     /* 72 - Vocï¿½ foi inscrito como formador para o curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,72)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,72)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'Z')
   {
     /* 196 - Vocï¿½ foi inscrito como colaborador para o curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,196)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,196)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'V')
   {
     /* 188 - Vocï¿½ foi inscrito como visitante para o curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,188)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,188)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else
   {
@@ -630,8 +632,8 @@ function CadastrarUsuario($sock, $cod_curso, $dados, $lista_frases, $cod_usuario
 }
 
 /* *********************************************************************
-   CadastrarUsuarioExistente - Cadastra o usu rio existente com os dados passados. Envia
-                      e-mail avisando login e senha.
+   CadastrarUsuarioExistente - Cadastra o usuário existente com os dados 
+                               passados. Envia e-mail avisando login e senha.
    Entrada: $sock - BASE DO CURSO
             $cod_curso - Codigo do curso
             $dados - array com ['cod_usuario_global']
@@ -639,7 +641,6 @@ function CadastrarUsuario($sock, $cod_curso, $dados, $lista_frases, $cod_usuario
 
    Saida: $sock com a base do curso  (necess rio por causa do e-mail)
 */
-//TODO: Alterar para a nova nomenclatura!!!!
 function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
 {
 
@@ -685,20 +686,25 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
   /* 63 - TelEduc: Inscri  o */
   $assunto=RetornaFraseDaLista($lista_frases,63)." ".$dados_curso['nome_curso'];
 
-  if ($dados['tipo_usuario']=="A")
+  if ($dados['tipo_usuario'] == 'A')
   {
-    /* 64 - Voc  foi inscrito como aluno no curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    /* 64 - Você foi inscrito como aluno no curso */
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,64)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else if ($dados[tipo_usuario] == 'F')
   {
-    /* 72 - Voc  foi inscrito como formador no curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,72)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    /* 72 - Você foi inscrito como formador no curso */
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,72)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
-  else if ($dados[tipo_usuario] == 'z' || $dados[tipo_usuario] == 'Z')
+  else if ($dados[tipo_usuario] == 'Z')
   {
-    /* 196 - Voc  foi inscrito como convidado no curso */
-    $mensagem ="<p>".RetornaFraseDaLista($lista_frases,196)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+    /* 196 - Você foi inscrito como colaborador no curso */
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,196)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
+  }
+  else if ($dados[tipo_usuario] == 'V')
+  {
+    /* 188 - Você foi inscrito como visitante no curso */
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases,188)." <strong>".$dados_curso['nome_curso']."</strong>.</p>\n";
   }
   else
   {
@@ -717,18 +723,18 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
   //$mensagem.="<p>".RetornaFraseDaLista($lista_frases,254)." <a href=\"http://".$host.$raiz_www."\">http://".$host.$raiz_www."</a></p>\n";
 
   /* 311 - Para acessar o curso clique  em*/
-  $mensagem.="<p>".RetornaFraseDaLista($lista_frases,311).": </p>";
-  $mensagem.="<p><a href=\"http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p>\n\n";
+  $mensagem .= "<p>".RetornaFraseDaLista($lista_frases,311).": </p>";
+  $mensagem .= "<p><a href=\"http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p>\n\n";
   /* 312 - Use login e senha jï¿½ cadastrados.*/
-  $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,312)."</p>";
+  $mensagem .= "<br /><p>".RetornaFraseDaLista($lista_frases,312)."</p>";
   /* 313 - Visite a pï¿½gina do curso pra saber o seu inï¿½cio.*/
-  $mensagem.="<br /><p>".RetornaFraseDaLista($lista_frases,313)."</p>";
+  $mensagem .= "<br /><p>".RetornaFraseDaLista($lista_frases,313)."</p>";
 
 
   $mensagem.="\n";
 
   /* 66 - Anteciosamente, Coordena  o do curso */
-  $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,66)." <strong>".$dados_curso[nome_curso]."</strong>. </p><br />\n";
+  $mensagem .= "<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,66)." <strong>".$dados_curso[nome_curso]."</strong>. </p><br />\n";
 
   Desconectar($sock);
 
@@ -744,7 +750,8 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
 /* *********************************************************************
    RetornaListaUsuarios - Retorna a lista de usuarios
    Entrada: $sock - BASE DO CURSO
-            $tipo_usuario - Tipo do usuï¿½rio a ser retorna (a,r,A,F)
+            $tipo_usuario - Tipo do usuï¿½rio a ser retornado.
+            Os tipos válidos são i, r, a, A, f, F, z, Z, v, V.
             $ordem - "nome" ou "data"
    Saida: array com [$cod_usuario]['nome']
                     [$cod_usuario]['data_inscricao']
@@ -756,13 +763,19 @@ function RetornaListaUsuarios($sock, $cod_curso, $tipo_usuario, $ordem)
 
   if ($ordem=="data")
     $ordem="data_inscricao";
+  
+  /*if (!in_array($tipo_usuario, array('i', 'r', 'a', 'A', 'f', 'F', 'z', 'Z', 'v', 'V')))
+  {
+    trigger_error("Erro em RetornaListaUsuarios, linha ".__LINE__."<BR>");
+    exit();
+  }*/
 
   $query  = "select UC.cod_usuario,U.nome,U.data_inscricao,UC.portfolio ";
   $query .= "from ".$dbnamebase.".Usuario_curso UC ";
   $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
-  $query .= "where binary UC.tipo_usuario='".$tipo_usuario."' ";
-  $query .= "and UC.cod_curso='".$cod_curso."' ";
-  $query .= "and UC.cod_usuario>=0 ";
+  $query .= "where binary UC.tipo_usuario='".$tipo_usuario."' and ";
+  $query .=       "UC.cod_curso='".$cod_curso."' and ";
+  $query .=       "UC.cod_usuario >= 0 ";
   $query .= "order by ".$ordem;
 
   $res    = Enviar($sock,$query);
@@ -900,7 +913,7 @@ function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
    Saida: $sock da base do curso
 
 */
-function MudarTipoUsuarioComMensagem($sock,$cod_curso,$cod_usu,$tipo_usuario,$assunto,$mensagem)
+function MudarTipoUsuarioComMensagem($sock, $cod_curso, $cod_usu, $tipo_usuario, $assunto, $mensagem)
 {
   global $lista_frases;
 
@@ -928,12 +941,14 @@ function MudarTipoUsuarioComMensagem($sock,$cod_curso,$cod_usu,$tipo_usuario,$as
 
   if (count($cod_usu)>0)
   {
-    $mensagem_temp=$mensagem;
     foreach($cod_usu as $cod => $cod_usuario)
     {
       $sock=Conectar($cod_curso);
 
-      $query="update ".$dbnamebase.".Usuario_curso set tipo_usuario='".$tipo_usuario."' where cod_usuario='".$cod_usuario."' and cod_curso='".$cod_curso."'";
+      $query  = "update ".$dbnamebase.".Usuario_curso ";
+      $query .= "set tipo_usuario='".VerificaStringQuery($tipo_usuario)."' ";
+      $query .= "where cod_usuario='".VerificaStringQuery($cod_usuario)."' and "; 
+      $query .=       "cod_curso='".VerificaStringQuery($cod_curso)."'";
       $res=Enviar($sock,$query);
 
       $dados_curso=DadosCursoParaEmail($sock, $cod_curso);
@@ -944,9 +959,8 @@ function MudarTipoUsuarioComMensagem($sock,$cod_curso,$cod_usu,$tipo_usuario,$as
       $res=Enviar($sock,$query);
       $dados=RetornaLinha($res);
 
-      if ($tipo_usuario=="A" || $tipo_usuario == "V")
+      if ($tipo_usuario == "A" || $tipo_usuario == "V")
       {
-        $mensagem=$mensagem_temp;
         $mensagem.="<hr style=\"margin:30px 0 30px 0;\" />\n";
 
         /* 252 - Para acessar o curso basta ir ao endereÃ§o */
@@ -1017,12 +1031,13 @@ function RetornaDadosUsuario($sock,$cod_curso,$cod_usuario)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.*, UC.*
-          from ".$dbnamebase.".Usuario_curso UC
-          inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-          where UC.cod_usuario='".$cod_usuario."'
-          and UC.cod_curso='".$cod_curso."'";
-  $res=Enviar($sock,$query);
+  $query  = "select U.*, UC.* ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario='".$cod_usuario."' and ";
+  $query .=       "UC.cod_curso='".$cod_curso."'";
+
+  $res    = Enviar($sock,$query);
   return RetornaLinha($res);
 }
 
@@ -1055,12 +1070,12 @@ function RetornaListaEscolaridade($sock)
 function RetornaListaUsuariosGlobal($sock,$busca,$inicio,$num_registros)
 {
 
-   //Seleciona todos os usuarios, exceto os ja cadastrados no curso
-   $query="select cod_usuario,nome,login,email
-          from ".$dbnamebase.".Usuario
-          where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
-          order by nome
-          LIMIT ".$inicio." , ".$num_registros;
+  //Seleciona todos os usuarios, exceto os ja cadastrados no curso
+  $query  = "select cod_usuario, nome, login, email ";
+  $query .= "from ".$dbnamebase.".Usuario ";
+  $query .= "where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%')) ";
+  $query .= "order by nome ";
+  $query .= "LIMIT ".$inicio." , ".$num_registros;
 
   $res=Enviar($sock,$query);
   $saida= RetornaArrayLinhas($res);
@@ -1101,8 +1116,8 @@ function ListaUsuariosPaginaDinamic($pagina, $tam_pagina, $cod_curso, $busca="")
 }
 
 /* *********************************************************************
-   RetornaContagemUsuariosGlobal - Retorna a contagem usuarios nao cadastrados no curso
-                                         para a tela inscrever3.php
+   RetornaContagemUsuariosGlobal - Retorna a contagem usuarios nao cadastrados
+                                   no curso para a tela inscrever3.php
    Entrada: $sock - BASE DO CURSO
             $cod_curso - Codigo do curso
             $busca - string opcional para filtrar resultados
@@ -1115,14 +1130,14 @@ function RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca="")
   $dbnamebase = $_SESSION['dbnamebase'];
 
   //Conta todos os usuarios, exceto os ja cadastrados no curso
-  $query="select count(*) as total
-          from ".$dbnamebase.".Usuario
-          where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%'))
-          order by nome";
-  $res=Enviar($sock,$query);
+  $query  = "select count(*) as total ";
+  $query .= "from ".$dbnamebase.".Usuario ";
+  $query .= "where ((nome LIKE '%".$busca."%') OR (email LIKE '%".$busca."%') OR (login LIKE '%".$busca."%')) ";
+  $query .= "order by nome";
+  $res    = Enviar($sock,$query);
 
-  $ar = mysql_fetch_array($res);
-  $saida= $ar["total"];
+  $ar    = mysql_fetch_array($res);
+  $saida = $ar["total"];
 
   return $saida;
 }
@@ -1140,19 +1155,23 @@ function RetornaListaUsuariosSenha($sock,$cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select UC.cod_usuario,U.nome,U.login,U.email
-          from ".$dbnamebase.".Usuario_curso UC
-          inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-          where UC.cod_usuario>=0
-          and UC.cod_curso = '".$cod_curso."'
-          and (binary UC.tipo_usuario='A' or binary UC.tipo_usuario='F' or binary UC.tipo_usuario='V' or binary UC.tipo_usuario='Z' or binary UC.tipo_usuario='z')
-          order by nome";
-  $res=Enviar($sock,$query);
+  $query  = "select UC.cod_usuario,U.nome,U.login,U.email ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario>=0 and ";
+  $query .=       "UC.cod_curso = '".$cod_curso."' and ";
+  $query .=      "(binary UC.tipo_usuario='A' or ";
+  $query .=       "binary UC.tipo_usuario='F' or ";
+  $query .=       "binary UC.tipo_usuario='V' or ";
+  $query .=       "binary UC.tipo_usuario='Z') ";
+  $query .= "order by nome";
+
+  $res    = Enviar($sock,$query);
   while ($linha=RetornaLinha($res))
   {
-    $saida[$linha['cod_usuario']]['nome']=$linha['nome'];
-    $saida[$linha['cod_usuario']]['login']=$linha['login'];
-    $saida[$linha['cod_usuario']]['email']=$linha['email'];
+    $saida[$linha['cod_usuario']]['nome']  = $linha['nome'];
+    $saida[$linha['cod_usuario']]['login'] = $linha['login'];
+    $saida[$linha['cod_usuario']]['email'] = $linha['email'];
   }
   return $saida;
 }
@@ -1194,101 +1213,6 @@ function AtualizaEmailUsuario($sock,$cod_curso,$cod_usuario,$email)
 }
 
 /* *********************************************************************
-   RetornaListaColaboradores - retorna lista de colaboradores
-   Entrada:
-       $sock  - sock de conexao com a base de dados
-       $acao  - indica se mostra colaboradores com inscricao aceita ou com
-                inscricao rejeitada
-       $ordem - parametro de ordenacao (data ou nome)
-   Saida: array
-       [ $cod_usuario ]['nome'] - nome do colaborador
-       [ $cod_usuario ]['data_inscricao'] - data de inscricao
-*/
-function RetornaListaConvidados($sock, $cod_curso, $acao, $ordem) { return RetornaListaColaboradores($sock,$cod_curso, $acao, $ordem, $tipo_usuario); }
-function RetornaListaColaboradores($sock, $cod_curso, $acao, $ordem)
-{
-  // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-
-  // abandonamos a ideia de mostrar colaboradores com inscricao rejeitada. Agora mostramos apenas os colaboradores no curso
-  $acao = 'a';
-
-  if ($acao == 'a')
-  {
-    // Colaborador(Z)
-    $where .= "UC.tipo_usuario='Z'";
-  }
-  else if ($acao == 'r')
-  {
-    // Colaborador(t) com inscricao cancelada
-    $where .= "UC.tipo_usuario='t'";
-  }
-  else
-  {
-    trigger_error("Erro em RetornaListaColaboradores, linha ".__LINE__."<BR>");
-    exit();
-  }
-
-  if ($ordem == "data")
-    $ordem = "UC.data_inscricao";
-
-  $query  = "select UC.cod_usuario, U.nome, U.data_inscricao 'data' ";
-  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
-  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
-  $query .= "where ".$where." ";
-  $query .= "and UC.cod_curso='".$cod_curso."' ";
-  $query .= "order by ".$ordem;
-
-  $res    = Enviar ($sock, $query);
-  while($linha = RetornaLinha($res))
-  {
-    $lista_retorno[ $linha['cod_usuario'] ]['nome']           = $linha['nome'];
-    $lista_retorno[ $linha['cod_usuario'] ]['data_inscricao'] = $linha['data'];
-  }
-
-  return $lista_retorno;
-}
-
-/* *********************************************************************
-   RemoverFormador - Deleta o formador
-   Entrada:
-       $sock - sock de conexao
-       $cod_usuario - codigo do usuario (convidado) a ter seu tipo_usuario alterado
-       $interacao - booleano que indica se convidado tem interacao (tipo-usuario = 'F' maiusculo), ou nao (tipo-usuario = 'f' minusculo)
-   Saida:
-       Nenhuma
-*/
-function RemoverFormador ($sock,$cod_curso,$cod_usuario)
-{
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-  $tipo_usuario='f';
-
-  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".VerificaStringQuery($tipo_usuario)."' where cod_usuario='".VerificaStringQuery($cod_usuario)."' and cod_curso='".VerificaStringQuery($cod_curso)."'";
-  $res   = Enviar ($sock, $query);
-}
-
-/* *********************************************************************
-  RemoverAluno - Deleta o aluno
-  Entrada:
-       $sock- sock de conexao
-       $cod_usuario - codigo do usuario (convidado) a ter seu tipo_usuario alterado
-       $interacao - booleano que indica se convidado tem interacao (tipo-usuario = 'F' maiusculo), ou nao (tipo-usuario = 'f' minusculo)
-  Saida:
-       Nenhuma
- */
-function RemoverAluno($sock,$cod_curso,$cod_usuario){
-  $dbnamebase=$_SESSION['dbnamebase'];
-  $tipo_usuario='a';
-
-  $query = "update ".$dbnamebase.".Usuario_curso set tipo_usuario='".VerificaStringQuery($tipo_usuario)."' where cod_usuario='".VerificaStringQuery($cod_usuario)."' and cod_curso='".VerificaStringQuery($cod_curso)."'";
-  $res=Enviar($sock,$query);
-}
-
-
-/* *********************************************************************
    RetornaCodigoCoordenador - retorna cod_usuario do coordenador do curso
    entrada:  $sock - sock de conexao
    saida:    codigo do coordenador
@@ -1305,60 +1229,6 @@ function RetornaCodigoCoordenador ($sock, $cod_curso)
   return $linha['cod_coordenador'];
 }
 
-/* *********************************************************************
-   RetornaListaVisitantes - retorna lista da visitantes
-   entrada - $sock  - sock de conexao
-             $acao  - indica se mostra visitantes com inscricao aceita ou com
-                      inscricao rejeitada
-             $ordem - parametro de ordenacao pode ser {"nome", "data"}
-   saida: array[ $cod_usuario ]['nome'] - nome do visitante
-               [ $cod_usuario ]['data_inscricao'] - data de inscricao em UT
-*/
-function RetornaListaVisitantes($sock, $cod_curso, $acao, $ordem)
-{
-  // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-
-  // abandonamos a ideia de mostrar visitantes com inscricao rejeitada. Agora mostramos apenas os visitantes no curso
-  $acao = 'a';
-  
-  if ($acao == 'a')
-  {
-    // Visitante(V)
-    $where .= "UC.tipo_usuario='V'";
-  }
-  else if ($acao == 'r')
-  {
-    // Visitante(y) com inscricao cancelada
-    $where .= "UC.tipo_usuario='y'";
-  }
-  else
-  {
-    trigger_error("Erro em RetornaListaVisitantes, linha ".__LINE__."<BR>");
-    exit();
-  }
-
-  if ($ordem == "data")
-    $ordem = "UC.data_inscricao";
-
-  $query .= "select UC.cod_usuario, U.nome, U.data_inscricao 'data' ";
-  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
-  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
-  $query .= "where ".$where." ";
-  $query .= "and UC.cod_curso='".$cod_curso."' ";
-  $query .= "order by ".$ordem;
-
-  $res    = Enviar($sock, $query);
-  while($linha = RetornaLinha($res))
-  {
-    $lista_retorno[ $linha['cod_usuario'] ]['nome']           = $linha['nome'];
-    $lista_retorno[ $linha['cod_usuario'] ]['data_inscricao'] = $linha['data_inscricao'];
-  }
-
-  return $lista_retorno;
-}
-
 /* *************************************************************************
    RetornaFerramCompartilhadas - Retorna lista de ferramentas compartilhadas
    do curso
@@ -1368,8 +1238,9 @@ function RetornaListaVisitantes($sock, $cod_curso, $acao, $ordem)
 */
 function RetornaFerramCompartilhadas ($sock, $cod_curso)
 {
-  $query  = "select cod_ferramenta from Cursos_compart where ";
-  $query .= "cod_curso=".$cod_curso." order by cod_ferramenta";
+  $query  = "select cod_ferramenta from Cursos_compart ";
+  $query .= "where cod_curso=".$cod_curso." ";
+  $query .= "order by cod_ferramenta";
   $id = Enviar($sock, $query);
   $lista_compart = RetornaArrayLinhas($id);
   return $lista_compart;
@@ -1383,8 +1254,8 @@ function RetornaFerramCompartilhadas ($sock, $cod_curso)
 */
 function RetornaFerramCompartilhaveis ($sock)
 {  
-  $query  = "select status, cod_ferramenta from Curso_ferramentas where ";
-  $query .= "cod_ferramenta in (1, 3, 4, 5, 6, 7, 16, 23)";
+  $query  = "select status, cod_ferramenta from Curso_ferramentas ";
+  $query .= "where cod_ferramenta in (1, 3, 4, 5, 6, 7, 16, 23)";
   $id = Enviar($sock, $query);
   $lista_ferramentas_disp = RetornaArrayLinhas($id);
   return $lista_ferramentas_disp;
@@ -1400,12 +1271,12 @@ function RetornaFerramCompartilhaveis ($sock)
 */
 function VerificaFerramCompartilhada($sock, $cod_curso, $cod_ferramenta)
 {
-  $lista_compart = RetornaFerramCompartilhadas($sock, $cod_curso);
-  $tamanho = count($lista_compart);
-  for ($i = 0; $i < $tamanho; $i++)
+  $ferramentas_compartilhadas = RetornaFerramCompartilhadas($sock, $cod_curso);
+  foreach ($ferramentas_compartilhadas as $ferramenta)
   {
-    if ($lista_compart[$i]['cod_ferramenta'] == $cod_ferramenta)
+    if ($ferramenta['cod_ferramenta'] == $cod_ferramenta) {
       return true;
+    }
   }
   return false;
 }
@@ -1431,8 +1302,9 @@ function CompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta)
 */
 function DescompartilhaFerramenta($sock, $cod_curso, $cod_ferramenta)
 {
-  $query  = "delete from Cursos_compart where cod_curso=".$cod_curso;
-  $query .= " and cod_ferramenta=".$cod_ferramenta;
+  $query  = "delete from Cursos_compart ";
+  $query .= "where cod_curso=".$cod_curso." and ";
+  $query .=       "cod_ferramenta=".$cod_ferramenta;
   return Enviar($sock, $query);
 }
 
@@ -1459,7 +1331,7 @@ function AlterarNomenclaturaDinamic($cod_curso, $status, $cod_ferramenta){
   $sock=Conectar("");
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
 
-Desconectar($sock);
+  Desconectar($sock);
 
   $sock=Conectar($cod_curso);
 

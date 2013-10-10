@@ -94,7 +94,7 @@
     header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action_ger."&atualizacao=true");
   }
 
-  if($action_ger == "trocar_coordenador"){
+  if($action_ger == "trocar_coordenador") {
     TrocaCoordenador($sock, $cod_curso, $cod_usu[0]);
     header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=F&acao_fb=".$action_ger."&atualizacao=true");
   }
@@ -112,7 +112,7 @@
       $linha['tipo_usuario']=$tipo_usuario;
 
       //Funcao que utiliza o cadastro ja existente do usuario e cadastra-o no curso
-      $sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha, $lista_frases);
+      $sock=CadastrarUsuarioExistente($sock, $cod_curso, $linha, $lista_frases);
     }
 
     $cod_usu_global = "";
@@ -127,9 +127,9 @@
     {
       if($nome[$i] != "")
       {
-        $dados_preenchidos_s[$i]['nome'] =$nome[$i];
-        $dados_preenchidos_s[$i]['login']=$login[$i];
-        $dados_preenchidos_s[$i]['email']=$email[$i];
+        $dados_preenchidos_s[$i]['nome']  = $nome[$i];
+        $dados_preenchidos_s[$i]['login'] = $login[$i];
+        $dados_preenchidos_s[$i]['email'] = $email[$i];
       }
     }
     
@@ -166,7 +166,7 @@
           $inscrito = LoginCadastradoCurso($sock, $linha['login'], $cod_curso);
           if(!$inscrito) {
             // se usuario jah estah cadastrado no ambiente e nao estah inscrito no curso, soh faz a inscricao
-            $sock=CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);
+            $sock = CadastrarUsuarioExistente($sock,$cod_curso,$linha,$lista_frases);
           } else {
             // se usuario jah estah cadastrado no ambiente e tbm no curso, gera msg de erro
             Desconectar($sock);

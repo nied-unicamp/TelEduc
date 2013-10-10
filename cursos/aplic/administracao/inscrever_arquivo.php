@@ -49,13 +49,13 @@
 
   switch($tipo_usuario)
   {
-    case 'z':
-    //convidado
-    $cod_pagina_ajuda = 14;
-    break;
     case 'A':
-    //aluno
-    $cod_pagina_ajuda = 7;
+      //Aluno
+      $cod_pagina_ajuda = 7;
+      break;
+    case 'Z':
+      //Colaborador
+      $cod_pagina_ajuda = 14;
     break;
   }
 
@@ -63,9 +63,8 @@
 
   /*Funcao JavaScript*/
   echo("    <script type=\"text/javascript\">\n\n");
-  echo("      var numLogins = 5;");
+  echo("      var numLogins = 5;\n");
 
-  echo("\n");
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");
@@ -209,13 +208,13 @@
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -223,61 +222,53 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("          <form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
     Desconectar($sock);
     exit();
   }
   
-  echo("      <form name=\"inscreveArq\" action=faz_inscricao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario." onsubmit=return(verificaArquivo()) method=\"post\" enctype=\"multipart/form-data\">\n");
-  echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
-  echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
-  echo("      <input type=\"hidden\" name=\"tipo_usuario\" value=".$tipo_usuario.">\n");
-  echo("      <input type=\"hidden\" name=\"action\" value='inscrever'>\n");
+  echo("      <form name=\"inscreveArq\" action=\"faz_inscricao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\" onsubmit=\"return(verificaArquivo())\" method=\"post\" enctype=\"multipart/form-data\">\n");
+  echo("        <input type=\"hidden\" name=\"cod_curso\"      value=".$cod_curso.">\n");
+  echo("        <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
+  echo("        <input type=\"hidden\" name=\"tipo_usuario\"   value=".$tipo_usuario.">\n");
+  echo("        <input type=\"hidden\" name=\"action\"         value='inscrever'>\n");
 
   // Pï¿½gina Principal
   /* 1 - Administraï¿½ï¿½o */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
 
-  if ($tipo_usuario=="F")
+  if ($tipo_usuario == 'F')
   {
     /* 50 - Inscrever Formadores */
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 50)."</h4>";
-    $cod_pagina=6;
+    $cod_pagina = 6;
   }
-  else if ($tipo_usuario == 'z')
+  else if ($tipo_usuario == 'Z')
   {
-    // 164 - Inscrever Convidados
+    // 164 - Inscrever Colaboradores
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>";
-
-    // 166 - Nï¿½ de Convidados:
-    $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
-    $cod_pagina=14;
+    $cod_pagina = 14;
   }
   else if ($tipo_usuario == 'V')
   {
-    // 164 - Inscrever Visitantes
-    $cabecalho .= " - "."[Inscrever Visitantes]"."</h4>";
-
-    // 166 - Nï¿½ de Visitantes:
-    $frase_qtde="Nï¿½ de Visitantes:";
-
+    // 182 - Inscrever Visitantes
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 182)."</h4>";
   }
   else if ($tipo_usuario == 'A')
   {
     /* 51 - Inscrever Alunos */
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 51)."</h4>";
-    $tipo_usuario="A";
-    $cod_pagina=7;
+    $cod_pagina = 7;
   }
   else
   {
-    echo("Arquivo inscrever.php, tipo_usuario invalido, tipo_usuario = [");
+    echo("Arquivo inscrever.php, tipo_usuario inválido, tipo_usuario = [");
     var_dump($tipo_usuario);
     echo("]<br>\n");
     Desconectar($sock);
     die();
-  }  
+  }
 
   echo($cabecalho);
 
@@ -288,7 +279,7 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   

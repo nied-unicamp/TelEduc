@@ -56,15 +56,15 @@
   /* Conta quantas ferramentas existem. */
   $total_ferramentas = count($tela_lista_ferramentas);
 
-    if(!EFormador($sock,$cod_curso,$cod_usuario))
+  if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -82,7 +82,7 @@
   echo("  <script type=\"text/javascript\">\n\n");
 
   echo("    function Iniciar() {\n");
-  echo("	startList();\n");
+  echo("      startList();\n");
   echo("    }\n\n");
 
   echo("    function CancelaExtracao()\n");
@@ -90,7 +90,7 @@
   echo("      document.frmExtracao.action = \"administracao.php?cod_curso=".$cod_curso."\";\n");
   echo("      document.frmExtracao.submit();\n");
   echo("    }\n\n");
-		  
+
   echo("  </script>\n\n");
 
   include("../menu_principal.php");
@@ -111,13 +111,13 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
-  echo("          <form name=frmExtracao method=post action=\"extracao2.php\">\n");
-  echo("            <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("            <input type=hidden name=action value='extrairCurso'>\n");
+  echo("          <form name=\"frmExtracao\" method=\"post\" action=\"extracao2.php\">\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("            <input type=\"hidden\" name=\"action\"    value=\"extrairCurso\">\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -141,14 +141,14 @@
   echo("                  <tr>\n");
   echo("                    <td align=left colspan=4>\n");
 
-  /* Primeiro retornaremos todos os usuarios ativos exceto visitantes e convidados */
-  $query = "select UC.cod_usuario, U.nome
-            from ".$dbnamebase.".Usuario_curso UC
-            inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-            where UC.cod_usuario >= 0
-            and UC.cod_curso='".$cod_curso."'
-            and (UC.tipo_usuario='F' or UC.tipo_usuario='A')
-            order by nome";
+  /* Primeiro retornaremos todos os usuarios ativos exceto visitantes e colaboradores */
+  $query  = "select UC.cod_usuario, U.nome ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario >= 0 and ";
+  $query .=       "UC.cod_curso = '".$cod_curso."' and ";
+  $query .=       "(binary UC.tipo_usuario = 'F' or binary UC.tipo_usuario = 'A') ";
+  $query .= "order by nome";
   $res=Enviar($sock, $query);
 
   while ($linha = RetornaLinha($res)) {
@@ -166,7 +166,7 @@
   }
   else
     /* 104 - Nenhuma pessoa registrada */
-    echo("                      ".RetornaFraseDaLista($lista_frases,104)."</font><br>\n");  
+    echo("                      ".RetornaFraseDaLista($lista_frases,104)."</font><br>\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
   echo("                  <tr class=\"head alLeft\">\n");
@@ -183,10 +183,10 @@
   $ferramentas_curso = RetornaFerramentasCurso($sock);
 
   $k=0;
-  $total_fer_ordenadas = count($tela_ordem_ferramentas);	
+  $total_fer_ordenadas = count($tela_ordem_ferramentas);
   for($i=0;$i<$total_fer_ordenadas;)
   {
-    for($count=0;$count<2;$count++)		
+    for($count=0;$count<2;$count++)
     {
       $cod_ferramenta = $tela_ordem_ferramentas[$i]['cod_ferramenta'];
       if($cod_ferramenta > 0)
@@ -201,8 +201,8 @@
           if (($cod_ferramenta == 13) || ($cod_ferramenta == 22))
           {
             echo("                    <td width=\"2%\"><input type=\"checkbox\" name=\"ferramentas[]\" value=".$cod_ferramenta);
-	    echo(" checked='checked' onMouseOut='this.checked=true'></td>\n");
-	    echo("                    <td align=left>".RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])." *</td>\n");
+            echo(" checked='checked' onMouseOut='this.checked=true'></td>\n");
+            echo("                    <td align=left>".RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])." *</td>\n");
           }
           else
           {
@@ -212,18 +212,18 @@
             if ($cod_ferramenta == 18) {
               echo("                    <td align=left>".RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])." **</td>\n");
             } else {
-	       echo("                    <td align=left>".RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])."</td>\n");
+              echo("                    <td align=left>".RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$cod_ferramenta]['cod_texto_nome'])."</td>\n");
             }
           }
           $k++;
           if($k==2)
-          {	
+          {
             echo("                  </tr>\n");
             $k=0;
-          }	
+          }
         }
       }
-      $i++;	
+      $i++;
     }
   }
 
@@ -231,7 +231,7 @@
   {
     echo("                    <td colspan=2></td>");
     echo("                  </tr>\n");
-  }  
+  }
   echo("                </table>\n");
 
   /* 216 - * S�o necess�rias pois outras ferramentas possuem links que apontam para elas */
@@ -241,7 +241,7 @@
   echo("                ".RetornaFraseDaLista($lista_frases, 226)." (Desabilitada a extra&ccedil;&atilde;o da ferramenta acessos temporariamente)<br><br>\n");
   
   /* 7 - Confirmar */
-  echo("                <div align=right><input type=submit class=\"input\" style=\"width:85px\" value='".RetornaFraseDaLista($lista_frases_geral, 7)."'></div>\n");
+  echo("                <div align=right><input type=\"submit\" class=\"input\" style=\"width:85px\" value='".RetornaFraseDaLista($lista_frases_geral, 7)."'></div>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");

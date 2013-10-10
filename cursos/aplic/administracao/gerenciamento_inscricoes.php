@@ -191,21 +191,21 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("          <form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("          <form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
     Desconectar($sock);
     exit();
   }
   
 /*Forms*/
-  echo("    <form action=\"acoes.php\" name=\"gerenc\" method=\"get\">\n");
-  echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
-  echo("      <input type=\"hidden\" name=\"acao\" value=\"".$acao."\">\n");
-  echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\">\n");
-  echo("      <input type=\"hidden\" name=\"ordem\" value=\"".$ordem."\">\n");
-  echo("      <input type=\"hidden\" name=\"opcao\" value=\"nenhuma\">\n");
-  echo("      <input type=\"hidden\" name=\"action_ger\" value=\"nenhuma\">\n");
-  echo("      <input type=\"hidden\" name=\"origem\" value=\"gerenciamento\">\n");
+  echo("          <form action=\"acoes.php\" name=\"gerenc\" method=\"get\">\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\">\n");
+  // variavel que indica o tipo de usuário.
+  echo("            <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
+  echo("            <input type=\"hidden\" name=\"ordem\"        value=\"".$ordem."\">\n");
+  echo("            <input type=\"hidden\" name=\"opcao\"        value=\"\">\n");
+  echo("            <input type=\"hidden\" name=\"action_ger\"   value=\"nenhuma\">\n");
+  echo("            <input type=\"hidden\" name=\"origem\"       value=\"gerenciamento_inscricoes.php\">\n");
 
   // Pï¿½gina Principal
   echo($cabecalho."</h4>");

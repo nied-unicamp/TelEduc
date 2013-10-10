@@ -184,7 +184,7 @@
   echo(RetornaFraseDaLista($lista_frases,103));
   echo("</a><br />\n");
 
-  // 165 - Gerenciamento de Convidados
+  // 165 - Gerenciamento de Colaboradores
   echo("                      <a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z\">");
   echo(RetornaFraseDaLista($lista_frases, 165));
   echo("</a><br />\n");
