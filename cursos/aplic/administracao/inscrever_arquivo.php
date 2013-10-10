@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/administracao/inscrever.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
+    Nied - NÚcleo de InformÁtica Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitï¿½ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -121,7 +121,7 @@
   //echo("              document.formul.submit();\n");
   echo("            }\n");
   echo("            else {\n");
-  // 225 - Existem logins repetidos. Especifique logins diferentes para cada usuï¿½rio.
+  // 225 - Existem logins repetidos. Especifique logins diferentes para cada usuário.
   echo("              alert('".RetornaFraseDaLista($lista_frases, 225)."');\n");
   echo("              return false;\n");
   echo("            }\n");
@@ -204,7 +204,7 @@
   echo("      function verificaArquivo(){\n");
   echo("        nomeArq = document.getElementById('arquivoInsc').value;\n");
   echo("        if(nomeArq == ''){\n");
-  echo("          mostraFeedback('VocÃª nao selecionou nenhum arquivo', false);\n");
+  echo("          mostraFeedback('Você nao selecionou nenhum arquivo', false);\n");
   echo("          return false;\n");
   echo("        }\n");
   echo("      }\n");
@@ -249,8 +249,8 @@
   echo("        <input type=\"hidden\" name=\"tipo_usuario\"   value=".$tipo_usuario.">\n");
   echo("        <input type=\"hidden\" name=\"action\"         value='inscrever'>\n");
 
-  // Pï¿½gina Principal
-  /* 1 - Administraï¿½ï¿½o */
+  // Página Principal
+  /* 1 - Administração */
   $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
 
   if ($tipo_usuario == 'F')
@@ -311,7 +311,7 @@
   echo("              <td>\n");
   echo("                <table  cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head alLeft\">\n");
-  /* 84 - Escolha um arquivo CSV com registros dos usuÃ¡rios a serem inscritos no formato "nome, email, login" : */
+  /* 84 - Escolha um arquivo CSV com registros dos usuários a serem inscritos no formato "nome, email, login" : */
   echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases_geral,84)."</td>\n");
   echo("                  <tr>\n");
   echo("                  <tr class=\"alLeft\">\n");
