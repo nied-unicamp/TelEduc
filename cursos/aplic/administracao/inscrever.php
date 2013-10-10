@@ -416,25 +416,17 @@
   {
     // 164 - Inscrever Colaboradores
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>";
-
-    // 166 - N� de Colaboradores:
-    $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
     $cod_pagina=14;
   }
   else if ($tipo_usuario == 'V')
   {
     // 182 - Inscrever Visitantes
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 182)."</h4>";
-
-    // 166 - N� de Visitantes:
-    $frase_qtde="N� de Visitantes:";
-
   }
   else if ($tipo_usuario == 'A')
   {
     /* 51 - Inscrever Alunos */
     $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 51)."</h4>";
-    $tipo_usuario="A";
     $cod_pagina=7;
   }
   else
@@ -469,26 +461,28 @@
 
   echo("                  <li><a href=\"inscrever_arquivo.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,82)."</a></li>\n");
   /* Botão de Gerenciamento de usuário*/
+  echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."\">\n");
   if ($tipo_usuario == "F")
   {
     /* 87 - Gerenciamento de formadores */
-    echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,87)."</a></li>\n");
+    echo(RetornaFraseDaLista($lista_frases_geral,87));
   }
   else if ($tipo_usuario == 'Z')
   {
     // 85 - Gerenciamento de Colaboradores
-    echo("                  <li><a href=\"gerenciamento4.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,85)."</a></li>\n");
+    echo(RetornaFraseDaLista($lista_frases_geral,85));
   }
   else if ($tipo_usuario == 'V')
   {
     // 88 - Gerenciamento de Visitantes
-    echo("                  <li><a href=\"gerenciamento5.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,88)."</a></li>\n");
+    echo(RetornaFraseDaLista($lista_frases_geral,88));
   }
   else if ($tipo_usuario == 'A')
   {
     /* 86 - Gerenciamento de Alunos */
-    echo("                  <li><a href=\"gerenciamento.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&acao=".$tipo_usuario."\">".RetornaFraseDaLista($lista_frases_geral,86)."</a></li>\n");
+    echo(RetornaFraseDaLista($lista_frases_geral,86));
   }
+  echo("</a></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -518,7 +512,7 @@
       echo("                    <td><b>".$i.".</b></td>\n");
       echo("                    <td><input autocomplete=\"off\" class=\"input\" type=\"text\" id=\"email\" size=\"30\" maxlength=\"127\" onkeyup=\"xajax_SugerirLoginDinamic(this.value,'".RetornaFraseDaLista($lista_frases, 316)."',$i);\" onblur=\"TesteBlur();\" name=\"email[]\" ></td>\n");
       echo("                    <td><input class=\"input\" type=\"text\" id=\"nome\" name=\"nome[]\" size=\"20\" maxlength=\"127\"></td>\n");
-      echo("                    <td id=\"login_$i\"><input class=\"input\" type=text id=\"login\" name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
+      echo("                    <td id=\"login_$i\"><input class=\"input\" type=\"text\" id=\"login\" name=\"login[]\" size=\"10\" maxlength=\"20\"></td>\n");
       echo("                  </tr>\n");
     }
       echo("                  <tr id=\"addLogin\">\n");
@@ -561,16 +555,17 @@
   echo("      </tr>\n");
   include("../tela2.php");
   echo("  </body>\n");
-  echo("</html>\n");
-/*layers sugestões de usuários*/
-
+  
+  /*layers sugestões de usuários*/
+  
   echo("  <div id=\"sugestao\" class=\"popup\">\n");
-  echo("  <div class=\"posX\"><span onclick=\"EscondeLayer(cod_sugestao);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+  echo("  <div class=\"posX\"><span onclick=\"EscondeLayer(cod_sugestao);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span>\n");
   echo("     <div id=\"divSugs\" style=\"display:none;background-color:#FFF;position:absolute;border:1pt solid #EEE;padding:5px; margin-top:-22px;\" onmouseover=\"flagOnDivSugs=1;\" onmouseout=\"flagOnDivSugs=0;\" class=\"int_popup ulPopup\">\n");
   echo("     </div>\n");
   echo("  </div>\n");
   echo("  </div>\n");
-
+  
+  echo("</html>\n");
 
   Desconectar($sock);
 

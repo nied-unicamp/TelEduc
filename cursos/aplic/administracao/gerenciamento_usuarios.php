@@ -70,7 +70,9 @@
   //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
   // 255 - Erro na operacao
   // 256 - Transformacao ocorrida com sucesso.
+  // 268 - Inscrição realizada com sucesso
   $feedbackObject->addAction("transformar", 256, 255);
+  $feedbackObject->addAction("inscrever", 268, 255);
   $feedbackObject->addAction("trocar_coordenador", 256, 255);
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
@@ -262,12 +264,13 @@
 
   /*Forms*/
   echo("          <form action=\"acoes.php\" name=\"gerenc\" method=\"get\">\n");
-  echo("            <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\">\n");
   // variavel que indica o tipo de usuário.
-  echo("            <input type=\"hidden\" name=\"tipo_usuario\"   value=\"".$tipo_usuario."\">\n");
-  echo("            <input type=\"hidden\" name=\"ordem\"          value=\"".$ordem."\">\n");
-  echo("            <input type=\"hidden\" name=\"opcao\"          value=\"\">\n");
-  echo("            <input type=\"hidden\" name=\"action_ger\"     value=\"\">\n");
+  echo("            <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
+  echo("            <input type=\"hidden\" name=\"ordem\"        value=\"".$ordem."\">\n");
+  echo("            <input type=\"hidden\" name=\"opcao\"        value=\"\">\n");
+  echo("            <input type=\"hidden\" name=\"action_ger\"   value=\"\">\n");
+  echo("            <input type=\"hidden\" name=\"origem\"       value=\"gerenciamento_usuarios.php\">\n");
 
   // Pï¿½gina Principal
   echo($cabecalho."</h4>");

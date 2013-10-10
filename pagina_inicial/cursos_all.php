@@ -163,67 +163,31 @@
           echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,56)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."&amp;visitante=sim';\" type=\"button\" /></td>\n");
         }
         
-        
-        /*****************
-        else if(empty($_SESSION['login_usuario_s']))
-        {
-        	/* 53 - Informa��es */
-        /*	echo("                    <td colspan=2><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        }
-        else
-        {
-       	/* Se o usuario estiver logado e for formador/coordenador do curso, pode entrar.
-       	 * Se o usuario tem acesso ao curso e o curso já começou, também pode. 
-       	 */
-        	/*if($tem_acesso_curso || empty($_SESSION['cod_usuario_global_s']))
-        	{
-          		/* 55 - Entrar */
-          	/*echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,55)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
-        	}
-        	//else
-          		//echo("                    <td>&nbsp;</td>\n");
-        
-        	if($linha['inscricao_inicio']<=$hoje && $linha['inscricao_fim']>=$ontem && !$tem_acesso_curso)
-        	{
-          		/* 54 - Inscri��es */
-          	/*	echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        	}
-        	else if(!$tem_acesso_curso)
-        	{
-          		/* 53 - Informa��es */
-          	/*	echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        	}
-        	//else
-          		//echo("                    <td>&nbsp;</td>\n");
-
-        	echo("                  </tr>\n");
-        }
-        *******************/
         if(!empty($_SESSION['cod_usuario_global_s'])){
           echo("                    <td id=\"status_cel\"> ".StatusUsuarioNoCurso($sock, $linha['cod_curso'])." </td>");
         }
         
-        if($tem_acesso_curso){
-//        	if($rejeitado_curso){
-//        		/* 223 - Inscrio no aceita */
-//        		echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-//        	}else{
-        		/* 55 - Entrar */
-          		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,55)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
-//        	}
+        if($tem_acesso_curso) {
+//          if($rejeitado_curso) {
+//            /* 223 - Inscrio no aceita */
+//            echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+//          }else{
+              /* 55 - Entrar */
+              echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,55)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
+//          }
         }
         else
         {
-        	if($tipo_curso == "I")
-        	{
-        		/* 54 - Inscri��es */
-          		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        	}
-        	else
-        	{
-        		/* 53 - Informa��es */
-          		echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-        	}
+          if($tipo_curso == "I")
+          {
+            /* 54 - Inscri��es */
+            echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,54)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+          }
+          else
+          {
+            /* 53 - Informa��es */
+            echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+          }
         }
         
       }

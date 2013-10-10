@@ -51,17 +51,25 @@
  * Função que adiciona os eventos aos botões de ação das páginas de gerenciamento.
  */
 function AdicionaEventos(coordenadorSelecionado) {
-  document.getElementById('mDados_Selec').className="menuUp02";
-  document.getElementById('mDados_Selec').onclick=function() { SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'dados', ''); };
-  
+  document.getElementById('mDados_Selec').className = "menuUp02";
+  document.getElementById('mDados_Selec').onclick   = function() { SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'dados', ''); };
+
   if(!coordenadorSelecionado) {
+    if (document.getElementById('mAceitar_Selec') != null) {
+      document.getElementById('mAceitar_Selec').className = "menuUp02";
+      document.getElementById('mAceitar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'aceitar', ''); };
+    }
+    if (document.getElementById('mRejeitar_Selec') != null) {
+      document.getElementById('mRejeitar_Selec').className = "menuUp02";
+      document.getElementById('mRejeitar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'rejeitar', ''); };
+    }
     if (document.getElementById('mAtivarPort_Selec') != null) {
-      document.getElementById('mAtivarPort_Selec').className="menuUp02";
-      document.getElementById('mAtivarPort_Selec').onclick=function(){ AtivaDesativaPort('ativar_port'); };
+      document.getElementById('mAtivarPort_Selec').className = "menuUp02";
+      document.getElementById('mAtivarPort_Selec').onclick   = function(){ AtivaDesativaPort('ativar_port'); };
     }
     if (document.getElementById('mDesativarPort_Selec') != null) {
-      document.getElementById('mDesativarPort_Selec').className="menuUp02";
-      document.getElementById('mDesativarPort_Selec').onclick=function(){ AtivaDesativaPort('desativar_port'); };
+      document.getElementById('mDesativarPort_Selec').className = "menuUp02";
+      document.getElementById('mDesativarPort_Selec').onclick   = function(){ AtivaDesativaPort('desativar_port'); };
     }
   }
 }
@@ -69,16 +77,23 @@ function AdicionaEventos(coordenadorSelecionado) {
 /*
  * Função que remove os eventos aos botões de ação das páginas de gerenciamento.
  */
-function RemoveEventos()
-{
-  document.getElementById('mDados_Selec').className="menuUp";
-  document.getElementById('mDados_Selec').onclick=null;
+function RemoveEventos() {
+  document.getElementById('mDados_Selec').className = "menuUp";
+  document.getElementById('mDados_Selec').onclick   = null;
+  if (document.getElementById('mAceitar_Selec') != null) {
+    document.getElementById('mAceitar_Selec').className = "menuUp";
+    document.getElementById('mAceitar_Selec').onclick   = null;
+  }
+  if (document.getElementById('mRejeitar_Selec') != null) {
+    document.getElementById('mRejeitar_Selec').className = "menuUp";
+    document.getElementById('mRejeitar_Selec').onclick   = null;
+  }
   if (document.getElementById('mAtivarPort_Selec') != null) {
-    document.getElementById('mAtivarPort_Selec').className="menuUp";
-    document.getElementById('mAtivarPort_Selec').onclick=null;
+    document.getElementById('mAtivarPort_Selec').className = "menuUp";
+    document.getElementById('mAtivarPort_Selec').onclick   = null;
   }
   if (document.getElementById('mDesativarPort_Selec') != null) {
-    document.getElementById('mDesativarPort_Selec').className="menuUp";
-    document.getElementById('mDesativarPort_Selec').onclick=null;
+    document.getElementById('mDesativarPort_Selec').className = "menuUp";
+    document.getElementById('mDesativarPort_Selec').onclick   = null;
   }
 }

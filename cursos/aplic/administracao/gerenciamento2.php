@@ -66,6 +66,8 @@
   $sock=Conectar($cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n");
 
   if($opcao == "dados")
@@ -100,8 +102,10 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  echo("</script>");
+  echo("    </script>");
+
   include("../menu_principal.php");
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
@@ -130,54 +134,56 @@
   /* 1 - Administraï¿½ï¿½o */
   $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1);
 
-  if ($action_ger=="A")
-  {
-    /* 102 - Gerenciamento de Alunos */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 102)."</h4>\n";
-    $tipo_usuario="A";
-    $cod_pagina=9;
-  }
-  else if ($action_ger=="F")
-  {
-    /* 103 - Gerenciamento de Formadores */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 103)."</h4>\n";
-    $tipo_usuario="F";
-    $cod_pagina=10;
-  }
-  else if ($action_ger=="G")
-  {
-    /* 258 - Gerenciamento de Formadores desligados */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 258)."</h4>\n";
-    $tipo_usuario="F";
-    $cod_pagina=10;
-  }
-  else if ($action_ger=="AG")
-  {
-    /* 283 - Gerenciamento de Alunos desligados */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 283)."</h4>\n";
-  	$tipo_usuario="A";
-    $cod_pagina=10;
-  }
-  else if ($action_ger == 'z')
-  {
-    // 165 - Gerenciamento de Convidados
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 165)."</h4>\n";
-    $cod_pagina=13;
-  }
-  else if ($action_ger == 'V')
-  {
-    // 179 - Gerenciamento de Visitantes
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 179)."</h4>\n";
-    $cod_pagina=16;
-  }
-  else
-  {
-    /* 74 - Gerenciamento de Inscriï¿½ï¿½es */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 74)."</h4>\n";
-    $cod_pagina=8;
+  switch($tipo_usuario) {
+    case 'a':
+      /* 283 - Gerenciamento de Alunos desligados */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 283);
+      $cod_pagina  = 10;
+      break;
+    case 'A':
+      /* 102 - Gerenciamento de Alunos */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 102);
+      $cod_pagina  = 9;
+      break;
+    case 'f':
+      /* 258 - Gerenciamento de Formadores desligados */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 258);
+      $cod_pagina  = 10;
+      break;
+    case 'F':
+      /* 103 - Gerenciamento de Formadores */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 103);
+      $cod_pagina  = 10;
+      break;
+    case 'z':
+      /* 319 - Gerenciamento de Colaboradores desligados */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 319);
+      $cod_pagina  = 13;
+      break;
+    case 'Z':
+      /* 165 - Gerenciamento de Colaboradores  */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 165);
+      $cod_pagina  = 13;
+      break;
+    case 'v':
+      /* 321 - Gerenciamento de Visitantes desligados */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 321);
+      $cod_pagina  = 13;
+      break;
+    case 'V':
+      /* 179 - Gerenciamento de Visitantes */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 179);
+      $cod_pagina  = 13;
+      break;
+    case 'i':
+    case 'r':
+      /* 74 - Gerenciamento de Inscriï¿½ï¿½es */
+      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 74);
+      $cod_pagina  = 8;
+      break;
   }
   
-  echo($cabecalho);
+  echo($cabecalho."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
   echo("          <div id=\"mudarFonte\">\n");
@@ -196,9 +202,8 @@
   /* 23 - Voltar (gen) */
   echo("                  <ul class=\"btAuxTabs\">\n");
 
-  $redireciona = 'gerenciamento_usuarios.php';
-  echo("                    <li><a href=\"".$redireciona."?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;opcao=".$opcao."&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
-  if ((count($cod_usu)==0) && (!isset($origem)))
+  echo("                    <li><a href=\"".$origem."?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;opcao=".$opcao."&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+  if (count($cod_usu) == 0)
   {
     echo("                </ul>\n");
     echo("              </td>\n");
@@ -252,8 +257,7 @@
     echo("                <td>\n");
 
     // Ações que mandam emails de notificação aos usuários gerenciados.
-    //if ($action_ger == "aceitar" || $action_ger == "rejeitar" || $action_ger == "desligar_usuario" || $action_ger == "religar_usuario")
-    if ($action_ger == "aceitar" || $action_ger =="rejeitar" || $action_ger == "desligar_usuario" || $action_ger == "religar_usuario" || $action_ger == "aceitar_vis" || $action_ger == "remover_aluno" || $action_ger == "remover_form" || $action_ger == "encerrarConvite" || $action_ger == "rejeitarVisitantes"|| $action_ger == "religar_form" || $action_ger == "religar_aluno")
+    if ($action_ger == "aceitar" || $action_ger =="rejeitar" || $action_ger == "desligar_usuario" || $action_ger == "religar_usuario")
     {
       echo("                  <form action=\"gerenciamento3.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."\" name=\"gerenc\" method=\"post\" onsubmit=\"return(updateRTE('mensagem'));\">\n");
       echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -267,7 +271,7 @@
         $titulo=RetornaFraseDaLista($lista_frases,90);
 
         /* 112 - Inscriï¿½ï¿½o aceita */
-        $assunto=RetornaFraseDaLista($lista_frases,112);
+        $assunto =RetornaFraseDaLista($lista_frases,112);
         $assunto.=$dados_curso['nome_curso'];
         /* 99 - Sua inscriï¿½ï¿½o como aluno para o curso */
         /* 100 - foi aceita. */

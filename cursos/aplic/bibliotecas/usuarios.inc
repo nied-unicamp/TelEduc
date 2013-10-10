@@ -122,7 +122,7 @@ function getTipoAtor($sock, $cod_curso, $cod_usuario){
              $cod_curso - C�igo do curso 
              $cod_usuario - C�igo do usu�io a buscar a informa�o                        
    Saida: Envia mensagem de acesso negado e interrompe a execu�o, caso 
-          aluno seja a ou r
+          aluno seja i ou r
 */
 function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
 {

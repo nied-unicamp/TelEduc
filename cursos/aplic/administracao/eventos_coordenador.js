@@ -56,6 +56,14 @@ function AdicionaEventos(coordenadorSelecionado) {
   document.getElementById('mDados_Selec').onclick   = function() { SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'dados', ''); };
 
   if(!coordenadorSelecionado) {
+    if (document.getElementById('mAceitar_Selec') != null) {
+      document.getElementById('mAceitar_Selec').className = "menuUp02";
+      document.getElementById('mAceitar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'aceitar', ''); };
+    }
+    if (document.getElementById('mRejeitar_Selec') != null) {
+      document.getElementById('mRejeitar_Selec').className = "menuUp02";
+      document.getElementById('mRejeitar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'rejeitar', ''); };
+    }
     if (document.getElementById('mAluno_Selec') != null) {
       document.getElementById('mAluno_Selec').className = "menuUp02";
       document.getElementById('mAluno_Selec').onclick   = function(){ SubmitAcao('acoes.php', 'transformar','aluno'); };
@@ -99,12 +107,19 @@ function AdicionaEventos(coordenadorSelecionado) {
 /*
  * Função que remove os eventos aos botões de ação das páginas de gerenciamento.
  */
-function RemoveEventos()
-{
+function RemoveEventos() {
 
   document.getElementById('mDados_Selec').className = "menuUp";
   document.getElementById('mDados_Selec').onclick   = null;
 
+  if (document.getElementById('mAceitar_Selec') != null) {
+    document.getElementById('mAceitar_Selec').className = "menuUp";
+    document.getElementById('mAceitar_Selec').onclick   = null;
+  }
+  if (document.getElementById('mRejeitar_Selec') != null) {
+    document.getElementById('mRejeitar_Selec').className = "menuUp";
+    document.getElementById('mRejeitar_Selec').onclick   = null;
+  }
   if (document.getElementById('mAluno_Selec') != null) {
     document.getElementById('mAluno_Selec').className = "menuUp";
     document.getElementById('mAluno_Selec').onclick   = null;

@@ -646,7 +646,7 @@ function RetornaDataInscricao($cod_curso){
   Fun��o RetornaTipoUsuario - Retorna o tipo_usuario da tabela Usuario_curso
   Entradas: $cod_curso - c�digo do curso
   Sa�da: Flag de tipo_usuario
-********************************************************************/
+*********************************************************************/
 
 function RetornaTipoUsuario($sock, $cod_curso){
 
@@ -660,11 +660,11 @@ function RetornaTipoUsuario($sock, $cod_curso){
   return RetornaLinha($res);
 }
 
-/********************************************************************
+/* **********************************************************************
   Fun��o StatusUsuarioNoCurso - Retorna a condi��o do usuario no curso
   Entradas: $cod_curso - c�digo do curso
   Sa�da: String com a condi��o do usu�rio
-********************************************************************/
+*************************************************************************/
 
 function StatusUsuarioNoCurso($sock, $cod_curso){
   $lista_frases = RetornaListaDeFrases($sock,-3);
@@ -730,11 +730,12 @@ function ParticipaDoCurso($cod_curso)
       $tem_acesso_curso = true;
     else
     {
-      for($i=0;$i<count($meus_cursos);$i++)
+      foreach ($meus_cursos as $meu_curso)
       {
-        if($meus_cursos[$i]['cod_curso'] == $cod_curso)
+        if($meu_curso['cod_curso'] == $cod_curso) {
           $tem_acesso_curso = true;
           break;
+        }
       }
     }
 
@@ -745,12 +746,12 @@ function ParticipaDoCurso($cod_curso)
     return null;
 }
 
-/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/********************************************************************
   Fun�ao RejeitadoDoCurso - Verifica se o usuario foi rejeitado do curso
   Entradas:  $cod_curso - codigo do curso
   Saida:    'true' se o usuario foi rejeitado do curso; 'false', caso contrario.
             Caso o usuario nao esteja logado, retornamos 'null'.
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+********************************************************************/
 
 function RejeitadoDoCurso($cod_curso)
 {
@@ -768,11 +769,12 @@ function RejeitadoDoCurso($cod_curso)
     //  $tem_acesso_curso = true;
     //else
     //{ 
-      for($i=0;$i<count($meus_cursos);$i++)
+      foreach ($meus_cursos as $meu_curso)
       {
-        if($meus_cursos[$i]['cod_curso'] == $cod_curso){
-          if($meus_cursos[$i]['tipo_usuario'] == "r")
-            $rejeitado_curso = true;
+        if($meu_curso['cod_curso']    == $cod_curso && 
+           $meu_curso['tipo_usuario'] == 'r') {
+          $rejeitado_curso = true;
+          break;
         }
 
       }

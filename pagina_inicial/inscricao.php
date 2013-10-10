@@ -152,14 +152,15 @@
     /* Endere�o do Link de gerenciamento */
     $link_gerenciamento = "<a href='";
     $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
-    $link_gerenciamento.= "gerenciamento.php?cod_curso=".$dados_curso['cod_curso'];
+    $link_gerenciamento.= "gerenciamento_inscricoes.php.php?cod_curso=".$dados_curso['cod_curso'];
     $link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
-    $link_gerenciamento.= "&cod_ferramenta=0&acao=N";
-    $link_gerenciamento.= "'> Gerenciamento de Inscri��es </a>";
+    $link_gerenciamento.= "&cod_ferramenta=0&tipo_usuario=i";
+    /* 235 - Gerenciamento de Inscri��es */
+    $link_gerenciamento.= "'> ".RetornaFraseDaLista($lista_frases, 235)." </a>";
     
     /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */
-    /* 190 - Para ver os dados do aluno, aeita-lo no curso, aceita-lo como visitante ou rejeitar o pedido, acesse o item Administracao e, em seguida, Gerenciamento de Inscricoes desse curso. */
+    /* 190 - Para ver os dados do aluno, aceita-lo no curso, aceita-lo como visitante ou rejeitar o pedido, acesse o item Administracao e, em seguida, Gerenciamento de Inscricoes desse curso. */
     /* 191 - Atenciosamente, Administracao do Ambiente TelEduc. */
     $mensagem_coord = "<p>".RetornaFraseDaLista($lista_frases,188)." <b>".$dados_curso['nome_curso']."</b> ".RetornaFraseDaLista($lista_frases,189)."</p>\n";
     $mensagem_coord.= "<p>".RetornaFraseDaLista($lista_frases,190)."</p>\n";
