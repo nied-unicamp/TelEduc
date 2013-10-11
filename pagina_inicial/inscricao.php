@@ -155,8 +155,8 @@
     $link_gerenciamento.= "gerenciamento_inscricoes.php.php?cod_curso=".$dados_curso['cod_curso'];
     $link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
     $link_gerenciamento.= "&cod_ferramenta=0&tipo_usuario=i";
-    /* 235 - Gerenciamento de Inscri��es */
-    $link_gerenciamento.= "'> ".RetornaFraseDaLista($lista_frases, 235)." </a>";
+    /* 215 - Gerenciamento de Inscri��es */
+    $link_gerenciamento.= "'> ".RetornaFraseDaLista($lista_frases, 215)." </a>";
     
     /* 188 - Um pedido de matricula no curso */
     /* 189 - foi solicitado. */

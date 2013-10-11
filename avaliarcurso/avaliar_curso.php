@@ -51,7 +51,7 @@
   
   
   /* Inicio do JavaScript */
-  echo("<script type=text/javascript>\n\n");
+  echo("<script type=\"text/javascript\">\n\n");
 
   /* *********************************************************************
   Funcao Reload - JavaScript. Carrega novamente a p�gina com novos parametros.
@@ -73,7 +73,7 @@
   echo("      document.cursos.submit();\n");
   echo("    }\n\n");
 
-  echo("    function Iniciar()\n"); 
+  echo("    function Iniciar()\n");
   echo("    {\n");
   echo("	startList();\n");
   echo("    }\n");
@@ -170,7 +170,8 @@
     echo("              </td>\n");
     echo("            </tr>\n");
     echo("            </tr>"); 
-    echo("              <td align=\"right\">\n");/* 215 - Avaliar Curso */
+    echo("              <td align=\"right\">\n");
+    /* 215 - Avaliar Curso */
     echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,215)."\" onClick=\"document.cursos.submit();\" type=\"button\" />\n"); 
   }
   else

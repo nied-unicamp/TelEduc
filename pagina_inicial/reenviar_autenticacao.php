@@ -80,8 +80,9 @@
   echo("        {\n");
   echo("          log = log.replace(/ /, '');\n");
   echo("        }\n");
-  echo("        if (log == '')\n");				  /* 69 - O campo de e-mail/login n�o pode estar em branco! */
+  echo("        if (log == '')\n");
   echo("        {\n");
+  /* 69 - O campo de e-mail/login n�o pode estar em branco! */
   echo("          alert('".RetornaFraseDaLista($lista_frases_autenticacao, 69)."');\n");
   echo("          return(false);\n");
   echo("        }\n");
@@ -89,51 +90,53 @@
   echo("          return(true);\n");
   echo("        }\n\n");
 
-  echo("			function EmailouLogin()");
+  echo("      function EmailouLogin()");
   echo("      {\n");
-  echo("				input = document.frmLogin.input.value;\n");
-  echo("				if (input.search('@') == -1)\n");
-	echo("					return 1;\n");			/* 1 � a op��o para login */
-	echo("				return 2;\n");				/* 2 para email */
+  echo("        input = document.frmLogin.input.value;\n");
+  echo("        if (input.search('@') == -1)\n");
+  echo("          return 1;\n");			/* 1 � a op��o para login */
+  echo("        return 2;\n");				/* 2 para email */
   echo("      }\n");
   
   echo("      function confere()\n");
   echo("      {\n");
   echo("        if(EntradaValida())\n");
-  echo("				{\n");
-  echo("					opcao = EmailouLogin();\n");
+  echo("        {\n");
+  echo("          opcao = EmailouLogin();\n");
   echo("          xajax_EnviarConfirmacaoUsuarioDinamic(document.frmLogin.input.value,opcao);\n");
-  echo("				}\n");
+  echo("        }\n");
   echo("        return false;\n");
   echo("      }\n\n");
 
   echo("      function trataEnvio(flag)\n");
   echo("      {\n");
-  echo("				switch (flag)\n");
-  echo("				{\n");
-  echo("					case (0):\n");
-  echo("  	      {\n");												/* 100 - Email de confirma��o enviado com sucesso!. */
-  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao,100)."');\n");
-  echo("      	    document.location='autenticacao_cadastro.php';\n");
-  echo("						break;");
-  echo("  	      }\n");
-  echo("	        case (1):\n");
-  echo("  	      {\n");												/* 72 - Email inv�lido! */
-  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 72)."');\n");
-  echo("						break;");
-  echo("	        }\n");
-  echo(" 	       	case (2):\n");
-  echo("  	     	{\n");												/* 99 - Usu�rio j� efetuou confirma��o do cadastro! */
-  echo("    	      alert('".RetornaFraseDaLista($lista_frases_autenticacao, 99)."');\n");
-  echo("						break;");
-  echo("       	 	}\n");
-  echo("					default:");
-  echo("  	      {\n");
-  echo("    	      alert('FAIL AT FAILLING'+flag);\n");
-  echo("						break;");
-
-  echo("        	}\n");
-  echo("				}\n");
+  echo("        switch (flag)\n");
+  echo("        {\n");
+  echo("          case (0):\n");
+  echo("          {\n");
+  /* 100 - Email de confirma��o enviado com sucesso!. */
+  echo("            alert('".RetornaFraseDaLista($lista_frases_autenticacao,100)."');\n");
+  echo("            document.location='autenticacao_cadastro.php';\n");
+  echo("            break;");
+  echo("          }\n");
+  echo("          case (1):\n");
+  echo("          {\n");
+  /* 72 - Email inv�lido! */
+  echo("            alert('".RetornaFraseDaLista($lista_frases_autenticacao, 72)."');\n");
+  echo("            break;");
+  echo("          }\n");
+  echo("          case (2):\n");
+  echo("          {\n");
+  /* 99 - Usu�rio j� efetuou confirma��o do cadastro! */
+  echo("            alert('".RetornaFraseDaLista($lista_frases_autenticacao, 99)."');\n");
+  echo("            break;");
+  echo("          }\n");
+  echo("          default:");
+  echo("          {\n");
+  echo("            alert('FAIL AT FAILLING'+flag);\n");
+  echo("            break;");
+  echo("          }\n");
+  echo("        }\n");
   echo("      }\n\n");
   
   echo("    </script>\n\n");
@@ -158,15 +161,17 @@
   
   // 94 - Se voc� n�o confirmou seu cadastro atrav�s de seu email ou est� tendo
   // problemas com a confirma��o, siga os passos abaixo para confirmar seu cadastro.
-  // 95 - Voc� precisar� do seu login ou do email que voc� cadastrou para o acesso.  
+  // 95 - Voc� precisar� do seu login ou do email que voc� cadastrou para o acesso.
   // 96 - Preencha o campo abaixo e selecione o bot�o Enviar.
   // 97 - Um novo email ser� enviado para efetuar a confirma��o de seu cadastro.
-	// 215 - Login / Email:
+  // 157 - Login / Email:
+  // 43 - E-mail:
+  // 11 - Enviar
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td>\n");
   echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
-  echo("                  <tr>   \n");
+  echo("                  <tr>\n");
 
   echo("                    <td align=left>\n");
   echo("                      <p style=\"text-indent:15px\">".RetornaFraseDaLista($lista_frases_autenticacao,94)."</p>\n");
@@ -174,32 +179,32 @@
   echo("                      <p style=\"text-indent:15px\">".RetornaFraseDaLista($lista_frases_autenticacao,96)."</p>\n");
   echo("                      <p style=\"text-indent:15px\">".RetornaFraseDaLista($lista_frases_autenticacao,97)."</p>\n");
   echo("                      <br />\n");
-  echo("                      <form name=frmLogin method=post action=\"\" onSubmit=\"return(confere());\">\n");
-  echo("                        <input type=hidden name=raiz_www value='".$raiz_www."' />\n");
-  echo("                      		<div align=\"center\"><table>\n");
-  echo("                        		<tr>\n");
+  echo("                      <form name=\"frmLogin\" method=\"post\" action=\"\" onSubmit=\"return(confere());\">\n");
+  echo("                        <input type=\"hidden\" name=\"raiz_www\" value='".$raiz_www."' />\n");
+  echo("                        <div align=\"center\">\n");
+  echo("                          <table align=\"center\">\n");
   
-  echo("                          		<td style=\"border:none; text-align:right;\">\n");
-  echo("                          			".RetornaFraseDaLista($lista_frases,215)."\n");
-  echo("                          		</td>\n");
-  echo("                          		<td style=\"border:none\">\n");
-  echo("                            		<input class='input' type='text' name='input' />\n");
-  echo("                          		</td>\n");
+  echo("                            <tr>\n");
+  echo("                              <td style=\"border:none; text-align:right;\">\n");
+  echo("                                ".RetornaFraseDaLista($lista_frases,157)."/".RetornaFraseDaLista($lista_frases,43)."\n");
+  echo("                              </td>\n");
+  echo("                              <td style=\"border:none\">\n");
+  echo("                                <input class='input' type='text' name='input' />\n");
+  echo("                              </td>\n");
+  echo("                            </tr>\n");
   
-  echo("                        		</tr>\n");
-  
-  echo("                        		<tr>\n");
-  echo("                          		<td style=\"border:none; text-align:right;\">\n");
-  echo("                          		</td>\n");
-  echo("                          		<td style=\"border:none\">\n");
-  echo("                            	<br /><input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 11)."\" />\n");
-  echo("                          		</td>\n");
-  echo("                        		</tr>\n");
-  echo("                      		</table>\n");
-  echo("												</div>\n");
-  echo("                      </form>");
+  echo("                            <tr>\n");
+  echo("                              <td style=\"border:none; text-align:right;\">\n");
+  echo("                              </td>\n");
+  echo("                              <td style=\"border:none\">\n");
+  echo("                                <br /><input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 11)."\" />\n");
+  echo("                              </td>\n");
+  echo("                            </tr>\n");
+  echo("                          </table>\n");
+  echo("                        </div>\n");
+  echo("                      </form>\n");
   echo("                    </td>\n");
-  echo("                  </tr>   \n");
+  echo("                  </tr>\n");
   echo("                </table>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

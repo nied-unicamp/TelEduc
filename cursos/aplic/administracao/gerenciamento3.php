@@ -277,8 +277,8 @@
             /* 336 - Visitante(s) desligado(s) com sucesso. */
             $confirmacao = RetornaFraseDaLista($lista_frases,336);
   
-            /* 243 - Mensagem de cancelamento*/
-            $aviso = RetornaFraseDaLista($lista_frases,243);
+            /* 244 - Mensagem de cancelamento*/
+            $aviso = RetornaFraseDaLista($lista_frases,244);
   
             $tipo_usuario = 'v';
             break;

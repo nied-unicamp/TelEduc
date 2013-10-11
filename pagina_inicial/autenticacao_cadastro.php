@@ -165,21 +165,13 @@
 
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-    if($destino == "inscricao" && $origem==NULL){
-      echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
-    }
+  if($destino == "inscricao" && $origem==NULL){
+    echo("		  <span class=\"destaque\"><p id=\"feedback\">".RetornaFraseDaLista($lista_frases,219)." ".RetornaFraseDaLista($lista_frases,220)."</p></span>");
+  }
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td colspan=\"4\">\n");
   echo("                <table cellspacing=\"0\" id=\"divide_meio\" class=\"tabInterna\">\n");
-  echo("                  <tr class=\"head\">   \n");
-  //echo("                    <td align=\"left\">".RetornaFraseDaLista($lista_frases,165)."</td>\n");
-  
-  
-  //echo("					<td class=\"divide_meio\" align=\"left\"> Caso nao possua um cadastro, clique em Cadastrar-se.</td>");
-  
-  
-  echo("                  </tr>   \n");
   echo("                  <tr id=\"caixaAutenticacao\">   \n");
   echo("                    <td class=\"divide_meio\" align=\"center\">\n");
   echo("                    ".RetornaFraseDaLista($lista_frases,165)."\n");
@@ -197,12 +189,10 @@
     echo("                          <input type=\"hidden\" name=\"destino\" value=\"".$destino."\" />\n");			
   
   echo("                          <table>\n");
-  /* Login
-   * Frase cod_texto=215 e cod_ferramenta=-3: Login
-   */
   echo("                            <tr>\n");
   echo("                              <td style=\"border:none; text-align:right;\">\n");
-  echo("                                <b>".RetornaFraseDaLista($lista_frases,215)."</b>\n");
+  /* Frase cod_texto=157 e cod_ferramenta=-3: Login */
+  echo("                                <b>".RetornaFraseDaLista($lista_frases,157)."</b>\n");
   echo("                              </td>\n");
   echo("                              <td style=\"border:none\">\n");
   echo("                                <input class=\"valorExemplo\" type=\"text\" id=\"login\" name=\"login\" size=\"25\" maxlength=\"100\" value='".$login."' onfocus=Login_onfocus(document.formAutentica.login); onblur=Login_onblur(document.formAutentica.login);>\n");
@@ -281,7 +271,6 @@
   echo("      </tr>\n");
   include("../rodape_tela_inicial.php");
   echo("  </body>\n");
-  echo("</html>");
+  echo("</html>\n");
   Desconectar($sock);
 ?>
-
