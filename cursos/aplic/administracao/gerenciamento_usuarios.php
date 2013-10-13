@@ -442,8 +442,8 @@
       echo("                  <li id=\"mFormador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,108)."</span></li>\n");
 
     if ($tipo_usuario != 'Z')
-      // 315 - Transformar em Colaborador
-      echo("                  <li id=\"mColaborador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,315)."</span></li>\n");
+      // 176 - Transformar em Colaborador
+      echo("                  <li id=\"mColaborador_Selec\" class=\"menuUp\"><span>".RetornaFraseDaLista($lista_frases,176)."</span></li>\n");
 
     if ($tipo_usuario != 'V')
       // 314 - Transformar em visitante

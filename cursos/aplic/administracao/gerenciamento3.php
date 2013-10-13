@@ -336,8 +336,8 @@
             /* 281 - Mensagem de confirmacao*/
             $aviso = RetornaFraseDaLista($lista_frases,281);
   
-            /* 338 - Visitantes(s) religado(s) com sucesso. */
-            $confirmacao = RetornaFraseDaLista($lista_frases,338);
+            /* 315 - Visitantes(s) religado(s) com sucesso. */
+            $confirmacao = RetornaFraseDaLista($lista_frases,315);
   
             $tipo_usuario = 'V';
             break;
