@@ -43,10 +43,10 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("administracao.inc");
-  
+
   $action = $_POST['action'];
   $action_js = $_POST['action_js'];
-  
+
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
   $sock=Conectar("");
@@ -88,7 +88,7 @@
       $tipo_usuario="V";
 
     foreach($cod_usu as $cod => $cod_usuario)
-      MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario); 
+      MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario);
 
     Desconectar($sock);
     header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action_ger."&atualizacao=true");
@@ -132,7 +132,7 @@
         $dados_preenchidos_s[$i]['email'] = $email[$i];
       }
     }
-    
+
     $logins=RetornaLoginsInscricao($sock);
     $emails=RetornaEmailsInscricao($sock);
 
@@ -204,24 +204,24 @@
         $assunto=RetornaFraseDaLista($lista_frases,138);
 
         $mensagem="<font size=\"2\">\n";
-  
+
         /* 95 - Prezado(a) */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,95)." <strong>".$lista_usuarios[$cod_usuario_senha]['nome']."</strong>,</p>\n\n";
-  
+
         /* 140 - Segue abaixo o seu login e senha conforme solicitado para o curso */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,140)." <strong>".$dados_curso['nome_curso']."</strong></p>";
-  
+
         /* 67 - Seu login � */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,67)." <strong><big><em>".$lista_usuarios[$cod_usuario_senha]['login']."</em></big></strong> ";
-  
+
         /* 68 - e sua senha � */
         $mensagem.=RetornaFraseDaLista($lista_frases,68)." <strong><big><em>".$senha."</em></big></strong></p>\n";
-  
+
         /* 230 - Acesse o curso atrav�s do endere�o: */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,230)."</p>\n";
-  
+
         $mensagem.="<p><a href=\"http://".$host.$dir."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$dir."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p><br />\n";
-  
+
         /* 139 - Atenciosamente, */
         $mensagem.="<p style=\"text-align:right;\">".RetornaFraseDaLista($lista_frases,139)."<br /><strong>".$lista_usuarios[$cod_usuario]['nome']."</strong></p><br />\n";
 
@@ -238,7 +238,7 @@
 
         //o montaMsg faz outras conexoes com o BD, não dá pra manter várias simultaneas
         Desconectar($sock);
-        $mensagem_envio = MontaMsg($host, $dir, $cod_curso, $mensagem, $assunto, $cod_usuario, $lista_usuarios[$cod_usuario_senha]['nome']); 
+        $mensagem_envio = MontaMsg($host, $dir, $cod_curso, $mensagem, $assunto, $cod_usuario, $lista_usuarios[$cod_usuario_senha]['nome']);
         $sock=Conectar($cod_curso);
 
         if (MandaMsg($remetente,$destino,$assunto,$mensagem_envio))
@@ -267,7 +267,7 @@
     }
     header("Location:administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$action."&atualizacao=".$confirma."");
   }
-  
+
   if($action == "escolherFerramentas")
   {
     $query="update Curso_ferramentas set status='D', _timestamp = ".time();
@@ -313,7 +313,7 @@
     $sock=Conectar("");
     MudancaDeLingua($sock,$cod_lin);
     $cadastro_fora=CadastraDadosCurso($sock,$cod_curso,$nome_curso,$inscricao_inicio,$inscricao_fim,$curso_inicio,$curso_fim,$informacoes,$publico_alvo,$tipo_inscricao,$acesso_visitante,$cod_lin,$horario);
-    
+
 
     if (!($cadastro_fora && $cadastro_dentro))
     {
@@ -352,14 +352,14 @@
       {
         DescompartilhaFerramenta($sock, $cod_curso, $lista_compart[$j]['cod_ferramenta']);
         $j++;
-      } 
-    }   
+      }
+    }
 
     /*insere o resto de $ferr_comp na base de dados*/
     while($i<count($ferr_comp))
     {
       CompartilhaFerramenta($sock, $cod_curso, $ferr_comp[$i]);
-      $i++;   
+      $i++;
     }
 
     /*remove o resto de $lista_compart da base de dados*/  
@@ -367,15 +367,15 @@
     {
       if($lista_compart != NULL && $lista_compart[$j] != "")
       { 
-        DescompartilhaFerramenta($sock, $cod_curso, $lista_compart[$j]['cod_ferramenta']);    
+        DescompartilhaFerramenta($sock, $cod_curso, $lista_compart[$j]['cod_ferramenta']);
         $j++;
       }
     }
     $confirma='true';
     Desconectar($sock);
-    header("Location:administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$action."&atualizacao=".$confirma.""); 
+    header("Location:administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$action."&atualizacao=".$confirma."");
   }
 
   Desconectar($sock);
-  
+
 ?>
