@@ -670,36 +670,47 @@ if ($dono_portfolio) {
 
 echo ("                    <td align=\"center\">" . $compartilhamentospan . "</td>\n");
 
-$Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaTituloAvaliacaoDoItem($sock, $linha_item['cod_item']) . "</span>";
-
-if ($ferramenta_avaliacao) {
-	echo ("                    <td align=\"center\">");
-	if (is_array($lista)) {
-		$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
+  $tituloAvaliacao = RetornaTituloAvaliacaoDoItem($sock, $linha_item['cod_item']);
+          
+  if($tituloAvaliacao!= ""){
+    $tituloavalia = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . $tituloAvaliacao . "</span>";
+  }
+  else{
+    //Frase Ger #36 - N�o
+    $tituloavalia = "<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 36) . "</span>";
+  }
+  
+  if ($ferramenta_avaliacao) {
+    echo ("                    <td align=\"center\"><span>");
+	  if (is_array($lista)) {
+		 //$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
+		 $foiavaliado=FoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_usuario']);
 		if ($foiavaliado) {
 			if ($eformador) {
-				echo ($Sim . "</span><span class=\"avaliado\"> (a)</span>\n");
+				echo ($tituloavalia . "</span><span class=\"avaliado\"> (a)\n");
 			}
 			//else = não é formador
 			else {
 				$compartilhado = NotaCompartilhadaAluno($sock, $linha_item['cod_item'], $lista['cod_avaliacao'], $cod_grupo_portfolio, $cod_usuario);
 				if ($compartilhado) {
-					echo ($Sim . "</span><span class=\"avaliado\"> (a)</span>\n");
+					echo ($tituloavalia . "</span><span class=\"avaliado\"> (a)\n");
 				}
 				//else = não é compartilhado
 				else {
-					echo ($Sim);
+					echo ($tituloavalia);
 				}
 			}
-		} else {
-			echo ($Sim);
+		} 
+		else {
+			echo ($tituloavalia);
 		}
 	}
 	//else = não tem avaliação
 	else {
 		// G 36 - Não
-		echo ("<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 36) . "</span>\n");
+		echo ($tituloavalia);
 	}
+	echo ("                    </span>");
 	echo ("                    </td>");
 }
 echo ("                  </tr>");

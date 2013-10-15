@@ -4250,6 +4250,12 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 	
 	if(!$linha[0]) return '';
 	
+	$query = "select status from Avaliacao where cod_avaliacao=".$linha[0];
+	$res=Enviar($sock,$query);
+	$status = RetornaLinha($res);
+	
+	if($status[0]!='X'){
+	
 	$query="select cod_atividade from Avaliacao where cod_avaliacao=".$linha[0];
 	$res=Enviar($sock,$query);
 	$linha2=RetornaLinha($res);
@@ -4258,8 +4264,13 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 	$res = Enviar($sock, $query);
 	$linha3 = RetornaLinha($res);
 	
+	$resposta = $linha3[0];
+	}
+	else{
+	  $resposta = "";
+	}
 	
-	return $linha3[0];
+	return $resposta;
 }
 
 /* *********************************************************************

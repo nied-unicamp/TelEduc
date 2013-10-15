@@ -989,11 +989,18 @@
           $icone = "<img alt=\"\" src=\"../imgs/".$arquivo."\" border=\"0\" />";
 
           echo("<td class=\"itens\">".$icone." ".$titulo."</td>");
-
-        // 35 - Sim
-		  $Sim = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . RetornaTituloAvaliacaoDoItem($sock, $linha['cod_item']) . "</span>";
-          if ($ferramenta_avaliacao)
-          {
+          
+          $tituloAvaliacao = RetornaTituloAvaliacaoDoItem($sock, $linha['cod_item']);
+          
+          if($tituloAvaliacao!= ""){
+		    $tituloavalia = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . $tituloAvaliacao . "</span>";
+            }
+            else{
+            //36 - Nao
+              $tituloavalia = "<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 36) . "</span>";
+            }
+		    if ($ferramenta_avaliacao)
+            {
             echo("<td width=\"110\" align=\"center\"><span>");
             if (is_array($lista))
             {
@@ -1001,28 +1008,28 @@
               $foiavaliado=FoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_usuario']);
               if ($foiavaliado){
                 if ($eformador){
-                  echo($Sim."</span><span class=\"avaliado\"> (a)");
+                  echo($tituloavalia."</span><span class=\"avaliado\"> (a)");
                 }
                 //else = não é formador
                 else{
                   $compartilhado=NotaCompartilhadaAluno($sock,$linha['cod_item'],$lista['cod_avaliacao'],$cod_grupo_portfolio,$cod_usuario);
                   if ($compartilhado){
-                    echo($Sim."</span><span class=\"avaliado\"> (a)");
+                    echo($tituloavalia."</span><span class=\"avaliado\"> (a)");
                   }
                   //else = n? ?compartilhado
                   else{
-                    echo($Sim);
+                    echo($tituloavalia);
                   }
                 }
               }
               else{
-                echo($Sim);
+                echo($tituloavalia);
               }
             }
             //else = n? tem avalia?o
             else{
               // G 36 - N?
-              echo(RetornaFraseDaLista($lista_frases_geral, 36)."");
+              echo($tituloavalia);
             }
             echo("</span>");
             echo("</td>");
