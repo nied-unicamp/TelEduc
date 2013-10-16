@@ -46,7 +46,7 @@
 
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda = 1;
+  //$cod_pagina_ajuda = 1;
 
   include("../topo_tela.php");
 
@@ -55,13 +55,13 @@
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -69,7 +69,7 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("<form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
     Desconectar($sock);
     exit();
@@ -78,7 +78,7 @@
   echo("  <script type=\"text/javascript\">\n\n");
 
   echo("    function Iniciar() {\n");
-  echo("	startList();\n");
+  echo("      startList();\n");
   echo("    }\n\n");
 
   echo("    function CancelaExtracao()\n");
@@ -107,8 +107,8 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
-   /* 509 - Voltar */
+  /*Voltar*/
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   $sock2 = Conectar("");
@@ -118,8 +118,8 @@
   $num_linhas = RetornaNumLinhas($res);
   Desconectar($sock2);
 
-  echo("          <form name=frmListExtracao method=post action=\"remover_extracao2.php\">\n");
-  echo("            <input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("          <form name=\"frmListExtracao\" method=\"post\" action=\"remover_extracao2.php\">\n");
+  echo("            <input type=\"hidden\" name=cod_curso value=".$cod_curso.">\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -135,7 +135,7 @@
   echo("                  <tr class=\"head\">\n");
   /* 221 - Usuário(s) para o(s) qual(is) a extração do curso será feita: */
   echo("                    <td>".RetornaFraseDaLista($lista_frases, 221)."</td>\n");
-  echo("                  </tr>\n");	   
+  echo("                  </tr>\n");
 
   $sock = Conectar($cod_curso);
 
@@ -156,19 +156,19 @@
       echo("                  <tr>\n");
       echo("                    <td><input type=\"checkbox\" name=\"selecionados[]\" value=\"".$selecionados."\"></td>\n");
       echo("                    <td>".NomeUsuario($sock, $selecionados)."</td>\n");
-    
+
       $vetor_bd_ferramentas = array("estrutura", "dinamica", "agenda", "avaliacoes", "atividades", "material", "leituras", "perguntas", "exercicios", "parada", "mural", "forum", "batepapo", "correio", "grupos", "perfil", "diario", "portfolio", "acessos", "intermap");
       $vetor_cod_ferramentas = array(17, 16, 1, 22, 3, 4, 5, 6, 23, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19);
       $i = 0;
-      
+
       echo("                    <td>\n");
       foreach($vetor_bd_ferramentas as $vetor => $ferramenta)
       {
         if($extracao[$ferramenta] == 1)
         {
           echo("                    <li>");
-	  echo(RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$vetor_cod_ferramentas[$i]]['cod_texto_nome'])."\n");
-	  echo("                    </li>\n");
+          echo(RetornaFraseDaLista($lista_frases_menu, $tela_lista_ferramentas[$vetor_cod_ferramentas[$i]]['cod_texto_nome'])."\n");
+          echo("                    </li>\n");
         }
         $i++;
       }
@@ -195,11 +195,12 @@
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
-  echo("          </form>\n");  
+  echo("          </form>\n");
   echo("        </td>\n");
   echo("      </tr>\n");
   include("../tela2.php");
   echo("  </body>\n");
   echo("</html>\n");
   Desconectar($sock);
+
 ?>

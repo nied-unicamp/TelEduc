@@ -53,10 +53,18 @@
       //Aluno
       $cod_pagina_ajuda = 7;
       break;
+    case 'F':
+      //Formador
+      $cod_pagina_ajuda = 6;
+      break;
     case 'Z':
       //Colaborador
       $cod_pagina_ajuda = 14;
-    break;
+      break;
+    case 'V':
+      //visitante
+      //$cod_pagina_ajuda = ;
+      break;
   }
 
   include("../topo_tela.php");
