@@ -67,18 +67,18 @@
   echo("<html>\n");
   /* 1 - Administra�o */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=\"../teleduc.css\">\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=\"administracao.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"administracao.css\">\n");
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-  	/* 1 - Administracao  297 - Area restrita ao formador. */
-  	echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
-	
+    /* 1 - Administracao  297 - Area restrita ao formador. */
+    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+
     /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  	
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -86,7 +86,7 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("<form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
     Desconectar($sock);
     exit();
@@ -94,41 +94,40 @@
 
   echo("  <body link=#0000ff vlink=#0000ff onLoad='document.frmMarcar.cmdVoltar.focus();'>\n");
   /* 1 - Administra�o */
-  $cabecalho = "    <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
+  $cabecalho = "    <b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
   /* 213 - Listar / Remover Extra�o do Curso */
-  $cabecalho .= "    <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 213)."</b>";
+  $cabecalho .= "    <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 213)."</b>";
   echo(PreparaCabecalho($sock,$cod_curso, $cabecalho, 0,19));
   echo("    <br>\n");
 
-  echo("    <form name=frmMarcar method=post action=\"administracao.php\">\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
+  echo("    <form name=\"frmMarcar\" method=\"post\" action=\"administracao.php\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
 
-  echo("      <font class=text>\n");
+  echo("      <font class=\"text\">\n");
 
   Desconectar($sock);
-  $sock2 = Conectar("");  
+  $sock2 = Conectar("");
   
   if(count($selecionados) > 0)
   {
     /* 144 - Opera�o conclu�a com sucesso! */
     echo("        ".RetornaFraseDaLista($lista_frases, 144)."\n");
-  
+
     foreach($selecionados as $sels => $usuario)
-    {  
+    {
       $query = "delete from Extracoes_agendadas where cod_usuario=$usuario and cod_curso=$cod_curso and extraido=0;";
       Enviar($sock2, $query);
     }
   }
   else
   {
-  /* 224 - Selecione pelo menos um usu�io para ser removido da extra�o. */
-  echo(RetornaFraseDaLista($lista_frases, 224));
+    /* 224 - Selecione pelo menos um usu�io para ser removido da extra�o. */
+    echo(RetornaFraseDaLista($lista_frases, 224));
   }
   
   Desconectar($sock2);
   echo("      </font>\n");
-  echo("      <p>\n");
-  echo("      <input type=submit name=cmdVoltar class=text value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n");
+  echo("      <input type=\"submit\" name=\"cmdVoltar\" class=\"text\" value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n");
   echo("    </form>\n");
 
   echo("    </body>\n");

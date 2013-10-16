@@ -57,7 +57,7 @@
   $objMaterial->processRequests();
 
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda = 3;
+  $cod_pagina_ajuda = 12;
   include("../topo_tela.php");
   /*Funcao JavaScript*/
   echo("    <script type=\"text/javascript\">\n\n");

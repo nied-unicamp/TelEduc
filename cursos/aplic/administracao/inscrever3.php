@@ -57,21 +57,30 @@
   $cod_ferramenta_ajuda = $cod_ferramenta;
 
   switch($tipo_usuario){
-    case 'z':
-    //convidado
-    $cod_pagina_ajuda = 14;
-    break;
+    case 'F':
+      //formador
+      $cod_pagina_ajuda = 6;
+      break;
     case 'A':
-    //aluno
-    $cod_pagina_ajuda = 7;
-    break;
+      //aluno
+      $cod_pagina_ajuda = 7;
+      break;
+    case 'Z':
+      //colaborador
+      $cod_pagina_ajuda = 14;
+      break;
+    case 'V':
+      //visitante
+      //$cod_pagina_ajuda = ;
+      break;
   }
+
   include("../topo_tela.php");
   include("../menu_principal.php");
 
   $itens_por_pagina = 10;
   //$lista_usuarios = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,0,10);
-  $total_usuarios= RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
+  $total_usuarios = RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
@@ -79,7 +88,7 @@
   $objAjax->printJavascript("../xajax_0.2.4/");
   
   echo("    <script type=\"text/javascript\">\n\n");
-  
+
   echo("      var numLogins = 5;\n");
   echo("      var total_usuarios = ".$total_usuarios.";\n");
   echo("      var itens_por_pagina = ".$itens_por_pagina.";\n");

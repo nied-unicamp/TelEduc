@@ -59,7 +59,7 @@
   
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda = 1;
+  $cod_pagina_ajuda = 17;
 
   include("../topo_tela.php");
  

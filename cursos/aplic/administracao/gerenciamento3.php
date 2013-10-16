@@ -46,7 +46,6 @@
 
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  $cod_pagina_ajuda = 9;
 
   include("../topo_tela.php");
 
@@ -66,6 +65,68 @@
     $ordem="nome";
   }
 
+  // P�gina Principal
+  /* 1 - Administra��o */
+  $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1);
+  
+  switch($tipo_usuario) {
+    case 'a':
+      /* 283 - Gerenciamento de Alunos desligados */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 283);
+      $cod_pagina       = 9;
+      $cod_pagina_ajuda = 9;
+      break;
+    case 'A':
+      /* 102 - Gerenciamento de Alunos */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 102);
+      $cod_pagina       = 9;
+      $cod_pagina_ajuda = 9;
+      break;
+    case 'f':
+      /* 258 - Gerenciamento de Formadores desligados */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 258);
+      $cod_pagina       = 10;
+      $cod_pagina_ajuda = 10;
+      break;
+    case 'F':
+      /* 103 - Gerenciamento de Formadores */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 103);
+      $cod_pagina       = 10;
+      $cod_pagina_ajuda = 10;
+      break;
+    case 'z':
+      /* 319 - Gerenciamento de Colaboradores desligados */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 319);
+      $cod_pagina       = 13;
+      $cod_pagina_ajuda = 13;
+      break;
+    case 'Z':
+      /* 165 - Gerenciamento de Colaboradores  */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 165);
+      $cod_pagina       = 13;
+      $cod_pagina_ajuda = 13;
+      break;
+    case 'v':
+      /* 321 - Gerenciamento de Visitantes desligados */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 321);
+      $cod_pagina       = 16;
+      $cod_pagina_ajuda = 16;
+      break;
+    case 'V':
+      /* 179 - Gerenciamento de Visitantes */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 179);
+      $cod_pagina       = 16;
+      $cod_pagina_ajuda = 16;
+      break;
+    case 'i':
+    case 'r':
+      /* 74 - Gerenciamento de Inscri��es */
+      $cabecalho       .= " - ".RetornaFraseDaLista($lista_frases, 74);
+      $cod_pagina       = 8;
+      $cod_pagina_ajuda = 8;
+      break;
+  }
+
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      function Iniciar()\n");
   echo("      {\n");
@@ -74,6 +135,7 @@
   echo("    </script>");
 
   include("../menu_principal.php");
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
@@ -96,59 +158,6 @@
 
     Desconectar($sock);
     exit();
-  }
-  
-  // P�gina Principal
-  /* 1 - Administra��o */
-  $cabecalho = "          <h4>".RetornaFraseDaLista ($lista_frases, 1);
-
-  switch($tipo_usuario) {
-    case 'a':
-      /* 283 - Gerenciamento de Alunos desligados */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 283);
-      $cod_pagina  = 10;
-      break;
-    case 'A':
-      /* 102 - Gerenciamento de Alunos */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 102);
-      $cod_pagina  = 9;
-      break;
-    case 'f':
-      /* 258 - Gerenciamento de Formadores desligados */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 258);
-      $cod_pagina  = 10;
-      break;
-    case 'F':
-      /* 103 - Gerenciamento de Formadores */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 103);
-      $cod_pagina  = 10;
-      break;
-    case 'z':
-      /* 319 - Gerenciamento de Colaboradores desligados */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 319);
-      $cod_pagina  = 13;
-      break;
-    case 'Z':
-      /* 165 - Gerenciamento de Colaboradores  */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 165);
-      $cod_pagina  = 13;
-      break;
-    case 'v':
-      /* 321 - Gerenciamento de Visitantes desligados */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 321);
-      $cod_pagina  = 16;
-      break;
-    case 'V':
-      /* 179 - Gerenciamento de Visitantes */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 179);
-      $cod_pagina  = 16;
-      break;
-    case 'i':
-    case 'r':
-      /* 74 - Gerenciamento de Inscri��es */
-      $cabecalho  .= " - ".RetornaFraseDaLista($lista_frases, 74);
-      $cod_pagina  = 8;
-      break;
   }
   
   echo($cabecalho."</h4>");
