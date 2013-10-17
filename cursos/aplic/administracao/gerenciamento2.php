@@ -322,7 +322,7 @@
       {
 
         switch ($tipo_usuario) {
-          case 'A':
+          case 'a':
             // 285 - Religar Aluno
             $titulo=RetornaFraseDaLista($lista_frases,285);
           
@@ -341,7 +341,7 @@
             $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
             $mensagem.="</font>";
             break;
-          case 'F':
+          case 'f':
             // 260 - Religar Formador
             $titulo=RetornaFraseDaLista($lista_frases,260);
             
@@ -360,7 +360,7 @@
             $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
             $mensagem.="</font>";
             break;
-          case 'Z':
+          case 'z':
             // 329 - Religar Colaborador
             $titulo=RetornaFraseDaLista($lista_frases,329);
             
@@ -379,7 +379,7 @@
             $mensagem.=" <strong>".$dados_curso['nome_curso']."</strong>.</p>";
             $mensagem.="</font>";
             break;
-          case 'V':
+          case 'v':
             // 330 - Religar Visitante
             $titulo=RetornaFraseDaLista($lista_frases,330);
             
@@ -505,19 +505,19 @@
       }
       else if ($action_ger == 'religar_usuario') {
         switch ($tipo_usuario){
-          case 'A':
+          case 'a':
             // 291 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes alunos:
             echo("                      ".RetornaFraseDaLista($lista_frases,291)."\n");
             break;
-          case 'F':
+          case 'f':
             // 263 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes formadores:
             echo("                      ".RetornaFraseDaLista($lista_frases,263)."\n");
             break;
-          case 'Z':
+          case 'z':
             // 335 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes colaboradores:
             echo("                      ".RetornaFraseDaLista($lista_frases,335)."\n");
             break;
-          case 'V':
+          case 'v':
             // 189 - Ao enviar a mensagem, estara confirmando o religamento dos seguintes visitantes:
             echo("                      ".RetornaFraseDaLista($lista_frases,189)."\n");
             break;

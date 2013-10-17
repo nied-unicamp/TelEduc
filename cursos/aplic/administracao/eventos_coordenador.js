@@ -89,8 +89,8 @@ function AdicionaEventos(coordenadorSelecionado) {
       document.getElementById('mDesligar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'desligar_usuario', ''); };
     }
     if (document.getElementById('mReligar') != null) {
-      document.getElementById('Religar').className = "menuUp02";
-      document.getElementById('Religar').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'religar_usuario', ''); };
+      document.getElementById('mReligar').className = "menuUp02";
+      document.getElementById('mReligar').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'religar_usuario', ''); };
     }
     if (document.getElementById('mAtivarPort_Selec') != null) {
       document.getElementById('mAtivarPort_Selec').className = "menuUp02";
@@ -105,12 +105,16 @@ function AdicionaEventos(coordenadorSelecionado) {
 }
 
 /*
- * Função que remove os eventos aos botões de ação das páginas de gerenciamento.
+ * Função que remove os eventos aos botões de ação das páginas de gerenciamento,
+ * quando nenhum checkbox for selecionado ou quando o checkbox do coordenador
+ * for selecionado.
  */
-function RemoveEventos() {
+function RemoveEventos(algumSelecionado) {
 
-  document.getElementById('mDados_Selec').className = "menuUp";
-  document.getElementById('mDados_Selec').onclick   = null;
+  if (!algumSelecionado) {
+    document.getElementById('mDados_Selec').className = "menuUp";
+    document.getElementById('mDados_Selec').onclick   = null;
+  }
 
   if (document.getElementById('mAceitar_Selec') != null) {
     document.getElementById('mAceitar_Selec').className = "menuUp";
@@ -145,8 +149,8 @@ function RemoveEventos() {
     document.getElementById('mDesligar_Selec').onclick   = null;
   }
   if (document.getElementById('mReligar') != null) {
-    document.getElementById('Religar').className = "menuUp";
-    document.getElementById('Religar').onclick   = null;
+    document.getElementById('mReligar').className = "menuUp";
+    document.getElementById('mReligar').onclick   = null;
   }
   if (document.getElementById('mAtivarPort_Selec') != null) {
     document.getElementById('mAtivarPort_Selec').className = "menuUp";

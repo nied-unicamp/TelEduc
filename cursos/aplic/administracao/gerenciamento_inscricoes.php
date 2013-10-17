@@ -303,7 +303,7 @@
         echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
         echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
         /* 79 - Dados */
-        echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
+        echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;ordem=".$ordem."&amp;origem=gerenciamento_inscricoes.php&amp;action_ger=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
         echo("                  </tr>\n");
       }
       $msg_por_pag--;
