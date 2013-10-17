@@ -80,8 +80,8 @@ function VerificaCheck() {
   var Cabecalho = document.getElementById('check_all');
   var cod_itens = getElementsByName_iefix('input','cod_usu[]');
   for (i in cod_itens) {
-    if (cod_itens[i].checked){
-      if(typeof(cod_coordenador) != 'undefined' && 
+    if (cod_itens[i].checked) {
+      if (typeof(cod_coordenador) != 'undefined' && 
          cod_itens[i].value == cod_coordenador)
         coordenadorSelecionado = true;
       count++;
@@ -90,12 +90,12 @@ function VerificaCheck() {
   if (count == cod_itens.length) Cabecalho.checked = true;
   else                           Cabecalho.checked = false;
 
-  // Habilita os botões ou não de acordo com as seleções dos checkboxes.
+  // Habilita ou desabilita os botões de acordo com as seleções dos checkboxes.
   if(count > 0) {
     AdicionaEventos(coordenadorSelecionado);
   }
-  else {
-    RemoveEventos();
+  if (count <= 0 || coordenadorSelecionado) {
+    RemoveEventos((count > 0));
   }
 }
 

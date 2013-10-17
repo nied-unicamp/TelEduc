@@ -200,6 +200,9 @@
   echo("      var cod_curso = ".$cod_curso.";\n");
   echo("      var cod_usuario = ".$cod_usuario.";\n");
   echo("      var cod_ferramenta = ".$cod_ferramenta.";\n");
+  if ($ecoordenador) {
+    echo("      var cod_coordenador = ".$cod_coordenador.";\n");
+  }
   /*79 - Dados */
   echo("      var fraseDados = '".RetornaFraseDaLista($lista_frases, 79)."';\n");
   /* 114 - Nenhuma pessoa selecionada */
@@ -296,47 +299,44 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  // Apenas Coordenadores podem Ligar/Desligar Formadores.
-  if ((($tipo_usuario != 'F') && ($tipo_usuario != 'f')) || $ecoordenador) {
-    echo("            <tr>\n");
-    echo("              <td>\n");
-    echo("                <ul class=\"btAuxTabs03\">\n");
+  echo("            <tr>\n");
+  echo("              <td>\n");
+  echo("                <ul class=\"btAuxTabs03\">\n");
 
-    switch($tipo_usuario) {
-      case 'a':
-      case 'A':
-        /* 318 - Alunos */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=A&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,318)."</a></li>\n");
-        /* 317 - Alunos Desligados */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=a&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,317)."</a></li>\n");
-        break;
-      case 'f':
-      case 'F':
-        /* 323 - Formadores */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=F&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,323)."</a></li>\n");
-        /* 261 - Formadores desligados */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=f&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,261)."</a></li>\n");
-        break;
-      case 'z':
-      case 'Z':
-        /* 324 - Colaboradores */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,324)."</a></li>\n");
-        /* 325 - Colaboradores desligados */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,325)."</a></li>\n");
-        break;
-      case 'v':
-      case 'V':
-        /* 326 - Visitantes */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,326)."</a></li>\n");
-        /* 327 - Visitantes desligados */
-        echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,327)."</a></li>\n");
-        break;
-    }
-
-    echo("                </ul>\n");
-    echo("              </td>\n");
-    echo("            </tr>\n");
+  switch($tipo_usuario) {
+    case 'a':
+    case 'A':
+      /* 318 - Alunos */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=A&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,318)."</a></li>\n");
+      /* 317 - Alunos Desligados */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=a&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,317)."</a></li>\n");
+      break;
+    case 'f':
+    case 'F':
+      /* 323 - Formadores */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=F&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,323)."</a></li>\n");
+      /* 261 - Formadores desligados */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=f&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,261)."</a></li>\n");
+      break;
+    case 'z':
+    case 'Z':
+      /* 324 - Colaboradores */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,324)."</a></li>\n");
+      /* 325 - Colaboradores desligados */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,325)."</a></li>\n");
+      break;
+    case 'v':
+    case 'V':
+      /* 326 - Visitantes */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,326)."</a></li>\n");
+      /* 327 - Visitantes desligados */
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,327)."</a></li>\n");
+      break;
   }
+
+  echo("                </ul>\n");
+  echo("              </td>\n");
+  echo("            </tr>\n");
 
   /* Código de montagem do conteúdo a partir daqui */
   $lista_usuarios = RetornaListaUsuarios($sock, $cod_curso, $tipo_usuario, $ordem);
@@ -406,7 +406,7 @@
         echo("                    <td align=\"left\">".$linha['nome']."</td>\n");
         echo("                    <td>".Unixtime2Data($linha['data_inscricao'])."</td>\n");
         /* 79 - Dados */
-        echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;ordem=".$ordem."&amp;action_ger=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
+        echo("                    <td><a href=\"gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=".$tipo_usuario."&amp;ordem=".$ordem."&amp;origem=gerenciamento_usuarios.php&amp;action_ger=dados&amp;cod_usu[]=".$cod_usuario_l."\">".RetornaFraseDaLista($lista_frases,79)."</a></td>\n");
         if($gerenciar_portfolio) {
           echo("                  <td id=\"status_port".$cod_usuario_l."\">");
           if($linha['portfolio'] == "ativado")
@@ -461,7 +461,7 @@
       echo("                  <li id=\"mDesligar_Selec\" class=\"menuUp\"><span>".$frase_desligar."</span></li>\n");
   
     if (isset($frase_religar))
-      echo("                  <li id=\"Religar\" class=\"menuUp\"><span>".$frase_religar."</span></li>\n");
+      echo("                  <li id=\"mReligar\" class=\"menuUp\"><span>".$frase_religar."</span></li>\n");
   }
 
   // Ativar / Desativar Portfolio

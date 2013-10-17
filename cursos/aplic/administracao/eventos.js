@@ -63,6 +63,14 @@ function AdicionaEventos(coordenadorSelecionado) {
       document.getElementById('mRejeitar_Selec').className = "menuUp02";
       document.getElementById('mRejeitar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'rejeitar', ''); };
     }
+    if (document.getElementById('mDesligar_Selec') != null) {
+      document.getElementById('mDesligar_Selec').className = "menuUp02";
+      document.getElementById('mDesligar_Selec').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'desligar_usuario', ''); };
+    }
+    if (document.getElementById('mReligar') != null) {
+      document.getElementById('mReligar').className = "menuUp02";
+      document.getElementById('mReligar').onclick   = function(){ SubmitAcao('gerenciamento2.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta='+cod_ferramenta, 'religar_usuario', ''); };
+    }
     if (document.getElementById('mAtivarPort_Selec') != null) {
       document.getElementById('mAtivarPort_Selec').className = "menuUp02";
       document.getElementById('mAtivarPort_Selec').onclick   = function(){ AtivaDesativaPort('ativar_port'); };
@@ -75,11 +83,16 @@ function AdicionaEventos(coordenadorSelecionado) {
 }
 
 /*
- * Função que remove os eventos aos botões de ação das páginas de gerenciamento.
+ * Função que remove os eventos aos botões de ação das páginas de gerenciamento,
+ * quando nenhum checkbox for selecionado.
  */
-function RemoveEventos() {
-  document.getElementById('mDados_Selec').className = "menuUp";
-  document.getElementById('mDados_Selec').onclick   = null;
+function RemoveEventos(algumSelecionado) {
+
+  if (!algumSelecionado) {
+    document.getElementById('mDados_Selec').className = "menuUp";
+    document.getElementById('mDados_Selec').onclick   = null;
+  }
+
   if (document.getElementById('mAceitar_Selec') != null) {
     document.getElementById('mAceitar_Selec').className = "menuUp";
     document.getElementById('mAceitar_Selec').onclick   = null;
@@ -87,6 +100,14 @@ function RemoveEventos() {
   if (document.getElementById('mRejeitar_Selec') != null) {
     document.getElementById('mRejeitar_Selec').className = "menuUp";
     document.getElementById('mRejeitar_Selec').onclick   = null;
+  }
+  if (document.getElementById('mDesligar_Selec') != null) {
+    document.getElementById('mDesligar_Selec').className = "menuUp";
+    document.getElementById('mDesligar_Selec').onclick   = null;
+  }
+  if (document.getElementById('mReligar') != null) {
+    document.getElementById('mReligar').className = "menuUp";
+    document.getElementById('mReligar').onclick   = null;
   }
   if (document.getElementById('mAtivarPort_Selec') != null) {
     document.getElementById('mAtivarPort_Selec').className = "menuUp";
