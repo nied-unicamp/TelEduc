@@ -245,7 +245,7 @@
     {
       /* 50 - Salvar em Arquivo (ger) */
       if ($SalvarEmArquivo!=1)
-        echo("                    <li><a href=\"salvar_gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;acao=".$acao."&amp;ordem=".$ordem."&amp;opcao=".$opcao."\">".RetornaFraseDaLista($lista_frases_geral,50)."</a></li>\n");
+        echo("                    <li><a href=\"salvar_gerenciamento2.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;action_ger=".$action_ger."&amp;ordem=".$ordem."&amp;opcao=".$opcao."\">".RetornaFraseDaLista($lista_frases_geral,50)."</a></li>\n");
       /* 14 - Imprimir */
       echo("                    <li><span onclick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
       echo("                  </ul>\n");
@@ -624,7 +624,7 @@
           /* Gerenciamento de Aluno ou Formador */
           echo("                            <a href=\"#\" onclick=\"return(OpenWindowPerfil(".$dados['cod_usuario']."));\">");
         echo($dados['nome']);
-        if (($acao=="A" || $acao=="F") && $SalvarEmArquivo!=1) /* Gerenciamento de Aluno ou Formador */
+        if (($tipo_usuario == "A" || $tipo_usuario == "F") && $SalvarEmArquivo!=1) /* Gerenciamento de Aluno ou Formador */
           echo("</a>\n");
         echo("                          </td>\n");
         echo("                        </tr>\n");
