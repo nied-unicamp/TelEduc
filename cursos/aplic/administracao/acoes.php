@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/administracao/acoes.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½ncia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Distância
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Nï¿½cleo de Informï¿½tica Aplicada ï¿½ Educaï¿½ï¿½o
+    Nied - Núcleo de Informática Aplicada à Educação
     Unicamp - Universidade Estadual de Campinas
-    Cidade Universitï¿½ria "Zeferino Vaz"
+    Cidade Universitária "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -71,7 +71,11 @@
     exit();
   }
 
-  $msgErro = "";
+  // É possível que um formador mal intencionado consiga fazer um post para esta
+  // página com os parâmetros certos, com a intenção de realizar ações que só o
+  // coordenador pode fazer. Precisamos então fazer a verificação abaixo para as
+  // ações exclusivas do coordenador.
+  $ecoordenador = ECoordenador($sock,$cod_curso,$cod_usuario);
 
   if($action_ger == "transformar")
   {
@@ -87,16 +91,29 @@
     else if ($opcao == "visitante")
       $tipo_usuario="V";
 
-    foreach($cod_usu as $cod => $cod_usuario)
-      MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario);
+    $confirma = 'false';
+
+    if ($ecoordenador) {
+      foreach($cod_usu as $cod => $cod_usuario)
+        MudaTipoUsuario($sock,$cod_curso,$cod_usuario,$tipo_usuario);
+      $confirma = 'true';
+    }
 
     Desconectar($sock);
-    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action_ger."&atualizacao=true");
+    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=".$tipo_usuario."&acao_fb=".$action_ger."&atualizacao=".$confirma);
   }
 
   if($action_ger == "trocar_coordenador") {
-    TrocaCoordenador($sock, $cod_curso, $cod_usu[0]);
-    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=F&acao_fb=".$action_ger."&atualizacao=true");
+
+    $confirma = 'false';
+
+    if ($ecoordenador) {
+      TrocaCoordenador($sock, $cod_curso, $cod_usu[0]);
+      $confirma = 'true';
+    }
+
+    header("Location:gerenciamento_usuarios.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&tipo_usuario=F&acao_fb=".$action_ger."&atualizacao=".$confirma);
+
   }
 
   if($action == "inscrever_cadastrado")
@@ -109,7 +126,7 @@
     foreach($codigos_usu_global as $cod)
     {
       $linha['cod_usuario_global'] = $cod;
-      $linha['tipo_usuario']=$tipo_usuario;
+      $linha['tipo_usuario'] = $tipo_usuario;
 
       //Funcao que utiliza o cadastro ja existente do usuario e cadastra-o no curso
       $sock=CadastrarUsuarioExistente($sock, $cod_curso, $linha, $lista_frases);
@@ -186,7 +203,6 @@
     }
   }
 
-
   if($action == "enviarSenha")
   {
     if (count($cod_usu)!=0)
@@ -211,13 +227,13 @@
         /* 140 - Segue abaixo o seu login e senha conforme solicitado para o curso */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,140)." <strong>".$dados_curso['nome_curso']."</strong></p>";
 
-        /* 67 - Seu login ï¿½ */
+        /* 67 - Seu login é */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,67)." <strong><big><em>".$lista_usuarios[$cod_usuario_senha]['login']."</em></big></strong> ";
 
-        /* 68 - e sua senha ï¿½ */
+        /* 68 - e sua senha é */
         $mensagem.=RetornaFraseDaLista($lista_frases,68)." <strong><big><em>".$senha."</em></big></strong></p>\n";
 
-        /* 230 - Acesse o curso atravï¿½s do endereï¿½o: */
+        /* 230 - Acesse o curso através do endereço: */
         $mensagem.="<p>".RetornaFraseDaLista($lista_frases,230)."</p>\n";
 
         $mensagem.="<p><a href=\"http://".$host.$dir."/cursos/aplic/index.php?cod_curso=".$cod_curso."\">http://".$host.$dir."/cursos/aplic/index.php?cod_curso=".$cod_curso."</a></p><br />\n";
@@ -236,7 +252,7 @@
 
         AtualizaSenhaUsuario($sock,$cod_curso,$cod_usuario_senha,$senha_crypt);
 
-        //o montaMsg faz outras conexoes com o BD, nÃ£o dÃ¡ pra manter vÃ¡rias simultaneas
+        //o montaMsg faz outras conexoes com o BD, não dá pra manter várias simultaneas
         Desconectar($sock);
         $mensagem_envio = MontaMsg($host, $dir, $cod_curso, $mensagem, $assunto, $cod_usuario, $lista_usuarios[$cod_usuario_senha]['nome']);
         $sock=Conectar($cod_curso);
@@ -362,7 +378,7 @@
       $i++;
     }
 
-    /*remove o resto de $lista_compart da base de dados*/  
+    /*remove o resto de $lista_compart da base de dados*/
     while(($lista_compart != NULL)&&($j<count($lista_compart)))
     {
       if($lista_compart != NULL && $lista_compart[$j] != "")
