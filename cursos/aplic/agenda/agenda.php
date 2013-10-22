@@ -61,14 +61,14 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("criarAgenda", 0, 97);
 
-Desconectar($sock);
-$sock = Conectar($cod_curso);
+  Desconectar($sock);
+  $sock = Conectar($cod_curso);
   /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
   /* Fun��es JavaScript */
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
-//  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
+  //echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
@@ -92,19 +92,19 @@ $sock = Conectar($cod_curso);
   echo("      }\n");
 
   echo("      function getPageScrollY()\n");
-	echo("      {\n");
-	echo("        if (isNav)\n");
-	echo("          return(window.pageYOffset);\n");
-	echo("        if (isIE){\n");
-	echo("          if(document.documentElement.scrollLeft>=0){\n");
-	echo("            return document.documentElement.scrollTop;\n");
-	echo("          }else if(document.body.scrollLeft>=0){\n");
-	echo("            return document.body.scrollTop;\n");
-	echo("          }else{\n");
-	echo("            return window.pageYOffset;\n");
-	echo("          }\n");
-	echo("        }\n");
-	echo("      }\n");
+  echo("      {\n");
+  echo("        if (isNav)\n");
+  echo("          return(window.pageYOffset);\n");
+  echo("        if (isIE){\n");
+  echo("          if(document.documentElement.scrollLeft>=0){\n");
+  echo("            return document.documentElement.scrollTop;\n");
+  echo("          }else if(document.body.scrollLeft>=0){\n");
+  echo("            return document.body.scrollTop;\n");
+  echo("          }else{\n");
+  echo("            return window.pageYOffset;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("      }\n");
 
   echo("      function AjustePosMenuIE()\n");
   echo("      {\n");
@@ -119,7 +119,7 @@ $sock = Conectar($cod_curso);
   echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
-  echo("      }\n\n");	
+  echo("      }\n\n");
 
   echo("      function EscondeLayers()\n");
   echo("      {\n");
@@ -162,7 +162,7 @@ $sock = Conectar($cod_curso);
   echo("          return false;\n");
   echo("        }\n");
   echo("        return true;\n");
-  echo("      }\n\n");	
+  echo("      }\n\n");
   echo("    </script>\n\n");
 
   include("../menu_principal.php");
@@ -178,7 +178,7 @@ $sock = Conectar($cod_curso);
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
+  /*Voltar*/
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
       
@@ -186,30 +186,30 @@ $sock = Conectar($cod_curso);
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  echo("                <ul class=\"btAuxTabs\">\n");	
+  echo("                <ul class=\"btAuxTabs\">\n");
   
   if($usr_formador)
   {
-  	/* 6 - Nova Agenda*/
-		echo("					<li><span OnClick='NovaAgenda();'>".RetornaFraseDaLista($lista_frases, 6)."</span></li>");
+    /* 6 - Nova Agenda*/
+    echo("                  <li><span OnClick='NovaAgenda();'>".RetornaFraseDaLista($lista_frases, 6)."</span></li>");
     /* 3 - Editar Agenda*/
-    echo("              	<li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
-  }	
-  /* 2- Agenda Anteriores*/	
-  echo("              	<li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 2)."</a></li>\n");
-  
+    echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 3)."</a></li>\n");
+  }
+  /* 2- Agenda Anteriores*/
+  echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">".RetornaFraseDaLista($lista_frases, 2)."</a></li>\n");
 
-  echo("                </ul>\n");	
+
+  echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("            <tr>\n");
   echo("              <td>\n");
-  /* Tabela Interna */	
+  /* Tabela Interna */
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   /*18 - Titulo */
-  echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,18)."</td>\n");		
-  echo("                  </tr>\n");	
+  echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,18)."</td>\n");
+  echo("                  </tr>\n");
   /* Conteudo */
 
   $linha_item=RetornaAgendaAtiva($sock);
@@ -263,14 +263,14 @@ $sock = Conectar($cod_curso);
     {
       echo("                  <tr class=\"head\">\n");
       /* 94 - Conteudo */
-      echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,94)."</td>\n");		
+      echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,94)."</td>\n");
       echo("                  </tr>\n");
       echo("                  <tr>\n");
       echo("                    <td align=left>\n");
       if ($arquivo_entrada!=""){
-      		echo($conteudo);
+        echo($conteudo);
       } else {
-      echo("                      <div class=\"divRichText\">".$conteudo."</div>\n");
+        echo("                      <div class=\"divRichText\">".$conteudo."</div>\n");
       }
       echo("                    </td>\n");
       echo("                  </tr>\n");
@@ -282,34 +282,34 @@ $sock = Conectar($cod_curso);
     echo("                  <tr>\n");
     echo("                    <td colspan=5>".RetornaFraseDaLista($lista_frases,4)."</td>\n");
     echo("                  </tr>\n");
-  }	
+  }
 
-  /*Fim tabela interna*/		
+  /*Fim tabela interna*/
   echo("                </table>\n");
-    
+  
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
-  echo("    	    </table>\n");	
+  echo("          </table>\n");
   include("../tela2.php");
 
   /* Cria a funcao JavaScript que testa o nome da nova agenda e o layer  */ 
   /* nova_agenda, se estiver visualizando as agendas disponieis.         */
     
   /* Novo Item */
-  echo("    <div id=\"layer_nova_agenda\" class=popup>\n");
+  echo("    <div id=\"layer_nova_agenda\" class=\"popup\">\n");
   echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  echo("      <div class=int_popup>\n");
-  echo("        <form name=form_nova_agenda method=post action=acoes_linha.php onSubmit='return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));'>\n");
+  echo("      <div class=\"int_popup\">\n");
+  echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"acoes_linha.php\" onSubmit=\"return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));\">\n");
   //echo("        ".RetornaSessionIDInput());
-  echo("          <div class=ulPopup>\n");    
+  echo("          <div class=\"ulPopup\">\n");
   /* 18 - Titulo: */
   echo("            ".RetornaFraseDaLista($lista_frases,18)."<br />\n");
-  echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=150 /><br />\n");
-  echo("            <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("            <input type=hidden name=acao value=criarAgenda />\n");
-  echo("            <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
-  echo("            <input type='hidden' name='origem' value=ver_editar />\n");
+  echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=\"150\" /><br />\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\"   value=\"".$cod_curso."\" />\n");
+  echo("            <input type=\"hidden\" name=\"acao\"        value=\"criarAgenda\" />\n");
+  echo("            <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
+  echo("            <input type=\"hidden\" name=\"origem\"      value=\"ver_editar\" />\n");
   /* 18 - Ok (gen) */
 
   echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
@@ -320,8 +320,8 @@ $sock = Conectar($cod_curso);
   echo("        </form>\n");
   echo("      </div>\n");
   echo("    </div>\n\n");
-  echo("  </body>\n");			
-  echo("</html>\n");	
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
 
 ?>

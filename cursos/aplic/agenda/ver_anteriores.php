@@ -92,9 +92,9 @@
   echo("        var i;\n");
   echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
   echo("        var cod_itens=document.getElementsByName('chkItem');\n");
-  echo("		if (cod_itens.length == 0){\n");
-  echo("		  return;\n");
-  echo("		}\n");
+  echo("        if (cod_itens.length == 0){\n");
+  echo("          return;\n");
+  echo("        }\n");
   echo("        for(i = 0; i < cod_itens.length; i++){\n");
   echo("          e = cod_itens[i];\n");
   echo("          e.checked = CabMarcado;\n");
@@ -125,7 +125,7 @@
   echo("        startList();\n");
   echo("      }\n\n");
 
-  echo("    </script>\n\n");		
+  echo("    </script>\n\n");
 
   include("../menu_principal.php");
 
@@ -133,39 +133,39 @@
   /* 1 - Agenda */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   echo(" - ".RetornaFraseDaLista($lista_frases, 2));
-  echo("</h4>");			
+  echo("</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
-   /* 509 - Voltar */
+  /*Voltar*/
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
       
   /* Tabela Externa */
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  echo("                <ul class=\"btAuxTabs\">\n");		
+  echo("                <ul class=\"btAuxTabs\">\n");
   /*8 - Voltar para Agenda Atual*/
   echo("                      <li><a href=\"agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=1'\">".RetornaFraseDaLista($lista_frases, 8)."</a></li>\n");
-  echo("                </ul>\n");	
-  echo("        	</td>\n");
+  echo("                </ul>\n");
+  echo("              </td>\n");
   echo("            </tr>\n");
   echo("            <tr>\n");
   echo("              <td>\n");
-  /* Tabela Interna */	
+  /* Tabela Interna */
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
   /*1 - Agenda */
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,1)."</td>\n");
   /*7 - Data */
-  echo("                    <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,7)."</td>\n");		
+  echo("                    <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,7)."</td>\n");
   echo("                  </tr>\n");
   /* Conteudo */
    
@@ -193,7 +193,7 @@
       }
       else 
       {
-	$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_anteriores\">".$linha_item['titulo']."</a>";
+        $titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_anteriores\">".$linha_item['titulo']."</a>";
       }
 
       $icone="<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
@@ -207,11 +207,11 @@
   else
   { 
     /* 90 - Nao ha agendas anteriores. */
-    echo("                  <tr>\n");	
+    echo("                  <tr>\n");
     echo("                    <td colspan=\"5\">".RetornaFraseDaLista($lista_frases,90)."</td>\n");
-    echo("                  </tr>\n");	
+    echo("                  </tr>\n");
   }
-  /*Fim tabela interna*/		
+  /*Fim tabela interna*/
   echo("                </table>\n");
   
   /* 68 - Excluir Selecionados (ger)*/ 
@@ -222,19 +222,19 @@
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
-  echo("    	  </table>\n");
-  include("../tela2.php");	
+  echo("          </table>\n");
+  include("../tela2.php");
 
   echo("    <form name=\"form_dados\" action=\"\" id=\"form_dados\">\n");
-  echo("      <input type=hidden name=cod_curso id=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("      <input type=hidden name=cod_item id=cod_item value=\"\" />\n");
-  echo("      <input type=hidden name=acao id=\"acao_form\" value=\"\" />\n");
-  echo("      <input type=hidden name=cod_itens id=cod_itens_form value=\"\" />\n");
-  echo("	  <input type=hidden name=origem value=ver_anteriores");  
+  echo("      <input type=\"hidden\" name=\"cod_curso\" id=\"cod_curso\"      value=\"".$cod_curso."\" />\n");
+  echo("      <input type=\"hidden\" name=\"cod_item\"  id=\"cod_item\"       value=\"\" />\n");
+  echo("      <input type=\"hidden\" name=\"acao\"      id=\"acao_form\"      value=\"\" />\n");
+  echo("      <input type=\"hidden\" name=\"cod_itens\" id=\"cod_itens_form\" value=\"\" />\n");
+  echo("      <input type=\"hidden\" name=\"origem\"    value=\"ver_anteriores\"");
   echo("    </form>\n");
 
-  echo("  </body>\n");			
-  echo("</html>\n");	
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
 
 ?>
