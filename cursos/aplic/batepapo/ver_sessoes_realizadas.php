@@ -114,6 +114,15 @@
    ***********************/
   // echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
   echo("<script type=\"text/javascript\" language=JavaScript>\n\n");
+  
+  if($AcessoAvaliacao)
+  {
+    echo("    function VerAvaliacao(id)\n");
+    echo("    {\n");
+    echo("      window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+    echo("      return(false);\n");
+    echo("    }\n");
+  }
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -493,7 +502,7 @@
 				elseif ($e_formador)
 				{
 						// G 35 - Sim
-						echo("<a class=text href=# onClick='VerAvaliacaoLixeira(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");	
+						echo("<a class=text href=# onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");	
 				}else
 				{
 				/* 95 - erro interno... */
