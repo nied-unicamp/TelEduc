@@ -163,7 +163,7 @@ function IniciaCriacao ($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titul
   if (!file_exists($diretorio_temp."/tmp/".$cod_curso."/agenda/"))
     CriaDiretorio($diretorio_temp."/tmp/".$cod_curso."/agenda/");
   
-  $dir=$diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item."/";  
+  $dir=$diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item."/";
   CriaDiretorio($dir);
 
   
@@ -388,7 +388,7 @@ function CopiaArquivoParaTemporario($sock,$cod_curso,$diretorio_arquivos,$direto
   {
     return false;
   }
-  return true;  
+  return true;
 }
 
 /* *********************************************************************
@@ -412,9 +412,9 @@ function ApagarItem ($sock,$cod_item,$cod_curso,$cod_usuario,$diretorio_arquivos
 
   /*Exclui diretório temporário e diretório de arquivos criados,caso existam*/
   if(file_exists($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item))
-  	RemoveDiretorio($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item);
+    RemoveDiretorio($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item);
   if(file_exists($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item))
-  	RemoveDiretorio($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item);	
+    RemoveDiretorio($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item);
 }
 
 /* *********************************************************************
@@ -432,7 +432,7 @@ function AtivarAgenda($sock,$cod_item,$cod_usuario)
     $consulta="update Agenda_itens set situacao='H' where cod_item=".VerificaNumeroQuery($linha['cod_item']);
     $res=Enviar($sock, $consulta);
     $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($linha['cod_item']).",".VerificaNumeroQuery($cod_usuario).",".time().",'H')";
-    $res=Enviar($sock, $consulta);    
+    $res=Enviar($sock, $consulta);
   }
   $consulta="update Agenda_itens set situacao='A' where cod_item=".VerificaNumeroQuery($cod_item);
   $res=Enviar($sock, $consulta);
@@ -505,14 +505,14 @@ function RetornaAgendaCurso($sock)
 /* *********************************************************************
    ImportarAgenda - Retorna a agenda dada
    Entradas: $cod_usuario
-   	     $cod_curso_destino
-	     $cod_itens
-	     $cod_curso_origem
-	     $diretorio_origem
-	     $diretorio_destino
-	     $diretorio_temp
+          $cod_curso_destino
+          $cod_itens
+          $cod_curso_origem
+          $diretorio_origem
+          $diretorio_destino
+          $diretorio_temp
    Saida: booleano - true caso a importacao tenha sido um sucesso
-   		     false caso tenha ocorrido algum erro
+                     false caso tenha ocorrido algum erro
 */
 function ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens, $cod_curso_origem, $diretorio_origem, $diretorio_destino, $diretorio_temp)
 { 
@@ -545,18 +545,19 @@ function ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens, $cod_curso
     {
       $ret = CriaDiretorio($diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");
       if($ret)
-      	$ret = CopiaArquivosDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item."/", $diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");
+        $ret = CopiaArquivosDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item."/", $diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");
     }
- /*   if($ret)
-    {	
-	MudarDB($sock,$cod_curso_destino);
-	/*faz a copia(Importacao) de fato!*/
-/*        $ret = AtualizaAgenda($sock, $cod_curso_destino, $cod_item_dest, $item_import['titulo'], $item_import['texto'],
-                              'N', $diretorio_destino, $diretorio_temp, $cod_usuario);
-
+/*
+    if($ret)
+    {
+      MudarDB($sock,$cod_curso_destino);
+      //faz a copia(Importacao) de fato!
+      $ret = AtualizaAgenda($sock, $cod_curso_destino, $cod_item_dest, $item_import['titulo'], $item_import['texto'],
+                            'N', $diretorio_destino, $diretorio_temp, $cod_usuario);
     }
     else
-      return $ret;*/
+      return $ret;
+*/
     Desconectar($sock);
   }
   return $ret;
@@ -728,7 +729,7 @@ function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 
    Saida: -  O próprio texto ($texto) caso o mesmo contenha caracteres "com valor";
           -  "" caso contrário
-*/            
+*/
 function VerificaTexto($texto){
   
   $text1 = Enter2BR($texto);
@@ -737,7 +738,7 @@ function VerificaTexto($texto){
   foreach($text2 as $string){
     $string1 = explode("&nbsp;",$string);
     foreach($string1 as $string2){
-      $string3 = explode("<br>",$string2);	
+      $string3 = explode("<br>",$string2);
       foreach($string3 as $pal){	
         if((trim($pal)!="")&&(trim($pal)!="<P>")&&(trim($pal)!="</P>"))
         {
@@ -748,33 +749,33 @@ function VerificaTexto($texto){
   }
 
   return "";
-}		
+}
 
 /* *********************************************************************
    VerificaAnexo - verifica se nome do anexo aprenseta acento ou chars ruins.
    Entrada: $string - com o nome do anexo a ser verificado
    Saida: 1 - nome do anexo est� ok!
-   		  0 - nome do anexo apresenta acento ou chars ruins.
+          0 - nome do anexo apresenta acento ou chars ruins.
 */
 function VerificaAnexo($str_anexo)
 {
-	$string = utf8_decode($str_anexo);
-	// Palavras acentuadas
-	$bad_chars = "����������";
-	$bad_chars.= "����";
-	$bad_chars.= "����������";
-	$bad_chars.= "����������";
-	$bad_chars.= "����������";
+  $string = utf8_decode($str_anexo);
+  // Palavras acentuadas
+  $bad_chars = "����������";
+  $bad_chars.= "����";
+  $bad_chars.= "����������";
+  $bad_chars.= "����������";
+  $bad_chars.= "����������";
 
-	// Caracteres estranhos para nome de um arquivo anexo
-	$bad_chars.= "�`!@#$%*()+={}[]\\\"';:?/,<>";
-	$str_res = strpbrk($string, $bad_chars);
+  // Caracteres estranhos para nome de um arquivo anexo
+  $bad_chars.= "�`!@#$%*()+={}[]\\\"';:?/,<>";
+  $str_res = strpbrk($string, $bad_chars);
 
-	// Se apresentar algum char de $bad_chars, str_res != ""
-	if (($str_res == "") || ($str_res == false))
-		return 1;
-	else
-		return 0;
+  // Se apresentar algum char de $bad_chars, str_res != ""
+  if (($str_res == "") || ($str_res == false))
+    return 1;
+  else
+    return 0;
 }
 /* *********************************************************************
    EditarTexto - Edita o texto do item dado, dinâmicamente
@@ -835,7 +836,7 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
   if($acao){
     $consulta="insert into Agenda_itens_historicos values ('".VerificaStringQuery($cod_item)."', '".VerificaStringQuery($cod_usuario)."', '".VerificaStringQuery($data)."', 'F')";
   }else{
-    $consulta="insert into Agenda_itens_historicos values ('".VerificaNumeroQuery($cod_item)."', '".VerificaStringQuery($cod_usuario)."', '".VerificaStringQuery($data)."', 'D')";  
+    $consulta="insert into Agenda_itens_historicos values ('".VerificaNumeroQuery($cod_item)."', '".VerificaStringQuery($cod_usuario)."', '".VerificaStringQuery($data)."', 'D')";
   }
 
   $res=Enviar($sock, $consulta);
@@ -867,7 +868,7 @@ function AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, $acao){
   if ($acao){
     $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".VerificaNumeroQuery($data).", 'F')";
   }else{
-    $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".VerificaNumeroQuery($data).", 'D')";    
+    $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".VerificaNumeroQuery($data).", 'D')";
   }
   $res=Enviar($sock, $consulta);
 
@@ -902,10 +903,10 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario,$origem){
 
     $objResponse->addScript("document.location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."cod_ferramenta=1'");
   }else {
-    if($linha['status']=="E"){		
+    if($linha['status']=="E"){
       $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".time().", 'D')";
       $res=Enviar($sock,$consulta);
-    }	
+    }
     $consulta="update Agenda_itens set status='E', cod_usuario=".VerificaNumeroQuery($cod_usuario).", inicio_edicao=".time()." where cod_item=".VerificaNumeroQuery($cod_item);
     $res=Enviar($sock,$consulta);
     $consulta="insert into Agenda_itens_historicos values (".VerificaNumeroQuery($cod_item).", ".VerificaNumeroQuery($cod_usuario).", ".time().", 'E')";
@@ -919,7 +920,6 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario,$origem){
 
   return $objResponse->getXML();
 }
-
 
 /* *********************************************************************
    RetornaFraseDinamic - Retorna lista de frases para uma variavel JavaScript, dinamicamente
@@ -1028,7 +1028,7 @@ function SelecionarEntradaDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_u
 
   foreach($nomes_arquivos as $cod => $linha)
   {
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
     if($linha[1] == 1)
       AlteraStatusArquivo($nome_arquivo,true);
     else

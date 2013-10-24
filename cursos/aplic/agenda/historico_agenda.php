@@ -88,7 +88,7 @@
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td colspan=3>\n");    
+  echo("        <td colspan=3>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
   echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
@@ -114,38 +114,38 @@
   $res=RetornaResHistoricoDoItem($sock, $cod_item);
   $num_linhas=RetornaNumLinhas($res);
 
-    while ($num_linhas>0)
-    {
-      $linha=RetornaLinha($res);
-      $num_linhas--;
-      $nome_usuario="<span class=\"link\" onclick=\"OpenWindowPerfil(".$linha['cod_usuario'].");\">".NomeUsuario($sock, $linha['cod_usuario'], $cod_curso)."</span>";
-      $data=UnixTime2DataHora($linha['data']);
+  while ($num_linhas>0)
+  {
+    $linha=RetornaLinha($res);
+    $num_linhas--;
+    $nome_usuario="<span class=\"link\" onclick=\"OpenWindowPerfil(".$linha['cod_usuario'].");\">".NomeUsuario($sock, $linha['cod_usuario'], $cod_curso)."</span>";
+    $data=UnixTime2DataHora($linha['data']);
 
-      switch ($linha['acao']){
+    switch ($linha['acao']){
 
-                  /* 40 - Cria�o */
-        case ('C'): $acao=RetornaFraseDaLista($lista_frases,40); break;
-                  /* 39 - Edi�o Cancelada */
-        case ('D'): $acao=RetornaFraseDaLista($lista_frases,39); break;
-                  /* 43 - Em Edi�o */
-        case ('E'): $acao=RetornaFraseDaLista($lista_frases,43); break;
-                  /* 37 - Edi�o Finalizada */
-        case ('F'): $acao=RetornaFraseDaLista($lista_frases,37); break;
-                  /* 42 - Movida para histórico */
-        case ('H'): $acao=RetornaFraseDaLista($lista_frases,42); break;
-                  /* 41 - Ativada */
-        case ('A'): $acao=RetornaFraseDaLista($lista_frases,41); break;
-                  /* 38 - Desconhecida */
-        default: $acao=RetornaFraseDaLista($lista_frases,38); break;
-      }
-
-      echo("            <tr>\n");
-      echo("              <td align=center>".$acao."</td>\n");
-      echo("              <td align=center>".$data."</td>\n");
-      echo("              <td align=center>".$nome_usuario."</td>\n");
-      echo("            </tr>\n");
-
+                /* 40 - Cria�o */
+      case ('C'): $acao=RetornaFraseDaLista($lista_frases,40); break;
+                /* 39 - Edi�o Cancelada */
+      case ('D'): $acao=RetornaFraseDaLista($lista_frases,39); break;
+                /* 43 - Em Edi�o */
+      case ('E'): $acao=RetornaFraseDaLista($lista_frases,43); break;
+                /* 37 - Edi�o Finalizada */
+      case ('F'): $acao=RetornaFraseDaLista($lista_frases,37); break;
+                /* 42 - Movida para histórico */
+      case ('H'): $acao=RetornaFraseDaLista($lista_frases,42); break;
+                /* 41 - Ativada */
+      case ('A'): $acao=RetornaFraseDaLista($lista_frases,41); break;
+                /* 38 - Desconhecida */
+      default: $acao=RetornaFraseDaLista($lista_frases,38); break;
     }
+
+    echo("            <tr>\n");
+    echo("              <td align=center>".$acao."</td>\n");
+    echo("              <td align=center>".$data."</td>\n");
+    echo("              <td align=center>".$nome_usuario."</td>\n");
+    echo("            </tr>\n");
+
+  }
 
   echo("          </table>\n");
   echo("        </td>\n");

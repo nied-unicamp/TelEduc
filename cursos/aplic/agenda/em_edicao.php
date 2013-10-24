@@ -97,7 +97,7 @@
     echo("        </td>\n");
     echo("      </tr>\n");
     echo("      <tr>\n");
-    echo("        <td colspan=3>\n");    
+    echo("        <td colspan=3>\n");
     echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("            <tr>\n");
     echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");

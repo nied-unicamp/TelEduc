@@ -115,7 +115,7 @@
   echo("            }\n\n");
   
   echo("            function BtnVoltarClick()\n");
-  echo("            {\n");  
+  echo("            {\n");
   echo("              document.frmImportar.action = 'importar_agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1';");
   echo("              document.frmImportar.submit();\n");
   echo("            }\n\n");
@@ -130,7 +130,7 @@
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
   echo("      <input type=\"hidden\" name=\"cod_categoria\" value=\"".$cod_categoria."\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso_import\" value=\"".$cod_curso_import."\">\n");
-  echo("      <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\">\n");
+  echo("      <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\">\n");
   echo("      <input type=\"hidden\" name=\"cod_item\" value=''>\n");
   echo("      <input type=\"hidden\" name=\"curso_compartilhado\" value=\"".$curso_compartilhado."\">\n");
   echo("      <input type=\"hidden\" name=\"curso_extraido\" value=\"".$curso_extraido."\">\n");
@@ -159,8 +159,8 @@
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
-   /* 509 - Voltar */
+  /*Voltar*/
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
   $sock = Conectar($cod_curso_import);
@@ -210,15 +210,15 @@
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  echo("                <ul class=\"btAuxTabs\">\n");		
+  echo("                <ul class=\"btAuxTabs\">\n");
    /*23 - (Geral) Voltar*/
   echo("                  <li><span onClick=history.go(-1);>".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");
-  echo("                </ul>\n");	
+  echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("            <tr>\n");
-  echo("              <td>\n");		
-  /* Tabela Interna */	
+  echo("              <td>\n");
+  /* Tabela Interna */
   echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   /*18 - Titulo */
@@ -239,7 +239,7 @@
   echo("                  <tr>\n");
   echo("                    <td class=\"itens\">".$icone.$titulo."</td>\n");
   echo("                    <td class=\"itens\" align=\"center\">".$data."</td>\n");
-  echo("                  </tr>\n");	
+  echo("                  </tr>\n");
 
   /*Verifica se ha arquivo de entrada*/
   $arquivo_entrada="";
@@ -251,7 +251,7 @@
 
   /*Se houver, cria um iframe para exibi-lo*/
   if(($linha_item['texto']=="")&&($arquivo_entrada!=""))
-    $conteudo="<span id=\"text_".$linha_item['cod_item']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"Auto\"></iframe></span>"; 
+    $conteudo="<span id=\"text_".$linha_item['cod_item']."\"><iframe id=\"iframe_ArqEntrada\" texto=\"ArqEntrada\" src=\"".$arquivo_entrada."\" width=\"100%\" height=\"400\" frameBorder=\"0\" scrolling=\"Auto\"></iframe></span>";
   /*Senaum, exibe o texto da agenda*/
   else
     $conteudo="<span id=\"text_".$linha_item['cod_item']."\">".AjustaParagrafo($linha_item['texto'])."</span>";
@@ -277,8 +277,8 @@
         echo("                  <tr class=\"head\">\n");
         /* 57(biblioteca) - Arquivos */
         echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases_biblioteca,57)."</td>\n");
-        echo("                  </tr>\n");    
-    
+        echo("                  </tr>\n");
+
         $conta_arq=0;
 
         echo("                  <tr>\n");
@@ -369,7 +369,7 @@
                   // pasta
                   $imagem    = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
                   echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
-                  echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n"); 
+                  echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
                   echo("                        ".$espacos2.$espacos.$imagem.$temp[$nivel]."\n");
                   echo("                        ".$espacos2."<br>\n");
                }
@@ -393,13 +393,13 @@
         echo("                  </tr>\n");
   }
 
-  /*Fim tabela interna*/		
+  /*Fim tabela interna*/
   echo("                </table>\n");
   /*Fim tabela externa*/
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");
-  include("../tela2.php"); 
+  include("../tela2.php");
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");

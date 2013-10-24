@@ -135,11 +135,11 @@
     // Se possuir acentos ou outros caracteres problematicos
     if (VerificaAnexo($nome_arquivo) == 0)
     {
-    	// Nao realiza upload de arquivos com acentos
-    	$acao = "nomeAnexo";
-    	$atualizacao = "false";
-    	header("Location:ver_linha.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
-    	exit;
+      // Nao realiza upload de arquivos com acentos
+      $acao = "nomeAnexo";
+      $atualizacao = "false";
+      header("Location:ver_linha.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
+      exit;
     }
     
     /* Verifica a existência do diretório a ser movido o arquivo */

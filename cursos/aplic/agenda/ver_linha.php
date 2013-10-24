@@ -234,7 +234,7 @@
       AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 0);
     }else{
       /* Está em edição... */
-      echo("          <script language=javascript>\n");
+      echo("          <script language=\"javascript\">\n");
       echo("            window.open('em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&origem=ver_linha','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
       echo("            window.location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."';\n");
       echo("          </script>\n");
@@ -256,26 +256,26 @@
    */
   if($origem == "ver_anteriores")
   {
-  	/* 1 - Agenda */
+    /* 1 - Agenda */
     /*2 - Agendas Anteriores*/ 
     $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,2)."</h4>";
   } else {
-  	/* 1 - Agenda */
-  	/* 111 - Editar Agenda*/
+    /* 1 - Agenda */
+    /* 111 - Editar Agenda*/
     $cabecalho = "          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases,111)."</h4>";
   }
   echo($cabecalho);
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
   /*Voltar*/
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   /* Tabela Externa */
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -301,15 +301,15 @@
   else 
     $caminho="agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario;
 
-  echo("              	<li><a href=\"".$caminho."\">".$frase."</a></li>\n");
+  echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
   /*34 - Histórico */
-  echo("              	<li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
+  echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
   if($origem == "ver_editar"){
     /*34 - Ativar */
-    echo("              	<li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
+    echo("                  <li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
   }
   /*34 - Apagar */
-  echo("              	<li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
+  echo("                  <li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -384,10 +384,10 @@
       echo("                        <li>".$editar."</li>\n");
       echo("                        <li>".$limpar."</li>\n");
       /* Só pode apagar ou ativar agendas que estão na seção "Editar Agendas" ou que acabaram de ser criadas*/
-    /*  if($origem == "ver_editar")
-      {	*/
+      /*if($origem == "ver_editar")
+      {*/
         /*24 - Ativar*/
-       /* echo("                        <li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
+        /*echo("                        <li><span onClick=\"Ativar();\">".RetornaFraseDaLista ($lista_frases, 24)."</span></li>\n");
         // G 1 - Apagar
         echo("                        <li><span onClick=\"ApagarItem();\">".RetornaFraseDaLista ($lista_frases_geral, 1)."</span></li>\n");
       }*/
@@ -421,7 +421,7 @@
   else
   {
     $texto = AjustaParagrafo($linha_item['texto']);
-    
+
     if(($texto == "<P>&nbsp;</P>") || ($texto == "<br />"))
       $texto = "";
 
@@ -583,7 +583,7 @@
     echo("                  </tr>\n");
     echo("                  <tr>\n");
     echo("                    <td align=left colspan=4>\n");
-    echo("                      <form name=formFiles id=formFiles action='acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
+    echo("                      <form name=\"formFiles\" id=\"formFiles\" action='acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
     echo("                        <input type='hidden' name='cod_curso' value='".$cod_curso."' />\n");
     echo("                        <input type='hidden' name='cod_item' value='".$cod_item."' />\n");
     echo("                        <input type='hidden' name='acao' value='anexar' />\n");

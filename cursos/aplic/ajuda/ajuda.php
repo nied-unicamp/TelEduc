@@ -56,7 +56,7 @@
   if ($cod_ferramenta==-1)
     $nome_ferramenta="Configurar";
   else if ($cod_ferramenta==0)
-    $nome_ferramenta="Administra��o";
+    $nome_ferramenta="Administra&ccedil;&atilde;o";
   else
     $nome_ferramenta=$lista_nome_ferramentas[$cod_ferramenta];
 
@@ -228,13 +228,13 @@
     echo("          <form name=\"ajuda1\" method=\"post\" action=\"\">\n");
     echo("            <ul class=\"btAuxTabs\">\n");
     if (isset($ver_toda) && ($ver_toda==1 || $ver_toda == 2 || $ver_toda == 3)){
-    	/* G 23 - Voltar */
-      	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
+      /* G 23 - Voltar */
+      echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");
     }
     if (!isset($ver_toda) || $ver_toda!=1)
       /* G 508 - Ver toda a Ajuda */
       echo("              <li><span onclick=\"VerToda(document.ajuda1);AlteraAjuda(document.ajuda1);\">".RetornaFraseDaLista($lista_frases_geral, 508)."</span></li>\n");
-	
+
       /*?? - Indice */
       echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">�ndice</span></li>\n");
 
@@ -265,7 +265,6 @@
 
     echo("              <input type=\"hidden\" name=\"ver_toda\" value=\"".$ver_toda."\" />\n");
 
-    
     echo("          </form>\n");
   }
 
@@ -278,78 +277,72 @@
   if (isset($ver_toda) && $ver_toda==2){
 
     echo("          <form name=\"ajuda3\" method=\"post\" action=\"\">\n");
-    echo("          	<table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
-	echo("		            <tr>\n");
-	echo("		              <td><b>".$nome_ferramenta." - �ndice</b>\n");
-	echo ("<br /><br />\n");
-    echo("			            <ul>\n");	
+    echo("            <table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
+    echo("              <tr>\n");
+    echo("                <td><b>".$nome_ferramenta." - &Iacute;ndice</b>\n");
+    echo ("<br /><br />\n");
+    echo("                  <ul>\n");
 
     $paginas=RetornaPaginasFerramenta($sock,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
 
     foreach ($paginas as $cod_p){
-    	$nome = RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
-    	if($nome == ''){
-    		echo("              		<li><a href=# onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome_ferramenta."</a></li>\n");
-    	}
-    	echo("              		<li><a href=# onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome."</a></li>\n");
-    	
-    }
-    echo("			            </ul>\n");
-    echo("              		<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-    echo("              		<input type=\"hidden\" name=\"cod_pagina\" value='' />\n");
-    echo("              		<input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\" />\n");
-    echo("              		<input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\" />\n");
-    echo("		                <input type=\"hidden\" name=\"ver_toda\" value=\"".$ver_toda."\" />\n");
+      $nome = RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+      if($nome == ''){
+        echo("                  <li><a href=\"#\" onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome_ferramenta."</a></li>\n");
+      }
+      echo("                  <li><a href=\"#\" onclick=\"VerAjudaEspecifica(document.ajuda3);AlteraAjudaIndice(document.ajuda3, ".$cod_p.");\">".$nome."</a></li>\n");
 
-	echo("	              	</td>\n");
-	echo("	          	</tr>\n");
-	echo("          </table>\n");    
-    echo("        </form>\n");
+    }
+    echo("                  </ul>\n");
+    echo("                  <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_pagina\" value='' />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_ferramenta\" value=\"".$cod_ferramenta."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"ver_toda\" value=\"".$ver_toda."\" />\n");
+
+    echo("                </td>\n");
+    echo("              </tr>\n");
+    echo("            </table>\n");
+    echo("          </form>\n");
   }
   else{
-	  if (!isset($ver_toda) || $ver_toda!=1)
-	    $paginas[0]['cod_pagina']=$cod_pagina;
-	  else
-	    $paginas=RetornaPaginasFerramenta($sock,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
-	
-	  foreach ($paginas as $cod => $cod_p)
-	  {
-	    if (!isset($ver_toda) || $ver_toda!=1)
-	      $nome_pagina=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
-	    else
-	      $nome_pagina=RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
-	
-	    echo("          <table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
-	    echo("            <tr>\n");
-	    echo("              <td><b>".$nome_ferramenta."</b>\n");
-	
-	
-	
-	    if ($nome_pagina!='')
-	      echo("                <b> - ".$nome_pagina."</b>\n");
-		
-	
-	
-	    if (!isset($ver_toda) || $ver_toda!=1)
-	      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_pagina,$_SESSION['cod_lingua_s'],$tipo_usuario);
-	    else
-	      $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_p,$_SESSION['cod_lingua_s'],$tipo_usuario);
-	
-	    echo($texto."\n");
-	
-	
-	    echo ("<br /><br />\n");
-	    echo("              </td>\n");
-	    echo("            </tr>\n");
-	    echo("          </table>\n");
-	  }
+    if (!isset($ver_toda) || $ver_toda!=1)
+      $paginas[0]['cod_pagina']=$cod_pagina;
+    else
+      $paginas=RetornaPaginasFerramenta($sock,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+
+    foreach ($paginas as $cod => $cod_p)
+    {
+      if (!isset($ver_toda) || $ver_toda!=1)
+        $nome_pagina=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+      else
+        $nome_pagina=RetornaNomePagina($sock,$cod_p,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
+
+      echo("          <table cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"white\" style=\"width:100%; padding:8px 8px 8px 8px\">\n");
+      echo("            <tr>\n");
+      echo("              <td><b>".$nome_ferramenta."</b>\n");
+
+      if ($nome_pagina!='')
+        echo("                <b> - ".$nome_pagina."</b>\n");
+
+      if (!isset($ver_toda) || $ver_toda!=1)
+        $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_pagina,$_SESSION['cod_lingua_s'],$tipo_usuario);
+      else
+        $texto=RetornaTextoDaAjuda($sock,$cod_ferramenta,$cod_p,$_SESSION['cod_lingua_s'],$tipo_usuario);
+
+      echo($texto."\n");
+
+      echo ("<br /><br />\n");
+      echo("              </td>\n");
+      echo("            </tr>\n");
+      echo("          </table>\n");
+    }
   }
-	
 
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  
+
   echo("        <td valign=\"bottom\" colspan=\"3\">\n");
   if (!$SalvarEmArquivo)
   {
@@ -357,32 +350,32 @@
     echo("            ".RetornaSessionIDInput());
     echo("            <ul class=\"btAuxTabs\">\n");
     if (isset($ver_toda) && ($ver_toda==1 || $ver_toda == 2 || $ver_toda == 3)){
-    	/* G 23 - Voltar */
-      	echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");	
+      /* G 23 - Voltar */
+      echo("              <li><span valign=\"top\" align\"left\" onclick=\"javascript:history.back(-1);\">".RetornaFraseDaLista($lista_frases_geral, 23)."</span></li>\n");
     }
     if (!isset($ver_toda) || $ver_toda!=1)
       /* G 508 - Ver toda a Ajuda */
       echo("              <li><span onclick=\"VerToda(document.ajuda2);AlteraAjuda(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,508)."</span></li>\n");
-      
-      /*?? - Indice */
-      echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">�ndice</span></li>\n");
+
+    /*?? - Indice */
+    echo("              <li><span onclick=\"VerIndice(document.ajuda1);AlteraAjuda(document.ajuda1);\">�ndice</span></li>\n");
 
     /* G 50 - Salvar Em Arquivo */
     echo("              <li><span onclick=\"AlteraSalvar(document.ajuda2);\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
-    
+
     /* G 14 - Imprimir */
     echo("              <li><span onclick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
-    
+
     /* G 13 - Fechar */
     echo("              <li><span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 
     echo("            </ul>\n");
-    
+
     echo("              <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
 
-   if ($nome_pagina=='' || (isset($ver_toda) && $ver_toda==1))
-     echo("              <input type=\"hidden\" name=\"nome_arquivo\" value=\"".$nome_ferramenta.".html\" />\n");
-   else
+    if ($nome_pagina=='' || (isset($ver_toda) && $ver_toda==1))
+      echo("              <input type=\"hidden\" name=\"nome_arquivo\" value=\"".$nome_ferramenta.".html\" />\n");
+    else
     {
       $nome_provisorio=RetornaNomePagina($sock,$cod_pagina,$cod_ferramenta,$_SESSION['cod_lingua_s'],$tipo_usuario);
       echo("             <input type=\"hidden\" name=\"nome_arquivo\" value=\"".$nome_ferramenta." - ".$nome_provisorio.".html\" />\n");
@@ -396,15 +389,14 @@
 
     echo("          </form>\n");
   }
-  
 
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
-  
+
   /* tela2 */
   include("../tela2.php");
-  
+
   echo("  </body>\n");
   echo("</html>\n");
 

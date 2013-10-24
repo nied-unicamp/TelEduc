@@ -3,11 +3,11 @@
    verificaRequisitos - Verifica se os pre-requisitos das etapas estao devidamente instalados.
 
    Entrada: $etapa - Numero da etapa em questao
-            $flag  - variável que armazena bit a bit os erros ocorridos durante o passo atual.
-   Saida:   $flag  - Variável que armazena bit a bit os erros ocorridos durante o passo atual.
+            $flag  - vari�vel que armazena bit a bit os erros ocorridos durante o passo atual.
+   Saida:   $flag  - Vari�vel que armazena bit a bit os erros ocorridos durante o passo atual.
 */
 function &verificaRequisitos($etapa) {
-  $flag = 0;
+	$flag = 0;
 	switch ($etapa) {
 		case 1:
 			if (!function_exists('mysql_connect')) {
@@ -33,7 +33,7 @@ function &verificaRequisitos($etapa) {
 				$flag |= 1;
 			}
 
-			// Vamos exibir apenas um erro de mysql de cada vez, pois a função mysql_error retorna o erro do último comando de sql.
+			// Vamos exibir apenas um erro de mysql de cada vez, pois a fun��o mysql_error retorna o erro do �ltimo comando de sql.
 			if (!$sock = @mysql_connect($_SESSION['dbhost'].':'.$_SESSION['dbport'], $_SESSION['dbuser'], $_SESSION['dbpwd'])) {
 				$flag |= 2;
 				break;
@@ -47,10 +47,10 @@ function &verificaRequisitos($etapa) {
 				break;
 			}
 
-			// Se não deu erro de mysql, podemos escrever o arquivo de configuração.
+			// Se n�o deu erro de mysql, podemos escrever o arquivo de configura��o.
 			$comando = 'mysql -h ' .$_SESSION['dbhost']. ' -u ' .$_SESSION['dbuser']. ' -p' .$_SESSION['dbpwd']. ' ' .$_SESSION['dbname']. ' < base_geral.sql';
 			exec($comando, $saida = array(), $sucesso);
-				
+			
 			$conteudo = "<?php\n";
 			$conteudo .= '$_SESSION[\'dbnamebase\']=\''.$_SESSION['dbname']."';\n";
 			$conteudo .= '$_SESSION[\'dbnamecurso\']=\''.$_SESSION['dbnamecurso']."';\n";
@@ -72,7 +72,7 @@ function &verificaRequisitos($etapa) {
 			break;
 
 		case 3:
-			clearstatcache();	
+			clearstatcache();
 
 			if (!is_dir($_SESSION['arquivos']) && !is_writable($_SESSION['arquivos'].'/')) {
 				if (!mkdir($_SESSION['arquivos'], 0775)) {
@@ -81,8 +81,8 @@ function &verificaRequisitos($etapa) {
 				}
 			}
 
-			// Se o diretório existe, pode ser modificado e temos permissão, 
-			// tentamos criar um link simbólico para ele para testar.
+			// Se o diret�rio existe, pode ser modificado e temos permiss�o,
+			// tentamos criar um link simb�lico para ele para testar.
 			$arquivo = fopen($_SESSION['arquivos'].'/teste.txt', "w");
 			fwrite($arquivo, '... testando pasta de arquivos. EOF\n');
 			fclose($arquivo);
@@ -94,8 +94,8 @@ function &verificaRequisitos($etapa) {
 				}
 			}
 
-			// Se conseguimos criar um link simbólico
-			// de teste, então o apagamos.
+			// Se conseguimos criar um link simb�lico
+			// de teste, ent�o o apagamos.
 			unlink($_SESSION['arquivos'].'/teste.txt');
 			unlink('../cursos/diretorio/123.txt');
 
@@ -137,86 +137,86 @@ function &verificaRequisitos($etapa) {
 /* ************************************************************************
    exibeErro - Exibe a mensagem de erro / falha na instalacao de acordo com a etapa e flag de erro.
 
-   Entrada: $etapa - Numero da etapa em questao
-            $erro  - variável que armazena bit a bit os erros ocorridos durante o passo atual.
+   Entrada: $etapa - Numero da etapa em quest�o
+            $erro  - vari�vel que armazena bit a bit os erros ocorridos durante o passo atual.
    Saida:   void
 */
 function exibeErro($etapa,$erro) {
 
-	$content_header = "Não foi possível continuar com a instalação.";
+	$content_header = "N&aacute;o foi poss&iacute;vel continuar com a instala&ccedil;&atilde;o.";
 	$console = '';
 	$content = '';
 	
 	switch ($etapa) {
 		case 1:
 			if ($erro & 1) {
-				$console .= "<p class=feedbackp>O módulo php-mysql não foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class=\"feedbackp\">O m&oacute;dulo php-mysql n&aacute;o foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
-				$content .= "<p>O módulo php-mysql não foi encontrado.</p>";
+				$content .= "<p>O m&oacute;dulo php-mysql n&atilde;o foi encontrado.</p>";
 				$content .= "<br />";
-				$content .= "<p>A instalação desse módulo deve ser feita de acordo com a distribuição utilizada.</p>";
+				$content .= "<p>A instala&ccedil;&atilde;o desse m&oacute;dulo deve ser feita de acordo com a distribui&ccedil;&atilde;o utilizada.</p>";
 				$content .= "<br />";
 			}
 			if ($erro & 2) {
-				$console .= "<p class=feedbackp>A versão do PHP está acima da requerida. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class=\"feedbackp\">A vers&atilde;o do PHP est&aacute; acima da requerida. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
-				$content .= "<p>O TelEduc necessita da versão <b>5.3.x</b> ou inferior para funcionar corretamente.</p>";
+				$content .= "<p>O TelEduc necessita da vers&atilde;o <b>5.3.x</b> ou inferior para funcionar corretamente.</p>";
 				$content .= "<br />";
-				$content .= "<p>Faça o downgrade do seu PHP se desejar continuar com a instalação.</p>";
+				$content .= "<p>Fa&ccedil;a o downgrade do seu PHP se desejar continuar com a instala&ccedil;&atilde;o.</p>";
 				$content .= "<br />";
 			}
 			if ($erro & 4) {
-				$console .= "<p class=feedbackp>A diretiva register_globals está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>A diretiva register_globals est&aacute; desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
 				$content .= "<p>A diretiva <b>register_globals</b> deveria estar ligada.</p>";
 				$content .= "<br />";
 				$content .= "<pre>register_globals = On</pre>";
 				$content .= "<br />";
-				$content .= "<p>Para isso, edite o arquivo de configuração do seu PHP.</p>";
+				$content .= "<p>Para isso, edite o arquivo de configura&ccedil;&atilde;o do seu PHP.</p>";
 				$content .= "<br />";
-				$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir alteração da diretiva register_globals.</p>";
+				$content .= "<p>Se voc&ecirc; est&aacute; instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir altera&ccedil;&atilde;o da diretiva register_globals.</p>";
 				$content .= "<br/>";
 			}
 			if ($erro & 8) {
-				$console .= "<p class=feedbackp>A diretiva magic_quotes_gpc está desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>A diretiva magic_quotes_gpc est&aacute; desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
 				$content .= "<p>A diretiva <b>magic_quotes_gpc</b> deveria estar ligada.</p>";
 				$content .= "<br />";
 				$content .= "<pre>magic_quotes_gpc = On</pre>";
 				$content .= "<br />";
-				$content .= "<p>Para isso, edite o arquivo de configuração do seu PHP.</p>";
+				$content .= "<p>Para isso, edite o arquivo de configura&ccedil;&atilde;o do seu PHP.</p>";
 				$content .= "<br />";
-				$content .= "<p>Se você está instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir alteração da diretiva magic_quotes_gpc.</p>";
+				$content .= "<p>Se voc&ecirc; est&aacute; instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir altera&ccedil;&atilde;o da diretiva magic_quotes_gpc.</p>";
 				$content .= "<br />";
 			}
 			break;
 		case 2:
 			if ($erro & 1) {
-				$console .= "<p class=feedbackp>Erro de permissão em <b>cursos/aplic/bibliotecas/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>cursos/aplic/bibliotecas/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 2) {
-				$console .= "<p class=feedbackp>Não foi possível realizar a conexão com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 4) {
-				$console .= "<p class=feedbackp>Não foi possível criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;�vel criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 8) {
-				$console .= "<p class=feedbackp>Não foi possível selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;�vel selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 
 			if ($erro & 1) {
-				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para escrever e ler no seguinte diretório:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permissões para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".str_replace("instalacao", "cursos/aplic/bibliotecas/", getcwd())."</pre>";
 				$content .= "<br />";
-				$content .= "<p>Para prosseguir com a instalação é necessário configurar o diretório com permissão <b>775 (drwxrwxr-x)</b> para um dos usuários acima citados.</p>";
+				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
 				$content .= "<br />";
 			}
 			else {
-				$content .= "<p>Verifique os dados inseridos na etapa anterior. (<b>nome do banco, usuário, senha, servidor etc</b>)</p>";
+				$content .= "<p>Verifique os dados inseridos na etapa anterior. (<b>nome do banco, usu&aacute;rio, senha, servidor etc</b>)</p>";
 				$content .= "<br />";
-				$content .= "<p>Em caso de instalação em banco de dados remoto, verifique se não há algum firewall impedindo a conexão.</p>";
+				$content .= "<p>Em caso de instala&ccedil;&atilde;o em banco de dados remoto, verifique se n&aacute;o h&aacute; algum firewall impedindo a conex&atilde;o.</p>";
 				$content .= "<br />";
-				$content .= "<p>Além disso, veja se foi dada a permissão para a conexão remota.</p>";
+				$content .= "<p>Al&eacute;m disso, veja se foi dada a permiss&atilde;o para a conex&atilde;o remota.</p>";
 				$content .= "<br />";
 				$content .= "<p>O erro exibido pelo MySQL foi:</p>";
 				$content .= "<pre>".mysql_error()."</pre>";
@@ -225,38 +225,38 @@ function exibeErro($etapa,$erro) {
 			break;
 		case 3:
 			if ($erro & 1) {
-				$console .= "<p class=feedbackp>Não foi possível criar o diretório de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;�vel criar o diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 				
-				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para criar o seguinte diretório:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permiss&otilde;es para criar o seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".$_SESSION['arquivos']."/</pre>";
 				$content .= "<br />";
-				$content .= "<p>Isso impedirá o ambiente de fazer o upload de arquivos.</p>";
+				$content .= "<p>Isso impedir&aacute; o ambiente de fazer o upload de arquivos.</p>";
 				$content .= "<br />";
 			}
 			if ($erro & 2) {
-				$console .= "<p class=feedbackp>Não foi possível fazer links para a diretório de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;�vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
-				$content .= "<p>O usuário do apache, dependendo da distribuição <b>apache</b> ou <b>www-data</b>, não possui as permissões para escrever e ler no seguinte diretório:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>teleduc4/cursos/diretorio/</pre>";
 				$content .= "<br />";
-				$content .= "<p>O upload de arquivos é feito para uma pasta não acessível pela web com o objetivo de proteger os arquivos de acessos não autorizados.</p>";
+				$content .= "<p>O upload de arquivos &eacute; feito para uma pasta n&aacute;o acess&iacute;�vel pela web com o objetivo de proteger os arquivos de acessos n&aacute;o autorizados.</p>";
 				$content .= "<br />";
-				$content .= "<p>Quando um usuário autenticado tenta acessar um dos aos anexos, é feito um link da pasta temporária para a pasta de arquivos.</p>";
+				$content .= "<p>Quando um usu&aacute;rio autenticado tenta acessar um dos aos anexos, &eacute; feito um link da pasta tempor&aacute;ria para a pasta de arquivos.</p>";
 				$content .= "<br />";
 			}
-			$content .= "<p>Para prosseguir com a instalação é necessário criar e configurar o diretório com permissão <b>775 (drwxrwxr-x)</b> para um dos usuários acima citados.</p>";
+			$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio criar e configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
 			$content .= "<br />";
 			break;
 		case 4:
 			break;
 	}
 
-	$content .= "<div class=formulario>";
+	$content .= "<div class=\"formulario\">";
 		$content .= "<form method='GET' action='index.php'>";
 			if ($etapa == 3) {
 				$content .= "<input type='button' class='form' style='margin-left: 105px;' value='Voltar' onClick='history.go(-1)'>";
 				$content .= "<input type='button' class='formtn' value='Tentar Novamente' onClick='history.go(0)'>";
-				$content .= "<input type='button' class='formtn' value='Pular Verificação' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
+				$content .= "<input type='button' class='formtn' value='Pular Verifica&ccedil;&atilde;o' onClick=document.location='index.php?etapa=3&bypass_anexo=1'>";
 			}
 			else {
 				$content .= "<input type='button' class='form' style='margin-left: 195px;' value='Voltar' onClick='history.go(-1)'>";
