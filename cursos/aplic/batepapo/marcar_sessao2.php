@@ -61,7 +61,7 @@
   }
   $objetivos = $_POST['ObjetivosAval'];
   $criterios = $_POST['CriteriosAval'];
-  $com_avaliacao = ($objetivos != NULL && $valor != NULL && $criterios != NULL);
+  $com_avaliacao = ($valor != NULL);
   
   /* tela_topo.php faz isso
   $cod_usuario=VerificaAutenticacao($cod_curso);

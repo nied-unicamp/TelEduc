@@ -212,6 +212,39 @@
   echo("    window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
   echo("    return(false);\n");
   echo("  }\n");
+  
+  echo("        function VerificaDigitosValor(valor) {\n");
+  echo("          re_com_virgula = /^[0-9]+(\.|,)?[0-9]+\$/; \n"); // nota com decimal
+  echo("          re_somente_numeros = /^[0-9]+\$/; \n"); // somente numeros
+  echo("          if (valor == '' || re_com_virgula.test(valor) || re_somente_numeros.test(valor) ) { \n");
+  echo("            return false;\n");
+  echo("          } else {\n");
+  echo("            return true;\n");
+  echo("          }\n");
+  echo("        }\n");
+
+  echo("        function VerificaValor(valor) \n");
+  echo("        {\n");
+  echo("          if (valor==''){\n");
+  // 111 - O campo Valor n&atilde;o pode ser vazio.
+  echo("            alert('".RetornaFraseDaLista($lista_frases,111)."');\n");
+  echo("            return false; \n");
+  echo("          } \n");
+  echo("          if (VerificaDigitosValor(valor)){\n");
+  // 112 - Voc&ecirc; digitou caracteres estranhos no campo Valor.
+  // 113 - Use apenas d&iacute;gitos de 0 a 9 e o ponto ( . ) ou a v&iacute;rgula ( , ) para este campo (exemplo: 7.5).
+  echo("            alert('".RetornaFraseDaLista($lista_frases,112)."\\n".RetornaFraseDaLista($lista_frases,113)."');\n");
+  echo("            return false; \n");
+  echo("          } \n");
+  // verificamos se o Valor tem virgula, se tiver, convertemos para ponto
+  echo("          valor = valor.replace(/\,/, '.'); \n");
+  echo("          if (valor < 0) { \n");
+  // 114 - A avaliação não pode ter valor negativo.
+  echo("            alert('".RetornaFraseDaLista($lista_frases,114)."');\n");
+  echo("            return false; \n");
+  echo("          }  \n");
+  echo("          return true;\n");
+  echo("        }  \n");
 
   
   echo("      function AdicionaInputAvaliacao(div_hidden){\n");
@@ -226,55 +259,59 @@
   echo("      }\n\n");
   
   echo("      function EditaAvaliacao(opt){\n");
-  
-    echo("          document.getElementById('ValorAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('ObjetivosAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('CriteriosAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('divAvaliacaoEdit').className='divHidden';\n");
+  echo("          if (opt==1){\n");
+  echo("            if (!VerificaValor(document.getElementById('ValorAval').value)){\n");
+  echo("              return false;\n");
+  echo("            }\n");
+  echo("          }\n");
+  echo("          document.getElementById('ValorAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('ObjetivosAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('CriteriosAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('divAvaliacaoEdit').className='divHidden';\n");
 	
-    /* Cancelamento de inclusão de avaliação */
-    echo("          if (opt==0){\n");
-    echo("            document.getElementById('ValorAval').value='';\n");
-    echo("            document.getElementById('ObjetivosAval').value='';\n");
-    echo("            document.getElementById('CriteriosAval').value='';\n");
-    echo("            document.getElementById('divAvaliacaoAdd').className='';\n\n");
-    echo("          }\n");
-    echo("          else\n");
-    echo("          {\n");
-    /* Inclusão de avaliação */
-    echo("            if(opt==1)\n");
-    echo("            {\n");
-    echo("              document.getElementById('span_ValorAval').innerHTML=document.getElementById('ValorAval').value;\n");
-    echo("              if(document.getElementById('ObjetivosAval').value == '')\n");
-        /* 102 - Nao definidos*/
-    echo("                document.getElementById('span_ObjetivosAval').innerHTML='".RetornaFraseDaLista($lista_frases,102)."';\n");
-    echo("              else\n");
-    echo("                document.getElementById('span_ObjetivosAval').innerHTML=document.getElementById('ObjetivosAval').value;\n");
+  /* Cancelamento de inclusão de avaliação */
+  echo("          if (opt==0){\n");
+  echo("            document.getElementById('ValorAval').value='';\n");
+  echo("            document.getElementById('ObjetivosAval').value='';\n");
+  echo("            document.getElementById('CriteriosAval').value='';\n");
+  echo("            document.getElementById('divAvaliacaoAdd').className='';\n\n");
+  echo("          }\n");
+  echo("          else\n");
+  echo("          {\n");
+  /* Inclusão de avaliação */
+  echo("            if(opt==1)\n");
+  echo("            {\n");
+  echo("              document.getElementById('span_ValorAval').innerHTML=document.getElementById('ValorAval').value;\n");
+  echo("              if(document.getElementById('ObjetivosAval').value == '')\n");
+  /* 110 - Nao definidos*/
+  echo("                document.getElementById('span_ObjetivosAval').innerHTML='".RetornaFraseDaLista($lista_frases,110)."';\n");
+  echo("              else\n");
+  echo("                document.getElementById('span_ObjetivosAval').innerHTML=document.getElementById('ObjetivosAval').value;\n");
 
-    echo("              if(document.getElementById('CriteriosAval').value == '')\n");
-        /* 102 - Nao definidos*/
-    echo("                document.getElementById('span_CriteriosAval').innerHTML='".RetornaFraseDaLista($lista_frases,102)."';\n");
-    echo("              else\n");
-    echo("                document.getElementById('span_CriteriosAval').innerHTML=document.getElementById('CriteriosAval').value;\n");
-    echo("            }\n");
-    echo("            document.getElementById('divAvaliacao').className='';\n\n");
-    echo("            document.getElementById('dadosAvaliacao').className='';\n\n");
-    echo("          }\n");
-    echo("          cancelarElemento=null;\n");
-    echo("        }\n\n");
+  echo("              if(document.getElementById('CriteriosAval').value == '')\n");
+ /* 110 - Nao definidos*/
+  echo("                document.getElementById('span_CriteriosAval').innerHTML='".RetornaFraseDaLista($lista_frases,110)."';\n");
+  echo("              else\n");
+  echo("                document.getElementById('span_CriteriosAval').innerHTML=document.getElementById('CriteriosAval').value;\n");
+  echo("            }\n");
+  echo("            document.getElementById('divAvaliacao').className='';\n\n");
+  echo("            document.getElementById('dadosAvaliacao').className='';\n\n");
+  echo("          }\n");
+  echo("          cancelarElemento=null;\n");
+  echo("        }\n\n");
     
-    echo("      function ApagaAvaliacao(){\n");
-    echo("          document.getElementById('ValorAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('ObjetivosAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('CriteriosAval').style.visibility='hidden';\n");
-    echo("          document.getElementById('ValorAval').value='';\n");
-    echo("          document.getElementById('ObjetivosAval').value='';\n");
-    echo("          document.getElementById('CriteriosAval').value='';\n");
-    echo("          document.getElementById('divAvaliacao').className='divHidden';\n");
-    echo("          document.getElementById('dadosAvaliacao').className='divHidden';\n");
-    echo("          document.getElementById('divAvaliacaoEdit').className='divHidden';\n");
-    echo("          document.getElementById('divAvaliacaoAdd').className='';\n\n");
-    echo("      }\n");
+  echo("      function ApagaAvaliacao(){\n");
+  echo("          document.getElementById('ValorAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('ObjetivosAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('CriteriosAval').style.visibility='hidden';\n");
+  echo("          document.getElementById('ValorAval').value='';\n");
+  echo("          document.getElementById('ObjetivosAval').value='';\n");
+  echo("          document.getElementById('CriteriosAval').value='';\n");
+  echo("          document.getElementById('divAvaliacao').className='divHidden';\n");
+  echo("          document.getElementById('dadosAvaliacao').className='divHidden';\n");
+  echo("          document.getElementById('divAvaliacaoEdit').className='divHidden';\n");
+  echo("          document.getElementById('divAvaliacaoAdd').className='';\n\n");
+  echo("      }\n");
     
   echo("  </script>\n");
 
@@ -455,7 +492,7 @@
 
   echo("        <tr>\n");
   /* 52 - Obs.: Se o hor�rio de t�rmino for menor que o hor�rio de in�cio, ser� considerado hor�rio do dia seguinte. */
-  echo("          <td colspan=5>".RetornaFraseDaLista($lista_frases,52)."</td>\n");
+  echo("          <td colspan=\"5\">".RetornaFraseDaLista($lista_frases,52)."</td>\n");
   echo("        </tr>\n");
 
   // Fim Tabela Interna
