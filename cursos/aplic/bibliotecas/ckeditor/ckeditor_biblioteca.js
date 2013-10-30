@@ -43,7 +43,7 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
     var formTmp;
     style = "width:90%;height:100px;";
     formTmp = ('<div class="rteDiv">');
-    formTmp += ('<textarea name="text_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
+    formTmp += ('<textarea name="text_'+cod+'_text" id="text_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
     if (typeof(textoOk) == 'undefined')
         textoOk = 'Ok';
     if (typeof(textoCancelar) == 'undefined')
