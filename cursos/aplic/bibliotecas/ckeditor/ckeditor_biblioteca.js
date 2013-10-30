@@ -41,14 +41,14 @@ function writeRichTextOnJSButtons(rte, html, width, height, buttons, readOnly, i
     
     var local = document.getElementById(id);
     var formTmp;
-    style = "width:90%;height:100px;display:none;";
+    style = "width:90%;height:100px;";
     formTmp = ('<div class="rteDiv">');
     formTmp += ('<textarea name="text_'+cod+'_text" style="'+style+'">'+html+'</textarea>');
     if (typeof(textoOk) == 'undefined')
         textoOk = 'Ok';
     if (typeof(textoCancelar) == 'undefined')
       textoCancelar = 'Cancelar';
-    formTmp += ('<input type="button" id="OkEdita" class="input" style="margin-bottom: 5px;margin-top:3px;margin-right:3px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="'+textoOk+'"><input type="button" class="input" name="cancelar" id="CancelaEdita" style="margin-bottom: 5px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="'+textoCancelar+'">');
+    formTmp += ('<br><input type="button" id="OkEdita" class="input" style="margin-bottom: 5px;margin-top:3px;margin-right:3px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'ok\');" value="'+textoOk+'"><input type="button" class="input" name="cancelar" id="CancelaEdita" style="margin-bottom: 5px;" onclick="EdicaoTexto(\''+cod+'\', \''+id+'\', \'canc\');" value="'+textoCancelar+'">');
     formTmp += ('</div>');
     local.innerHTML = formTmp;
     loadEditor('text_'+cod+'_text');
