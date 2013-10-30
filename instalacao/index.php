@@ -98,7 +98,7 @@ if ($erro =& verificaRequisitos($etapa) && !isset($_GET['bypass_anexo'])) {
 }
 
 if ($etapa == 0) {
-	$content_header = "Bem-Vindo(a) &agrave;  Instala&ccedil;&atilde;o do TelEduc ".VERSAO."!";
+	$content_header = "Bem-Vindo(a) &agrave; Instala&ccedil;&atilde;o do TelEduc ".VERSAO."!";
 
 	$content  = "<p>Leia atentamente as instru&ccedil;&otilde;es contidas em cada passo da instala&ccedil;&atilde;o.</p>";
 	$content .= "<p>Em caso de d&uacute;vida, consulte o nosso <a href='doc/InstalacaoTelEduc4.pdf' target='_blank'>Guia de Instala&ccedil;&atilde;o.</a></p>";

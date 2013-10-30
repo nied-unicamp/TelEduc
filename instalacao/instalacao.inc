@@ -143,14 +143,14 @@ function &verificaRequisitos($etapa) {
 */
 function exibeErro($etapa,$erro) {
 
-	$content_header = "N&aacute;o foi poss&iacute;vel continuar com a instala&ccedil;&atilde;o.";
+	$content_header = "N&atilde;o foi poss&iacute;vel continuar com a instala&ccedil;&atilde;o.";
 	$console = '';
 	$content = '';
 	
 	switch ($etapa) {
 		case 1:
 			if ($erro & 1) {
-				$console .= "<p class=\"feedbackp\">O m&oacute;dulo php-mysql n&aacute;o foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class=\"feedbackp\">O m&oacute;dulo php-mysql n&atilde;o foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
 
 				$content .= "<p>O m&oacute;dulo php-mysql n&atilde;o foi encontrado.</p>";
 				$content .= "<br />";
@@ -195,17 +195,17 @@ function exibeErro($etapa,$erro) {
 				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>cursos/aplic/bibliotecas/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 2) {
-				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 4) {
-				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;≠vel criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;≠vel criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 8) {
-				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;≠vel selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 
 			if ($erro & 1) {
-				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permiss√µes para escrever e ler no seguinte diret&oacute;rio:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss√µes para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".str_replace("instalacao", "cursos/aplic/bibliotecas/", getcwd())."</pre>";
 				$content .= "<br />";
 				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
@@ -214,7 +214,7 @@ function exibeErro($etapa,$erro) {
 			else {
 				$content .= "<p>Verifique os dados inseridos na etapa anterior. (<b>nome do banco, usu&aacute;rio, senha, servidor etc</b>)</p>";
 				$content .= "<br />";
-				$content .= "<p>Em caso de instala&ccedil;&atilde;o em banco de dados remoto, verifique se n&aacute;o h&aacute; algum firewall impedindo a conex&atilde;o.</p>";
+				$content .= "<p>Em caso de instala&ccedil;&atilde;o em banco de dados remoto, verifique se n&atilde;o h&aacute; algum firewall impedindo a conex&atilde;o.</p>";
 				$content .= "<br />";
 				$content .= "<p>Al&eacute;m disso, veja se foi dada a permiss&atilde;o para a conex&atilde;o remota.</p>";
 				$content .= "<br />";
@@ -225,21 +225,21 @@ function exibeErro($etapa,$erro) {
 			break;
 		case 3:
 			if ($erro & 1) {
-				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;≠vel criar o diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;≠vel criar o diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 				
-				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permiss&otilde;es para criar o seguinte diret&oacute;rio:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para criar o seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".$_SESSION['arquivos']."/</pre>";
 				$content .= "<br />";
 				$content .= "<p>Isso impedir&aacute; o ambiente de fazer o upload de arquivos.</p>";
 				$content .= "<br />";
 			}
 			if ($erro & 2) {
-				$console .= "<p class='feedbackp'>N&aacute;o foi poss&iacute;≠vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;≠vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
-				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&aacute;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>teleduc4/cursos/diretorio/</pre>";
 				$content .= "<br />";
-				$content .= "<p>O upload de arquivos &eacute; feito para uma pasta n&aacute;o acess&iacute;≠vel pela web com o objetivo de proteger os arquivos de acessos n&aacute;o autorizados.</p>";
+				$content .= "<p>O upload de arquivos &eacute; feito para uma pasta n&atilde;o acess&iacute;≠vel pela web com o objetivo de proteger os arquivos de acessos n&atilde;o autorizados.</p>";
 				$content .= "<br />";
 				$content .= "<p>Quando um usu&aacute;rio autenticado tenta acessar um dos aos anexos, &eacute; feito um link da pasta tempor&aacute;ria para a pasta de arquivos.</p>";
 				$content .= "<br />";
