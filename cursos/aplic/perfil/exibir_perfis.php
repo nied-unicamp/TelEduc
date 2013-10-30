@@ -187,6 +187,7 @@ Programa Principal
   echo("        if (valor=='ok'){\n");
   //echo("          eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
   echo("   		conteudo = document.getElementById('text_'+codigo+'_text').value;");
+  echo("		alert(conteudo)");
   echo("          xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
   echo("        }\n");
   //echo("        document.getElementById('text_'+codigo).innerHTML= '$campo'+conteudo;\n");
