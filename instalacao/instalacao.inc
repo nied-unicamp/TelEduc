@@ -205,7 +205,7 @@ function exibeErro($etapa,$erro) {
 			}
 
 			if ($erro & 1) {
-				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permissões para escrever e ler no seguinte diret&oacute;rio:</p>";
+				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".str_replace("instalacao", "cursos/aplic/bibliotecas/", getcwd())."</pre>";
 				$content .= "<br />";
 				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
