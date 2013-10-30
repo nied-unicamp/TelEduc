@@ -130,3 +130,12 @@ function writeRichText(rte, html, width, height, buttons, readOnly, alignLeft) {
 		document.writeln('<textarea name="' + rte + '" id="' + rte + '" style="width: ' + width + 'px; height: ' + height + 'px;">' + html + '</textarea>');
 		loadEditor(rte);
 }
+
+
+function isEditorLoaded(id)
+{
+    var instance = CKEDITOR.instances[id];
+    if(instance)
+        return true;
+    return false;
+}

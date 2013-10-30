@@ -184,9 +184,13 @@ Programa Principal
   echo("      }\n");
 
   echo("      function EdicaoTexto(codigo, id, valor){\n");
+  echo("        CKEditorComponent = false;\n");
   echo("        if (valor=='ok'){\n");
-  //echo("          eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
-  echo("   		conteudo = document.getElementById('text_'+codigo+'_text').value;");
+  echo("          if(isEditorLoaded(id+'_text')) {\n");
+  echo("            eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+  echo("          } else {\n");
+  echo("            conteudo = document.getElementById('text_'+codigo+'_text').value;");
+  echo("          }\n");
   echo("          xajax_EditarPerfilDinamic('".$cod_curso."', codigo, conteudo, '".RetornaFraseDaLista($lista_frases,116)."');\n");
   echo("        }\n");
   //echo("        document.getElementById('text_'+codigo).innerHTML= '$campo'+conteudo;\n");
