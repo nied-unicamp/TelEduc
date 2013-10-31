@@ -63,14 +63,14 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   // 67 - Sess�es desmarcadas com sucesso.
-  //  - Erro ao desmarcar a sess�o.
-  $feedbackObject->addAction("desmarcar_sessao", 67, "Erro ao desmarcar sess�o");
+  // 116 - Erro ao desmarcar a sess�o.
+  $feedbackObject->addAction("desmarcar_sessao", 67, 116);
 
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22); /*verifica se avaliacao est� disponibilizada */
 
   $e_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
-  echo("    <script type=\"text/javascript\" language=JavaScript>\n\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n\n");
 
   if($AcessoAvaliacao){
      echo("      function VerAvaliacao(id)\n");

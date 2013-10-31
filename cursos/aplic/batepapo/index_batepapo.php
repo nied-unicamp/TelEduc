@@ -82,7 +82,7 @@
 
   Desconectar($sock);
 
-  echo("<script language=javascript>\n");
+  echo("<script language=\"javascript\">\n");
   echo("  top.close();\n");
   echo("</script>\n");
 

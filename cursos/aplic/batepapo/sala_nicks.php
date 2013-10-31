@@ -77,7 +77,7 @@
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
 
-  echo("    <script type=\"text/javascript\" language=javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("      var timeoutnick;\n");
   echo("        timeoutnick=setTimeout(\"Recarrega()\", 1000)\n");
 
