@@ -151,18 +151,18 @@ function EhAvaliacaoBatePapo($sock,$cod_assunto)
 function BatePapoEhAvaliacao($sock,$assunto,$di,$df)
 {
   /*
-      Ve se um dos assuntos � avalia��o
-  */
+    Ve se um dos assuntos � avalia��o
+   */
   $assunto_unico = explode("<br/>", $assunto);
   foreach($assunto_unico as $assunto_u){
-  	$cod_assunto=RetornaCodAssunto($sock,$assunto_u,$di,$df);
-  	//echo ("Cod_assunto = ".$cod_assunto);
- 	 $query="select cod_avaliacao from Avaliacao where cod_atividade=".$cod_assunto." and ferramenta='B' and status!='X'and status != 'A' and status != 'C'";
- 	 $res=Enviar($sock,$query);
- 	 if (RetornanumLinhas($res) > 0)
-  	 {
-   	 	return true;
-  	 }
+    $cod_assunto=RetornaCodAssunto($sock,$assunto_u,$di,$df);
+    //echo ("Cod_assunto = ".$cod_assunto);
+    $query="select cod_avaliacao from Avaliacao where cod_atividade=".$cod_assunto." and ferramenta='B' and status!='X'and status != 'A' and status != 'C'";
+    $res=Enviar($sock,$query);
+    if (RetornanumLinhas($res) > 0)
+    {
+      return true;
+    }
   }
   return false;
 }

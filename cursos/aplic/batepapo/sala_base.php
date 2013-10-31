@@ -97,7 +97,7 @@
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
 
-  echo("    <script type=\"text/javascript\" language=javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("      var timeout;\n");
   echo("      var ScrollDownIniciado = false;\n");
   echo("      var step = 2;\n");
@@ -145,7 +145,7 @@
   echo("        return true;\n");
   echo("      }\n");
 
-	
+
   if ($scrollbox=="sim")
     echo("  ScrollDown();\n");
 
@@ -196,7 +196,7 @@
   echo("                <td>".stripslashes(RetornaApelido($sock,$cod_sessao,$cod_usuario))."</td>\n");
 
   $lista_fala=RetornaFalas($sock);
-  echo("                <td><select class=input name=cod_fala>\n");
+  echo("                <td><select class=\"input\" name=\"cod_fala\">\n");
 
   foreach($lista_fala as $cod=>$fala)
   {
@@ -211,7 +211,7 @@
   echo("                  </select></td>\n");
 
   echo("                <td width=\"15%\">\n");
-   echo("                  <select class=input name=cod_usuario_r>\n");
+   echo("                  <select class=\"input\" name=\"cod_usuario_r\">\n");
    $selected="";
    if (!isset($cod_usuario_r))
      $selected="selected";
@@ -235,8 +235,8 @@
    echo("                </select>\n");
 
   //Voltar as op��es padr�o "fala para" e "Todos"
-  echo("                <script  type=\"text/javascript\" language=javascript>\n");
-  echo("                  VoltaPadroes();\n");
+  echo("          <script  type=\"text/javascript\" language=\"javascript\">\n");
+  echo("            VoltaPadroes();\n");
   echo("          </script>\n");
 
   //echo("         <span id=\"apelido_r\">".(($apelido_usuario_r!="")?$apelido_usuario_r:'Todos')."</span>\n");
@@ -244,14 +244,16 @@
   echo("         <input type=\"hidden\" name=\"apelido_usuario_r\" id=\"apelido_usuario_r\" value=\"".(($apelido_usuario_r!="")?$apelido_usuario_r:'Todos')."\" /></td>\n");
   echo("        </tr>\n");
   echo("        <tr>\n");
-  echo("          <td><input type=text class=input name=mensagem autocomplete=\"off\" size=50>");
-  echo("            <input class=input type=submit name=submits value='".RetornaFraseDaLista($lista_frases_geral,11)."' onclick=return(Valida());></td>\n");
+  echo("          <td>\n");
+  echo("            <input class=\"input\" type=\"text\"   name=\"mensagem\" autocomplete=\"off\" size=50 />");
+  echo("            <input class=\"input\" type=\"submit\" name=\"submits\"  value='".RetornaFraseDaLista($lista_frases_geral,11)."' onclick='return(Valida());' />\n");
+  echo("          </td>\n");
 
   $checked="";
   if ($scrollbox=="sim")
     $checked="checked";
   /* 21 - Rolagem Autom�tica */
-  echo("          <td colspan=2><input type=checkbox $checked name=scrollbox onclick=CheckCheckBox(); value=sim>".RetornaFraseDaLista($lista_frases,21)."</td>\n");
+  echo("          <td colspan=2><input type=\"checkbox\" $checked name=\"scrollbox\" onclick='CheckCheckBox();' value=\"sim\">".RetornaFraseDaLista($lista_frases,21)."</td>\n");
 
   echo("        </tr>\n");
   // Fim Tabela Interna
@@ -259,15 +261,15 @@
 
   echo("      <div align=\"right\">\n");
   /* 20 - Sair (ger) */
-  echo("        <input class=input type=button value='".RetornaFraseDaLista($lista_frases_geral,20)."' onclick=ConfirmaSair(); style=\"target=Batepapo\" />\n");
+  echo("        <input class=\"input\" type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,20)."' onclick=ConfirmaSair(); style=\"target=Batepapo\" />\n");
   echo("      </div>\n");
 
   echo("    </td>\n");
   echo("  </tr>\n");
   // Fim Tabel�o
   echo("</table>\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso." />\n");
-  echo("<input type=hidden name=enviar value=sim />\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("<input type=\"hidden\" name=\"enviar\"    value=\"sim\" />\n");
   echo("</form>\n");
   echo("</body>\n");
   echo("</html>\n");

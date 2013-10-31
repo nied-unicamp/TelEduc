@@ -49,50 +49,36 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario); */
-
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
-  $e_formador=EFormador($sock,$cod_curso,$cod_usuario);
+  $e_formador = EFormador($sock,$cod_curso,$cod_usuario);
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
-  echo("  var window_handle;\n");
+  echo("      var window_handle;\n");
 
-  echo("  function Iniciar() \n");
-  echo("  { \n");
-  echo("    startList(); \n");
-  echo("  } \n");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+  echo("        startList(); \n");
+  echo("      }\n");
 
-  echo("  function ImprimirRelatorio()\n");
-  echo("  {\n");
-  echo("    if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
-  echo("    {\n");
-  echo("      self.print();\n");
-  echo("    }\n");
-  echo("    else\n");
-  echo("    {\n");
+  echo("      function ImprimirRelatorio()\n");
+  echo("      {\n");
+  echo("        if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
+  echo("        {\n");
+  echo("          self.print();\n");
+  echo("        }\n");
+  echo("        else\n");
+  echo("        {\n");
   /* 45- Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
-  echo("      alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
-  echo("    }\n");
-  echo("  }\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
+  echo("        }\n");
+  echo("      }\n");
 
-  echo("  function OpenWindowLink(funcao)\n");
-  echo("  {\n");
-  echo("    window_handle = window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("  window_handle.focus();\n");
-  echo("  }\n");
+  echo("      function OpenWindowLink(funcao)\n");
+  echo("      {\n");
+  echo("        window_handle = window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("        window_handle.focus();\n");
+  echo("      }\n");
 
    /* Fun��o JvaScript para chamar p�gina para salvar em arquivo. */
   echo("      function SalvarMensagensAluno()\n");
@@ -104,14 +90,14 @@
 
   if (($e_formador)&&($AcessoAvaliacao))
   {
-    echo("  function AvaliarAluno(funcao)\n");
-    echo("  {\n");
-    echo("   window_handle = window.open(\"../avaliacoes/avaliar_atividade.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&cod_aluno=\"+funcao,\"AvaliarParticipante\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-    echo("  window_handle.focus();\n");
-    echo("  }\n");
+    echo("      function AvaliarAluno(funcao)\n");
+    echo("      {\n");
+    echo("       window_handle = window.open(\"../avaliacoes/avaliar_atividade.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."&cod_aluno=\"+funcao,\"AvaliarParticipante\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+    echo("       window_handle.focus();\n");
+    echo("      }\n");
   }
 
-  echo("</script>\n");
+  echo("    </script>\n");
 
   include("../menu_principal.php");
 
@@ -138,32 +124,32 @@
   echo("  <tr>\n");
   echo("    <td valign=\"top\">\n");
 
-  echo("      <form name=frmMsg action=\"\" method=post>\n");
-  echo("        <input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("        <input type=hidden name=cod_avaliacao value=".$cod_avaliacao.">\n");
-  echo("        <input type=hidden name=cod_assunto value=".$cod_assunto.">\n");
-  echo("        <input type=hidden name=cod_aluno value=".$cod_aluno.">\n");
-  //echo("        <input type=hidden name=cod_sessao value=".$cod_sessao.">\n");
+  echo("      <form name=\"frmMsg\" action=\"\" method=\"post\">\n");
+  echo("        <input type=\"hidden\" name=\"cod_curso\"     value=\"".$cod_curso."\">\n");
+  echo("        <input type=\"hidden\" name=\"cod_avaliacao\" value=\"".$cod_avaliacao."\">\n");
+  echo("        <input type=\"hidden\" name=\"cod_assunto\"   value=\"".$cod_assunto."\">\n");
+  echo("        <input type=\"hidden\" name=\"cod_aluno\"     value=\"".$cod_aluno."\">\n");
+  //echo("        <input type=\"hidden\" name=\"cod_sessao      value=\"".$cod_sessao."\">\n");
 
   echo("      <ul class=\"btAuxTabs\">\n");
 
 //   if (!$SalvarEmArquivo)
 //   {
 //     /* 13 - Fechar (ger) */
-//     echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
+//     echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 //   }
 
   /* 27 - Ver Sess�es Realizadas */
-  echo("        <li><span title=\"Ver Sess�es Realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases,27)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases,27)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases,27)."</span></li>\n");
 
   if (!$SalvarEmArquivo)
   {
     /* 50 - Salvar em Arquivo (geral) */
-    echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarMensagensAluno();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarMensagensAluno();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
   }
 
     /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
   echo("      </ul>\n");
 
   echo("      </form>\n");
@@ -191,7 +177,7 @@
   $nome_aluno=NomeUsuario($sock, $cod_aluno, $cod_curso);
 
   if (!$SalvarEmArquivo)
-    echo("          <td><a href=# onClick=return(OpenWindowLink(".$cod_aluno."));>".$nome_aluno."</a></td>\n");
+    echo("          <td><a href=\"#\" onClick='return(OpenWindowLink(".$cod_aluno."));'>".$nome_aluno."</a></td>\n");
   else
     echo("          <td>".$nome_aluno."</td>\n");
 
@@ -205,13 +191,13 @@
     {
       echo("        <tr>\n");
       echo("          <td>\n");
-      echo("<font class=textsmall>(".Unixtime2Hora($linha['Data']).")</font>\n");
+      echo("<font class=\"textsmall\">(".Unixtime2Hora($linha['Data']).")</font>\n");
       if ($cod_usuario == $linha['cod_usuario'])
-        echo("<font class=text color=#007700>");
+        echo("<font class=\"text\" color=#007700>");
       else if ($cod_usuario == $linha['cod_usuario_r'])
-        echo("<font class=text color=#000099>");
+        echo("<font class=\"text\" color=#000099>");
       else
-        echo("<font class=text>");
+        echo("<font class=\"text\">");
       echo("<b>".$linha['Apelido']."</b> ".RetornaFraseDaLista($lista_frases,$linha['cod_texto_fala'])." ");
       if ($linha['cod_texto_fala']>8) /* N�o � entrada ou sa�da... */
         echo("<b>".$linha['ApelidoR']."</b>: ".$linha['Mensagem']);

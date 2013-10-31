@@ -74,17 +74,17 @@ Saida: codigo da avaliacao criada
 */
 function IniciaCriacaoAvaliacao ($sock, $tabela, $cod_atividade, $cod_formador, $ferramenta, $tipo)
 {
-$cod_avaliacao=RetornaProximoCodigo($sock,$tabela);
+  $cod_avaliacao=RetornaProximoCodigo($sock,$tabela);
 
-/* data_termino = tempo at� o exato instante, menos o que jah foi de hoje, somado a 23h59m59s */
-/* data_termino = hoje as 23h59m59s */ 
-$data_termino = time() - (time()%86400) + 86399;
-$consulta="insert into ".$tabela." (cod_avaliacao,cod_atividade,cod_usuario,ferramenta,tipo,status,data,data_inicio,data_termino,inicio_edicao) values (".$cod_avaliacao.", ".$cod_atividade.", ".$cod_formador.", '".$ferramenta."', '".$tipo."', 'L',".time().",".time().",".$data_termino.",".time().")";
-$res=Enviar($sock, $consulta);
-$consulta="insert into ".$tabela."_historicos values (".$cod_avaliacao.", ".$cod_formador.", ".time().", 'C')";
-$res=Enviar($sock, $consulta);
+  /* data_termino = tempo at� o exato instante, menos o que jah foi de hoje, somado a 23h59m59s */
+  /* data_termino = hoje as 23h59m59s */ 
+  $data_termino = time() - (time()%86400) + 86399;
+  $consulta="insert into ".$tabela." (cod_avaliacao,cod_atividade,cod_usuario,ferramenta,tipo,status,data,data_inicio,data_termino,inicio_edicao) values (".$cod_avaliacao.", ".$cod_atividade.", ".$cod_formador.", '".$ferramenta."', '".$tipo."', 'L',".time().",".time().",".$data_termino.",".time().")";
+  $res=Enviar($sock, $consulta);
+  $consulta="insert into ".$tabela."_historicos values (".$cod_avaliacao.", ".$cod_formador.", ".time().", 'C')";
+  $res=Enviar($sock, $consulta);
 
-return($cod_avaliacao);
+  return($cod_avaliacao);
 }
 
 
@@ -104,16 +104,16 @@ Saida: nenhuma
 */
 function AtualizaCadastroAvaliacao($sock,$tabela,$cod_formador,$objetivos,$criterios,$tipo,$valor,$data_inicio,$data_termino,$cod_avaliacao)
 {
-$objetivos=EliminaScript($objetivos);
-$objetivos=LimpaConteudo($objetivos);
-$criterios=EliminaScript($criterios);
-$criterios=LimpaConteudo($criterios);
-$consulta="update ".$tabela." set cod_usuario=".$cod_formador.",objetivos='".$objetivos."', criterios='".$criterios."', tipo='".$tipo."', valor=".$valor.",status='F',data=".time().",data_inicio=".$data_inicio.",data_termino=".$data_termino." where cod_avaliacao=".$cod_avaliacao."";
-$res=Enviar($sock, $consulta);
-//Verificar a consulta abaixo, pois a avaliacao s sera finalizada no final da edicao da atividade, entao so deveria inserir em avaliacao_historicos
-//depois que finalizasse a edicao da atividade, porem isso faria que fosse inserido em Avaliacao_historico toda vez que editasse a atividade
-$consulta="insert into Avaliacao_historicos values (".$cod_avaliacao.", ".$cod_formador.", ".time().", 'F')";
-$res=Enviar($sock, $consulta);
+  $objetivos=EliminaScript($objetivos);
+  $objetivos=LimpaConteudo($objetivos);
+  $criterios=EliminaScript($criterios);
+  $criterios=LimpaConteudo($criterios);
+  $consulta="update ".$tabela." set cod_usuario=".$cod_formador.",objetivos='".$objetivos."', criterios='".$criterios."', tipo='".$tipo."', valor=".$valor.",status='F',data=".time().",data_inicio=".$data_inicio.",data_termino=".$data_termino." where cod_avaliacao=".$cod_avaliacao."";
+  $res=Enviar($sock, $consulta);
+  //Verificar a consulta abaixo, pois a avaliacao s sera finalizada no final da edicao da atividade, entao so deveria inserir em avaliacao_historicos
+  //depois que finalizasse a edicao da atividade, porem isso faria que fosse inserido em Avaliacao_historico toda vez que editasse a atividade
+  $consulta="insert into Avaliacao_historicos values (".$cod_avaliacao.", ".$cod_formador.", ".time().", 'F')";
+  $res=Enviar($sock, $consulta);
 }
 
 /* *********************************************************************

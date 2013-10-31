@@ -40,39 +40,38 @@
   ARQUIVO : cursos/aplic/batepapo/sala_base.php
   ========================================================== */
 
-   $bibliotecas="../bibliotecas/";
-   include($bibliotecas."geral.inc");
-   include("batepapo.inc");
+  $bibliotecas="../bibliotecas/";
+  include($bibliotecas."geral.inc");
+  include("batepapo.inc");
 
   $cod_curso = $_GET['cod_curso'];
   $cod_usuario_global=VerificaAutenticacao($cod_curso);
 
-   $sock=Conectar("");
+  $sock=Conectar("");
 
-   $lista_frases=RetornaListaDeFrases($sock,10);
-   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-   
+  $lista_frases=RetornaListaDeFrases($sock,10);
+  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
+
   Desconectar($sock);
-  
+
   $sock=Conectar($cod_curso);
-  
+
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-  
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10);
-  
-echo("<html>\n");
-/* 1 - Bate-Papo */
-echo("  <head>\n");
-echo("    <title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
-echo("  </head>\n");
 
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=batepapo.css>\n");
-echo("<font class=text>Bem vindo(a) � sess�o de Batepapo!<br>Aguarde um instante...</font>\n");    
-echo("</body>\n");
-echo("</html>\n");
-  
+  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10);
+
+  echo("<html>\n");
+  /* 1 - Bate-Papo */
+  echo("  <head>\n");
+  echo("    <title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
+  echo("  </head>\n");
+
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"batepapo.css\">\n");
+  echo("  <font class=\"text\">Bem vindo(a) &agrave; sess&atilde;o de Batepapo!<br>Aguarde um instante...</font>\n");
+  echo("</body>\n");
+  echo("</html>\n");
   
 ?>

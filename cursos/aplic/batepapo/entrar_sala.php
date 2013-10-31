@@ -49,40 +49,30 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
+  /* Encerra sessão anterior, se não tiver ninguém online e se a sessão
+   * anterior não for uma sessão marcada previamente (e portanto tem uma
+   * hora marcada para acabar).
+   */
+  $cod_sessao     = RetornaSessaoCorrente($sock);
+  $sessao_marcada = RetornaListaSessoesMarcadas($sock);
 
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
-  /* Encerra sessï¿½o anterior, se nï¿½o tiver ninguï¿½m online */
-  $cod_sessao=RetornaSessaoCorrente($sock);
   if (VerificaRetiradaOnline($sock))
   {
     LimpaOnline($sock,$cod_curso, 90);
   }
 
-  if (!VerificaOnline($sock))
+  print '<pre>'.print_r($sessao_marcada, true).'</pre>';
+  print '<pre>'.var_export(empty($sessao_marcada), true).'</pre>';
+  if (!VerificaOnline($sock) && empty($sessao_marcada))
   {
-    /* Todas as pessoas foram retiradas. Encerramos a sessao entï¿½o */
     EncerraSessao($sock,$cod_curso,$cod_sessao);
     $cod_sessao=RetornaSessaoCorrente($sock);
   }
 
-  /* Verifica se jï¿½ estï¿½ online e se jï¿½ tem apelido. Se tiver, jï¿½ o deixa preenchido */
-  $apelido=RetornaApelido($sock,$cod_sessao,$cod_usuario);
+  /* Verifica se já estão online e se já tem apelido. Se tiver, já o deixa preenchido */
+  $apelido = RetornaApelido($sock,$cod_sessao,$cod_usuario);
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -172,7 +162,7 @@
         echo("        <tr>");
       if ($cod>0)
       {
-        echo("          <td>".stripslashes($linha)." - <i><a href=# onclick=OpenWindowLink(".$cod.");>\n");
+        echo("          <td>".stripslashes($linha)." - <i><a href=\"#\" onclick='OpenWindowLink(".$cod.");'>\n");
         echo(NomeUsuario($sock,$cod,$cod_curso)."</a></i></td></tr>\n");
       }
       else

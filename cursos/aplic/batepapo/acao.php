@@ -67,14 +67,14 @@
     if ($acao=='A')
     {
       /* 82 - Sess�es recuperadas com sucesso */
-    header("Location:ver_sessoes_realizadas.php?&cod_curso=".$cod_curso);
-    Desconectar($sock);
+      header("Location:ver_sessoes_realizadas.php?&cod_curso=".$cod_curso);
+      Desconectar($sock);
     }
     else
     {
       /* 76 - Sess�es apagadas com sucesso. */
-    header("Location:ver_sessoes_realizadas.php?&cod_curso=".$cod_curso."&lixeira=sim");
-    Desconectar($sock);
+      header("Location:ver_sessoes_realizadas.php?&cod_curso=".$cod_curso."&lixeira=sim");
+      Desconectar($sock);
     }
   }
 

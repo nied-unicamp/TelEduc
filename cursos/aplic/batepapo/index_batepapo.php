@@ -65,7 +65,8 @@
 
   /* Retirar de Online */
 
-  $cod_sessao=RetornaSessaoCorrente($sock);
+  $cod_sessao     = RetornaSessaoCorrente($sock);
+  $sessao_marcada = RetornaListaSessoesMarcadas($sock);
 
   RetiraUsuarioSala($sock,$cod_curso,$cod_sessao,$cod_usuario);
   
@@ -74,7 +75,7 @@
     LimpaOnline($sock, $cod_curso, 90);
   }
 
-  if (!VerificaOnline($sock))
+  if (!VerificaOnline($sock) && empty($sessao_marcada))
   {
     EncerraSessao($sock,$cod_curso,$cod_sessao);
   }

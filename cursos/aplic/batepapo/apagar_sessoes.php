@@ -64,24 +64,24 @@
   echo("<html>\n");
   /* 1 - Bate-papo */
   echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-  echo("  <link rel=stylesheet TYPE=text/css href=batepapo.css>\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"batepapo.css\">\n");
 
   echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
   /* 1 - Bate-Papo */
-  $cabecalho ="<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho ="<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
 
   /* 83 - Apagar sess�es */
   /* 84 - Recuperar sess�es */
 
   if ($acao=='A')
   {
-    $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,84)."</b>";
+    $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,84)."</b>";
     $cod_pagina=4;
   }
   else
   {
-    $cabecalho.="<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,83)."</b>";
+    $cabecalho.="<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,83)."</b>";
     $cod_pagina=5;
   }
 
@@ -98,7 +98,7 @@
     if ($acao=='A')
     {
       /* 82 - Sess�es recuperadas com sucesso */
-      echo("<font class=text><b>".RetornaFraseDaLista($lista_frases,82)."</b></font><br>\n");
+      echo("<font class=\"text\"><b>".RetornaFraseDaLista($lista_frases,82)."</b></font><br>\n");
     }
     else
     {
@@ -108,11 +108,11 @@
   }
   else
     /* 77 - Nenhuma sess�o foi selecionada.*/
-    echo("<font class=text>".RetornaFraseDaLista($lista_frases,77)."</font><br>\n");
+    echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,77)."</font><br>\n");
 
   echo("<form>\n");
   /* 23 - Voltar */
-  echo("<input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onClick='document.location=\"ver_sessoes_realizadas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&lixeira=".$lixeira."\";'>\n");
+  echo("<input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onClick='document.location=\"ver_sessoes_realizadas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&lixeira=".$lixeira."\";'>\n");
   echo("</form>\n");
 
   Desconectar($sock);

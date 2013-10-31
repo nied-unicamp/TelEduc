@@ -49,129 +49,104 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
 ?>
 
 <link rel="stylesheet" href="./templates/sk15_purple/main.css" type="text/css">
-<script type=text/javascript language="javascript">
+<script type="text/javascript" language="javascript">
 // Lista as mensagem do sistema Imprimindo-as
 // N�O RETIRE ESSAS LINHAS DO TEMPLATE !!!
 
+  var timeout = setTimeout("javascript:delayReload();", "5000"); 
 
-
-var timeout = setTimeout("javascript:delayReload();", "5000"); 
-
-function delayReload() {
- if (navigator.userAgent.indexOf("MSIE") != "-1"){      
-  window.self.history.go(0);    
- } else {
-  window.self.location.reload();        
- }
-}
-
-
+  function delayReload() {
+    if (navigator.userAgent.indexOf("MSIE") != "-1"){
+     window.self.history.go(0);
+    } else {
+     window.self.location.reload();
+    }
+  }
 
 </script>
 <?php
-echo("</head>\n");
-echo("<body bgcolor=\"#666696\" text=\"#000000\" link=\"#000020\" vlink=\"#000020\" alink=\"#000020\" leftmargin=\"10\" topmargin=\"10\" marginwidth=\"10\" marginheight=\"10\">\n");
+  echo("</head>\n");
+  echo("<body bgcolor=\"#666696\" text=\"#000000\" link=\"#000020\" vlink=\"#000020\" alink=\"#000020\" leftmargin=\"10\" topmargin=\"10\" marginwidth=\"10\" marginheight=\"10\">\n");
 
-
-session_start();
+  session_start();
 
   if (VerificaRetiradaOnline($sock))
   {
     $removidos=LimpaOnline($sock,$cod_curso, 600);
   }
 
-Desconectar($sock);
-$sock=Conectar("");
-    
-$query="select * from Batepapo_sessoes_correntes where data > '".$tempo."' AND cod_curso=".$cod_curso." ORDER BY data";
+  Desconectar($sock);
+  $sock=Conectar("");
 
-$query2="select data from Batepapo_sessoes_correntes where cod_curso=".$cod_curso." ORDER BY data DESC limit 1";
+  $query="select * from Batepapo_sessoes_correntes where data > '".$tempo."' AND cod_curso=".$cod_curso." ORDER BY data";
 
-$res=Enviar($sock,$query2);
-$lista=RetornaLinha($res);
-$_SESSION['tempo'] = $lista['data'];
+  $query2="select data from Batepapo_sessoes_correntes where cod_curso=".$cod_curso." ORDER BY data DESC limit 1";
 
-$res=Enviar($sock,$query);
-$lista=RetornaArrayLinhas($res);
-#var_dump($lista);
-$separador = ':';
+  $res=Enviar($sock,$query2);
+  $lista=RetornaLinha($res);
+  $_SESSION['tempo'] = $lista['data'];
 
-$sock = Conectar($cod_curso);
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+  #var_dump($lista);
+  $separador = ':';
 
-if (is_array($lista)){
-  echo("<script language=\"JavaScript\" type=\"text/javascript\">\n");
-  
-  
-  foreach($lista as $cod=>$linha)
-  {
-    $linha['mensagem'] = ConverteAspas2Html(LimpaTags(LimpaConteudo($linha['mensagem'])));
-    if ($linha['cod_usuario_r'] == $cod_usuario)
+  $sock = Conectar($cod_curso);
+
+  if (is_array($lista)){
+    echo("<script language=\"javascript\" type=\"text/javascript\">\n");
+
+    foreach($lista as $cod=>$linha)
     {
-      $cor_fundo = 'white';
-      $expessura = '1px';
-    }
-    else if ($linha['cod_usuario'] == $cod_usuario)
-    {
-      $cor_fundo = 'white';
-      $expessura = '1px';
-    }
-    else 
-    {
-      $cor_fundo = 'white';
-      $expessura = '0px';
-    }
+      $linha['mensagem'] = ConverteAspas2Html(LimpaTags(LimpaConteudo($linha['mensagem'])));
+      if ($linha['cod_usuario_r'] == $cod_usuario)
+      {
+        $cor_fundo = 'white';
+        $expessura = '1px';
+      }
+      else if ($linha['cod_usuario'] == $cod_usuario)
+      {
+        $cor_fundo = 'white';
+        $expessura = '1px';
+      }
+      else 
+      {
+        $cor_fundo = 'white';
+        $expessura = '0px';
+      }
 
+      if ($linha['cod_fala'] == 7 || $linha['cod_fala'] == 8)
+      {
+        $linha['apelido_r'] = '';
+        $separador = '';
+        if ($linha['cod_fala'] == 8)
+        {
+          $linha['fala'] = RetornaFraseDaLista($lista_frases,'8');
+        }
+      }
 
-    if ($linha['cod_fala'] == 7 || $linha['cod_fala'] == 8)
-    {
-	    $linha['apelido_r'] = '';
-	    $separador = '';
-	    if ($linha['cod_fala'] == 8)
-	    {
-              $linha['fala'] = RetornaFraseDaLista($lista_frases,'8');
-            }
+      $conteudo = "<table width=\"100%\" cellspacing=4 cellpadding=4><tr><td bgcolor=\"#FFFFFF\" style=\"border-style: solid;border-width: ".$expessura.";border-color: #000000\"><font size=\"1\" color=\"black\">(".UnixTime2Hora($linha['data']).") - <b></font><font size=\"2\" color=\"black\">".$linha['apelido']."</b> ".$linha['fala']." <b>".$linha['apelido_r']." </b> ".$separador." ".$linha['mensagem']."</font></td></tr></table>";
+      //troca EOL por " "
+      $conteudo = str_replace(chr(10), " ", $conteudo);
+      $conteudo = str_replace(chr(13), " ", $conteudo);
 
+      if(! (UsuarioOnline($sock, $cod_usuario)) ){
+        echo("  clearTimeout(timeout);\n");
+        echo("  window.parent.meio.document.write('".RetornaFraseDaLista($lista_frases, 23)."<br>');\n");
+        echo("  window.parent.meio.document.write('".RetornaFraseDaLista($lista_frases, 24)."<br>');\n");
+      }else{
+        echo("  window.parent.meio.document.write('".trim($conteudo)."');\n");
+      }
+
+      echo("  window.parent.base.document.formBaixo.mensagem.focus();\n");
     }
-    $conteudo = "<table width=\"100%\" cellspacing=4 cellpadding=4><tr><td bgcolor=\"#FFFFFF\" style=\"border-style: solid;border-width: ".$expessura.";border-color: #000000\"><font size=\"1\" color=\"black\">(".UnixTime2Hora($linha['data']).") - <b></font><font size=\"2\" color=\"black\">".$linha['apelido']."</b> ".$linha['fala']." <b>".$linha['apelido_r']." </b> ".$separador." ".$linha['mensagem']."</font></td></tr></table>";
-    //troca EOL por " "
-    $conteudo = str_replace(chr(10), " ", $conteudo);
-    $conteudo = str_replace(chr(13), " ", $conteudo);
-    
-    if(! (UsuarioOnline($sock, $cod_usuario)) ){
-      echo("  clearTimeout(timeout);\n");
-      echo("  window.parent.meio.document.write('".RetornaFraseDaLista($lista_frases, 23)."<br>');\n");
-      echo("  window.parent.meio.document.write('".RetornaFraseDaLista($lista_frases, 24)."<br>');\n");
-    }else{
-      echo("  window.parent.meio.document.write('".trim($conteudo)."');\n");
-    }
+    echo("</script>\n");
 
-    echo("  window.parent.base.document.formBaixo.mensagem.focus();\n");
   }
-  echo("</script>\n");
-
-}
-
-
 
 echo("</body>\n");
 echo("</html>\n");
 ?>
-

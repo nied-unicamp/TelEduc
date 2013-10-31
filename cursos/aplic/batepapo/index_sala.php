@@ -49,24 +49,6 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
- 
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
-  /* Colocar Online */
-
   $cod_sessao=RetornaSessaoCorrente($sock);
 
   ManterOnline($sock,$cod_usuario);
@@ -84,20 +66,20 @@
 
         echo("<body link=#0000ff vlink=#0000ff bgcolor=white>\n");
         /* 1 - Bate-Papo */
-        echo("<b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+        echo("<b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
         /* 2 - Entrar na sala de bate-papo */
-        echo("<b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,2)."</b>\n");
+        echo("<b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,2)."</b>\n");
         echo("<br>\n");
         echo("<p>\n");
 
         /* 25 - Infelizmente, este apelido (ou nome) j� se encontra em uso por outra pessoa. */
         /* 26 - Por favor, pressione "Voltar" e tente outro apelido. */
-        echo("<font class=text>".RetornaFraseDaLista($lista_frases,25)."</font><p>\n");
-        echo("<font class=text>".RetornaFraseDaLista($lista_frases,26)."</font><p>\n");
+        echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,25)."</font><p>\n");
+        echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases,26)."</font><p>\n");
         
         echo("<form>\n");
         /* 23 - Voltar (ger) */
-        echo("<input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1); />\n");
+        echo("<input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick='history.go(-1);' />\n");
         echo("</form>\n");
 
         Desconectar($sock);
@@ -106,9 +88,9 @@
   CadastrarApelido($sock,$cod_usuario,$cod_sessao,$apelido);
 
   $fala=RetornaFraseDaLista($lista_frases,'7');
-  
+
   $tempo = time()-30;
-					      
+
   /* Enviar mensagem de entrada na sala */
   InsereConversa($sock,$cod_curso,$cod_sessao,$cod_usuario,"",1,$fala,"");
   
@@ -117,13 +99,13 @@
 
 
   echo("<frameset rows=\"50,*,175,0\" border=1>\n");
-  echo("  <frame name=assunto src=\"sala_assunto.php?cod_curso=".$cod_curso."\" NORESIZE SCROLLING=no>\n");
+  echo("  <frame name=\"assunto\" src=\"sala_assunto.php?cod_curso=".$cod_curso."\" NORESIZE SCROLLING=no>\n");
   echo("    <frameset cols=\"*,175\" border=\"0\">\n");
-  echo("      <frame name=meio src=\"sala_meio.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&tempo=".(time() - 30)."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=auto>\n");
-  echo("      <frame name=lateral src=\"sala_nicks.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=auto>\n");
+  echo("      <frame name=\"meio\" src=\"sala_meio.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&tempo=".(time() - 30)."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=auto>\n");
+  echo("      <frame name=\"lateral\" src=\"sala_nicks.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=auto>\n");
   echo("    </frameset>\n");
-  echo("  <frame name=base src=\"sala_base.php?&cod_curso=".$cod_curso."&scrollbox=sim&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&tempo=".(time() - 30)."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=yes>\n");
-  echo("  <frame name=reload src=\"sala_reload.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&tempo=".$tempo."\" NORESIZE SCROLLING=no>\n");
+  echo("  <frame name=\"base\" src=\"sala_base.php?&cod_curso=".$cod_curso."&scrollbox=sim&cod_usuario=".$cod_usuario."&cod_sessao=".$cod_sessao."&tempo=".(time() - 30)."&cod_lingua=".$cod_lingua_s."&db=".$dbnamebase."\" NORESIZE SCROLLING=yes>\n");
+  echo("  <frame name=\"reload\" src=\"sala_reload.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&tempo=".$tempo."\" NORESIZE SCROLLING=no>\n");
   echo("</frameset>\n");
 
   Desconectar($sock);

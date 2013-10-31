@@ -50,13 +50,13 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
   echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
-    if($SalvarEmArquivo){
-          echo("    <style>\n");
-          include "../js-css/ambiente.css";
-          include "../js-css/tabelas.css";
-          include "../js-css/navegacao.css";
-          echo("    </style>\n");
-        }
+  if($SalvarEmArquivo){
+        echo("    <style>\n");
+        include "../js-css/ambiente.css";
+        include "../js-css/tabelas.css";
+        include "../js-css/navegacao.css";
+        echo("    </style>\n");
+      }
 
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
@@ -69,14 +69,14 @@
   $data_fim=$linha['DataFim'];
   $status=$linha['Status'];
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
-  echo("var window_handle;\n");
+  echo("      var window_handle;\n");
 
-  echo("  function Iniciar() \n");
-  echo("  { \n");
-  echo("    startList(); \n");
-  echo("  }\n");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+  echo("        startList(); \n");
+  echo("      }\n");
   
   echo("      function startList() {\n");
   echo("        if (document.all && document.getElementById) {\n");
@@ -103,44 +103,44 @@
   echo("        }\n");
   echo("      }\n\n");
 
-  echo("  function ImprimirRelatorio()\n");
-  echo("  {\n");
-  echo("    if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
-  echo("    {\n");
-  echo("      self.print();\n");
-  echo("    }\n");
-  echo("    else\n");
-  echo("    {\n");
+  echo("      function ImprimirRelatorio()\n");
+  echo("      {\n");
+  echo("        if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape') \n");
+  echo("        {\n");
+  echo("          self.print();\n");
+  echo("        }\n");
+  echo("        else\n");
+  echo("        {\n");
   /* 45- Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
-  echo("      alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
-  echo("    }\n");
-  echo("  }\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases,45)."');\n");
+  echo("        }\n");
+  echo("      }\n");
 
-  echo("  function OpenWindowLink(funcao)\n");
-  echo("  {\n");
-  echo("    window.open(\"../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("    return(false);\n");
-  echo("  }\n");
+  echo("      function OpenWindowLink(funcao)\n");
+  echo("      {\n");
+  echo("        window.open(\"../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("        return(false);\n");
+  echo("      }\n");
 
   if (($e_formador)&&($AcessoAvaliacao))
   {
-    echo("  function AvaliarAlunos(funcao)\n");
-    echo("  {\n");
-    echo("    window_handle = window.open(\"../avaliacoes/avaliar_participantes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+funcao,\"AvaliarParticipantes\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-    echo("  window_handle.focus();\n");
-    echo("  }\n");
+    echo("      function AvaliarAlunos(funcao)\n");
+    echo("      {\n");
+    echo("        window_handle = window.open(\"../avaliacoes/avaliar_participantes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+funcao,\"AvaliarParticipantes\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+    echo("        window_handle.focus();\n");
+    echo("      }\n");
   }
 
-  echo("</script>\n");
-  echo("</head>\n");
-  echo("<body onLoad=\"Iniciar();\">\n");
+  echo("    </script>\n");
+  echo("  </head>\n");
+  echo("  <body onLoad=\"Iniciar();\">\n");
 
-  echo("<br/><br/>\n");
+  echo("  <br/><br/>\n");
   /* 1 - Bate-Papo */
-  echo("<h4>".RetornaFraseDaLista($lista_frases,1));
+  echo("  <h4>".RetornaFraseDaLista($lista_frases,1));
   /* 43 - Ver sess�o */
   echo(" - ".RetornaFraseDaLista($lista_frases,43)."</h4>");
-  echo("<br/>\n");
+  echo("  <br/>\n");
 
   $cod_pagina=6;
   if(($AcessoAvaliacao)&&($e_formador))/*Pare exibir a ajuda de avalia��es*/
@@ -152,10 +152,10 @@
   echo("  <tr>\n");
   echo("    <td valign=\"top\">\n");
 
-  echo("      <form action=salvar_sessao.php method=get>\n");
+  echo("      <form action=\"salvar_sessao.php\" method=\"get\">\n");
   //echo(RetornaSessionIDInput());
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso." />\n");
-  echo("      <input type=hidden name=cod_sessao value=".$cod_sessao." />\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\"  value=\"".$cod_curso."\" />\n");
+  echo("      <input type=\"hidden\" name=\"cod_sessao\" value=\"".$cod_sessao."\" />\n");
   echo("      </form>\n");
 
   if ((!$SalvarEmArquivo) && ($e_formador) && ($status=='A') && ($AcessoAvaliacao))
@@ -232,7 +232,7 @@
       if ($cod>0)
       {
         echo($linha);
-        echo(" (<a href=# onclick=OpenWindowLink(".$cod.");>".NomeUsuario($sock,$cod,$cod_curso)."</a>)\n");
+        echo(" (<a href=\"#\" onclick='OpenWindowLink(".$cod.");'>".NomeUsuario($sock,$cod,$cod_curso)."</a>)\n");
       }
       else
       {
@@ -273,11 +273,11 @@
       $apelido  = LimpaConteudo($linha['Apelido']);
       $mensagem = LimpaConteudo($linha['Mensagem']);
       $apelidoR = LimpaConteudo($linha['ApelidoR']);
-      echo("<b><a href=# onclick=OpenWindowLink(".$linha['cod_usuario'].");>".$apelido."</a></b> ".RetornaFraseDaLista($lista_frases, $linha['cod_texto_fala'])." ");
+      echo("<b><a href=\"#\" onclick='OpenWindowLink(".$linha['cod_usuario'].");'>".$apelido."</a></b> ".RetornaFraseDaLista($lista_frases, $linha['cod_texto_fala'])." ");
       if ($linha['cod_texto_fala'] > 8 && $linha['ApelidoR'] != "Todos")
-        echo("<b><a href=# onclick=OpenWindowLink(".$linha['cod_usuario_r'].");>".$apelidoR."</a></b>: ".$mensagem."\n");
-	  else if($linha['cod_texto_fala'] > 8) echo("<b>".$apelidoR."</b>: ".$mensagem."\n");
-	  
+        echo("<b><a href=\"#\" onclick='OpenWindowLink(".$linha['cod_usuario_r'].");'>".$apelidoR."</a></b>: ".$mensagem."\n");
+      else if($linha['cod_texto_fala'] > 8) echo("<b>".$apelidoR."</b>: ".$mensagem."\n");
+
       echo("</font>\n");
 
       echo("          </td>\n");
@@ -291,10 +291,9 @@
   // Fim Tabel�o
   echo("</table>\n");
 
-  echo("</body>\n");
+  echo("  </body>\n");
   echo("</html>\n");
 
   Desconectar($sock);
 
 ?>
-

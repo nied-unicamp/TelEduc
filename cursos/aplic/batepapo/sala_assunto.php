@@ -49,22 +49,6 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
- 
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
   $cod_sessao=RetornaSessaoCorrente($sock);
 
   /* mantem o usu�rio na sess�o */
@@ -76,31 +60,31 @@
   $cod_sessao=RetornaSessaoCorrente($sock);
   $assunto=RetornaAssuntoSessao($sock,$cod_sessao);
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
-  echo("  function Iniciar() \n");
-  echo("  { \n");
-  echo("    startList();\n");
-  echo("  } \n");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+  echo("        startList();\n");
+  echo("      }\n");
 
-  echo("</script>\n");
+  echo("    </script>\n");
 
-  echo("<style type=\"text/css\">\n");
-  echo("  .assunto\n");
-  echo("  {\n");
-  echo("    position: absolute;\n");
-  echo("    top: 0;\n");
-  echo("    left: 0;\n");
-  echo("    visibility: true;\n");
-  echo("  }\n");
-  echo("</style>\n");
+  echo("    <style type=\"text/css\">\n");
+  echo("      .assunto\n");
+  echo("      {\n");
+  echo("        position: absolute;\n");
+  echo("        top: 0;\n");
+  echo("        left: 0;\n");
+  echo("        visibility: true;\n");
+  echo("      }\n");
+  echo("    </style>\n");
 
-  echo("</head>\n");
-  echo("<body onLoad=\"Iniciar();\">\n");
+  echo("  </head>\n");
+  echo("  <body onLoad=\"Iniciar();\">\n");
 
-  echo("<br/>\n");
+  echo("    <br/>\n");
   /* 17 - Sala de Bate-Papo */
-  echo("<h4>".RetornaFraseDaLista($lista_frases,17));
+  echo("    <h4>".RetornaFraseDaLista($lista_frases,17));
 
   echo(" - ".$assunto."</h4>\n");
 

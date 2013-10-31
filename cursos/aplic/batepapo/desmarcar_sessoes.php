@@ -66,96 +66,80 @@
   //  - Erro ao desmarcar a sess�o.
   $feedbackObject->addAction("desmarcar_sessao", 67, "Erro ao desmarcar sess�o");
 
-  /* tela_topo faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22); /*verifica se avaliacao est� disponibilizada */
 
   $e_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
-  echo("  <script type=\"text/javascript\" language=JavaScript>\n\n");
+  echo("    <script type=\"text/javascript\" language=JavaScript>\n\n");
 
   if($AcessoAvaliacao){
-     echo("    function VerAvaliacao(id)\n");
-     echo("    {\n");
-     echo("      window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-     echo("      return(false);\n");
-     echo("    }\n");
+     echo("      function VerAvaliacao(id)\n");
+     echo("      {\n");
+     echo("        window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+     echo("        return(false);\n");
+     echo("      }\n");
   }
 
-  echo("    function Iniciar() \n");
-  echo("    { \n");
-              $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo("      startList(); \n");
-  echo("    } \n");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+                $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("        startList(); \n");
+  echo("      }\n");
 
-  echo("    function OpenWindow() \n");
-  echo("    {\n");
-  echo("      window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
-  echo("      return(false);\n");
-  echo("    }\n");
+  echo("      function OpenWindow() \n");
+  echo("      {\n");
+  echo("        window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
+  echo("        return(false);\n");
+  echo("      }\n");
 
-  echo("    function VerificaCheck(){\n");
-  echo("      var i;\n");
-  echo("      var j=0;\n");
-  echo("      var cod_itens=document.getElementsByName('chkItem');\n");
-  echo("      var Cabecalho = document.getElementById('checkMenu');\n");
-  echo("      var array_itens = new Array();\n");
-  echo("      for (i=0; i < cod_itens.length; i++){\n");
-  echo("        if (cod_itens[i].checked){\n");
-  //echo("          var item = cod_itens[i].id.split('_');\n");
-  echo("          array_itens[j]=cod_itens[i].value;\n");
-  echo("          j++;\n");
+  echo("      function VerificaCheck(){\n");
+  echo("        var i;\n");
+  echo("        var j=0;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        var Cabecalho = document.getElementById('checkMenu');\n");
+  echo("        var array_itens = new Array();\n");
+  echo("        for (i=0; i < cod_itens.length; i++){\n");
+  echo("          if (cod_itens[i].checked){\n");
+  //echo("            var item = cod_itens[i].id.split('_');\n");
+  echo("            array_itens[j]=cod_itens[i].value;\n");
+  echo("            j++;\n");
+  echo("          }\n");
   echo("        }\n");
-  echo("      }\n");
-  echo("      if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
-  echo("      else Cabecalho.checked=false;\n");
-  echo("      if(j > 0){\n");
-  echo("        document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
-  echo("        document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(array_itens); };\n");
-  echo("      }else{\n");
-  echo("        document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
-  echo("        document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
-  echo("      }\n");
-  echo("    }\n\n");
+  echo("        if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
+  echo("        else Cabecalho.checked=false;\n");
+  echo("        if(j > 0){\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(array_itens); };\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+  echo("        }\n");
+  echo("      }\n\n");
 
-  echo("    function CheckTodos(){\n");
-  echo("      var e;\n");
-  echo("      var i;\n");
-  echo("      var CabMarcado = document.getElementById('checkMenu').checked;\n");
-  echo("      var cod_itens=document.getElementsByName('chkItem');\n");
-  echo("      for(i = 0; i < cod_itens.length; i++){\n");
-  echo("        e = cod_itens[i];\n");
-  echo("        e.checked = CabMarcado;\n");
-  echo("      }\n");
-  echo("      VerificaCheck();\n");
-  echo("    }\n\n");
+  echo("      function CheckTodos(){\n");
+  echo("        var e;\n");
+  echo("        var i;\n");
+  echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        for(i = 0; i < cod_itens.length; i++){\n");
+  echo("          e = cod_itens[i];\n");
+  echo("          e.checked = CabMarcado;\n");
+  echo("        }\n");
+  echo("        VerificaCheck();\n");
+  echo("      }\n\n");
 
-  echo("    function ExcluirSelecionados(array_itens){\n");
+  echo("      function ExcluirSelecionados(array_itens){\n");
   /* 73 - Tem certeza que deseja desmarcar as sess�es selecionadas? */
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases,73)."')){\n");
-  echo("        xajax_DesmarcaSessaoDinamic('".$cod_curso."', array_itens, '".$cod_usuario."');\n");
-  echo("      }\n");
-  echo("    }\n\n");
+  echo("        if (confirm('".RetornaFraseDaLista($lista_frases,73)."')){\n");
+  echo("          xajax_DesmarcaSessaoDinamic('".$cod_curso."', array_itens, '".$cod_usuario."');\n");
+  echo("        }\n");
+  echo("      }\n\n");
 
-  echo("    function Recarregar(){\n");
-  echo("      document.location='desmarcar_sessoes.php?cod_curso=".$cod_curso."&acao=desmarcar_sessao&atualizacao=true';");
-  echo("    }\n\n");
+  echo("      function Recarregar(){\n");
+  echo("        document.location='desmarcar_sessoes.php?cod_curso=".$cod_curso."&acao=desmarcar_sessao&atualizacao=true';");
+  echo("      }\n\n");
 
-  echo("</script>\n");
+  echo("    </script>\n");
 
   $objAjax->printJavascript("../xajax_0.2.4/");
 
@@ -169,7 +153,7 @@
   echo(" - ".RetornaFraseDaLista($lista_frases,63)."</h4>");
   $cod_pagina=8;
   if(($AcessoAvaliacao)&&($e_formador))/*Pare exibir a ajuda de avalia��es*/
-  $cod_pagina=14;
+    $cod_pagina=14;
 
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
@@ -187,19 +171,19 @@
 
   echo("      <ul class=\"btAuxTabs\">\n");
   /* 27 - Ver sess�es realizadas */
-  echo("        <li><span title=\"Ver sess�es realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 27)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
   if ($e_formador)
   {
     /* 47 - Marcar sess�o */
-    echo("        <li><span title=\"Marcar sess�o\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 47)."\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
     /* 63 - Desmarcar sess�es */
-    echo("        <li><span title=\"Desmarcar sess�es\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 63)."\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
 
     /* 78 - Lixeira */
-    echo("        <li><span title=\"Lixeira\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 78)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
   }
   /* 55 - Pr�xima sess�o marcada */
-  echo("        <li><span title=\"Pr�xima sess�o marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 55)."\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
 
   echo("      </ul>\n");
 
@@ -211,9 +195,9 @@
 
   /* prepara a exibi��o dos campos a serem preenchidos */
   /* 73 - Tem certeza que deseja desmarcar as sess�es selecionadas? */
-  echo("      <form action=desmarcar_sessoes2.php method=post onSubmit=\"return(confirm('".RetornaFraseDaLista($lista_frases,73)."'));\">\n");
+  echo("      <form action=\"desmarcar_sessoes2.php\" method=\"post\" onSubmit=\"return(confirm('".RetornaFraseDaLista($lista_frases,73)."'));\">\n");
   //echo(RetornaSessionIDInput());
-  echo("      <input type=hidden name=cod_curso value=".$cod_curso." />\n");
+  echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
 
   echo("      <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("        <tr class=\"head\">\n");
@@ -253,9 +237,8 @@
         $i = ($i + 1) % 2;
         if ($e_formador)
         {
-          //echo("      <td><input class=input type=checkbox name=cod_assunto_desmarcar[] value=".$linha['cod_assunto']." /></td>\n");
-
-          echo("<td><input class=\"input\" type=\"checkbox\" name=\"chkItem\" id=\"itm_".$linha['cod_assunto']."\" onclick='VerificaCheck();' value=\"".$linha['cod_assunto']."\" /></td>\n");
+          //echo("      <td><input class=\"input\" type=\"checkbox\" name=\"cod_assunto_desmarcar[]\" value=\"".$linha['cod_assunto']."\" /></td>\n");
+          echo("      <td><input class=\"input\" type=\"checkbox\" name=\"chkItem\" id=\"itm_".$linha['cod_assunto']."\" onclick='VerificaCheck();' value=\"".$linha['cod_assunto']."\" /></td>\n");
         }
         echo("      <td>".$linha['assunto']."</td>\n");
         echo("      <td>".Unixtime2Data($linha['data_inicio'])."</td>\n");
@@ -268,7 +251,7 @@
             $cod_assunto=RetornaCodAssunto($sock,$linha['assunto'],$linha['data_inicio'],$linha['data_fim']);
             $cod_avaliacao=RetornaCodAvaliacao($sock,$cod_assunto);
             /* 35 - Sim*/
-            echo("<td class=text align=center><a class=text href=# onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a></td>");
+            echo("<td class=\"text\" align=center><a class=\"text\" href=\"#\" onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a></td>");
           }
           else
             /*36 - N�o*/
@@ -296,7 +279,7 @@
 
     echo("      <ul class=\"btAuxTabs03\">\n");
     /* 2 - Entrar na sala de bate-papo */
-    echo("        <li><span title=\"Entrar na sala de bate-papo\" onClick=\"return(OpenWindow());\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 2)."\" onClick=\"return(OpenWindow());\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
     echo("      </ul>\n");
 
   }
@@ -324,4 +307,3 @@
   Desconectar($sock);
 
 ?>
-

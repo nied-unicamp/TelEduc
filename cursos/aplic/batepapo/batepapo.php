@@ -94,15 +94,19 @@
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,0);
   MarcaAcesso($sock,$cod_usuario,$cod_ferramenta);
 
-  /* Encerra sessï¿½o anterior, se nï¿½o tiver ninguï¿½m online */
-  $cod_sessao=RetornaSessaoCorrente($sock);
+  /* Encerra sessão anterior, se não tiver ninguém online e se a sessão
+   * anterior não for uma sessão marcada previamente (e portanto tem uma
+   * hora marcada para acabar).
+   */
+  $cod_sessao     = RetornaSessaoCorrente($sock);
+  $sessao_marcada = RetornaListaSessoesMarcadas($sock);
 
   if (VerificaRetiradaOnline($sock))
   {
     LimpaOnline($sock,$cod_curso, 90);
   }
 
-  if (!VerificaOnline($sock))
+  if (!VerificaOnline($sock) && empty($sessao_marcada))
   {
     /* Todas as pessoas foram retiradas. Encerramos a sessao entï¿½o */
     EncerraSessao($sock,$cod_curso,$cod_sessao);

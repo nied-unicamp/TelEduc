@@ -50,36 +50,20 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n\n");
 
-  $sock=Conectar("");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+  echo("        startList(); \n");
+  echo("      }\n");
 
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
+  echo("      function OpenWindow() \n");
+  echo("      {\n");
+  echo("        window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
+  echo("        return(false);\n");
+  echo("      }\n");
 
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
-  echo("<script type=\"text/javascript\" language=JavaScript>\n\n");
-
-  echo("  function Iniciar() \n");
-  echo("  { \n");
-  echo("    startList(); \n");
-  echo("  } \n");
-
-  echo("  function OpenWindow() \n");
-  echo("  {\n");
-  echo("    window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
-  echo("    return(false);\n");
-  echo("  }\n");
-
-  echo("</script>\n");
+  echo("    </script>\n");
 
   $e_formador=EFormador($sock,$cod_curso,$cod_usuario);
 
@@ -122,19 +106,19 @@
 
     echo("      <ul class=\"btAuxTabs\">\n");
     /* 27 - Ver sess�es realizadas */
-    echo("        <li><span title=\"Ver sess�es realizadas\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 27)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
     if ($e_formador)
     {
       /* 47 - Marcar sess�o */
-      echo("        <li><span title=\"Marcar sess�o\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
+      echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 47)."\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
       /* 63 - Desmarcar sess�es */
-      echo("        <li><span title=\"Desmarcar sess�es\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
+      echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 63)."\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
 
       /* 78 - Lixeira */
-      echo("        <li><span title=\"Lixeira\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
+      echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 78)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
     }
     /* 55 - Pr�xima sess�o marcada */
-    echo("        <li><span title=\"Pr�xima sess�o marcada\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 55)."\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
 
     echo("      </ul>\n");
 
@@ -153,7 +137,7 @@
 
     echo("      <ul class=\"btAuxTabs03\">\n");
     /* 2 - Entrar na sala de bate-papo */
-    echo("        <li><span title=\"Entrar na sala de bate-papo\" onClick=\"return(OpenWindow());\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 2)."\" onClick=\"return(OpenWindow());\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
     echo("      </ul>\n");
 
   echo("    </td>\n");

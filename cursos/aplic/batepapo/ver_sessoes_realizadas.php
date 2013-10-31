@@ -56,12 +56,12 @@
 
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  
+
   if ($lixeira == "sim")
-  	$cod_pagina_ajuda=5;
+    $cod_pagina_ajuda=5;
   else
-  	$cod_pagina_ajuda=4;
-  	
+    $cod_pagina_ajuda=4;
+
   include("../topo_tela.php");
 
   // instanciar o objeto, passa a lista de frases por parametro
@@ -77,30 +77,18 @@
   // 107 - Erro ao apagar as sessï¿½es.
   $feedbackObject->addAction("excluir_sessao", 76, 107);
 
-  /* tela_topo.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); */
-
-  /* Encerra sessï¿½o anterior, se nï¿½o tiver ninguï¿½m online */
-  $cod_sessao=RetornaSessaoCorrente($sock);
+  /* Encerra sessão anterior, se não tiver ninguém online e se a sessão
+   * anterior não for uma sessão marcada previamente (e portanto tem uma
+   * hora marcada para acabar).
+   */
+  $cod_sessao     = RetornaSessaoCorrente($sock);
+  $sessao_marcada = RetornaListaSessoesMarcadas($sock);
   if (VerificaRetiradaOnline($sock))
   {
     LimpaOnline($sock,$cod_curso, 90);
   }
 
-  if (!VerificaOnline($sock))
+  if (!VerificaOnline($sock) && empty($sessao_marcada))
   {
     /* Todas as pessoas foram retiradas. Encerramos a sessao entï¿½o */
     EncerraSessao($sock,$cod_curso,$cod_sessao);
@@ -112,39 +100,39 @@
   /***********************
     Codigo Javascript
    ***********************/
-  // echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
-  echo("<script type=\"text/javascript\" language=JavaScript>\n\n");
-  
+  // echo("    <script language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n\n");
+
   if($AcessoAvaliacao)
   {
-    echo("    function VerAvaliacao(id)\n");
-    echo("    {\n");
-    echo("      window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-    echo("      return(false);\n");
-    echo("    }\n");
+    echo("      function VerAvaliacao(id)\n");
+    echo("      {\n");
+    echo("        window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+    echo("        return(false);\n");
+    echo("      }\n");
   }
 
-  echo("  function Iniciar() \n");
-  echo("  { \n");
-            $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo("    startList(); \n");
-  echo("  } \n");
+  echo("      function Iniciar() \n");
+  echo("      {\n");
+                $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("        startList(); \n");
+  echo("      }\n");
 
   /* Abre a janela de exibiï¿½ï¿½o da sessï¿½o escolhida */
-  echo("  function AbreSessao(cod_ses)\n");
-  echo("  {\n");
-  echo("    window.open('ver_sessao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_sessao='+cod_ses,'Sessao','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-  echo("    return false;\n");
-  echo("  }\n");
+  echo("      function AbreSessao(cod_ses)\n");
+  echo("      {\n");
+  echo("        window.open('ver_sessao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_sessao='+cod_ses,'Sessao','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("        return false;\n");
+  echo("      }\n");
 
   if ($lixeira!="sim")
   {
     // Se estiver visualizando as sessï¿½es de bate_bapo realizadas entï¿½o obtï¿½m o layer para avaliaï¿½ï¿½o
-    echo("  function iniciar()\n");
-    echo("  {\n");
-    echo("    lay_avaliacao = getLayer(\"layer_avaliacao\");\n");
-    echo("    EscondeLayers(); \n");
-    echo("  }\n");
+    echo("      function iniciar()\n");
+    echo("      {\n");
+    echo("        lay_avaliacao = getLayer(\"layer_avaliacao\");\n");
+    echo("        EscondeLayers(); \n");
+    echo("      }\n");
   }
 
   $e_formador       = EFormador($sock,$cod_curso,$cod_usuario);
@@ -161,63 +149,63 @@
       {
         if ($e_formador)
         {
-          echo("    function CriarAvaliacao(id)\n");
-          echo("    {\n");
-          echo("      document.frmSessao.cod_sessao.value = id;\n");
-          echo("      document.frmSessao.action = \"../avaliacoes/criar_avaliacao_batepapo.php?".RetornaSessionID());
+          echo("      function CriarAvaliacao(id)\n");
+          echo("      {\n");
+          echo("        document.frmSessao.cod_sessao.value = id;\n");
+          echo("        document.frmSessao.action = \"../avaliacoes/criar_avaliacao_batepapo.php?".RetornaSessionID());
           echo("&origem=../batepapo/ver_sessoes_realizadas\";\n");
-          echo("      document.frmSessao.submit();\n");
-          echo("    }\n\n");
+          echo("        document.frmSessao.submit();\n");
+          echo("      }\n\n");
 
           // Abre a janela com a lista de Participantes para ser avaliado
-          echo("  function AvaliarParticipantes(id)\n");
-          echo("  {\n");
-          echo("    window.open('../avaliacoes/avaliar_participantes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao='+id,'AvaliarParticipantes','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-          echo("    return false;\n");
-          echo("  }\n");
+          echo("      function AvaliarParticipantes(id)\n");
+          echo("      {\n");
+          echo("        window.open('../avaliacoes/avaliar_participantes.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao='+id,'AvaliarParticipantes','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+          echo("        return false;\n");
+          echo("      }\n");
         }
 
-        echo("  function VerNotas(id)\n");
-        echo("  {\n");
-        echo("    window.open(\"../avaliacoes/ver_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerNotas\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-        echo("    return(false);\n");
-        echo("  }\n");
+        echo("      function VerNotas(id)\n");
+        echo("      {\n");
+        echo("        window.open(\"../avaliacoes/ver_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerNotas\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+        echo("        return(false);\n");
+        echo("      }\n");
 
-        echo("  function VerificarParticipacao(id)\n");
-        echo("  {\n");
-        echo("    window.open(\"../avaliacoes/ver_participacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&origem=ver&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerParticipacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-        echo("    return(false);\n");
-        echo("  }\n");
+        echo("      function VerificarParticipacao(id)\n");
+        echo("      {\n");
+        echo("        window.open(\"../avaliacoes/ver_participacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&origem=ver&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerParticipacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+        echo("        return(false);\n");
+        echo("      }\n");
 
-        echo("  function HistoricodoDesempenho(id)\n");
-        echo("  {\n");
-        echo("    window.open(\"../avaliacoes/historico_desempenho_todos.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"HistoricoDesempenho\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-        echo("    return(false);\n");
-        echo("  }\n");
+        echo("      function HistoricodoDesempenho(id)\n");
+        echo("      {\n");
+        echo("        window.open(\"../avaliacoes/historico_desempenho_todos.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"HistoricoDesempenho\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+        echo("        return(false);\n");
+        echo("      }\n");
 
-        echo("  function Ver(id)\n");
-        echo("  {\n");
-        echo("    window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&EhAluno=".$e_aluno."&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-        echo("    return(false);\n");
-        echo("  }\n");
+        echo("      function Ver(id)\n");
+        echo("      {\n");
+        echo("        window.open(\"../avaliacoes/ver_popup.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&EhAluno=".$e_aluno."&cod_avaliacao=\"+id,\"VerAvaliacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+        echo("        return(false);\n");
+        echo("      }\n");
       }
   }
-  echo("  function VerSessao(id)\n");
-  echo("  {\n");
-  echo("    window.open('ver_sessao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_sessao='+id,'Sessao','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
-  echo("    return false;\n");
-  echo("  }\n\n");
+  echo("      function VerSessao(id)\n");
+  echo("      {\n");
+  echo("        window.open('ver_sessao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_sessao='+id,'Sessao','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("        return false;\n");
+  echo("      }\n\n");
 
-  echo("  function VerAvaliacaoLixeira(id)\n");
-  echo("  {\n");
-  echo("    window.open('../avaliacoes/ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&EhLixeiraDaAtividade=1&cod_avaliacao='+id,'VerAvaliacao','width=450,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
-  echo("    return(false);\n");
-  echo("  }\n");
+  echo("      function VerAvaliacaoLixeira(id)\n");
+  echo("      {\n");
+  echo("        window.open('../avaliacoes/ver.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&EhLixeiraDaAtividade=1&cod_avaliacao='+id,'VerAvaliacao','width=450,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+  echo("        return(false);\n");
+  echo("      }\n");
 
-  echo("  function OpenWindow() \n");
-  echo("  {\n");
-  echo("    window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
-  echo("  }\n");
+  echo("      function OpenWindow() \n");
+  echo("      {\n");
+  echo("        window.open(\"entrar_sala.php?".RetornaSessionID()."&cod_curso=".$cod_curso."\",\"Batepapo\",\"width=1000,height=700,top=50,left=50,scrollbars=no,status=yes,toolbar=no,menubar=no,resizable=no\");\n");
+  echo("      }\n");
 
   echo("      function VerificaCheck(){\n");
   echo("        var i;\n");
@@ -262,7 +250,7 @@
   }
   echo("        }\n");
   echo("      }\n\n");
-  
+
   echo("      function CheckTodos(){\n");
   echo("        var e;\n");
   echo("        var i;\n");
@@ -274,7 +262,7 @@
   echo("        }\n");
   echo("        VerificaCheck();\n");
   echo("      }\n\n");
-  
+
   echo("      function ExcluirSelecionados(){\n");
   /* 79 - Tem certeza que deseja apagar definitvamente as sessï¿½es selecionadas?  */
   echo("        if (confirm('".RetornaFraseDaLista($lista_frases,79)."')){\n");
@@ -297,16 +285,16 @@
   echo("        }\n");
   echo("      }\n\n");
 
-  echo("    function Recarregar(status){\n");
-  echo("      if(status=='A') \n");
-  echo("        document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&acao=recuperar_sessao&atualizacao=true';");
-  echo("      if(status=='X') \n");
-  echo("        document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&lixeira=sim&acao=excluir_sessao&atualizacao=true';");
-  echo("      if(status=='L') \n");
-  echo("        document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&acao=apagar_sessao&atualizacao=true';");
-  echo("    }\n\n");
+  echo("      function Recarregar(status){\n");
+  echo("        if(status=='A') \n");
+  echo("          document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&acao=recuperar_sessao&atualizacao=true';");
+  echo("        if(status=='X') \n");
+  echo("          document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&lixeira=sim&acao=excluir_sessao&atualizacao=true';");
+  echo("        if(status=='L') \n");
+  echo("          document.location='ver_sessoes_realizadas.php?cod_curso=".$cod_curso."&acao=apagar_sessao&atualizacao=true';");
+  echo("      }\n\n");
 
-  echo("</script>\n");
+  echo("    </script>\n");
 
   $objAjax->printJavascript("../xajax_0.2.4/");
 
@@ -332,12 +320,12 @@
     echo(" - ".RetornaFraseDaLista($lista_frases,27)."</h4>\n");
     $cod_pagina=4;
     if(($AcessoAvaliacao)&&($e_formador))/*Pare exibir a ajuda de avaliaï¿½ï¿½es*/
-       $cod_pagina=10;
+      $cod_pagina=10;
   }
 
-   /* 509 - Voltar */
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   echo("<div id=\"mudarFonte\">\n");
   echo("	<a href=\"#\" onClick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("	<a href=\"#\" onClick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
@@ -373,7 +361,7 @@
 //     if (count($sessoes)>1)
 //     {
 //       /* 58 - Ver prï¿½ximas sessï¿½es marcadas */
-//       echo("          <a href=ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso.">(".RetornaFraseDaLista($lista_frases,58).")</a>\n");
+//       echo("          <a href=\"ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."\">(".RetornaFraseDaLista($lista_frases,58).")</a>\n");
 //     }
 //     echo("          </td>\n");
 //     echo("        </tr>\n");
@@ -388,19 +376,19 @@
 
   echo("      <ul class=\"btAuxTabs\">\n");
   /* 27 - Ver sessï¿½es realizadas */
-  echo("        <li><span onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 27)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 27)."</span></li>\n");
   if ($e_formador)
   {
     /* 47 - Marcar sessï¿½o */
-    echo("        <li><span onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 47)."\" onClick=\"document.location='marcar_sessao.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 47)."</span></li>\n");
     /* 63 - Desmarcar sessï¿½es */
-    echo("        <li><span onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 63)."\" onClick=\"document.location='desmarcar_sessoes.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 63)."</span></li>\n");
 
     /* 78 - Lixeira */
-    echo("        <li><span onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 78)."\" onClick=\"document.location='ver_sessoes_realizadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;lixeira=sim';\">".RetornaFraseDaLista($lista_frases, 78)."</span></li>\n");
   }
   /* 55 - Prï¿½xima sessï¿½o marcada */
-  echo("        <li><span onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases, 55)."\" onClick=\"document.location='ver_sessoes_marcadas.php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."';\">".RetornaFraseDaLista($lista_frases, 55)."</span></li>\n");
 
   echo("      </ul>\n");
   echo("    </td>\n");
@@ -408,13 +396,13 @@
   echo("  <tr>\n");
   echo("    <td valign=\"top\">\n");
 
-  echo("      <form name=frmSessao action=\"\" method=post>\n");
+  echo("      <form name=\"frmSessao\" action=\"\" method=\"post\">\n");
   //echo(RetornaSessionIDInput());
-  echo("        <input type=hidden name=cod_curso value=".$cod_curso." />\n");
+  echo("        <input type=\"hidden\" name=\"cod_curso\"               value=\"".$cod_curso."\" />\n");
   /* Passa o cod_avaliacao para executar aï¿½ï¿½es sobre ela.       */
-  echo("        <input type=hidden name=cod_avaliacao value=-1 />\n");
-  echo("        <input type=hidden name=cod_sessao value=-1 />\n");
-  echo("        <input type=hidden name=VeiodeSessoesRealizadas value=1 />\n");
+  echo("        <input type=\"hidden\" name=\"cod_avaliacao\"           value=\"-1\" />\n");
+  echo("        <input type=\"hidden\" name=\"cod_sessao\"              value=\"-1\" />\n");
+  echo("        <input type=\"hidden\" name=\"VeiodeSessoesRealizadas\" value=\"1\" />\n");
   echo("      </form>\n");
 
   /* <!----------------- Tabela Interna -----------------> */
@@ -444,8 +432,8 @@
     $lista=RetornaListaSessoes($sock,'A');
 
   $i=0;
-  $reg=count($lista);   //numero de sessoes a serem listadas
-  $num=0;       // contador para registros listados
+  $reg=count($lista);  //numero de sessoes a serem listadas
+  $num=0;              // contador para registros listados
   if (count($lista)>0)
   {
     foreach($lista as $cod => $linha)
@@ -459,76 +447,77 @@
 
       if ($lixeira=="sim")
       {
-        echo("      <td><a href=# onClick=return(AbreSessao(".$linha['cod_sessao']."));>");
-        echo("<img src=../imgs/trash.gif border=0 />");
+        echo("      <td><a href=\"#\" onClick='return(AbreSessao(".$linha['cod_sessao']."));'>");
+        echo("<img src=\"../imgs/trash.gif\" border=0 />");
         echo($linha['Assunto']."</a></td>\n");
       }
       else
       {
-        echo("      <td><a href=# onClick=return(AbreSessao(".$linha['cod_sessao']."));>");
-        echo("<img src=../imgs/icForum.gif border=0 />");
+        echo("      <td><a href=\"#\" onClick='return(AbreSessao(".$linha['cod_sessao']."));'>");
+        echo("<img src=\"../imgs/icForum.gif\" border=0 />");
         echo($linha['Assunto']."</a></td>\n");
       }
 
-      echo("      <td class=text align=center>".Unixtime2Data($linha['DataInicio'])."</td>\n");
-      echo("      <td class=text align=center>".Unixtime2Hora($linha['DataInicio'])."</td>\n");
-      echo("      <td class=text align=center>".Unixtime2Hora($linha['DataFim'])."</td>\n");
-       /*5 - (Sessï¿½o nï¿½o agendada)*/
+      echo("      <td class=\"text\" align=center>".Unixtime2Data($linha['DataInicio'])."</td>\n");
+      echo("      <td class=\"text\" align=center>".Unixtime2Hora($linha['DataInicio'])."</td>\n");
+      echo("      <td class=\"text\" align=center>".Unixtime2Hora($linha['DataFim'])."</td>\n");
       if($AcessoAvaliacao)
       {
         /* Pode ocorrer de uma sessï¿½o de bate-papo fazer parte de mais de um assunto 
-	   Desse modo, devemos determinar se hï¿½ uma avaliaï¿½ï¿½o para cada um desses assuntos
-	 */
-	/* Os assuntos sï¿½o montados na funï¿½ï¿½o RetornaListaSessoes, e se houver mais de um, eles sï¿½o
-           separados por um <br/>	 
-	 */
-	$assunto_unico = explode("<br/>", $linha['Assunto']); 
-        echo("      <td class=text align=center>");
+           Desse modo, devemos determinar se hï¿½ uma avaliaï¿½ï¿½o para cada um desses assuntos
+         */
+        /* Os assuntos sï¿½o montados na funï¿½ï¿½o RetornaListaSessoes, e se houver mais de um, eles sï¿½o
+           separados por um <br/> 
+         */
+        $assunto_unico = explode("<br/>", $linha['Assunto']);
+        echo("      <td class=\"text\" align=center>");
 
-	foreach($assunto_unico as $assunto_u){ 	
-		if (strcmp($linha['Assunto'], RetornaFraseDaLista($lista_frases,5)))
-		{
-			if (BatePapoEhAvaliacao($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']))
-			{
-				$cod_assunto=RetornaCodAssunto($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']);
-				$cod_avaliacao=RetornaCodAvaliacao($sock,$cod_assunto);
-				$foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$cod_usuario);
-				
-				if ($e_aluno || $usr_conv_ativo || $usr_conv_passivo)
-				{
-					// G 35 - Sim
-					echo(RetornaFraseDaLista($lista_frases_geral,35)."<br/>");
-				}
-				elseif ($e_formador)
-				{
-						// G 35 - Sim
-						echo("<a class=text href=# onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");	
-				}else
-				{
-				/* 95 - erro interno... */
-				echo (RetornaFraseDaLista($lista_frases,95));
-				}
-			}
-			elseif (($lixeira=="sim") && (BatePapoEraAvaliacao($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim'])))
-			{
-				$cod_assunto=RetornaCodAssunto($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']);
-				$cod_avaliacao=RetornaCodAvaliacaoApagada($sock,$cod_assunto);
-				/* 35 - Sim */
-				echo("<a class=text href=# onClick='VerAvaliacaoLixeira(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");
-			}
-			else
-			/* 36 - Nï¿½o */
-			echo("<font class=text>".RetornaFraseDaLista($lista_frases_geral,36)."</font><br/>");
-		}
-		else
-		/* 36 - Nï¿½o */
-		echo("<font class=text>".RetornaFraseDaLista($lista_frases_geral,36)."</font><br/>");
-		}
-		
-	}//fim ï¿½ do foreach
-	echo("</td>\n");
-	echo("    </tr>\n");
-    }//fim do acesso avaliaï¿½ï¿½o
+        foreach($assunto_unico as $assunto_u){
+          // Se o Assunto da sessão for diferente de "Sessï¿½o nï¿½o agendada"
+          /*5 - (Sessï¿½o nï¿½o agendada)*/
+          if (strcmp($linha['Assunto'], RetornaFraseDaLista($lista_frases,5)))
+          {
+            if (BatePapoEhAvaliacao($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']))
+            {
+              $cod_assunto=RetornaCodAssunto($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']);
+              $cod_avaliacao=RetornaCodAvaliacao($sock,$cod_assunto);
+              $foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$cod_usuario);
+
+              if ($e_aluno || $usr_conv_ativo || $usr_conv_passivo)
+              {
+                // G 35 - Sim
+                echo(RetornaFraseDaLista($lista_frases_geral,35)."<br/>");
+              }
+              elseif ($e_formador)
+              {
+                // G 35 - Sim
+                echo("<a class=\"text\" href=\"#\" onClick='VerAvaliacao(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");
+              }else
+              {
+                /* 95 - erro interno... */
+                echo (RetornaFraseDaLista($lista_frases,95));
+              }
+            }
+            elseif (($lixeira=="sim") && (BatePapoEraAvaliacao($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim'])))
+            {
+              $cod_assunto=RetornaCodAssunto($sock,$assunto_u,$linha['DataInicio'],$linha['DataFim']);
+              $cod_avaliacao=RetornaCodAvaliacaoApagada($sock,$cod_assunto);
+              /* 35 - Sim */
+              echo("<a class=\"text\" href=\"#\" onClick='VerAvaliacaoLixeira(".$cod_avaliacao.");return(false);'>".RetornaFraseDaLista($lista_frases_geral,35)."</a><br/>");
+            }
+            else
+              /* 36 - Nï¿½o */
+              echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases_geral,36)."</font><br/>");
+          }
+          else
+            /* 36 - Nï¿½o */
+            echo("<font class=\"text\">".RetornaFraseDaLista($lista_frases_geral,36)."</font><br/>");
+        }//fim ï¿½ do foreach
+
+      }//fim do acesso avaliaï¿½ï¿½o
+      echo("</td>\n");
+      echo("    </tr>\n");
+    }
   }
   else
   {
