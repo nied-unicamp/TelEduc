@@ -61,8 +61,6 @@
     LimpaOnline($sock,$cod_curso, 90);
   }
 
-  print '<pre>'.print_r($sessao_marcada, true).'</pre>';
-  print '<pre>'.var_export(empty($sessao_marcada), true).'</pre>';
   if (!VerificaOnline($sock) && empty($sessao_marcada))
   {
     EncerraSessao($sock,$cod_curso,$cod_sessao);
