@@ -60,15 +60,18 @@ function AdmiteVisitante($sock,$cod_curso)
     return false;
 }
 
-/* RetornaCSSInline - Dado um array de arquivos css, retorna seu conteudo inline */
+/* *********************************************************************
+   RetornaCSSInline - Dado um array de arquivos css, retorna seu conteudo
+                      inline 
+ */
 function RetornaCSSInline($estilos_css){
-	$inline = "";
-	
-	foreach($estilos_css as $css){
-		$inline .= file_get_contents($css);
-	}
-	
-	return $inline;
+  $inline = "";
+
+  foreach($estilos_css as $css){
+    $inline .= file_get_contents($css);
+  }
+
+  return $inline;
 }
 
 /* *********************************************************************
@@ -462,49 +465,49 @@ if(!function_exists("RetornaGruposDoUsuario")){
 
 /************************ Funcoes do Menu **************************/
 function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_ferramenta,$cod_usuario){
-  
-	/* As ferramentas do TelEduc foram agrupadas de acordo com
-	 * sua funcionalidade. As ferramentas que estao na divisa precisam
-	 * colocar um traco a mais para representar a divisao. Sao estas:
-	 * Ferramenta 8 - Mural
-     * Ferramenta 11 - Correio
-     * Ferramenta 15 - Portfolio
-     * Ferramenta 17 - Estrutura do Ambiente
-     * Ferramenta 19 - Intermap
-     * Ferramenta 22 - Avaliacoes 
-     */
-    
-	/* Verifica se a ferramenta atual eh a que esta selecionada */
-	if ($cod_ferr == $cod_ferramenta)
-		$style .= "Selecionada ";
-	
-	/* Verifica se a ferramenta atual esta na divisa */
-    if ($cod_ferr==8 ||$cod_ferr==11 || $cod_ferr==15 || $cod_ferr==17 || $cod_ferr==19 || $cod_ferr==22)
-    	$style .= "Divisa ";
-    	
-    /* Verifica se ha novidades na ferramenta atual */
-    $novidades = ($data>$ultimo_acesso);
-    if ($novidades)
-    	$style .= "Novidade ";
 
-   	echo("            <li class=\"".$style."\">\n");
-    echo("			  		<div>");
-      
-    if ($cod_ferr==15)
-    	echo("               <a class=\"".$style."\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
-    else 
-		echo("               <a class=\"".$style."\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
-		
-	/* Coloca estrela se houver novidade */
-	if ($novidades)
-		echo(" 				<img src='../imgs/estrelinha.gif' border=\"0\" alt=\"\" />");
-  
-    echo("					".$nome_ferramenta."");
-    echo("               </a>\n");
-    echo("             </div>\n");
-    echo("            </li>\n");
-    
-  }
+  /* As ferramentas do TelEduc foram agrupadas de acordo com
+   * sua funcionalidade. As ferramentas que estao na divisa precisam
+   * colocar um traco a mais para representar a divisao. Sao estas:
+   * Ferramenta 8 - Mural
+   * Ferramenta 11 - Correio
+   * Ferramenta 15 - Portfolio
+   * Ferramenta 17 - Estrutura do Ambiente
+   * Ferramenta 19 - Intermap
+   * Ferramenta 22 - Avaliacoes 
+   */
+
+  /* Verifica se a ferramenta atual eh a que esta selecionada */
+  if ($cod_ferr == $cod_ferramenta)
+    $style .= "Selecionada ";
+
+  /* Verifica se a ferramenta atual esta na divisa */
+  if ($cod_ferr==8 ||$cod_ferr==11 || $cod_ferr==15 || $cod_ferr==17 || $cod_ferr==19 || $cod_ferr==22)
+    $style .= "Divisa ";
+
+  /* Verifica se ha novidades na ferramenta atual */
+  $novidades = ($data>$ultimo_acesso);
+  if ($novidades)
+    $style .= "Novidade ";
+
+  echo("            <li class=\"".$style."\">\n");
+  echo("			  		<div>");
+
+  if ($cod_ferr==15)
+    echo("               <a class=\"".$style."\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
+  else 
+    echo("               <a class=\"".$style."\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+
+  /* Coloca estrela se houver novidade */
+  if ($novidades)
+    echo(" 				<img src='../imgs/estrelinha.gif' border=\"0\" alt=\"\" />");
+
+  echo("					".$nome_ferramenta."");
+  echo("               </a>\n");
+  echo("             </div>\n");
+  echo("            </li>\n");
+
+}
 
 /********************************************************************
   Fun�ao RetornaNomeCodCursoUsuario - Retorna os codigos e os nomes dos cursos dos quais o usuario tem acesso
@@ -516,11 +519,11 @@ function RetornaNomeCodCursoUsuario($sock)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query = "SELECT CUR.cod_curso,CUR.nome_curso
-	    FROM ".$dbnamebase.".Usuario USU
-	    INNER JOIN ".$dbnamebase.".Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario)
-	    INNER JOIN ".$dbnamebase.".Cursos CUR on (CUR.cod_curso = USUC.cod_curso)
-            WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
+  $query  = "SELECT CUR.cod_curso,CUR.nome_curso ";
+  $query .= "FROM ".$dbnamebase.".Usuario USU ";
+  $query .= "INNER JOIN ".$dbnamebase.".Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+  $query .= "INNER JOIN ".$dbnamebase.".Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+  $query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
 
   $res = Enviar($sock, $query);
 
@@ -552,9 +555,9 @@ function RetornaListaDeCursosUsuario($sock){
 */
 function RetornaLinguaCurso($sock,$cod_curso)
 {
-	$query="select cod_lingua from Cursos where cod_curso='".$cod_curso."'";
-  	$res=Enviar($sock,$query);
-  	$linha=RetornaLinha($res);
-  	return $linha[0];
+  $query="select cod_lingua from Cursos where cod_curso='".$cod_curso."'";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  return $linha[0];
 }
 ?>

@@ -150,17 +150,14 @@
     echo("          </div>\n");
 
     echo("          <h3>".NomeCurso($sock,$cod_curso)."</h3>\n");
-    echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicitacao</span></div>\n");
+    echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicita&ccedil&atilde;o</span></div>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
     echo("      <tr>\n");
 
-  
-
     echo("        <td style=\"width:200px\" valign=\"top\">\n");
     echo("          <!-- Navegacao Principal -->\n");
     echo("          <ul id=\"nav\">\n");
-
 
     // Ferramenta 11 - Correio
     // Ferramenta 12 - Grupos
@@ -169,38 +166,34 @@
     // Ferramenta 22 - Avaliacoes
     // Ferramenta 23 - Execicios
 
-    // Lista das ferramentas a esconder de convidados passivos
-    $tela_array_convidado_passivo = array (11, 12, 14, 15, 22, 23);
-    // Lista das ferramentas a esconder de convidados ativos
-    $tela_array_convidado_ativo   = array (12, 14, 22, 23);
+    // Lista das ferramentas a esconder de visitantes
+    $tela_array_visitante   = array (11, 12, 14, 15, 22, 23);
+    // Lista das ferramentas a esconder de colaboradores
+    $tela_array_colaborador = array (12, 14, 22, 23);
 
     foreach($tela_ordem_ferramentas as $cod => $linha)
     {
       $tela_cod_ferr=$linha['cod_ferramenta'];
 
-      if($tela_cod_ferr != -1){
-        $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
-        $tela_diretorio=$tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
+      if($tela_cod_ferr != -1) {
+        $tela_nome_ferramenta = RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
+        $tela_diretorio = $tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
         if (isset($tela_curso_ferramentas[$tela_cod_ferr])) {
-          $tela_status=$tela_curso_ferramentas[$tela_cod_ferr]['status'];
+          $tela_status = $tela_curso_ferramentas[$tela_cod_ferr]['status'];
         }
         else {
           $tela_status = 'A';
         }
 
-        $tela_exibir = false;
-        if (! $tela_convidado)
+        $tela_exibir = true;
+        if ($tela_colaborador)
         {
-          $tela_exibir = true;
+          // verifica na lista se deve exibir a ferramenta para o colaborador
+          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_array_colaborador);
         }
-        else if ($tela_convidado_ativo)
+        else if ($tela_visitante)
         {
-          // verifica na lista se deve exibir a ferramenta para o convidado ativo
-          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_array_convidado_ativo);
-        }
-        else if ($tela_convidado_passivo)
-        {
-          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_array_convidado_passivo);
+          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_colaborador);
         }
 
         if ($tela_exibir)
@@ -213,6 +206,7 @@
 
           if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))
           {
+            //TODO: rever essa função
             ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_convidado,$tela_convidado_passivo,$tela_convidado_ativo,$tela_style,$cod_ferramenta,$cod_usuario);
           }
         }
@@ -221,7 +215,7 @@
 
     echo("          </ul>\n");
 
-    echo("		  <br>");
+    echo("          <br>");
 
     // Lista os usuarios online
     $lista_usuarios_online=RetornaUsuariosOnline($sock, $time_out);
@@ -234,9 +228,9 @@
       echo("            <li class=\"usuarioOnlineLista\">\n");
       echo(               NomeUsuario($sock, $linha["cod_usuario"], $cod_curso) );
       echo("            </li>\n");
-  }
-  echo("            </ul>\n");
-  echo("        </td>\n");
+    }
+    echo("            </ul>\n");
+    echo("        </td>\n");
   }
 
 ?>
