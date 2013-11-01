@@ -470,10 +470,10 @@
   echo("                    <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,13)."\" />\n");
   echo("                  </div>\n");
 
-  echo("                  <input type=hidden name=\"cod_curso\" value=".$cod_curso." />\n");
+  echo("                  <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso." />\n");
 
   foreach($cod_ferr as $cod => $ferr)
-    echo("                  <input type=hidden name=\"cod_ferr[]\" value=\"".$ferr."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_ferr[]\" value=\"".$ferr."\" />\n");
 
   echo("                </form>\n");
 

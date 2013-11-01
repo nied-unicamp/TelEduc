@@ -452,7 +452,7 @@ function RetornaStatusFerramentas($sock)
             $cod_usuario - c�digo do usu�rio
    Saida: $tipo_usuario - O tipo do usu�rio
 */
-function RetornaTipoUsuario($sock,$cod_curso, $cod_usuario)
+function RetornaTipoUsuario($sock, $cod_curso, $cod_usuario)
 {
 
    // 2Session
