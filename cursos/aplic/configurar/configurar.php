@@ -66,8 +66,8 @@
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   // 25 - Plano de notifica��es de novidades alterado com sucesso.
-  //  - Erro na altera��o de notificar novidades.
-  $feedbackObject->addAction("atualiza_notificacao", 25, "Erro na altera��o de notificar novidades.");
+  // 26 - Erro ao alterar o plano de notifica��es de novidades.
+  $feedbackObject->addAction("atualiza_notificacao", 25, 26);
 
    /*
   ==================
