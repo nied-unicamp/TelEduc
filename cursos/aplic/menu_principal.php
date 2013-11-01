@@ -14,7 +14,7 @@
   // Tempo para um usuario ser considerado offline em segundos
   $time_out=30*60;
 
-  /* Funï¿½ï¿½es javascript */
+  /* Funções javascript */
   echo("    <script language=\"javascript\" type=\"text/javascript\">\n");
   /* *********************************************************
   Funcao MostraPerfil
@@ -96,10 +96,10 @@
 
       }
 
-      // 46 - Visï¿½o de Formador
+      // 46 - Visão de Formador
       $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,46);
       echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
-      // 45 - Visï¿½o de Aluno
+      // 45 - Visão de Aluno
 
       $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,45);
       echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
@@ -141,7 +141,7 @@
     }
 
     /*Ajuda */
-    // 43 - Voltar ao inï¿½cio
+    // 43 - Voltar ao início
     $tela_nome_ferramenta=RetornaFraseDaLista($lista_frases_menu,43);
     echo("            ".PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
     echo("            <li><img src=\"../imgs/icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
@@ -163,7 +163,7 @@
 
     // Ferramenta 11 - Correio
     // Ferramenta 12 - Grupos
-    // Ferramenta 14 - Diï¿½rio de bordo
+    // Ferramenta 14 - Diário de bordo
     // Ferramenta 15 - Portfolio
     // Ferramenta 22 - Avaliacoes
     // Ferramenta 23 - Execicios
