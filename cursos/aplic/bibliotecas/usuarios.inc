@@ -104,7 +104,7 @@ function getTipoAtor($sock, $cod_curso, $cod_usuario){
     $sigla= 'A';
   } elseif (EVisitante($sock, $cod_curso, $cod_usuario)){
     $sigla= 'V';
-  } elseif (EColaborador($sock, $cod_usuario, $cod_curso)){
+  } elseif (EColaborador($sock, $cod_curso, $cod_usuario)){
     $sigla= 'Z';
   }/* elseif (EConvidado($sock, $cod_usuario, $cod_curso)){
     $sigla= 'Z';
@@ -764,7 +764,7 @@ function RetornaLinguaUsuario($sock,$cod_usuario, $cod_curso)
    saida: true - o usuario eh colaborador.
           false - o usuario nao eh colaborador.
 */
-function EColaborador($sock, $cod_usuario, $cod_curso)
+function EColaborador($sock, $cod_curso, $cod_usuario)
 {
 
   // 2Session

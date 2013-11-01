@@ -137,8 +137,8 @@
 
   $e_formador       = EFormador($sock,$cod_curso,$cod_usuario);
   $e_aluno          = EAluno($sock, $cod_curso, $cod_usuario);
-  $usr_conv_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
+  $usr_visitante    = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador  = EColaborador($sock, $cod_curso, $cod_usuario);
 
   if(($AcessoAvaliacao)&&($lixeira!="sim"))
   {
@@ -483,7 +483,7 @@
               $cod_avaliacao=RetornaCodAvaliacao($sock,$cod_assunto);
               $foiavaliado=FoiAvaliado($sock,$cod_avaliacao,$cod_usuario);
 
-              if ($e_aluno || $usr_conv_ativo || $usr_conv_passivo)
+              if ($e_aluno || $usr_colaborador || $usr_visitante)
               {
                 // G 35 - Sim
                 echo(RetornaFraseDaLista($lista_frases_geral,35)."<br/>");
