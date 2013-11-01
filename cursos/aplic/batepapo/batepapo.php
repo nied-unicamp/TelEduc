@@ -48,7 +48,6 @@
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=1;
 
-  
   $bibliotecas="../bibliotecas/";
   include("../menu.inc");
 
@@ -57,9 +56,9 @@
   $sock=Conectar("");
 
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
-  
+
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
-   
+
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $tela_ordem_ferramentas=RetornaOrdemFerramentas($sock);
   $tela_lista_ferramentas=RetornaListaFerramentas($sock);
@@ -76,16 +75,13 @@
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
-  $tela_visitante     = EVisitante($sock,$cod_curso,$cod_usuario);
+  $tela_formador      = EFormador($sock,$cod_curso,$cod_usuario);
+  $tela_formadormesmo = EFormadorMesmo($sock,$cod_curso,$cod_usuario);
 
-  $tela_formador          = EFormador($sock,$cod_curso,$cod_usuario);
-  $tela_formadormesmo     = EFormadorMesmo($sock,$cod_curso,$cod_usuario);
-
-  // booleano, indica se usuario eh convidado
-  $tela_convidado         = EConvidado ($sock, $cod_usuario, $cod_curso);
-  // especifica que tipo de convidado eh
-  $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
+  // booleano, indica se usuario eh colaborador
+  $tela_colaborador   = EColaborador($sock, $cod_curso, $cod_usuario);
+  // booleano, indica se usuario eh visitante
+  $tela_visitante     = EVisitante($sock, $cod_curso, $cod_usuario);
 
   Desconectar($sock);
 
