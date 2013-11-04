@@ -52,8 +52,8 @@
   $sock=Conectar($cod_curso);
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-  $eformador=EFormador($sock,$cod_curso,$cod_usuario);
-  $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
+  $eformador   = EFormador($sock,$cod_curso,$cod_usuario);
+  $colaborador = EColaborador($sock, $cod_usuario, $cod_curso);
 
   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
   echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");

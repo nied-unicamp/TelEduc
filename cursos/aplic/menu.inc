@@ -464,7 +464,7 @@ if(!function_exists("RetornaGruposDoUsuario")){
 }
 
 /************************ Funcoes do Menu **************************/
-function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$convidado,$convidado_passivo,$convidado_ativo,$style,$cod_ferramenta,$cod_usuario){
+function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultimo_acesso,$style,$cod_ferramenta,$cod_usuario){
 
   /* As ferramentas do TelEduc foram agrupadas de acordo com
    * sua funcionalidade. As ferramentas que estao na divisa precisam
@@ -491,20 +491,20 @@ function ExibeLink($cod_curso,$cod_ferr,$nome_ferramenta,$diretorio,$data,$ultim
     $style .= "Novidade ";
 
   echo("            <li class=\"".$style."\">\n");
-  echo("			  		<div>");
+  echo("              <div>\n");
 
   if ($cod_ferr==15)
-    echo("               <a class=\"".$style."\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");	
+    echo("                <a class=\"".$style."\" href=\"../".$diretorio."/ver_".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."&amp;exibir=myp\" >");
   else 
-    echo("               <a class=\"".$style."\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
+    echo("                <a class=\"".$style."\" href=\"../".$diretorio."/".$diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferr."\">");
 
   /* Coloca estrela se houver novidade */
   if ($novidades)
-    echo(" 				<img src='../imgs/estrelinha.gif' border=\"0\" alt=\"\" />");
+    echo("<img src='../imgs/estrelinha.gif' border=\"0\" alt=\"\" />");
 
-  echo("					".$nome_ferramenta."");
-  echo("               </a>\n");
-  echo("             </div>\n");
+  echo($nome_ferramenta."\n");
+  echo("                </a>\n");
+  echo("              </div>\n");
   echo("            </li>\n");
 
 }

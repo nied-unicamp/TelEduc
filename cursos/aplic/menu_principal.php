@@ -66,7 +66,7 @@
     if (!empty ($_SESSION['cod_usuario_global_s'])) {
       $email_usuario = RetornaEmailUsuario1($_SESSION['cod_usuario_global_s']);
     }
-    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$email_usuario."</a>&nbsp;&nbsp;|&nbsp;&nbsp";
+    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$email_usuario."</a></li>\n";
 
     if ($tela_formadormesmo)
     {
@@ -109,7 +109,9 @@
 
     echo("          <div id=\"btsNivel3\" class=\"menu_dd\">\n");
 
-    echo("            <ul>\n".$tela_email);
+    echo("            <ul>\n");
+    echo("              ".$tela_email."\n");
+    echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp</li>");
     RetornaListaDeCursosUsuario($sock);
 
     /* 47 - Configurar */
@@ -206,8 +208,7 @@
 
           if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))
           {
-            //TODO: rever essa função
-            ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_convidado,$tela_convidado_passivo,$tela_convidado_ativo,$tela_style,$cod_ferramenta,$cod_usuario);
+            ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_style,$cod_ferramenta,$cod_usuario);
           }
         }
       }
@@ -221,12 +222,12 @@
     $lista_usuarios_online=RetornaUsuariosOnline($sock, $time_out);
 
     echo("          <ul class=\"usuarioOnlineExterno\">\n");
-    echo("            <li class=\"usuarioOnlineHead\">");
-    echo(               RetornaFraseDaLista($lista_frases_menu,60));
-    echo("            </li>");
+    echo("            <li class=\"usuarioOnlineHead\">\n");
+    echo("               ".RetornaFraseDaLista($lista_frases_menu,60)."\n");
+    echo("            </li>\n");
     foreach($lista_usuarios_online as $cod => $linha) {
       echo("            <li class=\"usuarioOnlineLista\">\n");
-      echo(               NomeUsuario($sock, $linha["cod_usuario"], $cod_curso) );
+      echo("               ".NomeUsuario($sock, $linha["cod_usuario"], $cod_curso)."\n");
       echo("            </li>\n");
     }
     echo("            </ul>\n");
