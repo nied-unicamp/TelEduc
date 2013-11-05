@@ -72,6 +72,9 @@
   $objAjax->registerFunction("MudarCompartilhamentoDinamic");
   $objAjax->registerFunction("AtualizaIconesDinamic");
   $objAjax->registerFunction("MudaTipoQuestaoDinamic");
+  $objAjax->registerFunction("OcultarArquivosDinamic");
+  $objAjax->registerFunction("DesocultarArquivosDinamic");
+  
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
@@ -90,9 +93,11 @@
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject = new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
-//  $feedbackObject->addAction("anexar", 62, sprintf(RetornaFraseDaLista($lista_frases, 189), ((int) ini_get('upload_max_filesize'))));
-  $feedbackObject->addAction("anexar", 62, 61);
-  //Frase #204: Questao criada com sucesso!
+  /*Frase #185 - Arquivo anexado com sucesso */
+  $feedbackObject->addAction("anexar", RetornaFraseDaLista($lista_frases, 185), 0);
+  /* Frase #210 - Arquivo descompactado com sucesso */
+  $feedbackObject->addAction("descompactar", RetornaFraseDaLista($lista_frases, 210), 0);
+  /*Frase #204: Questao criada com sucesso!*/
   $feedbackObject->addAction("criarQuestao", RetornaFraseDaLista($lista_frases, 204), 0);
 
   /* Se a questao esta em um exercicio que ja foi aplicado, volta para a pagina de questoes e exibe feedback. */
@@ -1254,81 +1259,214 @@
   echo("        return false;\n");
   echo("      return true;\n");
   echo("    }\n");
-
-  echo("    function EdicaoArq(i, msg){\n");
-  echo("      var nomeArq,td,subpasta;\n");
-  echo("      nomeArq = getfilename(document.getElementById('input_files').value);\n");
-  echo("      subpasta = pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      if ((i==1)&&(ArquivoValido(nomeArq))){\n"); //OK
-  echo("        xajax_VerificaExistenciaArquivoDinamic(".$cod_curso.",".$cod_questao.",".$cod_usuario.",pastaRaiz+subpasta,nomeArq);\n");
+  
+  echo("    function CheckTodosArq(){\n");
+  echo("      var e;\n");
+  echo("      var i;\n");
+  echo("      var CabMarcado = document.getElementById('checkMenuArq').checked;\n");
+  echo("      var cod_itens=document.getElementsByName('chkArq');\n");
+  //echo("      var cod_itens=getElementsByName_iefix('input', 'chkArq');\n");
+  echo("      for(i = 0; i < cod_itens.length; i++){\n");
+  echo("        e = cod_itens[i];\n");
+  echo("        e.checked = CabMarcado;\n");
   echo("      }\n");
-  echo("      else {\n");
-  echo("        alert('".RetornaFraseDaLista($lista_frases, 206)."');\n");
-  echo("        document.getElementById('input_files').style.visibility='hidden';\n");
-  echo("        document.getElementById('input_files').value='';\n");
-  echo("        document.getElementById('divArquivo').className='';\n");
-  echo("        document.getElementById('divArquivoEdit').className='divHidden';\n");
-  //Cancela Edição
-  echo("        if (!cancelarTodos)\n");
-  //echo("          xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
-  echo("        input=0;\n");
-  echo("        cancelarElemento=null;\n");
-  echo("      }\n");
+  echo("      VerificaChkBoxArq(0);\n");
   echo("    }\n\n");
 
-  echo("    function ApagarArq(){\n");
-  echo("      var i,j,checks,getNumber,nomeArq,arrayIdArq,caminho;\n");
-  echo("      checks = document.getElementsByName('chkArq');\n");
-  echo("      arrayIdArq = new Array();\n");
-  echo("      j = 0;\n");
-  echo("      caminho = pastaRaiz + pastaAtual.split(\"Raiz/\")[1];\n");
-  /* Frase #172 - Voce deseja excluir os arquivo(s) selecionado(s) ? */
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases, 172)."')){\n");
-  //echo("      xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_raiz);\n");
+  echo("      function EdicaoArq(i, msg){\n");
+  echo("        if ((i==1)&&(ArquivoValido(document.getElementById('input_files').value))){ //OK\n");
+  echo("          document.formFiles.submit();\n");
+  echo("        }\n");
+  echo("        else {\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases, 206)."');\n");
+  echo("          document.getElementById('input_files').style.visibility='hidden';\n");
+  echo("          document.getElementById('input_files').value='';\n");
+  echo("          document.getElementById('divArquivo').className='';\n");
+  echo("          document.getElementById('divArquivoEdit').className='divHidden';\n");
+  echo("          //Cancela Edição\n");
+  echo("          if (!cancelarTodos)\n");
+  //echo("            xajax_AcabaEdicaoDinamic('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", 0);\n");
+  echo("          input=0;\n");
+  echo("          cancelarElemento=null;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+  echo("      function ApagarArq(){\n");
+  echo("        checks = document.getElementsByName('chkArq');\n");
+  echo("        if (confirm('".RetornaFraseDaLista($lista_frases, 39)."')){\n");
+  //echo("          xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
+  echo("          for (i=0; i<checks.length; i++){\n");
+  echo("            if(checks[i].checked){\n");
+  echo("              getNumber=checks[i].id.split('_');\n");
+  echo("              nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
+  echo("            xajax_ExcluiArquivoDinamic(getNumber[1],nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"".RetornaFraseDaLista($lista_frases, 43)."\");\n");
+  //echo("              js_conta_arq--;\n");
+  echo("            }\n");
+  echo("          }\n");
+  echo("          LimpaBarraArq();\n");
+  echo("          VerificaChkBoxArq(0);\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
+  echo("      function Descompactar(){\n");
+    echo("        checks = document.getElementsByName('chkArq');\n");
+    echo("        for (i=0; i<checks.length; i++){\n");
+    echo("          if(checks[i].checked){\n");
+    echo("            getNumber=checks[i].id.split(\"_\");\n");
+    echo("            arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');\n");
+     /* Frase #40 - Voce tem certeza que deseja descompactar este arquivo? */
+    echo("            if (confirm(\"".RetornaFraseDaLista($lista_frases, 40)."\")){\n");
+   // echo("              xajax_AbreEdicao('".$tabela."', ".$cod_curso.", ".$cod_item.", ".$cod_usuario.", ".$cod_topico_raiz.");\n");
+    echo("              window.location='acoes.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&pasta=questao&acao=descompactar&arq='+arqZip;\n");
+    echo("            }\n");
+    echo("          } \n");
+    echo("        }\n");
+    echo("      }\n");
+
+  echo("      function VerificaChkBoxArq(alpha){\n");
+  echo("        CancelaTodos();\n");
+  echo("        checks = document.getElementsByName('chkArq');\n");
+  echo("        var i, j=0;\n");
+  echo("        var arqComum=0;\n");
+  echo("        var arqZip=0;\n");
+  echo("        var arqOculto=0;\n");
+  echo("        var pasta=0;\n\n");
+
   echo("        for (i=0; i<checks.length; i++){\n");
   echo("          if(checks[i].checked){\n");
+  echo("            j++;\n");
   echo("            getNumber=checks[i].id.split(\"_\");\n");
-  echo("            nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).innerHTML;\n");
-  echo("            xajax_ExcluiArquivoDinamic(i,caminho+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.",\"texto\");\n");
-  echo("            arrayIdArq[j++] = getNumber[1];\n");
+  echo("            tipo = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('tipoArq');\n");
+  echo("            switch (tipo){\n");
+  echo("              case ('pasta'): pasta=1;break;\n");
+  echo("              case ('comum'): arqComum++;break;\n");
+  echo("              case ('zip'): arqZip++;break;\n");
+  echo("            }\n\n");
+
+  echo("            if (document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('arqOculto')=='sim'){\n");
+  echo("               arqOculto++;\n");
+  echo("            }\n\n");
+
   echo("          }\n");
   echo("        }\n");
-  echo("        DeletaLinhaArq(arrayIdArq,j);\n");
-  echo("        VerificaChkBoxArq();\n");
-  echo("      }\n");
-  echo("    }\n\n");
 
-  echo("    function VerificaChkBoxArq(){\n");
-  echo("      var i,getNumber,nomeArq;\n");
-  echo("      var j=0;\n");
-  echo("      var flag=0;\n");
-  echo("      var cod_itens=document.getElementsByName('chkArq');\n");
-  echo("      var Cabecalho = document.getElementById('checkMenuArq');\n");
-  echo("      EscondeLayers();\n");
-  echo("      for (i=0; i < cod_itens.length; i++){\n");
-  echo("        if (cod_itens[i].checked){\n");
-  echo("          j++;\n");
-  echo("          getNumber = cod_itens[i].id.split(\"_\");\n");
-  echo("          nomeArq = document.getElementById('nomeArq_'+getNumber[1]).innerHTML;\n");
-  echo("          if(RetornaTipoArq(nomeArq) != 'zip')\n");
-  echo("            flag = 1;\n");
+  echo("        if (pasta==1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n");
+
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
+
+  echo("        }else if((arqComum==1)||(arqZip>1)){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
+  echo("        }else if(arqComum>1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
+  echo("        }else if(arqZip==1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp02\";\n\n");
+
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ ApagarArq(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){ Descompactar() };\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+
+  echo("          document.getElementById('sArq_apagar').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n");
+  echo("        }\n\n");
+
+  echo("        //todos arquivos selecionados sao ocultos\n");
+  echo("        if ((j==arqOculto)&&(j!=0)) {\n");
+  echo("            document.getElementById('sArq_ocultar').onclick= function(){ Desocultar(); };\n");
   echo("        }\n");
-  echo("      }\n");
-  echo("      if (j == (cod_itens.length) && i != 0) Cabecalho.checked=true;\n");
-  echo("      else Cabecalho.checked=false;\n");
-  echo("      if(j > 0){\n");
-  echo("        document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
-  echo("        document.getElementById('mArq_apagar').onclick=function(){ ApagarArq(); };\n");
-  echo("        document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-  echo("        document.getElementById('mArq_ocultar').onclick=function(){ Ocultar(); };\n");
-  echo("      }else{\n");
-  echo("        document.getElementById('mArq_apagar').className=\"menuUp\";\n");
-  echo("        document.getElementById('mArq_apagar').onclick=function(){ };\n");
-  echo("        document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
-  echo("        document.getElementById('mArq_ocultar').onclick=function(){ };\n");
-  echo("      }\n");
-  echo("    }\n\n");
 
+  echo("        //Nao foi chamado pela funcao CheckTodos\n");
+  echo("        if (alpha){\n");
+  echo("          if (j==checks.length){ document.getElementById('checkMenuArq').checked=true; }\n");
+  echo("          else document.getElementById('checkMenuArq').checked=false;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  
+  echo("	function Ocultar(){\n");
+  echo("		checks = document.getElementsByName('chkArq');\n");
+  echo("		j=0;\n");
+  echo("		var nomesArqs = new Array();\n");
+
+  echo("		for (i=0; i<checks.length; i++){\n");
+  echo("			if(checks[i].checked){\n");
+  echo("				getNumber=checks[i].id.split(\"_\");\n");
+  echo("				if ((document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('arqOculto'))=='nao'){\n");
+  echo("					nomesArqs[j] = new Array();\n");
+  echo("					nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
+  echo("					nomesArqs[j][0]=nomeArq;\n");
+  echo("					nomesArqs[j][1]=getNumber[1];\n");
+  echo("					j++;\n");
+  echo("				}\n");
+  echo("			}\n");
+  echo("		}\n");
+  /* #70 - Oculto */
+  /* #42 - Arquivo(s) ocultado(s) com sucesso. */
+  echo("		xajax_OcultarArquivosDinamic(nomesArqs, '".RetornaFraseDaLista($lista_frases, 70)."', ".$cod_curso.", ".$cod_usuario.", '".RetornaFraseDaLista($lista_frases, 42)."');\n");
+  echo("          LimpaBarraArq();\n");
+  echo("          VerificaChkBoxArq(0);\n");
+  echo("	}\n\n");
+
+  echo("	function Desocultar(){\n");
+  echo("		checks = document.getElementsByName('chkArq');\n");
+  echo("		j=0;\n");
+  echo("		var nomesArqs = new Array();\n");
+
+  echo("		for (i=0; i<checks.length; i++){\n");
+  echo("			if(checks[i].checked){\n");
+  echo("				getNumber=checks[i].id.split(\"_\");\n");
+  echo("				if ((document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('arqOculto'))=='sim'){\n");
+  echo("					nomesArqs[j] = new Array();\n");
+  echo("					nomeArq = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('nomeArq');\n");
+  echo("					nomesArqs[j][0]=nomeArq;\n");
+  echo("					nomesArqs[j][1]=getNumber[1];\n");
+  echo("					j++;\n");
+  echo("				}\n");
+  echo("			}\n");
+  echo("		}\n");
+  /* #234 - Arquivo(s) desocultado(s) com sucesso. */
+  echo("		xajax_DesocultarArquivosDinamic(nomesArqs, ".$cod_curso.", ".$cod_usuario.", '".RetornaFraseDaLista($lista_frases, 234)."');\n");
+  echo("          LimpaBarraArq();\n");
+  echo("          VerificaChkBoxArq(0);\n");
+  echo("}\n\n");
+  
+  echo("      function LimpaBarraArq(){\n");
+  echo("        lista = document.getElementById('listFiles');\n");
+  echo("        if (!js_conta_arq){\n");
+  echo("          pai_lista=lista.parentNode;\n");
+  echo("          pai_lista2=pai_lista.parentNode;\n");
+  echo("          i=3;\n");
+  echo("          do{\n");
+  echo("            if (pai_lista.firstChild)\n");
+  echo("              pai_lista.removeChild(pai_lista.firstChild);\n");
+  echo("            i--;\n");
+  echo("          }while(i>0);\n");
+  echo("        }\n");
+  echo("        document.getElementById('checkMenuArq').checked=false;\n");
+  echo("        CheckTodosArq();\n");
+  echo("      }\n");
 
   echo("    function InsereDiretorioVazio(){\n");
   echo("      var trRef,tr,td;");
@@ -1342,240 +1480,7 @@
   echo("      trRef = document.getElementById(\"optArq\");\n");
   echo("      trRef.parentNode.insertBefore(tr,trRef);\n");
   echo("    }\n\n");
-
-  echo("    function DeletaLinhaArq(arrayIdArq,n){\n");
-  echo("      var i,tr;\n");
-  echo("      for (i=0; i < n; i++){\n");
-  echo("        tr = document.getElementById('arq_'+arrayIdArq[i]);\n");
-  echo("        tr.parentNode.removeChild(tr);\n");
-  echo("        contaArq--;\n");
-  echo("      }\n");
-  echo("    }\n\n");
-
-  echo("    function criaTrArq(id){\n");
-  echo("      var tr;\n");
-  echo("      tr = document.createElement(\"tr\");\n");
-  echo("      tr.setAttribute(\"id\",\"arq_\"+id);\n");
-  echo("      tr.setAttribute(\"name\",pastaAtual);\n");
-  echo("      return tr;\n");
-  echo("    }\n\n");
-
-  echo("    function RetornaSrcImg(nomeArq)\n");
-  echo("    {\n");
-  echo("      var array,formato,n;\n");
-  echo("      array = nomeArq.split('.');\n");
-  echo("      n = array.length;\n");
-  echo("      formato = array[n-1];\n");
-  echo("      if(formato == 'zip'){\n");
-  echo("        return '../imgs/arqzip.gif';\n");
-  echo("      }\n");
-  echo("      if(formato == 'jpg' || formato == 'jpeg' || formato == 'png' || formato == 'gif'){\n");
-  echo("        return '../imgs/arqimg.gif';\n");
-  echo("      }\n");
-  echo("      if(formato == 'doc'){\n");
-  echo("        return '../imgs/arqdoc.gif';\n");
-  echo("      }\n");
-  echo("      if(formato == 'pdf'){\n");
-  echo("        return '../imgs/arqpdf.gif';\n");
-  echo("      }\n");
-  echo("      if(formato == 'html'){\n");
-  echo("        return '../imgs/arqhtml.gif';\n");
-  echo("      }\n");
-  echo("      if(formato == 'mp3' || formato == 'midi'){\n");
-  echo("        return '../imgs/arqsnd.gif';\n");
-  echo("      }\n");
-  echo("      return '../imgs/arqp.gif';\n");
-  echo("    }\n\n");
-
-  echo("    function RetornaTipoArq(nomeArq)\n");
-  echo("    {\n");
-  echo("      var array,formato,n;\n");
-  echo("      array = nomeArq.split('.');\n");
-  echo("      n = array.length;\n");
-  echo("      formato = array[n-1];\n");
-  echo("      if(formato == 'zip'){\n");
-  echo("        return 'zip';\n");
-  echo("      }\n");
-  echo("      else{\n");
-  echo("        return 'comum';\n");
-  echo("      }\n");
-  echo("    }\n\n");
-
-  echo("    function CriaCheckBoxArq(cod)\n");
-  echo("    {\n");
-  echo("      var check = document.createElement(\"input\");\n");
-  echo("      check.setAttribute(\"type\", \"checkbox\");\n");
-  echo("      check.setAttribute(\"id\",'chkArq_'+cod);\n");
-  echo("      check.setAttribute(\"name\", \"chkArq\");\n");
-  echo("      check.setAttribute(\"value\", cod);\n");
-  echo("      check.onclick = function(){ VerificaChkBoxArq(1); };\n");
-  echo("      return check;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaImgArq(nomeArq)\n");
-  echo("    {\n");
-  echo("      var img = document.createElement(\"img\");\n");
-  echo("      img.setAttribute(\"border\", \"0\");\n");
-  echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
-  echo("      return img;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
-  echo("    {\n");
-  echo("      var span = document.createElement(\"span\");\n");
-  //echo("      span.setAttribute(\"class\", \"link\");\n");
-  echo("      span.className=\"link\";");
-  echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
-  echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
-  echo("      span.setAttribute(\"nomeArq\",caminho);\n");
-  echo("      if(RetornaTipoArq(nomeArq) == 'zip')\n");
-  echo("        span.setAttribute(\"arqZip\",nomeArq);\n");
-  echo("      span.setAttribute(\"arqOculto\",\"nao\");\n");
-  echo("      span.onclick = function(){ WindowOpenVer(caminho); }\n");
-  echo("      span.innerHTML = nomeArq;\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaCheckBoxArq(cod)\n");
-  echo("    {\n");
-  echo("      var check = document.createElement(\"input\");\n");
-  echo("      check.setAttribute(\"type\", \"checkbox\");\n");
-  echo("      check.setAttribute(\"id\",'chkArq_'+cod);\n");
-  echo("      check.setAttribute(\"name\", \"chkArq\");\n");
-  echo("      check.setAttribute(\"value\", cod);\n");
-  echo("      check.onclick = function(){ VerificaChkBoxArq(); };\n");
-  echo("      return check;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaImgArq(nomeArq)\n");
-  echo("    {\n");
-  echo("      var img = document.createElement(\"img\");\n");
-  echo("      img.setAttribute(\"border\", \"0\");\n");
-  echo("      img.setAttribute(\"src\",RetornaSrcImg(nomeArq));\n");
-  echo("      return img;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaImgPasta()\n");
-  echo("    {\n");
-  echo("      var img = document.createElement(\"img\");\n");
-  echo("      img.setAttribute(\"border\", \"0\");\n");
-  echo("      img.setAttribute(\"src\",\"../imgs/pasta.gif\");\n");
-  echo("      return img;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaSpanVisualizarArq(nomeArq,cod,caminho)\n");
-  echo("    {\n");
-  echo("      var span = document.createElement(\"span\");\n");
-  //echo("      span.setAttribute(\"class\", \"link\");\n");
-  echo("      span.className=\"link\";");
-  echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
-  echo("      span.setAttribute(\"tipoArq\",RetornaTipoArq(nomeArq));\n");
-  echo("      span.setAttribute(\"nomeArq\",caminho);\n");
-  echo("      if(RetornaTipoArq(nomeArq) == 'zip')\n");
-  echo("        span.setAttribute(\"arqZip\",nomeArq);\n");
-  echo("      span.setAttribute(\"arqOculto\",\"nao\");\n");
-  echo("      span.onclick = function(){ WindowOpenVer(caminho); }\n");
-  echo("      span.innerHTML = nomeArq;\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaSpanAbrirPasta(nome,cod,caminho)\n");
-  echo("    {\n");
-  echo("      var span = document.createElement(\"span\");\n");
-  //echo("      span.setAttribute(\"class\", \"link\");\n");
-  echo("      span.className=\"link\";");
-  echo("      span.setAttribute(\"id\",\"nomeArq_\"+cod);\n");
-  echo("      span.onclick = function(){ AbrePasta(caminho); }\n");
-  echo("      span.innerHTML = nome;\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-
-  echo("    function criaSpanArq(nomeArq,numArq,caminho){\n");
-  echo("      var span;\n");
-  //echo("      span.setAttribute(\"numArq\",\"arq_\"+numArq);\n");
-  echo("      span.appendChild(CriaCheckBoxArq(numArq));\n");
-  echo("      span.appendChild(CriaImgArq(nomeArq));\n");
-  echo("      span.appendChild(CriaSpanVisualizarArq(nomeArq,numArq,caminho));\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-  echo("    function criaSpanPasta(nome,numArq,caminho){\n");
-  echo("      var span;\n");
-  echo("      span = document.createElement(\"span\");\n");
-  echo("      span.appendChild(CriaImgPasta());\n");
-  echo("      span.appendChild(CriaSpanAbrirPasta(nome,numArq,caminho));\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-  echo("    function criaSpanArqOculto(){\n");
-  echo("      var span;\n");
-  echo("      span = document.createElement(\"span\");\n");
-  echo("      span.style.color = \"red\";\n");
-  echo("      span.innerHTML = \" (oculto)\";\n");
-  echo("      return span;\n");
-  echo("    }\n\n");
-
-  echo("    function CriaTexto(texto){\n");
-  echo("      texto = document.createTextNode(texto);\n");
-  echo("      return texto;\n");
-  echo("    }\n\n");
-
-  echo("    function InsereLinhaArq(nomeArq,tamanho,numArq,caminho,data,tipo,status){\n");
-  echo("      var novaTr,trRef,tdChk,spanNome;\n");
-  echo("      if(tipo == \"arquivo\"){\n");
-  echo("        spanNome = document.createElement(\"span\");\n");
-  echo("        spanNome.setAttribute(\"id\",\"arq_\"+numArq);\n");
-  echo("        spanNome.appendChild(CriaCheckBoxArq(numArq));\n");
-  echo("        spanNome.appendChild(CriaSpanEspAlt(5));\n");
-  echo("        spanNome.appendChild(CriaImgArq(nomeArq));\n");
-  echo("        spanNome.appendChild(CriaSpanVisualizarArq(nomeArq,numArq,caminho));\n");
-  echo("        spanNome.appendChild(CriaTexto(\" - (\"+tamanho+\" Kb)\"));\n");
-  echo("      }else if(status == '1')\n");
-  echo("        spanNome.appendChild(criaSpanArqOculto());\n");
-  echo("      tdRef = document.getElementById(\"listFiles\");\n");
-  echo("      tdRef.appendChild(spanNome);\n");
-  echo("      tdRef.appendChild(document.createElement(\"br\"));\n");
-  echo("      contaArq++;\n");
-  echo("    }\n\n");
-
-  echo("    function EncontraArquivoEApaga(nomeArq)\n");
-  echo("    {\n");
-  echo("      var i,span;\n");
-  echo("      for(i = 0; i <= contaArq; i++)\n");
-  echo("      {\n");
-  echo("        span = document.getElementById(\"nomeArq_\"+i);\n");
-  echo("        if(span != null)\n");
-  echo("        {\n");
-  echo("          if(span.innerHTML == nomeArq)\n");
-  echo("          {\n");
-  echo("            xajax_ExcluiArquivoDinamic(i,'".$dir_questao_temp['link']."'+nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.", \"texto\");\n");
-  echo("          }\n");
-  echo("        }\n");
-  echo("      }\n");
-  echo("    }\n\n");
-
-  echo("    function VerificaUpload(nomeArq,flag)\n");
-  echo("    {\n");
-  echo("      subpasta = pastaAtual.split(\"Raiz/\")[1];\n");
-  echo("      document.formFiles.subpasta.value = subpasta;\n");
-  echo("      if((flag == 0))");
-  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,pastaRaiz+subpasta,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
-  /* 44- "Arquivo anexado com sucesso."*/
-  echo("        mostraFeedback(\"".RetornaFraseDaLista($lista_frases, 44)."\",true);\n");
-  /* 219 - "Arquivo"
-   * 217 - "ja existe"
-   * 218 - "Deseja sobrescrev�-lo?"*/
-  echo("      texto1 = \"".RetornaFraseDaLista($lista_frases, 219)."\";\n");
-  echo("      texto2 = \"".RetornaFraseDaLista($lista_frases, 217)."\";\n");
-  echo("      texto3 = \"".RetornaFraseDaLista($lista_frases, 218)."\";\n");
-  echo("      if(flag == 1 && confirm(texto1+' '+nomeArq+' '+texto2+'.'+' '+texto3))\n");
-  echo("      {");
-  echo("        EncontraArquivoEApaga(nomeArq);\n");
-  echo("        micoxUpload2('formFiles',0,'Anexando ',function(){},++contaArq,nomeArq,".$cod_curso.",".$cod_questao.",".$cod_usuario.");\n");
-  echo("      }");
-  echo("    }\n\n");
-
+  
   echo("    function HabilitarMudancaPosicaoAlt()\n");
   echo("    {\n");
   echo("      if(tBody_alternativas) tableDnD.init(null,tBody_alternativas,".$existeGabaritoDiss.");\n");
@@ -1908,65 +1813,73 @@
       }
     }
     echo("                  <tr class=\"head\">\n");
-    /* Frase #12 - Arquivos */
-    echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 12)."</td>\n");
+    /* 12 - Arquivos */
+    echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases,12)."</td>\n");
     echo("                  </tr>\n");
-    echo("                  <tr>\n");
-    echo("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
+    
+   if(count($lista_arq)==0){
+      echo("                <tr>\n");
+      /*187 - Diret�rio est� vazio*/
+      echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases,187)."</td>\n");
+      echo("				</tr>\n");
+    }
+  
+    if (is_array($lista_arq) && count($lista_arq)>0){
+    
+      $conta_arq=0;
 
-    if (count($lista_arq) > 0 || $lista_arq != null) {
-
-      $conta_arq = 0;
+      echo("                  <tr>\n");
+      echo("                    <td class=\"itens\" colspan=\"6\" id=\"listFiles\">\n");
       // Procuramos na lista de arquivos se existe algum visivel
-      $ha_visiveis = false;
+      $ha_visiveis = $num_arq_vis > 0;
 
-      while ((list ($cod, $linha) = each($lista_arq)) && !$ha_visiveis) {
-        if ($linha['Arquivo'] != "")
-          $ha_visiveis = !($linha['Status']);
-      }
 
-      if ($ha_visiveis) {
-        $nivel_anterior = 0;
-        $nivel = -1;
+      if (($ha_visiveis) || (!$aplicada)){
 
-        foreach ($lista_arq as $cod => $linha) {
+        $nivel_anterior=0;
+        $nivel=-1;
+
+        foreach($lista_arq as $cod => $linha){
           $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
-          if (!($linha['Arquivo'] == "" && $linha['Diretorio'] == ""))
-            if (!$linha['Status']) {
-              $nivel_anterior = $nivel;
-              $espacos = "";
-              $espacos2 = "";
-              $temp = explode("/", $linha['Diretorio']);
-              $nivel = count($temp) - 1;
-              for ($c = 0; $c <= $nivel; $c++) {
-                $espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
-                $espacos2 .= "  ";
+          if (!($linha['Arquivo']=="" && $linha['Diretorio']=="")){
+            if ((!$linha['Status']) || (!$aplicada)){
+              $nivel_anterior=$nivel;
+              $espacos="";
+              $espacos2="";
+              $temp=explode("/",$linha['Diretorio']);
+              $nivel=count($temp)-1;
+              for ($c=0;$c<=$nivel;$c++){
+                if($exercicio['situacao']=='C'){
+                  $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
+                  $espacos2.="  ";
+                }
+                else{
+                  $espacos.="";
+                  $espacos2.="";
+                }
               }
 
-              $caminho_arquivo = $dir_questao_temp['link'] . ConverteUrl2Html($linha['Diretorio'] . "/" . $linha['Arquivo']);
-              //converte o o caminho e o nome do arquivo que vêm do linux em UTF-8 para 
-              //ISO-8859-1 para ser exibido corretamente na página.
-              $caminho_arquivo = mb_convert_encoding($caminho_arquivo, "ISO-8859-1", "UTF-8");
-              $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
-              if ($linha['Arquivo'] != "") {
+              $caminho_arquivo = $dir_questao_temp['link'].$linha['Diretorio']."/".$linha['Arquivo'];
+              $caminho_arquivo = preg_replace("/\/\//", "/", $caminho_arquivo);
+// echo($caminho_arquivo);
 
-                if ($linha['Diretorio'] != "") {
-                  $espacos .= "&nbsp;&nbsp;&nbsp;&nbsp;";
-                  $espacos2 .= "  ";
-                }
+              if ($linha['Arquivo'] != ""){
+                if ($linha['Diretorio']!=""){
+                    $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
+                    $espacos2.="  ";
+                  }
 
-                if ($linha['Status'])
-                  $arqOculto = "arqOculto='sim'";
-                else
-                  $arqOculto = "arqOculto='nao'";
+                if ($linha['Status']) $arqOculto="arqOculto='sim'";
+                else $arqOculto="arqOculto='nao'";
 
-                if (eregi(".zip$", $linha['Arquivo'])) {
+                if (eregi(".zip$",$linha['Arquivo'])){
                   // arquivo zip
-                  $imagem = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
-                  $tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"zip\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" arqZip=\"" . $linha['Arquivo'] . "\" " . $arqOculto . ">";
-                } else {
-                // arquivo comum
-                  // imagem
+                  $imagem    = "<img src=\"../imgs/arqzip.gif\" border=0 alt=\"\"/>";
+                  $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."');return false;\" tipoArq=\"zip\" nomeArq=\"".ConverteUrl2Html($caminho_arquivo)."\" arqZip=\"".$linha['Arquivo']."\" ". $arqOculto.">";
+                }
+                else{
+                  // arquivo comum
+                  //imagem
                   if((eregi(".jpg$",$linha['Arquivo'])) || eregi(".png$",$linha['Arquivo']) || eregi(".gif$",$linha['Arquivo']) || eregi(".jpeg$",$linha['Arquivo'])) {
                     $imagem    = "<img alt=\"\" src=\"../imgs/arqimg.gif\" border=\"0\" />";
                   //doc
@@ -1978,83 +1891,92 @@
                   //html
                   }else if((eregi(".html$",$linha['Arquivo'])) || (eregi(".htm$",$linha['Arquivo']))){
                     $imagem    = "<img alt=\"\" src=\"../imgs/arqhtml.gif\" border=\"0\" />";
-                  //mp3
                   }else if((eregi(".mp3$",$linha['Arquivo'])) || (eregi(".mid$",$linha['Arquivo']))) {
                     $imagem    = "<img alt=\"\" src=\"../imgs/arqsnd.gif\" border=\"0\" />";
                   }else{
                     $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
                   }
-
-                  $tag_abre = "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" onclick=\"WindowOpenVer('" . $caminho_arquivo . "');\" tipoArq=\"comum\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\" " . $arqOculto . ">";
-
+                  $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."'); return false;\" tipoArq=\"comum\" nomeArq=\"".ConverteUrl2Html($caminho_arquivo)."\" ".$arqOculto.">";
                 }
 
-                $tag_fecha = "</span>";
+                $tag_fecha = "</a>";
 
-                echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
+                echo("                        ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
 
-                if(!$aplicada) {
-                  echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
+                if (!$aplicada){
+                  echo("                          ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_".$conta_arq."\" />\n");
                 }
+				/* #235 - �ltima modifica��o em */
+                echo("                          ".$espacos2.$espacos.$imagem." ".$tag_abre.$linha['Arquivo'].$tag_fecha." - (".round(($linha['Tamanho']/1024),2)."Kb) - ".RetornaFraseDaLista($lista_frases,235)." ".UnixTime2DataMesAbreviado($linha["Data"])." ".UnixTime2Hora($linha["Data"])."");
 
-                echo ("                          " . $espacos2 . $espacos . $imagem . $tag_abre . $linha['Arquivo'] . $tag_fecha . " - (" . round(($linha['Tamanho'] / 1024), 2) . "Kb)");
-
-                echo ("<span id=\"local_oculto_" . $conta_arq . "\">");
-                if ($linha['Status'])
-                  /* Frase #70 - Oculto */
-                  echo("<span id=\"arq_oculto_" . $conta_arq . "\"> - <span style=\"color:red;\">".RetornaFraseDaLista($lista_frases, 70)."</span></span>");
+                echo("<span id=\"local_oculto_".$conta_arq."\">");
+                if ($linha['Status']){
+                  // 70 - Oculto
+                    echo("<span id=\"arq_oculto_".$conta_arq."\"> - <span style='color:red;'>".RetornaFraseDaLista($lista_frases,70)."</span></span>");
+                }
                 echo("</span>\n");
-                echo("                          " . $espacos2 . "<br />\n");
-                echo("                        " . $espacos2 . "</span>\n");
-              } else {
-                if ($nivel_anterior >= $nivel) {
-                  $i = $nivel_anterior - $nivel;
-                  $j = $i;
-                  $espacos3 = "";
-                  do {
-                    $espacos3 .= "  ";
+                echo("                          ".$espacos2."<br />\n");
+                echo("                        ".$espacos2."</span>\n");
+              }
+
+              else if ((!$aplicada) || (haArquivosVisiveisDir($linha['Diretorio'], $lista_arq))){
+                if ($nivel_anterior>=$nivel){
+                  $i=$nivel_anterior-$nivel;
+                  $j=$i;
+                  $espacos3="";
+                  do{
+                    $espacos3.="  ";
                     $j--;
-                  } while ($j >= 0);
-                  do {
-                    echo ("                      " . $espacos3 . "</span>\n");
+                  }while($j>=0);
+
+                  while($i>=0){
+                    echo("                      ".$espacos3."</span>\n");
                     $i--;
-                  } while ($i >= 0);
+                  }
                 }
                 // pasta
-                $imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
-                echo("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
-                echo("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
-                echo("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
-                echo("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
-                echo("                        " . $espacos2 . "<br />\n");
-              }
+                $imagem    = "<img src=\"../imgs/pasta.gif\" border=0 alt=\"\" />";
+                echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
+                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
+                if (!$aplicada){
+                  echo("                        ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBoxArq(1);\" id=\"chkArq_".$conta_arq."\" />\n");
+                }
+                echo("                        ".$espacos2.$espacos.$imagem.$temp[$nivel]."\n");
+                echo("                        ".$espacos2."<br />\n");
+             }
             }
+          }
           $conta_arq++;
         }
-        do {
-          $j = $nivel;
-          $espacos3 = "";
-          do {
-            $espacos3 .= "  ";
+        do{
+          $j=$nivel;
+          $espacos3="";
+          do{
+            $espacos3.="  ";
             $j--;
-          } while ($j >= 0);
+          }while($j>=0);
+          echo("                      ".$espacos3."</span>\n");
           $nivel--;
-        }
-        while ($nivel >= 0);
+        }while($nivel>=0);
       }
+      echo("                      <script type=\"text/javascript\" language=\"JavaScript\">js_conta_arq=".$conta_arq.";</script>\n");
+      echo("                    </td>\n");
+      echo("                  </tr>\n");
+     
+      
     }
-    echo("                    </td>\n");
-    echo("                  </tr>\n");
     if(!$aplicada) {
       echo("                   <tr id=\"optArq\">\n");
       echo("                     <td align=\"left\" colspan=\"6\">\n");
-      echo("                       <ul>\n");
-      echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onclick=\"CheckTodos(1);\" /></span></li>\n");
+       echo("                      <ul>\n");
+      echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onClick=\"CheckTodosArq();\" /></span></li>\n");
       /* Frase #71 - Apagar */
       echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
+      /* Frase #72 - Descompactar */
+      echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">".RetornaFraseDaLista($lista_frases, 72)."</span></li>\n");
       /* Frase #73 - Ocultar */
       echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases, 73)."</span></li>\n");
-      echo("                       </ul>\n");
+      echo("                      </ul>\n");
       echo("                     </td>\n");
       echo("                   </tr>\n");
       echo("                  <tr>\n");

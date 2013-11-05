@@ -1124,7 +1124,7 @@ function RetornaRespostaQuestao($sock,$cod_resolucao,$cod_questao,$tp_questao)
 */
 function RetornaArquivosQuestao($cod_curso, $dirlink)
 {
-  return (RetornaArrayDiretorioSimples($dirlink));
+  return (RetornaArrayDiretorio($dirlink));
 }
 
 /* *********************************************************************
@@ -1842,7 +1842,7 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
     Desconectar($sock);
 
     $atualizacao = 'true';
-    $objResponse->addRemove('trArq_'.$numero);
+    $objResponse->addRemove('arq_'.$numero);
 
     //AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
   } else {                    /* Se ocorreu algum erro ao remover o diretorio */
@@ -2012,6 +2012,8 @@ function DescompactarArquivoDinamic($pasta, $nomeArq){
     $atualizacao = "false";
 
   }
+  
+
 
   Desconectar($sock);
 
@@ -3062,5 +3064,89 @@ function RetornaTopicoQuestao($sock,$cod_questao) {
 
   return ($topico);
 }
+
+/*******************************************************************************************
+   OcultarArquivosDinamic - Oculta os arquivos passados num array, dinamicamente
+   Entrada: $nomes_arquivos - array de nomes dos arquivos
+            $msg_oculto - string 'oculto'
+            $cod_curso - codigo do curso
+            $cod_item - codigo do item
+            $cod_usuario - codigo do usuario
+
+   Saida: XML da função Ajax
+*******************************************************************************************/
+function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_usuario, $texto){
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  foreach($nomes_arquivos as $cod => $linha){
+    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+
+    AlteraStatusArquivo($nome_arquivo,true);
+
+    $objResponse->addCreate('local_oculto_'.$linha[1], 'span', 'arq_oculto_'.$linha[1]);
+
+    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in1_'.$linha[1]);
+    $objResponse->addAssign('arq_oculto_in1_'.$linha[1], 'innerHTML', '&nbsp;- ');
+
+    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in2_'.$linha[1]);
+    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'innerHTML', $msg_oculto);
+    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'className', 'arqOculto');
+
+    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'sim\');');
+  }
+  $objResponse->addEvent('sArq_ocultar', 'onclick', 'Desocultar();');
+  //AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
+  if($texto!='')
+  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  return $objResponse->getXML();
+}
+
+
+/***********************************************************************************************
+   DesocultarArquivosDinamic - Desoculta os arquivos passados num array, dinamicamente
+   Entrada: $nomes_arquivos - array de nomes dos arquivos
+            $msg_oculto - string 'oculto'
+            $cod_curso - codigo do curso
+            $cod_item - codigo do item
+            $cod_usuario - codigo do usuario
+   Saida: XML da função Ajax
+***********************************************************************************************/
+function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_usuario,$texto=''){
+  $objResponse = new xajaxResponse('ISO-8859-1');
+
+  foreach($nomes_arquivos as $cod => $linha){
+    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+
+    AlteraStatusArquivo($nome_arquivo,false);
+
+    $objResponse->addRemove('arq_oculto_'.$linha[1]);
+    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'nao\');');
+
+  }
+  $objResponse->addEvent('sArq_ocultar', 'onclick', 'Ocultar();');
+  //AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
+	if($texto!='')
+  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  return $objResponse->getXML();
+}
+
+/************************************************************************************************************
+   haArquivosVisiveisDir - verifica se ha arquivo visivel dentro da pasta
+   Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
+   Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
+*************************************************************************************************************/
+function haArquivosVisiveisDir($dir, $lista_arq_vis){    
+    foreach($lista_arq_vis as $cod => $linha)
+    { 
+	if(!($linha['Status'])){
+		if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+			return true;
+		}
+	}
+    }
+    
+    return false;
+}
+
 
 ?>

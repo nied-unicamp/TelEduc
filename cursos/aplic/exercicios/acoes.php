@@ -62,8 +62,11 @@
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  $dir_name = "exercicios";
+  
+  $dir_exercicio_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_exercicio, $diretorio_arquivos, $diretorio_temp, "exercicio");
+  $dir_questao_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_questao, $diretorio_arquivos, $diretorio_temp, "questao");
+  
+  //$dir_name = "exercicios";
   //$dir_item_temp=CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
   /* acao = Criar Nova Questao - origem = questoes.php */
@@ -160,7 +163,7 @@
       $atualizacao="false";
     }
 
-    if ($atualizacao == "true")
+    if (($atualizacao == "true")&&($pasta == 'exercicio'))
     {
       // Alterando o status e a data (referente a modifica��o feita = recuperada)
       AtualizaExerciciosModelo($sock, $cod_exercicio);
@@ -171,14 +174,24 @@
 
     //AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
     Desconectar($sock);
-    //header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
+    
+    if($cod_exercicio!=null){
+      header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&cod_usuario=".$cod_usuario."&acao=".$acao."&atualizacao=".$atualizacao);
+    }
+    else{
+      header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=".$acao."&atualizacao=".$atualizacao);
+    }
   }
 
   /* ação = Descompactar Arquivo - origem = editar_questao.php */
   else if ($acao=="descompactar")
   {
-
-    $dir_tmp=$dir_item_temp['diretorio'];
+    if($pasta == 'questao'){
+      $dir_tmp=$dir_questao_temp['diretorio'];
+    }
+    else{
+      $dir_tmp=$dir_exercicio_temp['diretorio'];
+    }
     $caminho="";
 
     $tmp=explode("/",$arq);
@@ -192,7 +205,13 @@
     }else{
       RemoveArquivo($dir_tmp.$arq);
     }
-
+    
+    if($cod_exercicio!=null){
+      header("Location:editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=".$acao."&atualizacao=".$atualizacao);
+    }
+    else{
+      header("Location:editar_questao.php?cod_curso=".$cod_curso."&cod_questao=".$cod_questao."&acao=".$acao."&atualizacao=".$atualizacao);
+    }
     Desconectar($sock);
   }
   else if($acao == "apagar")
