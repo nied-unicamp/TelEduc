@@ -170,9 +170,6 @@
 
         echo("         <span class=\"link\" onclick=\"Mover('".$linha_dir['Caminho']."');\"><img src=\"../imgs/pasta.gif\" alt=\"Pasta\" border=\"0\" />".$caminho[$cont-1]."</span><br />\n");
     }
-  }else{
-        echo("         <span>Diret&oacute;rio vazio</span>\n");
-
   }
   echo("      </div>\n");
   echo("    </div>\n");

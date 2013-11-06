@@ -132,6 +132,18 @@
 
   $dir_item_temp = CriaLinkVisualizar($sock,$dir,$cod_curso,$cod_usuario,$cod_item,$diretorio_arquivos,$diretorio_temp);
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
+  
+  $lista_arq=RetornaArquivosMaterialVer($cod_curso, $dir_item_temp['diretorio']);
+  if ((count($lista_arq))>0){
+    $i=0;
+    foreach($lista_arq as $cod=>$linha2){
+      if (is_dir($linha2['Caminho'])){
+        $lista_diretorios[$i]['Diretorio'] = $linha2['Diretorio'];
+        $lista_diretorios[$i]['Caminho'] = $linha2['Caminho'];
+        $i++;
+      }
+    }
+  }
 
   $dir_tmp_ferramenta = $diretorio_arquivos.'/'.$cod_curso.'/'.$dir.'/tmp';
   
@@ -860,6 +872,8 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("        var arqZip=0;\n");
     echo("        var arqOculto=0;\n");
     echo("        var pasta=0;\n\n");
+    echo("		  var listaDir = '".$lista_diretorios."';\n");
+    echo("		  var haDiretorios = listaDir.length;\n");
 
     echo("        for (i=0; i<checks.length; i++){\n");
     echo("          if(checks[i].checked){\n");
@@ -893,12 +907,22 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("        }else if((arqComum==1)||(arqZip>1)){\n");
     echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
     echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+    echo("			if (haDiretorios>0){\n");
+    echo("          	document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+    echo("			}\n");
+    echo("			else{\n");
+    echo("          	document.getElementById('mArq_mover').className=\"menuUp\";\n");
+    echo("			}\n");
     echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
 
     echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
     echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
-    echo("          document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+    echo("			if (haDiretorios>0){\n");
+    echo("          	document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+    echo("			}\n");
+    echo("			else{\n");
+    echo("          	document.getElementById('sArq_mover').onclick= function(){  };\n");
+    echo("			}\n");
     echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
     echo("        }else if(arqComum>1){\n");
     echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
@@ -913,12 +937,22 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
     echo("        }else if(arqZip==1){\n");
     echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
     echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+    echo("			if (haDiretorios>0){\n");
+    echo("          	document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+    echo("			}\n");
+    echo("			else{\n");
+    echo("          	document.getElementById('mArq_mover').className=\"menuUp\";\n");
+    echo("			}\n");
     echo("          document.getElementById('mArq_descomp').className=\"menuUp02\";\n\n");
 
     echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
     echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
-    echo("          document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+    echo("			if (haDiretorios>0){\n");
+    echo("          	document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+    echo("			}\n");
+    echo("			else{\n");
+    echo("          	document.getElementById('sArq_mover').onclick= function(){  };\n");
+     echo("			}\n");
     echo("          document.getElementById('sArq_descomp').onclick= function(){ Descompactar() };\n");
     echo("        }else{\n");
     echo("          document.getElementById('mArq_apagar').className=\"menuUp\";\n");
