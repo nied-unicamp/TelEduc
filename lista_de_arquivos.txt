@@ -132,7 +132,6 @@ administracao.inc
 administracao.php
 alterar_cronograma.php
 alterar_dados_curso.php
-alterar_nomenclatura2.php
 alterar_nomenclatura.php
 compartilhar_ferramentas.php
 enviar_senha.php
@@ -149,7 +148,6 @@ inscrever3.php
 inscrever_arquivo.php
 inscrever.php
 javascript.inc
-marcar_ferramentas2.php
 marcar_ferramentas.php
 remover_extracao2.php
 remover_extracao.php
