@@ -44,7 +44,7 @@
    RetornaFrase - Retorna a frase pedida da lingua atual
    Entrada: $sock - Sock da base geral aberta
             $cod_texto - cod_texto a ser empregado.
-            $cod_ferramenta - cod_ferramenta a ser empregada  
+            $cod_ferramenta - cod_ferramenta a ser empregada
    Saida: Texto na lingua pedida
 */
 function RetornaFrase($sock, $cod_texto, $cod_ferramenta)
@@ -58,7 +58,7 @@ function RetornaFrase($sock, $cod_texto, $cod_ferramenta)
 
   if (!isset($_SESSION['lista_frases_s'][$cod_ferramenta]))
   {
-    $query = "SELECT texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
+    $query  = "SELECT texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
     $query .= "cod_texto=".VerificaNumeroQuery($cod_texto)." AND ";
     $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
     $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta);
@@ -73,10 +73,11 @@ function RetornaFrase($sock, $cod_texto, $cod_ferramenta)
     else
     {
       // Erro na execu�o da cl�sula : terminar o programa
-      $msg = "</script></table></div></table></div></table></div><H3>ERRO : N� foi poss�el executar a cl�sula SQL<H3>";
-      $msg .= "<BR><B>SQL : </B><BR>".$query;
-      $msg .= "<BR><B>Mensagem de erro do MySql : </B><BR>".mysql_error();
-      $msg .= "<BR><a href=# onclick=history.go(-1);>Voltar</a>";
+      $msg  = "</script></table></div></table></div></table></div>";
+      $msg .= "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL<h3>";
+      $msg .= "<br><strong>SQL : </strong><br>".$query;
+      $msg .= "<br><strong>Mensagem de erro do MySql : </strong><br>".mysql_error();
+      $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
       die($msg);
     }
   }

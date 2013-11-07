@@ -62,11 +62,11 @@
   echo("      <tr>\n");
   
   if(!$SalvarEmArquivo){
-    echo("        <td valign=\"bottom\">");
+    echo("        <td valign=\"bottom\">\n");
     echo("        </td>\n");
   }
   
-  echo("       <td valign=\"bottom\" class=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+  echo("        <td valign=\"bottom\" class=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
   echo("      </tr>\n");
   echo("    </table>\n");
 
