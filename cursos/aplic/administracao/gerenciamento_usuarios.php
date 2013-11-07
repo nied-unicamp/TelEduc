@@ -245,7 +245,7 @@
 
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-    /* 1 - Administracao  297 - Area restrita ao formador. */
+    /* 1 - Administracao  28 - Area restrita ao formador. */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
 
     /*Voltar*/
@@ -261,6 +261,13 @@
     /* 23 - Voltar (gen) */
     echo("          <form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
+    echo("        </td>\n");
+    echo("      </tr>\n");
+
+    include("../tela2.php");
+
+    echo("  </body>\n");
+    echo("</html>\n");
     Desconectar($sock);
     exit();
   }

@@ -76,13 +76,10 @@
   }
 
   include("../topo_tela.php");
-  include("../menu_principal.php");
 
   $itens_por_pagina = 10;
   //$lista_usuarios = RetornaListaUsuariosGlobal($sock,$cod_curso,$busca,0,10);
   $total_usuarios = RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
-  
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /*Funcao JavaScript*/
   $objAjax->printJavascript("../xajax_0.2.4/");
@@ -95,7 +92,7 @@
 
   echo("      function Iniciar()\n");
   echo("      {\n");
-  echo("        ExibePagina(1);\n"); 
+  echo("        ExibePagina(1);\n");
   echo("        startList();\n");
   echo("      }\n\n");
 
@@ -345,15 +342,19 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-  
+
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
   if(!EFormador($sock,$cod_curso,$cod_usuario))
   {
-    /* 1 - Administracao  297 - Area restrita ao formador. */
-    echo("<h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+    /* 1 - Administracao  28 - Area restrita ao formador. */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,28)."</h4>\n");
 
     /*Voltar*/
     /* 509 - Voltar */
-    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -362,8 +363,15 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("          <form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
 
+    echo("        </td>\n");
+    echo("      </tr>\n");
+
+    include("../tela2.php");
+
+    echo("  </body>\n");
+    echo("</html>\n");
     Desconectar($sock);
     exit();
   }
@@ -378,38 +386,30 @@
 
   // P�gina Principal
   /* 1 - Administra��o */
-  $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1)."\n");
+  $cabecalho = ("          <h4>".RetornaFraseDaLista ($lista_frases, 1));
 
-  if ($tipo_usuario=="F")
+  if ($tipo_usuario == 'F')
   {
     /* 50 - Inscrever Formadores */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 50)."</h4>";
-    $cod_pagina=6;
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 50)."</h4>\n";
+    $cod_pagina = 6;
   }
-  else if ($tipo_usuario == 'z')
+  else if ($tipo_usuario == 'Z')
   {
-    // 164 - Inscrever Convidados
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>";
-
-    // 166 - N� de Convidados:
-    $frase_qtde=RetornaFraseDaLista($lista_frases, 166);
-    $cod_pagina=14;
+    /* 164 - Inscrever Colaboradores */
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 164)."</h4>\n";
+    $cod_pagina = 14;
   }
   else if ($tipo_usuario == 'V')
   {
-    // 164 - Inscrever Visitantes
-    $cabecalho .= " - "."[Inscrever Visitantes]"."</h4>";
-
-    // 166 - N� de Visitantes:
-    $frase_qtde="N� de Visitantes:";
-
+    // 182 - Inscrever Visitantes
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 182)."</h4>\n";
   }
   else if ($tipo_usuario == 'A')
   {
     /* 51 - Inscrever Alunos */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 51)."</h4>";
-    $tipo_usuario="A";
-    $cod_pagina=7;
+    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 51)."</h4>\n";
+    $cod_pagina = 7;
   }
   else
   {
@@ -418,21 +418,21 @@
     echo("]<br>\n");
     Desconectar($sock);
     die();
-  }  
+  }
 
   echo($cabecalho);
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-  /*Voltar*/			
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+  /*Voltar*/
+  /* 509 - Voltar */
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -455,7 +455,6 @@
   echo("                    <td align=\"left\" valign=\"top\" colspan=\"4\">Nome/E-mail/Login: <input type='text' class='input' name='busca' onkeypress='return verifica_submit(event);' value='".$busca."'>&nbsp;<input type=\"button\" class=\"input\" onclick=\"return(buscar());\" value='Buscar"/*.RetornaFraseDaLista($lista_frases,59)*/."'></td>\n");
   echo("                  </tr>\n");
   
- 
   
   /* Contagem de usuarios: Usuarios (1 a 10 de 23) */
   echo("                  <tr class=\"head01\">\n");
@@ -472,22 +471,22 @@
   echo("                  </tr>\n");
   
   
-  echo("                  		<tr class=\"head\">\n");
-  echo("                    		<td></td>\n");
+  echo("                  <tr class=\"head\">\n");
+  echo("                    <td></td>\n");
   /* 15 - Nome */
-  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,15)."</b></td>\n");
+  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,15)."</b></td>\n");
   /* 52 - E-mail */
-  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,52)."</b></td>\n");
+  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,52)."</b></td>\n");
   /* 53 - Login */
-  echo("                    		<td><b>".RetornaFraseDaLista($lista_frases,53)."</b></td>\n");
-  echo("                  		</tr>\n");
+  echo("                    <td><b>".RetornaFraseDaLista($lista_frases,53)."</b></td>\n");
+  echo("                  </tr>\n");
 
-  //echo("                 		<tr>\n");
+  //echo("                  <tr>\n");
   /* 279 - Sua pesquisa n&atilde;o retornou resultado. */
-  //echo("                   		<td colspan=\"4\">".RetornaFraseDaLista($lista_frases,279)."</td>\n");
-  //echo("                  	</tr>\n");
+  //echo("                    <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,279)."</td>\n");
+  //echo("                  </tr>\n");
 
-  echo("                  	</table>\n");
+  echo("                </table>\n");
   echo("              </td>\n");
   echo("              </tr>\n");
     
