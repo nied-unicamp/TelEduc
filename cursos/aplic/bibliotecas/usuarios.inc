@@ -215,7 +215,7 @@ function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
     echo("            </tr>\n");
     echo("          </table>\n");
     echo("          <span class=\"btsNavBottom\">\n");
-    echo("            <a href=\"../../pagina_inicial/exibe_cursos.php\"><img src=\"imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a>\n");
+    echo("            <a href=\"../../../pagina_inicial/exibe_cursos.php\"><img src=\"imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a>\n");
     echo("          </span>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
@@ -242,16 +242,28 @@ function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
 */
 function TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta)
 {
-  $status=RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
-  $query="select status from Curso_ferramentas where cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta);
-  $res=Enviar($sock,$query);
+  $status_usuario = RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
+
+  $query  = "select status from Curso_ferramentas ";
+  $query .= "where cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta);
+
+  $res = Enviar($sock,$query);
+
   $linha = RetornaLinha($res);
-  return (!($linha['status'] == 'D' || ($linha['status'] == 'F' && $status == 'A')));
+
+  return (!(
+            // Ferramenta não é visivel por ninguém ou
+            $linha['status'] == 'D' ||
+            // Ferramenta é visível apenas para formadores e 
+            // usuário atual não é formador
+            ($linha['status'] == 'F' && $status_usuario != 'F')
+          )
+         );
 }
 
-
 /* *********************************************************************
-   VerificaAcessoAFerramenta - Barra usuï¿½ios de entrar em ferramentas desabilitadas
+   VerificaAcessoAFerramenta - Barra usuï¿½ios de entrar em ferramentas
+                               desabilitadas
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
                      BASE EXTERNA
              $cod_curso - Cï¿½igo do curso
@@ -262,13 +274,6 @@ function TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta)
 */
 function VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta)
 {
-  /*
-  $status=RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
-  $query="select status from Curso_ferramentas where cod_ferramenta=".$cod_ferramenta;
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  if ($linha['status']=='D' || ($linha['status']=='F' && $status=='A'))
-  */
   if (!TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta))
   {
     // 59 - Ferramenta desabilitada
@@ -281,8 +286,8 @@ function VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta
    EFormador - Retorna true se usuï¿½io for formador ou se for administrador do ambiente
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              $cod_curso - Cï¿½igo do curso 
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
-   Saida: true se ï¿½formador e este nï¿½ esta com visao de aluno, false caso contrï¿½io 
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
+   Saida: true se ï¿½formador e este nï¿½ esta com visao de aluno, false caso contrï¿½io
    OBS.: O coordenador aparece tambï¿½ como formador
 */
 function EFormador($sock,$cod_curso,$cod_usuario)
@@ -372,7 +377,7 @@ function EAlunoMesmo($sock,$cod_curso,$cod_usuario)
    ECoordenador - Retorna true se usuï¿½io for coordenador ou se for administrador do ambiente
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              $cod_curso - Cï¿½igo do curso 
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
    Saida: true se ï¿½coordenador e este nï¿½ esta com visao de aluno, false caso contrï¿½io 
 */
 function ECoordenador($sock,$cod_curso,$cod_usuario)
@@ -396,7 +401,8 @@ function ECoordenador($sock,$cod_curso,$cod_usuario)
 }
 
 /* *********************************************************************
-   ECoordenadorMesmo - Retorna true se usuï¿½io for coordenador ou se for administrador do ambiente
+   ECoordenadorMesmo - Retorna true se usuï¿½io for coordenador ou se for
+                       administrador do ambiente
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              $cod_curso - Cï¿½igo do curso 
              $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
@@ -421,10 +427,10 @@ function ECoordenadorMesmo($sock,$cod_curso,$cod_usuario)
 }
 
 /* *********************************************************************
-   EVisitante - Retorna true se visitante for aluno
+   EVisitante - Retorna true se usuario for visitante
    Entradas: $sock - Socket da base de dados (retorno do Conectar)
              $cod_curso - Cï¿½igo do curso 
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
    Saida: true se ï¿½aluno, false caso contrï¿½io 
 */
 function EVisitante($sock,$cod_curso,$cod_usuario)
@@ -439,7 +445,7 @@ function EVisitante($sock,$cod_curso,$cod_usuario)
 /* *********************************************************************
    MarcaAcesso - Marca o acesso a determinada ferramenta pelo aluno
    Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
              $cod_ferramenta - Cï¿½igo da ferramenta. "" se Entrada no 
                                TelEduc
    Saida: nenhuma
@@ -478,7 +484,7 @@ function MarcaAcesso($sock,$cod_usuario,$cod_ferramenta)
    UltimoAcesso - Retorna o timestamp do ltimo acesso a determinada 
                    ferramenta
    Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
              $cod_ferramenta - Cï¿½igo da ferramenta. "" se Entrada no 
                                TelEduc
    Saida: timestamp do ltimo acesso
@@ -505,7 +511,7 @@ function UltimoAcesso($sock,$cod_usuario,$cod_ferramenta)
    PenultimoAcesso - Retorna o timestamp do penltimo acesso a determinada 
                    ferramenta
    Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o                        
+             $cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
              $cod_ferramenta - Cï¿½igo da ferramenta. "" se Entrada no 
                                TelEduc
    Saida: timestamp do ltimo acesso
