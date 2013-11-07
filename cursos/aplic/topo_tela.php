@@ -89,8 +89,11 @@
 
   $tela_formador      = EFormador($sock, $cod_curso, $cod_usuario);
   $tela_formadormesmo = EFormadorMesmo($sock, $cod_curso, $cod_usuario);
-  // booleano, indica se usuario eh colaborador
-  $tela_colaborador   = EColaborador($sock, $cod_curso, $cod_usuario);
+  // booleano, indica se usuario eh convidado
+  $tela_convidado         = EConvidado ($sock, $cod_usuario, $cod_curso);
+  // especifica que tipo de convidado eh
+  $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
+  $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   // booleano, indica se usuario eh visitante
   $tela_visitante     = EVisitante($sock, $cod_curso, $cod_usuario);
 
