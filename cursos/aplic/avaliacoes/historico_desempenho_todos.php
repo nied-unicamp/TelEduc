@@ -65,7 +65,7 @@
   $usr_aluno=EAluno($sock,$cod_curso,$cod_usuario);
 
   /* Fun��es javascript */
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\">\n");
 
   /* *****************************************************************
   Funcao OpenWindow
