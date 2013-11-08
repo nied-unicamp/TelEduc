@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/correio/exibir_mensagem.php
+    Arquivo : cursos/aplic/correio/exibe_mensagem_selecionada.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : cursos/aplic/correio/exibir_mensagem.php
+  ARQUIVO : cursos/aplic/correio/exibe_mensagem_selecionada.php
   ========================================================== */
 
 /* C�digo principal */
@@ -54,13 +54,11 @@
   $arrayMsgsAux = $_GET['arrayMsgs'];
   $arrayMsgs = explode(",", $arrayMsgsAux);
 
-  
-  Desconectar($sock);    
+  Desconectar($sock);
 
   $sock=Conectar($cod_curso);
 
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
-
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
   $listaDest=ListaCompletaDestinatarios($sock,$arrayMsgs[0],$lista_frases, $cod_curso);
   $numDest = count($listaDest);
@@ -207,14 +205,13 @@
 
     $sock=Conectar($cod_curso);
 
-
     if (! is_numeric ($cod_msg) || (!RemetenteMensagem($sock, $cod_msg, $cod_usuario) &&  !DestinatarioMensagem($sock, $cod_msg, $cod_usuario)))
     {
-      echo("<script type=\"text/javascript\">\n");
+      echo("    <script type=\"text/javascript\">\n");
       /* 119 - Ocorreu um erro ao tentar acessar a mensagem */
-      echo("  alert('".RetornaFraseDaLista($lista_frases, 119)."');\n");
-      echo("  self.close();\n");
-      echo("</script>\n");
+      echo("      alert('".RetornaFraseDaLista($lista_frases, 119)."');\n");
+      echo("      self.close();\n");
+      echo("    </script>\n");
   
       Desconectar ($sock);
       exit();
@@ -229,11 +226,11 @@
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
     echo("                <form name=\"formApagar\" id=\"formApagar\" action=\"acoes.php\" method=\"post\">\n");
-    echo("                  <input type=\"hidden\" name=cod_msg value=".$cod_msg." />\n");    
-    echo("                  <input type=\"hidden\" name=acao value=\"apagar\" />\n");
-    echo("                  <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("                  <input type=\"hidden\" name=status_mensagem value=\"".$modoVisualizacao."\" />\n");
-    echo("                  <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_msg\"         value=\"".$cod_msg."\" />\n");    
+    echo("                  <input type=\"hidden\" name=\"acao\"            value=\"apagar\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_curso\"       value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"status_mensagem\" value=\"".$modoVisualizacao."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_usuario\"     value=\"".$cod_usuario."\" />\n");
     echo("                </form>\n");
   
     echo("                <ul class=\"btAuxTabs\">\n");
@@ -277,7 +274,7 @@
     echo("                    </td>\n");
 
     echo("                    <td class=alLeft>\n");
-    echo("                      <a class=text href=# onClick=AbrePerfil(".$linha['cod_usuario'].")>"); 
+    echo("                      <a class=\"text\" href=\"#\" onClick=\"AbrePerfil(".$linha['cod_usuario'].");\">"); 
     echo("                      ".RetornaNomeUsuarioDeCodigo($sock,$linha['cod_usuario'], $cod_curso). "</a>\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
@@ -288,7 +285,7 @@
     echo("                      ".RetornaFraseDaLista($lista_frases, 27)."\n");
     echo("                    </td>\n");
 
-    echo("                    <td class=alLeft style=\"height:30px;overflow:auto\">\n");
+    echo("                    <td class=\"alLeft\" style=\"height:30px;overflow:auto\">\n");
     if($numDest > 6){
       echo("                      <div style=\"width:505px;height:".$tamQuadroDest.";overflow:auto\">\n");
     }else{
@@ -302,16 +299,16 @@
         $link_fecha = "</font>";
       }
       else if ('g' == $k['status']){
-          $link_abre  = "                       <a class=text href=# onClick=return(AbreGrupo(".$k['codigo']."))>";
+          $link_abre  = "                       <a class=\"text\" href=\"#\" onClick=\"return(AbreGrupo(".$k['codigo']."));\">";
           $link_fecha = "</a>";
       }
       else if ('u' == $k['status']){
         // usuario espec�fico ==> link para perfil
-        $link_abre  = "                       <a class=text href=# onClick=return(AbrePerfil(".$k['codigo']."))>";
+        $link_abre  = "                       <a class=\"text\" href=\"#\" onClick=\"return(AbrePerfil(".$k['codigo']."));\">";
         $link_fecha = "</a>";
       }
       else{
-        echo("<font class=text color=red>Erro interno em exibir_varias_mensagens.php. Parametro inesperado </font><br />");
+        echo("<font class=\"text\" color=\"red\">Erro interno em exibir_varias_mensagens.php. Parametro inesperado </font><br />");
         die ();
       }
 
@@ -323,7 +320,7 @@
     echo("                  <tr>\n");
     /* 24 - Data */
     echo("                    <td class=\"alRight\">". RetornaFraseDaLista($lista_frases, 24)."\n");
-    echo("                    <td class=\"g1field alLeft\"><font class=text>".UnixTime2DataHora($linha['data'])."</font></td>\n");
+    echo("                    <td class=\"g1field alLeft\"><font class=\"text\">".UnixTime2DataHora($linha['data'])."</font></td>\n");
     echo("                  </tr>\n");
 
     echo("                  <tr>\n");  
@@ -356,9 +353,9 @@
       foreach($listaArq as $cod => $linha){
           $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
           if($cod == 0){
-            echo("                      <a class=text href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=blank> ".$linha['Arquivo']." </a>\n");
+            echo("                      <a class=\"text\" href=\"".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])."\" target=\"blank\"> ".$linha['Arquivo']." </a>\n");
           }else{
-            echo("                      | <a class=text href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=blank> ".$linha['Arquivo']." </a>\n");
+            echo("                      | <a class=\"text\" href=\"".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])."\" target=\"blank\"> ".$linha['Arquivo']." </a>\n");
           }
         }
       }

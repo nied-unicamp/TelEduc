@@ -65,7 +65,7 @@ RetornaCodigoFormadoresDoCurso
 RetornaEstadoDaMensagemPorExtenso
 RetornaCodigoAlunosDoCurso
 
-RetornaCodigoConvidadosDoCurso
+RetornaCodigoColaboradoresDoCurso
 
 RetornaGrupoComCodigo
 InsereMsgCM
@@ -162,10 +162,10 @@ function RetornaUsuariosGrupo($sock,$cod_grupo, $cod_curso)
   $dbnamebase = $_SESSION['dbnamebase'];
 
   /* todos os usuarios */
-  $query="select U.nome,U.email, UC.cod_usuario from ".$dbnamebase.".Usuario as U, Grupos_usuario as GU, ".$dbnamebase.".Usuario_curso as UC where";
-  $query.=" UC.cod_curso = ".$cod_curso." and U.cod_usuario=UC.cod_usuario_global and UC.cod_usuario >= 0 and";
-  $query.=" (binary UC.tipo_usuario = 'A' or binary UC.tipo_usuario = 'F') and";
-  $query.=" (UC.cod_usuario = GU.cod_usuario) and (GU.cod_grupo = ".$cod_grupo.") order by UC.tipo_usuario, U.nome";
+  $query  = "select U.nome,U.email, UC.cod_usuario from ".$dbnamebase.".Usuario as U, Grupos_usuario as GU, ".$dbnamebase.".Usuario_curso as UC where";
+  $query .= " UC.cod_curso = ".$cod_curso." and U.cod_usuario=UC.cod_usuario_global and UC.cod_usuario >= 0 and";
+  $query .= " (binary UC.tipo_usuario = 'A' or binary UC.tipo_usuario = 'F') and";
+  $query .= " (UC.cod_usuario = GU.cod_usuario) and (GU.cod_grupo = ".$cod_grupo.") order by UC.tipo_usuario, U.nome";
 
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
@@ -280,9 +280,9 @@ function RetornaListaMensagensNovas($sock,$cod_usuario,$ordem)
 
   $ordem_base=$tmp_base[$num];
 
-  $query="select CM.cod_msg as cod_msg,CM.assunto as assunto,CM.cod_usuario as cod_usuario_autor,CM.data as data,U.nome as nome
-  from Correio_mensagens as CM,Usuario as U
-  where (".$where_clause.") and U.cod_usuario=CM.cod_usuario order by ".$ordem_base;
+  $query  = "select CM.cod_msg as cod_msg,CM.assunto as assunto,CM.cod_usuario as cod_usuario_autor,CM.data as data,U.nome as nome ";
+  $query .= "from Correio_mensagens as CM,Usuario as U ";
+  $query .= "where (".$where_clause.") and U.cod_usuario=CM.cod_usuario order by ".$ordem_base;
 
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
@@ -740,7 +740,6 @@ function RetornaCodigoGruposDoCurso($sock)
 */
 
 function RetornaNomeUsuarioDeCodigo($sock, $cod_usuario, $cod_curso)
-
 {
 
    // 2Session
@@ -778,11 +777,11 @@ function RetornaCodigoFormadoresDoCurso($sock, $cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.nome, UC.cod_usuario
-          from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='F' order by U.nome asc"; /*UC.cod_usuario = '".VerificaStringQuery($cod_usuario)."' AND UC.cod_curso='".VerificaStringQuery($cod_curso)."')"*/
-  
-  //$query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." AND binary tipo_usuario='F' order by cod_usuario asc";
+  $query  = "select U.nome, UC.cod_usuario ";
+  $query .= "from ".$dbnamebase.".Usuario U ";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) ";
+  $query .= "where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario = 'F' order by U.nome asc";
+
   $res=Enviar($sock,$query);
   $linha=RetornaArrayLinhas($res);
   return $linha;
@@ -857,8 +856,7 @@ function RetornaEstadoDaMensagem($sock, $modoVisualizacao, $cod_msg, $cod_usuari
     $abrev=$linha['estado'];
   }
 
-
-return $linha['estado'];
+  return $linha['estado'];
 }
 
 
@@ -878,7 +876,6 @@ function TrocaEstadoDaMensagemLixeira($sock, $estado, $cod_msg, $cod_usuario, $r
   $query = "update Correio_mensagens set estado ='".$estado."' where (cod_msg = ".$cod_msg." and estado = 'A' and   cod_usuario = ".$cod_usuario.")";
   $res = Enviar($sock, $query);
 }
-  
 
 /* *************************************************************************
   RetornaCodigoAlunosDoCurso - retorna array com os cod_usuario dos alunos do curso
@@ -890,11 +887,11 @@ function RetornaCodigoAlunosDoCurso($sock, $cod_curso){
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.nome, UC.cod_usuario
-          from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='A' order by U.nome asc";
-  
-  //  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='A' order by cod_usuario asc";
+  $query  = "select U.nome, UC.cod_usuario ";
+  $query .= "from ".$dbnamebase.".Usuario U ";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) ";
+  $query .= "where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario = 'A' order by U.nome asc";
+
   $res=Enviar($sock,$query);
   $linha=RetornaArrayLinhas($res);
   return $linha;
@@ -930,7 +927,6 @@ function InsereMsgCM($sock,$cod_msg,$cod_autor,$assunto,$data,$mensagem,$codMsgA
     $codMsgAnt = 'NULL';
   }
 
-
   $mensagem_limpa=EliminaScript($mensagem);
   $mensagem_limpa = trim($mensagem_limpa);
 
@@ -953,10 +949,11 @@ function InsereMsgCM($sock,$cod_msg,$cod_autor,$assunto,$data,$mensagem,$codMsgA
                   'TG' - todos os grupos
                   'TA' - todos os alunos
                   'TF' - todos os formadores
+                  'TC' - todos os colaboradores
                   'G' - grupo individual
                   'U' - usuario individual
            $cod_categ - codigo da categoria destinataria da mensagem.
-                  -1 se $categ for 'TT,'TG','TA' ou 'TF'
+                  -1 se $categ for 'TT,'TG','TA', 'TC' ou 'TF'
            $array_enviadas - array contendo os cod_usuario dos usuarios que ja receberam esta msg,
                            para que nao a recebam 2 vezes
   Saida:   $array_enviadas - mesmo array de entrada, aumentado com os usuarios que receberam a msg
@@ -974,7 +971,7 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
   $dbnamebase = $_SESSION['dbnamebase'];
 
   if ($categ == "G"){
-	$query="insert into Correio_lista_destinos values (".$cod_msg.",".$cod_autor.",".$cod_categ.",'g')";
+    $query="insert into Correio_lista_destinos values (".$cod_msg.",".$cod_autor.",".$cod_categ.",'g')";
     $res=Enviar($sock,$query);
 
     $query="select distinct cod_usuario from Grupos_usuario where cod_grupo=".$cod_categ;
@@ -999,20 +996,21 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
     return ($array_enviadas);
   }
   else if ($categ == "TG"){
-	// msg enviada para todos grupos, por isso $cod_categ = -1
-	$query = "insert into Correio_lista_destinos values (".$cod_msg.", ".$cod_autor.", -1, 'G')";
-	Enviar ($sock, $query);
+    // msg enviada para todos grupos, por isso $cod_categ = -1
+    $query = "insert into Correio_lista_destinos values (".$cod_msg.", ".$cod_autor.", -1, 'G')";
+    Enviar ($sock, $query);
 
     // Para cada usuario em cada grupo nï¿½o-apagado, inserir em CD
-    $query = "select distinct GU.cod_usuario 'cod_usuario' 
-                from Grupos_usuario GU, Grupos G 
-                where G.status <> 'X' 
-                  and G.cod_grupo=GU.cod_grupo";
+    $query  = "select distinct GU.cod_usuario 'cod_usuario' ";
+    $query .= "from Grupos_usuario GU, Grupos G ";
+    $query .= "where G.status <> 'X' and ";
+    $query .=       "G.cod_grupo=GU.cod_grupo";
+
     $res   = Enviar ($sock, $query);
     while ($linha = RetornaLinha ($res)){
-	  if (! in_array ($cod_usuario = $linha ['cod_usuario'], $array_enviadas)){
+      if (! in_array ($cod_usuario = $linha ['cod_usuario'], $array_enviadas)){
         InsereMsgCD ($sock, $cod_msg, $cod_usuario, $cod_autor);
-	    array_push  ($array_enviadas, $cod_usuario);
+        array_push  ($array_enviadas, $cod_usuario);
       }
     }
     
@@ -1034,7 +1032,7 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
          InsereMsgCD($sock,$cod_msg,$linha['cod_usuario'],$cod_autor);
          array_push($array_enviadas,$linha['cod_usuario']);
        }
-     return ($array_enviadas); 
+     return ($array_enviadas);
     }
     else
      return (array());
@@ -1060,8 +1058,7 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
     return ($array_enviadas);
   }
   else if ("TC" == $categ){
-    // msg enviada para todos os convidados. 
-    // Lembrando que somente convidados com interacao (tipo_usuario = 'Z' maiusculo) tem acesso ao correio
+    // msg enviada para todos os colaboradores.
     
     // insercao em CLD
     $query = "insert into Correio_lista_destinos values (".$cod_msg.", ".$cod_autor.", -1, 'Z')";
@@ -1071,13 +1068,13 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
     $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
     $res   = Enviar ($sock, $query);
     
-    while ($linha_convidado = RetornaLinha($res) ){
-      $cod_convidado = $linha_convidado ['cod_usuario'];
+    while ($linha_colaboradores = RetornaLinha($res) ){
+      $cod_colaborador = $linha_colaboradores['cod_usuario'];
       
-      // checar se este convidado nao esta no array de caras que jah receberam a mensagem
-      if (! in_array ($cod_convidado, $array_enviadas)){
-        InsereMsgCD($sock, $cod_msg, $cod_convidado, $cod_autor);
-        array_push ($array_enviadas, $cod_convidado);
+      // checar se este colaborador nao esta no array de caras que jah receberam a mensagem
+      if (! in_array ($cod_colaborador, $array_enviadas)){
+        InsereMsgCD($sock, $cod_msg, $cod_colaborador, $cod_autor);
+        array_push ($array_enviadas, $cod_colaborador);
       }
     }
     return $array_enviadas;
@@ -1086,7 +1083,7 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
     $query="insert into Correio_lista_destinos values (".$cod_msg.",".$cod_autor.",-1,'T')";
     $res=Enviar($sock,$query);
 
-    // enviar para formadores, alunos e convidados
+    // enviar para formadores, alunos e colaboradores
     $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and (binary tipo_usuario='F' or binary tipo_usuario='A' or binary tipo_usuario='Z') order by cod_usuario asc";
     $res=Enviar($sock,$query);
     
@@ -1105,8 +1102,8 @@ function InsereMsgCLDCD($sock,$cod_msg,$cod_autor,$categ,$cod_categ,$array_envia
     return ($array_enviadas);
   }
   else{
-	echo("<font class=text color=red>Em correio.inc, funcao InsereMsgCLDCD, parametro \$categ fora do esperado</font>");
-	die ();
+    echo("<font class=\"text\" color=\"red\">Em correio.inc, funcao InsereMsgCLDCD, parametro \$categ fora do esperado</font>");
+    die ();
   }
 }
 
@@ -1240,10 +1237,6 @@ function CriaArquivoSendmail($informacoes, $cod_msg, $arq_sendmail, $corpo, $for
   return $retval;
 }
 
-
-
-
-
 /* *******************************************************************
   PrimeiroDestinatarioDaMensagem - Retorna primeiro usuario ou categoria destinatario da mensagem
 
@@ -1263,7 +1256,6 @@ function PrimeiroDestinatarioDaMensagem($sock,$cod_msg, $lista_frases, $cod_curs
   $num=RetornaNumLinhas($res);
   $lista=RetornaArrayLinhas($res);
 
-  
   //  Existe uma hierarquias entre as categorias de destino, no hora de exibir o destinatario da mensagem.
   //  As proximas linhas encontram dentro do vetor de destinatarios o de maior hierarquia para exibir o destinatario
   $vetor_hierarquia = array (
@@ -1277,11 +1269,11 @@ function PrimeiroDestinatarioDaMensagem($sock,$cod_msg, $lista_frases, $cod_curs
                             );
   $tmp = 0;
   foreach ($lista as $linha){
-	if ($tmp2 = $vetor_hierarquia [ $linha ['categ_destino'] ] > $tmp){
-	  $tmp              = $tmp2;
-	  $categ            = $linha ['categ_destino'];
-	  $cod_usuario_dest = $linha ['cod_destino'];
-	}
+    if ($tmp2 = $vetor_hierarquia [ $linha ['categ_destino'] ] > $tmp){
+      $tmp              = $tmp2;
+      $categ            = $linha ['categ_destino'];
+      $cod_usuario_dest = $linha ['cod_destino'];
+    }
   }
 
   if ('T' == $categ)
@@ -1289,7 +1281,7 @@ function PrimeiroDestinatarioDaMensagem($sock,$cod_msg, $lista_frases, $cod_curs
     $retorno=RetornaFraseDaLista($lista_frases,29);
   else if ('G' == $categ)
     // 32 - Todos os grupos
-    $retorno = RetornaFraseDaLista($lista_frases, 32); 
+    $retorno = RetornaFraseDaLista($lista_frases, 32);
   else if ('A' == $categ)
     // 31 - Todos os alunos 
     $retorno=RetornaFraseDaLista($lista_frases,31);
@@ -1297,17 +1289,17 @@ function PrimeiroDestinatarioDaMensagem($sock,$cod_msg, $lista_frases, $cod_curs
     // 30 - Todos os formadores 
     $retorno=RetornaFraseDaLista($lista_frases,30);
   else if ('Z' == $categ)
-    // 117 - Todos os convidados
+    // 117 - Todos os colaboradores
     $retorno = RetornaFraseDaLista($lista_frases, 117);
   else if ('g' == $categ){
-	// algum grupo especifico
+    // algum grupo especifico
     $query="select nome from Grupos where cod_grupo=".$cod_usuario_dest;
     $res=Enviar($sock,$query);
-    $linha=RetornaLinha($res);    
+    $linha=RetornaLinha($res);
     $retorno=$linha['nome'];
   }
   else if ('U' == $categ){
-	// algum usuario especifico
+    // algum usuario especifico
     $cod_usuario_global = RetornaCodigoUsuarioGlobal($sock, $cod_usuario_dest, $cod_curso);
     $query="select nome from ".$dbnamebase.".Usuario where cod_usuario=".$cod_usuario_global;
     $res=Enviar($sock,$query);
@@ -1315,8 +1307,8 @@ function PrimeiroDestinatarioDaMensagem($sock,$cod_msg, $lista_frases, $cod_curs
     $retorno=$linha['nome'];
   }
   else{
-	echo("<font class=text color=red>Erro interno. Em correio.inc, funcao PrimeiroDestinatarioDaMensagem, parametro desconhecido </font><br>\n");
-	die ();
+    echo("<font class=\"text\" color=\"red\">Erro interno. Em correio.inc, funcao PrimeiroDestinatarioDaMensagem, parametro desconhecido </font><br>\n");
+    die ();
   }
 
   if($num>1)
@@ -1365,13 +1357,13 @@ function ListaCompletaDestinatarios($sock,$cod_msg, $lista_frases, $cod_curso){
         $retorno[$i]['status'] = false;
       }
       else if ($lista[$i]['categ_destino'] == 'G'){
-	    // 32 - Todos os grupos
-	    $retorno [$i]['nome']   = RetornaFraseDaLista($lista_frases, 32);
-	    $retorno [$i]['codigo'] = -1;
-	    $retorno[$i]['status']  = false;
-	  }
+        // 32 - Todos os grupos
+        $retorno [$i]['nome']   = RetornaFraseDaLista($lista_frases, 32);
+        $retorno [$i]['codigo'] = -1;
+        $retorno[$i]['status']  = false;
+      }
       else if ('Z' == $lista[$i]['categ_destino']){
-	    // 117 - Todos os convidados
+        // 117 - Todos os colaboradores
         $retorno[$i]['nome']   = RetornaFraseDaLista($lista_frases, 117);
         $retorno[$i]['codigo'] = -1;
         $retorno[$i]['status'] = false;
@@ -1390,8 +1382,8 @@ function ListaCompletaDestinatarios($sock,$cod_msg, $lista_frases, $cod_curso){
         $retorno[$i]['status'] = 'u';
       }
       else{
-	    echo("<font class=text color=red>Em correio.inc, fun&ccedil;&atilde;o ListaCompletaDestinatarios, valor fora do esperado</font>\n");
-	    die ();
+        echo("<font class=\"text\" color=\"red\">Em correio.inc, fun&ccedil;&atilde;o ListaCompletaDestinatarios, valor fora do esperado</font>\n");
+        die ();
       }
       $i++;
     }
@@ -1593,21 +1585,21 @@ function RetornaDiretorio($sock,$item){
 }
 
 /* **********************************************************************
-   RetornaCodigoConvidadosDoCurso - retorna codigo dos convidados do curso
+   RetornaCodigoColaboradoresDoCurso - retorna codigo dos colaboradores
+                                       do curso
    entrada: $sock - sock de conexao com a base
-   saida:   array com os cod_usuario dos convidados do curso
-   OBS:     Lembrando que somente convidados com interacao tem acesso ao correio
+   saida:   array com os cod_usuario dos colaboradores do curso
 */
-function RetornaCodigoConvidadosDoCurso ($sock, $cod_curso){
+function RetornaCodigoColaboradoresDoCurso ($sock, $cod_curso){
 
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query="select U.nome, UC.cod_usuario
-          from ".$dbnamebase.".Usuario U
-          inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario='z' order by U.nome asc";
-  
-  //  $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
+  $query  = "select U.nome, UC.cod_usuario ";
+  $query .= "from ".$dbnamebase.".Usuario U ";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario) ";
+  $query .= "where UC.cod_curso=".$cod_curso." AND binary UC.tipo_usuario = 'Z' order by U.nome asc";
+
   $res   = Enviar ($sock, $query);
   $lista = RetornaArrayLinhas ($res);
   return $lista;
@@ -1639,40 +1631,91 @@ function StatusFerramentaGrupos ($sock, $cod_curso, $cod_usuario){
   else if ($status == 'F')
     $retorno = EFormador ($sock, $cod_curso, $cod_usuario);
   else
-    // se entrou aqui, status = 'A'. Permito para alunos e convidados
+    // se entrou aqui, status = 'A'. Permito para alunos e colaboradores
     $retorno = true;
   
   return $retorno;
 }
 
 /* *********************************************************************
-   ExpulsaConvidadoPassivo - verifica se o usuario eh convidado passivo e 
-                             impede seu acesso se for
-   entrada: $sock - sock de conexao
-            $cod_usuario
+   ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+                      acesso se for
+   entrada: $sock        - sock de conexao
+            $cod_curso   - código do curso atual.
+            $cod_usuario - código do usuário o qual pretende-se testar o
+                           acesso à ferramenta correio.
+            $ehPopup     - booleano que indica se a página que o chamou
+                           é ou não um popup. Se não for, devemos fechar
+                           as tags html do template comum de uma página
+                           de ferramenta (com rodapé, fechando o tabelão,
+                           etc).
    saida:   nenhuma
-   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e executa o comando exit
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
 */
-function ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_curso, $lista_frases){
-  
-  if (EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
-    echo("<html>\n");
-    /* 1 - Correio */
-    echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=correio.css>\n");
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $ehPopup = false) {
 
-    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Correio */
-    $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
-    /* 118 - ï¿½rea restrita a alunos e formadores */
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 118)."</b>";
-    echo($cabecalho);
+  if (EVisitante($sock, $cod_curso, $cod_usuario)) {
 
-    echo("    <br>\n");
-    echo("    <p>\n");
+    Desconectar($sock);
+    $sock = Conectar("");
+    $cod_ferramenta = 11;
+    $lista_frases       = RetornaListaDeFrases($sock,$cod_ferramenta);
+    $lista_frases_geral = RetornaListaDeFrases($sock,-1);
+
+    //if (!$ehPopup) {
+    //  include("../menu_principal.php");
+    //  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+    //}
+    if ($ehPopup) {
+      echo("  </head>\n");
+      echo("  <body>\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
+
+    /* 1 - Correio 118 - ï¿½rea restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,118)."</h4>\n");
+
+    if (!$ehPopup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$ehPopup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+
+    if ($ehPopup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+
+    if (!$ehPopup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
     echo("  </body>\n");
-    echo("  </html>\n");
+    echo("</html>\n");
     Desconectar($sock);
     exit();
   }
@@ -1695,7 +1738,7 @@ function DestinatarioMensagem($sock, $cod_msg, $cod_usuario){
 }
 
 /* *********************************************************************
-  RemetenteMensagem - verifica se o usuario eh remetente da mensagem
+   RemetenteMensagem - verifica se o usuario eh remetente da mensagem
                              para permitir ou nao a leitura desta
                              Barra o usuario caso ele nao seja destinatario da mensagem
    entrada: $sock - sock de conexao
@@ -1726,7 +1769,7 @@ function InsereMsgCorreioListaDestinos($sock, $codMsg, $destsCorreio, $indexDest
   foreach($listaCodCateg as $infs){
     
     $query="insert into Correio_lista_destinos values (".$codMsg.",".$cod_usuario.",".$infs['codDestino'].", '".$infs['categDestino']."')";
-    $res=Enviar($sock,$query);  
+    $res=Enviar($sock,$query);
 
     if($infs['categDestino'] == 'g'){
       $aux = 0;
@@ -1783,38 +1826,38 @@ function AnexarArquivos($dir_curso, $dir_arq, $arquivosAnexos, $chkArqAnexo){
 
   /* Novos arquivos anexados (via input) */
   if(count($arquivosAnexos['name']) > 0){
-  	for($contArq = 0; $contArq < count($arquivosAnexos['name']); $contArq++){
-      	$arquivosAnexos['name'][$contArq] = mb_convert_encoding($arquivosAnexos['name'][$contArq], "UTF-8", "ISO-8859-1");
-      	$destino = $dir_arq."/".$arquivosAnexos['name'][$contArq];   
-    	$num = 0;	
-    	$destinoAux = $destino;   
-        $flag=true;  
-	    while($flag){
-		  	if(ExisteArquivo($destinoAux)){	  		
-		  	  $num++;  		
-			  $destinoAux = explode("/", $destino);
-			  $tamCamArq = count($destinoAux);
-			  
-			  $nomeArq = $destinoAux[$tamCamArq-1];
-			  
-			  $nomeArq = explode(".", $nomeArq);
-			  $nomeArq[0] .= "(".$num.")";
-			  $nomeArq = implode(".", $nomeArq);
-			  $destinoAux[$tamCamArq-1] = $nomeArq;
-			  
-			  $destinoAux=implode("/",$destinoAux);
-		
-			  $flag= true;
-		  	}else{
-		  	  $destino = $destinoAux;
-		  	  $flag=false;
-		  	}
-      }       
+    for($contArq = 0; $contArq < count($arquivosAnexos['name']); $contArq++){
+      $arquivosAnexos['name'][$contArq] = mb_convert_encoding($arquivosAnexos['name'][$contArq], "UTF-8", "ISO-8859-1");
+      $destino = $dir_arq."/".$arquivosAnexos['name'][$contArq];
+      $num = 0;
+      $destinoAux = $destino;
+      $flag=true;
+      while($flag){
+        if(ExisteArquivo($destinoAux)){
+          $num++;
+          $destinoAux = explode("/", $destino);
+          $tamCamArq = count($destinoAux);
+
+          $nomeArq = $destinoAux[$tamCamArq-1];
+
+          $nomeArq = explode(".", $nomeArq);
+          $nomeArq[0] .= "(".$num.")";
+          $nomeArq = implode(".", $nomeArq);
+          $destinoAux[$tamCamArq-1] = $nomeArq;
+
+          $destinoAux=implode("/",$destinoAux);
+
+          $flag= true;
+        }else{
+          $destino = $destinoAux;
+          $flag=false;
+        }
+      }
       move_uploaded_file($arquivosAnexos['tmp_name'][$contArq], $destino);
       chmod($dir_arq."/".$arquivosAnexos['name'][$contArq],0644);
     }
   }
-    
+
 }
 
 function UpgradeUsuarioRepetido($listaDestinatarios, $codUser, $cod_msg, $cod){
@@ -1826,7 +1869,7 @@ function UpgradeUsuarioRepetido($listaDestinatarios, $codUser, $cod_msg, $cod){
 
 function trocaEstadoMsg($cod_usuario, $cod_curso, $modoVisualizacao, $msg, $estado, $texto='', $reload='', $recuperar=''){
     $objResponse = new xajaxResponse('ISO-8859-1');
-    $sock = Conectar($cod_curso);  
+    $sock = Conectar($cod_curso);
 
     if(is_array($msg)){
       foreach($msg as $cod_msg){

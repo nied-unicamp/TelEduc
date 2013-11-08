@@ -46,9 +46,8 @@
   include($bibliotecas."geral.inc");
   include("correio.inc");
 
-  $cod_ferramenta=11;
+  $cod_ferramenta = 11;
   include("../topo_tela.php");
- echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
   $cod_curso = $_GET['cod_curso'];
   $modoVisualizacao = $_GET['modoVisualizacao'];
 
@@ -82,16 +81,15 @@
 
   $sock=Conectar($cod_curso);
 
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
-
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
   if (! is_numeric ($cod_msg) || (!RemetenteMensagem($sock, $cod_msg, $cod_usuario) &&  !DestinatarioMensagem($sock, $cod_msg, $cod_usuario)))
   {
-    echo("<script type=\"text/javascript\">\n");
+    echo("    <script type=\"text/javascript\">\n");
     /* 119 - Ocorreu um erro ao tentar acessar a mensagem */
-    echo("  alert('".RetornaFraseDaLista($lista_frases, 119)."');\n");
-    echo("  self.close();\n");
-    echo("</script>\n");
+    echo("      alert('".RetornaFraseDaLista($lista_frases, 119)."');\n");
+    echo("      self.close();\n");
+    echo("    </script>\n");
 
     Desconectar ($sock);
     exit();
@@ -113,7 +111,7 @@
 //   if($modoVisualizacao == 'R' && $estadoMsg == 'N')
 //     TrocaEstadoDaMensagemRecebidas($sock, 'L', $cod_msg, $cod_usuario);
 
-  echo("<script type=\"text/javascript\">\n");
+  echo("    <script type=\"text/javascript\">\n");
 
   /* ************************************
        AbrePerfil - abre o perfil do usuario em nova janela
@@ -121,57 +119,56 @@
          do qual abrir o perfil
        saida: false - para nao mudar a pagina atual
   */
-  echo("function AbrePerfil(cod_usuario)\n");
-  echo("{\n");
-  echo("  window.open('../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
-  echo("  return(false);\n");
-  echo("}\n");
+  echo("    function AbrePerfil(cod_usuario)\n");
+  echo("    {\n");
+  echo("      window.open('../perfil/exibir_perfis.php?&cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+  echo("      return(false);\n");
+  echo("    }\n");
 
 
-  echo("function ImprimirRelatorio(){ \n");
-  echo("  if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
-  echo("  {\n");
-  echo("    self.print();\n");
-  echo("  }\n");
-  echo("  else\n");
-  echo("  {\n");
+  echo("    function ImprimirRelatorio(){ \n");
+  echo("      if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
+  echo("      {\n");
+  echo("        self.print();\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
   /* 51- Infelizmente n�o foi poss�vel imprimir automaticamente esse documento. Mantenha a tecla <Ctrl> pressionada enquanto pressiona a tecla <p> para imprimir. */
-  echo("      alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
-  echo("  }\n");
-  echo("}\n");
+  echo("          alert('".RetornaFraseDaLista($lista_frases_geral,51)."');\n");
+  echo("      }\n");
+  echo("    }\n");
 
-  echo("function Resposta(acao,cod_msg){\n");
-  echo("  window.open('compor.php?cod_curso=" .$cod_curso. "&cod_msg_ant='+cod_msg+'&acao='+acao, 'mensagem', 'top=50,left=100,scrollbars=yes, status=no,toolbar=no,menubar=no,resizable=yes');\n");
-
-  echo("}\n\n");
+  echo("    function Resposta(acao,cod_msg){\n");
+  echo("      window.open('compor.php?cod_curso=" .$cod_curso. "&cod_msg_ant='+cod_msg+'&acao='+acao, 'mensagem', 'top=50,left=100,scrollbars=yes, status=no,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("    }\n\n");
 
   if ($modoVisualizacao == 'L'){
-    echo("function ConfirmaExcluir()\n");
-    echo("{\n");
+    echo("    function ConfirmaExcluir()\n");
+    echo("    {\n");
     /* 103 - Voce tem certeza de que deseja excluir definitivamente esta mensagem ? */
-    echo("  if(confirm('".RetornaFraseDalista($lista_frases,103)."')){\n");
-    echo("    document.getElementById('formApagar').acao.value=\"excluir\";\n");
-    echo("    document.getElementById('formApagar').submit();\n");
-    echo("  }\n");
-    echo("}\n\n");
+    echo("      if(confirm('".RetornaFraseDalista($lista_frases,103)."')){\n");
+    echo("        document.getElementById('formApagar').acao.value=\"excluir\";\n");
+    echo("        document.getElementById('formApagar').submit();\n");
+    echo("      }\n");
+    echo("    }\n\n");
 
-    echo("function ConfirmaRecuperar()\n");
-    echo("{\n");
+    echo("    function ConfirmaRecuperar()\n");
+    echo("    {\n");
     /* 104 - Voce tem certeza de que deseja recuperar esta mensagem ? */
-    echo("  if(confirm('".RetornaFraseDaLista($lista_frases,104)."')){\n");
-    echo("    document.getElementById('formApagar').acao.value=\"recuperar\";\n");
-    echo("    document.getElementById('formApagar').submit();\n");
-    echo("  }\n");
-    echo("}\n\n");
+    echo("      if(confirm('".RetornaFraseDaLista($lista_frases,104)."')){\n");
+    echo("        document.getElementById('formApagar').acao.value=\"recuperar\";\n");
+    echo("        document.getElementById('formApagar').submit();\n");
+    echo("      }\n");
+    echo("    }\n\n");
   }
   else
   {
-    echo("function ConfirmaApagar()\n");
-    echo("{\n");
+    echo("    function ConfirmaApagar()\n");
+    echo("    {\n");
     /* 106 - Voce tem certeza de que deseja mover esta mensagem para a Lixeira? */
-    echo("  if(confirm('".RetornaFraseDaLista($lista_frases,106)."')){;\n");
-    echo("    document.getElementById('formApagar').submit()};\n");
-    echo("}\n\n");
+    echo("      if(confirm('".RetornaFraseDaLista($lista_frases,106)."')){;\n");
+    echo("        document.getElementById('formApagar').submit()};\n");
+    echo("    }\n\n");
   }
   echo("      function Iniciar(){\n");
   echo("        var tamY =".$tamY.";\n");
@@ -185,11 +182,12 @@
   echo("        startList();\n");
   echo("      }\n");
 
-   echo("</script>\n");
+   echo("    </script>\n");
 
-  echo("</head>\n");
+  echo("  </head>\n");
 
   echo("  <body style=\"width:1500\" onLoad=\"Iniciar();\"><br />\n");
+  echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
   echo("    <table style=name:tabelaGlobal class=\"tabelaGlobal\" id=\"tabelaGlobal\" width=\"670\" border=0>\n");
   echo("      <tr>\n");
   echo("        <td width=\"100%\" valign=\"top\">\n");
@@ -214,11 +212,11 @@
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <form name=\"formApagar\" id=\"formApagar\" action=\"acoes.php\" method=\"post\">\n");
-  echo("                  <input type=hidden name=cod_msg value=".$cod_msg." />\n");    
-  echo("                  <input type=hidden name=acao value=\"apagar\" />\n");
-  echo("                  <input type=hidden name=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("                  <input type=hidden name=status_mensagem value=\"".$modoVisualizacao."\" />\n");
-  echo("                  <input type=hidden name=cod_usuario value=\"".$cod_usuario."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"cod_msg\"         value=\"".$cod_msg."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"acao\"            value=\"apagar\" />\n");
+  echo("                  <input type=\"hidden\" name=\"cod_curso\"       value=\"".$cod_curso."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"status_mensagem\" value=\"".$modoVisualizacao."\" />\n");
+  echo("                  <input type=\"hidden\" name=\"cod_usuario\"     value=\"".$cod_usuario."\" />\n");
   echo("                </form>\n");
 
   echo("                <ul class=\"btAuxTabs\">\n");
@@ -275,8 +273,8 @@
   echo("                      ".RetornaFraseDaLista($lista_frases, 23)."\n");
   echo("                    </td>\n");
  
-  echo("                    <td class=alLeft>\n");
-  echo("                      <a class=text href=# onClick=AbrePerfil(".$linha['cod_usuario'].")>"); 
+  echo("                    <td class=\"alLeft\">\n");
+  echo("                      <a class=\"text\" href=\"#\" onClick=\"AbrePerfil(".$linha['cod_usuario'].");\">"); 
   echo("                      ".RetornaNomeUsuarioDeCodigo($sock,$linha['cod_usuario'], $cod_curso). "</a>\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
@@ -296,7 +294,7 @@
   {
     if ($SalvarEmArquivo || (false == $k ['status']) ){
       // Salvar em arquivo ou destinatario eh 'todos <alguma coisa>' ==> Sem link
-      $link_abre  = "<font class=text>";
+      $link_abre  = "<font class=\"text\">";
       $link_fecha = "</font>";
     }
     else if ('g' == $k['status']){
@@ -324,7 +322,7 @@
   echo("                    <td class=\"g1field alLeft\"><font class=\"text\">".UnixTime2DataHora($linha['data'])."</font></td>\n");
   echo("                  </tr>\n");
 
-  echo("                  <tr>\n");  
+  echo("                  <tr>\n");
   echo("                    <td class=\"alRight\">\n");
       /* 20 - Assunto */
   echo("                      ".RetornaFraseDaLista($lista_frases,20)."\n");
@@ -349,14 +347,14 @@
     echo("                      <b>". RetornaFraseDaLista($lista_frases,100).":</b>\n");
     $listaArq = RetornaArrayDiretorio($dir_temp);
     if(count($listaArq) > 0){
-		foreach($listaArq as $cod => $linha){
-	        $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
-	        if($cod == 0){       	
-	          echo("                      <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
-	        }else{
-	          echo("                      | <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
-	        }
-      	}
+      foreach($listaArq as $cod => $linha){
+        $linha['Arquivo'] = mb_convert_encoding($linha['Arquivo'], "ISO-8859-1", "UTF-8");
+        if($cod == 0){
+          echo("                      <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
+        }else{
+          echo("                      | <a class=\"text\" href=".$link_temp ."/".ConverteURL2HTML($linha['Arquivo'])." target=\"blank\"> ".$linha['Arquivo']." </a>\n");
+        }
+      }
     }
     echo("                    </td>\n");
     echo("                  </tr>\n");

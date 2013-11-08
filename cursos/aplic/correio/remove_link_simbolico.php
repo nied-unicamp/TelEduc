@@ -45,12 +45,8 @@
   include($bibliotecas."geral.inc");
   include("correio.inc");
 
-
-  $cod_usuario_global=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar($cod_curso);
-
-  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso); 
+  $cod_ferramenta = 11;
+  include("../topo_tela.php");
 
   Desconectar($sock);
   $sock = Conectar("");
@@ -69,21 +65,14 @@
     RemoveArquivo($dir_temp);
 
   Desconectar($sock);
-
   $sock=Conectar($cod_curso);
 
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,11);
-
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
-
-  echo("<html>\n");
-  /* 1 - Correio */
-  echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>");
-  echo("<body link=#0000ff vlink=#0000ff bgcolor=#FFFFFF onLoad=self.close();>\n");
+  echo("  </head>\n");
+  echo("  <body link=#0000ff vlink=#0000ff bgcolor=#FFFFFF onLoad=\"self.close();\">\n");
   Desconectar($sock);
-  echo("</body>\n");
+  echo("  </body>\n");
   echo("</html>");
 
 ?>
