@@ -2,8 +2,8 @@
 $checked = "";
   echo("                        <div class=\"bordaBox\" style=\"float:left;\">\n");
 //   echo("                    <form id=\"selectDest\" name=\"selectDest\" action=\"naumsei.php\" method=\"Post\" >");
-  /* 30 - Todos os Formadores */
 
+  /* 30 - Todos os Formadores */
   echo("                          <ul>\n");
   echo("                            <li>\n");
   echo("                              <input name=\"chkTodosF\" id=\"chkTodosF\" type=\"checkbox\" value=\"F*\" onClick=\"MarcaOuDesmarcaTodos('F');\" /> ".RetornaFraseDaLista($lista_frases, 30)." <span id=\"mostraF\" class=\"link\" ver=\"nao\" onClick=\"MostraEscondeUsers('F')\">[ + ]</span><br>\n");
@@ -34,7 +34,7 @@ $checked = "";
     
       if($codFormadores[$i]['cod_usuario']>=0){
   /*exclui o administrador do TelEduc da Lista */  
-        echo("                                <li>\n"); 
+        echo("                                <li>\n");
         // $acao = 0 - noma mensagem
         // $acao = 1 - Responder 
         // $acao = 2 - Responder a todos os destinatarios
@@ -44,7 +44,7 @@ $checked = "";
           // msg estah sendo respondida. Destinatario eh o autor da msg anterior
           
           if ($codUsuarioAutorAnt == $codFormadores[$i]['cod_usuario']){
-            $checked = "checked = checked";            
+            $checked = "checked = checked";
           }else{
             $checked = "";
           }
@@ -71,7 +71,7 @@ $checked = "";
 //                     OU se o destinatário da mensagem anterior(que está sendo respondida) eh o mesmo do checkbox que estah sendo analisado E se o destinátario da mensagem anterior, nao eh o autor da mensagem atual(resposta)
                   
                 ) {
-                $checked = "checked = checked"; 
+                $checked = "checked = checked";
                 break;
               }else{
 
@@ -95,19 +95,19 @@ $checked = "";
   $cont = count($codAlunos);
   $checked = "";
   if(is_array($codAlunos) && ($cont > 0)){
-  /* 31 - Todos os alunos*/
+
+    /* 31 - Todos os alunos*/
     echo("                            <li>\n");
     echo("                              <input name=\"chkTodosA\" id=\"chkTodosA\" type=\"checkbox\" value=\"A*\" onclick=\"MarcaOuDesmarcaTodos('A');\" /> ".RetornaFraseDaLista($lista_frases, 31)." <span id=\"mostraA\" class=\"link\" style=ver:nao onclick=\"MostraEscondeUsers('A')\">[ + ]</span><br />\n");
     echo("                            </li>\n");
-  
-    
+
     echo("                            <li>\n");
-    echo("                              <ul id=\"ulUserA\" class=\"listaDest\" style=\"display:none\">\n");  
-  
+    echo("                              <ul id=\"ulUserA\" class=\"listaDest\" style=\"display:none\">\n");
+
     for($i=0 ; $i < $cont; $i++){
 
       if( $codAlunos[$i]['cod_usuario'] >= 0 ){ 
-        echo("                                <li>\n"); 
+        echo("                                <li>\n");
         if ($acao == 1 && $codMsgAnt != "NULL"){
           // msg estah sendo respondida. Destinatario eh o autor da msg anterior
           if ($codUsuarioAutorAnt == $codAlunos[$i]['cod_usuario']){
@@ -132,7 +132,7 @@ $checked = "";
                     (($codUsuarioAutorAnt == $codAlunos[$i]['cod_usuario']) && ($codUsuarioAutorAnt != $cod_usuario)) 
                     //OU se o destinatário da mensagem anterior(que está sendo respondida) eh o mesmo do checkbox que estah sendo analisado E se o destinátario da mensagem anterior, nao eh o autor da mensagem atual(resposta)
                   ) {
-                $checked = "checked = checked"; 
+                $checked = "checked = checked";
                 break;
               }else{
                 $checked = "";
@@ -151,12 +151,12 @@ RetornaNomeUsuarioDeCodigo($sock, $codAlunos[$i]['cod_usuario'],$cod_curso)."</s
     echo("                            </li>\n");
   }
 
-  $cont = count($codConvidados);
+  $cont = count($codColaboradores);
   $checked = "";
 
-  if(is_array($codConvidados) && ($cont > 0)){
+  if(is_array($codColaboradores) && ($cont > 0)){
 
-  /* 117 - Todos os Convidados*/
+    /* 117 - Todos os Colaboradores*/
     echo("                            <li>\n");
     echo("                              <input name=\"chkTodosC\" id=\"chkTodosC\" type=\"checkbox\" value=\"C*\" onclick=\"MarcaOuDesmarcaTodos('C');\" /> ".RetornaFraseDaLista($lista_frases, 117)." <span id=\"mostraC\" class=\"link\" style=ver:nao onclick=\"MostraEscondeUsers('C')\">[ + ]</span><br />\n");
     echo("                            </li>\n");
@@ -165,12 +165,12 @@ RetornaNomeUsuarioDeCodigo($sock, $codAlunos[$i]['cod_usuario'],$cod_curso)."</s
     echo("                            <li>\n");
     echo("                              <ul id=\"ulUserC\" class=\"listaDest\" style=\"display:none\">\n");
     for($i=0 ; $i < $cont; $i++){
-      if( $codConvidados[$i]['cod_usuario'] >= 0 ){ 
-        echo("                                <li>\n"); 
+      if( $codColaboradores[$i]['cod_usuario'] >= 0 ){
+        echo("                                <li>\n");
         if ($acao == 1 && $codMsgAnt != "NULL"){
           // msg estah sendo respondida. Destinatario eh o autor da msg anterior
           // $linha=RetornaInfosMensagem($sock,$codMsgAnt);
-          if ($codUsuarioAutorAnt == $codConvidados[$i]['cod_usuario']){
+          if ($codUsuarioAutorAnt == $codColaboradores[$i]['cod_usuario']){
             $checked = "checked = checked";
           }else{$checked = "";}
         }
@@ -182,16 +182,16 @@ RetornaNomeUsuarioDeCodigo($sock, $codAlunos[$i]['cod_usuario'],$cod_curso)."</s
             foreach($lista as $cod=>$dados){
               if( //marca como o checkbox SE:
                   (                       
-                    (($dados['cod_destino'] == $codConvidados[$i]['cod_usuario']) && (($dados['cod_destino'] != $cod_usuario) || ($codUsuarioAutorAnt == $cod_usuario)) && ($dados['categ_destino'] == 'U'))
+                    (($dados['cod_destino'] == $codColaboradores[$i]['cod_usuario']) && (($dados['cod_destino'] != $cod_usuario) || ($codUsuarioAutorAnt == $cod_usuario)) && ($dados['categ_destino'] == 'U'))
                   ) 
                     //(a pessoa na lista de destinatario corresponde ao checkbox que estah sendo analisado, E se a pessoa na lista de destinatario nao eh a pessoa que estah enviando a mensagem OU se quem enviou a mensagem anterior enviou a mensagem para ela mesma) E se a categoria do Destinatario eh Usuario
 
                     ||
 
-                    (($codUsuarioAutorAnt == $codConvidados[$i]['cod_usuario']) && ($codUsuarioAutorAnt != $cod_usuario)) 
+                    (($codUsuarioAutorAnt == $codColaboradores[$i]['cod_usuario']) && ($codUsuarioAutorAnt != $cod_usuario)) 
                     //OU se o destinatário da mensagem anterior(que está sendo respondida) eh o mesmo do checkbox que estah sendo analisado E se o destinátario da mensagem anterior, nao eh o autor da mensagem atual(resposta)
                   ) {
-                $checked = "checked = checked"; 
+                $checked = "checked = checked";
                 break;
               }else{
                 $checked = "";
@@ -200,8 +200,8 @@ RetornaNomeUsuarioDeCodigo($sock, $codAlunos[$i]['cod_usuario'],$cod_curso)."</s
           }
         }
 
-        echo("                                  <input name=\"chkC[]\" id=\"chkC\" type=\"checkbox\" value=\"".$codConvidados[$i]['cod_usuario']."\" onclick=\"ControlaChkTodos('C', this)\" ".$checked." /> <span class=\"link\" onclick='OpenWindowPerfil(".$codConvidados[$i]['cod_usuario'].");'> ".
-RetornaNomeUsuarioDeCodigo($sock, $codConvidados[$i]['cod_usuario'],$cod_curso)."</span><br />\n");
+        echo("                                  <input name=\"chkC[]\" id=\"chkC\" type=\"checkbox\" value=\"".$codColaboradores[$i]['cod_usuario']."\" onclick=\"ControlaChkTodos('C', this)\" ".$checked." /> <span class=\"link\" onclick='OpenWindowPerfil(".$codColaboradores[$i]['cod_usuario'].");'> ".
+RetornaNomeUsuarioDeCodigo($sock, $codColaboradores[$i]['cod_usuario'],$cod_curso)."</span><br />\n");
         echo("                                </li>\n");
       }
     }
@@ -214,16 +214,17 @@ RetornaNomeUsuarioDeCodigo($sock, $codConvidados[$i]['cod_usuario'],$cod_curso).
   $cont = count($codGrupos);
   $checked ="";
   if(is_array($codGrupos) && ($cont > 0)){
-  /* 32 - Todos os alunos*/
+
+    /* 32 - Todos os alunos*/
     echo("                            <li>\n");
     echo("                              <input name=\"chkTodosG\" id=\"chkTodosG\" type=\"checkbox\" value=\"G*\" onclick=\"MarcaOuDesmarcaTodos('G');\" /> ".RetornaFraseDaLista($lista_frases, 32)." <span id=\"mostraG\" class=\"link\" style=ver:nao onclick=\"MostraEscondeUsers('G')\">[ + ]</span><br />\n");
     echo("                            </li>\n");
     echo("                            <li>\n");
-    echo("                              <ul id=\"ulUserG\" class=\"listaDest\" style=\"display:none\">\n");  
+    echo("                              <ul id=\"ulUserG\" class=\"listaDest\" style=\"display:none\">\n");
   
     for($i=0 ; $i < $cont; $i++){
       if( $codGrupos[$i]['cod_grupo'] >= 0 ){ 
-        echo("                                <li>\n"); 
+        echo("                                <li>\n");
         if ($acao == 1 && $codMsgAnt != "NULL"){
           // msg estah sendo respondida. Destinatario eh o autor da msg anterior
           if ($linha['cod_destino'] == $codGrupos[$i]['cod_grupo']){
@@ -246,7 +247,7 @@ RetornaNomeUsuarioDeCodigo($sock, $codConvidados[$i]['cod_usuario'],$cod_curso).
 //                 ||
 // 
 //                 (($codUsuarioAutorAnt == $codGrupos[$i]['cod_grupo']) && ($codUsuarioAutorAnt != $cod_usuario)) ) {
-                  $checked = "checked = checked"; 
+                  $checked = "checked = checked";
                   break;
                 }else{
                   $checked = "";
@@ -254,7 +255,7 @@ RetornaNomeUsuarioDeCodigo($sock, $codConvidados[$i]['cod_usuario'],$cod_curso).
               }
             }
           }
-        }        
+        }
   
         echo("                                  <input name=\"chkG[]\" id=\"chkG\" type=\"checkbox\" value=\"".$codGrupos[$i]['cod_grupo']."\" onclick=\"ControlaChkTodos('G', this)\" ".$checked." /> <span class=\"link\" onclick='OpenWindowGrupo(".$codGrupos[$i]['cod_grupo'].");'> ". RetornaGrupoComCodigo($sock, $codGrupos[$i]['cod_grupo']) ."</span><br />\n");
         echo("                                </li>\n");

@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic//compor2.php
+    Arquivo : cursos/aplic/correio/compor2.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -99,12 +99,11 @@
     $dir_temp_msg=$diretorio_temp."/tmp/".$cod_curso."/extmsg";
   }
 
-
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
 
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
   $userFormador = EFormador($sock,$cod_curso,$cod_usuario);
 
@@ -112,7 +111,6 @@
 
   $codMsg = RetornaProximoCodigo($sock, "Correio_mensagens");
   $dirArq=$diretorio_arq."/".$cod_curso."/correio/".$codMsg;
-
 
   $msgCorpo = VerificaStringQuery($msgCorpo);
   $assunto = VerificaStringQuery($assunto);
@@ -161,13 +159,13 @@
 
       $listaCod[$contDest]['codDestino'] = $inf;
       $listaCod[$contDest]['categDestino'] = 'U';
-      $contDest++;  
+      $contDest++;
     }
   }
 
   if($chkG){
-    $numG = count($chkG); 
-    $aux =  $contDest;    
+    $numG = count($chkG);
+    $aux  =  $contDest;
     foreach($chkG as $inf){
 
     $listaCod[$contDest]['codDestino'] = $inf;
@@ -242,7 +240,7 @@
       $conteudo_email .= "<strong>".RetornaFraseDaLista($lista_frases,113).":</strong> ";
       foreach($validfiles as $idx => $tupla){
         if($idx > 0) $conteudo_email .= ", ";
-          $conteudo_email .= $tupla['Arquivo'];        
+          $conteudo_email .= $tupla['Arquivo'];
       }
       $conteudo_email .= "</p>\n";
     }else{
@@ -274,7 +272,7 @@
     $informacoes['nome_ferramenta'] = RetornaFraseDaLista($lista_frases, 1);
 
     Desconectar($sock);
-    $mensagem_envio = MontaMsg($host, $raiz_www, $cod_curso, $conteudo_email, $assunto, $cod_usuario, $mnomes); 
+    $mensagem_envio = MontaMsg($host, $raiz_www, $cod_curso, $conteudo_email, $assunto, $cod_usuario, $mnomes);
     $sock = Conectar($cod_curso);
 
     if (CriaArquivoSendmail($informacoes, $codMsg, $nomearquivo,
@@ -298,7 +296,7 @@
 
   }
 
-  echo("    <script type=text/javascript>\n");
+  echo("    <script type=\"text/javascript\">\n");
   echo("      function esperaEFecha(){\n");
   echo("       window.setTimeout(\"this.close()\", 2000);\n");
   echo("      }\n");

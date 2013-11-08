@@ -46,8 +46,8 @@
   
   require_once("../xajax_0.2.4/xajax.inc.php");
   
-   //Estancia o objeto XAJAX
-   $objAjax = new xajax();
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
   $objAjax = new xajax();
   $objAjax->registerFunction("trocaEstadoMsg");
@@ -79,9 +79,7 @@
   session_unregister('array_mensagens_s');
   session_unregister('sin_pag_s');
 
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
-
-  if ((!isset($todas_abertas)) || ($todas_abertas == '')) $todas_abertas = 0;  
+  if ((!isset($todas_abertas)) || ($todas_abertas == '')) $todas_abertas = 0;
   /* Se o tipo de ordena�o n� foi especificada escolhe por padr� a            */
   /* ordena�o por data.                                                       */
   if ((!isset($ordem)) || ($ordem == "")) $ordem = 'data';
@@ -96,10 +94,10 @@
 
 
   /* Verifica se o usuario eh formador. */
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
-  $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
-  $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
+  $usr_visitante   = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_formador    = EFormador($sock, $cod_curso, $cod_usuario);
+  $usr_aluno       = EAluno($sock, $cod_curso, $cod_usuario);
 
    if($modoVisualizacao == 'R')
      $listaMsg = RetornaListaMensagensRecebidas2($sock,$cod_usuario,$ordem);
@@ -149,7 +147,7 @@
 
   echo("      function Iniciar(event){\n");
   echo("        ExibeMsgPagina(".$pagAtual.");\n");
-  echo("        var date = new Date();\n");  
+  echo("        var date = new Date();\n");
   echo("        clock = date.getTime();\n");
   echo("        setTimeout(\"VerificaMsgNova(clock)\", 60000);\n");
   echo("        startList();\n");
@@ -207,8 +205,8 @@
   echo("            tabela.rows[i].style.display=\"table-row\";\n");
   echo("          tabela.rows[i].className = 'altColor'+((i+1)%2);");
   echo("        }\n\n");
-  echo("        document.getElementById('primMsgIndex').innerHTML=inicio;\n"); 
-  echo("        document.getElementById('ultMsgIndex').innerHTML=(i-1);\n\n"); 
+  echo("        document.getElementById('primMsgIndex').innerHTML=inicio;\n");
+  echo("        document.getElementById('ultMsgIndex').innerHTML=(i-1);\n\n");
 
   echo("        if (browser==\"Microsoft Internet Explorer\")\n");
   echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
@@ -229,7 +227,7 @@
   echo("          document.getElementById('paginacao_back').className = \"\";\n");
   echo("        }\n");
   echo("        document.getElementById('paginacao_first').innerHTML = \"&lt;&lt;\";\n");
-  echo("        document.getElementById('paginacao_back').innerHTML = \"&lt;\";\n");    
+  echo("        document.getElementById('paginacao_back').innerHTML = \"&lt;\";\n");
   echo("        inicio = pagAtual-2;\n");
   echo("        if (inicio < 1) inicio=1;\n");
   echo("        fim = pagAtual+2;\n");
@@ -296,9 +294,9 @@
   echo("            tableElement = tabela.rows[i].parentNode;\n");
   echo("            tableElement.removeChild(tabela.rows[i]);\n");
   echo("            i--}\n");
-  echo("        }\n\n");  
+  echo("        }\n\n");
   echo("        var browser=navigator.appName;\n\n");
-  echo("	pagina = 1;\n");
+  echo("        pagina = 1;\n");
   echo("        inicio = ((pagina-1)*".$msgPorPag.")+1;\n");
   echo("        final = ((pagina)*".$msgPorPag.");\n");
   echo("        contador=0;\n");
@@ -311,21 +309,21 @@
   echo("            tabela.rows[i].style.display=\"table-row\";\n");
   echo("          tabela.rows[i].className = 'altColor'+((i+1)%2);");
   echo("        }\n\n");
-  echo("        document.getElementById('primMsgIndex').innerHTML=inicio;\n"); 
+  echo("        document.getElementById('primMsgIndex').innerHTML=inicio;\n");
 
-  echo("        document.getElementById('ultMsgIndex').innerHTML=(i-1);\n\n"); 
-
-  echo("        if (browser==\"Microsoft Internet Explorer\")\n");
-  echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
-  echo("        else\n");
-  echo("          tabela.rows[tabela.rows.length-1].style.display=\"table-row\";\n");
+  echo("        document.getElementById('ultMsgIndex').innerHTML=(i-1);\n\n");
 
   echo("        if (browser==\"Microsoft Internet Explorer\")\n");
   echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
   echo("        else\n");
   echo("          tabela.rows[tabela.rows.length-1].style.display=\"table-row\";\n");
 
-  echo("        pagAtual=pagina;\n\n");    
+  echo("        if (browser==\"Microsoft Internet Explorer\")\n");
+  echo("          tabela.rows[tabela.rows.length-1].style.display=\"block\";\n");
+  echo("        else\n");
+  echo("          tabela.rows[tabela.rows.length-1].style.display=\"table-row\";\n");
+
+  echo("        pagAtual=pagina;\n\n");
 
   echo("        if (pagAtual != 1){\n");
   echo("          document.getElementById('paginacao_first').onclick = function(){ ExibeMsgPagina(1); };\n");
@@ -339,7 +337,7 @@
   echo("          document.getElementById('paginacao_back').className = \"\";\n");
   echo("        }\n");
   echo("        document.getElementById('paginacao_first').innerHTML = \"&lt;&lt;\";\n");
-  echo("        document.getElementById('paginacao_back').innerHTML = \"&lt;\";\n");    
+  echo("        document.getElementById('paginacao_back').innerHTML = \"&lt;\";\n");
   echo("        inicio = pagAtual-2;\n");
   echo("        if (inicio<1) inicio=1;\n");
   echo("        fim = pagAtual+2;\n");
@@ -394,7 +392,7 @@
   echo("        var i;\n");
   echo("        var inicio;\n");
   echo("        var final;\n");
-  echo("        var elementos = document.getElementsByName('chk[]')\n");      
+  echo("        var elementos = document.getElementsByName('chk[]')\n");
   echo("        inicio = ((pagAtual-1)*".$msgPorPag.");\n");
   echo("        final = ((pagAtual)*".$msgPorPag.");\n");
   echo("        controle = (pagAtual-1)*".$msgPorPag.";\n");
@@ -417,12 +415,12 @@
   echo("        var achou = conteudo.indexOf(chkbox.value+' ');");
   echo("        cabecalho = document.frmSelecao.cabecalho;\n");
   echo("        var elementos = document.getElementsByName('chk[]')\n");
-//   echo("        if(chkbox.checked){\n");  
+//   echo("        if(chkbox.checked){\n");
   echo("          for(i=0 ; i < elementos.length; i++){\n");
-  echo("            if(elementos[i].checked){\n"); 
-  echo("              j++\n"); 
-  echo("            }\n"); 
-  echo("          }\n"); 
+  echo("            if(elementos[i].checked){\n");
+  echo("              j++\n");
+  echo("            }\n");
+  echo("          }\n");
   echo("          controle = (pagAtual-1)*".$msgPorPag."\n");
   echo("          controle = elementos.length - controle\n");
   echo("          if((j == ".$msgPorPag.") || (j == controle)){ cabecalho.checked = true;\n");
@@ -503,7 +501,7 @@
   echo("        var reload = 'no';\n");
 
   echo("        for(i=0 ; i < elementos.length; i++){\n");
-  echo("          codMsgAtual = elementos[i].id.split('_');\n");  
+  echo("          codMsgAtual = elementos[i].id.split('_');\n");
   echo("          if(elementos[i].checked){\n");
   echo("            cont++;\n");
   echo("          }\n");
@@ -526,22 +524,22 @@
 
   echo("        cont=0;\n");
   echo("        for(i=0 ; i < elementos.length; i++){\n");
-  echo("          codMsgAtual = elementos[i].id.split('_');\n");  
+  echo("          codMsgAtual = elementos[i].id.split('_');\n");
   echo("          if(elementos[i].checked){\n");
   echo("            msg[cont] = elementos[i].value;\n");
   echo("            apagado = document.getElementById('tr_'+codMsgAtual[1]); \n");
   echo("            tabAux = apagado.parentNode;\n");
-  echo("            tabAux.removeChild(apagado);\n");  
+  echo("            tabAux.removeChild(apagado);\n");
   echo("            i--;cont++;\n");
   echo("            \n");
-  echo("          }else{\n"); 
-  echo("            altCor = (contCor%2);\n"); 
-  echo("            contCor++;\n"); 
+  echo("          }else{\n");
+  echo("            altCor = (contCor%2);\n");
+  echo("            contCor++;\n");
   echo("            document.getElementById('tr_'+codMsgAtual[1]).className=\"altColor\"+altCor;\n");
-  echo("          }\n"); 
+  echo("          }\n");
   echo("        }\n");
   /* 57 - Não há nenhuma mensagem selecionada !*/
-//   echo("        if(cont==0) alert('".RetornaFraseDalista($lista_frases,57)."');\n");
+  //   echo("        if(cont==0) alert('".RetornaFraseDalista($lista_frases,57)."');\n");
 
   echo("        if(totalMensagem == cont) reload = 'yes';\n");
 
@@ -556,7 +554,7 @@
 
   echo("        }\n\n");
 
-  echo("        if(((totalMensagem%".$msgPorPag.") - cont) < 0){\n");  
+  echo("        if(((totalMensagem%".$msgPorPag.") - cont) < 0){\n");
   echo("          if(pagAtual == totalPag){\n");
   echo("            pagAtual--;\n");
   echo("          }\n");
@@ -594,15 +592,15 @@
   echo("        var codMsgAtual;\n");
   echo("        apagado = document.getElementById('tr_'+cod_msg); \n");
   echo("        tabAux = apagado.parentNode;\n");
-  echo("        tabAux.removeChild(apagado);\n");  
+  echo("        tabAux.removeChild(apagado);\n");
   echo("        for(i=0 ; i < elementos.length; i++){\n");
-  echo("          codMsgAtual = elementos[i].id.split('_');\n");  
-  echo("          altCor = (contCor%2);\n"); 
-  echo("          contCor++;\n"); 
+  echo("          codMsgAtual = elementos[i].id.split('_');\n");
+  echo("          altCor = (contCor%2);\n");
+  echo("          contCor++;\n");
   echo("          document.getElementById('tr_'+codMsgAtual[1]).className=\"altColor\"+altCor;\n");
-  echo("        }\n"); 
+  echo("        }\n");
 
-  echo("        if(((totalPag%".$msgPorPag.") - i) < 0);\n");  
+  echo("        if(((totalPag%".$msgPorPag.") - i) < 0);\n");
   echo("          totalPag--;\n");
 
   echo("        ExibeMsgPagina(pagAtual);\n");
@@ -629,24 +627,29 @@
   echo("        }\n");
   /* 57 - Não há nenhuma mensagem selecionada !*/
   echo("        if(cont==0) {alert('".RetornaFraseDalista($lista_frases,57)."'); return;}\n");
-echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_curso=".$cod_curso."&modoVisualizacao=".$modoVisualizacao."&arrayMsgs='+arrayMsgs,'mensagem','width=1800,height=900,top=100,left=100,scrollbars=yes,status=no,toolbar=no,menubar=no,resizable=no');\n");
+  echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_curso=".$cod_curso."&modoVisualizacao=".$modoVisualizacao."&arrayMsgs='+arrayMsgs,'mensagem','width=1800,height=900,top=100,left=100,scrollbars=yes,status=no,toolbar=no,menubar=no,resizable=no');\n");
 
   echo("      }\n\n");
 
-  echo("    </script>\n");  
+  echo("    </script>\n");
+
   include("../menu_principal.php");
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  if($modoVisualizacao == "R") $nomeModo = RetornaFraseDaLista($lista_frases,4);
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
+  if($modoVisualizacao == "R")       $nomeModo = RetornaFraseDaLista($lista_frases,4);
   else if ($modoVisualizacao == "E") $nomeModo = RetornaFraseDaLista($lista_frases,5);
   else if ($modoVisualizacao == "L") $nomeModo = RetornaFraseDaLista($lista_frases,6);
   /* 131 - Correio */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ". $nomeModo ."</h4>\n");
  
 // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
    /* 509 - Voltar */
@@ -744,7 +747,7 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
     foreach($listaMsg as $campo => $dados){
       if($numMsgPag == $msgPorPag){
         $numPagina++;
-        $numMsgPag = 0;      
+        $numMsgPag = 0;
       }
       if($numPagina == $pagAtual) $style = "";
       else $style = "display:none";
@@ -794,7 +797,7 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
       $data = UnixTime2DataHora($dados['data']);
       $dataaux = explode(" ",$data);
       $data = $dataaux[0] . "<br />" . $dataaux[1];
-      $data = "<span id=\"data_".$cod_msg."\" class=\"$styleClass\">".$data."</span>"; 
+      $data = "<span id=\"data_".$cod_msg."\" class=\"$styleClass\">".$data."</span>";
 
       echo("                      <tr id=\"tr_".$cod_msg."\" style=\"".$style."\" class=\"altColor".($num_msg%2)."\">\n");
       echo("                        <td width=\"2%\">\n");
@@ -865,7 +868,7 @@ echo("        window_handle = window.open('exibe_mensagem_selecionadas.php?&cod_
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
-  echo("          </table>\n");  // </TABELA EXTERNA> 
+  echo("          </table>\n");  // </TABELA EXTERNA>
 
   echo("        </td>\n");
   echo("      </tr>\n");

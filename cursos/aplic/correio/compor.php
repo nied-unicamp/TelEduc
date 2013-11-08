@@ -76,14 +76,14 @@
 
   $sock = Conectar($cod_curso);
 
-  ExpulsaConvidadoPassivo($sock, $cod_usuario, $cod_usuario, $lista_frases);
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
   $eformador = EFormador($sock, $cod_curso, $cod_usuario);
 
-  $codFormadores = RetornaCodigoFormadoresDoCurso($sock, $cod_curso);
-  $codAlunos = RetornaCodigoAlunosDoCurso($sock, $cod_curso);
-  $codConvidados = RetornaCodigoConvidadosDoCurso($sock, $cod_curso);
-  $codGrupos = RetornaCodigoGruposDoCurso($sock);
+  $codFormadores    = RetornaCodigoFormadoresDoCurso($sock, $cod_curso);
+  $codAlunos        = RetornaCodigoAlunosDoCurso($sock, $cod_curso);
+  $codColaboradores = RetornaCodigoColaboradoresDoCurso($sock, $cod_curso);
+  $codGrupos        = RetornaCodigoGruposDoCurso($sock);
 
   $codMsgAnt = $_GET['cod_msg_ant'];
   $acao = $_GET['acao'];
@@ -186,14 +186,14 @@
   echo("        elementoDiv.removeChild(document.getElementById('input_file_'+numero));\n");
   echo("      }\n\n");
 
-  echo("    function ArquivoValido(file)\n");
-  echo("    {\n");
- 			 /* Usando expressao regular para identificar caracteres invalidos */
-  echo("			var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
-  echo("			if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
-  echo("				return false;\n");
-  echo("      return true;\n");
-  echo("    }\n");
+  echo("      function ArquivoValido(file)\n");
+  echo("      {\n");
+                /* Usando expressao regular para identificar caracteres invalidos */
+  echo("        var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);\n");
+  echo("        if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))\n");
+  echo("          return false;\n");
+  echo("        return true;\n");
+  echo("      }\n");
 
   /* ************************************************************************
    * EdicaoArq - funcao chamada ao selecionar um arq anexo
@@ -215,7 +215,7 @@
 
   /* ************************************************************************
    * addInputFile - Cria os elementos de anexar arquivos (input) e remove o link "Anexar Arquivo"
-   * 			    Chamada ao clicar no link "Anexar Arquivo"
+   *                Chamada ao clicar no link "Anexar Arquivo"
    */
   echo("      function addInputFile(){\n");
   echo("        var num = many_arqs;\n");
@@ -223,7 +223,7 @@
   echo("        while(elementoDiv.lastChild.tagName!=\"IMG\")\n");
   echo("          elementoDiv.removeChild(elementoDiv.lastChild);\n"); //remove "anexar arquivo"
   echo("        elementoDiv.removeChild(elementoDiv.lastChild);\n"); // remove o clipes
-  				/* inputFile: caixa de selecao do arquivo anexo*/
+                /* inputFile: caixa de selecao do arquivo anexo*/
   echo("        inputFile=document.createElement('input');\n");
   echo("        inputFile.setAttribute(\"type\", \"file\");\n");
   echo("        inputFile.setAttribute(\"size\", \"40\");\n");
@@ -231,33 +231,33 @@
   echo("        inputFile.onchange = function() { EdicaoArq('input_file_', num); };\n");
   echo("        inputFile.setAttribute(\"id\", \"input_file_\"+many_arqs);\n");
   echo("        inputFile.setAttribute(\"style\", \"border:2px solid #9bc; margin-left:65px;\");\n\n");
-  				/* Espaco */
+                /* Espaco */
   echo("        createSpace=document.createElement('span');\n");
   echo("        createSpace.setAttribute(\"id\", \"space_\"+many_arqs);\n");
   echo("        createSpace.innerHTML=\"&nbsp;&nbsp;&nbsp;\"\n");
-  				/* Span: botao Remover arquivo anexo
-   				* Frase 132 (ferramenta 11): Remover */
+                /* Span: botao Remover arquivo anexo
+                 * Frase 132 (ferramenta 11): Remover */
   echo("        createSpan = document.createElement('span');\n");
   echo("        createSpan.onclick = function() { removeInputFile(num); };\n");
   echo("        createSpan.setAttribute(\"id\", \"remover_arquivo_\"+many_arqs);\n");
   echo("        createSpan.className=\"link\";\n");
   echo("        createSpan.innerHTML=\"".RetornaFraseDaLista($lista_frases,132)."\";\n\n");
-  				/* Pula linha*/
+                /* Pula linha*/
   echo("        createBr = document.createElement('br');\n");
   echo("        createBr.setAttribute(\"id\", \"br_\"+many_arqs);\n\n");
-  				/* Imgaem do clips*/
+                /* Imgaem do clips*/
   echo("        createImg = document.createElement('img');\n");
   echo("        createImg.setAttribute(\"src\", \"../imgs/paperclip.gif\");\n");
   echo("        createImg.setAttribute(\"border\", \"0\");\n");
   echo("        createImg.setAttribute(\"style\", \"margin-left:65px;\");\n\n");
-				/* Link Anexar Arquivo
-				* Frase 85 (ferramenta 11): Anexar arquivo */
+                /* Link Anexar Arquivo
+                 * Frase 85 (ferramenta 11): Anexar arquivo */
   echo("        createSpan2 = document.createElement('span');\n");
   echo("        createSpan2.className=\"link\";\n");
   echo("        createSpan2.onclick = function (){ addInputFile(); };\n");
   echo("        createSpan2.setAttribute(\"id\", \"anexar_arquivo\");\n"); //removi sem querer?!
   echo("        createSpan2.innerHTML=\"".RetornaFraseDaLista($lista_frases,85)."\";\n\n");
-  				/* Adiciona novos elementos como ultimos filhos (no final): */
+                /* Adiciona novos elementos como ultimos filhos (no final): */
   echo("        elementoDiv.appendChild(inputFile);\n");
   echo("        elementoDiv.appendChild(createSpace);\n");
   echo("        elementoDiv.appendChild(createSpan);\n");
@@ -269,11 +269,11 @@
 
   /* ************************************************************************
    * submitForm - Verifica se o campo assunto e destinatarios estao ok,
-   * 				remove os campos dos arquivos anexos.
+   *              remove os campos dos arquivos anexos.
    */
   echo("      function submitForm(){\n");
- 				/* Se o assunto esta vazio, avisa ao usuario
-   				* Frase 43 (ferramenta 11): Voce n�o informou o assunto da correspondencia. */
+                /* Se o assunto esta vazio, avisa ao usuario
+                 * Frase 43 (ferramenta 11): Voce n�o informou o assunto da correspondencia. */
   echo("        if(document.getElementById('assunto').value.replace(\" \", \"\")  == ''){\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases,43)."');\n");
   echo("          document.getElementById('assunto').focus();\n");
@@ -367,9 +367,9 @@
   echo("      <tr>\n");
   echo("        <td width=\"100%\">\n");
   echo("          <form enctype=\"multipart/form-data\" name=\"enviarMsg\" id=\"enviarMsg\" method=\"post\" action=\"compor2.php\" onsubmit=\"return(submitForm());\">\n");
-  echo("            <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("            <input type=\"hidden\" name=codMsgAnt value=\"".$codMsgAnt."\" />\n");
-  echo("            <input type=\"hidden\" name=acao value=".$acao." />\n");
+  echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("            <input type=\"hidden\" name=\"codMsgAnt\" value=\"".$codMsgAnt."\" />\n");
+  echo("            <input type=\"hidden\" name=\"acao\"      value=\"".$acao."\" />\n");
 
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
 
