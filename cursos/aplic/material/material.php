@@ -697,7 +697,6 @@
         $top_index++;
       }
     }
-
     foreach($lista_unificada as $cod => $linha){
       //se � t�pico...
       if(isset($linha['posicao_topico'])){
@@ -726,8 +725,10 @@
         }else{
 
           echo("                      </td>\n");
-          echo("                      <td class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=0 alt=\"\"/>&nbsp;&nbsp;<a href=\"material.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$linha['cod_topico']."\">".$linha['topico']."</span></td>\n");
-          echo("                      <td width=\"10%\" align=\"center\">".$data."</td>\n"); //dani
+          if($linha['tipo_compartilhamento']=="T"){
+            echo("                      <td class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=0 alt=\"\"/>&nbsp;&nbsp;<a href=\"material.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$linha['cod_topico']."\">".$linha['topico']."</span></td>\n");
+            echo("                      <td width=\"10%\" align=\"center\">".$data."</td>\n"); //dani
+          }
         }
         echo("                    </tr>\n");
       } //� item
