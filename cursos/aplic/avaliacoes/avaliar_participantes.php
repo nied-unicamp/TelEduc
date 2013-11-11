@@ -70,6 +70,21 @@ $VeioDaAtividade = ($VeioDaAtividade == 1);
 $dados=RetornaAvaliacaoCadastrada($sock,$cod_avaliacao);
 $avaliacao_participante = VerificaAvalicaoParticipantes($sock, $cod_avaliacao);
 
+
+if($dados['Ferramenta']=='E'){
+  /* #233 - Justificar */
+  $textoReavaliarOuJustificar = RetornaFraseDaLista($lista_frases,233);
+  /* #234 - Avaliar/Justificar */
+  $textoHead = RetornaFraseDaLista($lista_frases,234);
+}
+else{
+  /* #66 - Reavaliar */
+  $textoReavaliarOuJustificar = RetornaFraseDaLista($lista_frases,66);
+  /* #62 - Avaliar/Reavaliar */
+  $textoHead = RetornaFraseDaLista($lista_frases,62);
+}
+
+
 if($dados['Tipo'] == "G")
 $portfolio_grupo = true;
 
@@ -982,7 +997,7 @@ if (!$SalvarEmArquivo)
     echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
     echo("              else\n");
     //66 - Reavaliar
-    echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
+    echo("                childElement.firstChild.innerHTML = $textoReavaliarOuJustificar;\n");
     echo("            }\n");
     echo("            if(i == 9 && !isIE) {\n");//Avaliar/Reavaliar no FF
     echo("              if(codNota == -1)\n");
@@ -990,7 +1005,7 @@ if (!$SalvarEmArquivo)
     echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,65)."';\n");
     echo("              else\n");
     //66 - Reavaliar
-    echo("                childElement.firstChild.innerHTML = '".RetornaFraseDaLista($lista_frases,66)."';\n");
+    echo("                childElement.firstChild.innerHTML = $textoReavaliarOuJustificar;\n");
     echo("            }\n");
 
     echo("            if(i == 5 && isIE)\n");      //span compartilhamento no IE
@@ -1153,23 +1168,23 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
     //Tabela com a lista de alunos do curso, com suas respectivas notas na avalia�o realizada
     echo ("                 <tr class=\"head\">\n");
     // 48 - Grupo
-    echo("                    <td align=center width=25%>".RetornaFraseDaLista($lista_frases,48)."</td>\n");
+    echo("                    <td align=\"center\" width=\"25%\">".RetornaFraseDaLista($lista_frases,48)."</td>\n");
 
     // 49 - Participa�es
-    echo("                    <td align=center width=12%>".RetornaFraseDaLista($lista_frases,49)."</td>\n");
+    echo("                    <td align=\"center\" width=\"12%\">".RetornaFraseDaLista($lista_frases,49)."</td>\n");
     // 60 - Nota
-    echo("                    <td align=center width=11%>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
+    echo("                    <td align=\"center\" width=\"11%\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
     // 61 - Data da Avalia�o
-    echo("                    <td align=center width=11%>".RetornaFraseDaLista($lista_frases,61)."</td>\n");
+    echo("                    <td align=\"center\" width=\"11%\">".RetornaFraseDaLista($lista_frases,61)."</td>\n");
     if ($usr_formador)
     {
       if($avaliacao_participante)
       {
         // 62 - Avaliar/Reavaliar
-        echo("                    <td align=center width=21%>".RetornaFraseDaLista($lista_frases,62)."</td>\n");
+        echo("                    <td align=\"center\" width=\"21%\">".$textoHead."</td>\n");
       }
       // 63 - Compartilhamento
-      echo("                    <td align=center width=20%>".RetornaFraseDaLista($lista_frases,63)."</td>\n");
+      echo("                    <td align=\"center\" width=\"20%\">".RetornaFraseDaLista($lista_frases,63)."</td>\n");
     }
     echo("                  </tr>\n");
 
@@ -1190,7 +1205,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
       $num_itens=RetornaNumItensPortfolioAvaliacao($sock,$cod_grupo,$cod_avaliacao,$portfolio_grupo,$cod_usuario,$usr_formador,"");
       if ($num_itens > 0)
       {
-        echo("                    <td align=center>");
+        echo("                    <td align=\"center\">");
         if (!$SalvarEmArquivo)
         echo("<a href=\"#\" onClick=\"return(RetornaItensGrupo(".$cod_grupo."));\">".$num_itens."</a></td>\n");
         else
@@ -1199,7 +1214,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
       else
       {
         // N� Participou
-        echo("                    <td align=center>0</td>\n");
+        echo("                    <td align=\"center\">0</td>\n");
       }
 
       $foiavaliado=GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo);
@@ -1236,14 +1251,14 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
         if ($nota_vazia)
         {
           // coluna de nota
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           if ($usr_formador && !$SalvarEmArquivo)
           echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">&nbsp;</span></td>\n");
           else
           echo("&nbsp;</td>\n");
 
           // coluna da data da avalia�o
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           echo("&nbsp;</td>\n");
 
           if ($usr_formador)
@@ -1258,7 +1273,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
 
               if($avaliacao_participante)
               {
-                echo("                    <td align=center>");
+                echo("                    <td align=\"center\">");
                 if($portfolio_grupo)
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
                 else
@@ -1269,11 +1284,11 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
             }
             else
             {
-              echo("                    <td align=center>");
+              echo("                    <td align=\"center\">");
               echo("&nbsp;</td>\n");
             }
             // coluna do compartilhamento
-            echo("                    <td align=center><span>&nbsp</span></td>\n");
+            echo("                    <td align=\"center\"><span>&nbsp</span></td>\n");
           }
         }
         else
@@ -1292,7 +1307,7 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
           echo($nota."</td>\n");
 
           // coluna da data da avalia�o
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           echo(UnixTime2Data($dados_nota['data'])."</td>\n");
 
           if ($usr_formador)
@@ -1307,23 +1322,23 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
               }
               if($avaliacao_participante)
               {
-                echo("                    <td align=center>");
+                echo("                    <td align=\"center\">");
                 if($portfolio_grupo)
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
                 else
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
-                echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                echo($textoReavaliarOuJustificar."</span></td>\n");
               }
             }
             else if($avaliacao_participante)
             {
-              echo("                   <td align=center>");
+              echo("                   <td align=\"center\">");
               // 66 - Reavaliar
-              echo(RetornaFraseDaLista($lista_frases,66)."</td>\n");
+              echo($textoReavaliarOuJustificar."</td>\n");
             }
             if (!$SalvarEmArquivo)
             $compartilhamento=$marcaib."<span name=\"comp_".$cod_nota."\" class=\"link\" onMouseDown=\"js_cod_nota=".$cod_nota.";js_cod_grupo='".$cod_grupo."';js_cod_aluno='".$cod."';AtualizaComp('".$tipo_compartilhamento."','comp_".$cod_nota."');MostraLayer(cod_comp,".$ajuste.");return(false);\">".$compartilhamento."</span>".$marcafb;
-            echo("                    <td align=center>".$compartilhamento."</td>\n");
+            echo("                    <td align=\"center\">".$compartilhamento."</td>\n");
           }
         }
       }
@@ -1331,14 +1346,14 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
       {
         $cod=RetornaCodAlunodoGrupo($sock,$cod_avaliacao,$cod_grupo);
         //coluna de nota
-        echo("                    <td align=center>");
+        echo("                    <td align=\"center\">");
         if ($usr_formador && !$SalvarEmArquivo)
         echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">&nbsp;</span></td>\n");
         else
         echo("&nbsp;</td>\n");
 
         //coluna da data da avalia�o
-        echo("                    <td align=center>");
+        echo("                    <td align=\"center\">");
         echo("&nbsp;</td>\n");
 
         if ($usr_formador)
@@ -1353,21 +1368,21 @@ if ( ( ($dados['Ferramenta'] == 'P') || ($dados['Ferramenta']=='N')) && ($dados[
             if($avaliacao_participante)
             {
               if($portfolio_grupo)
-              echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
+              echo("                    <td align=\"center\"><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
               else
-              echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
+              echo("                    <td align=\"center\"><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
               // 65 - Avaliar
               echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
-              echo("                    <td align=center>");
+              echo("                    <td align=\"center\">");
               echo("<span></span></td>\n");
             }
           }
           else
           {
             // coluna 'avaliar'
-            echo("                    <td align=center>&nbsp;</td>\n");
+            echo("                    <td align=\"center\">&nbsp;</td>\n");
             // coluna do compartilhamento
-            echo("                    <td align=center><span>&nbs</span></td>\n");
+            echo("                    <td align=\"center\"><span>&nbs</span></td>\n");
           }
         }
       }
@@ -1393,22 +1408,22 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
     //Tabela com a lista de alunos do curso, com suas respectivas notas na avalia�o realizada
     echo ("                 <tr class=\"head\">\n");
     // 48 - Grupo
-    echo("                    <td align=center width=25%>".RetornaFraseDaLista($lista_frases,48)."</td>\n");
+    echo("                    <td align=\"center\" width=\"25%\">".RetornaFraseDaLista($lista_frases,48)."</td>\n");
     // 49 - Participacoes
-    echo("                    <td align=center width=12%>".RetornaFraseDaLista($lista_frases,59)."</td>\n");
+    echo("                    <td align=\"center\" width=\"12%\">".RetornaFraseDaLista($lista_frases,59)."</td>\n");
     // 60 - Nota
-    echo("                    <td align=center width=11%>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
+    echo("                    <td align=\"center\" width=\"11%\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
     // 61 - Data da Avalia�o
-    echo("                    <td align=center width=11%>".RetornaFraseDaLista($lista_frases,61)."</td>\n");
+    echo("                    <td align=\"center\" width=\"11%\">".RetornaFraseDaLista($lista_frases,61)."</td>\n");
     if ($usr_formador)
     {
       if($avaliacao_participante)
       {
         // 62 - Avaliar/Reavaliar
-        echo("                    <td align=center width=21%>".RetornaFraseDaLista($lista_frases,62)."</td>\n");
+        echo("                    <td align=\"center\" width=\"21%\">".$textoHead."</td>\n");
       }
       // 63 - Compartilhamento
-      echo("                    <td align=center width=20%>".RetornaFraseDaLista($lista_frases,63)."</td>\n");
+      echo("                    <td align=\"center\" width=\"20%\">".RetornaFraseDaLista($lista_frases,63)."</td>\n");
     }
     echo("                  </tr>\n");
     foreach ($lista_grupos as $cod_grupo => $nome)
@@ -1427,7 +1442,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 
       if ($num_itens > 0)
       {
-        echo("                    <td align=center>");
+        echo("                    <td align=\"center\">");
         if (!$SalvarEmArquivo)
         {
           $cod_resolucao = RetornaCodResolucaoExercicio($sock, $cod_avaliacao, $cod_grupo);
@@ -1439,7 +1454,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
       else
       {
         // N� Participou
-        echo("                    <td align=center>0</td>\n");
+        echo("                    <td align=\"center\">0</td>\n");
       }
 
       $foiavaliado=GrupoFoiAvaliado($sock,$cod_avaliacao,$cod_grupo);
@@ -1472,14 +1487,14 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
         if ($nota_vazia)
         {
           // coluna de nota
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           if($usr_formador && !$SalvarEmArquivo)
           echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\"></span></td>");
           else
           echo("&nbsp;</td>\n");
 
           // coluna da data da avalia�o
-          echo("                    <td class=\"text\" align=center>");
+          echo("                    <td class=\"text\" align=\"center\">");
           echo("&nbsp;</td>\n");
 
           if ($usr_formador)
@@ -1494,7 +1509,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
 
               if($avaliacao_participante)
               {
-                echo("                    <td align=center>");
+                echo("                    <td align=\"center\">");
                 if($portfolio_grupo)
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
                 else
@@ -1505,18 +1520,18 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
             }
             else
             {
-              echo("                    <td align=center>");
+              echo("                    <td align=\"center\">");
               echo("&nbsp;</td>\n");
             }
             // coluna do compartilhamento
-            echo("                    <td align=center><span>&nbsp;</span></td>\n");
+            echo("                    <td align=\"center\"><span>&nbsp;</span></td>\n");
           }
         }
         else
         {
           $marcaib="";
           $marcafb="";
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           if (!$SalvarEmArquivo)
           {
             echo("<span class=\"link\" onClick=\"return(HistoricodoDesempenhoPortfolioGrupo(".$cod_grupo.",'tr_grupos_".$cod_grupo."'));\">");
@@ -1531,7 +1546,7 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
           echo($nota."</td>\n");
 
           // coluna da data da avalia�o
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           echo(UnixTime2Data($dados_nota['data'])."</td>\n");
 
           if ($usr_formador)
@@ -1546,19 +1561,19 @@ elseif(($dados['Ferramenta'] == 'E') && ($dados['Tipo'] == 'G'))
               }
               if($avaliacao_participante)
               {
-                echo("                    <td align=center>");
+                echo("                    <td align=\"center\">");
                 if($portfolio_grupo)
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
                 else
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_grupos_".$cod_grupo."'));\">");
-                echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                echo($textoReavaliarOuJustificar."</span></td>\n");
               }
             }
             else if($avaliacao_participante)
             {
               echo("                   <td align=center>");
               // 66 - Reavaliar
-              echo(RetornaFraseDaLista($lista_frases,66)."</td>\n");
+              echo($textoReavaliarOuJustificar."</td>\n");
             }
             if (!$SalvarEmArquivo)
             $compartilhamento=$marcaib."<span name=\"comp_".$cod_nota."\" class=\"link\" onMouseDown=\"js_cod_nota=".$cod_nota.";js_cod_grupo='".$cod_grupo."';js_cod_aluno='".$cod."';AtualizaComp('".$tipo_compartilhamento."','comp_".$cod_nota."');MostraLayer(cod_comp,".$ajuste.");return(false);\">".$compartilhamento."</span>".$marcafb;
@@ -1646,7 +1661,7 @@ else
     {
       if($avaliacao_participante)
       /* 62 - Avaliar/Reavaliar */
-      echo("                    <td align=center width=21%><b> ".RetornaFraseDaLista($lista_frases,62)."</td>\n");
+      echo("                    <td align=center width=21%><b> ".$textoHead."</td>\n");
       /* 63 - Compartilhamento */
       echo("                    <td align=center width=20%><b> ".RetornaFraseDaLista($lista_frases,63)."</td>\n");
     }
@@ -1863,14 +1878,19 @@ else
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
                 else
                 echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
-                echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+              if($exercicio['Ferramenta']=='E'){
+                  echo($textoReavaliarOuJustificar."</span></td>\n");
+                }
+                else{
+                  echo($textoReavaliarOuJustificar."</span></td>\n");
+                }
               }
               else if($avaliacao_participante)
               {
                 echo("                    <td align=\"center\">");
                 echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_users_".$cod."'));\">");
                 // 66 - Reavaliar
-                echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                echo($textoReavaliarOuJustificar."</span></td>\n");
               }
             }
             else
@@ -1960,8 +1980,7 @@ else
       if ($usr_formador)
       {
         if($avaliacao_participante)
-        // 62 - Avaliar/Reavaliar
-        echo("                    <td align=center width=21%><b> ".RetornaFraseDaLista($lista_frases,62)."</b></td>\n");
+        echo("                    <td align=center width=21%><b> ".$textoHead."</b></td>\n");
         // 63 - Compartilhamento
         echo("                    <td align=center width=20%><b> ".RetornaFraseDaLista($lista_frases,63)."</b></td>\n");
       }
@@ -2172,37 +2191,37 @@ else
                   {
                     $cod = 0;
                   }
-                  echo("                    <td align=center>");
+                  echo("                    <td align=\"center\">");
                   if($portfolio_grupo)
                   echo("<span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
                   else
                   echo("<span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
-                  echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                  echo($textoReavaliarOuJustificar."</span></td>\n");
                 }
                 else if($avaliacao_participante)
                 {
-                  echo("                    <td align=center>");
+                  echo("                    <td align=\"center\">");
                   echo("<span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
                   // 66 - Reavaliar
-                  echo(RetornaFraseDaLista($lista_frases,66)."</span></td>\n");
+                  echo($textoReavaliarOuJustificar."</span></td>\n");
                 }
               }
               else
               {
-                echo("                    <td align=center>");
+                echo("                    <td align=\"center\">");
                 echo("&nbsp;</td>\n");
               }
               if (!$SalvarEmArquivo)
               $compartilhamento=$marcaib."<span name=\"comp_".$cod_nota."\" class=\"link\" onMouseDown=\"js_cod_nota=".$cod_nota.";js_cod_grupo='".$cod_grupo."';js_cod_aluno='".$cod."';AtualizaComp('".$tipo_compartilhamento."','comp_".$cod_nota."');MostraLayer(cod_comp,".$ajuste.");return(false);\">".$compartilhamento."</span>".$marcafb;
               // coluna do compartilhamento
-              echo("                    <td align=center>".$compartilhamento."</td>\n");
+              echo("                    <td align=\"center\">".$compartilhamento."</td>\n");
             }
           }
         }
         else // nenhuma nota foi atribuida
         {
           //coluna de nota
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           if ($usr_formador && !$SalvarEmArquivo)
           {
             if (strcmp($dados['Ferramenta'],'P'))
@@ -2215,7 +2234,7 @@ else
           echo("&nbsp;</td>\n");
 
           //coluna da data da avalia�o
-          echo("                    <td align=center>");
+          echo("                    <td align=\"center\">");
           echo("&nbsp;</td>\n");
 
           if ($usr_formador)
@@ -2230,26 +2249,26 @@ else
                   $cod = 0;
                 }
                 if($portfolio_grupo)
-                echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
+                echo("                   <td align=\"center\"><span class=\"link\" onClick=\"return(AvaliarAlunoGrupo(".$cod.",".$cod_grupo.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
                 else
-                echo("                   <td align=center><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
+                echo("                   <td align=\"center\"><span class=\"link\" onClick=\"return(AvaliarAluno(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
                 echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
               }
               else if($avaliacao_participante)
               {
-                echo("                    <td align=center><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
+                echo("                    <td align=\"center\"><span class=\"link\" onClick=\"return(AvaliarAlunoPortfolio(".$cod.",'".VerificaStringQuery(trim($nome))."','tr_formadores_".$cod."'));\">");
                 // 65 - Avaliar
                 echo(RetornaFraseDaLista($lista_frases,65)."</span></td>\n");
               }
-              echo("                    <td align=center>");
+              echo("                    <td align=\"center\">");
               echo("<span></span></td>\n");
             }
             else
             {
               // coluna 'avaliar'
-              echo("                    <td align=center>&nbsp;</td>\n");
+              echo("                    <td align=\"center\">&nbsp;</td>\n");
               // coluna do compartilhamento
-              echo("                    <td align=center><span>&nbsp;</span></td>\n");
+              echo("                    <td align=\"center\"><span>&nbsp;</span></td>\n");
             }
           }
         }
