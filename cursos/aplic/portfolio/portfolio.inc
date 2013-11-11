@@ -4465,4 +4465,24 @@ function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_
   return $objResponse->getXML();
 
 }
+
+/************************************************************************************************************
+   haArquivosVisiveisDir - verifica se ha arquivo visivel dentro da pasta
+   Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
+   Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
+*************************************************************************************************************/
+function haArquivosVisiveisDir($dir, $lista_arq_vis){    
+    foreach($lista_arq_vis as $cod => $linha)
+    { 
+	if(!($linha['Status'])){
+		if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+			return true;
+		}
+	}
+    }
+    
+    return false;
+}
+
+
 ?>

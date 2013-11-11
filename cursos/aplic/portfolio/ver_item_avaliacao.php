@@ -510,8 +510,14 @@ echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInte
               $temp=explode("/",$linha['Diretorio']);
               $nivel=count($temp)-1;
               for ($c=0;$c <= $nivel;$c++){
-                $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
-                $espacos2.="  ";
+              if($dono_portfolio){
+                  $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
+                  $espacos2.="  ";
+                }
+                else{
+                  $espacos.="";
+                  $espacos2.="";
+                }
               }
 
               $caminho_arquivo = $dir_item_temp['link'].ConverteUrl2Html($linha['Diretorio']."/".$linha['Arquivo']);
