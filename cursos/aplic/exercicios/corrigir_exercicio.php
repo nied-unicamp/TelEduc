@@ -501,7 +501,7 @@ if($ehFormador){
             echo("                          ".$espacos2."<br />\n");
             echo("                        ".$espacos2."</span>\n");
       }
-      else if (($exercicio['situacao'] == 'C') || ($exercicio['situacao']== 'A') || (haArquivosVisiveisDir($linha['Diretorio'], $lista_arq))){
+      else if (($exercicio['situacao'] == 'C') || (haArquivosVisiveisDir($linha['Diretorio'], $lista_arq))){
         if ($nivel_anterior>=$nivel){
           $i=$nivel_anterior-$nivel;
           $j=$i;
@@ -728,7 +728,7 @@ if($ehFormador){
                 echo("                        ".$espacos2."</span>\n");
               }
 
-              else if (($exercicio['situacao'] == 'C') || ($exercicio['situacao'] == 'A') || (haArquivosVisiveisDir($linha_arq['Diretorio'], $lista_arq))){
+              else if (($exercicio['situacao'] == 'C') || (haArquivosVisiveisDir($linha['Diretorio'], $lista_arq))){
                 if ($nivel_anterior>=$nivel){
                   $i=$nivel_anterior-$nivel;
                   $j=$i;

@@ -1812,6 +1812,7 @@
           echo("                  </tr>\n");
       }
     }
+    if (($num_arq_vis > 0) || (!$aplicada)) {
     echo("                  <tr class=\"head\">\n");
     /* 12 - Arquivos */
     echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases,12)."</td>\n");
@@ -1970,12 +1971,9 @@
       echo("                     <td align=\"left\" colspan=\"6\">\n");
        echo("                      <ul>\n");
       echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenuArq\" onClick=\"CheckTodosArq();\" /></span></li>\n");
-      /* Frase #71 - Apagar */
-      echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases, 71)."</span></li>\n");
-      /* Frase #72 - Descompactar */
-      echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">".RetornaFraseDaLista($lista_frases, 72)."</span></li>\n");
-      /* Frase #73 - Ocultar */
-      echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases, 73)."</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">".RetornaFraseDaLista($lista_frases_geral, 38)."</span></li>\n");
+      echo("                        <li class=\"menuUp\" id=\"mArq_ocultar\"><span id=\"sArq_ocultar\">".RetornaFraseDaLista($lista_frases_geral, 511)."</span></li>\n");
       echo("                      </ul>\n");
       echo("                     </td>\n");
       echo("                   </tr>\n");
@@ -2007,6 +2005,7 @@
       echo("                    </td>\n");
       echo("                  </tr>\n");
     }
+ }
     echo("                </table>\n");
     echo("              </td>\n");
     echo("            </tr>\n");
