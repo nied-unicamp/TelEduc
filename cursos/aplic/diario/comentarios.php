@@ -44,7 +44,7 @@
   include($bibliotecas."geral.inc");
   include("diario.inc");
 
-    require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.2.4/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMudarComp = new xajax();
@@ -53,19 +53,15 @@
   // Manda o xajax executar os pedidos acima.
   $objMudarComp->processRequests();
 
- 
-  $cod_ferramenta=14;
-  $cod_ferramenta_ajuda=$cod_ferramenta;
-  $cod_pagina_ajuda=4;
+  $cod_ferramenta = 14;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+  $cod_pagina_ajuda = 4;
   include("../topo_tela.php");
-
-  ExpulsaConvidado($sock, $cod_usuario, $cod_curso);
-
 
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
-  $feedbackObject->addAction("comentar", 29, 30);  
+  $feedbackObject->addAction("comentar", 29, 30);
   $feedbackObject->addAction("excluir_comentario", 72,0);
 
   /* Verifica se o usuario ï¿½ visitante. */
@@ -76,13 +72,13 @@
     AlteraTipoCompartilhamento ($sock, $cod_item, $tipo_comp);
   }
 
-  /* Se o cï¿½digo do usuï¿½rio cujo item serï¿½ exibido nï¿½o   */
-  /* estiver definido, atribui-lhe o cï¿½digo do usuï¿½rio   */
-  /* que estï¿½ visualizando o item, por padrï¿½o.           */
-  /* Esta reatribuiï¿½ï¿½o ï¿½ necessï¿½ria porque as pï¿½ginas    */
-  /* editar_item2 e renomear_item2 nï¿½o passam a variï¿½vel */
-  /* cod_propriet, visto que essas aï¿½ï¿½es sï¿½ poderiam ser */
-  /* feitas se o usuï¿½rio for o proprietï¿½rio do diï¿½rio e  */
+  /* Se o código do usuário cujo item será exibido não   */
+  /* estiver definido, atribui-lhe o código do usuário   */
+  /* que está visualizando o item, por padrão.           */
+  /* Esta reatribuição é necessária porque as páginas    */
+  /* editar_item2 e renomear_item2 não passam a variável */
+  /* cod_propriet, visto que essas ações só poderiam ser */
+  /* feitas se o usuário for o proprietário do diário e  */
   /* dos itens.                                          */
   if (!isset($cod_propriet))
     $cod_propriet = $cod_usuario;
@@ -90,159 +86,165 @@
   // verifica se eh dono do diario
   $dono_diario = VerificaDonoDiario ($sock, $cod_curso, $cod_usuario, $cod_propriet);
 
-
-  
-
   /*
  ==================
  Funcoes JavaScript
  ==================
  */
-  echo("<script type=\"text/javascript\">\n\n");
+  echo("    <script type=\"text/javascript\">\n\n");
 
-    echo("      function VerificaCheck(){\n");
-    echo("        var i;\n");
-    echo("        var j=0;\n");
-    echo("        var cod_itens=document.getElementsByName('chkItem');\n");
-    echo("        var Cabecalho = document.getElementById('checkMenu');\n");
-    echo("        array_itens = new Array();\n");
-    echo("        for (i=0; i < cod_itens.length; i++){\n");
-    echo("          if (cod_itens[i].checked){\n");
-    echo("            var item = cod_itens[i].id.split('_');\n");
-    echo("            array_itens[j]=item[1];\n");
-    echo("            j++;\n");
-    echo("          }\n");
-    echo("        }\n");
-    echo("        if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
-    echo("        else Cabecalho.checked=false;\n");
-    echo("        if(j > 0){\n");
-    echo("          document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
-    echo("          document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(); };\n");
-    echo("        }else{\n");
-    echo("          document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
-    echo("          document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
-    echo("        }\n");
-    echo("      }\n\n");
-  
-    echo("      function CheckTodos(){\n");
-    echo("        var e;\n");
-    echo("        var i;\n");
-    echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
-    echo("        var cod_itens=document.getElementsByName('chkItem');\n");
-    echo("        for(i = 0; i < cod_itens.length; i++){\n");
-    echo("          e = cod_itens[i];\n");
-    echo("          e.checked = CabMarcado;\n");
-    echo("        }\n");
-    echo("        VerificaCheck();\n");
-    echo("      }\n\n");
-  
-  echo("    function ExcluirSelecionados(){\n");
+  echo("      function VerificaCheck(){\n");
+  echo("        var i;\n");
+  echo("        var j=0;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        var Cabecalho = document.getElementById('checkMenu');\n");
+  echo("        array_itens = new Array();\n");
+  echo("        for (i=0; i < cod_itens.length; i++){\n");
+  echo("          if (cod_itens[i].checked){\n");
+  echo("            var item = cod_itens[i].id.split('_');\n");
+  echo("            array_itens[j]=item[1];\n");
+  echo("            j++;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        if (j == (cod_itens.length)) Cabecalho.checked=true;\n");
+  echo("        else Cabecalho.checked=false;\n");
+  echo("        if(j > 0){\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(); };\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('mExcluir_Selec').className=\"menuUp\";\n");
+  echo("          document.getElementById('mExcluir_Selec').onclick=function(){  };\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+
+  echo("      function CheckTodos(){\n");
+  echo("        var e;\n");
+  echo("        var i;\n");
+  echo("        var CabMarcado = document.getElementById('checkMenu').checked;\n");
+  echo("        var cod_itens=document.getElementsByName('chkItem');\n");
+  echo("        for(i = 0; i < cod_itens.length; i++){\n");
+  echo("          e = cod_itens[i];\n");
+  echo("          e.checked = CabMarcado;\n");
+  echo("        }\n");
+  echo("        VerificaCheck();\n");
+  echo("      }\n\n");
+
+
+  echo("      function ExcluirSelecionados(){\n");
       /* 69 - Tem certeza de que deseja excluir este comentÃ¡rio? */
       /* 70 - (o item serÃ¡ excluÃ­do definitivamente) */
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases,69)."\\n".RetornaFraseDaLista($lista_frases,70)."')){\n");
-  echo("        xajax_ExcluirComentDinamic('".$cod_curso."', array_itens,'".$cod_ferramenta."', '".$cod_usuario."');\n");
-  echo("      }\n");
-  echo("    }\n\n");
-  
-  echo("    function Recarregar(acao, atualizacao){\n");
-  echo("      window.location='comentarios.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_propriet=".$cod_propriet."&acao='+acao+'&atualizacao='+atualizacao;");
-  echo("    }\n\n");
+  echo("        if (confirm('".RetornaFraseDaLista($lista_frases,69)."\\n".RetornaFraseDaLista($lista_frases,70)."')){\n");
+  echo("          xajax_ExcluirComentDinamic('".$cod_curso."', array_itens,'".$cod_ferramenta."', '".$cod_usuario."');\n");
+  echo("        }\n");
+  echo("      }\n\n");
 
 
-  echo("  function Iniciar()\n");
-  echo("  {\n");
+  echo("      function Recarregar(acao, atualizacao){\n");
+  echo("        window.location='comentarios.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_propriet=".$cod_propriet."&acao='+acao+'&atualizacao='+atualizacao;");
+  echo("      }\n\n");
+
+
+  echo("      function Iniciar()\n");
+  echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo("    startList();\n");
-  echo("  }\n\n");
+  echo("        startList();\n");
+  echo("      }\n\n");
 
 
-
-  echo("  function VerComentario(id)\n");
-  echo("  {\n");
-  echo("    window.open(\"ver_comentario.php?&cod_curso=".$cod_curso);
+  echo("      function VerComentario(id)\n");
+  echo("      {\n");
+  echo("        window.open(\"ver_comentario.php?&cod_curso=".$cod_curso);
   echo("&cod_comentario=\" + id + \"&cod_propriet=".$cod_propriet."&cod_item=".$cod_item."\", \"Comentario\",");
   echo("\"width=450,height=300,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,");
   echo("resizable=yes\");\n");
-  echo("    return(false);\n");
-  echo("  }\n\n");
+  echo("      return(false);\n");
+  echo("    }\n\n");
 
-  echo("  function OpenWindowPerfil(id)\n");
-  echo("  {\n");
-  echo("    window.open(\"../perfil/exibir_perfis.php?");
+
+  echo("      function OpenWindowPerfil(id)\n");
+  echo("      {\n");
+  echo("        window.open(\"../perfil/exibir_perfis.php?");
   echo("&cod_curso=".$cod_curso."&cod_aluno[]=\" + id, \"PerfilDisplay\",\"width=600,height=400,");
   echo("top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("    return(false);\n");
-  echo("  }\n\n");
+  echo("        return(false);\n");
+  echo("      }\n\n");
 
-  echo("  function EnviarComent(){\n");
-  echo("    document.getElementById('OKComent').style.visibility='visible';\n");
-  echo("    document.getElementById('cancComent').style.visibility='visible';\n");
-  echo("    document.getElementById('textArea_coment').style.visibility='visible';\n");
-  echo("    document.getElementById('td_coment').style.background='';\n");
-  echo("    document.getElementById('text_coment').className='divShow';\n");
-  echo("    document.getElementById('button_coment').className='divShow';\n");
-  echo("    elementoDiv = document.getElementById('text_coment');\n");
-  echo("    elementoDiv.removeChild(elementoDiv.lastChild);\n");
-  echo("    document.getElementById('btnComentar').onclick = function() {};\n");
-  echo("  }\n\n");
 
-  echo("  function CancelarComent(){\n");
-  echo("    document.getElementById('textArea_coment').value='';\n");
-  echo("    document.getElementById('td_coment').style.background='#DCDCDC';\n");
-  echo("    document.getElementById('text_coment').className='divHidden';\n");
-  echo("    document.getElementById('button_coment').className='divHidden';\n");
-  echo("    elementoDiv = document.getElementById('text_coment');\n");
-  echo("    createBr = document.createElement('br');\n");
-  echo("    elementoDiv.appendChild(createBr);\n");
-  echo("    document.getElementById('btnComentar').onclick = function() { EnviarComent(); };\n");
-  echo("    element=document.getElementsByName('input_files[]');\n");
-  echo("    for (i=0; i < element.length; i++){\n");
-  echo("      document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("      document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("      document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("      document.getElementById('text_coment').removeChild(element[i]);\n");
-  echo("      i--;\n");
-  echo("    }\n");
-  echo("  }\n\n");
+  echo("      function EnviarComent(){\n");
+  echo("        document.getElementById('OKComent').style.visibility='visible';\n");
+  echo("        document.getElementById('cancComent').style.visibility='visible';\n");
+  echo("        document.getElementById('textArea_coment').style.visibility='visible';\n");
+  echo("        document.getElementById('td_coment').style.background='';\n");
+  echo("        document.getElementById('text_coment').className='divShow';\n");
+  echo("        document.getElementById('button_coment').className='divShow';\n");
+  echo("        elementoDiv = document.getElementById('text_coment');\n");
+  echo("        elementoDiv.removeChild(elementoDiv.lastChild);\n");
+  echo("        document.getElementById('btnComentar').onclick = function() {};\n");
+  echo("      }\n\n");
 
-  echo("  function submitForm(){\n");
-  echo("    if(document.getElementById('textArea_coment').value==''){\n");
-              /* 106 - Seu comentï¿½io estï¿½ vazio. Para nï¿½o envia-lo, pressione o botao Cancelar. */
-  //echo("      alert('Seu comentï¿½rio estï¿½ vazio. Para nï¿½o envia-lo, pressione o botï¿½o Cancelar.');\n");
-  echo("      alert('".RetornaFraseDaLista($lista_frases,106)."');\n");
-  echo("      return false;\n");
-  echo("    }\n");
-  echo("    element=document.getElementsByName('input_files[]');\n");
-  echo("    for (i=0; i < element.length; i++){\n");
-  echo("      if((element[i].value)==\"\"){\n");
-  echo("        document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("        document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("        document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
-  echo("        document.getElementById('text_coment').removeChild(element[i]);\n");
-  echo("        i--;\n");
-  echo("      }\n");
-  echo("    }\n");
-  echo("    return true;\n");
-  echo("  }\n\n");
 
-  echo("</script>\n");
+  echo("      function CancelarComent(){\n");
+  echo("        document.getElementById('textArea_coment').value='';\n");
+  echo("        document.getElementById('td_coment').style.background='#DCDCDC';\n");
+  echo("        document.getElementById('text_coment').className='divHidden';\n");
+  echo("        document.getElementById('button_coment').className='divHidden';\n");
+  echo("        elementoDiv = document.getElementById('text_coment');\n");
+  echo("        createBr = document.createElement('br');\n");
+  echo("        elementoDiv.appendChild(createBr);\n");
+  echo("        document.getElementById('btnComentar').onclick = function() { EnviarComent(); };\n");
+  echo("        element=document.getElementsByName('input_files[]');\n");
+  echo("        for (i=0; i < element.length; i++){\n");
+  echo("          document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("          document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("          document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("          document.getElementById('text_coment').removeChild(element[i]);\n");
+  echo("          i--;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+
+
+  echo("      function submitForm(){\n");
+  echo("        if(document.getElementById('textArea_coment').value==''){\n");
+  /* 106 - Seu comentï¿½io estï¿½ vazio. Para nï¿½o envia-lo, pressione o botao Cancelar. */
+  echo("          alert('".RetornaFraseDaLista($lista_frases,106)."');\n");
+  echo("          return false;\n");
+  echo("        }\n");
+  echo("        element=document.getElementsByName('input_files[]');\n");
+  echo("        for (i=0; i < element.length; i++){\n");
+  echo("          if((element[i].value)==\"\"){\n");
+  echo("            document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("            document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("            document.getElementById('text_coment').removeChild(element[i].nextSibling);\n");
+  echo("            document.getElementById('text_coment').removeChild(element[i]);\n");
+  echo("            i--;\n");
+  echo("          }\n");
+  echo("        }\n");
+  echo("        return true;\n");
+  echo("      }\n\n");
+
+  echo("    </script>\n");
 
   $objMudarComp->printJavascript("../xajax_0.2.4/");
+
   include("../menu_principal.php");
-  
+
   echo("          <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - Diï¿½rio de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   /* 12 - Comentï¿½rios */
   echo(" - ".RetornaFraseDaLista($lista_frases, 12)."</h4>\n");
 
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
   echo("          <div id=\"mudarFonte\">\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("          </div>\n");
 
   echo("          <img alt=\"".RetornaFraseDaLista($lista_frases, 1)."\" src=\"../imgs/icPerfil.gif\" border=\"0\" />&nbsp;<a class=\"text\" href=\"#\" onclick=\"OpenWindowPerfil(".$cod_propriet.");return(false);\">".NomeUsuario($sock, $cod_propriet, $cod_curso)."</a>\n");

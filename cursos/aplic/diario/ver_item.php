@@ -64,8 +64,6 @@
   $cod_pagina_ajuda=2;
   include("../topo_tela.php");
 
-  ExpulsaConvidado($sock, $cod_usuario, $cod_curso);
-
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
@@ -155,182 +153,233 @@
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases, 34)."'))");
     echo("        window.location='acoes.php?cod_curso='+js_cod_curso+'&cod_item='+js_cod_item+'&acao=apagarItem'; \n");
     echo("      } \n");
+
+    echo("    function CancelaTodos(){ \n");
+    echo("      EscondeLayers(); \n");
+    echo("      if(cancelarElemento) { cancelarElemento.onclick(); } \n");
+    echo("    } \n");
+
+    echo("    function EdicaoTitulo(codigo, id, ok){ \n");
+    echo("      if (ok){ \n");
+    echo("        conteudo = document.getElementById(id+\"_text\").value; \n");
+    echo("        xajax_EditarTitulo(js_cod_curso, js_cod_item, conteudo, js_cod_usuario, '".RetornaFraseDaLista($lista_frases,39)."'); \n");
+    echo("      } else { \n");
+    echo("          document.getElementById(id).innerHTML=conteudo;\n");
+    echo("          document.getElementById(id).className=\"\";\n");
+    echo("      }\n");
+    echo("      editaTitulo=0;\n");
+    echo("      cancelarElemento=null;\n");
+    echo("    } \n");
+
+    echo("     function EditaTituloEnter(campo, evento, id)\n");
+    echo("     {\n");
+    echo("       var tecla;\n");
+    echo("       CheckTAB=true;\n\n");
+    echo("       if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
+    echo("       {\n");
+    echo("           tecla = evento.which;\n");
+    echo("       }\n");
+    echo("       else\n");
+    echo("       {\n");
+    echo("           tecla = evento.keyCode;\n");
+    echo("       }\n\n");
+    echo("       if ( tecla == 13 )\n");
+    echo("       {\n");
+    echo("           EdicaoTitulo(id, 'tit_'+id, 'ok');\n"); //A funcoes e parametros sao os mesmos utilizados na funcao de edicao ja utilizada.
+    echo("       }\n\n");
+    echo("       return true;\n");
+    echo("   }\n\n");
+
+    echo("    function AlteraTitulo(id){ \n");
+    echo("      var id_aux = id;\n");
+    echo("      if (editaTitulo==0){ \n");
+    echo("        CancelaTodos(); \n");
+
+    echo("        xajax_DecodificaString(document.getElementById('tit_'+id).innerHTML); \n");
+    echo("        conteudo = document.getElementById('tit_'+id).innerHTML; \n");
+
+    echo("        document.getElementById(\"tr_\"+id).className=\"\"; \n");
+    echo("        document.getElementById(\"tit_\"+id).className=\"\"; \n");
+    echo("        document.getElementById(\"tr_\"+id).className=\"\"; \n");
+
+    echo("        createInput = document.createElement(\"input\"); \n");
+    echo("        document.getElementById(\"tit_\"+id).innerHTML=\"\"; \n");
+    echo("        document.getElementById(\"tit_\"+id).onclick=function(){ }; \n");
+
+    echo("        createInput.setAttribute(\"type\", \"text\"); \n");
+    echo("        createInput.setAttribute(\"style\", \"border: 2px solid #9bc\"); \n");
+    echo("        createInput.setAttribute(\"id\", \"tit_\"+id+\"_text\"); \n");
+    echo("        if (createInput.addEventListener){\n"); //not IE
+    echo("          createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
+    echo("        } else if (createInput.attachEvent){\n"); //IE
+    echo("          createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
+    echo("        }\n");
+
+    echo("        document.getElementById(\"tit_\"+id).appendChild(createInput); \n");
+    echo("        xajax_DecodificaString(\"tit_\"+id+\"_text\", conteudo, \"value\"); \n");
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    echo("        espaco = document.createElement(\"span\"); \n");
+    echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
+    echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
+
+    echo("        createSpan = document.createElement(\"span\"); \n");
+    echo("        createSpan.className=\"link\"; \n");
+    echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 1); }; \n");
+    echo("        createSpan.setAttribute(\"id\", \"OkEdita\"); \n");
+    echo("        createSpan.innerHTML=textoOk; \n");
+    echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    echo("        espaco = document.createElement(\"span\"); \n");
+    echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
+    echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
+
+    echo("        createSpan = document.createElement(\"span\"); \n");
+    echo("        createSpan.className=\"link\"; \n");
+    echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 0); }; \n");
+    echo("        createSpan.setAttribute(\"id\", \"CancelaEdita\"); \n");
+    echo("        createSpan.innerHTML=textoCancelar; \n");
+    echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    echo("        espaco = document.createElement(\"span\"); \n");
+    echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
+    echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
+    echo("        startList(); \n");
+    echo("        cancelarElemento=document.getElementById(\"CancelaEdita\"); \n");
+    echo("        document.getElementById(\"tit_\"+id+\"_text\").select(); \n");
+    echo("        editaTitulo++; \n");
+    echo("      } \n");
+    echO("    } \n");
+
+    echo("    function EdicaoTexto(codigo, id, valor){ \n");
+    echo("      if (valor=='ok'){ \n");
+    echo("        eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
+    echo("        xajax_EditarTexto(js_cod_curso, js_cod_item, conteudo, js_cod_usuario, '".RetornaFraseDaLista($lista_frases,27)."'); \n");
+    echo("      } \n");
+    echo("      else{ \n");
+    echo("      } \n");
+    echo("      document.getElementById(id).innerHTML=conteudo; \n");
+    echo("      editaTexto=0; \n");
+    echo("      cancelarElemento=null; \n");
+    echo("    } \n");
+
+    echo("    function AlteraTexto(id){ \n");
+    echo("      if (editaTexto==0) { \n");
+    echo("        CancelaTodos(); \n");
+    echo("        conteudo = document.getElementById('text_'+id).innerHTML; \n");
+    echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true,false, id); \n");
+    echo("        startList(); \n");
+    echo("        document.getElementById('text_'+id+'_text').focus();\n");
+    echo("        cancelarElemento=document.getElementById('CancelaEdita'); \n");
+    echo("        editaTexto++; \n");
+    echo("      } \n");
+    echo("    } \n");
+
+    echo("    function LimpaTexto(id){\n");
+    // 66 - Você tem certeza que deseja apagar o texto deste comentário?
+    echo("      if (confirm('".RetornaFraseDaLista($lista_frases,66)."')){\n");
+    echo("        checks = document.getElementsByName('chkArq');\n\n");
+    echo("        CancelaTodos();\n");
+    echo("        document.getElementById('text_'+id).innerHTML='';\n\n");
+    // 67 - Texto excluido com sucesso
+    echo("        xajax_EditarTexto(js_cod_curso, js_cod_item, '', js_cod_usuario, '".RetornaFraseDaLista($lista_frases,67)."');\n\n");
+    echo("        editaTexto=0; \n");
+    echo("      }\n");
+    echo("    }\n\n");
+
+    echo("    function AtualizaComp(js_cod_item, js_tipo_comp)\n");
+    echo("    { \n");
+    echo("      if ((isNav) && (!isMinNS6)) { \n");
+    echo("        document.comp.document.form_comp.tipo_comp.value=js_tipo_comp; \n");
+    echo("        document.comp.document.form_comp.cod_item.value=js_cod_item; \n");
+    echo("        var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'), document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_P')); \n");
+    echo("      } else { \n");
+    echo("      if (isIE || ((isNav)&&(isMinNS6)) ){ \n");
+    echo("          document.form_comp.tipo_comp.value=js_tipo_comp; \n");
+    echo("          document.form_comp.cod_item.value=js_cod_item; \n");
+    echo("          var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P')); \n");
+    echo("          } \n");
+    echo("      } \n");
+    echo("      var imagem=\"<img src='../imgs/checkmark_blue.gif'>\" \n");
+    echo("      if (js_tipo_comp=='F') { \n");
+    echo("        tipo_comp[0].innerHTML=imagem; \n");
+    echo("        tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
+    echo("        tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
+    echo("      } else if (js_tipo_comp=='T') { \n");
+    echo("        tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
+    echo("        tipo_comp[1].innerHTML=imagem; \n");
+    echo("        tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
+    echo("      } else{ \n");
+    echo("        tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
+    echo("        tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
+    echo("        tipo_comp[2].innerHTML=imagem; \n");
+    echo("      }\n");
+    echo("    } \n");
+
+    echo("        function MudaSpanCompartilhamento(spanID,novoComp,tipoComp,js_cod_item)\n");
+    echo("        {\n");
+    echo("          spanElement = document.getElementById(spanID);\n");
+    echo("          spanElement.innerHTML = novoComp;\n");
+    echo("          spanElement.onclick = function(event) { AtualizaComp(js_cod_item, tipoComp);MostraLayer(lay_comp,100,event); }\n");
+    echo("        }\n");
+
+    echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
+    echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  
+    echo("    if (isNav)\n");
+    echo("    {\n");
+    echo("      document.captureEvents(Event.MOUSEMOVE);\n");
+    echo("    }\n");
+    echo("    document.onmousemove = TrataMouse;\n\n");
+  
+    echo("    function TrataMouse(e)\n");
+    echo("    {\n");
+    echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+    echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+    echo("    }\n\n");
+  
+    echo("    function getPageScrollY()\n");
+    echo("    {\n");
+    echo("      if (isNav)\n");
+    echo("        return(window.pageYOffset);\n");
+    echo("      if (isIE)\n");
+    echo("        return(document.body.scrollTop);\n");
+    echo("    }\n\n");
+  
+    echo("    function AjustePosMenuIE()\n");
+    echo("    {\n");
+    echo("      if (isIE)\n");
+    echo("        return(getPageScrollY());\n");
+    echo("      else\n");
+    echo("        return(0);\n");
+    echo("    }\n\n");
+  
+    // Esconde todos os layers. Se o usuario for o propriet�rio do di�rio
+    // visualizado ent�o esconde o layer para renomear o item.
+    echo("    function EscondeLayer()\n");
+    echo("    {\n");
+    echo("      hideLayer(lay_comp);\n");
+    echo("    }\n\n");
+  
+  
+    echo("      function MostraLayer(cod_layer, ajuste, ev)\n");
+    echo("        {\n");
+    echo("        EscondeLayers();\n");
+    echo("        ev = ev || window.event;\n");
+    echo("        if(ev.pageX || ev.pageY){\n");
+    echo("          Xpos = ev.pageX;\n");
+    echo("          Ypos = ev.pageY;\n");
+    echo("        }else{\n");
+    echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
+    echo("          Ypos = ev.clientY + document.body.scrollTop  - document.body.clientTop;\n");
+    echo("        }\n");
+    echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
+    echo("        showLayer(cod_layer);\n");
+    echo("      }\n\n");
+
   }
-
-  echo("    function CancelaTodos(){ \n");
-  echo("      EscondeLayers(); \n");
-  echo("      if(cancelarElemento) { cancelarElemento.onclick(); } \n");
-  echo("    } \n");
-
-  echo("    function EdicaoTitulo(codigo, id, ok){ \n");
-  echo("      if (ok){ \n");
-  echo("        conteudo = document.getElementById(id+\"_text\").value; \n");
-  echo("        xajax_EditarTitulo(js_cod_curso, js_cod_item, conteudo, js_cod_usuario, '".RetornaFraseDaLista($lista_frases,39)."'); \n");
-  echo("      } else { \n");
-  echo("          document.getElementById(id).innerHTML=conteudo; \n");
-  echo("          document.getElementById(id).className=\"\"; \n");
-  echo("      } \n");
-
-  echo("      editaTitulo=0; \n");
-  echo("      cancelarElemento=null; \n");
-  echo("    } \n");
-
-  echo ("     function EditaTituloEnter(campo, evento, id)\n");
-  echo ("     {\n");
-  echo ("       var tecla;\n");
-  echo ("       CheckTAB=true;\n\n");
-  echo ("       if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
-  echo ("       {\n");
-  echo ("           tecla = evento.which;\n");
-  echo ("       }\n");
-  echo ("       else\n");
-  echo ("       {\n");
-  echo ("           tecla = evento.keyCode;\n");
-  echo ("       }\n\n");
-  echo ("       if ( tecla == 13 )\n");
-  echo ("       {\n");
-  echo ("           EdicaoTitulo(id, 'tit_'+id, 'ok');\n"); //A funcoes e parametros sao os mesmos utilizados na funcao de edicao ja utilizada.
-  echo ("       }\n\n");
-  echo ("       return true;\n");
-  echo ("   }\n\n");
-
-  echo("    function AlteraTitulo(id){ \n");
-  echo("      var id_aux = id;\n");
-  echo("      if (editaTitulo==0){ \n");
-  echo("        CancelaTodos(); \n");
-
-  echo("        xajax_DecodificaString(document.getElementById('tit_'+id).innerHTML); \n");
-  echo("        conteudo = document.getElementById('tit_'+id).innerHTML; \n");
-
-  echo("        document.getElementById(\"tr_\"+id).className=\"\"; \n");
-  echo("        document.getElementById(\"tit_\"+id).className=\"\"; \n");
-  echo("        document.getElementById(\"tr_\"+id).className=\"\"; \n");
-
-  echo("        createInput = document.createElement(\"input\"); \n");
-  echo("        document.getElementById(\"tit_\"+id).innerHTML=\"\"; \n");
-  echo("        document.getElementById(\"tit_\"+id).onclick=function(){ }; \n");
-
-  echo("        createInput.setAttribute(\"type\", \"text\"); \n");
-  echo("        createInput.setAttribute(\"style\", \"border: 2px solid #9bc\"); \n");
-  echo("        createInput.setAttribute(\"id\", \"tit_\"+id+\"_text\"); \n");
-  echo("        if (createInput.addEventListener){\n"); //not IE
-  echo("          createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
-  echo("        } else if (createInput.attachEvent){\n"); //IE
-  echo("          createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
-  echo("        }\n");
-
-  echo("        document.getElementById(\"tit_\"+id).appendChild(createInput); \n");
-  echo("        xajax_DecodificaString(\"tit_\"+id+\"_text\", conteudo, \"value\"); \n");
-
-    //cria o elemento 'espaco' e adiciona na pagina
-  echo("        espaco = document.createElement(\"span\"); \n");
-  echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
-  echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
-
-  echo("        createSpan = document.createElement(\"span\"); \n");
-  echo("        createSpan.className=\"link\"; \n");
-  echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 1); }; \n");
-  echo("        createSpan.setAttribute(\"id\", \"OkEdita\"); \n");
-  echo("        createSpan.innerHTML=textoOk; \n");
-  echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
-
-    //cria o elemento 'espaco' e adiciona na pagina
-  echo("        espaco = document.createElement(\"span\"); \n");
-  echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
-  echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
-
-  echo("        createSpan = document.createElement(\"span\"); \n");
-  echo("        createSpan.className=\"link\"; \n");
-  echo("        createSpan.onclick= function(){ EdicaoTitulo(id, \"tit_\"+id, 0); }; \n");
-  echo("        createSpan.setAttribute(\"id\", \"CancelaEdita\"); \n");
-  echo("        createSpan.innerHTML=textoCancelar; \n");
-  echo("        document.getElementById(\"tit_\"+id).appendChild(createSpan); \n");
-
-    //cria o elemento 'espaco' e adiciona na pagina
-  echo("        espaco = document.createElement(\"span\"); \n");
-  echo("        espaco.innerHTML=\"&nbsp;&nbsp;\" \n");
-  echo("        document.getElementById(\"tit_\"+id).appendChild(espaco); \n");
-
-  echo("        startList(); \n");
-  echo("        cancelarElemento=document.getElementById(\"CancelaEdita\"); \n");
-  echo("        document.getElementById(\"tit_\"+id+\"_text\").select(); \n");
-  echo("        editaTitulo++; \n");
-  echo("      } \n");
-  echO("    } \n");
-
-  echo("    function EdicaoTexto(codigo, id, valor){ \n");
-  echo("      if (valor=='ok'){ \n");
-  echo("		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');");
-  echo("        xajax_EditarTexto(js_cod_curso, js_cod_item, conteudo, js_cod_usuario, '".RetornaFraseDaLista($lista_frases,27)."'); \n");
-  echo("      } \n");
-  echo("      else{ \n");
-  echo("      } \n");
-  echo("      document.getElementById(id).innerHTML=conteudo; \n");
-  echo("      editaTexto=0; \n");
-  echo("      cancelarElemento=null; \n");
-  echo("    } \n");
-
-  echo("    function AlteraTexto(id){ \n");
-
-  echo("      if (editaTexto==0) { \n");
-  echo("        CancelaTodos(); \n");
-  echo("        conteudo = document.getElementById('text_'+id).innerHTML; \n");
-  echo("        writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true,false, id); \n");
-  echo("        startList(); \n");
-  echo("        document.getElementById('text_'+id+'_text').focus();\n");
-  echo("        cancelarElemento=document.getElementById('CancelaEdita'); \n");
-  echo("        editaTexto++; \n");
-  echo("      } \n");
-  echo("    } \n");
-
-  echo("    function LimpaTexto(id){\n");
-  // 66 - Você tem certeza que deseja apagar o texto deste comentário?
-  echo("      if (confirm('".RetornaFraseDaLista($lista_frases,66)."')){\n");
-  echo("        checks = document.getElementsByName('chkArq');\n\n");
-  echo("        CancelaTodos();\n");
-  echo("        document.getElementById('text_'+id).innerHTML='';\n\n");
-  // 67 - Texto excluido com sucesso
-  echo("        xajax_EditarTexto(js_cod_curso, js_cod_item, '', js_cod_usuario, '".RetornaFraseDaLista($lista_frases,67)."');\n\n");
-  echo("        editaTexto=0; \n");
-  echo("      }\n");
-  echo("    }\n\n");
-
-  echo("    function AtualizaComp(js_cod_item, js_tipo_comp)\n");
-  echo("    { \n");
-  echo("      if ((isNav) && (!isMinNS6)) { \n");
-  echo("        document.comp.document.form_comp.tipo_comp.value=js_tipo_comp; \n");
-  echo("        document.comp.document.form_comp.cod_item.value=js_cod_item; \n");
-  echo("        var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'), document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_P')); \n");
-  echo("      } else { \n");
-  echo("      if (isIE || ((isNav)&&(isMinNS6)) ){ \n");
-  echo("          document.form_comp.tipo_comp.value=js_tipo_comp; \n");
-  echo("          document.form_comp.cod_item.value=js_cod_item; \n");
-  echo("          var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P')); \n");
-  echo("          } \n");
-  echo("      } \n");
-  echo("      var imagem=\"<img src='../imgs/checkmark_blue.gif'>\" \n");
-  echo("      if (js_tipo_comp=='F') { \n");
-  echo("        tipo_comp[0].innerHTML=imagem; \n");
-  echo("        tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
-  echo("        tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
-  echo("      } else if (js_tipo_comp=='T') { \n");
-  echo("        tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
-  echo("        tipo_comp[1].innerHTML=imagem; \n");
-  echo("        tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
-  echo("      } else{ \n");
-  echo("        tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
-  echo("        tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
-  echo("        tipo_comp[2].innerHTML=imagem; \n");
-  echo("      } \n");
-
-  echo("    } \n");
-
-  echo("        function MudaSpanCompartilhamento(spanID,novoComp,tipoComp,js_cod_item)\n");
-  echo("        {\n");
-  echo("          spanElement = document.getElementById(spanID);\n");
-  echo("          spanElement.innerHTML = novoComp;\n");
-  echo("          spanElement.onclick = function(event) { AtualizaComp(js_cod_item, tipoComp);MostraLayer(lay_comp,100,event); }\n");
-  echo("        }\n");
 
   echo("</script>\n");
 
@@ -339,18 +388,21 @@
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - Di�rio de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   /* 41 - Ver anota��o */
   echo(" - ".RetornaFraseDaLista($lista_frases, 41)."</h4>");
   
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
   echo("          <div id=\"mudarFonte\">\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("          </div>\n");
 
   echo("          <img alt=\"".RetornaFraseDaLista($lista_frases, 1)."\" src=\"../imgs/icPerfil.gif\" border=\"0\" />&nbsp;<a class=\"text\" href=\"#\" onclick=\"OpenWindowPerfil(".$cod_propriet.");return(false);\">".NomeUsuario($sock, $cod_propriet, $cod_curso)."</a>\n");
@@ -498,66 +550,6 @@
 
   if ( $dono_diario )
   {
-    
-    echo("  <script type=\"text/javascript\">\n\n");
-  
-    echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
-    echo("    var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
-  
-    echo("    if (isNav)\n");
-    echo("    {\n");
-    echo("      document.captureEvents(Event.MOUSEMOVE);\n");
-    echo("    }\n");
-    echo("    document.onmousemove = TrataMouse;\n\n");
-  
-    echo("    function TrataMouse(e)\n");
-    echo("    {\n");
-    echo("      Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
-    echo("      Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
-    echo("    }\n\n");
-  
-    echo("    function getPageScrollY()\n");
-    echo("    {\n");
-    echo("      if (isNav)\n");
-    echo("        return(window.pageYOffset);\n");
-    echo("      if (isIE)\n");
-    echo("        return(document.body.scrollTop);\n");
-    echo("    }\n\n");
-
-    echo("    function AjustePosMenuIE()\n");
-    echo("    {\n");
-    echo("      if (isIE)\n");
-    echo("        return(getPageScrollY());\n");
-    echo("      else\n");
-    echo("        return(0);\n");
-    echo("    }\n\n");
-
-    // Esconde todos os layers. Se o usuario for o propriet�rio do di�rio   
-    // visualizado ent�o esconde o layer para renomear o item.              
-    echo("    function EscondeLayer()\n");
-    echo("    {\n");
-    echo("      hideLayer(lay_comp);\n");
-    echo("    }\n\n");
-
-
-    echo("      function MostraLayer(cod_layer, ajuste, ev)\n");
-    echo("        {\n");
-    echo("        EscondeLayers();\n");
-    echo("        ev = ev || window.event;\n");
-    echo("        if(ev.pageX || ev.pageY){\n");
-    echo("          Xpos = ev.pageX;\n");
-    echo("          Ypos = ev.pageY;\n");
-    echo("        }else{\n");
-    echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
-    echo("          Ypos = ev.clientY + document.body.scrollTop  - document.body.clientTop;\n");
-    echo("        }\n");
-  
-    echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
-    echo("        showLayer(cod_layer);\n");
-    echo("      }\n\n");
-    
-    echo("  </script>\n");
-
 
     // Mudar Compartilhamento
     echo("          <div class=\"popup\" id=\"layer_comp\" style=\"visibility:hidden oncontextmenu:return(false);\">\n");
@@ -592,13 +584,12 @@
 
   }
 
-    echo("          <br />\n");    
-    /* 509 - voltar, 510 - topo */
-    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-     
-  echo("        </td>\n"); 
-  echo("      </tr>\n");  
+  echo("          <br />\n");
+  /* 509 - voltar, 510 - topo */
+  echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
 
+  echo("        </td>\n");
+  echo("      </tr>\n");
 
   include("../tela2.php");
   echo("  </body>\n");
