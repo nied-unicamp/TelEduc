@@ -59,9 +59,6 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-
-  ExpulsaConvidado($sock, $cod_usuario, $cod_curso);
-
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
@@ -83,163 +80,148 @@
   // verifica se eh dono do diario
   $dono_diario = VerificaDonoDiario ($sock, $cod_curso, $cod_usuario, $cod_propriet);
 
-
-  if ($usr_visitante)
-  {
-
-    echo("        </td>\n"); 
-    echo("      </tr>\n");  
-    include("../tela2.php");
-    echo("  </body>\n");
-    echo("  </html>\n");
-    exit();
-  }
-
-
-
   /*
   ==================
   Fun��es JavaScript
   ==================
   */
-  echo("        <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-  echo("        <script type=\"text/javascript\">\n");
+  echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+  echo("    <script type=\"text/javascript\">\n");
 
-  echo("          var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
-  echo("          var versao = (navigator.appVersion.substring(0,3));\n");
-  echo("          var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
+  echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
+  echo("      var versao = (navigator.appVersion.substring(0,3));\n");
+  echo("      var isIE = (navigator.appName.indexOf(\"Microsoft\") !=-1);\n");
 
-  echo("          if (isNav)\n");
-  echo("          {\n");
-  echo("            document.captureEvents(Event.MOUSEMOVE);\n");
+  echo("      if (isNav)\n");
+  echo("      {\n");
+  echo("        document.captureEvents(Event.MOUSEMOVE);\n");
+  echo("      }\n");
+  echo("      document.onmousemove = TrataMouse;\n\n");
+
+  echo("      function TrataMouse(e)\n");
+  echo("      {\n");
+  echo("        Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
+  echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
+  echo("      }\n\n");
+
+  echo("      var selected_item;\n");
+
+  echo("      function getPageScrollY()\n");
+  echo("      {\n");
+  echo("        if (isNav)\n");
+  echo("          return(window.pageYOffset);\n");
+  echo("        if (isIE){\n");
+  echo("          if(document.documentElement.scrollLeft>=0){\n");
+  echo("            return document.documentElement.scrollTop;\n");
+  echo("          }else if(document.body.scrollLeft>=0){\n");
+  echo("            return document.body.scrollTop;\n");
+  echo("          }else{\n");
+  echo("            return window.pageYOffset;\n");
   echo("          }\n");
-  echo("          document.onmousemove = TrataMouse;\n\n");
-
-  echo("          function TrataMouse(e)\n");
-  echo("          {\n");
-  echo("            Ypos = (isMinNS4) ? e.pageY : event.clientY;\n");
-  echo("            Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
-  echo("          }\n\n");
-
-  echo("          var selected_item;\n");
-
- echo("      function getPageScrollY()\n");
-   echo("      {\n");
-   echo("        if (isNav)\n");
-   echo("          return(window.pageYOffset);\n");
-   echo("        if (isIE){\n");
-   echo("          if(document.documentElement.scrollLeft>=0){\n");
-   echo("            return document.documentElement.scrollTop;\n");
-   echo("          }else if(document.body.scrollLeft>=0){\n");
-   echo("            return document.body.scrollTop;\n");
-   echo("          }else{\n");
-   echo("            return window.pageYOffset;\n");
-   echo("          }\n");
-   echo("        }\n");
-   echo("      }\n");
+  echo("        }\n");
+  echo("      }\n");
 
   /* Iniciliza os layers. Se o usuario for o propriet�rio do di�rio ent�o */
   /* atribui layer_renomear � vari�vel lay_renomear.                      */
-  echo("          function Iniciar()\n");
-  echo("          {\n");
+  echo("      function Iniciar()\n");
+  echo("      {\n");
   if ($dono_diario)
   {
-    echo("             cod_comp = getLayer('layer_comp');\n");
+    echo("         cod_comp = getLayer('layer_comp');\n");
   }
-  echo("            cod_novoitem = getLayer(\"novoitem\");\n");
+  echo("        cod_novoitem = getLayer(\"novoitem\");\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-  echo("            startList();\n");
-  echo("          }\n\n");
+  echo("        startList();\n");
+  echo("      }\n\n");
 
   // Esconde o layer especificado por cod_layer.
-  echo("          function EscondeLayer(cod_layer)\n");
-  echo("          {\n");
-  echo("            hideLayer(cod_layer);\n");
-  echo("          }\n\n");
+  echo("      function EscondeLayer(cod_layer)\n");
+  echo("      {\n");
+  echo("        hideLayer(cod_layer);\n");
+  echo("      }\n\n");
 
   /* Esconde todos os layers. Se o usuario for o propriet�rio do di�rio   */
   /* visualizado ent�o esconde o layer para renomear o item.              */
-  echo("          function EscondeLayers()\n");
-  echo("          {\n");
+  echo("      function EscondeLayers()\n");
+  echo("      {\n");
   if ($dono_diario)
   {
-    echo("            hideLayer(cod_comp);\n");
+    echo("        hideLayer(cod_comp);\n");
   }
-  echo("            hideLayer(cod_novoitem);\n");
-  echo("          }\n\n");
+  echo("        hideLayer(cod_novoitem);\n");
+  echo("      }\n\n");
 
 
- echo("      function MostraLayer(cod_layer, ajuste, ev){\n");
-   echo("        EscondeLayers();\n");
-   echo("        ev = ev || window.event;\n");
-   echo("        if(ev.pageX || ev.pageY){\n");
-   echo("          Xpos = ev.pageX;\n");
-   echo("          Ypos = ev.pageY;\n");
-   echo("        }else{\n");
-   echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
-   echo("          Ypos = ev.clientY + getPageScrollY();\n");
-   echo("        }\n");
-   echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
-   echo("        showLayer(cod_layer);\n");
-   echo("      }\n\n");
+  echo("      function MostraLayer(cod_layer, ajuste, ev){\n");
+  echo("        EscondeLayers();\n");
+  echo("        ev = ev || window.event;\n");
+  echo("        if(ev.pageX || ev.pageY){\n");
+  echo("          Xpos = ev.pageX;\n");
+  echo("          Ypos = ev.pageY;\n");
+  echo("        }else{\n");
+  echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
+  echo("          Ypos = ev.clientY + getPageScrollY();\n");
+  echo("        }\n");
+  echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
+  echo("        showLayer(cod_layer);\n");
+  echo("      }\n\n");
   
-  echo("          function OpenWindowPerfil(id)\n");
-  echo("          {\n");
-  echo("            window.open(\"../perfil/exibir_perfis.php?");
+  echo("      function OpenWindowPerfil(id)\n");
+  echo("      {\n");
+  echo("        window.open(\"../perfil/exibir_perfis.php?");
   echo("&cod_curso=".$cod_curso."&cod_aluno[]=\" + id, \"PerfilDisplay\",\"width=600,height=400,");
   echo("top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("            return(false);\n");
-  echo("          }\n\n");
+  echo("        return(false);\n");
+  echo("      }\n\n");
 
-  echo("          function VerificaNovoItemTitulo(textbox) {\n");
-  echo("            texto=textbox.value;\n");
-  echo("            if (texto==''){\n");
-  echo("              // se nome for vazio, nao pode\n");
+  echo("      function VerificaNovoItemTitulo(textbox) {\n");
+  echo("        texto=textbox.value;\n");
+  echo("        if (texto==''){\n");
+  echo("          // se nome for vazio, nao pode\n");
                 /* 36 - O titulo nao pode ser vazio. */
   //echo("        alert(\"".RetornaFraseDaLista($lista_frases,36)."\");\n");
-  echo("              alert(\"O titulo n�o pode ser vazio. \");\n");
-  echo("              textbox.focus();\n");
-  echo("              return false;\n");
-  echo("            }\n");
-  echo("            return true;\n");
-  echo("          }\n\n");  
+  echo("          alert(\"O titulo n�o pode ser vazio. \");\n");
+  echo("          textbox.focus();\n");
+  echo("          return false;\n");
+  echo("        }\n");
+  echo("        return true;\n");
+  echo("      }\n\n");
 
-  echo("          function AtualizaComp(js_cod_item, js_tipo_comp)\n");
-  echo("          {\n");
-  echo("            if ((isNav) && (!isMinNS6)) { \n");
-  echo("              document.comp.document.form_comp.tipo_comp.value=js_tipo_comp; \n");
-  echo("              document.comp.document.form_comp.cod_item.value=js_cod_item; \n");
-  echo("              var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'), document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_P')); \n");
-  echo("            } else { \n");
-  echo("              if (isIE || ((isNav)&&(isMinNS6)) ){ \n");
-  echo("                document.form_comp.tipo_comp.value=js_tipo_comp; \n");
-  echo("                document.form_comp.cod_item.value=js_cod_item; \n");
-  echo("                var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P')); \n");
-  echo("              } \n");
-  echo("            } \n");
-  echo("            var imagem=\"<img src='../imgs/checkmark_blue.gif' />\" \n");
-  echo("            if (js_tipo_comp=='F') { \n");
-  echo("              tipo_comp[0].innerHTML=imagem; \n");
-  echo("              tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
-  echo("              tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
-  echo("            } else if (js_tipo_comp=='T') { \n");
-  echo("              tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
-  echo("              tipo_comp[1].innerHTML=imagem; \n");
-  echo("              tipo_comp[2].innerHTML=\"&nbsp;\"; \n");
-  echo("            } else{ \n");
-  echo("              tipo_comp[0].innerHTML=\"&nbsp;\"; \n");
-  echo("              tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
-  echo("              tipo_comp[2].innerHTML=imagem; \n");
-  echo("            } \n");
-
+  echo("      function AtualizaComp(js_cod_item, js_tipo_comp)\n");
+  echo("      {\n");
+  echo("        if ((isNav) && (!isMinNS6)) {\n");
+  echo("          document.comp.document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("          document.comp.document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("          var tipo_comp = new Array(document.comp.document.getElementById('tipo_comp_T'), document.comp.document.getElementById('tipo_comp_F'), document.comp.document.getElementById('tipo_comp_P'));\n");
+  echo("        } else {\n");
+  echo("          if (isIE || ((isNav)&&(isMinNS6)) ){\n");
+  echo("            document.form_comp.tipo_comp.value=js_tipo_comp;\n");
+  echo("            document.form_comp.cod_item.value=js_cod_item;\n");
+  echo("            var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P'));\n");
   echo("          } \n");
+  echo("        }\n");
+  echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif' />\";\n");
+  echo("        if (js_tipo_comp=='F') { \n");
+  echo("          tipo_comp[0].innerHTML=imagem; \n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        } else if (js_tipo_comp=='T') {\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=imagem;\n");
+  echo("          tipo_comp[2].innerHTML=\"&nbsp;\";\n");
+  echo("        } else{\n");
+  echo("          tipo_comp[0].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[1].innerHTML=\"&nbsp;\";\n");
+  echo("          tipo_comp[2].innerHTML=imagem;\n");
+  echo("        }\n");
+  echo("      }\n");
 
-  echo("          function MudaSpanCompartilhamento(spanID,novoComp,tipoComp,js_cod_item)\n");
-  echo("          {\n");
-  echo("            spanElement = document.getElementById(spanID);\n");
-  echo("            spanElement.innerHTML = novoComp;\n");
-  echo("            spanElement.onclick = function(event) { AtualizaComp(js_cod_item, tipoComp);MostraLayer(cod_comp,100,event); }\n");
-  echo("          }\n");
+  echo("      function MudaSpanCompartilhamento(spanID,novoComp,tipoComp,js_cod_item)\n");
+  echo("      {\n");
+  echo("        spanElement = document.getElementById(spanID);\n");
+  echo("        spanElement.innerHTML = novoComp;\n");
+  echo("        spanElement.onclick = function(event) { AtualizaComp(js_cod_item, tipoComp);MostraLayer(cod_comp,100,event); }\n");
+  echo("      }\n");
 
   echo("      function VerificaCheck(){\n");
   echo("        var i;\n");
@@ -284,26 +266,30 @@
   echo("        }\n");
   echo("      }\n\n");
 
-  echo("    function Recarregar(acao, atualizacao){\n");
-  echo("      window.location='diario.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_propriet=".$cod_propriet."&origem=".$origem."&acao='+acao+'&atualizacao='+atualizacao;");
-  echo("    }\n\n");
+  echo("      function Recarregar(acao, atualizacao){\n");
+  echo("        window.location='diario.php?&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&cod_propriet=".$cod_propriet."&origem=".$origem."&acao='+acao+'&atualizacao='+atualizacao;");
+  echo("      }\n\n");
 
-  echo("        </script>\n");
+  echo("    </script>\n");
 
   $objAjax->printJavascript("../xajax_0.2.4/");
+
   include("../menu_principal.php");
-  
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - Diario de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)."</h4>\n");
 
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   echo("          <div id=\"mudarFonte\">\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("          </div>\n");
 
 
@@ -324,7 +310,7 @@
   if ($dono_diario)
   {
     /* 4 - Incluir nova anotacao */
-    echo("                  <li><span title=\"Incluir nova anotacao\" onclick=\"MostraLayer(cod_novoitem, 140,event);document.getElementById('titulo').focus(); document.getElementById('titulo').value=''\">".RetornaFraseDaLista($lista_frases, 4)."</span></li>\n");
+    echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases, 4)."\" onclick=\"MostraLayer(cod_novoitem, 140,event);document.getElementById('titulo').focus(); document.getElementById('titulo').value=''\">".RetornaFraseDaLista($lista_frases, 4)."</span></li>\n");
   }
 
   /* 5 - Ver outros diarios */
@@ -389,7 +375,7 @@
 
       echo("                    <td width=\"2%\"><input type=\"checkbox\" name=\"chkItem\" id=\"itm_".$cod_item."\" onclick='VerificaCheck();' value=\"".$cod_item."\" /></td>\n");
     }
-	
+
     echo ("                   <td class=\"alLeft\">\n".$icone."<a class=\"$estilo\" href=\"ver_item.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_propriet."&amp;origem=diario\" >".$item ['titulo']."</a></td>\n");
     echo ("                   <td align=\"center\" class=\"$estilo\">".UnixTime2DataHora($item ['data'])."</td>\n");
 
@@ -451,7 +437,7 @@
     echo("          </ul>\n");
   }
   
-    echo("          <br />\n");    
+    echo("          <br />\n");
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
   /* Se o usuario for o proprietario deste diario, cria o layer para */
@@ -521,14 +507,11 @@
   echo("            </div>\n");
   echo("          </div>\n");
 
-
-    
-  echo("        </td>\n"); 
-  echo("      </tr>\n");  
-
+  echo("        </td>\n");
+  echo("      </tr>\n");
 
   include("../tela2.php");
-  
+
   echo("  </body>\n");
   echo("  </html>\n");
 

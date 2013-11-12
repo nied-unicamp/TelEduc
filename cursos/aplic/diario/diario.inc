@@ -818,33 +818,76 @@ function RetornaCodProprietComentario($sock, $cod_comentario)
 }
 
 /* *********************************************************************
-   ExpulsaConvidado - verifica se o usuario eh convidado, se for, impede seu acesso
+   ExpulsaVisitante - Verifica se o usuario eh visitante, se for, impede
+                      seu acesso.
    entrada: $sock - sock de conexao
-            $cod_usuario
+            $cod_curso   - código do curso atual.
+            $cod_usuario - código do usuário o qual pretende-se testar o
+                           acesso à ferramenta correio.
+            $eh_popup    - booleano que indica se a página que o chamou
+                           é ou não um popup. Se não for, devemos fechar
+                           as tags html do template comum de uma página
+                           de ferramenta (com rodapé, fechando o tabelão,
+                           etc).
    saida:   nenhuma
-   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e executa o comando exit
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
 */
-function ExpulsaConvidado($sock, $cod_usuario, $cod_curso)
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false)
 {
   global $lista_frases;
+  global $lista_frases_geral;
   
-  if (EConvidado($sock, $cod_usuario, $cod_curso))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
-    echo("<html>\n");
     /* 1 - Correio */
-    echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=../teleduc.css>\n");
-    echo("  <link rel=stylesheet TYPE=text/css href=diario.css>\n");
+    if ($eh_popup) {
+      echo("  </head>\n");
+      echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\">\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
 
-    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Correio */
-    $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases, 1)."</b>";
-    /* 7 - ï¿½rea restrita a alunos e formadores */
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 7)."</b>";
-    echo($cabecalho);
+    /* 1 - Correio 7 - ï¿½rea restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, 7)."</h4>\n");
 
-    echo("    <br>\n");
-    echo("    <p>\n");
+    if (!$eh_popup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+    
+    if ($eh_popup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+    
+    if (!$eh_popup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
     echo("  </body>\n");
     echo("  </html>\n");
     Desconectar($sock);

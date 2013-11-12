@@ -44,35 +44,14 @@
   include($bibliotecas."geral.inc");
   include("diario.inc");
 
-  /* topo_tela.php faz isso
- $cod_usuario = VerificaAutenticacao($cod_curso);
-
- $sock = Conectar("");
-
- $lista_frases = RetornaListaDeFrases($sock, 14);
- $lista_frases_geral = RetornaListaDeFrases($sock,-1);
-
- Desconectar($sock);
-
- $sock = Conectar($cod_curso);
-
- VerificaAcessoAoCurso($sock, $cod_curso, $cod_usuario);
-
- VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,14); */
- 
-
-  
   $cod_ferramenta=14;
   $cod_ferramenta_ajuda=$cod_ferramenta;
   $cod_pagina_ajuda=6;
   include("../topo_tela.php");
-  
-    /* Verifica se o usuario eh formador. */
+
+  /* Verifica se o usuario eh formador. */
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
 
-
-  ExpulsaConvidado($sock, $cod_usuario, $cod_curso);
- 
   /*
  ==================
  Funcoes JavaScript
@@ -101,22 +80,24 @@
   echo("        </script>\n\n");
 
   include("../menu_principal.php");
+
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - Di�rio de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   /* 31 - Di�rios dos participantes do curso */
   echo(" - ".RetornaFraseDaLista($lista_frases, 31)."</h4>\n");
   
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   echo("          <div id=\"mudarFonte\">\n");
-  echo("	    <a href=\"#\" onClick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onClick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onClick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onClick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onClick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onClick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("          </div>\n");
-
-
 
   //<!----------------- Tabelao ----------------->
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -132,8 +113,6 @@
   echo("            </tr>\n");
 
   $lista_diarios = RetornaDiarios ($sock, $cod_curso, $cod_usuario);
-
-
 
   echo("            <tr>\n");
   //<!----------------- Tabela Interna ----------------->
@@ -179,14 +158,13 @@
   echo("            </tr>\n");
   echo("          </table>\n");
 
-    echo("          <br />\n");    
-    /* 509 - voltar, 510 - topo */
-    echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-    echo("        </td>\n");
+  echo("          <br />\n");
+  /* 509 - voltar, 510 - topo */
+  echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
+  echo("        </td>\n");
   echo("      </tr>\n");
 
   include("../tela2.php");
-
 
   echo("</body>\n");
   echo("</html>\n");
