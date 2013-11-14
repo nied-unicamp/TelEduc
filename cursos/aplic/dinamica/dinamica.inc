@@ -624,6 +624,7 @@ function ExcluirArquivo($numero, $arq){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
   $arq=htmlspecialchars_decode($arq);
+  $arq = str_replace("%20"," ",$arq);
 
   RemoveDiretorio($arq);
 

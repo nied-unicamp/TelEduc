@@ -1826,6 +1826,8 @@ function ExcluiArquivoDinamic($numero, $arq, $cod_curso, $cod_item, $cod_usuario
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $arq=htmlspecialchars_decode($arq);
+  $arq = str_replace("%20"," ",$arq);
+  
 
   if(RemoveDiretorio($arq)) { /* Se nao ocorreu nenhum erro ao remover o diretorio */
     $sock=Conectar($cod_curso);
@@ -3079,7 +3081,8 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_u
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo); 
 
     AlteraStatusArquivo($nome_arquivo,true);
 
@@ -3116,6 +3119,7 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_usuario,$te
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,false);
 

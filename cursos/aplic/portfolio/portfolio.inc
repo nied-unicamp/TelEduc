@@ -3843,6 +3843,7 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_i
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,true);
 
@@ -3881,6 +3882,7 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,false);
 

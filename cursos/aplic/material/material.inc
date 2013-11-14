@@ -2966,6 +2966,7 @@ function ExcluirArquivo($tabela, $numero, $arq, $cod_curso, $cod_item, $cod_usua
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   $arq=htmlspecialchars_decode($arq);
+  $arq = str_replace("%20"," ",$arq);
 
   $removido = RemoveDiretorio($arq);
   //if(!$removido){
@@ -3027,7 +3028,8 @@ function OcultarArquivosDinamic($tabela, $nomes_arquivos, $msg_oculto, $cod_curs
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo); 
 
     AlteraStatusArquivo($nome_arquivo,true);
 
@@ -3063,7 +3065,8 @@ function DesocultarArquivosDinamic($tabela, $nomes_arquivos, $cod_curso, $cod_it
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
+    $nome_arquivo = str_replace("%20"," ",$nome_arquivo); 
 
     AlteraStatusArquivo($nome_arquivo,false);
 
@@ -3180,6 +3183,7 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 	return $objResponse->getXML();
 
 	// Resolve o caminho da origem ('realpath' testa tambem se o arquivo existe).
+	$origem = eregi_replace("%20", " ", $origem);
 	$origem = realpath($origem);
 	if ($origem == false){
 		$objResponse->addScript("EscondeLayers();");
