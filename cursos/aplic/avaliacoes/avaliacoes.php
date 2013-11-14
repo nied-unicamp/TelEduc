@@ -259,6 +259,9 @@
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   echo("          <h4> ".RetornaFraseDaLista($lista_frases, 1)." - $frase_avaliacoes </h4>");
 
     // 3 A's - Muda o Tamanho da fonte
