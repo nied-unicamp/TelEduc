@@ -77,8 +77,12 @@
 
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+  /* Frase #212 - Avalia��o criada com sucesso */
   $feedbackObject->addAction("criarAvaliacao", 212, 0);
-  $feedbackObject->addAction("aplicar", 'Exercicio aplicado com sucesso.',0);
+  /* Frase #235 - Exercicio aplicado com sucesso */
+  $feedbackObject->addAction("aplicar", RetornaFraseDaLista($lista_frases, 235), 0);
+  /* Frase #236 - Exercicio reaplicado com sucesso */
+  $feedbackObject->addAction("reaplicar", RetornaFraseDaLista($lista_frases, 236), 0);
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");

@@ -753,6 +753,7 @@
   echo("          document.formFiles.submit();\n");
   echo("        }\n");
   echo("        else {\n");
+  /* #206 - Nome do anexo com acentos ou caracteres inválidos! Renomeie o arquivo e tente novamente. */
   echo("          alert('".RetornaFraseDaLista($lista_frases, 206)."');\n");
   echo("          document.getElementById('input_files').style.visibility='hidden';\n");
   echo("          document.getElementById('input_files').value='';\n");
@@ -930,19 +931,39 @@
   echo("            return(false);\n");
   echo("          }\n");
   echo("        }\n");
-  if($exercicio['situacao'] != "C")
-  echo("        xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
-  echo("        xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);\n");
+  if($exercicio['situacao'] != "C"){ //se o exercicio ja estiver aplicado
+    /* #237 - Deseja realmente reaplicar o exercício? */
+    /* #238 - Os dados já existentes (e.g.: exercícios entregues/corrigidos, avaliações e notas) serão perdidos. */
+    echo("      if (confirm('".RetornaFraseDaLista($lista_frases,237)."\\n".RetornaFraseDaLista($lista_frases,238)."')){\n");
+    echo("      	xajax_CancelaAplicacaoExercicioDinamic(".$cod_curso.",".$cod_usuario.",".$cod_exercicio.",0);\n");
+    echo("        	xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);\n");
+    echo("		}\n");
+  }
+  else{ //se ainda nao foi aplicado
+    echo("		xajax_AplicaExercicioDinamic(".$cod_curso.",".$cod_exercicio.",".$cod_usuario.",dt_disp,horario_disp,dt_entrega,horario_entrega,tp_aplicacao,disp_gabarito,avaliacao);\n");
+  }
   echo("    }\n\n");
 
   echo("    function ExercicioAplicado(avaliacao,cod_avaliacao)\n");
   echo("    {\n");
-  echo("      if(avaliacao == 'N')\n");
-  echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=aplicar&atualizacao=true';\n");
-  echo("      else\n");
-  echo("        window.location='../avaliacoes/ver.php?cod_curso=".$cod_curso."&cod_avaliacao='+cod_avaliacao+'&origem=exercicios&operacao=null&acao=aplicar&atualizacao=true';\n");
-  echo("    }\n\n");
-
+  if ($exercicio['situacao']=='C'){ //se o exercicio estiver em criacao, mostra feedback Exercicio aplicado com sucesso
+    echo("	  if(avaliacao == 'N'){\n"); 
+    echo("    	window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=aplicar&atualizacao=true';\n");
+    echo("	  }\n");
+    echo("      else{\n"); 
+    echo("        window.location='../avaliacoes/ver.php?cod_curso=".$cod_curso."&cod_avaliacao='+cod_avaliacao+'&origem=exercicios&operacao=null&acao=aplicar&atualizacao=true';\n");
+    echo("	  }\n");
+  }
+  else{ //se o exercicio ja foi aplicado, e vai reaplicar, mostra feedback Exercicio reaplicado com sucesso
+    echo("	  if(avaliacao == 'N'){\n"); 
+    echo("        window.location='editar_exercicio.php?cod_curso=".$cod_curso."&cod_exercicio=".$cod_exercicio."&acao=reaplicar&atualizacao=true';\n");
+    echo("	  }\n");
+    echo("      else{\n"); 
+    echo("        window.location='../avaliacoes/ver.php?cod_curso=".$cod_curso."&cod_avaliacao='+cod_avaliacao+'&origem=exercicios&operacao=null&acao=reaplicar&atualizacao=true';\n");
+    echo("	  }\n");
+  }
+  echo("	}\n\n"); 
+  
   echo("    function Voltar()\n");
   echo("    {\n");
   echo("      window.location='exercicios.php?cod_curso=".$cod_curso."&visualizar=E';\n");
@@ -1047,7 +1068,7 @@
     echo("            </tr>\n");
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
-    echo("                  <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
+    echo("                  <table border=\"0\" width=\"100%\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabInterna\">\n");
     echo("                    <tr class=\"head\">\n");
     /* Frase #13 - Titulo */
     if($exercicio['situacao'] == 'C')
@@ -1426,7 +1447,7 @@
     echo("          </div>\n");
 
     /* Frase #5 - Voltar */
-    echo("<form><input class=\"input\" type=button value=\"".RetornaFraseDaLista($lista_frases, 5)."\" onclick=\"history.go(-1);\" /></form>\n");
+    echo("<form><input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases, 5)."\" onclick=\"history.go(-1);\" /></form>\n");
   }
 
   echo("        </td>\n");
