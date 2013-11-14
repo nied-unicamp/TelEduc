@@ -2341,12 +2341,12 @@ $res=Enviar($sock, $consulta);
 */
 function AtualizaAvaliacaoTemporaria($sock,$tabela,$cod_formador,$objetivos,$criterios,$tipo,$valor,$data_inicio,$data_termino,$cod_avaliacao)
 {
-$objetivos=EliminaScript($objetivos);
-$objetivos=LimpaConteudo($objetivos);
-$criterios=EliminaScript($criterios);
-$criterios=LimpaConteudo($criterios);
-$consulta="update ".$tabela." set cod_usuario=".$cod_formador.",objetivos='".$objetivos."', criterios='".$criterios."',tipo='".$tipo."',valor=".$valor.",status='D',data=".time().",data_inicio=".$data_inicio.",data_termino=".$data_termino." where cod_avaliacao=".$cod_avaliacao."";
-$res=Enviar($sock, $consulta);
+  $objetivos=EliminaScript($objetivos);
+  $objetivos=LimpaConteudo($objetivos);
+  $criterios=EliminaScript($criterios);
+  $criterios=LimpaConteudo($criterios);
+  $consulta="update ".$tabela." set cod_usuario=".$cod_formador.",objetivos='".$objetivos."', criterios='".$criterios."',tipo='".$tipo."',valor=".$valor.",status='D',data=".time().",data_inicio=".$data_inicio.",data_termino=".$data_termino." where cod_avaliacao=".$cod_avaliacao."";
+  $res=Enviar($sock, $consulta);
 }
 
 
@@ -2361,12 +2361,10 @@ $res=Enviar($sock, $consulta);
 */
 function ApagaAvaliacaoTemporario($sock, $cod_avaliacao, $cod_usuario)
 {
-$query = "update Avaliacao set status='T' where cod_avaliacao=".$cod_avaliacao;
-$res = Enviar($sock, $query);
-return($res);
+  $query = "update Avaliacao set status='T' where cod_avaliacao=".$cod_avaliacao;
+  $res = Enviar($sock, $query);
+  return($res);
 }
-
-
 
 /* ******************************************************
    AtualizaItemDeAvaliacao - Muda o status do item de avaliaï¿½o para 'A' (Avaliado)
@@ -2379,19 +2377,19 @@ return($res);
 function AtualizaItemDeAvaliacao($sock,$cod_avaliacao,$cod_item,$cod_nota)
 {
 
-$query = "select * from Portfolio_itens_avaliacao where status='N' and cod_avaliacao=".$cod_avaliacao." and cod_item=".$cod_item;
-$res=Enviar($sock,$query);
-if (RetornaNumLinhas($res)>0)
-{
- $query = "update Portfolio_itens_avaliacao set status='A',cod_nota=".$cod_nota." where cod_avaliacao=".$cod_avaliacao." and cod_item=".$cod_item;
- $res = Enviar($sock, $query);
- return($res);
-}
-else
-{
- $consulta="insert into Portfolio_itens_avaliacao values (".$cod_item.",".$cod_avaliacao.", ".$cod_nota.",'A')";
- $res=Enviar($sock,$consulta);
-}
+  $query = "select * from Portfolio_itens_avaliacao where status='N' and cod_avaliacao=".$cod_avaliacao." and cod_item=".$cod_item;
+  $res=Enviar($sock,$query);
+  if (RetornaNumLinhas($res)>0)
+  {
+    $query = "update Portfolio_itens_avaliacao set status='A',cod_nota=".$cod_nota." where cod_avaliacao=".$cod_avaliacao." and cod_item=".$cod_item;
+    $res = Enviar($sock, $query);
+    return($res);
+  }
+  else
+  {
+    $consulta="insert into Portfolio_itens_avaliacao values (".$cod_item.",".$cod_avaliacao.", ".$cod_nota.",'A')";
+    $res=Enviar($sock,$consulta);
+  }
 }
 
 
@@ -2466,36 +2464,36 @@ function RetornaItemNaoAvaliado($sock,$cod_avaliacao,$cod_usr_grp,$portfolio_gru
 */
 function RetornaPastaRaizUsuario($sock,$cod_usuario,$cod_grupo)
 {
-if ($cod_usuario==-2)
- return 'NULL';
-/* definindo regra de escolha de pasta */
-if ($cod_grupo=="NULL" || $cod_grupo=="")
-{
- $cod_topico_pai=3;
- $regra="(cod_usuario=".$cod_usuario." and cod_grupo IS NULL)";
- $cod_grupo="NULL";
- $rep="#U".$cod_usuario;
-}
-else
-{
- $cod_topico_pai=4;
- $regra="(cod_grupo=".$cod_grupo.")";
- $rep="#G".$cod_grupo;
-}
+  if ($cod_usuario==-2)
+    return 'NULL';
+  /* definindo regra de escolha de pasta */
+  if ($cod_grupo=="NULL" || $cod_grupo=="")
+  {
+    $cod_topico_pai=3;
+    $regra="(cod_usuario=".$cod_usuario." and cod_grupo IS NULL)";
+    $cod_grupo="NULL";
+    $rep="#U".$cod_usuario;
+  }
+  else
+  {
+    $cod_topico_pai=4;
+    $regra="(cod_grupo=".$cod_grupo.")";
+    $rep="#G".$cod_grupo;
+  }
 
-$query="select cod_topico from Portfolio_topicos where ".$regra." and cod_topico_pai=".$cod_topico_pai;
-$res=Enviar($sock,$query);
-if (RetornaNumLinhas($res)>0)
-{
- $linha=RetornaLinha($res);
- return $linha['cod_topico'];
-}
-else
-{
- $query="insert into Portfolio_topicos (cod_topico_pai,cod_usuario,cod_grupo,tipo_compartilhamento,data,posicao_topico,topico) values (".$cod_topico_pai.",".$cod_usuario.",".$cod_grupo.",'P',".time().",".UltimaPosicaoLivreTopico($sock, $cod_topico_pai).",'".$rep."')";
- Enviar($sock,$query);
- return RetornaPastaRaizUsuario($sock,$cod_usuario,$cod_grupo);
-}
+  $query="select cod_topico from Portfolio_topicos where ".$regra." and cod_topico_pai=".$cod_topico_pai;
+  $res=Enviar($sock,$query);
+  if (RetornaNumLinhas($res)>0)
+  {
+    $linha=RetornaLinha($res);
+    return $linha['cod_topico'];
+  }
+  else
+  {
+    $query="insert into Portfolio_topicos (cod_topico_pai,cod_usuario,cod_grupo,tipo_compartilhamento,data,posicao_topico,topico) values (".$cod_topico_pai.",".$cod_usuario.",".$cod_grupo.",'P',".time().",".UltimaPosicaoLivreTopico($sock, $cod_topico_pai).",'".$rep."')";
+    Enviar($sock,$query);
+    return RetornaPastaRaizUsuario($sock,$cod_usuario,$cod_grupo);
+  }
 }
 
 
@@ -5081,6 +5079,87 @@ function RetornaCodResolucaoExercicio($sock, $cod_avaliacao, $cod_grupo){
   $res = Enviar($sock, $query);
   $retorno = RetornaLinha($res);
   return($retorno['cod_resolucao']);
+}
+
+/* *********************************************************************
+ ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+acesso se for
+entrada: $sock        - sock de conexao
+$cod_curso   - código do curso atual.
+$cod_usuario - código do usuário o qual pretende-se testar o
+acesso à ferramenta correio.
+$eh_popup    - booleano que indica se a página que o chamou
+é ou não um popup. Se não for, devemos fechar
+as tags html do template comum de uma página
+de ferramenta (com rodapé, fechando o tabelão,
+    etc).
+saida:   nenhuma
+OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+executa o comando exit
+*/
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false) {
+
+  global $lista_frases;
+  global $lista_frases_geral;
+
+  if (EVisitante($sock, $cod_curso, $cod_usuario)) {
+
+    //if (!$ehPopup) {
+    //  include("../menu_principal.php");
+    //  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+    //}
+    if ($eh_popup) {
+      echo("  </head>\n");
+      echo("  <body>\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
+
+    /* 1 - Avaliações 504 - ï¿½rea restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases_geral,504)."</h4>\n");
+
+    if (!$eh_popup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+
+    if ($eh_popup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
+  }
 }
 
 ?>
