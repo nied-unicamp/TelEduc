@@ -50,6 +50,8 @@ function &verificaRequisitos($etapa) {
 			// Se não deu erro de mysql, podemos escrever o arquivo de configuração.
 			$comando = 'mysql -h ' .$_SESSION['dbhost']. ' -u ' .$_SESSION['dbuser']. ' -p' .$_SESSION['dbpwd']. ' ' .$_SESSION['dbname']. ' < base_geral.sql';
 			exec($comando, $saida = array(), $sucesso);
+			$comando = 'mysql -h ' .$_SESSION['dbhost']. ' -u ' .$_SESSION['dbuser']. ' -p' .$_SESSION['dbpwd']. ' ' .$_SESSION['dbname']. ' < textos.sql';
+			exec($comando, $saida = array(), $sucesso);
 			
 			$conteudo = "<?php\n";
 			$conteudo .= '$_SESSION[\'dbnamebase\']=\''.$_SESSION['dbname']."';\n";
