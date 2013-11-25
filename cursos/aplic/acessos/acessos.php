@@ -104,7 +104,7 @@
    /* Iniciliza os layers. */
   echo("      function Iniciar()\n");
   echo("      {\n");
-  echo("        lay_calendario = getLayer('layer_calendario');\n"); 
+  echo("        lay_calendario = getLayer('layer_calendario');\n");
   echo("        startList();\n");
   echo("      }\n\n");
 
@@ -318,6 +318,9 @@
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - FÃ³runs de DiscussÃ£o */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");
 
@@ -328,9 +331,9 @@
   echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-   /* 509 - Voltar */
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
@@ -569,7 +572,7 @@
   // Imprime os demais usuários, se houver algum.
   foreach ($ordem_usuarios as $value)
   {
-    if($value["nome"] != "") 
+    if($value["nome"] != "")
     {
       $class = "tipo-usuario-".$value['tipo_usuario'];
       // A função array_shift usada acima zera as chaves numéricas. A partir daqui usamos

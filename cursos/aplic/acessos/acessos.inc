@@ -1759,4 +1759,85 @@ function ExistemAlunos($sock, $cod_curso)
     return ($linha['total_alunos'] > 0);
 }
 
+/* *********************************************************************
+   ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+                      acesso se for
+   entrada: $sock        - sock de conexao
+            $cod_curso   - código do curso atual.
+            $cod_usuario - código do usuário o qual pretende-se testar o
+                           acesso à ferramenta correio.
+            $eh_popup    - booleano que indica se a página que o chamou
+                           é ou não um popup. Se não for, devemos fechar
+                           as tags html do template comum de uma página
+                           de ferramenta (com rodapé, fechando o tabelão,
+                           etc).
+            saida:   nenhuma
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
+*/
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false) {
+
+  global $lista_frases;
+  global $lista_frases_geral;
+
+  if (EVisitante($sock, $cod_curso, $cod_usuario)) {
+
+    //if (!$ehPopup) {
+    //  include("../menu_principal.php");
+    //  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+    //}
+    if ($eh_popup) {
+      echo("  </head>\n");
+      echo("  <body>\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
+
+    /* 1 - Acessos 504 - Área restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases_geral,504)."</h4>\n");
+
+    if (!$eh_popup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+
+    if ($eh_popup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
+  }
+}
+
 ?>
