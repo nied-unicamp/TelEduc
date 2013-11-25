@@ -530,10 +530,13 @@
   // Fim Tabela Interna
   echo("      </table>\n");
 
-  echo("      <ul class=\"btAuxTabs03\">\n");
-  /* 2 - Entrar na sala de bate-papo */
-  echo("        <li><span onClick=\"OpenWindow();\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
-  echo("      </ul>\n");
+  // Visitantes não podem participar das sessões.
+  if (!$usr_visitante) {
+    echo("      <ul class=\"btAuxTabs03\">\n");
+    /* 2 - Entrar na sala de bate-papo */
+    echo("        <li><span onClick=\"OpenWindow();\">".RetornaFraseDaLista($lista_frases, 2)."</span></li>\n");
+    echo("      </ul>\n");
+  }
 
   if ($e_formador)
   {

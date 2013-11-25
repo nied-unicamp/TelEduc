@@ -49,6 +49,8 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   /* Encerra sessão anterior, se não tiver ninguém online e se a sessão
    * anterior não for uma sessão marcada previamente (e portanto tem uma
    * hora marcada para acabar).
