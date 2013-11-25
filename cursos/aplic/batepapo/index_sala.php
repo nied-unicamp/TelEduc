@@ -49,6 +49,8 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   $cod_sessao=RetornaSessaoCorrente($sock);
 
   ManterOnline($sock,$cod_usuario);
