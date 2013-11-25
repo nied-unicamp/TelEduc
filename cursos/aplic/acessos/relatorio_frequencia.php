@@ -64,11 +64,14 @@
 
   $cod_ferramenta = 18;
   include("../topo_tela.php");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   $cod_ferramenta = $_GET['cod_ferramenta_relatorio'];
 
   if (!$SalvarEmArquivo)
   {
-  	echo("    <script type=\"text/javascript\">\n");
+    echo("    <script type=\"text/javascript\">\n");
     echo("      function AbrePerfil(cod_usuario)\n");
     echo("      {\n");
     echo("         window.open('../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]='+cod_usuario,'PerfilDisplay','width=620,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
@@ -189,7 +192,7 @@
       echo("            <input type=\"hidden\" name=\"check_visitantes\" value=\"1\" />\n");
     echo("          </form>\n");
 
-    echo("          <ul class=\"btAuxTabs\">\n");  
+    echo("          <ul class=\"btAuxTabs\">\n");
     /* 22 - Salvar Em Arquivo */
     echo("            <li><span onClick=\"document.formSalvar.submit();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>");
     /* G 14 - Imprimir */
@@ -199,7 +202,7 @@
   }
   else
   {
-    echo("          <ul class=\"btAuxTabs\">\n");  
+    echo("          <ul class=\"btAuxTabs\">\n");
     /* G 13 - Fechar */
     echo("            <li><span onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   }

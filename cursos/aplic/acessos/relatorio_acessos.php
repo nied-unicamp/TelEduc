@@ -45,8 +45,9 @@
   $cod_ferramenta = 18;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
@@ -55,7 +56,7 @@
   echo("      }\n\n");
 
   echo("    </script>\n");
-  
+
   if (!$SalvarEmArquivo)
   {
     echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
@@ -148,7 +149,7 @@
 
       echo("          </form>\n");
 
-      echo("          <ul class=\"btAuxTabs\">\n");  
+      echo("          <ul class=\"btAuxTabs\">\n");
       /* 22 - Salvar Em Arquivo */
       echo("            <li><span onClick=\"document.formSalvar.submit();\">".RetornaFraseDaLista($lista_frases,22)."</span></li>");
       /* G 14 - Imprimir */
@@ -159,7 +160,7 @@
     }
     else
     {
-      echo("          <ul class=\"btAuxTabs\">\n");  
+      echo("          <ul class=\"btAuxTabs\">\n");
       /* G 13 - Fechar */
       echo("            <li><span onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
     }
@@ -273,7 +274,7 @@
             echo("                  <li><i>".RetornaFraseDaLista($lista_frases,21)."</i></li>\n");
           }
         }
-  
+
         /* numero de acessos do usuario*/
         if (isset($check_qtde) && $check_qtde)
         {
@@ -284,7 +285,7 @@
           }
           /* 20 - Quantidade de acessos */
           echo("                  <li><b>".RetornaFraseDaLista($lista_frases,20).":</b> ".$qtde_acessos."</li>\n");
-  
+
           if ($qtde_acessos>0)
             echo("                  <li style=\"line-height:3px; height:3px; border:1pt solid; width:".$max_qtde_acessos."; border-left:".$tamanho_barra."pt solid #C32621;\">&nbsp;</li>\n");
 

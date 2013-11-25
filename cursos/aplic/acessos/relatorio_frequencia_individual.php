@@ -64,6 +64,9 @@
 
   $cod_ferramenta = 18;
   include("../topo_tela.php");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   $cod_ferramenta = $_GET['cod_ferramenta_relatorio'];
   $lista_frases_ferramentas=$lista_frases_menu;
   $lista_ferramentas=$tela_lista_ferramentas;

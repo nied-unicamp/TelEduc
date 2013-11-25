@@ -50,6 +50,8 @@
   $cod_ferramenta = 18;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   echo("    <script type=\"text/javascript\">\n");
 
   if (!$SalvarEmArquivo)
