@@ -48,7 +48,6 @@
 
   $cod_ferramenta = 11;
   include("../topo_tela.php");
-  $cod_curso = $_GET['cod_curso'];
   $modoVisualizacao = $_GET['modoVisualizacao'];
 
   Desconectar($sock);

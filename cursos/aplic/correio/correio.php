@@ -825,7 +825,8 @@
   echo("                      <tr>\n");
   echo("                        <td colspan=\"2\" align=\"left\" style=\"border-right:none\">\n");
   if($totalMsg>1)
-    echo("                          ".RetornaFraseDaLista($lista_frases, 142)."\n");
+    /* 118 - * clique no cabeçalho para ordenar as mensagens */
+    echo("                          ".RetornaFraseDaLista($lista_frases, 118)."\n");
   echo("                        </td>\n");
 
   echo("                        <td colspan=\"2\" align=\"right\">\n");
