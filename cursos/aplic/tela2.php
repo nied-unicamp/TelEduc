@@ -44,11 +44,11 @@
   echo("      <tr>\n");
   
   if(!$SalvarEmArquivo){
-    echo("        <td valign=\"bottom\" height=\"80\">");
+    echo("        <td valign=\"bottom\" height=\"80\">\n");
     echo("        </td>\n");
   }
   
-  echo("        <td valign=\"bottom\" class=\"rodape\">");
+  echo("        <td valign=\"bottom\" class=\"rodape\">\n");
   /*	Para fins de SEO existe um random que alterna o alt e title da imagem do teleduc  */
   if(rand(1,2) == 1){
     echo("          <a href=\"http://www.teleduc.org.br\"><img src=\"../../../imgs/teleduc-EAD.jpg\" alt=\"TelEduc - Ensino � dist�ncia\" title=\"TelEduc - Ensino � dist�ncia\" border=\"0\" style=\"margin-right:5px;\" /></a>\n");

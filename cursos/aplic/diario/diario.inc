@@ -87,30 +87,10 @@ function Compara($ar1, $ar2)
                                   ['num_itens_nao_comentados'] - numero de itens nao comentados
                                   ['novidade'] - booleano que indica se houve novidade no portfolio
 */
-function RetornaDiarios ($sock, $cod_curso, $cod_usuario)
+function RetornaDiarios($sock, $cod_curso, $cod_usuario)
 {
-  global $lista_frases;
-
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
-
-
-  // lista dos usuarios
-  $query = "select UC.cod_usuario, U.nome from ".$dbnamebase.".Usuario U inner join ".$dbnamebase.".Usuario_curso UC on U.cod_usuario=UC.cod_usuario_global where UC.cod_curso=".$cod_curso;
-  $res   = Enviar ($sock, $query);
-  $lista = RetornaArrayLinhas ($res);
-  if (is_array ($lista))
-    foreach ($lista as $c => $linha)
-      $lista_usr [ $linha ['cod_usuario'] ] = $linha ['nome'];
-
-
-  // garantindo que o usuario logado vai ter seu diario aparecendo, mesmo que este esteja vazio
-  // se houver algo no diario, esta informacao vai ser sobreescrita no loop mais embaixo
-  // 56 - Diario de
-  $lista_diarios [ $cod_usuario ]['nome'] = RetornaFraseDaLista ($lista_frases, 56)." ".$lista_usr[ $cod_usuario ];
-  $lista_diarios [ $cod_usuario ]['data'] = 0;
-  $lista_diarios [ $cod_usuario ]['num_itens'] = 0;
-  $lista_diarios [ $cod_usuario ]['num_itens_nao_comentados'] = 0;
 
   if ( EFormadorComVisaoDeAluno ($sock, $cod_curso, $cod_usuario))
   {
@@ -118,66 +98,79 @@ function RetornaDiarios ($sock, $cod_curso, $cod_usuario)
   }
   else if (! EFormador ($sock, $cod_curso, $cod_usuario))
   {
-    $regra_comp = "(tipo_compartilhamento = 'T' or cod_usuario=".$cod_usuario.")";
+    $regra_comp = "(tipo_compartilhamento = 'T' or UC.cod_usuario_global=".$cod_usuario.")";
   }
   else
   {
-    $regra_comp = "(tipo_compartilhamento = 'T' or tipo_compartilhamento = 'F' or cod_usuario=".$cod_usuario.")";
+    $regra_comp = "(tipo_compartilhamento = 'T' or tipo_compartilhamento = 'F' or UC.cod_usuario=".$cod_usuario.")";
   }
 
-  // lista dos diarios a retornar
-  $query = "select cod_usuario, cod_item, data from Diario_itens where ".$regra_comp." AND status='A' order by cod_usuario";
-  $res   = Enviar ($sock, $query);
-  $lista1= RetornaArrayLinhas ($res);
+  // Lista dos itens de diarios e seus respectivos usuários.
+  $query  = "select DI.cod_usuario, U.nome, count(cod_comentario) as 'num_comentarios', ";
+  $query .= "       MAX(DI.data) as data_item, MAX(DC.data) as data_comentario ";
+  $query .= "from ".$dbnamebase.".Usuario U ";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC on U.cod_usuario  = UC.cod_usuario_global ";
+  $query .= "inner join Diario_itens                  DI on DI.cod_usuario = UC.cod_usuario ";
+  $query .= "left  join Diario_comentarios            DC on DC.cod_item    = DI.cod_item ";
+  $query .= "where UC.cod_curso = ".$cod_curso." and ";
+  // Retornamos diários de usuários que não estão desligados.
+  $query .= "      (binary UC.tipo_usuario = 'F' or ";
+  $query .= "       binary UC.tipo_usuario = 'A' or ";
+  $query .= "       binary UC.tipo_usuario = 'V' or ";
+  $query .= "       binary UC.tipo_usuario = 'Z') and ";
+  $query .=        $regra_comp." and ";
+  $query .= "      DI.status = 'A' ";
+  $query .= "group by DI.cod_item ";
+  $query .= "order by DI.cod_usuario";
 
-  if (is_array ($lista1))
+  $res         = Enviar ($sock, $query);
+  $lista_itens = RetornaArrayLinhas ($res);
+
+  if (is_array ($lista_itens))
   {
-    // lista com diarios e numero de itens comentados em cada diario e maior data de comentario
-    $query = "select cod_item, count(cod_comentario) 'num_comentarios', max(data) 'data' from Diario_comentarios group by cod_item";
-    $res   = Enviar ($sock, $query);
-    $lista2= RetornaArrayLinhas ($res);
-
-    if (is_array ($lista2))
-    {
-      foreach ($lista2 as $linha2)
-      {
-        $cod_item = $linha2 ['cod_item'];
-        $lista_comentarios [ $cod_item ]['num_comentarios'] = $linha2 ['num_comentarios'];
-        $lista_comentarios [ $cod_item ]['data']            = $linha2 ['data'];
-      }
-    }
 
     $penultimo_acesso = PenultimoAcesso($sock, $cod_usuario, "");
 
-    foreach ($lista1 as $linha1)
+    foreach ($lista_itens as $item)
     {
-      $cod_usr         = $linha1 ['cod_usuario'];
-      $cod_item        = $linha1 ['cod_item'];
-      $data_item       = $linha1 ['data'];
-      $data_comentario = $lista_comentarios [$cod_item]['data'];
-      // 56 - Diario de
-      $lista_diarios [ $cod_usr ]['nome'] = RetornaFraseDaLista ($lista_frases, 56)." ".$lista_usr [ $cod_usr ];
 
-      // retornar data do item mais novo (item mais novo = maior data) dentro do diario ou do comentarios mais novo
-      if (!isset ($lista_diarios [ $cod_usr ]['data']) || $lista_diarios [ $cod_usr ]['data'] < $data_item)
-        $lista_diarios [ $cod_usr ]['data'] = $data_item;
-      if ($lista_diarios [ $cod_usr ]['data'] < $data_comentario)
-        $lista_diarios [ $cod_usr ]['data'] = $data_comentario;
+      $cod_usr   = $item['cod_usuario'];
+      $data_item = max($item['data_item'], $item['data_comentario']);
+
+      if (!isset($lista_diarios[$cod_usr])) {
+        $lista_diarios[$cod_usr]['nome']                     = $item['nome'];
+        $lista_diarios[$cod_usr]['data']                     = $data_item;
+        $lista_diarios[$cod_usr]['num_itens']                = 0;
+        $lista_diarios[$cod_usr]['num_itens_nao_comentados'] = 0;
+        $lista_diarios[$cod_usr]['novidade']                 = 0;
+      }
+      else if ($lista_diarios[$cod_usr]['data'] < $data_item)
+        // Retornar data do item mais novo (item mais novo = maior data)
+        // dentro do diario ou do comentario mais novo.
+        $lista_diarios[$cod_usr]['data']                     = $data_item;
 
       // numero de itens no diario
-      $lista_diarios [ $cod_usr ]['num_itens'] ++;
-
-      // verifica se o item estah comentado. Se nao estiver, aumenta o numero de itens nao comentados no diario
-      if (! isset ($lista_comentarios [ $cod_item ]))
-        $lista_diarios [ $cod_usr ]['num_itens_nao_comentados'] ++;
-      else
-        $lista_diarios [ $cod_usr ]['num_itens_nao_comentados'] += 0;
+      $lista_diarios [ $cod_usr ]['num_itens']++;
 
       // ocorre novidade se houver um item novo ou um comentario novo
-      $lista_diarios [ $cod_usr ]['novidade'] |= ($data_item > $penultimo_acesso || $data_comentario > $penultimo_acesso);
+      $lista_diarios [ $cod_usr ]['novidade'] |= $item['data'] > $penultimo_acesso;
+
+      // Verifica se o item estah comentado. Se nao estiver,
+      // aumenta o numero de itens nao comentados no diario.
+      if (!$item["num_comentarios"])
+        $lista_diarios[$cod_usr]['num_itens_nao_comentados']++;
+
     }
   }
 
+  // Garantindo que o usuario logado vai ter seu
+  // diario aparecendo, mesmo que este esteja vazio.
+  if (!isset($lista_diarios[$cod_usuario])) {
+    $lista_diarios[$cod_usuario]['nome']                     = NomeUsuario($sock, $cod_usuario, $cod_curso);
+    $lista_diarios[$cod_usuario]['data']                     = NULL;
+    $lista_diarios[$cod_usuario]['num_itens']                = 0;
+    $lista_diarios[$cod_usuario]['num_itens_nao_comentados'] = 0;
+  }
   uasort ($lista_diarios, Compara);
 
   return $lista_diarios;
