@@ -147,7 +147,12 @@
     /* 56 - Diário de */
     echo("                      <a href=\"diario.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_usr."&amp;origem=diario\">".$negrito_abre.RetornaFraseDaLista($lista_frases, 56)." ".$linha_diario['nome'].$negrito_fecha."</a>\n");
     echo("                    </td>\n");
-    echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.UnixTime2DataHora($linha_diario['data']).$negrito_fecha."</td>\n");
+    echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre."\n");
+    if ($linha_diario['data'])
+      echo(UnixTime2DataHora($linha_diario['data']));
+    else
+      echo("-");
+    echo($negrito_fecha."</td>\n");
     echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.$linha_diario['num_itens'].$negrito_fecha."</td>\n");
     echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.$linha_diario['num_itens_nao_comentados'].$negrito_fecha."</td>\n");
     echo("                  </tr>\n");

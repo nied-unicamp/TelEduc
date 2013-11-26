@@ -389,8 +389,6 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
-
   /* 1 - Di�rio de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   /* 41 - Ver anota��o */

@@ -285,8 +285,11 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs03\">\n");
   
-  /* 3 - Comentar (Ger) */
+  // Visitantes podem ver os diários, mas não podem fazer comentários.s
+  if ($usr_visitante) {
+    /* 3 - Comentar (Ger) */
     echo("                  <li><span id=\"btnComentar\" onclick=\"EnviarComent(); document.getElementById('textArea_coment').focus();\">".RetornaFraseDaLista($lista_frases_geral,3)."</span></li>\n");
+  }
 
   echo("                </ul>\n");
   echo("              </td>\n");
