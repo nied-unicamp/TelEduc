@@ -416,11 +416,8 @@
   // 63 - Comentario de Formador
   echo("               <span class=\"cForm\">(c)</span>&nbsp;".RetornaFraseDaLista($lista_frases,63)."\n");
   echo(" - ");
-  if (!EVisitante($sock,$cod_curso,$cod_usuario))
-  {
-    // 53 - Comentario postados por mim
-    echo("               <span class=\"cMim\">(c)</span>&nbsp;".RetornaFraseDaLista($lista_frases,53)."\n");
-  }
+  // 53 - Comentario postados por mim
+  echo("               <span class=\"cMim\">(c)</span>&nbsp;".RetornaFraseDaLista($lista_frases,53)."\n");
 
   /* Fim do tabelao */
 
