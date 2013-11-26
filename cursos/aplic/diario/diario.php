@@ -45,7 +45,7 @@
   include("diario.inc");
 
   require_once("../xajax_0.2.4/xajax.inc.php");
-       
+
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
@@ -277,8 +277,6 @@
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-
-  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
 
   /* 1 - Diario de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)."</h4>\n");

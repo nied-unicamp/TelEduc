@@ -847,8 +847,8 @@ function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false)
       echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
     }
 
-    /* 1 - Correio 7 - ï¿½rea restrita a alunos e formadores */
-    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, 7)."</h4>\n");
+    /* 1 - Correio 504 - Área restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases_geral, 504)."</h4>\n");
 
     if (!$eh_popup) {
       echo("          <ul class=\"btsNav\">\n");
