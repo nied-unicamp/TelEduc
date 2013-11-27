@@ -75,8 +75,6 @@
   $feedbackObject->addAction("inscrever", 268, 255);
   $feedbackObject->addAction("trocar_coordenador", 256, 255);
 
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
   $ecoordenador    = ECoordenador($sock,$cod_curso,$cod_usuario);
   $cod_coordenador = RetornaCodigoCoordenador($sock, $cod_curso);
 
