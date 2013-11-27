@@ -56,6 +56,7 @@
 
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
 
   /* A��o = Comentar - origem = comentarios.php */
   if ($acao=="comentar")
@@ -70,7 +71,7 @@
   }
 
   /* A��o = Novo Item - origem = diario.php */
-  if ($acao=="novo_item")
+  if ($acao=="novo_item" && !$usr_visitante)
   {
     $atualizacao="false";
     if($cod_item = SalvaItem($sock, $titulo, $texto, $cod_usuario, $tipo_compartilhamento)){
