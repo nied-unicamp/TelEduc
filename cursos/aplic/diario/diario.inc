@@ -940,23 +940,22 @@ function IndentarComentario($texto, $spaces){
  
      Saida: XML da fun��o Ajax
  */
-  function ApagaItensDinamic($cod_curso, $cod_itens,$cod_ferramenta, $cod_usuario){
- 
-    $objResponse = new xajaxResponse('ISO-8859-1');
- 
-    $sock=Conectar($cod_curso);
- 
-    foreach($cod_itens as $cod => $linha){
-      ApagaItem($sock, $linha);
-    }
+function ApagaItensDinamic($cod_curso, $cod_itens,$cod_ferramenta, $cod_usuario){
 
-    AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario);
-    Desconectar($sock);
+  $objResponse = new xajaxResponse('ISO-8859-1');
 
-    $objResponse->addScriptCall("Recarregar", "apagar_itens", "true");
+  $sock=Conectar($cod_curso);
 
- 
-    return $objResponse->getXML();
- }
+  foreach($cod_itens as $cod => $linha){
+    ApagaItem($sock, $linha);
+  }
+
+  AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario);
+  Desconectar($sock);
+
+  $objResponse->addScriptCall("Recarregar", "apagar_itens", "true");
+
+  return $objResponse->getXML();
+}
 
 ?>
