@@ -305,7 +305,8 @@
   /* funcao de incluir anotacao.                                       */
   $status_curso=RetornaStatusCurso($sock,$cod_curso);
 
-  if ($dono_diario)
+  // Visitantes não podem criar novos itens no diário.
+  if ($dono_diario && !$usr_visitante)
   {
     /* 4 - Incluir nova anotacao */
     echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases, 4)."\" onclick=\"MostraLayer(cod_novoitem, 140,event);document.getElementById('titulo').focus(); document.getElementById('titulo').value=''\">".RetornaFraseDaLista($lista_frases, 4)."</span></li>\n");
@@ -477,30 +478,33 @@
 
   }
 
-  /* Novo Item */
-  echo("          <div id=\"novoitem\" class=\"popup\">\n");
-  echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(cod_novoitem);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-  echo("            <div class=\"int_popup\">\n");
-  echo("              <form name=\"form_novo_item\" method=\"post\" action=\"acoes.php\" onsubmit='return (VerificaNovoItemTitulo(document.form_novo_item.titulo));'>\n");
-  echo("              <div class=\"ulPopup\">\n");
-  /* 180 - Digite o nome do item a ser criado aqui: */
-  echo("                Digite o nome do item a ser criado aqui: <br />\n");
-
-  echo("                <input class=\"input\" type=\"text\" name=\"titulo\" id=\"titulo\" value=\"".$titulo."\" maxlength=\"150\" /><br />\n");
-  echo("                <input type=\"hidden\" name=\"tipo_compartilhamento\" value=\"T\" />\n");
-  echo("                <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-  echo("                <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");
-  echo("                <input type=\"hidden\" name=\"cod_propriet\" value=\"".$cod_propriet."\" />\n");
-  echo("                <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
-  echo("                <input type=\"hidden\" name=\"acao\" value=\"novo_item\" />\n");
-  /* 18 - Ok (gen) */
-  echo("                <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
-  /* 2 - Cancelar (gen) */
-  echo("                &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onclick=\"EscondeLayer(cod_novoitem);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-  echo("              </div>\n");
-  echo("              </form>\n");
-  echo("            </div>\n");
-  echo("          </div>\n");
+  // Visitantes não podem criar novos itens.
+  if (!$usr_visitante) {
+    /* Novo Item */
+    echo("          <div id=\"novoitem\" class=\"popup\">\n");
+    echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(cod_novoitem);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+    echo("            <div class=\"int_popup\">\n");
+    echo("              <form name=\"form_novo_item\" method=\"post\" action=\"acoes.php\" onsubmit='return (VerificaNovoItemTitulo(document.form_novo_item.titulo));'>\n");
+    echo("              <div class=\"ulPopup\">\n");
+    /* 180 - Digite o nome do item a ser criado aqui: */
+    echo("                Digite o nome do item a ser criado aqui: <br />\n");
+  
+    echo("                <input class=\"input\" type=\"text\" name=\"titulo\" id=\"titulo\" value=\"".$titulo."\" maxlength=\"150\" /><br />\n");
+    echo("                <input type=\"hidden\" name=\"tipo_compartilhamento\" value=\"T\" />\n");
+    echo("                <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("                <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");
+    echo("                <input type=\"hidden\" name=\"cod_propriet\" value=\"".$cod_propriet."\" />\n");
+    echo("                <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
+    echo("                <input type=\"hidden\" name=\"acao\" value=\"novo_item\" />\n");
+    /* 18 - Ok (gen) */
+    echo("                <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+    /* 2 - Cancelar (gen) */
+    echo("                &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onclick=\"EscondeLayer(cod_novoitem);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+    echo("              </div>\n");
+    echo("              </form>\n");
+    echo("            </div>\n");
+    echo("          </div>\n");
+  }
 
   echo("        </td>\n");
   echo("      </tr>\n");
