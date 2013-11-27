@@ -98,7 +98,7 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
   }
   else if (! EFormador ($sock, $cod_curso, $cod_usuario))
   {
-    $regra_comp = "(tipo_compartilhamento = 'T' or UC.cod_usuario_global=".$cod_usuario.")";
+    $regra_comp = "(tipo_compartilhamento = 'T' or UC.cod_usuario=".$cod_usuario.")";
   }
   else
   {
@@ -150,14 +150,14 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
         $lista_diarios[$cod_usr]['data']                     = $data_item;
 
       // numero de itens no diario
-      $lista_diarios [ $cod_usr ]['num_itens']++;
+      $lista_diarios[$cod_usr]['num_itens']++;
 
       // ocorre novidade se houver um item novo ou um comentario novo
-      $lista_diarios [ $cod_usr ]['novidade'] |= $item['data'] > $penultimo_acesso;
+      $lista_diarios[$cod_usr]['novidade'] |= $item['data'] > $penultimo_acesso;
 
       // Verifica se o item estah comentado. Se nao estiver,
       // aumenta o numero de itens nao comentados no diario.
-      if (!$item["num_comentarios"])
+      if (!$item['num_comentarios'])
         $lista_diarios[$cod_usr]['num_itens_nao_comentados']++;
 
     }
