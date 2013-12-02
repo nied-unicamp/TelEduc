@@ -571,9 +571,9 @@ function VerificaTexto($texto){
   foreach($text2 as $string){
     $string1 = explode("&nbsp;",$string);
     foreach($string1 as $string2){
-      $string3 = explode("<br>",$string2);	
-      foreach($string3 as $pal){	
-        if((trim($pal)!="")&&(trim($pal)!="<P>")&&(trim($pal)!="</P>"))
+      $string3 = explode("<br>",$string2);
+      foreach($string3 as $pal){
+        if((trim($pal)!="")&&(trim($pal)!="<p>")&&(trim($pal)!="</p>"))
         {
           return $texto;
         }
@@ -582,7 +582,7 @@ function VerificaTexto($texto){
   }
 
   return "";
-}		
+}
 
 /* *********************************************************************
    EditarTexto - Edita o texto do item dado, dinâmicamente
@@ -595,13 +595,13 @@ function VerificaTexto($texto){
 function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
   $objResponse = new xajaxResponse('ISO-8859-1');
-	
+
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
 
   $consulta="update Dinamica set texto='".VerificaStringQuery(trim(VerificaTexto($novo_nome)))."' where cod_dinamica=".VerificaNumeroQuery($cod_item);
   $res=Enviar($sock, $consulta);
-	 AtualizaFerramentasNova($sock, 16, 'T');
+  AtualizaFerramentasNova($sock, 16, 'T');
   Desconectar($sock);
   // Imprime no div valores do formulário
   $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");

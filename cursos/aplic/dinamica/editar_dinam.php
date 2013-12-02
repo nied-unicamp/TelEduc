@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/agenda/ver_linha.php
+    Arquivo : cursos/aplic/dinamica/editar_dinam.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : cursos/aplic/agenda/ver_linha.php
+  ARQUIVO : cursos/aplic/dinamica/editar_dinam.php
   ========================================================== */
 
   $bibliotecas="../bibliotecas/";
@@ -145,15 +145,15 @@
     /* 73 - Acao exclusiva a formadores. */
     echo("    - ".RetornaFraseDaLista($lista_frases_geral, 76)."</h4>");
 
-  /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-    
-  echo("          <div id=\"mudarFonte\">\n");
-  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-  echo("          </div>\n");
+    /*Voltar*/
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
     echo("          <form name=\"frmErro\" action=\"\" method=\"post\">\n");
@@ -168,7 +168,6 @@
     exit;
   }
 
-
   /* Verificação se o item está em Edição */
   /* Se estiver, voltar a tela anterior, e disparar a tela de Em Edição... */
   if ($linha_item['status']=="E")
@@ -177,7 +176,7 @@
       AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario);
     }else{
       /* Está em edição... */
-      echo("          <script language=javascript>\n");
+      echo("          <script language=\"javascript\">\n");
       echo("            window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&origem=ver_linha','EmEdicao','width=600,height=280,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
       echo("            window.location='dinamica.php?cod_curso=".$cod_curso."';\n");
       echo("          </script>\n");
@@ -209,16 +208,16 @@
   echo($cabecalho);
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
- 
+
   /*Voltar*/
   /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-      
+
   /* Tabela Externa */
   echo("          <table id=\"tabelaExterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -237,7 +236,7 @@
   /* 49 - Conteudo  */
   echo("                    <td align=\"left\">".RetornaFraseDaLista($lista_frases,49)."</td>\n");
   if($usr_formador)
-  {  
+  {
     /*51 - Opcoes */
     echo("                  <td align=\"center\" width=\"15%\">".RetornaFraseDaLista($lista_frases,51)."</td>\n");
   }
