@@ -741,7 +741,7 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 (35, 1, -4, 'Intermap'),
 (36, 1, -4, 'Permite aos formadores visualizar a interação dos participantes do curso nas ferramentas Correio, Fóruns de Discussão e Bate-Papo, facilitando o acompanhamento do curso.'),
 (37, 1, -4, 'Administração'),
-(38, 1, -4, 'Permite gerenciar as ferramentas do curso, as pessoas que participam do curso e ainda alterar dados do curso.<br><br>As funcionalidades disponibilizadas dentro de Administração são:<br><br><ul><li>Visualizar / Alterar Dados e Cronograma do Curso<li>Escolher e Destacar Ferramentas do Curso<li>Inscrever Alunos e Formadores<li>Gerenciamento de Inscrições, Alunos e Formadores<li>Alterar Nomenclatura do Coordenador<li>Enviar Senha<br></ul>'),
+(38, 1, -4, 'Permite gerenciar as ferramentas do curso, as pessoas que participam do curso e ainda alterar dados do curso.<br><br>As funcionalidades disponibilizadas dentro de Administração são:<br><br><ul><li>Visualizar / Alterar Dados e Cronograma do Curso<li>Escolher e Destacar Ferramentas do Curso<li>Inscrever Alunos, Formadores, Visitantes e Colaboradores<li>Gerenciamento de Inscrições, Alunos, Formadores, Visitantes e Colaboradores<li>Alterar Nomenclatura do Coordenador<li>Enviar Senha<br></ul>'),
 (39, 1, -4, 'Suporte'),
 (40, 1, -4, 'Permite aos formadores entrar em contato com o suporte do Ambiente (administrador do TelEduc) através de e-mail.'),
 (41, 1, -4, 'Alterar Senha'),
