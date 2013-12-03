@@ -184,7 +184,7 @@ function EdicaoTitulo(codigo, id, valor){
 
 function LimparTexto(id)
 {
-  if (confirm(lista_frases.msg188));
+  if (confirm(lista_frases.msg188))
     {
        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
        document.getElementById('text_'+id).innerHTML='';
