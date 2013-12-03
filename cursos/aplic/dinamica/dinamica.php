@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/agenda/agenda.php
+    Arquivo : cursos/aplic/dinamica/dinamica.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : cursos/aplic/agenda/agenda.php
+  ARQUIVO : cursos/aplic/dinamica/dinamica.php
   ========================================================== */
 
   $bibliotecas="../bibliotecas/";
@@ -107,11 +107,11 @@
   {
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
-    echo("                <ul class=\"btAuxTabs\">\n");	
+    echo("                <ul class=\"btAuxTabs\">\n");
     echo("                  <li><span onclick='IncAltDinam();'>".$frase."</span></li>\n");
     /* 36 - Importar Dinamica*/
     echo("                  <li><span onclick='ImportarDinam();'>".RetornaFraseDaLista($lista_frases, 36)."</span></li>\n");	
-    echo("                </ul>\n");	
+    echo("                </ul>\n");
     echo("              </td>\n");
     echo("            </tr>\n");
   }
