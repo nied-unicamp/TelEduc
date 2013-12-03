@@ -51,14 +51,14 @@
 
   switch($categ)
   {
-          /* 39 - Enquetes não aplicadas */
-          case 0: $cod_pagina_ajuda = 1; break;
-          /* 40 - Enquetes em andamento  */
-          case 1: $cod_pagina_ajuda = 2; break;
-          /* 41 - Enquetes encerradas */
-          case 2: $cod_pagina_ajuda = 3; break;
-          /* 97 - Lixeira */
-          case 3: $cod_pagina_ajuda = 4; break;
+    /* 39 - Enquetes não aplicadas */
+    case 0: $cod_pagina_ajuda = 1; break;
+    /* 40 - Enquetes em andamento  */
+    case 1: $cod_pagina_ajuda = 2; break;
+    /* 41 - Enquetes encerradas */
+    case 2: $cod_pagina_ajuda = 3; break;
+    /* 97 - Lixeira */
+    case 3: $cod_pagina_ajuda = 4; break;
   }
   
   include("../topo_tela.php");
@@ -125,14 +125,14 @@
 
   switch($categ)
   {
-          /* 39 - Enquetes não aplicadas */
-          case 0: $categoria = RetornaFraseDaLista($lista_frases,39); break;
-          /* 40 - Enquetes em andamento  */
-          case 1: $categoria = RetornaFraseDaLista($lista_frases,40) ; break;
-          /* 41 - Enquetes encerradas */
-          case 2: $categoria = RetornaFraseDaLista($lista_frases,41); break;
-          /* 97 - Lixeira */
-          case 3: $categoria = RetornaFraseDaLista($lista_frases,97); break;
+    /* 39 - Enquetes não aplicadas */
+    case 0: $categoria = RetornaFraseDaLista($lista_frases,39); break;
+    /* 40 - Enquetes em andamento  */
+    case 1: $categoria = RetornaFraseDaLista($lista_frases,40) ; break;
+    /* 41 - Enquetes encerradas */
+    case 2: $categoria = RetornaFraseDaLista($lista_frases,41); break;
+    /* 97 - Lixeira */
+    case 3: $categoria = RetornaFraseDaLista($lista_frases,97); break;
   } 
 
   /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
@@ -143,15 +143,15 @@
     /* 114 - Acao exclusiva a formadores. */
     echo("    - ".RetornaFraseDaLista($lista_frases, 114)."</h4>");
 
-  /*Voltar*/
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-    
-  echo("          <div id=\"mudarFonte\">\n");
-  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-  echo("          </div>\n");
+    /*Voltar*/
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
     echo("          <form name=\"frmErro\" action=\"\" method=\"post\">\n");
@@ -172,8 +172,8 @@
   
   /*********************************************************/
   /* início - JavaScript */
-  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("  <script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  echo("  <script type=\"text/javascript\" language=\"Javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"Javascript\">\n\n");
 
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var versao = (navigator.appVersion.substring(0,3));\n");
@@ -378,7 +378,7 @@
     echo("    {\n");
     // 104 - Tem certeza que deseja excluir a enquete? Ela sera excluida permanentemente, sem possibilidade de recuperacao.
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases, 104)."')){");
-    echo("      	document.location.href='excluir_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
+    echo("        document.location.href='excluir_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("      }\n");
     echo("    }\n\n");
  
@@ -387,7 +387,7 @@
     echo("    {\n");
     // 105 - Tem certeza que deseja recuperar a enquete?
     echo("      if(confirm('".RetornaFraseDaLista($lista_frases, 105)."')){");
-    echo("      	document.location.href='recuperar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
+    echo("        document.location.href='recuperar_enquete.php?cod_curso=".$cod_curso."&idEnquete='+selected_item\n");
     echo("    }\n");
     echo("    }\n\n");
   }
@@ -417,16 +417,16 @@
         break;
     }
   }
-  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EConvidado($sock, $cod_usuario, $cod_curso)))
+  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EColaborador($sock, $cod_usuario, $cod_curso)))
   {
-    // Início da Página do Aluno, Visitante e Convidado
+    // Início da Página do Aluno, Visitante e Colaborador
     switch($categ)
     {
       case 1:
-        $lista_enquetes = getEnquetesAndamento($sock, $ator); 
+        $lista_enquetes = getEnquetesAndamento($sock, $ator);
         break;
       case 2:
-        $lista_enquetes = getEnquetesEncerradas($sock, $ator);  
+        $lista_enquetes = getEnquetesEncerradas($sock, $ator);
         /*******************************************
         Nao Ha LAYER neste caso, o clique leva direito a pagina de visulizacao de enquete 
         *******************************************/

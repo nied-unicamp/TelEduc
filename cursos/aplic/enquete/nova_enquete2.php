@@ -54,7 +54,7 @@
   $data_fim=DataHora2Unixtime($data_fim." ".$hora_fim.":00");
 
   /* INICIO - JavaScript */
-  echo("<script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n\n");
   echo("  function Iniciar()\n");
   echo("  {\n");
   echo("    startList();\n");
@@ -69,16 +69,16 @@
   echo("</script>\n\n");
   /* FIM - JavaScript */
 
-  # FAVC
+  # FAVZ
   for ($i = 0; $i <= 3; $i++) {
-  	if (!isset($aplic[$i]))  $aplic[$i] = '-'; 
-  	$aplicacao .= $aplic[$i];
+    if (!isset($aplic[$i]))  $aplic[$i] = '-';
+    $aplicacao .= $aplic[$i];
   }
   
-  # RFAVC
+  # RFAVZ
   for ($i = 0; $i <= 4; $i++) {
-  	if (!isset($result[$i]))  $result[$i] = '-'; 
-  	$resultado .= $result[$i];
+    if (!isset($result[$i]))  $result[$i] = '-';
+    $resultado .= $result[$i];
   }
   
   //retira alternativas repetidas
@@ -90,14 +90,14 @@
   {
     $atualizacao="true";
     Desconectar($sock);
-    echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+    echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
     exit;
   } /* Se a enquete NAO pode ser salva apresenta uma mensagem de erro */
   else
   {
     $atualizacao="false";
     Desconectar($sock);
-    echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+    echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
     exit;
   }
 

@@ -249,237 +249,225 @@
 
   if ($tela_formador)
   {
-	/* 1 - Enquete */
-	/* 87 - Editar enquete */
-	echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,87)."</h4>\n");
-	
-  	/*Voltar*/			
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-	
-  	echo("          <div id=\"mudarFonte\">\n");
-  	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  	echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-        echo("	            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-	echo("          </div>\n");
+    /* 1 - Enquete */
+    /* 87 - Editar enquete */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,87)."</h4>\n");
 
-	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-  	echo("            <tr>\n");
-  	echo("              <td valign=\"top\">\n");
-  	echo("                <ul class=\"btAuxTabs\">\n");
+    /*Voltar*/
+    /* 509 - Voltar */
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
 
-  	/* 23 - Voltar  (gen) */
-  	echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+    echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
+    echo("            <tr>\n");
+    echo("              <td valign=\"top\">\n");
+    echo("                <ul class=\"btAuxTabs\">\n");
 
-  	if ($tela_formador)
-  	{
-  	  /* 3 - Nova Enquete */
-  	  echo("                  <li><a href='nova_enquete.php?cod_curso=".$cod_curso."'>".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
-  	  /* 39 - Enquetes nao aplicadas */
-  	  echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=0'>".RetornaFraseDaLista($lista_frases, 39)."</a></li>\n");
-  	}
+    /* 23 - Voltar  (gen) */
+    echo("                  <li><span onclick='Voltar();'>".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
-  	/* 39 - Enquetes em andamento */
-  	echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=1'>".RetornaFraseDaLista($lista_frases,40)."</a></li>\n");
-  	/* 41 - Enquetes encerradas  */
-  	echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=2'>".RetornaFraseDaLista($lista_frases,41)."</a></li>\n");
-  	if ($tela_formador)
-  	{
-  	  /* 97 - Lixeira */
-  	  echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."amp;categ=3'>".RetornaFraseDaLista($lista_frases,97)."</a></li>\n");
-  	}
-  	echo("                </ul>\n");
-  	echo("              </td>\n");
-  	echo("            </tr>\n");
+    /* 3 - Nova Enquete */
+    echo("                  <li><a href='nova_enquete.php?cod_curso=".$cod_curso."'>".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
+    /* 39 - Enquetes nao aplicadas */
+    echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=0'>".RetornaFraseDaLista($lista_frases, 39)."</a></li>\n");
 
-	echo("            <tr>\n");
-	echo("              <td valign=\"top\">\n");
+    /* 39 - Enquetes em andamento */
+    echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=1'>".RetornaFraseDaLista($lista_frases,40)."</a></li>\n");
+    /* 41 - Enquetes encerradas  */
+    echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=2'>".RetornaFraseDaLista($lista_frases,41)."</a></li>\n");
+    /* 97 - Lixeira */
+    echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."amp;categ=3'>".RetornaFraseDaLista($lista_frases,97)."</a></li>\n");
+    echo("                </ul>\n");
+    echo("              </td>\n");
+    echo("            </tr>\n");
 
-	echo("                <form name=enquete method=post action=\"editar_enquete2.php?cod_curso=".$cod_curso."\" onsubmit='return(testa_campos());'>\n");
-	
-        /* Passa idEnquete */
-        echo("                <input type=hidden name=idEnquete value=".$idEnquete.">\n");
-	echo("                <input type=hidden name=data_hoje value=".UnixTime2Data(time()).">\n");
-	echo("                <input type=hidden name=hora_hoje value=".UnixTime2Hora(time()).">\n");
-	echo("                  <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
-	echo("                    <tr class=\"head\">\n");
-	/* 9 - T�ulo */
-	echo("                      <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
-	echo("                    </tr>\n");
-	echo("                    <tr>\n");
-	echo("                      <td class=\"itens\" colspan=\"2\">\n");
-	echo("                        <input type=text name=titulo class=input value='".$enquete['titulo']."' size=40 maxlength=80>\n");
-	echo("                      </td>\n");
-	echo("                    </tr>\n");
+    echo("            <tr>\n");
+    echo("              <td valign=\"top\">\n");
 
-	echo("         	          <tr class=\"head\">\n");
-	/* 10 - Pergunta */
-	echo("        	            <td class=\"center\" style='width:50%'>".RetornaFraseDaLista($lista_frases,10)."</td>\n");
-	/* 11 - Alternativas */
-	echo("        	      	    <td class=\"center\"  style='width:50%'>".RetornaFraseDaLista($lista_frases,11)."</td>\n");
-	echo("      	  	  </tr>\n");
-	echo("      	    	  <tr>\n");
-	echo("        	    	    <td style='width:50%; vertical-align:top; text-align:left;'>\n");
-	echo("             	      <textarea name=pergunta class=input rows=7 style='width:95%' cols=\"100\">".$enquete['pergunta']."</textarea>\n");
-	echo("              	    </td>\n");
-	echo("             	    <td style='width:50%;' class='itens'>\n");
-	echo("        	              <div id ='choices' >\n");
-	/* Monta alternativas */
-        $count = 0;
-        foreach ($alternativas as $cod => $alternativa){
-          echo("         	".($count+1)." <input type=text id='alternativa$count' name=\"alternativa[$count]\" class=input value='".$alternativa['texto']."' size=46 maxlength=255 style=\"margin-bottom:5px;\"><br>\n");
-	  $count++;
-        }
+    echo("                <form name=\"enquete\" method=\"post\" action=\"editar_enquete2.php?cod_curso=".$cod_curso."\" onsubmit='return(testa_campos());'>\n");
 
-        echo("                        <script type=\"text/javascript\" language=\"JavaScript\"> alternativa_number = ".($count--)."</script>\n");
+    /* Passa idEnquete */
+    echo("                <input type=\"hidden\" name=\"idEnquete\" value=".$idEnquete.">\n");
+    echo("                <input type=\"hidden\" name=\"data_hoje\" value=".UnixTime2Data(time()).">\n");
+    echo("                <input type=\"hidden\" name=\"hora_hoje\" value=".UnixTime2Hora(time()).">\n");
+    echo("                  <table border=0 width=\"100%\" cellspacing=0 id=\"tabelaInterna\" class=\"tabInterna\">\n");
+    echo("                    <tr class=\"head\">\n");
+    /* 9 - T�ulo */
+    echo("                      <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
+    echo("                    </tr>\n");
+    echo("                    <tr>\n");
+    echo("                      <td class=\"itens\" colspan=\"2\">\n");
+    echo("                        <input type=\"text\" name=\"titulo\" class=\"input\" value='".$enquete['titulo']."' size=\"40\" maxlength=\"80\">\n");
+    echo("                      </td>\n");
+    echo("                    </tr>\n");
 
-	echo("        	              </div>\n");
-        /* 38 - Adicionar nova alternativa */
-	echo("                        <a href=\"javascript:void(0);\" onClick='addAlternativa()'>".RetornaFraseDaLista($lista_frases,38)."</a>\n"); 
-	echo("                      </td>\n");
-	echo("                    </tr>\n");
+    echo("                    <tr class=\"head\">\n");
+    /* 10 - Pergunta */
+    echo("                      <td class=\"center\" style='width:50%'>".RetornaFraseDaLista($lista_frases,10)."</td>\n");
+    /* 11 - Alternativas */
+    echo("                      <td class=\"center\"  style='width:50%'>".RetornaFraseDaLista($lista_frases,11)."</td>\n");
+    echo("                    </tr>\n");
+    echo("                    <tr>\n");
+    echo("                      <td style='width:50%; vertical-align:top; text-align:left;'>\n");
+    echo("                        <textarea name=\"pergunta\" class=\"input\" rows=\"7\" style='width:95%' cols=\"100\">".$enquete['pergunta']."</textarea>\n");
+    echo("                      </td>\n");
+    echo("                      <td style='width:50%;' class='itens'>\n");
+    echo("                        <div id ='choices' >\n");
+    /* Monta alternativas */
+    $count = 0;
+    foreach ($alternativas as $cod => $alternativa){
+      echo("             ".($count+1)." <input type=\"text\" id='alternativa$count' name=\"alternativa[$count]\" class=input value='".$alternativa['texto']."' size=46 maxlength=255 style=\"margin-bottom:5px;\"><br>\n");
+      $count++;
+    }
 
-	echo("                    <tr class='head'>\n");
-	/* 28 - Periodo de consulta */
-	echo("                <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,28)."</td>\n");
-	echo("              </tr>\n"); 
-	echo("              <tr>\n");
-	echo("                <td colspan=\"2\">\n");
-	echo("		         <table border=0 width=\"100%\" cellspacing=0>\n");
-	echo("      	            <tr>\n"); 
-	echo("      	             <td style='width:50%;' >\n"); 
-	/* 48 - Data de In�io*/
-        echo("      		       ".RetornaFraseDaLista($lista_frases,48)."\n");
-	echo("          	       <input class=\"input\" type=text size=10 maxlength=10 id=\"data_inicio\" name=\"data_inicio\" value=\"".UnixTime2Data($enquete['data_inicio'])."\" />\n");
-	echo("          	       <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_inicio'),'dd/mm/yyyy',this);\"/>\n");
-	echo("      		       <input class=\"input\" type=text maxlength=5 size=5 name=hora_inicio value='".UnixTime2Hora($enquete['data_inicio'])."' onBlur='padroniza_hora(document.enquete.hora_inicio);'>\n");
-	echo("      	             </td>\n"); 
-	echo("      	             <td style='width:50%;' >\n"); 
-	/* 49 - Data de T�mino */
-        echo("      		       ".RetornaFraseDaLista($lista_frases,49)."\n");
-	echo("          	       <input class=\"input\" type=text size=10 maxlength=10 id=\"data_fim\" name=\"data_fim\" value=\"".UnixTime2Data($enquete['data_fim'])."\" />\n");
-	echo("          	       <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim'),'dd/mm/yyyy',this);\"/>\n");
-	echo("      		       <input class=\"input\" type=text maxlength=5 size=5 name=hora_fim value='".UnixTime2Hora($enquete['data_fim'])."' onBlur='padroniza_hora(document.enquete.hora_fim);'>\n");
-	echo("      	             </td>\n"); 
-	echo("      	           </tr>\n"); 
-	echo("      	         </table>\n"); 
-	echo("                </td>\n");
-	echo("             </tr>\n");
-	echo("          <tr class=\"head\">\n");
-	/* 31 - Configura�es */
-	echo("            <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,31)."</td>\n");
-	echo("          </tr>\n"); 
+    echo("                        <script type=\"text/javascript\" language=\"javascript\"> alternativa_number = ".($count--)."</script>\n");
 
-	echo("       	    <tr>\n");
-	echo("       	    <td colspan=\"2\">\n");
-	echo("       	     <table border=0 width=\"100%\" cellspacing=0>\n");
-	echo("       	     <tr>\n");
-	/* 32 - Aplicar Enquete a  */
-	echo("        	      <td class='itens' width='280px'>".RetornaFraseDaLista($lista_frases,32)."</td>\n");
-	echo("        	      <td class='itens' >\n");
+    echo("                        </div>\n");
+    /* 38 - Adicionar nova alternativa */
+    echo("                        <a href=\"javascript:void(0);\" onClick='addAlternativa()'>".RetornaFraseDaLista($lista_frases,38)."</a>\n");
+    echo("                      </td>\n");
+    echo("                    </tr>\n");
 
-        $checked = RetornaCheckedAplicacao($enquete['aplicacao']);
-        
-	/* 21 - Formadores  */
-        echo("           	<input id='aplic0' type=checkbox name=\"aplic[0]\" value='F' {$checked[0]}><label for=\"aplic0\" />".RetornaFraseDaLista ($lista_frases, 21)."</label>\n");
-	/* 20 - Alunos  */
-        echo("           	<input id='aplic1' type=checkbox name=\"aplic[1]\" value='A' {$checked[1]}><label for=\"aplic1\" />".RetornaFraseDaLista ($lista_frases, 20)."</label>\n");
-	/* 57 - Visitantes  */
-        echo("           	<input id='aplic2' type=checkbox name=\"aplic[2]\" value='V' {$checked[2]}><label for=\"aplic2\" />".RetornaFraseDaLista ($lista_frases, 57)."</label>\n");
-	/* 58 - Convidados  */
-        echo("           	<input id='aplic3' type=checkbox name=\"aplic[3]\" value='Z' {$checked[3]}><label for=\"aplic3\" />".RetornaFraseDaLista ($lista_frases, 58)."</label>\n");
-	echo("      	    </td>\n");
-	echo("            </tr>\n");
-	echo("       	  <tr>\n");  
-	/* 33 - Compartilhar resultado com */
-	echo("        	    <td class='itens'>".RetornaFraseDaLista($lista_frases,33)."</td>\n");
-	echo("        	    <td class='itens'>\n");
-        
-        $checked = RetornaCheckedResultado($enquete['resultado']);
-        
-        /* 56 - Coordenador  */
-        echo("                  <input id='result0' type=checkbox name=\"result[0]\" value='R' {$checked[0]} /><label for=\"result0\">".RetornaFraseDaLista ($lista_frases, 56)."</label>\n");
-	/* 21 - Formadores  */
-        echo("                  <input id='result1' type=checkbox name=\"result[1]\" value='F' {$checked[1]} /><label for=\"result1\">".RetornaFraseDaLista ($lista_frases, 21)."</label>\n");
-	/* 20 - Alunos  */
-        echo("                  <input id='result2' type=checkbox name=\"result[2]\" value='A' {$checked[2]} /><label for=\"result2\">".RetornaFraseDaLista ($lista_frases, 20)."</label>\n");
-	/* 57 - Visitantes  */
-        echo("                  <input id='result3' type=checkbox name=\"result[3]\" value='V' {$checked[3]} /><label for=\"result3\">Visitantes</label>\n");
-	/* 58 - Convidados  */
-        echo("                  <input id='result4' type=checkbox name=\"result[4]\" value='Z' {$checked[4]} /><label for=\"result4\" />Convidados</label>\n");
-	echo("      	    </td>\n");
-	echo("            </tr>\n");
-	echo("      	  <tr class=g1field>\n");
-	/* 34 - Disponibilizar resultados parciais? */
-	echo("      	    <td class='itens'>".RetornaFraseDaLista($lista_frases,34)."</td>\n");
-	echo("        	    <td class='itens'>\n");
-	
-        $checked = RetornaCheckedSimNao($enquete['resultado_parcial']);
-        
-        echo("    		<input type=hidden name=resultado_parcial value='".$enquete['resultado_parcial']."' />\n");
-	/* 61 - Sim  */
+    echo("                    <tr class='head'>\n");
+    /* 28 - Periodo de consulta */
+    echo("                      <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,28)."</td>\n");
+    echo("                    </tr>\n");
+    echo("                    <tr>\n");
+    echo("                      <td colspan=\"2\">\n");
+    echo("                        <table border=0 width=\"100%\" cellspacing=0>\n");
+    echo("                          <tr>\n");
+    echo("                            <td style='width:50%;' >\n");
+    /* 48 - Data de In�io*/
+    echo("                              ".RetornaFraseDaLista($lista_frases,48)."\n");
+    echo("                              <input class=\"input\" type=text size=10 maxlength=10 id=\"data_inicio\" name=\"data_inicio\" value=\"".UnixTime2Data($enquete['data_inicio'])."\" />\n");
+    echo("                              <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_inicio'),'dd/mm/yyyy',this);\"/>\n");
+    echo("                              <input class=\"input\" type=\"text\" maxlength=\"5\" size=\"5\" name=\"hora_inicio\" value='".UnixTime2Hora($enquete['data_inicio'])."' onBlur='padroniza_hora(document.enquete.hora_inicio);'>\n");
+    echo("                            </td>\n");
+    echo("                            <td style='width:50%;' >\n");
+    /* 49 - Data de T�mino */
+    echo("                              ".RetornaFraseDaLista($lista_frases,49)."\n");
+    echo("                              <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"data_fim\" name=\"data_fim\" value=\"".UnixTime2Data($enquete['data_fim'])."\" />\n");
+    echo("                              <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim'),'dd/mm/yyyy',this);\"/>\n");
+    echo("                              <input class=\"input\" type=\"text\" maxlength=\"5\" size=\"5\" name=\"hora_fim\" value='".UnixTime2Hora($enquete['data_fim'])."' onBlur='padroniza_hora(document.enquete.hora_fim);'>\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                        </table>\n");
+    echo("                      </td>\n");
+    echo("                    </tr>\n");
+    echo("                    <tr class=\"head\">\n");
+    /* 31 - Configura�es */
+    echo("                      <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,31)."</td>\n");
+    echo("                    </tr>\n");
 
-        echo("           	<input class=input type=radio name=res_parc id=res_parc_S ".$checked[0]." onClick=\"document.enquete.resultado_parcial.value='S';\" /><label for=\"res_parc_S\" class=text>".RetornaFraseDaLista($lista_frases,61)."</label>\n");
+    echo("                    <tr>\n");
+    echo("                      <td colspan=\"2\">\n");
+    echo("                        <table border=0 width=\"100%\" cellspacing=0>\n");
+    echo("                          <tr>\n");
+    /* 32 - Aplicar Enquete a  */
+    echo("                            <td class='itens' width='280px'>".RetornaFraseDaLista($lista_frases,32)."</td>\n");
+    echo("                            <td class='itens' >\n");
 
-	/* 62 - Nao  */
+    $checked = RetornaCheckedAplicacao($enquete['aplicacao']);
 
-        echo("           	<input class=input type=radio name=res_parc id=res_parc_N ".$checked[1]." onClick=\"document.enquete.resultado_parcial.value='N';\" /><label for=\"res_parc_N\" class=text>".RetornaFraseDaLista($lista_frases,62)."</label>\n");
+    /* 21 - Formadores  */
+    echo("                              <input id='aplic0' type=\"checkbox\" name=\"aplic[0]\" value='F' {$checked[0]}><label for=\"aplic0\">".RetornaFraseDaLista ($lista_frases, 21)."</label>\n");
+    /* 20 - Alunos  */
+    echo("                              <input id='aplic1' type=\"checkbox\" name=\"aplic[1]\" value='A' {$checked[1]}><label for=\"aplic1\">".RetornaFraseDaLista ($lista_frases, 20)."</label>\n");
+    /* 57 - Visitantes  */
+    echo("                              <input id='aplic2' type=\"checkbox\" name=\"aplic[2]\" value='V' {$checked[2]}><label for=\"aplic2\">".RetornaFraseDaLista ($lista_frases, 57)."</label>\n");
+    /* 58 - Colaborador  */
+    echo("                              <input id='aplic3' type=\"checkbox\" name=\"aplic[3]\" value='Z' {$checked[3]}><label for=\"aplic3\">".RetornaFraseDaLista ($lista_frases, 58)."</label>\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                          <tr>\n");
+    /* 33 - Compartilhar resultado com */
+    echo("                            <td class='itens'>".RetornaFraseDaLista($lista_frases,33)."</td>\n");
+    echo("                            <td class='itens'>\n");
 
-	echo("        	    </td>\n");
-	echo("            </tr>\n");
-	echo("      	  <tr>\n");
-	/* 35 - Disponibilizar identidade dos votos? */
-	echo("      	    <td class='itens'>".RetornaFraseDaLista($lista_frases,35)."</td>\n");
-	echo("        	    <td class='itens'>\n");
-	
-        $checked = RetornaCheckedSimNao($enquete['identidade_votos']);
-        
-        echo("    	      <input type=hidden name=identidade_votos value='".$enquete['identidade_votos']."' />\n");
-	/* 61 - Sim  */
+    $checked = RetornaCheckedResultado($enquete['resultado']);
 
-	echo("                  <input class=input type=radio name=id_votos id=id_votos_S ".$checked[0]." onClick=\"document.enquete.identidade_votos.value='S';\" /><label for=\"id_votos_S\" class=text>".RetornaFraseDaLista($lista_frases,61)."</label>\n");
+    /* 56 - Coordenador  */
+    echo("                              <input id='result0' type=\"checkbox\" name=\"result[0]\" value='R' {$checked[0]} /><label for=\"result0\">".RetornaFraseDaLista ($lista_frases, 56)."</label>\n");
+    /* 21 - Formadores  */
+    echo("                              <input id='result1' type=\"checkbox\" name=\"result[1]\" value='F' {$checked[1]} /><label for=\"result1\">".RetornaFraseDaLista ($lista_frases, 21)."</label>\n");
+    /* 20 - Alunos  */
+    echo("                              <input id='result2' type=\"checkbox\" name=\"result[2]\" value='A' {$checked[2]} /><label for=\"result2\">".RetornaFraseDaLista ($lista_frases, 20)."</label>\n");
+    /* 57 - Visitantes  */
+    echo("                              <input id='result3' type=\"checkbox\" name=\"result[3]\" value='V' {$checked[3]} /><label for=\"result3\">".RetornaFraseDaLista ($lista_frases, 57)."</label>\n");
+    /* 58 - Colaboradores  */
+    echo("                              <input id='result4' type=\"checkbox\" name=\"result[4]\" value='Z' {$checked[4]} /><label for=\"result4\">".RetornaFraseDaLista ($lista_frases, 58)."</label>\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                          <tr class=\"g1field\">\n");
+    /* 34 - Disponibilizar resultados parciais? */
+    echo("                            <td class='itens'>".RetornaFraseDaLista($lista_frases,34)."</td>\n");
+    echo("                            <td class='itens'>\n");
 
-	/* 62 - Nao  */
+    $checked = RetornaCheckedSimNao($enquete['resultado_parcial']);
 
-	echo("                  <input class=input type=radio name=id_votos id=id_votos_N ".$checked[1]." onClick=\"document.enquete.identidade_votos.value='N';\" /><label for=\"id_votos_N\" class=text>".RetornaFraseDaLista($lista_frases,62)."</label>\n");
-	echo("        	    </td>\n");
-	echo("            </tr>\n");
-	echo("            <tr>\n");
-	/* 36 - Numero de escolhas */  
-	echo("        	    <td class='itens'>".RetornaFraseDaLista($lista_frases,36)."</td>\n");
-	echo("        	    <td class='itens'>\n");
-	
-        $checked = RetornaCheckedNumEscolhas($enquete['num_escolhas']);
-        
+    echo("                              <input type=\"hidden\" name=\"resultado_parcial\" value='".$enquete['resultado_parcial']."' />\n");
+    /* 61 - Sim  */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"res_parc\" id=\"res_parc_S\" ".$checked[0]." onClick=\"document.enquete.resultado_parcial.value='S';\" /><label for=\"res_parc_S\" class=\"text\">".RetornaFraseDaLista($lista_frases,61)."</label>\n");
+    /* 62 - Nao  */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"res_parc\" id=\"res_parc_N\" ".$checked[1]." onClick=\"document.enquete.resultado_parcial.value='N';\" /><label for=\"res_parc_N\" class=\"text\">".RetornaFraseDaLista($lista_frases,62)."</label>\n");
 
-        echo("    		<input type=hidden name=num_escolhas value='".$enquete['num_escolhas']."' />\n");
-	echo("             	<input class=input type=radio name=num_esc id=num_esc_1 {$checked[0]} onClick=\"document.enquete.num_escolhas.value='1';\" /><label for=\"num_esc_1\" class=text>Somente uma alternativa</label>\n");
-	echo("           	<input class=input type=radio name=num_esc id=num_esc_n {$checked[1]} onClick=\"document.enquete.num_escolhas.value='N';\" /><label for=\"num_esc_n\" class=text>Uma ou mais alternativas</label>\n");
-	echo("        	    </td>\n");
-	echo("            </tr>\n");
-	echo("            <tr>\n");
-	echo("              <td colspan='2' align='left'>\n");
-	/* 11 - Enviar */
-	echo("                <input type=submit class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,11)."\" />\n");
-	/* 2 - Cancelar */
-	echo("                <input type=button class=\"input\" onclick=\"CancelaEnquete();\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
-	echo("              </td>\n");
-	echo("            </tr>\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                          <tr>\n");
+    /* 35 - Disponibilizar identidade dos votos? */
+    echo("                            <td class='itens'>".RetornaFraseDaLista($lista_frases,35)."</td>\n");
+    echo("                            <td class='itens'>\n");
 
-	echo("          </table>\n");
-	
-	echo("        </td>\n");
-  	echo("      </tr>\n");
-	echo("    </table>\n");
-	echo("    </form>\n");
-	echo("   </td>\n");
-  	echo("   </tr>\n");
-  	echo("   </table>\n");
-    echo("          <br />\n");    
+    $checked = RetornaCheckedSimNao($enquete['identidade_votos']);
+
+    echo("                              <input type=\"hidden\" name=\"identidade_votos\" value='".$enquete['identidade_votos']."' />\n");
+    /* 61 - Sim  */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"id_votos\" id=\"id_votos_S\" ".$checked[0]." onClick=\"document.enquete.identidade_votos.value='S';\" /><label for=\"id_votos_S\" class=\"text\">".RetornaFraseDaLista($lista_frases,61)."</label>\n");
+    /* 62 - Nao  */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"id_votos\" id=\"id_votos_N\" ".$checked[1]." onClick=\"document.enquete.identidade_votos.value='N';\" /><label for=\"id_votos_N\" class=\"text\">".RetornaFraseDaLista($lista_frases,62)."</label>\n");
+
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                          <tr>\n");
+    /* 36 - Numero de escolhas */
+    echo("                            <td class='itens'>".RetornaFraseDaLista($lista_frases,36)."</td>\n");
+    echo("                            <td class='itens'>\n");
+
+    $checked = RetornaCheckedNumEscolhas($enquete['num_escolhas']);
+
+    echo("                              <input type=\"hidden\" name=\"num_escolhas\" value='".$enquete['num_escolhas']."' />\n");
+    /* 59 - Somente uma alternativa */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"num_esc\" id=\"num_esc_1\" {$checked[0]} onClick=\"document.enquete.num_escolhas.value='1';\" /><label for=\"num_esc_1\" class=\"text\">".RetornaFraseDaLista($lista_frases,59)."</label>\n");
+    /* 60 - Uma ou mais alternativas */
+    echo("                              <input class=\"input\" type=\"radio\" name=\"num_esc\" id=\"num_esc_n\" {$checked[1]} onClick=\"document.enquete.num_escolhas.value='N';\" /><label for=\"num_esc_n\" class=\"text\">".RetornaFraseDaLista($lista_frases,60)."</label>\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+    echo("                          <tr>\n");
+    echo("                            <td colspan='2' align='left'>\n");
+    /* 11 - Enviar */
+    echo("                              <input type=\"submit\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,11)."\" />\n");
+    /* 2 - Cancelar */
+    echo("                              <input type=\"button\" class=\"input\" onclick=\"CancelaEnquete();\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+    echo("                            </td>\n");
+    echo("                          </tr>\n");
+
+    echo("                        </table>\n");
+
+    echo("                      </td>\n");
+    echo("                    </tr>\n");
+    echo("                  </table>\n");
+    echo("                </form>\n");
+    echo("              </td>\n");
+    echo("            </tr>\n");
+    echo("          </table>\n");
+    echo("          <br />\n");
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-2);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-  	
   //*NAO �FORMADOR*/
   }
   else
@@ -488,10 +476,10 @@
     /* 37 - Area restrita ao formador. */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,37)."</h4>\n");
 
-    /*Voltar*/			
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-    
+    /*Voltar*/
+    /* 509 - Voltar */
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
     echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
@@ -499,9 +487,7 @@
     echo("          </div>\n");
 
     /* 23 - Voltar (gen) */
-    echo("<form><input type=button class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
-
-    exit;
+    echo("          <form><input type=\"button\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
   }
 
   echo("        </td>\n");

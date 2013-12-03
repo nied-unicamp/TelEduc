@@ -150,7 +150,6 @@ function getEnquetesEncerradas($sock, $papel)
 
 }
 
-
 /* *******************************************************************
    getEnquete - retorna array com informa�es da enquete cujo id �idEnquete
    entrada: $sock - sock de conexao
@@ -176,7 +175,6 @@ function getEnquete($sock, $idEnquete)
   $lista=RetornaArrayLinhas($res);
   return($lista[0]);
 }
-  
 
 /* *******************************************************************
    getAlternativas - retorna todas as alternativas de uma dada enquete
@@ -227,7 +225,6 @@ function getTodasEnquetesNaoAplicadas($sock)
   $lista=RetornaArrayLinhas($res);
   return($lista);
 }
-
 
 /* *******************************************************************
    getTodasEnquetesEmAndamento - retorna lista de todas as enquetes em andamento
@@ -287,7 +284,6 @@ function getTodasEnquetesEncerradas($sock)
   return($lista);
 }  
 
-
 /* *******************************************************************
    getTodasEnquetesLixeira - retorna lista de todas as enquetes na lixeira
                                   (para formadores)
@@ -313,9 +309,7 @@ function getTodasEnquetesLixeira($sock)
   $res=Enviar($sock, $consulta);
   $lista=RetornaArrayLinhas($res);
   return($lista);
-}  
-
-  
+}
 
 /*==========================================================
   ========================================================== */
@@ -356,7 +350,7 @@ function apagarEnquete($sock, $idEnquete)
   $res=Enviar($sock, $consulta);
   return($res);
 }
- 
+
 /* *******************************************************************
    recuperarEnquete - recupera a mensagem da lixeira de volta ao seu local
    entrada: $sock - sock de conexao
@@ -364,28 +358,27 @@ function apagarEnquete($sock, $idEnquete)
    saida:   resposta da consulta delete (true/false)
 */ 
 function recuperarEnquete($sock, $idEnquete)
-{	
-	$consulta = "select data_inicio, data_fim from Enquete where idEnquete = ".VerificaNumeroQuery($idEnquete);
-	$res = Enviar($sock, $consulta);
-	$linha = RetornaLinha($res);
-	
-	if ($linha['data_fim'] < time())
-		$status = 'F';
-	else if ($linha['data_inicio'] > time ())
-		$status = 'I';
-	else
-		$status = 'A';
-	
-	$consulta="update Enquete set status = ".$status." where idEnquete=".VerificaNumeroQuery($idEnquete);
-  	  		
-  	// Atualiza para notifica��o Ferramentas_nova (caso 'A')
-  	if ($status == 'A')
-  		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
-  		  		
-  	$res=Enviar($sock, $consulta);
-  	return($res);
-}
+{
+  $consulta = "select data_inicio, data_fim from Enquete where idEnquete = ".VerificaNumeroQuery($idEnquete);
+  $res = Enviar($sock, $consulta);
+  $linha = RetornaLinha($res);
 
+  if ($linha['data_fim'] < time())
+    $status = 'F';
+  else if ($linha['data_inicio'] > time ())
+    $status = 'I';
+  else
+    $status = 'A';
+
+  $consulta="update Enquete set status = ".$status." where idEnquete=".VerificaNumeroQuery($idEnquete);
+
+  // Atualiza para notifica��o Ferramentas_nova (caso 'A')
+  if ($status == 'A')
+    AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+
+  $res=Enviar($sock, $consulta);
+  return($res);
+}
 
 /* *******************************************************************
    finalizarEnquete - finaliza uma enquete (data_fim = agora)
@@ -429,12 +422,12 @@ function aplicarEnquete($sock, $idEnquete)
    saida:   'true' caso o usuario tenha votado na alternativa, 'false' caso contr�io
 */  
 function verificaVotoAlternativa($sock, $cod_usuario, $idAlternativa){
-	$query="SELECT idAlternativa from Enquete_voto where cod_usuario=".VerificaNumeroQuery($cod_usuario)." AND idAlternativa = ".VerificaNumeroQuery($idAlternativa);
-	$res = Enviar($sock, $query);
-	if (RetornaNumLinhas($res) == 0)
-		return false;
-	else
-		return true;
+  $query="SELECT idAlternativa from Enquete_voto where cod_usuario=".VerificaNumeroQuery($cod_usuario)." AND idAlternativa = ".VerificaNumeroQuery($idAlternativa);
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) == 0)
+    return false;
+  else
+    return true;
 }
 
 
@@ -464,15 +457,16 @@ function getVotos($sock,$idAlternativa,$cod_curso){
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-	$query="SELECT U.nome, UC.cod_usuario
-	        FROM Enquete_voto EV, ".$dbnamebase.".Usuario_curso UC
-	        INNER JOIN ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-	        WHERE EV.cod_usuario = UC.cod_usuario
-	        AND UC.cod_curso = ".$cod_curso."
-	        AND EV.idAlternativa= ".VerificaNumeroQuery($idAlternativa);
-	$res = Enviar($sock, $query);
+  $query  = "SELECT U.nome, UC.cod_usuario ";
+  $query .= "FROM Enquete_voto EV, ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "INNER JOIN ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "WHERE EV.cod_usuario = UC.cod_usuario AND ";
+  $query .= "UC.cod_curso = ".$cod_curso." ";
+  $query .= "AND EV.idAlternativa= ".VerificaNumeroQuery($idAlternativa);
 
-  	return($res);
+  $res = Enviar($sock, $query);
+
+  return($res);
 }
 
 /* *******************************************************************
@@ -487,25 +481,25 @@ function getParticipantesEnquete($sock, $idEnquete, $cod_curso){
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-	$query="select idAlternativa from Enquete_alternativa where idEnquete = ".VerificaNumeroQuery($idEnquete);
-	$alternativas = Enviar($sock, $query);
-	
-	$alternativa = RetornaLinha($alternativas);
-	$query="SELECT DISTINCT U.nome, UC.cod_usuario
-	        FROM Enquete_voto EV, ".$dbnamebase.".Usuario_curso UC
-	        INNER JOIN ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-	        WHERE EV.cod_usuario = UC.cod_usuario
-	        AND UC.cod_curso = ".$cod_curso."
-	        AND (EV.idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']);
-	
-	while ($alternativa = RetornaLinha($alternativas)){
-		$query .= " OR EV.idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']);
-	}
-	
-	$query .= ")";
-	
-	$res = Enviar($sock, $query);
-  	return($res);
+  $query = "select idAlternativa from Enquete_alternativa where idEnquete = ".VerificaNumeroQuery($idEnquete);
+  $alternativas = Enviar($sock, $query);
+
+  $alternativa = RetornaLinha($alternativas);
+  $query  = "SELECT DISTINCT U.nome, UC.cod_usuario ";
+  $query .= "FROM Enquete_voto EV, ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "INNER JOIN ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "WHERE EV.cod_usuario = UC.cod_usuario ";
+  $query .= "AND UC.cod_curso = ".$cod_curso." ";
+  $query .= "AND (EV.idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']);
+
+  while ($alternativa = RetornaLinha($alternativas)){
+    $query .= " OR EV.idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']);
+  }
+
+  $query .= ")";
+
+  $res = Enviar($sock, $query);
+  return($res);
 }
 
 
@@ -516,11 +510,11 @@ function getParticipantesEnquete($sock, $idEnquete, $cod_curso){
             'CHECKBOX' se $num_escolhas = N
 */        
 function getInputType($num_escolhas){
-	if (strcmp($num_escolhas, "1") == 0){
-		return "RADIO";
-	} else { //N
-		return "CHECKBOX";
-	}
+  if (strcmp($num_escolhas, "1") == 0){
+    return "RADIO";
+  } else { //N
+    return "CHECKBOX";
+  }
 }
 
 /* *******************************************************************
@@ -583,7 +577,7 @@ function setStatusEnquetesRecentes($sock)
 	$linhas_fim = RetornaArrayLinhas($res);
 	
 	$query  = "update Enquete set status = 'F' ";
-	$query .= "where status = 'A' and data_fim < ".$data;	
+	$query .= "where status = 'A' and data_fim < ".$data;
 	$res = Enviar($sock, $query);
 	
 	for($i = 0; $i < sizeof($linhas_fim); $i++)
@@ -608,16 +602,16 @@ function getCodStatusEnquete($sock, $idEnquete)
   $data_fim = $enquete['data_fim'];
   $data = time();
   if (strcmp($enquete['status'], 'L') == 0)
-        return "3";
+    return "3";
   if (($data_inicio > $data))
-  	return "0";
+    return "0";
   if (($data_inicio < $data) && ($data_fim > $data))
-  	return "1";
+    return "1";
   if (($data_fim < $data))
-  	return "2";
+    return "2";
 
 }
-  
+
 /*==========================================================
   ========================================================== */
 
@@ -649,31 +643,31 @@ function SalvaEnquete($sock,$cod_usuario,$titulo,$pergunta, $data_inicio, $data_
   
   if ($data_inicio < time ())
   {
-  	if ($data_fim > time())
-  		$status = "A";
-  	else
-  		$status = "F";
+    if ($data_fim > time())
+      $status = "A";
+    else
+      $status = "F";
   }
   else
   {
-  	$status = "I";
+    $status = "I";
   }
 
   $query ="INSERT INTO Enquete (cod_usuario,titulo,pergunta, data_inicio, data_fim, aplicacao, resultado , resultado_parcial, identidade_votos, num_escolhas, status) VALUES (".VerificaNumeroQuery($cod_usuario).",'".VerificaStringQuery($titulo)."', '".VerificaStringQuery($pergunta)."' , ".VerificaNumeroQuery($data_inicio).", ".VerificaNumeroQuery($data_fim).", '".VerificaStringQuery($aplicacao)."', '".VerificaStringQuery($resultado)."', '".VerificaStringQuery($resultado_parcial)."', '".VerificaStringQuery($identidade_votos)."', '".VerificaStringQuery($num_escolhas)."', '".$status."')";
   $res = Enviar($sock, $query);
-  $idEnquete = mysql_insert_id();  
+  $idEnquete = mysql_insert_id();
   for($i = 0; $i <= sizeof($alternativa); $i++){
-    	if (strcmp($alternativa[$i], "") != 0){
-    		$query ="INSERT INTO Enquete_alternativa (idEnquete, texto) VALUES (".VerificaNumeroQuery($idEnquete)." , '".VerificaStringQuery($alternativa[$i])."')";
-  		Enviar($sock, $query);
-	}
+    if (strcmp($alternativa[$i], "") != 0){
+      $query ="INSERT INTO Enquete_alternativa (idEnquete, texto) VALUES (".VerificaNumeroQuery($idEnquete)." , '".VerificaStringQuery($alternativa[$i])."')";
+      Enviar($sock, $query);
+    }
   }
   if (!$res)
     return false;
   else
   {
-  	if ($status == 'A')
-  		AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
+    if ($status == 'A')
+      AtualizaFerramentaEnquete($sock, $idEnquete, 'INICIO');
 
     return $idEnquete;
   }
@@ -807,41 +801,40 @@ function deleteVoto($sock, $cod_usuario, $idAlternativa){
    saida:   nenhuma
 */ 
 function insertVoto($sock, $cod_usuario, $idEnquete, $idAlternativa){
-        $status = true;
+  $status = true;
 
-	//pega todas as alternativas dessa enquete
-        $ja_votou = false;
-        $query="select idAlternativa from Enquete_alternativa where idEnquete = ".VerificaNumeroQuery($idEnquete);
-	$alternativas = Enviar($sock, $query);
-	// deleta os votos anteriores
-	while ($alternativa = RetornaLinha($alternativas)){
-		$query="select idAlternativa from Enquete_voto where idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']). " AND cod_usuario = ".VerificaNumeroQuery($cod_usuario);
-		$res = Enviar($sock, $query);
-		if (RetornaNumLinhas($res) != 0){
-                        $ja_votou = true;	
-			deleteVoto($sock, $cod_usuario, $alternativa['idAlternativa']);
-		}	
-	}
-        
-        if($ja_votou){
-		$status = "SUBSTITUIDO";	
-	}
-	
-	// insere voto para cada uma das alternativas
-	for ($i=0; $i < sizeof($idAlternativa); $i++){
-		$query="update Enquete_alternativa set votos = votos +1  where idAlternativa = ".VerificaNumeroQuery($idAlternativa[$i]);
-		if (!($res = Enviar($sock, $query))) return false;
-		
-		$query="insert into Enquete_voto (idAlternativa, cod_usuario) values (".VerificaNumeroQuery($idAlternativa[$i]).", ".VerificaNumeroQuery($cod_usuario).")";
-		if(!($res = Enviar($sock, $query))) return false;
-	}
-	
-	return $status;	
+  //pega todas as alternativas dessa enquete
+  $ja_votou = false;
+  $query="select idAlternativa from Enquete_alternativa where idEnquete = ".VerificaNumeroQuery($idEnquete);
+  $alternativas = Enviar($sock, $query);
+  // deleta os votos anteriores
+  while ($alternativa = RetornaLinha($alternativas)){
+    $query="select idAlternativa from Enquete_voto where idAlternativa = ".VerificaNumeroQuery($alternativa['idAlternativa']). " AND cod_usuario = ".VerificaNumeroQuery($cod_usuario);
+    $res = Enviar($sock, $query);
+    if (RetornaNumLinhas($res) != 0){
+      $ja_votou = true;
+      deleteVoto($sock, $cod_usuario, $alternativa['idAlternativa']);
+    }
+  }
+
+  if($ja_votou){
+    $status = "SUBSTITUIDO";
+  }
+
+  // insere voto para cada uma das alternativas
+  for ($i=0; $i < sizeof($idAlternativa); $i++){
+    $query="update Enquete_alternativa set votos = votos +1  where idAlternativa = ".VerificaNumeroQuery($idAlternativa[$i]);
+    if (!($res = Enviar($sock, $query))) return false;
+
+    $query="insert into Enquete_voto (idAlternativa, cod_usuario) values (".VerificaNumeroQuery($idAlternativa[$i]).", ".VerificaNumeroQuery($cod_usuario).")";
+    if(!($res = Enviar($sock, $query))) return false;
+  }
+
+  return $status;
 }
 
 /*==========================================================
   ========================================================== */
-  
   
 /* *******************************************************************
    votaEnquete - verifica se um usu�rio pode votar numa enquete
@@ -850,17 +843,17 @@ function insertVoto($sock, $cod_usuario, $idEnquete, $idAlternativa){
             $enquete - array associativo da enquete
    saida:   'true' se o usuario tem permiss�o para votar na enquete, 'false' caso contr�rio
 */ 
-function votaEnquete($sock, $ator, $enquete){
-	
-        if(strcmp($ator, 'R') == 0)
-          $ator = 'F';
-        
-        $pos = strpos($enquete['aplicacao'], $ator);
-        
-        if ($pos === false) 	
-                return false;
-	else
-		return true;
+function votaEnquete($sock, $ator, $enquete) {
+
+  if(strcmp($ator, 'R') == 0)
+    $ator = 'F';
+
+  $pos = strpos($enquete['aplicacao'], $ator);
+
+  if ($pos === false)
+    return false;
+  else
+    return true;
 }
 
 /* *******************************************************************
@@ -871,12 +864,12 @@ function votaEnquete($sock, $ator, $enquete){
    saida:   'true' se o usuario j� tinha votado na enquete, 'false' caso contr�rio
 */ 
 function jaVotouEnquete($sock,$cod_usuario, $idEnquete){
-	$query="SELECT EV.cod_usuario from Enquete_voto EV, Enquete_alternativa EA WHERE EV.idAlternativa = EA.idAlternativa AND  EA.idEnquete = ".VerificaNumeroQuery($idEnquete)." AND EV.cod_usuario= ".VerificaNumeroQuery($cod_usuario);
-	$res = Enviar($sock, $query);
-	if (RetornaNumLinhas($res) == 0)
-		return false;
-	else
-		return true;
+  $query="SELECT EV.cod_usuario from Enquete_voto EV, Enquete_alternativa EA WHERE EV.idAlternativa = EA.idAlternativa AND  EA.idEnquete = ".VerificaNumeroQuery($idEnquete)." AND EV.cod_usuario= ".VerificaNumeroQuery($cod_usuario);
+  $res = Enviar($sock, $query);
+  if (RetornaNumLinhas($res) == 0)
+    return false;
+  else
+    return true;
 }
 
 /*==========================================================
@@ -890,57 +883,57 @@ function jaVotouEnquete($sock,$cod_usuario, $idEnquete){
    saida:   'true' se o usuario tenha permiss� para ver a enquete, 'false' caso contr�io
 */
 function podeVerEnquete($sock, $ator, $enquete){
-        
-        if ((strcmp($ator, "R") == 0) || (strcmp($ator, "F") == 0))
-          return true;
-        
-        $pos1 = strpos($enquete['aplicacao'], $ator);
-        $pos2 = strpos($enquete['resultado'], $ator);
-        
-        if (($pos1 === false) && ($pos2 === false)) 	
-                return false;
-	else
-		return true;
-}
 
+  if ((strcmp($ator, "R") == 0) || (strcmp($ator, "F") == 0))
+    return true;
+
+  $pos1 = strpos($enquete['aplicacao'], $ator);
+  $pos2 = strpos($enquete['resultado'], $ator);
+
+  if (($pos1 === false) && ($pos2 === false))
+    return false;
+  else
+    return true;
+}
 
 /* *******************************************************************
    podeVerResultadoEnquete - verifica se um usu�io pode ver o resultado da enquete
    entrada: $sock - sock de conexao
             $ator - c�igo do ator
             $enquete - array associativo da enquete
-   saida:   'true' se o usuario tem permiss� para ver o resultado da enquete, 'false' caso contr�io
+   saida:   'true' se o usuario tem permiss� para ver o resultado da enquete,
+            'false' caso contr�io
 */
 function podeVerResultadoEnquete($sock, $ator, $enquete, $criadorEnquete){
 
-        $pos = strpos($enquete['resultado'], $ator);
+  $pos = strpos($enquete['resultado'], $ator);
 
-        /* se é o criador da enquete, pode ver, mesmo que não esteja compartilhado */
-        if($criadorEnquete) return true;
+  /* se é o criador da enquete, pode ver, mesmo que não esteja compartilhado */
+  if($criadorEnquete) return true;
 
-        /* se for coordenador e estiver compartilhado para formadores ele tamb� pode ver        */
+  /* se for coordenador e estiver compartilhado para formadores ele tamb� pode ver        */
 
-        if((strcmp($ator, 'R') == 0) ||  $criadorEnquete) {
-          if (($pos === false)) $pos = strpos($enquete['resultado'], 'F');
-        }
+  if((strcmp($ator, 'R') == 0) ||  $criadorEnquete) {
+    if (($pos === false)) $pos = strpos($enquete['resultado'], 'F');
+  }
 
-        $status_enquete = getStatusEnquete($sock, $enquete);
+  $status_enquete = getStatusEnquete($sock, $enquete);
 
-        //se esta esta em andamento e n� tem resultado parcial, n� pode ver
-        //j�se tiver resultado parcial e o resultado estiver compartilhado com o ator, pode
+  //se esta esta em andamento e n� tem resultado parcial, n� pode ver
+  //j�se tiver resultado parcial e o resultado estiver compartilhado com o ator, pode
 
-        if (strcmp($status_enquete, "ANDAMENTO") == 0){
-           if ($enquete['resultado_parcial'] == 'S'){
-            if (!($pos === false)) return true;
-            else return false;
-           }else{
-            return false;
-           }
-        //se n� estiver em andamento s�depende do resultado estar ou nao compartilhado 
-        } else {
-          if (!($pos === false)) return true;
-          else return false;
-        }
+  if (strcmp($status_enquete, "ANDAMENTO") == 0){
+    if ($enquete['resultado_parcial'] == 'S'){
+      if (!($pos === false)) return true;
+      else return false;
+    } else {
+      return false;
+    }
+  //se n� estiver em andamento s�depende do resultado estar ou nao compartilhado 
+  } else {
+    if (!($pos === false)) return true;
+    else return false;
+  }
 }
 
 function CriadorEnquete($sock, $cod_curso, $cod_usuario, $idEnquete){
@@ -960,12 +953,12 @@ function CriadorEnquete($sock, $cod_curso, $cod_usuario, $idEnquete){
 */
 function podeVerIdentidadeEnquete($sock,$ator, $enquete, $criadorEnquete){
 
-        //se pode ver resultado e identidade dos votos est�aberta, pode ver
-        if(((podeVerResultadoEnquete($sock,$ator, $enquete, $criadorEnquete))  && (strcmp($enquete['identidade_votos'], "S") == 0)) || $criadorEnquete) {
-            return true;
-        } else{
-          return false;
-        }
+  //se pode ver resultado e identidade dos votos est�aberta, pode ver
+  if(((podeVerResultadoEnquete($sock,$ator, $enquete, $criadorEnquete))  && (strcmp($enquete['identidade_votos'], "S") == 0)) || $criadorEnquete) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /*==========================================================
@@ -978,8 +971,9 @@ function podeVerIdentidadeEnquete($sock,$ator, $enquete, $criadorEnquete){
    saida: array contendo CHECKED no index i se o ator de indice i pode votar, vazio caso contrario
           checked[0] - F (formadores)
           checked[1] - A (alunos)
-          checked[2] - C (convidados)
-          checked[3] - V (visitantes)
+          checked[2] - V (visitantes)
+          checked[3] - Z (colaboradores)
+
 */ 
 function RetornaCheckedAplicacao($permissoes){
   for($i = 0; $i < 4; $i++){ 
@@ -995,11 +989,11 @@ function RetornaCheckedAplicacao($permissoes){
           checked[0] - R (coordenador)
           checked[1] - F (formadores)
           checked[2] - A (alunos)
-          checked[3] - C (convidados)
-          checked[4] - V (visitantes)
+          checked[3] - V (visitantes)
+          checked[4] - Z (colaboradores)
 */ 
 function RetornaCheckedResultado($permissoes){
-  for($i = 0; $i < 5; $i++){ 
+  for($i = 0; $i < 5; $i++){
     if (!(strcmp($permissoes[$i], '-') == 0)) $checked[$i] = "CHECKED";
   }
   return $checked;
@@ -1014,7 +1008,7 @@ function RetornaCheckedResultado($permissoes){
 function RetornaCheckedSimNao($bool){
   if (strcmp($bool, 'S') == 0) $checked[0] = "CHECKED";
   else $checked[1] = "CHECKED";
-  
+
   return $checked;
 }
 
@@ -1027,7 +1021,7 @@ function RetornaCheckedSimNao($bool){
 function RetornaCheckedNumEscolhas($num_escolhas){
   if (strcmp($num_escolhas, '1') == 0) $checked[0] = "CHECKED";
   else $checked[1] = "CHECKED";
-  
+
   return $checked;
 
 }

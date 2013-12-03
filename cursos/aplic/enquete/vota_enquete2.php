@@ -33,36 +33,36 @@
 
   /* SE tem permiss� para votar e a enquete est�em andamento, pode acessar */
   if (($vota = votaEnquete($sock, $ator, $enquete)) && ((strcmp($status_enquete, "ANDAMENTO") == 0)))
-  { 
-  
-      //se s�puder votar em uma alternativa e estiver tentando votar em mais de uma, s�insere o voto da primeira
-      if(strcmp($input_type, "RADIO") == 0)
-      {
-        $resposta = array_slice($resposta, 0, 1);
-      }
+  {
 
-      if ($status = insertVoto($sock, $cod_usuario, $idEnquete, $resposta))
-      {
-        $atualizacao="true";
-        Desconectar($sock);
-        echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
-        exit;
-      }
-      else
-      {
-        $atualizacao="false";
-        Desconectar($sock);
-        echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
-        exit;
-      }
+    //se s�puder votar em uma alternativa e estiver tentando votar em mais de uma, s�insere o voto da primeira
+    if(strcmp($input_type, "RADIO") == 0)
+    {
+      $resposta = array_slice($resposta, 0, 1);
+    }
+
+    if ($status = insertVoto($sock, $cod_usuario, $idEnquete, $resposta))
+    {
+      $atualizacao="true";
+      Desconectar($sock);
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+      exit;
+    }
+    else
+    {
+      $atualizacao="false";
+      Desconectar($sock);
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+      exit;
+    }
   }
   else
   {
     /* 1 - Enquete */
     /* 52- Votar Enquete */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,52)."</h4>\n");
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    /* 509 - Voltar */
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
     if(!$vota)
     {
@@ -72,12 +72,12 @@
     if((strcmp($status_enquete, "ANDAMENTO") != 0))
     {
       /* 94 - A consulta para esta enquete j�terminou.  */
-      echo("          <p>".RetornaFraseDaLista($lista_frases, 94)."</p>");    
+      echo("          <p>".RetornaFraseDaLista($lista_frases, 94)."</p>");
     }
 
-    echo("          <form name=voltar action=\"enquete.php?cod_curso=".$cod_curso."\" method=post>\n");
+    echo("          <form name=\"voltar\" action=\"enquete.php?cod_curso=".$cod_curso."\" method=\"post\">\n");
     /* 23 - Voltar */
-    echo("            <input type=submit class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n");
+    echo("            <input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n");
     echo("          </form>\n");
     echo("        </td>\n");
     echo("      </tr>\n"); 
