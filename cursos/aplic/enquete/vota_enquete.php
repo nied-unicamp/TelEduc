@@ -100,7 +100,7 @@
   /* Pega a enquete, seu status, e o tipo do usu�io*/
   $enquete = getEnquete($sock, $idEnquete); 
   $status_enquete = getStatusEnquete($sock, $enquete);
-  $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);   
+  $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);
 
   /* 1 - Enquete */
   /* 52- Votar Enquete */
@@ -119,98 +119,94 @@
   /* SE tem permiss� para votar e a enquete est�em andamento, pode acessar */
   if (($vota = votaEnquete($sock, $ator, $enquete)) && ((strcmp($status_enquete, "ANDAMENTO") == 0)))
   {
-	$alternativas = getAlternativas($sock, $enquete['idEnquete']);
-	$input_type = getInputType($enquete['num_escolhas']);
-	$cont = 0;
-	
-	echo("          <form action=\"vota_enquete2.php?cod_curso=".$cod_curso."\" name=\"enquete\" method=\"post\" onsubmit='return(testa_campos());'>\n");
-	echo("          <input type=\"hidden\" name=\"idEnquete\" value=\"".$enquete['idEnquete']."\">\n");
-	
-	
-	echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-	
-	echo("            <tr>\n");
-	echo("              <td valign=\"top\">\n");
-	echo("                <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabInterna\">\n");
-	echo("                  <tr class=\"head\">\n");
-	/* 9 - Titulo */ 
-	echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr>\n");
-	echo("                    <td class=\"itens\" colspan=\"2\">".$enquete['titulo']."</td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr class=\"head\">\n");
-	/* 10 - Pergunta */ 
-	echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,10)."</td>\n");
-	echo("                  </tr>\n");
-	echo("                  <tr>\n");
-	echo("                    <td class=\"itens\" colspan=\"2\">".$enquete['pergunta']."</td>\n");
-	echo("                  </tr>\n");
-//	echo("                  <tr class=\"head\">\n");
-	echo("                  <tr class=\"head\">\n");
-	/* 11 - Alternativas */ 
-	echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,11)."</td>\n");
-	echo("                  </tr>\n");
+    $alternativas = getAlternativas($sock, $enquete['idEnquete']);
+    $input_type = getInputType($enquete['num_escolhas']);
+    $cont = 0;
 
-	
-	
-	$total_votos = getTotalVotos($sock, $enquete['idEnquete']);
-	$count = 0;
-	foreach ($alternativas as $cod => $alternativa)
-	{
-	
-		echo ("                  <tr>\n");
-		echo ("                    <td class=\"itens\">\n");
-		echo ("                      <input type=\"".$input_type."\" id=\"resposta".$count."\" name=\"resposta[]\" value=\"".$alternativa['idAlternativa']."\">\n");
-		echo ("                      ".$alternativa['texto']."\n");
-		echo ("                    </td>\n");
-		echo ("                  </tr>\n");
+    echo("          <form action=\"vota_enquete2.php?cod_curso=".$cod_curso."\" name=\"enquete\" method=\"post\" onsubmit='return(testa_campos());'>\n");
+    echo("          <input type=\"hidden\" name=\"idEnquete\" value=\"".$enquete['idEnquete']."\">\n");
 
-		$count++;
-	}
+    echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 
-	echo("                  <tr  class=\"altColor0\" style=\"text-align:left\">\n");
-	echo("                    <td colspan=\"2\">\n");
-	echo("                      <script type=\"text/javascript\" language=\"JavaScript\"> num_respostas = ".($count--)."</script>\n");
-	echo("                      <input type=\"submit\" class=\"input\" value=\"Votar\">\n");
-        /* 2 - Cancelar */
-	echo("                      <input type=button onclick=\"CancelaVoto();\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\">\n");
-	echo("                    </td>\n");
-	echo("                  </tr>\n");
-	echo("                </table>\n");
-	echo("              </td>\n");
-	echo("            </tr>\n");
-	echo("          </table>\n");
-	echo("          </form>\n");
-    echo("          <br />\n");    
+    echo("            <tr>\n");
+    echo("              <td valign=\"top\">\n");
+    echo("                <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabInterna\">\n");
+    echo("                  <tr class=\"head\">\n");
+    /* 9 - Titulo */ 
+    echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
+    echo("                  </tr>\n");
+    echo("                  <tr>\n");
+    echo("                    <td class=\"itens\" colspan=\"2\">".$enquete['titulo']."</td>\n");
+    echo("                  </tr>\n");
+    echo("                  <tr class=\"head\">\n");
+    /* 10 - Pergunta */ 
+    echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,10)."</td>\n");
+    echo("                  </tr>\n");
+    echo("                  <tr>\n");
+    echo("                    <td class=\"itens\" colspan=\"2\">".$enquete['pergunta']."</td>\n");
+    echo("                  </tr>\n");
+    echo("                  <tr class=\"head\">\n");
+    /* 11 - Alternativas */ 
+    echo("                    <td class=\"itens\" colspan=\"2\">".RetornaFraseDaLista($lista_frases,11)."</td>\n");
+    echo("                  </tr>\n");
+
+    $total_votos = getTotalVotos($sock, $enquete['idEnquete']);
+    $count = 0;
+    foreach ($alternativas as $cod => $alternativa)
+    {
+
+      echo ("                  <tr>\n");
+      echo ("                    <td class=\"itens\">\n");
+      echo ("                      <input type=\"".$input_type."\" id=\"resposta".$count."\" name=\"resposta[]\" value=\"".$alternativa['idAlternativa']."\">\n");
+      echo ("                      ".$alternativa['texto']."\n");
+      echo ("                    </td>\n");
+      echo ("                  </tr>\n");
+
+      $count++;
+    }
+
+    echo("                  <tr  class=\"altColor0\" style=\"text-align:left\">\n");
+    echo("                    <td colspan=\"2\">\n");
+    echo("                      <script type=\"text/javascript\" language=\"javascript\"> num_respostas = ".($count--)."</script>\n");
+    echo("                      <input type=\"submit\" class=\"input\" value=\"Votar\">\n");
+    /* 2 - Cancelar */
+    echo("                      <input type=\"button\" onclick=\"CancelaVoto();\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\">\n");
+    echo("                    </td>\n");
+    echo("                  </tr>\n");
+    echo("                </table>\n");
+    echo("              </td>\n");
+    echo("            </tr>\n");
+    echo("          </table>\n");
+    echo("          </form>\n");
+    echo("          <br />\n");
     /* 509 - voltar, 510 - topo */
     echo("          <ul class=\"btsNavBottom\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span><span><a href=\"#topo\">&nbsp;".RetornaFraseDaLista($lista_frases_geral,510)."&nbsp;&#94;&nbsp;</a></span></li></ul>\n");
-	  /* NAO TEM PERMISSAO*/
+    /* NAO TEM PERMISSAO*/
   }
   else
   {
-        if (empty($enquete))
-        {
-          /* - */
-          echo("          <p>"./*.RetornaFraseDaLista($lista_frases, 93).*/"Enquete inv&aacute;lida.</p><br/>\n");
-        }
-        else
-        {
-	  if(!$vota)
-	  {
-	    /* 93 - Voc�n� tem permiss� para votar nesta enquete. */
-	    echo("          <p>".RetornaFraseDaLista($lista_frases, 93)."</p>\n");
-	  }
+    if (empty($enquete))
+    {
+      /* 118 - Enquete inv&aacute;lida. */
+      echo("          <p>".RetornaFraseDaLista($lista_frases, 118)."</p><br/>\n");
+    }
+    else
+    {
+      if(!$vota)
+      {
+        /* 93 - Voc�n� tem permiss� para votar nesta enquete. */
+        echo("          <p>".RetornaFraseDaLista($lista_frases, 93)."</p>\n");
+      }
 
-	  if((strcmp($status_enquete, "ANDAMENTO") != 0))
-	  {
-	    /* 94 - A consulta para esta enquete j�terminou.  */
-	    echo("          <p>".RetornaFraseDaLista($lista_frases, 94)."</p>\n");    
-	  }
-	}	
+      if((strcmp($status_enquete, "ANDAMENTO") != 0))
+      {
+        /* 94 - A consulta para esta enquete j�terminou.  */
+        echo("          <p>".RetornaFraseDaLista($lista_frases, 94)."</p>\n");
+      }
+    }
 
-	/* 23 - Voltar (gen) */
-	echo("          <form><input type=button value='-->".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=\"history.go(-1);\" class=\"input\" /></form>\n");
+    /* 23 - Voltar (gen) */
+    echo("          <form><input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=\"history.go(-1);\" class=\"input\" /></form>\n");
   }
 
   echo("        </td>\n");
