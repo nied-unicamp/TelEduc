@@ -333,9 +333,9 @@
     case 'v':
     case 'V':
       /* 326 - Visitantes */
-      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=Z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,326)."</a></li>\n");
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=V&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,326)."</a></li>\n");
       /* 327 - Visitantes desligados */
-      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=z&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,327)."</a></li>\n");
+      echo("                  <li><a href=\"gerenciamento_usuarios.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;tipo_usuario=v&amp;ordem=".$ordem."\">".RetornaFraseDaLista($lista_frases,327)."</a></li>\n");
       break;
   }
 

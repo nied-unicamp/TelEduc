@@ -258,7 +258,13 @@ function Inicial(limit,flag){
       }
       else{
         GerSpan.className="paginacao";
-        GerSpan.onclick=function(){xajax_PaginacaoDinamic(aux,intervalo,this.id,cod_curso,tipo_usuario,ordem,frasePortifolioAtivado,frasePortifolioDesativado);};
+        GerSpan.onclick = function(){
+          if (typeof(frasePortifolioAtivado) == 'undefined')
+            frasePortifolioAtivado = '';
+          if (typeof(frasePortifolioDesativado) == 'undefined')
+            frasePortifolioDesativado = '';
+          xajax_PaginacaoDinamic(aux,intervalo,this.id,cod_curso,tipo_usuario,ordem,frasePortifolioAtivado,frasePortifolioDesativado);
+        };
       }
       GerSpan.innerHTML='<a>[&nbsp;'+i+'&nbsp;]</a>';
       coluna.appendChild(GerSpan);
