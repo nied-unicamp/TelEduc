@@ -90,12 +90,18 @@ function RetornaAssociacaoItemAvaliacao($sock,$cod_item)
 
 function FoiAvaliado($sock,$cod_avaliacao,$cod_aluno)
 {
-  $query="select * from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and  cod_aluno=".$cod_aluno." and ((status='A') || (status='F'))";
+  $query="select status from Avaliacao where cod_avaliacao=".$cod_avaliacao."";
   $res=Enviar($sock,$query);
-  if (RetornaNumLinhas($res) > 0)
-    return true;
-  else
-    return false;
+  $status=RetornaLinha($res);
+  
+  if(($status[0]!='A') && ($status[0]!='X')){
+    $query="select * from Avaliacao_notas where cod_avaliacao=".$cod_avaliacao." and  cod_aluno=".$cod_aluno." and ((status='A') || (status='F'))";
+    $res=Enviar($sock,$query);
+    
+    if (RetornaNumLinhas($res) > 0)
+      return true;
+  }
+  return false;
 }
 
 

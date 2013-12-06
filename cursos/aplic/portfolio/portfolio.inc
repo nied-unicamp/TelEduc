@@ -4256,7 +4256,7 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 	$res=Enviar($sock,$query);
 	$status = RetornaLinha($res);
 	
-	if($status[0]!='X'){
+	if(($status[0]!='X') && ($status[0]!='A')){
 	
 	$query="select cod_atividade from Avaliacao where cod_avaliacao=".$linha[0];
 	$res=Enviar($sock,$query);
