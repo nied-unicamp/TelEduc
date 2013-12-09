@@ -281,11 +281,16 @@ function RetornaExerciciosUsuario($sock,$cod_usuario,$cod_curso,$eformador,$cod_
                     []['corrigida'] - indica se a resolucao foi corrigida
                     []['compartilhada'] - indica o compartilhamento da resolucao
 */
-function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_grupo_exercicio)
+function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$cod_grupo_exercicio)
 {
-  if (PertenceAoGrupo($sock,$cod_usuario, $cod_grupo_exercicio))
+  global $tela_formador, $tela_colaborador;
+  $cod_grupo_exercicio = VerificaNumeroQuery($cod_grupo_exercicio);
+
+  if ($cod_grupo_exercicio === '') return null;
+
+  if (PertenceAoGrupo($sock, $cod_usuario, $cod_grupo_exercicio))
     $regra="";
-  else if ($eformador)
+  else if ($tela_formador || $tela_colaborador)
     $regra="and (ER.compartilhada='T' or ER.compartilhada='F')";
   else
     $regra="and ER.compartilhada='T'";
@@ -296,7 +301,7 @@ function RetornaExerciciosGrupo($sock,$cod_usuario,$cod_curso,$eformador,$cod_gr
   $consulta  = "select ER.cod_resolucao as cod_resolucao,ER.cod_exercicio as cod_exercicio,EM.titulo as titulo,ER.dt_submissao as dt_submissao,ER.submetida as submetida,ER.corrigida as corrigida,ER.compartilhada as compartilhada ";
   $consulta .= "from Exercicios_aplicado EA, Exercicios_resolucao ER ";
   $consulta .= "inner join Exercicios_modelo EM on (ER.cod_exercicio = EM.cod_exercicio) ";
-  $consulta .= "where ER.cod_grupo=".VerificaNumeroQuery($cod_grupo_exercicio)." ".$regra." AND EA.cod_exercicio = ER.cod_exercicio AND EA.dt_disponibilizacao < ".time();
+  $consulta .= "where ER.cod_grupo = ".$cod_grupo_exercicio." ".$regra." AND EA.cod_exercicio = ER.cod_exercicio AND EA.dt_disponibilizacao < ".time();
 
   $res=Enviar($sock,$consulta);
   $lista=RetornaArrayLinhas($res);
@@ -359,6 +364,8 @@ function RetornaNumComentariosExercicio($sock, $cod_usuario, $cod_resolucao)
 */
 function NomeGrupo($sock, $cod_grupo)
 {
+  $cod_grupo = VerificaNumeroQuery($cod_grupo);
+  if ($cod_grupo === '') return '';
   $consulta="select nome from Grupos where cod_grupo=".$cod_grupo;
   $res=Enviar($sock, $consulta);
   $num=RetornaNumLinhas($res);
@@ -424,11 +431,16 @@ function RetornaQuestoes($sock)
                     []['compartilhada'] - indica qual o compartilhamento
                     []['compartilhada'] - situacao da resolucao
 */
-function RetornaResolucao($sock,$cod_resolucao)
+function RetornaResolucao($sock, $cod_resolucao)
 {
-  $consulta="select * from Exercicios_resolucao where cod_resolucao = ".VerificaNumeroQuery($cod_resolucao);
-  $res=Enviar($sock, $consulta);
-  $linha=RetornaLinha($res);
+  $cod_resolucao = VerificaNumeroQuery($cod_resolucao);
+  if ($cod_resolucao == '') return false;
+
+  $consulta  = "SELECT * FROM Exercicios_resolucao ";
+  $consulta .= "WHERE cod_resolucao = ".$cod_resolucao;
+
+  $res   = Enviar($sock, $consulta);
+  $linha = RetornaLinha($res);
   return($linha);
 }
 
@@ -538,6 +550,7 @@ function RetornaResHistoricoDaQuestao ($sock, $cod_questao)
 function RetornaResHistoricoDoExercicio ($sock, $cod_exerc)
 {
   $consulta="select * from Exercicios_modelo_historico where cod_exercicio=".VerificaNumeroQuery($cod_exerc)." order by data desc,acao desc";
+
   $res=Enviar($sock, $consulta);
   return($res);
 }
@@ -729,14 +742,15 @@ function RetornaTopicos($sock)
 }
 
 /* *********************************************************************
-   RetornaListaNomesOuTitulos - Retorna os nomes dos usuarios/grupos ou titulos dos exercicios visiveis pelo usuario
-   Entrada: $sock - BASE DO CURSO
-            $cod_curso - codigo do curso
-            $cod_usuario - codigo do usuario
+   RetornaListaNomesOuTitulos - Retorna os nomes dos usuarios/grupos ou 
+                                titulos dos exercicios visiveis pelo usuario
+   Entrada: $sock          - BASE DO CURSO
+            $cod_curso     - codigo do curso
+            $cod_usuario   - codigo do usuario
             $tela_formador - indica se o usuario Ã© formador ou nÃ£o
-            $agrupamento - opcao do agrupamento (aluno,grupo ou exercicio)
-            $visualizar - opcao de visualizacao (I - individual ou G - grupo)
-   Saida: array ['cod'] - codigo do usuario/grupo/exercicio
+            $agrupamento   - opcao do agrupamento (aluno, grupo ou exercicio)
+            $visualizar    - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod']    - codigo do usuario/grupo/exercicio
                 ['titulo'] - nome do usuario/grupo ou titulo do exercicio
 */
 function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,$agrupamento,$visualizar)
@@ -750,7 +764,11 @@ function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador
       //Pega todos os usuarios
       $consulta  = "SELECT U.nome as titulo, UC.cod_usuario as cod ";
       $consulta .= "FROM ".$dbnamebase.".Usuario U ";
-      $consulta .= "INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') WHERE UC.cod_usuario <> -1 ORDER BY U.nome";
+      $consulta .= "INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') ";
+      $consulta .= "WHERE UC.cod_usuario <> -1 AND ";
+      $consulta .=       "binary UC.tipo_usuario = 'A' ";
+      // Só vemos exercícios 
+      $consulta .= "ORDER BY U.nome";
     }
     else {
       //Pega apenas os usuarios com exercicios compartilhados
@@ -758,22 +776,125 @@ function RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador
       $consulta .= "FROM ".$dbnamebase.".Usuario U ";
       $consulta .= "INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') ";
       $consulta .= "INNER JOIN Exercicios_resolucao ER ON (UC.cod_usuario=ER.cod_usuario) ";
-      $consulta .= "WHERE ER.compartilhada='T' GROUP BY ER.cod_usuario ORDER BY NULL";
+      $consulta .= "WHERE ER.compartilhada='T' AND ";
+      $consulta .=       "binary UC.tipo_usuario = 'A' ";
+      $consulta .= "GROUP BY ER.cod_usuario ";
+      $consulta .= "ORDER BY NULL";
     }
   }
   else if($agrupamento == "G")
   {
     if($tela_formador)
       $consulta = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g";
-    else
-      $consulta = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er WHERE gu.cod_usuario = ".$cod_usuario." or (er.compartilhada='T' and g.cod_grupo = er.cod_grupo) GROUP BY g.cod_grupo ORDER BY NULL";
+    else {
+      //Pega apenas os grupos com exercicios compartilhados ou o grupo do usuário atual
+      $consulta  = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g ";
+      $consulta .= "INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er ";
+      $consulta .= "WHERE gu.cod_usuario = ".$cod_usuario." or (er.compartilhada='T' and g.cod_grupo = er.cod_grupo) ";
+      $consulta .= "GROUP BY g.cod_grupo ";
+      $consulta .= "ORDER BY NULL";
+    }
   }
   else if($agrupamento == "T")
   {
-    if($visualizar == "I")
-      $consulta = "SELECT em.cod_exercicio as cod, em.titulo as titulo from Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio WHERE ea.tp_aplicacao='I' ORDER BY em.cod_exercicio";
-    else if($visualizar == "G")
-      $consulta = "SELECT em.cod_exercicio as cod, em.titulo as titulo from Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio WHERE ea.tp_aplicacao='G' ORDER BY em.cod_exercicio";
+    if($visualizar == "I") {
+      $consulta  = "SELECT em.cod_exercicio as cod, em.titulo as titulo ";
+      $consulta .= "FROM Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio ";
+      $consulta .= "WHERE ea.tp_aplicacao='I' ORDER BY em.cod_exercicio";
+    }
+    else if($visualizar == "G") {
+      $consulta  = "SELECT em.cod_exercicio as cod, em.titulo as titulo ";
+      $consulta .= "FROM Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio ";
+      $consulta .= "WHERE ea.tp_aplicacao='G' ORDER BY em.cod_exercicio";
+    }
+  }
+
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+
+  return $lista;
+}
+
+/* *********************************************************************
+   RetornaListaNomes - Retorna os nomes dos usuarios/grupos visiveis pelo usuario
+   Entrada: $sock           - BASE DO CURSO
+            $cod_curso      - codigo do curso
+            $cod_usuario    - codigo do usuario
+            $tela_formador  - indica se o usuario Ã© formador ou nÃ£o
+            $tipo_exercicio - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod']    - codigo do usuario/grupo/exercicio
+                ['titulo'] - nome do usuario/grupo ou titulo do exercicio
+*/
+function RetornaListaNomes($sock,$cod_curso,$cod_usuario,$tela_formador,$tipo_exercicio)
+{
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  if($tipo_exercicio == "I")
+  {
+    if($tela_formador) {
+      //Pega todos os usuarios
+      $consulta  = "SELECT U.nome as titulo, UC.cod_usuario as cod ";
+      $consulta .= "FROM ".$dbnamebase.".Usuario U ";
+      $consulta .= "INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') ";
+      $consulta .= "WHERE UC.cod_usuario <> -1 ";
+      // Só vemos exercícios
+      $consulta .= "ORDER BY U.nome";
+    }
+    else {
+      //Pega apenas os usuarios com exercicios compartilhados
+      $consulta  = "SELECT U.nome as titulo,ER.cod_usuario as cod ";
+      $consulta .= "FROM ".$dbnamebase.".Usuario U ";
+      $consulta .= "INNER JOIN ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_curso='".VerificaStringQuery($cod_curso)."') ";
+      $consulta .= "INNER JOIN Exercicios_resolucao ER ON (UC.cod_usuario=ER.cod_usuario) ";
+      $consulta .= "WHERE ER.compartilhada='T' GROUP BY ER.cod_usuario ";
+      $consulta .= "ORDER BY NULL";
+    }
+  }
+  else if($tipo_exercicio == "G")
+  {
+    if($tela_formador)
+      $consulta = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g";
+    else {
+      //Pega apenas os grupos com exercicios compartilhados ou o grupo do usuário atual
+      $consulta  = "SELECT g.nome as titulo, g.cod_grupo as cod FROM Grupos as g ";
+      $consulta .= "INNER JOIN Grupos_usuario as gu ON g.cod_grupo=gu.cod_grupo, Exercicios_resolucao as er ";
+      $consulta .= "WHERE gu.cod_usuario = ".$cod_usuario." or (er.compartilhada='T' and g.cod_grupo = er.cod_grupo) ";
+      $consulta .= "GROUP BY g.cod_grupo ";
+      $consulta .= "ORDER BY NULL";
+    }
+  }
+
+  $res=Enviar($sock, $consulta);
+  $lista=RetornaArrayLinhas($res);
+
+  return $lista;
+}
+
+/* *********************************************************************
+   RetornaListaNomesOuTitulos - Retorna os titulos dos exercicios visiveis pelo usuario
+   Entrada: $sock           - BASE DO CURSO
+            $cod_curso      - codigo do curso
+            $cod_usuario    - codigo do usuario
+            $tela_formador  - indica se o usuario Ã© formador ou nÃ£o
+            $tipo_exercicio - opcao de visualizacao (I - individual ou G - grupo)
+   Saida: array ['cod']    - codigo do exercicio
+                ['titulo'] - nome do usuario/grupo ou titulo do exercicio
+*/
+function RetornaListaTitulosExercicios($sock,$cod_curso,$cod_usuario,$tela_formador,$tipo_exercicio)
+{
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  if($tipo_exercicio == "I") {
+    $consulta  = "SELECT em.cod_exercicio as cod, em.titulo as titulo ";
+    $consulta .= "FROM Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio ";
+    $consulta .= "WHERE ea.tp_aplicacao='I' ORDER BY em.cod_exercicio";
+  }
+  else if($tipo_exercicio == "G") {
+    $consulta  = "SELECT em.cod_exercicio as cod, em.titulo as titulo ";
+    $consulta .= "FROM Exercicios_modelo as em INNER JOIN Exercicios_aplicado as ea ON em.cod_exercicio = ea.cod_exercicio ";
+    $consulta .= "WHERE ea.tp_aplicacao='G' ORDER BY em.cod_exercicio";
   }
 
   $res=Enviar($sock, $consulta);
@@ -886,6 +1007,7 @@ function RetornaCodGrupoUsuario($sock,$cod_usuario)
   $data = time();
   $consulta="select cod_grupo from Grupos_usuario where cod_usuario = ".$cod_usuario;
   $res=Enviar($sock, $consulta);
+  //TODO: Resolver o caso em que o usuário está em mais de um grupo.
   $linha=RetornaLinha($res);
   return $linha['cod_grupo'];
 }
@@ -967,6 +1089,7 @@ function InsereTuplaResolucao($sock,$cod_usuario,$cod_exercicio,$tp_aplicacao,$c
   else /* Aplicacao em grupo */
   {
 
+    //TODO: Resolver o caso em que o usuário está em mais de um grupo.
     $cod_grupo = RetornaCodGrupoUsuario($sock,$cod_usuario);
     if($cod_grupo != null)
     {
@@ -1047,7 +1170,7 @@ function AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario)
 {
   $aplicados = RetornaExerciciosAplicados($sock);
 
-  foreach($aplicados as $cod => $linha) 
+  foreach($aplicados as $cod => $linha)
   {
     if(!FoiAplicado($sock,$cod_usuario,$linha['cod_exercicio'],$linha['tp_aplicacao']))
       /*Cria uma tupla na tabela Exercicios_resolucao*/
@@ -3104,7 +3227,6 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_u
   return $objResponse->getXML();
 }
 
-
 /***********************************************************************************************
    DesocultarArquivosDinamic - Desoculta os arquivos passados num array, dinamicamente
    Entrada: $nomes_arquivos - array de nomes dos arquivos
@@ -3118,7 +3240,7 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_usuario,$te
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
     $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,false);
@@ -3129,8 +3251,8 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_usuario,$te
   }
   $objResponse->addEvent('sArq_ocultar', 'onclick', 'Ocultar();');
   //AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
-	if($texto!='')
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  if($texto!='')
+    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
   return $objResponse->getXML();
 }
 
@@ -3139,18 +3261,97 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_usuario,$te
    Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
    Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
 *************************************************************************************************************/
-function haArquivosVisiveisDir($dir, $lista_arq_vis){    
-    foreach($lista_arq_vis as $cod => $linha)
-    { 
-	if(!($linha['Status'])){
-		if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
-			return true;
-		}
-	}
+function haArquivosVisiveisDir($dir, $lista_arq_vis){
+  foreach($lista_arq_vis as $cod => $linha)
+  {
+    if(!($linha['Status'])){
+      if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+        return true;
+      }
     }
-    
-    return false;
+  }
+  return false;
 }
 
+/* *********************************************************************
+   ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+                    acesso se for
+   entrada: $sock        - sock de conexao
+   $cod_curso   - código do curso atual.
+   $cod_usuario - código do usuário o qual pretende-se testar o
+                  acesso à ferramenta correio.
+   $eh_popup    - booleano que indica se a página que o chamou
+                  é ou não um popup. Se não for, devemos fechar
+                  as tags html do template comum de uma página
+                  de ferramenta (com rodapé, fechando o tabelão,
+                  etc).
+   saida:   nenhuma
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
+*/
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false) {
+
+  global $lista_frases;
+  global $lista_frases_geral;
+
+  if (EVisitante($sock, $cod_curso, $cod_usuario)) {
+
+    //if (!$ehPopup) {
+    //  include("../menu_principal.php");
+    //  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+    //}
+    if ($eh_popup) {
+      echo("  </head>\n");
+      echo("  <body>\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
+
+    /* 1 - Exercícios 504 - ï¿½rea restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases_geral,504)."</h4>\n");
+
+    if (!$eh_popup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+
+    if ($eh_popup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
+  }
+}
 
 ?>

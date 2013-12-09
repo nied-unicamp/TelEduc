@@ -566,7 +566,7 @@ function AjustaNome($nome_usuario)
              $cod_curso - Codigo do curso                        
    Saida: nome
 */
-function NomeUsuario($sock,$cod_usuario, $cod_curso)
+function NomeUsuario($sock, $cod_usuario, $cod_curso)
 {
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
@@ -574,16 +574,20 @@ function NomeUsuario($sock,$cod_usuario, $cod_curso)
   if ($cod_usuario == -2)
     return ("Visitante");
 
+  $cod_usuario = VerificaNumeroQuery($cod_usuario);
+  $cod_curso   = VerificaNumeroQuery($cod_curso);
+  if ($cod_curso === '' || $cod_usuario === '') return '';
+
   $query  = "select U.nome ";
   $query .= "from ".$dbnamebase.".Usuario U ";
-  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = ".VerificaStringQuery($cod_usuario)." AND UC.cod_curso=".VerificaStringQuery($cod_curso).")";
+  $query .= "inner join ".$dbnamebase.".Usuario_curso UC ON (UC.cod_usuario_global=U.cod_usuario AND UC.cod_usuario = ".$cod_usuario." AND UC.cod_curso=".$cod_curso.")";
 
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   $nome_usuario=$linha[0];
   if ($nome_usuario != AjustaNome($nome_usuario))
   {
-  	$cod_usuario_global = RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso);
+    $cod_usuario_global = RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso);
     $nome_usuario=AjustaNome($nome_usuario);
     $query="update ".$dbnamebase.".Usuario set nome='".addslashes($nome_usuario)."' where cod_usuario=".VerificaNumeroQuery($cod_usuario_global);
     Enviar($sock,$query);

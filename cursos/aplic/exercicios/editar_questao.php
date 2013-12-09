@@ -2023,7 +2023,7 @@
 
     /* Frase #5 - Voltar */
     /* 509 - Voltar */
-    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
     echo("          <div id=\"mudarFonte\">\n");
     echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
@@ -2061,17 +2061,17 @@
   echo("      <div class=\"posX\"><span onclick=\"EscondeLayer(cod_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("      <div class=\"int_popup\">\n");
   echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
-  echo("          <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
-  echo("          <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
-  echo("          <input type=\"hidden\" name=cod_item value=\"\" />\n");
-  echo("          <input type=\"hidden\" name=tipo_comp id=tipo_comp value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("          <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
+  echo("          <input type=\"hidden\" name=\"cod_item\" value=\"\" />\n");
+  echo("          <input type=\"hidden\" name=\"tipo_comp\" id=\"tipo_comp\" value=\"\" />\n");
   /* Frase #192 - Compartilhamento alterado com sucesso. */
-  echo("          <input type=\"hidden\" name=texto id=texto value=\"".RetornaFraseDaLista($lista_frases, 192)."\" />\n");
+  echo("          <input type=\"hidden\" name=\"texto\" id=\"texto\" value=\"".RetornaFraseDaLista($lista_frases, 192)."\" />\n");
   echo("          <ul class=\"ulPopup\">\n");
   echo("            <li onClick=\"document.getElementById('tipo_comp').value='F'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), '".RetornaFraseDaLista($lista_frases, 6)."','Q'); EscondeLayers();\">\n");
   echo("              <span id=\"tipo_comp_F\" class=\"check\"></span>\n");
   /* Frase #6 - Compartilhado com formadores */
-  echo("              <span>Compartilhado com formadores</span>\n");
+  echo("              <span>".RetornaFraseDaLista($lista_frases, 6)."</span>\n");
   echo("            </li>\n");
   echo("            <li onClick=\"document.getElementById('tipo_comp').value='N'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), '".RetornaFraseDaLista($lista_frases, 8)."', 'Q'); EscondeLayers();\">\n");
   echo("              <span id=\"tipo_comp_N\" class=\"check\"></span>\n");

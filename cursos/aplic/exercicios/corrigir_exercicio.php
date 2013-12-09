@@ -895,11 +895,11 @@ if($ehFormador){
     echo("        <script type=\"text/javaScript\">\n");
     echo("        </script>\n");
     echo("        <form name=\"form_comp\" action=\"\" id=\"form_comp\">\n");
-    echo("          <input type=\"hidden\" name=cod_curso value=\"".$cod_curso."\" />\n");
-    echo("          <input type=\"hidden\" name=cod_usuario value=\"".$cod_usuario."\" />\n");
-    echo("          <input type=\"hidden\" name=cod_item value=\"\" />\n");
-    echo("          <input type=\"hidden\" name=tipo_comp id=tipo_comp value=\"\" />\n");
-    echo("          <input type=\"hidden\" name=texto id=texto value=\"Texto\" />\n");
+    echo("          <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("          <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
+    echo("          <input type=\"hidden\" name=\"cod_item\" value=\"\" />\n");
+    echo("          <input type=\"hidden\" name=\"tipo_comp\" id=\"tipo_comp\" value=\"\" />\n");
+    echo("          <input type=\"hidden\" name=\"texto\" id=\"texto\" value=\"Texto\" />\n");
     echo("          <ul class=\"ulPopup\">\n");
     /* Frase #7 - Totalmente Compartilhado */
     echo("            <li onClick=\"document.getElementById('tipo_comp').value='T'; xajax_MudarCompartilhamentoDinamic(xajax.getFormValues('form_comp'), '".RetornaFraseDaLista($lista_frases, 7)."', 'R'); EscondeLayers();\">\n");
