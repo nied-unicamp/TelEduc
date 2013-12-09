@@ -393,20 +393,29 @@ if(!function_exists("RetornaMaiorDataItemComentario")){
   }
 }
 
-if(!function_exists("PertenceAoGrupo")){
+if(!function_exists("PertenceAoGrupo")) {
   /* *********************************************************************
     PertenceAoGrupo - Retorna trua se o usuario pertence ao grupo e o grupo est� ativo
-    Entrada: $sock - BASE DO CURSO
-              $cod_usuario - codigo do usuario
-              $cod_grupo_portfolio - codigo do grupo
+    Entrada: $sock        - BASE DO CURSO
+             $cod_usuario - codigo do usuario
+             $cod_grupo   - codigo do grupo
     Saida: True se pertence, false caso contrario
   */
-  function PertenceAoGrupo($sock,$cod_usuario,$cod_grupo_portfolio)
+  function PertenceAoGrupo($sock, $cod_usuario, $cod_grupo)
   {
-    if ($cod_grupo_portfolio=="" || $cod_grupo_portfolio=="NULL")
+    $cod_grupo = VerificaNumeroQuery($cod_grupo);
+    if ($cod_grupo === '')
       return false;
-    $query="select GU.cod_usuario 'cod_usuario' from Grupos_usuario GU, Grupos G where GU.cod_grupo=".$cod_grupo_portfolio." and G.cod_grupo=".$cod_grupo_portfolio." and GU.cod_usuario=".$cod_usuario." and G.status<>'X'";
-    $res=Enviar($sock,$query);
+
+    $query  = "select GU.cod_usuario ";
+    $query .= "from Grupos_usuario GU, Grupos G ";
+    $query .= "where GU.cod_grupo   = ".$cod_grupo."   and ";
+    $query .=       "G.cod_grupo    = ".$cod_grupo."   and ";
+    $query .=       "GU.cod_usuario = ".$cod_usuario." and ";
+    $query .=       "G.status<>'X'";
+
+    $res = Enviar($sock,$query);
+
     if (RetornaNumLinhas($res)>0)
       return true;
     else

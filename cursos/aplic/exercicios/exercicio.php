@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : cursos/aplic/exercicios/exercicio.php
+    Arquivo : cursos/aplic/exercicios/exercicios.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Distï¿½cia
     Copyright (C) 2001  NIED - Unicamp
@@ -76,14 +76,13 @@
   AplicaExerciciosAoUsuario($sock,$cod_curso,$cod_usuario);
 
   $titulos = RetornaListaNomesOuTitulos($sock,$cod_curso,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
-  $ex_num = RetornaNumExercicios($sock, $visualizar);
   $ex_entregues = RetornaNumExerciciosEntregues($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
   $ex_corrigidos = RetornaNumExerciciosCorrigidos($sock,$cod_usuario,$tela_formador,$agrupamento,$visualizar);
 
   $total_ex_entregues = count($ex_entregues);
   $total_ex_corrigidos = count($ex_corrigidos);
   $total_titulos = count($titulos);
-  
+
   /* Coloca o numero de exercicios entregues e tambem corridos
    * No array titulos, que contem o nome dos usuarios/ grupos.
    * Assim na hora de exibicao podemos fazer a conta com o 
@@ -97,7 +96,7 @@
       }
     }
  }
-  
+
   for($i_titulos=0; $i_titulos<$total_titulos; $i_titulos++){
    $titulos[$i_titulos]['corrigidos'] = 0;
    for ($i_ex_corrigidos=0; $i_ex_corrigidos<$total_ex_corrigidos; $i_ex_corrigidos++){
@@ -113,7 +112,7 @@
   echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"javascript\">\n\n");
 
-  echo("    var lay_agrupar;");
+  echo("    var lay_agrupar;\n");
 
   /* Iniciliza os layers. */
   echo("    function Iniciar()\n");
@@ -152,6 +151,8 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   if($visualizar == "I")
   {
     /* Frase #1 - Exercicios */
@@ -183,11 +184,12 @@
 
   echo("                <ul class=\"btAuxTabs\">\n");
 
-  /* Frase #109 - Exercicios Individuais */
-  if ($tela_formador) {
+  if ($tela_formador || $tela_colaborador) {
+    /* Frase #109 - Exercicios Individuais */
     echo("                  <li><a href='exercicio.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");
   } else {
-    echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A&cod=".$cod_usuario."'>".RetornaFraseDaLista($lista_frases, 109)."</a></li>\n");
+    /* Frase #239 - Meus exercícios */
+    echo("                  <li><a href='ver_exercicios.php?cod_curso=".$cod_curso."&visualizar=I&agrupar=A&cod=".$cod_usuario."'>".RetornaFraseDaLista($lista_frases, 239)."</a></li>\n");
   }
 
   /* Frase #110 - Exercicios em Grupo */
@@ -196,7 +198,7 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  if ($tela_formador){
+  if ($tela_formador) {
 
     echo("            <tr>\n");
     echo("              <td valign=\"top\">\n");
@@ -250,6 +252,7 @@
 
   if($agrupamento != "T"){
     if ($total_titulos){
+      $ex_num = RetornaNumExercicios($sock, $visualizar);
       foreach($titulos as $cod => $linha){
 
         echo("                  <tr id=\"tr_".$linha['cod']."\">\n");
@@ -309,7 +312,7 @@
 
   include("../tela2.php");
 
-  if($tela_formador)
+  if($tela_formador || $tela_colaborador)
   {
     /* Agrupar */
     echo("    <div id=\"layer_agrupar\" class=\"popup\">\n");
@@ -317,16 +320,16 @@
     echo("      <div class=\"int_popup\">\n");
     echo("        <div class=\"ulPopup\">\n");
     /* Frase #119 - Agrupar por: */
-    echo("            ".RetornaFraseDaLista($lista_frases, 119)."<br />\n"); //TODO: colocar frase no BD
+    echo("            ".RetornaFraseDaLista($lista_frases, 119)."<br />\n");
     echo("            <select class=\"input\" id=\"agrupamento\">");
     if($visualizar == "I")
       /*180 - Aluno*/
-      echo("              <option value=\"A\" selected>".RetornaFraseDaLista($lista_frases, 180)."</option>"); //TODO: colocar frase no BD
+      echo("              <option value=\"A\" selected>".RetornaFraseDaLista($lista_frases, 180)."</option>");
     else if($visualizar == "G")
       /*179 - Grupo*/
-      echo("              <option value=\"G\" selected>".RetornaFraseDaLista($lista_frases, 179)."</option>"); //TODO: colocar frase no BD
+      echo("              <option value=\"G\" selected>".RetornaFraseDaLista($lista_frases, 179)."</option>");
     /* 178 - Titulo do Exercicio*/
-    echo("              <option value=\"T\">".RetornaFraseDaLista($lista_frases, 178)."</option>"); //TODO: colocar frase no BD
+    echo("              <option value=\"T\">".RetornaFraseDaLista($lista_frases, 178)."</option>");
     echo("            </select><br /><br />");
     /* 18 - Ok (gen) */
     echo("            <input type=\"button\" id=\"ok_agrupar\" class=\"input\" onClick=\"MudaAgrupamento(document.getElementById('agrupamento').value);\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");

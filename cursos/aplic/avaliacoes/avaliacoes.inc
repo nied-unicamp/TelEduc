@@ -5082,20 +5082,20 @@ function RetornaCodResolucaoExercicio($sock, $cod_avaliacao, $cod_grupo){
 }
 
 /* *********************************************************************
- ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
-acesso se for
-entrada: $sock        - sock de conexao
-$cod_curso   - código do curso atual.
-$cod_usuario - código do usuário o qual pretende-se testar o
-acesso à ferramenta correio.
-$eh_popup    - booleano que indica se a página que o chamou
-é ou não um popup. Se não for, devemos fechar
-as tags html do template comum de uma página
-de ferramenta (com rodapé, fechando o tabelão,
-    etc).
-saida:   nenhuma
-OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
-executa o comando exit
+   ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+                    acesso se for
+   entrada: $sock        - sock de conexao
+   $cod_curso   - código do curso atual.
+   $cod_usuario - código do usuário o qual pretende-se testar o
+                  acesso à ferramenta correio.
+   $eh_popup    - booleano que indica se a página que o chamou
+                  é ou não um popup. Se não for, devemos fechar
+                  as tags html do template comum de uma página
+                  de ferramenta (com rodapé, fechando o tabelão,
+                  etc).
+   saida:   nenhuma
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
 */
 function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false) {
 
