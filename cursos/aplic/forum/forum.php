@@ -54,7 +54,7 @@
   $objAjax->registerFunction("EditarTituloDinamic");
   $objAjax->registerFunction("DecodificaString");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();  
+  $objAjax->processRequests();
 
   $cod_ferramenta=9;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -65,9 +65,8 @@
     $cod_pagina_ajuda=1;
 
   include("../topo_tela.php");
-  
+
   $AcessoAvaliacaoF = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
-//  $AcessoAvaliacaoF = true;
 
   $feedbackObject =  new FeedbackObject($lista_frases);
   $feedbackObject->addAction("excluir", 65, 66);
@@ -82,8 +81,8 @@
     $ordem_foruns = "D";
 
   /* Verifica se o usuario eh formador. */
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
@@ -140,7 +139,7 @@
   }
 
   
-    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
   /* 56 - Configuracao alterada com sucesso */
   echo("      var msg_56='".RetornaFraseDaLista($lista_frases, 56)."';\n");
@@ -264,7 +263,7 @@
   /* ApagarForum(id), VerLixeira(), Configurar(id), Renomear(id), ApagarAvaliacao(id), AlterarAvaliacao(id) e VerNotas(id).                  */
   if ($usr_formador)
   {
-    if ($status == 'A'){
+    if ($status == 'A') {
 
       echo("      function NovoForum(){\n");
       echo("        document.location='acoes.php?cod_curso=".$cod_curso."&acao=novo_forum'\n");
@@ -295,7 +294,7 @@
       echo("        document.getElementById('configuracao_'+status).innerHTML=imagem;\n");
       echo("        MostraLayer(lay_conf, 0);\n");
       echo("      }\n\n");
-            
+
       echo("      function EdicaoTitulo(codigo, id, valor){\n");
       echo("        if ((valor=='ok')&&(document.getElementById(id+'_text').value!=\"\")){\n");
       echo("          conteudo = document.getElementById(id+'_text').value;\n");
@@ -344,24 +343,24 @@
       echo("        document.getElementById('forumQtd_'+codigo).style.display=\"\";\n");
       echo("      }\n\n");
 
-    echo ("     function EditaTituloEnter(campo, evento, id)\n");
-    echo ("     {\n");
-    echo ("         var tecla;\n");
-    echo ("         CheckTAB=true;\n\n");
-    echo ("         if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
-    echo ("         {\n");
-    echo ("             tecla = evento.which;\n");
-    echo ("         }\n");
-    echo ("         else\n");
-    echo ("         {\n");
-    echo ("             tecla = evento.keyCode;\n");
-    echo ("         }\n\n");
-    echo ("         if ( tecla == 13 )\n");
-    echo ("         {\n");
-    echo ("             EdicaoTitulo(id, 'forum_'+id, 'ok');\n"); //A funï¿½ï¿½o e parï¿½metros sï¿½o os mesmos utilizados na funï¿½ï¿½o de ediï¿½ï¿½o jï¿½ utilizada.
-    echo ("         }\n\n");
-    echo ("         return true;\n");
-    echo ("     }\n\n");
+      echo("      function EditaTituloEnter(campo, evento, id)\n");
+      echo("      {\n");
+      echo("          var tecla;\n");
+      echo("          CheckTAB=true;\n\n");
+      echo("          if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
+      echo("          {\n");
+      echo("              tecla = evento.which;\n");
+      echo("          }\n");
+      echo("          else\n");
+      echo("          {\n");
+      echo("              tecla = evento.keyCode;\n");
+      echo("          }\n\n");
+      echo("          if ( tecla == 13 )\n");
+      echo("          {\n");
+      echo("              EdicaoTitulo(id, 'forum_'+id, 'ok');\n"); //A funï¿½ï¿½o e parï¿½metros sï¿½o os mesmos utilizados na funï¿½ï¿½o de ediï¿½ï¿½o jï¿½ utilizada.
+      echo("          }\n\n");
+      echo("          return true;\n");
+      echo("      }\n\n");
 
       echo("      function Renomear(id){\n");
       echo("        id_aux = id;\n");
@@ -470,26 +469,26 @@
 
   if ($AcessoAvaliacaoF)
   {
-  	echo("      function VerAvaliacao(id) {\n");
+    echo("      function VerAvaliacao(id) {\n");
     echo("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_topico=".$cod_topico_raiz."&cod_avaliacao='+id,'VerAvaliacao','width=600,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
     echo("        return(false);\n");
     echo("      }\n");
-      
+
     if ($status == 'A'){
-	    echo("      function VerNotas(id){\n");
-	    echo("        window.open(\"../avaliacoes/ver_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerNotas\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-	    echo("        return(false);\n");
-	    echo("      }\n\n");
-	
-	    echo("      function VerParticipacao(id){\n");
-	    echo("        window.open(\"../avaliacoes/ver_participacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerParticipacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-	    echo("        return(false);\n");
-	    echo("      }\n");
-	
-	    echo("      function HistoricodoDesempenho(id){\n");
-	    echo("         window.open(\"../avaliacoes/historico_desempenho_todos.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"HistoricoDesempenho\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-	    echo("        return(false);\n");
-	    echo("      }\n\n");
+      echo("      function VerNotas(id){\n");
+      echo("        window.open(\"../avaliacoes/ver_notas.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerNotas\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+      echo("        return(false);\n");
+      echo("      }\n\n");
+
+      echo("      function VerParticipacao(id){\n");
+      echo("        window.open(\"../avaliacoes/ver_participacao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"VerParticipacao\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+      echo("        return(false);\n");
+      echo("      }\n");
+
+      echo("      function HistoricodoDesempenho(id){\n");
+      echo("         window.open(\"../avaliacoes/historico_desempenho_todos.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&VeioDaAtividade=1&cod_avaliacao=\"+id,\"HistoricoDesempenho\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+      echo("        return(false);\n");
+      echo("      }\n\n");
     }
 
   }
@@ -497,7 +496,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/"); 
+  $objAjax->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
 
@@ -596,7 +595,7 @@
 
   /* 114 - Não há nenhum fórum de discussão*/
   if (($total_foruns)==0) {
-    echo("                  <tr>\n");	
+    echo("                  <tr>\n");
     echo("                    <td colspan=\"5\">".RetornaFraseDaLista($lista_frases,114)."</td>\n");
     echo("                  </tr>\n");
 
@@ -646,8 +645,8 @@
 
       /* Se o usuário for formador então cria links com acesso às opções  */
       /* (Ver, Configurar, etc.), se estiver visualizando os fóruns disponíveis, */
-      /* cria liks com acesso às opções (Ver, Excluir) se estiver visualizando a Lixeira. */   
-      $EhAvaliacao = ForumEhAvaliacao($sock,$lista_foruns[$num]['cod_forum']);   
+      /* cria liks com acesso às opções (Ver, Excluir) se estiver visualizando a Lixeira. */
+      $EhAvaliacao = ForumEhAvaliacao($sock,$lista_foruns[$num]['cod_forum']);
       if ($usr_formador){
         echo("                    <td width=\"15%\" align=\"center\" valign=\"top\" class=\"botao2\">\n");
         echo("                      <ul>\n");
@@ -679,7 +678,7 @@
       if($EhAvaliacao){
 
           $cod_avaliacao=RetornaCodAvaliacao($sock,$lista_foruns[$num]['cod_forum']);
-          if ($usr_aluno || $usr_conv_ativo || $usr_conv_passivo){
+          if ($usr_aluno || $usr_colaborador || $usr_visitante) {
             // G 35 - Sim
             echo("                    <td  width=\"10%\" align=\"center\"><span class=\"link\" onClick=\"VerAvaliacao(".RetornaCodAvaliacao($sock,$lista_foruns[$num]['cod_forum']).");\">".RetornaFraseDaLista($lista_frases_geral,35)."</span></td>\n");
           }
@@ -734,11 +733,11 @@
   {
     if ($status == 'A')
     {
-   	  /* layer_novo_forum */
-   	  echo("    <script type=\"text/javascript\">\n");
-   	  echo("      function testa_nome(form){\n");
-   	  /* Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços */
-   	  echo("        forum_nome = form.nome.value;\n");
+      /* layer_novo_forum */
+      echo("    <script type=\"text/javascript\">\n");
+      echo("      function testa_nome(form){\n");
+      /* Elimina os espaços para verificar se o titulo nao eh formado por apenas espaços */
+      echo("        forum_nome = form.nome.value;\n");
       echo("        while (forum_nome.search(\" \") != -1){\n");
       echo("          forum_nome = forum_nome.replace(/ /, \"\");\n");
       echo("        }\n");
@@ -746,14 +745,14 @@
       // 4 - O fórum deve ter um nome. 
       echo("          alert('".RetornaFraseDaLista($lista_frases, 4)."');\n");
       echo("          return(false);\n");
-      echo("		}\n");
+      echo("        }\n");
       /*
       echo("		elseif(form.avaliacao.checked == true){\n");
       echo("          <input type=\"hidden\" name=\"avalia\" value=\"true\" />\n");
-	  echo("          return(true);\n");
+      echo("          return(true);\n");
       echo("        }\n");
       */
-	  echo("        else {\n");
+      echo("        else {\n");
 
       echo("          return(true);\n");
       echo("        }\n");
@@ -765,12 +764,12 @@
       echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_novo_forum);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
       echo("      <div class=\"int_popup\">\n");
       echo("        <form name=\"form_novo_forum\" method=\"post\" action=\"acoes.php\" onsubmit='return (testa_nome(document.form_novo_forum));'>\n");
-      echo("          <div class=\"ulPopup\">\n");    
+      echo("          <div class=\"ulPopup\">\n");
       /* 132 - Digite o nome do fórum a ser criado aqui: */
       echo("            ".RetornaFraseDaLista($lista_frases,132)."<br />\n");
       echo("            <input class=\"input\" type=\"text\" name=\"nome\" id=\"nome\" value=\"\" maxlength=\"150\" /><br />\n");
-	  /* 136 - Criar Avaliação para este Fórum?: */
-      echo("			<input type=\"checkbox\" name=\"avaliacao\" value='S'>".RetornaFraseDaLista($lista_frases,136)."\n<br>");
+      /* 136 - Criar Avaliação para este Fórum?: */
+      echo("            <input type=\"checkbox\" name=\"avaliacao\" value='S'>".RetornaFraseDaLista($lista_frases,136)."\n<br>");
       echo("            <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
       echo("            <input type=\"hidden\" name=\"acao\" value=\"novo_forum\" />\n");
 
@@ -782,7 +781,7 @@
       /* 2 - Cancelar (gen) */
       echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\" onclick=\"EscondeLayer(lay_novo_forum);\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
       echo("         </div>\n");
-	  echo("        </form>\n");
+      echo("        </form>\n");
 
       echo("      </div>\n");
       echo("    </div>\n\n");
@@ -807,17 +806,17 @@
       echo("          </li>\n");
       /* 55 - Somente Leitura */
       echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'L'); EscondeLayers();\">\n");
-      echo("            <span class=\"check\" id=\"configuracao_L\"></span>\n");      
+      echo("            <span class=\"check\" id=\"configuracao_L\"></span>\n");
       echo("            <span>".RetornaFraseDaLista($lista_frases, 55)."</span>\n");
       echo("          </li>\n");
       /* 107 - Definir alunos com permissão de Escrita e Leitura */
       echo("          <li onclick=\"MudarConfiguracao('G'); EscondeLayers();\">\n");
-      echo("            <span class=\"check\" id=\"configuracao_G\"></span>\n");      
+      echo("            <span class=\"check\" id=\"configuracao_G\"></span>\n");
       echo("            <span>".RetornaFraseDaLista($lista_frases, 107)."</span>\n");
       echo("          </li>\n");
       /* 108 - Definir alunos com permissão de Escrita (a leitura é aberta para todos) */
       echo("          <li onclick=\"MudarConfiguracao('R'); EscondeLayers();\">\n");
-      echo("            <span class=\"check\" id=\"configuracao_R\"></span>\n");      
+      echo("            <span class=\"check\" id=\"configuracao_R\"></span>\n");
       echo("            <span>".RetornaFraseDaLista($lista_frases, 108)."</span>\n");
       echo("          </li>\n");
       echo("        </ul>\n");
@@ -825,7 +824,7 @@
       echo("    </div>\n\n");
     }
   }
-    
+
   echo("        </td>\n");
   echo("      </tr>\n"); 
 

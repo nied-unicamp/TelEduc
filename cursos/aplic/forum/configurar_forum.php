@@ -211,8 +211,8 @@ echo("</script>\n\n");
   echo("              <td>\n");
   echo("                <form name=\"frmConf\" action=\"acoes.php\" method=\"post\" onsubmit='seleciona_elementos_grupo(); return(ChecaVazio());'>\n");
   echo("                  <input type=\"hidden\" name=\"cod_forum\" value='".$cod_forum."' />\n");
-  echo("                  <input type=\"hidden\" name=\"acao\" value='configurar_forum' />\n"); 
-  echo("                  <input type=\"hidden\" name=\"status\" value='".$status."' />\n"); 
+  echo("                  <input type=\"hidden\" name=\"acao\" value='configurar_forum' />\n");
+  echo("                  <input type=\"hidden\" name=\"status\" value='".$status."' />\n");
   echo("                  <input type=\"hidden\" name=\"cod_curso\" value='".$cod_curso."' />\n");
   echo("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                    <tr>\n");
@@ -241,18 +241,18 @@ echo("</script>\n\n");
   $num= count($linha);
   for($c=0; $c<$num && $linha != ""; $c++)
     echo("                          <option value=\"".$linha[$c]['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha[$c]['cod_usuario']), 35)."</option>\n");
-  /* Separador entre ultimo aluno e convidados */
+  /* Separador entre ultimo aluno e colaboradores */
   echo("                          <option value=\"\">--------------------</option>\n");
-  $lista_convidados = RetornaTodosConvidados($sock, $cod_curso);
-  $num=count($lista_convidados);
+  $lista_colaboradores = RetornaTodosColaboradores($sock, $cod_curso);
+  $num=count($lista_colaboradores);
   if($num >0){
-    // 117 - Todos os convidados
-    echo("                          <option value=\"C*\">".RetornaFraseDaLista($lista_frases_grupos, 117)."</option>\n");
-    // Convidados um por um
-    if (is_array ($lista_convidados))
-      foreach ($lista_convidados as $c => $linha_convidado)
-        echo("                        <option value=\"".$linha_convidado['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha_convidado['cod_usuario']), 35)."</option>\n");
-    /* Separador entre ultimo convidado e grupos */
+    // 117 - Todos os colaboradores
+    echo("                          <option value=\"Z*\">".RetornaFraseDaLista($lista_frases_grupos, 117)."</option>\n");
+    // Colaboradores um por um
+    if (is_array ($lista_colaboradores))
+      foreach ($lista_colaboradores as $c => $linha_colaborador)
+        echo("                        <option value=\"".$linha_colaborador['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha_colaborador['cod_usuario']), 35)."</option>\n");
+    /* Separador entre ultimo colaborador e grupos */
     echo("                          <option value=\"\">--------------------</option>\n");
   }
 
@@ -268,7 +268,7 @@ echo("</script>\n\n");
         echo("                          <option value=\"g".$lista[$c]['cod_grupo']."\">".RetornaGrupoComCodigo($sock,$lista[$c]['cod_grupo'])."</option>\n");
     }
   }
-  echo("                        </select>\n");  
+  echo("                        </select>\n");
   echo("                      </td>\n");
 
   echo("                      <td style=\"border:0pt;\">\n");
