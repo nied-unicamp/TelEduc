@@ -92,18 +92,16 @@
   // contr�io, retorna 0).
   function e_usuario_sem_grupo($sock, $cod_usuario)
   {
-    $lista_frases=RetornaListaDeFrases($sock,12);
-    $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
-    $query="Select * from Grupos_usuario GU, Grupos G where GU.cod_usuario=".$cod_usuario." and G.cod_grupo=GU.cod_grupo and G.status!='X'";
+    $query  = "Select * from Grupos_usuario GU, Grupos G ";
+    $query .= "where GU.cod_usuario = ".$cod_usuario." and G.cod_grupo=GU.cod_grupo and G.status!='X'";
+
     $res = Enviar($sock, $query);
     $linhas = RetornaArrayLinhas($res);
 
-    if ($linhas=="") return true;
-    
+    if (empty($linhas)) return true;
     return false;
   }
-
 
   echo("  </head>\n");
 
