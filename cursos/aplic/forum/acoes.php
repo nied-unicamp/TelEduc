@@ -85,12 +85,12 @@
     }
 
     AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario);
-    AtualizaFerramentasNova($sock,9,'T');	
+    AtualizaFerramentasNova($sock,9,'T');
   
   }
-  else if ($acao=='avaliar'){
-  	
-  }  
+  else if ($acao=='avaliar') {
+  
+  }
 
   else if ($acao=="excluir")
   {
@@ -243,13 +243,13 @@
             }
             break;
   
-          case "C*" :
-            $convidados= RetornaTodosConvidados($sock, $cod_curso);
-            foreach($convidados as $c){
+          case "Z*" :
+            $colaboradores = RetornaTodosColaboradores($sock, $cod_curso);
+            foreach($colaboradores as $c){
               $select_participantes_permissao_aux[]= $c[0];
               next($select_participantes_permissao_aux);
             }
-            break;  
+            break;
 
           case "U*" :
             break;
@@ -339,13 +339,13 @@
     $cod_atividade = RetornaCodForum($sock,$nome);
     Desconectar($sock);
     header("Location:../avaliacoes/criar_avaliacao_forum.php?cod_curso=".$cod_curso."&cod_atividade=".$cod_atividade);
-	exit;
+    exit;
  
   }else if($cancelar_avaliacao=="sim"){
     CancelaEdicaoAvaliacao ($sock, $cod_forum,$cod_usuario);
-	Desconectar($sock);
-	header("Location:../forum/forum.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta);
-	exit;
+    Desconectar($sock);
+    header("Location:../forum/forum.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta);
+    exit;
 
   }else if($acao=="novo_forum"){
 
@@ -362,6 +362,6 @@
   }
 
   header("Location:ver_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
-  
+
   exit;
 ?>

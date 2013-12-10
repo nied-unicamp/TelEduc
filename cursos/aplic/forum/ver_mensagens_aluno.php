@@ -60,9 +60,9 @@
   include("../topo_tela.php");
 
   /* Verifica se o usuario eh formador. */
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
   /* Obt� o nome e o status do f�um                     */
@@ -416,7 +416,7 @@
     echo("      function AlteraRelevLayer(cod_msg, n_relev)\n");
     echo("      {\n");
     echo("        spans = document.getElementsByTagName('span');\n");
-    echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif'>\"\n");  
+    echo("        var imagem=\"<img src='../imgs/checkmark_blue.gif'>\"\n");
     echo("        for (i=0; i<spans.length; i++){\n");
     echo("          idTmp = spans[i].id.split('_');\n");
     echo("          if((idTmp[0])=='relevancia')\n");
@@ -626,7 +626,7 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) ){
+  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_visitante) ){
 
     echo("            <tr id=\"trNovaMsg\">\n");
     echo("              <td colspan=\"4\">\n");
@@ -892,4 +892,3 @@
 
   Desconectar($sock);
 ?>
-  

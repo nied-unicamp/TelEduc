@@ -5,7 +5,7 @@
 
     Arquivo : cursos/aplic/forum/ver_forum.php
 
-    TelEduc - Ambiente de Ensino-Aprendizagem a DistÔøΩcia
+    TelEduc - Ambiente de Ensino-Aprendizagem a Dist‚ncia
     Copyright (C) 2001  NIED - Unicamp
 
     This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
     You could contact us through the following addresses:
 
-    Nied - Ncleo de InformÔøΩica Aplicada ÔøΩEducaÔøΩo
+    Nied - Ncleo de Inform·tica Aplicada ‡ EducaÁ„o
     Unicamp - Universidade Estadual de Campinas
-    Cidade UniversitÔøΩia "Zeferino Vaz"
+    Cidade Universit·ria "Zeferino Vaz"
     Bloco V da Reitoria - 2o. Piso
     CEP:13083-970 Campinas - SP - Brasil
 
@@ -49,70 +49,69 @@
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
-//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  //Registre os nomes das funÁıes em PHP que vocÍ quer chamar atravÈs do xajax
   $objAjax->registerFunction("MudarRelevanciaDinamic");
   $objAjax->registerFunction("MostraMensagemDinamic");
-  
+
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequests();
 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
   session_register('sin_pag_s');
-  
+
   $cod_ferramenta=9;
   $cod_ferramenta_ajuda = $cod_ferramenta;
-  
+
   if ($status == 'D')
     $cod_pagina_ajuda=3;
   else
     $cod_pagina_ajuda=6;
 
   include("../topo_tela.php");
-  
 
   $feedbackObject =  new FeedbackObject($lista_frases);
   $feedbackObject->addAction("nova_msg", 17, 18);
   $feedbackObject->addAction("responde_mensagem", 17, 30);
 
   /* Verifica se o usuario eh formador. */
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
-  /* ObtÔøΩ o nome e o status do fÔøΩum                     */
+  /* ObtÈm o nome e o status do fÛrum                     */
   $forum_dados = RetornaForum($sock, $cod_forum);
 
   $AcessoAvaliacao = TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,22);
 
-  /* Nmero de mensagens exibidas por pÔøΩina.             */
+  /* Nmero de mensagens exibidas por p·gina.             */
   if (!isset($msg_por_pag)) $msg_por_pag = 10;
 
   /* Se o tipo de ordenacao nao for especificada, usa arvore */
   if ((!isset($_SESSION['ordem']) || $_SESSION['ordem'] == "") && (!isset($_GET['ordem']) || $_GET['ordem'] == "")) {
     $ordem = 'arvore';
   } else {
-    /* Se o usuÔøΩrio tentar atualizar a ordenacao, grava na $_SESSION */
+    /* Se o usu·rio tentar atualizar a ordenacao, grava na $_SESSION */
     if (isset($_GET['ordem']))
       $_SESSION['ordem'] = $_GET['ordem'];
     $ordem = $_SESSION['ordem'];
   }
 
-  /* ObtÔøΩ a data e hora do penltimo acesso para comparar com as datas das   */
-  /* mensagens e destacar a que sÔøΩ mais recentes.                            */
+  /* ObtÈm a data e hora do penltimo acesso para comparar com as datas das   */
+  /* mensagens e destacar a que s„o mais recentes.                            */
   $penult_acesso = PenultimoAcesso($sock, $cod_usuario, "");
 
-  /* Se a data de alteraÔøΩo nÔøΩ estiver setada entÔøΩ entrou pela primeira vez */
-  /* As pÔøΩinas que modificam a base de dados (compor, responder, apagar e    */
-  /* excluir mensagens) nÔøΩ repassam esse valor, pois assumem que houve       */
-  /* alteraÔøΩes.                                                              */
+  /* Se a data de alteraÁ„o n„o estiver setada ent„o entrou pela primeira vez */
+  /* As p·ginas que modificam a base de dados (compor, responder, apagar e    */
+  /* excluir mensagens) n„o repassam esse valor, pois assumem que houve       */
+  /* alteraÁıes.                                                              */
   if ((!isset($data_msg_alt)) || (MensagensAlteradas($sock, $cod_forum, $data_msg_alt)))
   {
-    /* ObtÔøΩ a data atual para posterior comparaÔøΩo. Esta data ÔøΩcomparada com */
+    /* ObtÈm a data atual para posterior comparaÁ„o. Esta data È comparada com */
     /* as das mensagens. Se alguma mensagem possuir data superior a            */
-    /* $data_msg_alt entÔøΩ lista novamente as mensagens, do contrÔøΩio utiliza  */
-    /* as mensagens armazenadas na sessÔøΩ.                                     */
+    /* $data_msg_alt ent„o lista novamente as mensagens, do contr·rio utiliza  */
+    /* as mensagens armazenadas na sess„o.                                     */
     $data_msg_alt = time();
 
     /* armazena o cod_forum */
@@ -124,16 +123,16 @@
     session_register('array_mensagens_s');
     session_register('sin_pag_s');
 
-    /* Se a ordenaÔøΩo for por ÔøΩvore entÔøΩ chama a funÔøΩo RetornaMensagens, que */
+    /* Se a ordenaÁ„o for por ·rvore ent„o chama a fun„oo RetornaMensagens, que */
     /* retorna as mensagens estruturadas.                                       */
     if ($ordem == 'arvore')
       list ($total_mensagens, $array_mensagens, $sin_pag) =
         RetornaMensagens($sock, $cod_forum, $status, $msg_por_pag, $cod_usuario, $penult_acesso);
     else
     {
-      /* Se a ordenaÔøΩo for por data, emissor ou tÔøΩulo da mensagem, chama a      */
+      /* Se a ordenaÁ„o for por data, emissor ou tÌtulo da mensagem, chama a      */
       /* RetornaMensagensOrdenadas, que retorna as mensagens de acordo com a      */
-      /* ordenaÔøΩo especificada porÔøΩ sem estruturaÔøΩo (identaÔøΩo).               */
+      /* ordenaÁ„o especificada porÈm sem estruturaÁ„o (identaÁ„o).               */
       list ($total_mensagens, $array_mensagens, $sin_pag) =
         RetornaMensagensOrdenadas($sock, $cod_curso, $cod_forum, $status, $msg_por_pag, $cod_usuario, $ordem, $penult_acesso);
     }
@@ -144,7 +143,7 @@
 
 
   else
-  /* Se nÔøΩ foram incluÔøΩas/alteradas mensagens apÔøΩ a data especificada em     */
+  /* Se n„o foram incluÌdas/alteradas mensagens apÛs a data especificada em     */
   /* $data_msg_alt, utiliza as mensagens armazenadas.  RECOMENTAR               */
   {
 
@@ -153,19 +152,19 @@
   }
 
    /* Se o nmero total de mensagens for superior que o nmero de mensagens por  */
-   /* pÔøΩina entÔøΩ calcula o total de pÔøΩinas. Do contrÔøΩio, define o nmero de  */
-   /* pÔøΩinas para 1.                                                            */
+   /* p·gina ent„o calcula o total de p·ginas. Do contr·io, define o nmero de  */
+   /* p·ginas para 1.                                                            */
    if ($total_mensagens > $msg_por_pag)
    {
-     /* Calcula o nmero de pÔøΩinas geradas.                  */
+     /* Calcula o nmero de p·ginas geradas.                  */
      $total_pag = ceil($total_mensagens / $msg_por_pag);
    }
    else
      $total_pag = 1;
 
-  /* Se a pÔøΩina atual nÔøΩ estiver setada entÔøΩ, por padrÔøΩ, atribui-lhe o valor 1. */
-  /* Se estiver setada, verifica se a pÔøΩina ÔøΩmaior que o total de pÔøΩinas, se for */
-  /* atribui o valor de $total_pag ÔøΩ$pag_atual.                                    */
+  /* Se a p·gina atual n„o estiver setada ent„o, por padr„o, atribui-lhe o valor 1. */
+  /* Se estiver setada, verifica se a p·gina È maior que o total de p·ginas, se for */
+  /* atribui o valor de $total_pag ‡ $pag_atual.                                    */
    if ((!isset($pag_atual)) || ($pag_atual=="") || ($pag_atual==0))
      $pag_atual =  1;
    else $pag_atual = min($pag_atual, $total_pag);
@@ -177,7 +176,7 @@
     Abre nova janela com o historico de desempenho, se acessado atraves do link
     Entrada: funcao = $cod_curso - Codigo do curso
     Saida:   false - para nao dar reload na pagina. Conferir a
-                     chamada da funÔøΩÔøΩo
+                     chamada da funÁ„o
   */
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      function OpenWindowLink(status) \n");
@@ -237,7 +236,7 @@
     echo("        EscondeLayers();\n");
   }
 
-  /*if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  /*if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_visitante) )
   {
     echo("        //writeRichTextOnJS('msg_corpo', '', 600, 200, false , false, 'divRTE', true);\n");
   }*/
@@ -325,7 +324,7 @@
   echo("        var controle=1;\n");
   echo("        var vetor= new Array();\n");
   echo("        for (j=inicio; j <= fim; j++){\n");
-  echo("          // A p√°gina atual N√£o √© exibida com link.\n");
+  echo("          // A p·gina atual N„o È exibida com link.\n");
   echo("          if (j == pag_atual){\n");
   echo("             document.getElementById('paginacao_'+controle).innerHTML='<b>['+j+']<\/b>';\n");
   echo("             document.getElementById('paginacao_'+controle).className='';\n");
@@ -349,8 +348,8 @@
   echo("        document.getElementById('paginacao_4').onclick=function(){ ExibeMsgPagina(vetor[4]); };\n");
   echo("        document.getElementById('paginacao_5').onclick=function(){ ExibeMsgPagina(vetor[5]); };\n\n");
 
-  echo("        /* Se a p√°gina atual N√£o for a √∫ltima p√°gina ent√£o cria um   \n");
-  echo("           link para a pr√≥xima p√°gina */\n");
+  echo("        /* Se a p·gina atual N„o for a ˙ltima p·gina ent„o cria um   \n");
+  echo("           link para a prÛxima p·gina */\n");
   echo("        if (pag_atual != total_pag){\n");
   echo("         document.getElementById('paginacao_fwd').onclick = function(){ ExibeMsgPagina(pag_atual+1); };\n");
   echo("         document.getElementById('paginacao_fwd').className = \"link\";\n");
@@ -406,21 +405,21 @@
   echo("         document.getElementById('paginacao_last').className = \"\";\n");
   echo("         document.getElementById('paginacao_last').innerHTML = \"\";\n\n");
   
-  /* 131 - Exibir por p√°ginas */
+  /* 131 - Exibir por p·ginas */
   echo("         document.getElementById('exibir_paginacao').innerHTML = \"".RetornaFraseDaLista($lista_frases,131)."\";\n");
   echo("         document.getElementById('exibir_paginacao').onclick = function(){ VoltarPaginacao(pag_atual); };\n");
   echo("         mensagens_abertas=contador-1;\n");
   echo("      }\n");
     
-  /* Se o status do f√≥rum for Ativo (permite leitura e escrita) e se o usu√°rio N√£o */
-  /* for um visitante, cria a fun√ß√£o de compor mensagem.                           */
-  /* Convidados ativos postam mensagens                                            */
-  /* Convidados passivos nao postam mensagens                                      */
-  /* Se o status do f√≥rum for G ou R (apenas os usu√°rios permitidos postam), mas o */
-  /* usu√°rio n√£o for permitido, n√£o postam mensagens.                              */
-//  if ( ($forum_dados['status'] == 'A') && !$usr_conv_passivo )
+  /* Se o status do fÛrum for Ativo (permite leitura e escrita) e se o usu·rio N„o */
+  /* for um visitante, cria a funÁ„o de compor mensagem.                           */
+  /* Colaboradores postam mensagens                                            */
+  /* Visitantes nao postam mensagens                                      */
+  /* Se o status do fÛrum for G ou R (apenas os usu·rios permitidos postam), mas o */
+  /* usu·rio n„o for permitido, n„o postam mensagens.                              */
+//  if ( ($forum_dados['status'] == 'A') && !$usr_visitante )
 
-  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
+  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) )
   {
 
     echo("      function ComporMensagem(){\n");
@@ -461,7 +460,7 @@
 
     echo("      function TestaNome(form){\n");
     echo("        updateRTE('msg_corpo');\n");
-    /* Elimina os espa√ßos para verificar se o titulo nao eh formado por apenas espa√ßos */
+    /* Elimina os espaÁos para verificar se o titulo nao eh formado por apenas espaÁos */
     echo("        Msg_nome = form.msg_titulo.value;\n");
     echo("        Msg_corpo = CKEDITOR.instances.msg_corpo.getData();\n");
     
@@ -469,7 +468,7 @@
     echo("          Msg_nome = Msg_nome.replace(/ /, \"\");\n");
     echo("        }\n");
     echo("        if (Msg_nome == ''){\n");
-    /* 7 - A mensagem deve ter um t√≠tulo. */
+    /* 7 - A mensagem deve ter um tÌtulo. */
     echo("          alert('".RetornaFraseDaLista($lista_frases, 15)."');\n");
     echo("          document.formCompor.msg_titulo.focus();\n");
     echo("          return(false);\n");
@@ -478,7 +477,7 @@
     echo("            Msg_corpo = Msg_corpo.replace(/ /, \"\");\n");
     echo("          }\n");
     echo("          if (Msg_corpo == ''){\n");
-    /* 8 - A mensagem deve ter um conte√∫do. */
+    /* 8 - A mensagem deve ter um conte˙do. */
     echo("            alert('".RetornaFraseDaLista($lista_frases, 16)."');\n");
     echo("          document.formCompor.msg_corpo.focus();\n");
     echo("            return(false);\n");
@@ -589,8 +588,8 @@
     echo("      }\n\n");
   }
   
-  /* Se houver mensagens neste f√≥rum cria a fun√ß√£o de visualizar as demais p√°ginas, */
-  /* exibir mensagens e mudar a ordena√ß√£o.                                          */
+  /* Se houver mensagens neste fÛrum cria a funÁ„o de visualizar as demais p·ginas, */
+  /* exibir mensagens e mudar a ordenaÁ„o.                                          */
   if ($total_mensagens > 0)
   {
 
@@ -656,7 +655,7 @@
     echo("        document.getElementById('paginacao_last').className = \"\";\n");
     echo("        document.getElementById('paginacao_last').innerHTML = \"\";\n\n");
 
-    /* 131 - Exibir por p√°ginas */
+    /* 131 - Exibir por p·ginas */
     echo("         document.getElementById('exibir_paginacao').innerHTML = \"".RetornaFraseDaLista($lista_frases,131)."\";\n");
     echo("         document.getElementById('exibir_paginacao').onclick = function(){ VoltarPaginacao(pag_atual); };\n");
     echo("         mensagens_abertas=contador-1;\n");
@@ -709,18 +708,18 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
- 
-  /* 1 - F√≥runs de Discuss√£o */
+
+  /* 1 - FÛruns de Discuss„o */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1));
   
   /*********************************************
-  Utilizado no cabe√ßalho
+  Utilizado no cabeÁalho
   $cod_pagina=1;
   if(($usr_formador)&&($AcessoAvaliacao))
      $cod_pagina=11;
-  *********************************************/   
-     
-  /* Se estiver visualizando a Lixeira adiciona esta informaÔøΩo no cabeÔøΩlho. */
+  *********************************************/
+  
+  /* Se estiver visualizando a Lixeira adiciona esta informaÁ„o no cabeÁalho. */
   if ($status == 'D')
   {
     /* 16 - Lixeira */
@@ -732,7 +731,7 @@
     *********************************************/
   }
   
-  /* 7 - Ver f√≥rum */
+  /* 7 - Ver fÛrum */
   echo(" - ".RetornaFraseDaLista($lista_frases, 7)." - ".$forum_dados['nome']);
 
   if (($forum_dados['status'] == 'L') || (($forum_dados['status'] == 'R') && (! $permitido)) )
@@ -753,8 +752,8 @@
    /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
-  /* Verifica a permiss√£o de visualiza√ß√£o do f√≥rum pelo usu√°rio, caso um usu√°rio n√£o permitido fa√ßa acesso ao f√≥rum diretamente pelo link */
-  /* 111 - Visualiza√ß√£o do f√≥rum n√£o dispon√≠vel. */
+  /* Verifica a permiss„o de visualizaÁ„o do fÛrum pelo usu·rio, caso um usu·rio n„o permitido faÁa acesso ao fÛrum diretamente pelo link */
+  /* 111 - VisualizaÁ„o do fÛrum n„o disponÌvel. */
   if (($forum_dados['status'] == 'G') && (!$permitido))
   {
     echo("          <b>".RetornaFraseDaLista($lista_frases, 111)."</b>");
@@ -776,24 +775,22 @@
   echo("                  <li><a href=\"forum.php?cod_curso=".$cod_curso."&amp;status=".$status."\">");
   if (isset($status) && ($status=='D'))
   {
-    /* 63 - Retornar √† lixeira */
+    /* 63 - Retornar ‡ lixeira */
     echo(RetornaFraseDaLista($lista_frases, 63)."</a></li>\n");
-  }else { // Quando n√£o h√° status definido ou status = A
-    /* 34 - Retornar √† lista de f√≥runs */
+  }else { // Quando n„o h· status definido ou status = A
+    /* 34 - Retornar ‡ lista de fÛruns */
     echo(RetornaFraseDaLista($lista_frases, 34)."</a></li>\n");
   }
   
-  /* checa se o curso terminou ou n√£o */
+  /* checa se o curso terminou ou n„o */
   $status_curso = RetornaStatusCurso($sock,$cod_curso);
 
-  /* Se o status do f√≥rum for Ativo (permite leitura e escrita) e se o usuÔøΩio NÔøΩ */
+  /* Se o status do fÛrum for Ativo (permite leitura e escrita) e se o usu·rio n„o */
   /* for um visitante, exibe um menu para compor mensagens.                        */
-  /* Se o status do fÔøΩum for G ou R (apenas os usuÔøΩios permitidos postam), mas o */
-  /* usuÔøΩio nÔøΩ for permitido, nÔøΩ postam mensagens.                              */
+  /* Se o status do fÛrum for G ou R (apenas os usu·rios permitidos postam), mas o */
+  /* usu·rio n„o for permitido, n„o postam mensagens.                              */
 
-  
-  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
-  //if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) )
   {
     if (($status_curso != 'E') || ($usr_formador))
     {
@@ -821,7 +818,7 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) ){
+  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) ){
 
     echo("            <tr id=\"trNovaMsg\">\n");
     echo("              <td colspan=\"4\">\n");
@@ -838,7 +835,7 @@
     }
     
     echo("                        <form id=\"formCompor\" name=\"formCompor\" action=\"acoes.php\" onsubmit=\"return(TestaNome(document.formCompor));\" method=\"post\">\n");
-    /* 9 - T√≠tulo */
+    /* 9 - TÌtulo */
     echo("                          <b>".RetornaFraseDaLista($lista_frases,9)."</b><br />\n");
     echo("                          <input type=\"text\" id=\"msg_titulo\" name=\"msg_titulo\" size=40 maxlength=100 value='".$msg_titulo."' style=\"border: 2px solid #9bc;\" /><br /><br />\n");
     /* 14 - Mensagem */
@@ -870,13 +867,13 @@
   
   if ($total_mensagens > 0)
   {
-    // Calcula o √≠ndice da primeira mensagem.
+    // Calcula o Ìndice da primeira mensagem.
     $prim_msg_index = (($pag_atual - 1) * $msg_por_pag) + 1;
-    // Calcula o √≠ndice da √∫ltima mensagem.
+    // Calcula o Ìndice da ˙ltima mensagem.
     $ult_msg_index = $pag_atual * $msg_por_pag;
 
-    // Se o √≠ndice da ltima mensagem for maior que o n√∫mero de mensagens, ent√£o copia este 
-    // para o √≠ndice da √∫ltima mensagem.
+    // Se o Ìndice da ltima mensagem for maior que o n˙mero de mensagens, ent„o copia este 
+    // para o Ìndice da ˙ltima mensagem.
     if ($ult_msg_index > $total_mensagens)
       $ult_msg_index = $total_mensagens;
     echo("            <tr class=\"head01\">\n");
@@ -893,26 +890,26 @@
     echo($total_mensagens.RetornaFraseDaLista($lista_frases, 23)."\n");
     echo("              </td>\n");
     echo("              <td style=\"text-align:right;border:none\">\n");
-    /* Se houver mensagens exibe a caixa de sele√ß√£o do m√©todo de ordena√ß√£o.           */
+    /* Se houver mensagens exibe a caixa de seleÁ„o do mÈtodo de ordenaÁ„o.           */
     /* 41 - Ordenar por:  */
     echo("                ".RetornaFraseDaLista($lista_frases, 41)."\n");
     echo("                <select name=\"ordem\" id=\"ordem_foruns\" onchange='MudaOrdenacao();' style=\"margin:5px 0 0 0;\">\n");
-    /* 43 - √Årvore */
+    /* 43 - ¡rvore */
     
     echo("                  <option value='arvore'>".RetornaFraseDaLista($lista_frases, 43)."</option>\n");
 //     if (isset($status) && ($status=='A'))
       if($status != 'D')
-      /* 130 - Relev√¢ncia */
+      /* 130 - Relev‚ncia */
       echo("                  <option value='relevancia'>".RetornaFraseDaLista($lista_frases, 130)."</option>\n");
     /* 45 - Autor */
     echo("                  <option value='emissor'>".RetornaFraseDaLista($lista_frases, 45)."</option>\n");
     /* 44 - Data */
     echo("                  <option value='data'>".RetornaFraseDaLista($lista_frases, 44)."</option>\n");
-    /* 46 - T√≠tulo */
+    /* 46 - TÌtulo */
     echo("                  <option value='titulo'>".RetornaFraseDaLista($lista_frases, 46)."</option>\n");
     echo("                </select>\n");
 
-  /* Procura e seleciona a ordena√ß√£o escolhida. */
+  /* Procura e seleciona a ordenaÁ„o escolhida. */
     echo("                <script type=\"text/javascript\">\n\n");
     echo("                  elementos = document.getElementById('ordem_foruns');\n");
     echo("                  for (var i = 0; i < elementos.length; i++)\n");
@@ -930,7 +927,7 @@
     echo("                    <tr class=\"head\">\n");
     /* 8 - # */
     echo("                      <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 8)."</td>\n");
-    /* 9 - TÔøΩulo */
+    /* 9 - TÌtulo */
     echo("                      <td class=\"alLeft\" width=\"35%\">".RetornaFraseDaLista($lista_frases, 9)."</td>\n");
     /* 10 - Autor */
     echo("                      <td width=\"25%\">".RetornaFraseDaLista($lista_frases, 10)."</td>\n");
@@ -942,12 +939,12 @@
     echo("                      <td width=\"10%\">".RetornaFraseDaLista($lista_frases, 11)."</td>\n");
     echo("                    </tr>\n");
     echo("                  </thead>\n");
-    /* Calcula o √≠ndice da mensagem com base no nmero da p√°gina. */
+    /* Calcula o Ìndice da mensagem com base no nmero da p·gina. */
     $msgidx = 0;
     
     /*115 - N&atilde;o Relevante
       116 - Pouco Relevante
-      117 - Relev√¢ncia M√©dia
+      117 - Relev‚ncia MÈdia
       118 - Relevante
       119 - Muito Relevante    */
     $array_rel = array();
@@ -962,7 +959,7 @@
 
     $res = Enviar($sock, $query);
     $tuplas = RetornaArrayLinhas($res);
-    //Aqui formamos um array em que o cod_msg √© o √≠ndice e seu contedo codigo da relev√¢ncia
+    //Aqui formamos um array em que o cod_msg È o Ìndice e seu contedo codigo da relev‚ncia
     
     $array_relevancia = array();
     if (is_array($tuplas)) {
@@ -976,7 +973,7 @@
       if ($num_paginas == $pag_atual) $style = "";
       else $style = "display:none";
     
-    //neste laÔøΩ listamos todas as mensagens desta pÔøΩina
+    //neste laÁo listamos todas as mensagens desta p·gina
       foreach ($array_mensagens[$num_paginas] as $cod_msg => $dados)
       {
         if ($dados['data'] > $penult_acesso)
@@ -989,8 +986,8 @@
           $bopen_tag = " ";
           $bclose_tag = " ";
         }
-        //124 - Relev√¢ncia n√£o avaliada
-          //Atualizamos aqui a Relevancia no Layer. Caso a relev√¢ncia n√£o tenha sido avaliada passamos o valor -1 para atribuir false a todos os campos do Layer de relevancia.
+        //124 - Relev‚ncia n„o avaliada
+          //Atualizamos aqui a Relevancia no Layer. Caso a relev‚ncia n„o tenha sido avaliada passamos o valor -1 para atribuir false a todos os campos do Layer de relevancia.
         if ($array_relevancia[$cod_msg]==''){
               $array_mensagens['relevancia'] = RetornaFraseDaLista($lista_frases, 124);
               $prop_relevancia = "-1";
@@ -1006,7 +1003,7 @@
   
         if ($ordem == 'arvore')
         {
-          /* Identa a mensagem de acordo com o n√≠vel em que ela se encontra. */
+          /* Identa a mensagem de acordo com o nÌvel em que ela se encontra. */
           for ($k = 0; $k < $dados['nivel']; $k++)
             echo("&nbsp;&nbsp;&nbsp;");
         }
@@ -1036,11 +1033,11 @@
         echo("                      <span class=\"link\" id=\"fechar_".$cod_msg."\" onclick=\"FecharMsg(".$cod_msg.");\">".RetornaFraseDaLista($lista_frases,138)."</span><br />\n");
 
 
-        /* Se o status do f√≥rum for Ativo (permite leitura e escrita) e se o usuÔøΩio NÔøΩ */
+        /* Se o status do fÛrum for Ativo (permite leitura e escrita) e se o usu·rio n„o */
         /* for um visitante, exibe um menu para compor mensagens.                        */
-        /* Se o status do fÔøΩum for G ou R (apenas os usuÔøΩios permitidos postam), mas o */
-        /* usuÔøΩio nÔøΩ for permitido, nÔøΩ postam mensagens.                              */    
-        if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
+        /* Se o status do fÛrum for G ou R (apenas os usu·rios permitidos postam), mas o */
+        /* usu·rio n„o for permitido, n„o postam mensagens.                              */    
+        if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) )
         {
           if (($status_curso != 'E') || ($usr_formador))
           {
@@ -1050,7 +1047,7 @@
         echo("                    </td>\n");
         echo("                  </tr>\n");
 
-        /* Incrementa o contador do √≠ndice da mensagem. */
+        /* Incrementa o contador do Ìndice da mensagem. */
         $msgidx++;
       }
 
@@ -1066,7 +1063,7 @@
     echo("                  <tr class=\"head\">\n");
     /* 8 - # */
     echo("                    <td width=\"5%\">".RetornaFraseDaLista($lista_frases, 8)."</td>\n");
-    /* 9 - T√≠tulo */
+    /* 9 - TÌtulo */
     echo("                    <td width=\"35%\">".RetornaFraseDaLista($lista_frases, 9)."</td>\n");
     /* 10 - Autor */
     echo("                    <td width=\"25%\">".RetornaFraseDaLista($lista_frases, 10)."</td>\n");
@@ -1079,15 +1076,15 @@
     echo("                  </tr>\n");
     echo("                  <tr class=\"altColor1\">\n");
     echo("                    <td colspan=\"6\" align=\"center\">\n");
-    /* 31 - N√£o h√° mensagens neste f√≥rum. */
+    /* 31 - N„o h· mensagens neste fÛrum. */
     echo("                      ".RetornaFraseDaLista($lista_frases, 31)."\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
 
   }
-  /* Se o n√∫mero de mensagens for superior ao nmero de mensagens exibidas por */
-  /* p√°gina, possibilita a cria√ß√£o de links para a p√°gina anterior e posterior */
-  /* (se existirem) e links para demais p√°ginas.                               */
+  /* Se o n˙mero de mensagens for superior ao nmero de mensagens exibidas por */
+  /* p·gina, possibilita a criaÁ„o de links para a p·gina anterior e posterior */
+  /* (se existirem) e links para demais p·ginas.                               */
 
   echo("                  <tr>\n");
   echo("                    <td colspan=\"5\" align=\"right\" class=\"paginacao\">\n");
@@ -1106,7 +1103,7 @@
   echo("            <tr>\n");
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
-  // Se houver mensagens cria o bot√£o para exibir todas as mensagens.
+  // Se houver mensagens cria o bot„o para exibir todas as mensagens.
   if ($total_mensagens > 0)
   {
      /* 71 - Exibir todas */
@@ -1118,7 +1115,7 @@
   echo("          </table>\n");
 
 
-  //div do Layer de altera√ß√£o de relev√¢ncia
+  //div do Layer de alteraÁ„o de relev‚ncia
   echo("          <div id='relev' class=\"popup\">\n");
   echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(relevIni);\"><img src=\"../imgs/btClose.gif\" alt=\"".RetornaFraseDaLista($lista_frases,138)."\" border=\"0\" /></span></div>\n");
   echo("            <div class=\"int_popup\">\n");
@@ -1130,7 +1127,7 @@
   echo("                <input type=\"hidden\" name=\"nova_relevancia\" id=\"nova_relevancia\" value=\"\" />\n");
   echo("                <input type=\"hidden\" name=\"texto_feedback\" id=\"texto_feedback\" value=\"".RetornaFraseDaLista($lista_frases, 128)."\" />\n");
   echo("              </form>\n");
-  //120 - Selecione a nova relev√¢ncia desejada:
+  //120 - Selecione a nova relev‚ncia desejada:
   echo("              ".RetornaFraseDaLista($lista_frases, 120)."\n");
   echo("              <ul class=\"ulPopup\">\n");
   for ($i=0; $i<5; $i++){

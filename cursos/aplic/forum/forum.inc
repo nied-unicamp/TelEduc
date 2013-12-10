@@ -1677,7 +1677,7 @@ function StatusFerramentaGrupos ($sock, $cod_curso, $cod_usuario)
   else if ($status == 'F')
     $retorno = EFormador ($sock, $cod_curso, $cod_usuario);
   else
-    // se entrou aqui, status = 'A'. Permito para alunos e convidados
+    // se entrou aqui, status = 'A'. Permito para alunos e colaboradores
     $retorno = true;
 
   return $retorno;
@@ -1832,20 +1832,22 @@ function RelevanciaExiste($sock, $cod_msg)
 
 
 /* *****************************************************************************************
-   RetornaTodosConvidados - retorna os nomes dos convidados do curso
+   RetornaTodosColaboradores - retorna os nomes dos colaboradores do curso
    Entrada: $sock - sock de conexao com a base
-   Saida: array com os nomes dos convidados do curso
-   OBS: Lembrando que somente convidados com interacao tem acesso ao f�um
+   Saida: array com os nomes dos colaboradores do curso
 *******************************************************************************************/
-function RetornaTodosConvidados($sock, $cod_curso)
+function RetornaTodosColaboradores($sock, $cod_curso)
 {
-
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query = "select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='Z' order by cod_usuario asc";
+  $query  = "select cod_usuario from ".$dbnamebase.".Usuario_curso ";
+  $query .= "where cod_curso=".$cod_curso." and binary tipo_usuario = 'Z' ";
+  $query .= "order by cod_usuario asc";
+
   $res   = Enviar ($sock, $query);
   $lista = RetornaArrayLinhas ($res);
+
   return $lista;
 }
 

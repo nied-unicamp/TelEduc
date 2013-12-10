@@ -52,11 +52,11 @@
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
   if (!isset($cod_curso)){
-  	if (isset($_GET['cod_curso'])){
-  		$cod_curso = $_GET['cod_curso'];
-  	} else if (isset($_POST['cod_curso'])){
-  		$cod_curso = $_POST['cod_curso'];
-  	}
+    if (isset($_GET['cod_curso'])){
+      $cod_curso = $_GET['cod_curso'];
+    } else if (isset($_POST['cod_curso'])){
+      $cod_curso = $_POST['cod_curso'];
+    }
   }
   
   /* Desnecessário
@@ -86,48 +86,45 @@
   $cod_ferramenta_ajuda = $cod_ferramenta;
 
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
-  
+
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
-   
+
   $lista_frases_geral=RetornaListaDeFrases($sock,-1);
   $tela_ordem_ferramentas=RetornaOrdemFerramentas($sock);
   $tela_lista_ferramentas=RetornaListaFerramentas($sock);
   $tela_lista_titulos=RetornaListaTitulos($sock, $_SESSION['cod_lingua_s']);
   $tela_email_suporte=RetornaConfiguracao($sock,"adm_email");
-  
+
   $query="select diretorio from Diretorio where item='raiz_www'";
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
   $tela_raiz_www = $linha[0];
-  
+
   $tela_host=RetornaConfiguracao($sock,"host");
 
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-  
+
   $tela_visitante     = EVisitante($sock,$cod_curso,$cod_usuario);
 
   $tela_formador          = EFormador($sock,$cod_curso,$cod_usuario);
   $tela_formadormesmo     = EFormadorMesmo($sock,$cod_curso,$cod_usuario);
 
-  // booleano, indica se usuario eh convidado
-  $tela_convidado         = EConvidado ($sock, $cod_usuario, $cod_curso);
-  // especifica que tipo de convidado eh
-  $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
-  
-  /* Fim dos Ajustes necess�rios para independer do topo_tela.php */
+  // booleano, indica se usuario eh colaborador
+  $tela_colaborador       = EColaborador($sock, $cod_curso, $cod_usuario);
+
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
-  
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,0);
+
+  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta);
   MarcaAcesso($sock,$cod_usuario,$cod_ferramenta);
 
   /* Desnecessário
   if (!isset($cod_ferramenta))
     $cod_ferramenta=1; // Agenda
   */
+  /* Fim dos Ajustes necess�rios para independer do topo_tela.php */
 
   echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
   echo("<html lang=\"pt\">\n"); 
@@ -170,9 +167,9 @@
   $feedbackObject->addAction("responde_mensagem", 17, 30);
 
   /* Verifica se o usuario eh formador. */
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
   /* Obt� o nome e o status do f�um                     */
@@ -312,7 +309,7 @@
     echo("        EscondeLayers();\n");
   }
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_visitante) )
   {
     echo("        writeRichTextOnJS('msg_corpo', '', 600, 200, true, false, 'divRTE', true);\n");
   }
@@ -489,13 +486,13 @@
     
   /* Se o status do fórum for Ativo (permite leitura e escrita) e se o usuário Não */
   /* for um visitante, cria a função de compor mensagem.                           */
-  /* Convidados ativos postam mensagens                                            */
-  /* Convidados passivos nao postam mensagens                                      */
+  /* Colaboradores postam mensagens                                            */
+  /* Visitantes nao postam mensagens                                      */
   /* Se o status do fórum for G ou R (apenas os usuários permitidos postam), mas o */
   /* usuário não for permitido, não postam mensagens.                              */
-//  if ( ($forum_dados['status'] == 'A') && !$usr_conv_passivo )
+//  if ( ($forum_dados['status'] == 'A') && !$usr_visitante )
 
-  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
+  if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) )
   {
 
     echo("      function ComporMensagem(){\n");
@@ -865,7 +862,7 @@
   /* Se o status do f�um for G ou R (apenas os usu�ios permitidos postam), mas o */
   /* usu�io n� for permitido, n� postam mensagens.                              */
 
-  //if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) )
+  //if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_visitante) )
   /*{
 
     if (($status_curso != 'E') || ($usr_formador))
@@ -887,7 +884,7 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_conv_passivo) ){
+  if ( ($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido)) && (!$usr_visitante) ){
 
     echo("            <tr id=\"trNovaMsg\">\n");
     echo("              <td colspan=\"4\">\n");
@@ -1104,7 +1101,7 @@
         /* for um visitante, exibe um menu para compor mensagens.                        */
         /* Se o status do f�um for G ou R (apenas os usu�ios permitidos postam), mas o */
         /* usu�io n� for permitido, n� postam mensagens.                              */    
-        /*if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_conv_passivo) )
+        /*if ( (($forum_dados['status'] == 'A') || (($forum_dados['status'] == 'G') && ($permitido)) || (($forum_dados['status'] == 'R') && ($permitido))) && (!$usr_visitante) )
         {
           if (($status_curso != 'E') || ($usr_formador))
           {
