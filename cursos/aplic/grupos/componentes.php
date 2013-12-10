@@ -74,7 +74,7 @@
   ==================
   */
 
-   if (!$SalvarEmArquivo)
+  if (!$SalvarEmArquivo)
   {
     echo("    <script type=\"text/javascript\">\n");
 
@@ -139,7 +139,7 @@
   {
     if (EFormador($sock,$cod_curso,$cod_usuario))
     {
-    echo("        lay_conf = getLayer('layer_conf');\n");
+      echo("        lay_conf = getLayer('layer_conf');\n");
     }
   }
   echo("        startList();\n");
@@ -262,7 +262,7 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-  if (EConvidado($sock, $cod_usuario, $cod_curso))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
     echo("          <br />\n");
     echo("          <br />\n");
@@ -278,10 +278,8 @@
     echo("  </body>\n");
     echo("</html>\n");
     Desconectar($sock);
-    exit();    
+    exit();
   }
-
-  MarcaAcesso($sock,$cod_usuario,12);
 
   /* 1 - Grupos */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1));
@@ -410,7 +408,7 @@
   echo("          </li>\n");
   /* 80 - Não Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'T'); EscondeLayers();\">\n");
-  echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");      
+  echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");
   echo("            <span>".RetornaFraseDaLista($lista_frases, 80)."</span>\n");
   echo("          </li>\n");
   echo("        </ul>\n");
@@ -421,8 +419,8 @@
   echo("        Iniciar();\n");
   echo("      </script>\n");
   echo("        </td>\n");
-   
-  echo("      </tr>\n");  
+  
+  echo("      </tr>\n");
 
 
   include("../tela2.php");

@@ -63,28 +63,28 @@
     $imagem="../figuras/grupoaberto.gif";
   }
 
-  if (EConvidado($sock, $cod_usuario, $cod_curso))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
-  echo("  </head>\n");
-  echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"startList(); self.focus();\">\n");
-  echo("    <a name=\"topo\"></a>\n");
+    echo("  </head>\n");
+    echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"startList(); self.focus();\">\n");
+    echo("    <a name=\"topo\"></a>\n");
 
-  /* 1 - Grupos */
-  $cabecalho ="<h4>".RetornaFraseDaLista($lista_frases,1);
-    /* 61 - �ea restrita a alunos e formadores */
-  $cabecalho.=" - ".RetornaFraseDaLista($lista_frases,61)."</h4>";
-  echo("    <br /><br />".$cabecalho."\n");
-  echo("    <br />\n");
-  echo("    <ul class=\"btAuxTabs\">\n");
-  echo("      <li>\n");
-  /* G 13 - Fechar */
-  echo("        <span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span>\n");
-  echo("      </li>\n");
-  echo("    </ul>\n");
-  echo("  </body>\n");
-  echo("</html>\n");
-  Desconectar($sock);
-  exit();    
+    /* 1 - Grupos */
+    $cabecalho ="<h4>".RetornaFraseDaLista($lista_frases,1);
+    /* 504 - �ea restrita a alunos e formadores */
+    $cabecalho.=" - ".RetornaFraseDaLista($lista_frases_geral, 504)."</h4>";
+    echo("    <br /><br />".$cabecalho."\n");
+    echo("    <br />\n");
+    echo("    <ul class=\"btAuxTabs\">\n");
+    echo("      <li>\n");
+    /* G 13 - Fechar */
+    echo("        <span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span>\n");
+    echo("      </li>\n");
+    echo("    </ul>\n");
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
   }
   
   // fun�o e_usuario_sem_grupo : Verifica se o usuario, cujo nome foi recebido
@@ -94,7 +94,9 @@
   {
 
     $query  = "Select * from Grupos_usuario GU, Grupos G ";
-    $query .= "where GU.cod_usuario = ".$cod_usuario." and G.cod_grupo=GU.cod_grupo and G.status!='X'";
+    $query .= "where GU.cod_usuario = ".$cod_usuario." ";
+    $query .=   "and G.cod_grupo = GU.cod_grupo ";
+    $query .=   "and G.status!='X'";
 
     $res = Enviar($sock, $query);
     $linhas = RetornaArrayLinhas($res);
@@ -108,26 +110,9 @@
   /* Aqui eu assumo que o grupo existe, e que cod_grupo �v�ido */
   $nome_grupo = RetornaNomeGrupo($sock,$cod_grupo);
 
-  if(EVisitante($sock,$cod_curso,$cod_usuario))
+  if (!GruposFechados($sock) || EFormador($sock,$cod_curso,$cod_usuario))
   {
-    echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"startList(); self.focus();\">\n");
-    echo("    <a name=\"topo\"></a>\n");
-    echo("    <br /><br /><h4>".RetornaFraseDaLista($lista_frases,54)."</h4><br />\n");
 
-    echo("    <ul class=\"btAuxTabs\">\n");
-    /* 54 - Op�o n� dispon�el para visitantes. */
-    echo("      <li>\n");
-    /* G 13 - Fechar */
-    echo("        <span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span>\n");
-    echo("      </li>\n");
-    echo("    </ul>\n");
-    echo("  </body>\n");
-    echo("</html>\n");
-    Desconectar($sock);
-    exit();
-  }
-  else if (!GruposFechados($sock) || EFormador($sock,$cod_curso,$cod_usuario))
-  {
     echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"startList(); self.focus();\">\n");
     echo("    <script type='text/javascript'>\n");
     echo("      function ClickHead(check){\n");
@@ -156,30 +141,30 @@
     echo("    </script>\n\n");
 
     echo("    <a name=\"topo\"></a>\n");
-  
+
     /* 1 - Grupos */
     $cabecalho ="<h4>".RetornaFraseDaLista($lista_frases,1);
     /* 65 - Incluir Componentes */
     $cabecalho.=" - ".RetornaFraseDaLista($lista_frases,65)."</h4>";
 
-  // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\" style=\"top: 42px;\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-  echo("          </div>\n");
-    
+    // 3 A's - Muda o Tamanho da fonte
+    echo("<div id=\"mudarFonte\" style=\"top: 42px;\">\n");
+    echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
+
     echo("    <br /><br />".$cabecalho."\n");
     echo("    <br />\n");
     echo("      <form method=\"post\" name=\"formIncluir\" action=\"acoes.php\">\n");
     echo("        <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
-    
+
     echo("        <input type=\"hidden\" name=\"cod_grupo\" value=\"".$cod_grupo."\" />\n");
     echo("        <input type=\"hidden\" name=\"acao\" value=\"incluir_no_grupo\" />\n");
     echo("        <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\"  class=\"tabExterna\">\n");
     echo("          <tr>\n");
     echo("            <td valign=\"top\">\n");
-    echo("              <ul class=\"btAuxTabs\">\n"); 
+    echo("              <ul class=\"btAuxTabs\">\n");
     /* 65 - Incluir Componentes */
     echo("                <li><span onclick=\"document.formIncluir.submit();\">".RetornaFraseDaLista($lista_frases,65)."</span></li>");
     /* 2 (ger) - Cancelar */
@@ -213,13 +198,13 @@
 
       if (e_usuario_sem_grupo($sock, $linha[$c]['cod_usuario']))
       {
-        $vetor_nome_sem_grupo[sizeof($vetor_nome_sem_grupo)] = $tipo_usuario_temp." ".$linha[$c]['nome'];
-        $vetor_cod_sem_grupo[sizeof($vetor_cod_sem_grupo)] = $linha[$c]['cod_usuario'];
+        $vetor_nome_sem_grupo[] = $tipo_usuario_temp." ".$linha[$c]['nome'];
+        $vetor_cod_sem_grupo[]  = $linha[$c]['cod_usuario'];
       }
       else
       {
-        $vetor_nome_com_grupo[sizeof($vetor_nome_com_grupo)] = $tipo_usuario_temp." ".$linha[$c]['nome'];
-        $vetor_cod_com_grupo[sizeof($vetor_cod_com_grupo)] = $linha[$c]['cod_usuario'];
+        $vetor_nome_com_grupo[] = $tipo_usuario_temp." ".$linha[$c]['nome'];
+        $vetor_cod_com_grupo[]  = $linha[$c]['cod_usuario'];
       }
     }
 
@@ -273,15 +258,13 @@
         echo("                  <td colspan=\"2\">&nbsp;</td>\n");
       }
       $aux++;
-    echo("                </tr>\n");  
+    echo("                </tr>\n");
     }
     echo("              </table>\n");
     echo("            </td>\n");
     echo("          </tr>\n");
     echo("        </table>\n");
     echo("      </form>\n");
-
-
 
   }
   else
@@ -304,7 +287,7 @@
     echo("    <table cellpadding=\"0\" cellspacing=\"0\"  class=\"tabExterna\" id=\"tabelaExterna\">\n");
     echo("      <tr>\n");
     echo("        <td valign=\"top\">\n");
-    echo("          <ul class=\"btAuxTabs\">\n");  
+    echo("          <ul class=\"btAuxTabs\">\n");
     /* 13 (ger) - Fechar */
     echo("            <li><span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
     echo("          </ul>\n");
@@ -321,8 +304,8 @@
     echo("      </tr>\n");
     echo("    </table>\n");
     echo("  </td>\n");
-    echo("  </tr>\n");    
-    echo("    </table>\n");
+    echo("  </tr>\n");
+    echo("</table>\n");
   }
 
   Desconectar($sock);

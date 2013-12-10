@@ -60,7 +60,7 @@
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
-  if (EConvidado($sock, $cod_usuario, $cod_curso))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
     echo("<html>\n");
     /* 1 - Grupos */
@@ -71,8 +71,8 @@
     echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\">\n");
     /* 1 - Grupos */
     $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases, 1)."</b>";
-    /* 61 - �rea restrita a alunos e formadores */
-    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 61)."</b>";
+    /* 504 - �rea restrita a alunos e formadores */
+    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases_geral, 504)."</b>";
     echo($cabecalho);
 
     echo("    <br>\n");
@@ -80,14 +80,14 @@
     echo("  </body>\n");
     echo("  </html>\n");
     Desconectar($sock);
-    exit();    
-  }  
+    exit();
+  }
   
   echo("<html>\n");
   /* 1 - Grupos */
   echo("<head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-  echo("<link rel=\"stylesheet\" TYPE=\"text/css\" href=\"../teleduc.css\">\n");
-  echo("<link rel=\"stylesheet\" TYPE=\"text/css\" href=\"grupos.css\">\n");
+  echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"../teleduc.css\">\n");
+  echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"grupos.css\">\n");
   echo("<body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"self.focus();\">\n");
   /* 1 - Grupos */
   $cabecalho ="<font class=\"titulo\"><b>".RetornaFraseDaLista($lista_frases,1)."</b></font>\n";
@@ -108,14 +108,14 @@
       }
     }
 
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
     echo("  self.opener.location.reload();\n");
     echo("  self.location='componentes.php?cod_curso=".$cod_curso."&cod_grupo=".$cod_grupo."';\n");
     echo("</script>\n");
   }
   else
   {
-    echo("<script language=JavaScript>\n");
+    echo("<script language=\"javascript\">\n");
     echo("  self.opener.location.reload();\n");
     echo("</script>\n");
 
