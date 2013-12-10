@@ -557,26 +557,32 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-  if (EConvidado($sock, $cod_usuario, $cod_curso))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
-    echo("          <br />\n");
-    echo("          <br />\n");
-    echo("          <br />\n");
     /* 1 - Grupos */
-    $cabecalho = "<h4>".RetornaFraseDaLista($lista_frases, 1);
-    /* 61 - �ea restrita a alunos e formadores */
-    $cabecalho .= "  <b> - ".RetornaFraseDaLista($lista_frases, 61)."</b>";
-    echo("          ".$cabecalho);
+    /*504 - �ea restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases, 1)." - ".RetornaFraseDaLista($lista_frases_geral, 504)."</h4>\n");
+    // 3 A's - Muda o Tamanho da fonte
+    echo("          <div id=\"mudarFonte\">\n");
+    echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo("          </div>\n");
+    
+    /* 509 - Voltar */
+    echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    /* 23 - Voltar */
+    echo("          <form>\n");
+    echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+    echo("          </form>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
     echo("    </table>\n");
     echo("  </body>\n");
     echo("</html>\n");
     Desconectar($sock);
-    exit();    
+    exit();
   }
-
-  MarcaAcesso($sock,$cod_usuario,12);
 
   /* 1 - Grupos */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1));
@@ -595,15 +601,15 @@
   echo(" - ".$tmp."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("          <div id=\"mudarFonte\">\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+
   echo("          <!-- Tabelao -->\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
@@ -633,21 +639,21 @@
     {
 
     echo("                <form action=\"salvar_arquivo.php\" method=\"get\" name=\"formSalvar\">\n");
-    echo("                  <input type=hidden name=cod_curso value=".$cod_curso." />\n");
-    echo("                  <input type=hidden name=nome_arquivo value='grupos.html' />\n");
-    echo("                  <input type=hidden name=origem value='grupos' />\n");
+    echo("                  <input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\" />\n");
+    echo("                  <input type=\"hidden\" name=\"nome_arquivo\" value=\"grupos.html\" />\n");
+    echo("                  <input type=\"hidden\" name=\"origem\"       value=\"grupos\" />\n");
     if (isset($check_ultimos))
-      echo("                  <input type=hidden name=check_ultimos value=1 />\n");
+      echo("                  <input type=\"hidden\" name=\"check_ultimos\" value=1 />\n");
     if (isset($check_qtde))
-      echo("                  <input type=hidden name=check_qtde value=1 />\n");
+      echo("                  <input type=\"hidden\" name=\"check_qtde\"    value=1 />\n");
     if (isset($check_local))
-      echo("                  <input type=hidden name=check_local value=1 />\n");
+      echo("                  <input type=\"hidden\" name=\"check_local\"   value=1 />\n");
     if (isset($check_cidade))
-      echo("                  <input type=hidden name=check_cidade value=1 />\n");
+      echo("                  <input type=\"hidden\" name=\"check_cidade\"  value=1 />\n");
     if (isset($check_estado))
-      echo("                  <input type=hidden name=check_estado value=1 />\n");
+      echo("                  <input type=\"hidden\" name=\"check_estado\"  value=1 />\n");
     if (isset($radio_ord))
-      echo("                  <input type=hidden name=radio_ord value=".$radio_ord." />\n");
+      echo("                  <input type=\"hidden\" name=\"radio_ord\"     value=".$radio_ord." />\n");
     echo("                </form>\n");
 
       /* usuario eh formador: permitir abertura e fechamento de grupos */
@@ -744,7 +750,7 @@
   echo("          </li>\n");
   /* 80 - Não Permitir Alteração */
   echo("          <li onclick=\"xajax_MudarConfiguracaoDinamic(xajax.getFormValues('formConfiguracao'), 'T'); EscondeLayers();\">\n");
-  echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");      
+  echo("            <span class=\"check\" id=\"configuracao_T\"></span>\n");
   echo("            <span>".RetornaFraseDaLista($lista_frases, 80)."</span>\n");
   echo("          </li>\n");
   echo("        </ul>\n");
@@ -775,7 +781,7 @@
   echo("    </div>\n");
 
   echo("        </td>\n");
-  echo("      </tr>\n");  
+  echo("      </tr>\n");
 
   include("../tela2.php");
 

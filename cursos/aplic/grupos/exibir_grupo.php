@@ -39,11 +39,11 @@
   ARQUIVO : cursos/aplic/grupo/exibir_grupo.php
   ========================================================== */
 
-/*
-==================
-Programa Principal
-==================
-*/
+  /*
+  ==================
+  Programa Principal
+  ==================
+  */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -72,6 +72,27 @@ Programa Principal
   echo("  </head>\n");
   echo("  <body bgcolor=\"white\" onload=\"startList(); self.focus();\">\n");
   echo("    <a name=\"topo\"></a>\n");
+  
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
+  {
+    /* 1 - Grupos */
+    $cabecalho ="<h4>".RetornaFraseDaLista($lista_frases,1);
+    /* 504 - �ea restrita a alunos e formadores */
+    $cabecalho.=" - ".RetornaFraseDaLista($lista_frases_geral, 504)."</h4>";
+    echo("    <br /><br />".$cabecalho."\n");
+    echo("    <br />\n");
+    echo("    <ul class=\"btAuxTabs\">\n");
+    echo("      <li>\n");
+    /* G 13 - Fechar */
+    echo("        <span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span>\n");
+    echo("      </li>\n");
+    echo("    </ul>\n");
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
+  }
+
   echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
   echo("      <tr>\n");
   echo("        <td></td>\n");
