@@ -31,7 +31,7 @@ class Node
   boolean msgtodos;
   boolean node_todos;
   
-  boolean isConvidado = false;
+  boolean isColaborador = false;
   boolean isVisitante = false;
 
   String lbl;
@@ -259,7 +259,7 @@ class GraphPanel extends Panel implements Runnable, MouseListener, MouseMotionLi
   final Color edgeColor = Color.black;
   final Color nodeColor = new Color(250, 220, 100);
   final Color stressColor = Color.green;
-  final Color convidadoColor = new Color(255, 153, 53);
+  final Color colaboradorColor = new Color(255, 153, 53);
   final Color visitanteColor = new Color(153, 153, 255);
 
   public void paintNode(Graphics g, Node n, FontMetrics fm) 
@@ -272,8 +272,8 @@ class GraphPanel extends Panel implements Runnable, MouseListener, MouseMotionLi
       g.setColor(fixedColor);
     else if (n.node_todos) 
       g.setColor(stressColor);
-    else if (n.isConvidado)
-      g.setColor(convidadoColor);
+    else if (n.isColaborador)
+      g.setColor(colaboradorColor);
     else if (n.isVisitante)
       g.setColor(visitanteColor);
     else
@@ -454,7 +454,7 @@ public class Grafo extends Applet implements ActionListener, ItemListener
       int codigo=Integer.valueOf(tkCodNome.nextToken()).intValue();
       String nome=tkCodNome.nextToken();
 
-      nomes[codigo]=nome;      
+      nomes[codigo]=nome;
     }
 
 
@@ -499,19 +499,19 @@ public class Grafo extends Applet implements ActionListener, ItemListener
           //n.y = d.height / 2;
           n.fixed = true;
         }
-      }        
+      }
     }
     
-    String convidados = getParameter("convidado");
-    if (convidados != null) {
-        for (StringTokenizer tkConv = new StringTokenizer(convidados, "/"); tkConv.hasMoreTokens(); ) {
+    String colaboradores = getParameter("colaborador");
+    if (colaboradores != null) {
+        for (StringTokenizer tkConv = new StringTokenizer(colaboradores, "/"); tkConv.hasMoreTokens(); ) {
             int conv = Integer.valueOf(tkConv.nextToken()).intValue();
             int num_node=panel.searchNode(nomes[conv]);
             if (num_node>=0) {
               Node n = panel.nodes[num_node];
               //n.x = d.width / 2;
               //n.y = d.height / 2;
-              n.isConvidado = true;
+              n.isColaborador = true;
             }
         }
     }
@@ -576,7 +576,7 @@ public class Grafo extends Applet implements ActionListener, ItemListener
       {"edges", "delimited string", "Uma lista de todas as arestas separadas por virgulas. Tem o formato: 'C-N1,C-N2,C-N3,C-NX,N1-N2/M12,N2-N3/M23,N3-NX/M3X,...' onde C e' o nome do no' central e NX e' um no' atachado ao no' central. Para as arestas conectando os nos (e nao para o no central) pode-se (opcionalmente) especificar um tamanho MXY que separar um no' do outro."},
       {"centro", "string", "No' central do grafo."},
       {"formador", "string", "Os codigos dos formadores."},
-      {"convidado", "string", "Os codigos dos convidados."},
+      {"colaborador", "string", "Os codigos dos colaboradores."},
       {"no_todos", "string", "No Todos os participantes"},
       {"mensagemtodos", "string", "O nome dos participantes que enviaram mensagem para todos."}
     };

@@ -52,7 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  echo("<script language=javascript>\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
+  echo("<script language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -106,15 +108,15 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
   if (!$SalvarEmArquivo && $apresentacao=="tabela")
   {
     /* 22 - Salvar Em Arquivo */
-    echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
   }
   echo("      </ul>\n");
   echo("    </td>\n");
@@ -204,10 +206,10 @@
        echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
        echo("        <tr class=\"head01\">\n");
        // 79 - Quantidade de Mensagens por Dia
-       echo("          <td colspan=".(count($msgs_qtde)+1).">".RetornaFraseDaLista($lista_frases,79)."</td>\n");
+       echo("          <td colspan=\"".(count($msgs_qtde)+1)."\">".RetornaFraseDaLista($lista_frases,79)."</td>\n");
        echo("        </tr>\n");
-       echo("        <tr valign=bottom align=center>\n");
-       echo("          <td class=text valign=middle align=right>&nbsp;</td>\n");
+       echo("        <tr valign=\"bottom\" align=\"center\">\n");
+       echo("          <td class=\"text\" valign=\"middle\" align=\"right\">&nbsp;</td>\n");
        foreach($msgs_qtde as $periodo => $linha)
        {
          $total+=$linha['qtde'];
@@ -215,25 +217,27 @@
            $tam=$linha['qtde']*200/$max_qtde;
          else
            $tam=1;
-         echo("          <td class=text>".$linha['qtde']."<br><img src=figuras/".$exibir.".gif border=0 width=5 height=".$tam."></td>\n");
+         echo("          <td class=\"text\">".$linha['qtde']."<br>\n");
+         echo("            <img src=\"figuras/".$exibir.".gif\" border=\"0\" width=\"5\" height=\"".$tam."\">\n");
+         echo("          </td>\n");
        }
        echo("        </tr>\n");
 
-       echo("        <tr valign=bottom align=center>\n");
+       echo("        <tr valign=\"bottom\" align=\"center\">\n");
        // 21 - Dia
-       echo("          <td class=text align=right><b>".RetornaFraseDaLista($lista_frases,21)."</b></td>\n");
+       echo("          <td class=\"text\" align=\"right\"><b>".RetornaFraseDaLista($lista_frases,21)."</b></td>\n");
        $number=0;
        foreach($msgs_qtde as $periodo => $linha)
        {
          $tmp=explode("/",$periodo);
-         echo("          <td class=text>&nbsp;".$tmp[0]."&nbsp;</td>\n");
+         echo("          <td class=\"text\">&nbsp;".$tmp[0]."&nbsp;</td>\n");
          $number++;
        }
        echo("        </tr>\n");
 
-       echo("        <tr valign=bottom>\n");
+       echo("        <tr valign=\"bottom\">\n");
        // 46 - M�s
-       echo("          <td class=text align=right><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
+       echo("          <td class=\"text\" align=\"right\"><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
 
        $mes_anterior="-1";
        unset($meses);
@@ -251,7 +255,7 @@
        }
        foreach($meses as $cod => $linha)
        {
-         echo("          <td class=text colspan=".$linha['num_dias'].">&nbsp;".$linha['nome']."&nbsp;</td>\n");
+         echo("          <td class=\"text\" colspan=\"".$linha['num_dias']."\">&nbsp;".$linha['nome']."&nbsp;</td>\n");
        }
        echo("        </tr>\n");
      }
@@ -261,7 +265,7 @@
        // 21 - Dia
        echo("          <td>".RetornaFraseDaLista($lista_frases,21)."</td>\n");
        // 46 - M�s
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,46)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,46)."</td>\n");
        // 60 - Quantidade de Mensagens
        echo("          <td>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
        echo("        </tr>\n");
@@ -275,7 +279,7 @@
          $tmp=explode("/",$periodo);
          $nome=NomeMes((int)$tmp[1]);
          echo("          <td>".$tmp[0]."</td>\n");
-         echo("          <td colspan=2>".$nome."</td>\n");
+         echo("          <td colspan=\"2\">".$nome."</td>\n");
          echo("          <td>".$linha['qtde']."</td>\n");
          echo("        </tr>\n");
        }
@@ -284,9 +288,9 @@
      {
        echo("        <tr class=\"head01\">\n");
        // 46 - M�s
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,46)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,46)."</td>\n");
        // 60 - Quantidade de Mensagens
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
        echo("        </tr>\n");
 
        $i=1;
@@ -296,7 +300,7 @@
          echo("        <tr>\n");
          $tmp=explode("/",$periodo);
          $nome=NomeMes((int)$tmp[0]);
-         echo("          <td colspan=2>".$nome."</td>\n");
+         echo("          <td colspan=\"2\">".$nome."</td>\n");
 
          if ($apresentacao=="grafico")
          {
@@ -304,12 +308,14 @@
              $tam=$linha['qtde']*600/$max_qtde;
            else
              $tam=1;
-           echo("          <td colspan=2 align=left><img src=figuras/".$exibir.".gif border=0 width=".$tam." height=5> ".$linha['qtde']."</td>\n");
+           echo("          <td colspan=\"2\" align=\"left\">\n");
+           echo("            <img src=\"figuras/".$exibir.".gif\" border=\"0\" width=\"".$tam."\" height=\"5\"> ".$linha['qtde']."\n");
+           echo("          </td>\n");
          }
          else
          {
            $i = ($i + 1) % 2;
-           echo("          <td colspan=2>".$linha['qtde']."</td>\n");
+           echo("          <td colspan=\"2\">".$linha['qtde']."</td>\n");
          }
          echo("        </tr>\n");
        }
@@ -318,9 +324,9 @@
      {
        echo("        <tr class=\"head01\">\n");
        // 63 - Semana
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,63)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,63)."</td>\n");
        // 60 - Quantidade de Mensagens
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,60)."</td>\n");
        echo("        </tr>\n");
 
        $i=1;
@@ -351,15 +357,17 @@
          }
 
          echo("        <tr>\n");
-         echo("          <td colspan=2>".$mes1."&nbsp;a&nbsp;".$mes2."</td>\n");
+         echo("          <td colspan=\"2\">".$mes1."&nbsp;a&nbsp;".$mes2."</td>\n");
          if ($apresentacao=="grafico")
          {
-           echo("          <td colspan=2 align=left><img src=figuras/".$exibir.".gif border=0 width=".$tam." height=5>&nbsp;".$linha['qtde']."</td>\n");
+           echo("          <td colspan=\"2\" align=\"left\">\n");
+           echo("            <img src=\"figuras/".$exibir.".gif\" border=\"0\" width=\"".$tam."\" height=\"5\">&nbsp;".$linha['qtde']."\n");
+           echo("          </td>\n");
          }
          else
          {
            $i = ($i + 1) % 2;
-           echo("          <td colspan=2>".$linha['qtde']."</td>\n");
+           echo("          <td colspan=\"2\">".$linha['qtde']."</td>\n");
          }
          echo("        </tr>\n");
        }
@@ -369,14 +377,14 @@
        $number=$number+1;
        echo("        <tr class=\"head01\">\n");
        // 76 - Total de mensagens enviadas:
-       echo("          <td colspan=".$number.">".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
+       echo("          <td colspan=\"".$number."\">".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
        echo("        </tr>\n");
      }
      else
      {
        echo("        <tr class=\"head01\">\n");
        // 76 - Total de mensagens enviadas:
-       echo("          <td colspan=4>".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
+       echo("          <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
        echo("        </tr>\n");
      }
   }
@@ -384,7 +392,7 @@
   {
     echo("        <tr>\n");
     // 51 - Nenhuma mensagem enviada no per�odo selecionado!
-    echo("          <td colspan=4>".RetornaFraseDaLista($lista_frases,51)."</td>\n");
+    echo("          <td colspan=\"4\">".RetornaFraseDaLista($lista_frases,51)."</td>\n");
     echo("        </tr>\n");
   }
 

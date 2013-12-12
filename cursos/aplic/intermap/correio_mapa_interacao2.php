@@ -52,7 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -101,11 +103,11 @@
 
   echo("<br>\n");
 
-  echo("<form name=mapa action=correio_mapa_interacao2.php target=Intermap method=get>\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=inicio value='".$inicio."'>\n");
-  echo("<input type=hidden name=fim value='".$fim."'>\n");
-  echo("<input type=hidden name=apresentacao value='".$apresentacao."'>\n");
+  echo("<form name=\"mapa\" action=\"correio_mapa_interacao2.php\" target=\"Intermap\" method=\"get\">\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\">\n");
+  echo("<input type=\"hidden\" name=\"inicio\"       value=\"".$inicio."\">\n");
+  echo("<input type=\"hidden\" name=\"fim\"          value=\"".$fim."\">\n");
+  echo("<input type=\"hidden\" name=\"apresentacao\" value=\"".$apresentacao."\">\n");
 
   /* <!----------------- Tabelao -----------------> */
   echo("<table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
@@ -144,16 +146,16 @@
     if (!$SalvarEmArquivo)
     {
       // 78 - Visualizar:
-      echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,78)."</td>\n");
+      echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,78)."</td>\n");
       //
-      echo("          <td width=35%>&nbsp;</td>\n");
+      echo("          <td width=\"35%\">&nbsp;</td>\n");
     }
     else
     {
       // 78 - Visualizar:
-      echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,78)."</td>\n");
+      echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,78)."</td>\n");
       //
-      echo("          <td width=35%>&nbsp;</td>\n");
+      echo("          <td width=\"35%\">&nbsp;</td>\n");
     }
   }
   echo("        </tr>\n");
@@ -172,14 +174,14 @@
 
       echo("          <td>\n");
       // 74 - Todos os participantes do curso
-      echo("            <input type=radio ".$checked." class=g1field name=visualizar value=participantes_todos onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
+      echo("            <input type=\"radio\" ".$checked." class=\"g1field\" name=\"visualizar\" value=\"participantes_todos\" onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
 
       $checked="";
       if ($visualizar=="participantes_mensagens")
         $checked="checked";
 
       // 56 - Participantes que enviaram mensagens
-      echo("            <input type=radio ".$checked." class=g1field name=visualizar value=participantes_mensagens onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,56)."<br>\n");
+      echo("            <input type=\"radio\" ".$checked." class=\"g1field\" name=\"visualizar\" value=\"participantes_mensagens\" onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,56)."<br>\n");
       echo("          </td>\n");
 
       $checked="";
@@ -187,7 +189,7 @@
         $checked="checked";
 
       // 43 - Exibir mensagens enviadas para TODOS OS PARTICIPANTES
-      echo("          <td><input type=checkbox name=mensagens_para_todos value=sim ".$checked." onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,43)."</td>\n");
+      echo("          <td><input type=\"checkbox\" name=\"mensagens_para_todos\" value=\"sim\" ".$checked." onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,43)."</td>\n");
     }
     else
     {
@@ -249,12 +251,12 @@
       $str_formadores = implode("/", $lista_formadores);
     }
 
-    // Lista de convidados. Informa ao Applet quais usu�rios sao convidados
-    $lista_convidados = RetornaCodUsuarioConvidado($sock, $cod_curso);
-    $str_convidados   = "";
-    if (is_array($lista_convidados))
+    // Lista de colaboradores. Informa ao Applet quais usu�rios sao colaboradores
+    $lista_colaboradores = RetornaCodUsuarioColaborador($sock, $cod_curso);
+    $str_colaboradores   = "";
+    if (is_array($lista_colaboradores))
     {
-      $str_convidados = implode("/", $lista_convidados);
+      $str_colaboradores = implode("/", $lista_colaboradores);
     }
 
     // busca no BD a lista de msgs
@@ -321,7 +323,7 @@
     }
 
 
-    $textos=RetornaFraseDaLista($lista_frases,92)."/".RetornaFraseDaLista($lista_frases,93)."/";
+    $textos =RetornaFraseDaLista($lista_frases,92)."/".RetornaFraseDaLista($lista_frases,93)."/";
     $textos.=RetornaFraseDaLista($lista_frases,103)."/".RetornaFraseDaLista($lista_frases,117)."/";
     $textos.=RetornaFraseDaLista($lista_frases,86)."/".RetornaFraseDaLista($lista_frases,72)."/";
     $textos.=RetornaFraseDaLista($lista_frases,89)."/".RetornaFraseDaLista($lista_frases,90)."/";
@@ -342,7 +344,6 @@
     $textos.=RetornaFraseDaLista($lista_frases,111)."/".RetornaFraseDaLista($lista_frases,112)."/";
     $textos.=RetornaFraseDaLista($lista_frases,113)."/".RetornaFraseDaLista($lista_frases,114)."/";
     $textos.=RetornaFraseDaLista($lista_frases,115)."/".RetornaFraseDaLista($lista_frases,116);
-										 
 
     // Invoca o applet.
     echo("<center>\n");
@@ -366,7 +367,7 @@
     echo("  <param name='arestas_com_no_todos' value='".$str_msgs_com_no_todos."'>\n");
     echo("  <param name='arestas_sem_no_todos' value='".$str_msgs_sem_no_todos."'>\n");
     echo("  <param name='formador' value='".$str_formadores."'>\n");
-    echo("  <param name='convidado' value='".$str_convidados."'>\n");
+    echo("  <param name='colaborador' value='".$str_colaboradores."'>\n");
     echo("</applet>\n");
     echo("</center>\n");
 
@@ -382,9 +383,9 @@
     // 13 - Autor da Mensagem
     echo("          <td>".RetornaFraseDaLista($lista_frases,13)."</td>\n");
     // 20 - Destinat�rio da Mensagem
-    echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,20)."</td>\n");
+    echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,20)."</td>\n");
     // 59 - Quantidade
-    echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,59)."</td>\n");
+    echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,59)."</td>\n");
     echo("        </tr>\n");
 
     $lista_usuarios=RetornaListaCodUsuarioNome($sock, $cod_curso);
@@ -394,9 +395,9 @@
     if (count($lista_usuarios)>0)
     {
       $cod_anterior=-1;
-$pif=1;
-$sif=1;
-$tif=1;
+      $pif=1;
+      $sif=1;
+      $tif=1;
       foreach ($lista_usuarios as $cod_usu => $nome)
       {
         if (is_array($lista_msgs[$cod_usu]))

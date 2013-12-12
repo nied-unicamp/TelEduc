@@ -61,9 +61,9 @@ import java.util.HashMap;
  *  - formador: lista no formato "cod1/cod2/cod3/ ... /codN" contendo a lista dos
  *  códigos dos formadores.
  *
- *  - convidado: lista no formato "cod1/cod2/cod3/ ... /codN" contendo a lista dos
- *  códigos dos convidados. Deve ser definido pelo HTML apenas quando a ferramenta
- *  cujos dados estão sendo visualizados apresentar suporte a convidados.
+ *  - colaborador: lista no formato "cod1/cod2/cod3/ ... /codN" contendo a lista dos
+ *  códigos dos colaboradores. Deve ser definido pelo HTML apenas quando a ferramenta
+ *  cujos dados estão sendo visualizados apresentar suporte a colaboradores.
  *
  *  - visitante: lista no formato "cod1/cod2/cod3/ ... /codN" contendo a lista dos
  *  códigos dos visitantes. Deve ser definido pelo HTML apenas quando a ferramenta
@@ -115,7 +115,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
         "Todos", //5
         "Alunos",
         "Formadores",
-        "Convidados",
+        "Colaboradores",
         "Visitantes",
         "Aguarde enquanto o sistema prepara suas representações gráficas.", //10
         "Carregando programas de gerenciamento de grafos...",
@@ -129,7 +129,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
         "Exibir separadamente mensagens enviadas para todos os participantes",
         "Aluno", //20
         "Formador",
-        "Convidado"
+        "Colaborador"
     };
     
     /** Quantidade de textos utilizada especificamente pelo applet.
@@ -249,12 +249,12 @@ public class GrafoApplet extends JApplet implements ChangeListener {
     /** Cor do nó do aluno quando estiver marcado.
      */
     private Color estudanteCorMarcado  = new Color(0xFFB351);
-    /** Cor do nó do convidado quando não estiver marcado.
+    /** Cor do nó do colaborador quando não estiver marcado.
      */
-    private Color convidadoCorNormal  = new Color(0xE3BAF4);
-    /** Cor do nó do convidado quando estiver marcado.
+    private Color colaboradorCorNormal  = new Color(0xE3BAF4);
+    /** Cor do nó do colaborador quando estiver marcado.
      */
-    private Color convidadoCorMarcado = new Color(0xD97DFF);
+    private Color colaboradorCorMarcado = new Color(0xD97DFF);
     /** Cor do nó do visitante quando não estiver marcado.
      */
     private Color visitanteCorNormal  = new Color(0xA7F498);
@@ -523,16 +523,16 @@ public class GrafoApplet extends JApplet implements ChangeListener {
             legenda.add(quadradoEstudante);
             legenda.add(labelEstudante);
             
-            if (getParameter("convidado")!=null) {
-                JPanel quadradoConvidado = new JPanel();
-                quadradoConvidado.setMaximumSize(new java.awt.Dimension(10, 10));
-                quadradoConvidado.setBackground(convidadoCorNormal);
-                quadradoConvidado.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0)));
-                // Texto 22: Convidado
-                JLabel labelConvidado = new JLabel("- "+textos[22]+"   ");
-                labelConvidado.setFont(new java.awt.Font("Dialog", 0, 12));
-                legenda.add(quadradoConvidado);
-                legenda.add(labelConvidado);
+            if (getParameter("colaborador")!=null) {
+                JPanel quadradoColaborador = new JPanel();
+                quadradoColaborador.setMaximumSize(new java.awt.Dimension(10, 10));
+                quadradoColaborador.setBackground(colaboradorCorNormal);
+                quadradoColaborador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0)));
+                // Texto 22: Colaborador
+                JLabel labelColaborador = new JLabel("- "+textos[22]+"   ");
+                labelColaborador.setFont(new java.awt.Font("Dialog", 0, 12));
+                legenda.add(quadradoColaborador);
+                legenda.add(labelColaborador);
             }
             
             if (getParameter("visitante")!=null) {
@@ -610,11 +610,11 @@ public class GrafoApplet extends JApplet implements ChangeListener {
         // Criando grupos
         
         int maxGr=2;
-        Grupo[] estudantes = new Grupo[maxGr];
-        Grupo[] formadores = new Grupo[maxGr];
-        Grupo[] convidados = new Grupo[maxGr];
-        Grupo[] visitantes = new Grupo[maxGr];
-        Grupo[] todos = new Grupo[maxGr];
+        Grupo[] estudantes    = new Grupo[maxGr];
+        Grupo[] formadores    = new Grupo[maxGr];
+        Grupo[] colaboradores = new Grupo[maxGr];
+        Grupo[] visitantes    = new Grupo[maxGr];
+        Grupo[] todos         = new Grupo[maxGr];
         
         for (int i=0; i<maxGr; i++) {
             Grafo gr;
@@ -623,16 +623,16 @@ public class GrafoApplet extends JApplet implements ChangeListener {
             estudantes[i] = new Grupo(textos[6], new CorNo(gr.defaultCorNo));
             // Texto 7: Formadores
             formadores[i] = new Grupo(textos[7], new CorNo(gr.defaultCorNo));
-            // Texto 8: Convidados
-            convidados[i] = new Grupo(textos[8], new CorNo(gr.defaultCorNo));
+            // Texto 8: Colaboradores
+            colaboradores[i] = new Grupo(textos[8], new CorNo(gr.defaultCorNo));
             // Texto 9: Visitantes
             visitantes[i] = new Grupo(textos[9], new CorNo(gr.defaultCorNo));
             // Texto 5: Todos
             todos[i] = new Grupo(textos[5], new CorNo(gr.defaultCorNo));
-            definirCoresDosGrupos(estudantes[i], formadores[i], convidados[i], visitantes[i], todos[i]);
+            definirCoresDosGrupos(estudantes[i], formadores[i], colaboradores[i], visitantes[i], todos[i]);
             gr.adicionarGrupo(estudantes[i]);
             gr.adicionarGrupo(formadores[i]);
-            gr.adicionarGrupo(convidados[i]);
+            gr.adicionarGrupo(colaboradores[i]);
             gr.adicionarGrupo(visitantes[i]);
             gr.adicionarGrupo(todos[i]);
         }
@@ -777,7 +777,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
         }
         
         moverParaGrupo(getParameter("formador"),formadores);
-        moverParaGrupo(getParameter("convidado"),convidados);
+        moverParaGrupo(getParameter("colaborador"),colaboradores);
         moverParaGrupo(getParameter("visitante"),visitantes);
         moverParaGrupo(COD_NO_TODOS, todos);
     }
@@ -797,7 +797,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
                 noPolar = (NoPolar)nosPolares.get(cod_no);
                 if (noPolar!=null) {
                     noPolar.moverParaGrupo(grupo[1]);
-                }                
+                }
             }
         }
     }
@@ -810,7 +810,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
      * @param aresta Aresta a ser adicionada.
      * @param ePolar True se aresta é polar, false caso contrário.
      */
-    private void adicionaArestaOuSomaValor(Collection listaArestas, Aresta aresta) {    
+    private void adicionaArestaOuSomaValor(Collection listaArestas, Aresta aresta) {
         Iterator i = listaArestas.iterator();
         Aresta arestaEmAnalise = null;
         boolean achei = false;
@@ -828,7 +828,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
             arestaEmAnalise.peso += aresta.peso;
         } else {
             // Adiciono a aresta informada à lista de arestas.
-            listaArestas.add(aresta);            
+            listaArestas.add(aresta);
         }
         
     }
@@ -892,16 +892,16 @@ public class GrafoApplet extends JApplet implements ChangeListener {
     /** Define as cores dos grupos de participantes da seguinte forma:
      * estudantes: azul;
      * formadores: laranja;
-     * convidados: roxo;
+     * colaboradores: roxo;
      * visitantes: verde;
      * todos: rosa claro.
      * @param estudantes Grupo contendo nós que representam estudantes.
      * @param formadores Grupo contendo nós que representam formadores.
-     * @param convidados Grupo contendo nós que representam convidados.
+     * @param colaboradores Grupo contendo nós que representam colaboradores.
      * @param visitantes Grupo contendo nós que representam visitantes.
      * @param todos Grupo contendo o nó "Todos".
      */
-    private void definirCoresDosGrupos(Grupo estudantes, Grupo formadores, Grupo convidados, Grupo visitantes, Grupo todos)  {
+    private void definirCoresDosGrupos(Grupo estudantes, Grupo formadores, Grupo colaboradores, Grupo visitantes, Grupo todos)  {
         Color fonteVermelha = new Color(0xDA1C1C);
         
         estudantes.cor.corDeFundoMarcado = estudanteCorMarcado; //new Color(0x69D3FF);
@@ -912,9 +912,9 @@ public class GrafoApplet extends JApplet implements ChangeListener {
         formadores.cor.corDeFundoNormal  = formadorCorNormal; //new Color(0xFED782);
         formadores.cor.corMarcado = fonteVermelha;
         
-        convidados.cor.corDeFundoMarcado = convidadoCorMarcado; //new Color(0xD97DFF);
-        convidados.cor.corDeFundoNormal = convidadoCorNormal; //new Color(0xE3BAF4);
-        convidados.cor.corMarcado = fonteVermelha;
+        colaboradores.cor.corDeFundoMarcado = colaboradorCorMarcado; //new Color(0xD97DFF);
+        colaboradores.cor.corDeFundoNormal = colaboradorCorNormal; //new Color(0xE3BAF4);
+        colaboradores.cor.corMarcado = fonteVermelha;
         
         visitantes.cor.corDeFundoMarcado = visitanteCorMarcado; //new Color(0x72FF51);
         visitantes.cor.corDeFundoNormal = visitanteCorNormal; //new Color(0xA7F498);
@@ -931,7 +931,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
     private void considerarTodosOsParticipantesDoCurso(boolean registrarModificacao) {
         grSimples.adicionarNos(nosSimplesNaoConsiderados, false);
         grPolar.adicionarNos(nosPolaresNaoConsiderados, false);
-        nosSimplesNaoConsiderados.clear();     
+        nosSimplesNaoConsiderados.clear();
         nosPolaresNaoConsiderados.clear();
         // Força mostrar nós escondidos
         grSimples.mostrarTodosOsNos(registrarModificacao);
@@ -1201,7 +1201,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
             }
 
             grSimples.procurarEstabilidade();
-            grSimples.centralizarGrafo();        
+            grSimples.centralizarGrafo();
 
             getContentPane().setVisible(true);
             repaint();
@@ -1226,7 +1226,7 @@ public class GrafoApplet extends JApplet implements ChangeListener {
 
         /* Justificativa para outros parametros nao serem necessarios:
          * - arestas_com_no_todos: Podem não existir arestas do nó Todos, pois nem sempre esse nó existe.
-         * - convidados e visitantes: Podem não existir convidados nem visitantes, dependendo da ferramenta
+         * - colaboradores e visitantes: Podem não existir colaboradores nem visitantes, dependendo da ferramenta
          * cujos dados estão sendo mostrados.
          * - usuarios_sessao: Podem não existir sessões, se a ferramenta não for o Bate-papo.
          * - textos: Se não houver textos (ou se houver algum problema com os textos 
@@ -1248,9 +1248,9 @@ public class GrafoApplet extends JApplet implements ChangeListener {
     public void stateChanged(javax.swing.event.ChangeEvent e) {
         Object o = e.getSource();
         if (o.equals(panelComAbas)) {
-            ajustarHabilitacaoGrafoForceDirected();            
+            ajustarHabilitacaoGrafoForceDirected();
         }
-    }    
+    }
 
     private void ajustarHabilitacaoGrafoForceDirected() {
         if (panelComAbas.getSelectedComponent() == tabPanelSimples && tabPanelSimples != null) {

@@ -52,7 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  echo("<script language=javascript>\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
+  echo("<script language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -104,10 +106,10 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  // 13 - Fechar (geral)
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
@@ -119,10 +121,10 @@
   echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("        <tr class=\"head\">\n");
   // 64 - Sess�o:
-  echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,64)."</td>\n");
+  echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,64)."</td>\n");
   echo("        </tr>\n");
   echo("        <tr>\n");
-  echo("          <td colspan=2>\n");
+  echo("          <td colspan=\"2\">\n");
   echo(UnixTime2Data($sessao['DataInicio']));
   // 16 - das
   echo(" - ".RetornaFraseDaLista($lista_frases,16)." ");
@@ -138,10 +140,10 @@
   $lista_usuarios=RetornaListaApelidos($sock,$cod_sessao);
 
   echo("        <tr class=\"head01\">\n");
-  // Participante
-  echo("          <td width=50%>Participante</td>\n");
-  // Apelido
-  echo("          <td width=50%>Apelido</td>\n");
+  /* 54 - Participante */
+  echo("          <td width=\"50%\">".RetornaFraseDaLista($lista_frases,54)."</td>\n");
+  /* 120 - Apelido */
+  echo("          <td width=\"50%\">".RetornaFraseDaLista($lista_frases,120)."</td>\n");
   echo("        </tr>\n");
 
   if (count($lista_usuarios)>0)
@@ -150,7 +152,7 @@
     foreach($lista_usuarios as $cod_usu => $apelido)
     {
       echo("        <tr>\n");
-      echo("          <td><a href=# onClick=return(OpenWindowPerfil(".$cod_usu."));>".$lista_nomes_usuarios[$cod_usu]."</a></td>\n");
+      echo("          <td><a href=\"#\" onClick=\"return(OpenWindowPerfil(".$cod_usu."));\">".$lista_nomes_usuarios[$cod_usu]."</a></td>\n");
       echo("          <td>".$apelido."</td>\n");
       echo("        </tr>\n");
     }
@@ -161,9 +163,9 @@
 
   if (count($lista_usuarios)>0)
   {
-    $lista_formadores = RetornaListaCodUsuarioFormador($sock, $cod_curso);
-    $lista_convidados = RetornaCodUsuarioConvidado($sock, $cod_curso);
-    $lista_visitantes = RetornaVisitantes($sock, $cod_curso);
+    $lista_formadores    = RetornaListaCodUsuarioFormador($sock, $cod_curso);
+    $lista_colaboradores = RetornaCodUsuarioColaborado($sock, $cod_curso);
+    $lista_visitantes    = RetornaVisitantes($sock, $cod_curso);
     $fluxo_msgs=RetornaFluxoMensagens($sock,$cod_sessao);
 
     // Cria a barra temporal que acompanha o fluxo de conversa��o
@@ -186,12 +188,13 @@
 
     echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("        <tr class=\"head\">\n");
-    echo("          <td colspan=".$numero.">Mensagens dos Participantes</td>\n");
+    /* 121 - Mensagens dos Participantes */
+    echo("          <td colspan=".$numero.">".RetornaFraseDaLista($lista_frases,121)."</td>\n");
     echo("        </tr>");
     echo("        <tr class=\"head01\">\n");
     foreach($lista_usuarios as $cod_usu => $apelido)
     {
-      echo("          <td colspan=".$numero."><a href=# onClick=return(OpenWindowPerfil(".$cod_usu."));>".$apelido."</a></td>\n");
+      echo("          <td colspan=".$numero."><a href=\"#\" onClick=\"return(OpenWindowPerfil(".$cod_usu."));\">".$apelido."</a></td>\n");
     }
     echo("        </tr>\n");
     echo("        <tr>\n");
@@ -199,8 +202,8 @@
     // Monta a barra do fluxo de conversa��o de um dado usu�rio
     if ($lista_formadores[$cod_usu]==$cod_usu)
       $imagem="figuras/formador.gif";
-    else if ($lista_convidados[$cod_usu] == $cod_usu)
-      $imagem = "figuras/convidado.jpeg";
+    else if ($lista_colaboradores[$cod_usu] == $cod_usu)
+      $imagem = "figuras/colaborador.jpeg";
     else if ($lista_visitantes[$cod_usu])
       $imagem = "figuras/visitante.jpeg";
     else
@@ -215,7 +218,7 @@
        {
          if ($data-$inicio-1>0)
          {
-           echo("          <td><a href=# onClick=return(AbreMensagem(".$cod_usu.",".$data."));><img src=".$imagem." width=16 height=6 border=0></a></td>");
+           echo("          <td><a href=\"#\" onClick=\"return(AbreMensagem(".$cod_usu.",".$data."));\"><img src=\"".$imagem."\" width=\"16\" height=\"6\" border=\"0\"></a></td>");
            $inicio=$data+5;
          }
          if ($cod_fala<0)
@@ -229,17 +232,17 @@
 //     foreach($lista_usuarios as $cod_usu => $apelido)
 //     {
 //       // Monta a barra do fluxo de conversa��o de um dado usu�rio
-//       echo("  <td class=text>\n");
+//       echo("  <td class=\"text\">\n");
 //       if ($lista_formadores[$cod_usu]==$cod_usu)
 //         $imagem="figuras/formador.gif";
-//       else if ($lista_convidados[$cod_usu] == $cod_usu)
-//         $imagem = "figuras/convidado.jpeg";
+//       else if ($lista_colaborador[$cod_usu] == $cod_usu)
+//         $imagem = "figuras/colaborador.jpeg";
 //       else if ($lista_visitantes[$cod_usu])
 //         $imagem = "figuras/visitante.jpeg";
 //       else
 //         $imagem="figuras/aluno.gif";
 // 
-//       echo("    &nbsp;<a href=# onClick=return(OpenWindowPerfil(".$cod_usu."));>".$apelido."</a>&nbsp;\n");
+//       echo("    &nbsp;<a href=\"#\" onClick=\"return(OpenWindowPerfil(".$cod_usu."));\">".$apelido."</a>&nbsp;\n");
 // 
 //       $inicio=$sessao['DataInicio']-3;
 //       $fluxo=$fluxo_msgs[$cod_usu];
@@ -252,11 +255,11 @@
 //           if ($data-$inicio-1>0)
 //           {
 //             if ($online)
-//               echo("<tr><td align=center><img src=".$imagem." width=4 height=".($data-$inicio-1)." border=0></td></tr>");
+//               echo("<tr><td align=\"center\"><img src=\"".$imagem."\" width=\"4\" height=\"".($data-$inicio-1)."\" border=\"0\"></td></tr>");
 //             else
-//               echo("<tr><td align=center><img src=figuras/invisivel.gif width=4 height=".($data-$inicio-1)." border=0></td></tr>");
+//               echo("<tr><td align=\"center\"><img src=\"figuras/invisivel.gif\" width=\"4\" height=\"".($data-$inicio-1)."\" border=\"0\"></td></tr>");
 // 
-//             echo("<tr><td align=center><a href=# onClick=return(AbreMensagem(".$cod_usu.",".$data."));><img src=".$imagem." width=16 height=6 border=0></a></td></tr>");
+//             echo("<tr><td align=\"center\"><a href=\"#\" onClick=\"return(AbreMensagem(".$cod_usu.",".$data."));\"><img src=\"".$imagem."\" width=\"16\" height=\"6\" border=\"0\"></a></td></tr>");
 // 
 //             $inicio=$data+5;
 //           }
@@ -277,18 +280,18 @@
 //       $fim=$sessao['DataFim']+4;
 //       echo("  <td><br>\n");
 //       echo("<table cellpadding=0 cellspacing=0 border=0 width=100%>");
-//       echo("<tr><td align=center><img src=figuras/invisivel.gif width=1 height=3 border=0></td></tr>");
-//       echo("<tr><td align=center><img src=figuras/todos.gif width=5 height=1 border=0></td></tr>");
+//       echo("<tr><td align=\"center\"><img src=\"figuras/invisivel.gif\" width=\"1\" height=\"3\" border=\"0\"></td></tr>");
+//       echo("<tr><td align=\"center\"><img src=\"figuras/todos.gif\" width=\"5\" height=\"1\" border=\"0\"></td></tr>");
 //       while($inicio+$dif_tempo<$fim)
 //       {
-//         echo("<tr><td align=center><img src=figuras/todos.gif width=1 height=".($dif_tempo-1)." border=0></td></tr>");
-//         echo("<tr><td align=center><img src=figuras/todos.gif width=5 height=1 border=0></td></tr>");
+//         echo("<tr><td align=\"center\"><img src=\"figuras/todos.gif\" width=\"1\" height=".($dif_tempo-1)." border=\"0\"></td></tr>");
+//         echo("<tr><td align=\"center\"><img src=\"figuras/todos.gif\" width=\"5\" height=\"1\" border=\"0\"></td></tr>");
 //         $inicio+=$dif_tempo;
 //       }
-//       echo("<tr><td align=center><img src=figuras/todos.gif width=1 height=".($fim-$inicio)." border=0></td></tr>");
+//       echo("<tr><td align=\"center\"><img src=\"figuras/todos.gif\" width=\"1\" height=\"".($fim-$inicio)."\" border=\"0\"></td></tr>");
 // 
 //       echo("</table>\n");
-//       echo("  </td>\n");     
+//       echo("  </td>\n");
 // 
 // 
 //     }
@@ -315,13 +318,13 @@
   // 36 - Legenda
   echo("      <b>".RetornaFraseDaLista($lista_frases,36)."</b>\n");
   // 81 - Formador
-  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/formador.gif width=9 height=9 border=0> - ".RetornaFraseDaLista($lista_frases,81));
+  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/formador.gif\"     width=\"9\" height=\"9\" border=\"0\"> - ".RetornaFraseDaLista($lista_frases,81));
   // 82 - Aluno
-  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/aluno.gif width=9 height=9 border=0> - ".RetornaFraseDaLista($lista_frases,82));
-  // 83 - Convidado
-  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/convidado.jpeg width=9 height=9 border=0> - ".RetornaFraseDaLista($lista_frases,83));
-  // 86 - Visitantes
-  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/visitante.jpeg width=9 height=9 border=0> - ".RetornaFraseDaLista($lista_frases,86));
+  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/aluno.gif\"        width=\"9\" height=\"9\" border=\"0\"> - ".RetornaFraseDaLista($lista_frases,82));
+  // 83 - Colaborador
+  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/colaborador.jpeg\" width=\"9\" height=\"9\" border=\"0\"> - ".RetornaFraseDaLista($lista_frases,83));
+  // 86 - Visitante
+  echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/visitante.jpeg\"   width=\"9\" height=\"9\" border=\"0\"> - ".RetornaFraseDaLista($lista_frases,86));
   echo("    </td>\n");
   echo("  </tr>\n");
   // Fim Tabel�o

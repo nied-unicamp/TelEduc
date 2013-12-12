@@ -52,10 +52,12 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   if (!isset($visualizar))
     $visualizar="todos";
 
-  echo("<script language=javascript>\n");
+  echo("<script language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -104,31 +106,31 @@
 
   echo("<br>\n");
 
-  echo("<form name=mapa action=forum_mapa_interacao2.php target=Intermap method=get>\n");
+  echo("<form name=\"mapa\" action=\"forum_mapa_interacao2.php\" target=\"Intermap\" method=\"get\">\n");
   //echo(RetornaSessionIDInput()."\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=inicio value='".$inicio."'>\n");
-  echo("<input type=hidden name=fim value='".$fim."'>\n");
-  echo("<input type=hidden name=apresentacao value='".$apresentacao."'>\n");
-  echo("<input type=hidden name=cod_forum value='".$cod_forum."'>\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\">\n");
+  echo("<input type=\"hidden\" name=\"inicio\"       value=\"".$inicio."\">\n");
+  echo("<input type=\"hidden\" name=\"fim\"          value=\"".$fim."\">\n");
+  echo("<input type=\"hidden\" name=\"apresentacao\" value=\"".$apresentacao."\">\n");
+  echo("<input type=\"hidden\" name=\"cod_forum\"    value=\"".$cod_forum."\">\n");
 
   /* <!----------------- Tabelao -----------------> */
   echo("<table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 
   if ($apresentacao=="tabela")
   {
     /* 14 - Imprimir (geral) */
-    echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
     if (!$SalvarEmArquivo)
     {
       /* 22 - Salvar Em Arquivo */
-      echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+      echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
     }
   }
   echo("      </ul>\n");
@@ -142,13 +144,13 @@
   echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("        <tr class=\"head\">\n");
   // 29 - F�rum de Discuss�o:
-  echo("          <td width=40%>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
+  echo("          <td width=\"40%\">".RetornaFraseDaLista($lista_frases,29)."</td>\n");
   // 58 - Per�odo:
   echo("          <td>".RetornaFraseDaLista($lista_frases,58)."</td>\n");
   if ($apresentacao=="tabela")
   {
     // 78 - Visualizar:
-    echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,78)."</td>\n");
+    echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,78)."</td>\n");
   }
   echo("        </tr>\n");
 
@@ -173,13 +175,13 @@
       if ($visualizar=="todos")
         $checked="checked";
       // 74 - Todos os participantes do curso
-      echo("            <input type=radio ".$checked." class=g1field name=visualizar value=todos onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
+      echo("            <input type=\"radio\" ".$checked." class=\"g1field\" name=\"visualizar\" value=\"todos\" onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
 
       $checked="";
       if ($visualizar=="mensagens")
         $checked="checked";
       // 56 - Participantes que enviaram mensagens
-      echo("            <input type=radio ".$checked." class=g1field name=visualizar value=mensagens onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,56)."<br>\n");
+      echo("            <input type=\"radio\" ".$checked." class=\"g1field\" name=\"visualizar\" value=\"mensagens\" onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,56)."<br>\n");
     }
     else
     {
@@ -345,11 +347,11 @@
     echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("        <tr class=\"head\">\n");
     // 13 - Autor da Mensagem
-    echo("          <td width=40%>".RetornaFraseDaLista($lista_frases,13)."</td>\n");
+    echo("          <td width=\"40%\">".RetornaFraseDaLista($lista_frases,13)."</td>\n");
     // 80 - Em resposta a Mensagem de
     echo("          <td>".RetornaFraseDaLista($lista_frases,80)."</td>\n");
     // 59 - Quantidade
-    echo("          <td width=35%>".RetornaFraseDaLista($lista_frases,59)."</td>\n");
+    echo("          <td width=\"35%\">".RetornaFraseDaLista($lista_frases,59)."</td>\n");
     echo("        </tr>\n");
 
     $lista_usuarios=RetornaListaCodUsuarioNome($sock, $cod_curso);

@@ -52,24 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,19);
-  $lista_frases_batepapo=RetornaListaDeFrases($sock,10);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario); */
-
   $lista_frases_batepapo=RetornaListaDeFrases($sock,10);
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
   echo("  function Iniciar() \n");
   echo("  { \n");
   echo("    startList(); \n");
@@ -90,8 +75,8 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
@@ -111,14 +96,14 @@
     {
       echo("        <tr>\n");
       echo("          <td>\n");
-      echo("<font class=textsmall>(".Unixtime2Hora($linha['Data']).")</font>\n");
+      echo("<font class=\"textsmall\">(".Unixtime2Hora($linha['Data']).")</font>\n");
       if ($cod_usuario == $linha['cod_usuario']) 
       {
-        print "<font class=text color=#2a6686>";
+        print "<font class=\"text\" color=\"#2a6686\">";
       }
       if ($cod_usuario == $linha['cod_usuario_r']) 
       {
-        print "<font class=text color=#2a6686>";
+        print "<font class=\"text\" color=\"#2a6686\">";
       }
       echo("<b>".$linha['Apelido']."</b> ".RetornaFraseDaLista($lista_frases_batepapo,$linha['cod_texto_fala'])." ");
       if ($linha['cod_texto_fala']>8) /* N�o � entrada ou sa�da... */

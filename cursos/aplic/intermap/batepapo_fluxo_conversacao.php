@@ -44,10 +44,10 @@
 
   $linha_curso=RetornaDadosCurso($sock,$cod_curso);
 
-  echo("<form name=mapa action=batepapo_fluxo_conversacao2.php target=Intermap method=get>\n");
+  echo("<form name=\"mapa\" action=\"batepapo_fluxo_conversacao2.php\" target=\"Intermap\" method=\"get\">\n");
   //echo(RetornaSessionIDInput()."\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso." />\n");
-  echo("<input type=hidden name=todos value=sim />\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+  echo("<input type=\"hidden\" name=\"todos\"     value=\"sim\" />\n");
 
   echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("  <tr class=\"head\">\n");
@@ -60,10 +60,10 @@
   {
     echo("  <tr>\n");
     echo("    <td>\n");
-    echo("      <select class=input name=cod_sessao>\n");
+    echo("      <select class=\"input\" name=\"cod_sessao\">\n");
     foreach ($sessoes as $cod => $linha)
     {
-       echo("        <option value=".$linha['cod_sessao'].">");
+       echo("        <option value=\"".$linha['cod_sessao']."\">");
        echo(UnixTime2Data($linha['DataInicio']));
        // 16 - das
        echo(" - ".RetornaFraseDaLista($lista_frases,16)." ");
@@ -94,7 +94,7 @@
   {
     echo("<div align=\"right\">\n");
     // 53 - Ok
-    echo("  <input class=input type=submit value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
+    echo("  <input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
     echo("</div>\n");
   }
 

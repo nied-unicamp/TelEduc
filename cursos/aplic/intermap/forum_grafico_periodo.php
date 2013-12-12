@@ -67,35 +67,35 @@
 
   if (count($foruns)>0)
   {
-    echo("<form name=mapa action=forum_grafico_periodo2.php target=Intermap method=get onsubmit=return(Valida())>\n");
+    echo("<form name=\"mapa\" action=\"forum_grafico_periodo2.php\" target=\"Intermap\" method=\"get\" onsubmit=\"return(Valida());\">\n");
 
     //echo(RetornaSessionIDInput()."\n");
-    echo("<input type=hidden name=cod_curso value=".$cod_curso." />\n");
-    echo("<input type=hidden name=todos value=sim />\n");
+    echo("<input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
+    echo("<input type=\"hidden\" name=\"todos\"     value=\"sim\" />\n");
 
     echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("  <tr class=\"head\">\n");
     // 7 - Apresenta��o:
-    echo("    <td width=30%>".RetornaFraseDaLista($lista_frases,7)."</td>\n");
+    echo("    <td width=\"30%\">".RetornaFraseDaLista($lista_frases,7)."</td>\n");
     // 29 - F�rum de Discuss�o:
-    echo("    <td width=40%>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
+    echo("    <td width=\"40%\">".RetornaFraseDaLista($lista_frases,29)."</td>\n");
     // 58 - Per�odo:
-    echo("    <td width=30%>".RetornaFraseDaLista($lista_frases,58)."</td>\n");
+    echo("    <td width=\"30%\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
     echo("  </tr>\n");
 
     echo("  <tr>\n");
     echo("    <td>\n");
     // 31 - Gr�fico
-    echo("      <input type=radio checked class=g1field name=apresentacao value=grafico />".RetornaFraseDaLista($lista_frases,31)."<br/>");
+    echo("      <input type=\"radio\" checked class=\"g1field\" name=\"apresentacao\" value=\"grafico\" />".RetornaFraseDaLista($lista_frases,31)."<br/>");
     // 68 - Tabela
-    echo("      <input type=radio class=g1field name=apresentacao value=tabela />".RetornaFraseDaLista($lista_frases,68)."<br/>");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"apresentacao\" value=\"tabela\" />".RetornaFraseDaLista($lista_frases,68)."<br/>");
     echo("    </td>\n");
 
     echo("    <td>\n");
-    echo("      <select class=input name=cod_forum>\n");
+    echo("      <select class=\"input\" name=\"cod_forum\">\n");
     foreach($foruns as $cod_forum => $linha)
     {
-      echo("        <option value=".$cod_forum.">");
+      echo("        <option value=\"".$cod_forum."\">");
       echo($linha['nome']." ");
       if ($linha['status']=='L')
         echo("(somente leitura)");
@@ -128,26 +128,26 @@
     // 6 - Agrupar por:
     echo("    <td>".RetornaFraseDaLista($lista_frases,6)."</td>\n");
     // 25 - Exibir:
-    echo("    <td colspan=2>".RetornaFraseDaLista($lista_frases,25)."</td>\n");
+    echo("    <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,25)."</td>\n");
     echo("  </tr>\n");
 
     echo("  <tr>\n");
     echo("    <td>\n");
     // 21 - Dia
-    echo("      <input type=radio checked class=g1field name=agrupar value=dia />".RetornaFraseDaLista($lista_frases,21)."<br/>\n");
+    echo("      <input type=\"radio\" checked class=\"g1field\" name=\"agrupar\" value=\"dia\" />".RetornaFraseDaLista($lista_frases,21)."<br/>\n");
     // 63 - Semana
-    echo("      <input type=radio class=g1field name=agrupar value=semana />".RetornaFraseDaLista($lista_frases,63)."<br/>\n");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"agrupar\" value=\"semana\" />".RetornaFraseDaLista($lista_frases,63)."<br/>\n");
     // 46 - M�s
-    echo("      <input type=radio class=g1field name=agrupar value=mes />".RetornaFraseDaLista($lista_frases,46)."<br/>\n");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"agrupar\" value=\"mes\" />".RetornaFraseDaLista($lista_frases,46)."<br/>\n");
     echo("    </td>\n");
 
-    echo("    <td colspan=2>\n");
+    echo("    <td colspan=\"2\">\n");
     // 73 - Todos os participantes
-    echo("      <input type=radio checked class=g1field name=exibir value=todos />".RetornaFraseDaLista($lista_frases,73)."<br/>\n");
+    echo("      <input type=\"radio\" checked class=\"g1field\" name=\"exibir\" value=\"todos\" />".RetornaFraseDaLista($lista_frases,73)."<br/>\n");
     // 66 - Somente Formadores
-    echo("      <input type=radio class=g1field name=exibir value=formador />".RetornaFraseDaLista($lista_frases,66)."<br/>\n");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"exibir\" value=\"formador\" />".RetornaFraseDaLista($lista_frases,66)."<br/>\n");
     // 65 - Somente Alunos
-    echo("      <input type=radio class=g1field name=exibir value=aluno />".RetornaFraseDaLista($lista_frases,65)."<br/>\n");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"exibir\" value=\"aluno\" />".RetornaFraseDaLista($lista_frases,65)."<br/>\n");
     echo("    </td>\n");
     echo("  </tr>\n");
 
@@ -155,7 +155,7 @@
 
     echo("<div align=\"right\">\n");
     // 53 - Ok
-    echo("  <input type=submit class=input value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
+    echo("  <input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
     echo("</div>\n");
     echo("</form>\n");
   }
