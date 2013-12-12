@@ -165,7 +165,7 @@
     /**************** ajax ****************/
 
   $objMaterial->printJavascript("../xajax_0.2.4/");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("        function redirecionaDownloadAnexos(url){\n");
   echo("            window.location=url;\n");
   echo("        }\n");

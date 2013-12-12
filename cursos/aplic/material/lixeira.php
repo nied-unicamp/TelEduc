@@ -124,7 +124,7 @@
     $cod_pagina_ajuda = 3;
   }
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");

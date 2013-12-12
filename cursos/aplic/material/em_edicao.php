@@ -62,7 +62,7 @@
 
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta);
   
-  if (EConvidadoPassivo ($sock, $cod_usuario))
+  if (EVisitante($sock, $cod_curso, $cod_usuario))
   {
     echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
     echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
@@ -112,19 +112,19 @@
 
   switch ($cod_ferramenta) {
     case 3 :
-      echo("  <link rel=stylesheet TYPE=text/css href=atividades.css>\n");
+      echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"atividades.css\">\n");
       $tabela="Atividade";
       break;
     case 4 :
-      echo("  <link rel=stylesheet TYPE=text/css href=apoio.css>\n");
+      echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"apoio.css\">\n");
       $tabela="Apoio";
       break;
     case 5 :
-      echo("  <link rel=stylesheet TYPE=text/css href=leituras.css>\n");
+      echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"leituras.css\">\n");
       $tabela="Leitura";
       break;
     case 7 :
-      echo("  <link rel=stylesheet TYPE=text/css href=obrigatoria.css>\n");
+      echo("  <link rel=\"stylesheet\" type=\"text/css\" href=\"obrigatoria.css\">\n");
       $tabela="Obrigatoria";
       break;
   }
@@ -167,7 +167,7 @@
   }
   else
   {
-    echo("            <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("            <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("               window.opener.document.location='".$origem.".php?cod_curso=".$cod_curso."&amp;cod_topico=".$cod_topico_raiz."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_item=".$cod_item."&amp;cod_usuario_portfolio=".$cod_usuario_portfolio."&amp;cod_grupo_portfolio=".$cod_grupo_portfolio."';\n");
     echo("            </script>\n");
     echo("          </ul>\n");
