@@ -52,10 +52,12 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   if (!isset($visualizar))
     $visualizar="todos";
 
-  echo("<script language=javascript>\n");
+  echo("<script language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -113,27 +115,27 @@
   $lista_usuarios        = RetornaTodosUsuarios($sock, $cod_curso);
   $lista_usuarios_sessao = RetornaListaApelidos($sock,$cod_sessao);
 
-  echo("<form name=mapa action=batepapo_grafico_participante2.php target=Intermap method=get>\n");
+  echo("<form name=\"mapa\" action=\"batepapo_grafico_participante2.php\" target=\"Intermap\" method=\"get\">\n");
   //echo(RetornaSessionIDInput()."\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=cod_sessao value='".$cod_sessao."'>\n");
-  echo("<input type=hidden name=apresentacao value='".$apresentacao."'>\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\"    value=\"".$cod_curso."\">\n");
+  echo("<input type=\"hidden\" name=\"cod_sessao\"   value=\"".$cod_sessao."\">\n");
+  echo("<input type=\"hidden\" name=\"apresentacao\" value=\"".$apresentacao."\">\n");
 
   /* <!----------------- Tabelao -----------------> */
   echo("<table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
 
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
   if (!$SalvarEmArquivo && $apresentacao=="tabela")
   {
     /* 22 - Salvar Em Arquivo */
-    echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
   }
   echo("      </ul>\n");
   echo("    </td>\n");
@@ -170,9 +172,9 @@
   {
     echo("          <td>\n");
     // 74 - Todos os participantes do curso
-    echo("            <input class=g1field type=radio name=visualizar ".($visualizar=="todos"?"checked":"")." value=todos onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
+    echo("            <input class=\"g1field\" type=\"radio\" name=\"visualizar\" ".($visualizar=="todos"?"checked":"")." value=\"todos\" onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,74)."<br>\n");
     // 67 - Somente os que participaram da sess�o
-    echo("            <input class=g1field type=radio name=visualizar ".($visualizar=="sessao"?"checked":"")." value=sessao onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,67)."<br>\n");
+    echo("            <input class=\"g1field\" type=\"radio\" name=\"visualizar\" ".($visualizar=="sessao"?"checked":"")." value=sessao onClick=\"document.mapa.submit();\">".RetornaFraseDaLista($lista_frases,67)."<br>\n");
   }
   else
   {
@@ -187,9 +189,9 @@
   }
   echo("        </tr>\n");
 
-  $lista_formadores = RetornaListaCodUsuarioFormador($sock, $cod_curso);
-  $lista_convidados = RetornaCodUsuarioConvidadoComSemInteracao($sock, $cod_curso);
-  $lista_visitantes = RetornaCodUsuarioVisitantes($sock, $cod_curso);
+  $lista_formadores    = RetornaListaCodUsuarioFormador($sock, $cod_curso);
+  $lista_colaboradores = RetornaCodUsuarioColaborador($sock, $cod_curso);
+  $lista_visitantes    = RetornaCodUsuarioVisitantes($sock, $cod_curso);
 
   $msgs_qtde=RetornaQtdeMsgsUsuario($sock,$cod_sessao,$lista_usuarios);
 
@@ -239,14 +241,14 @@
           {
             if ($lista_formadores[$cod_usu]=$cod_usu)
               $imagem = "formador.gif";
-            else if ($lista_convidados[$cod_usu] == $cod_usu)
-              $imagem = "convidado.jpeg";
+            else if ($lista_colaboradores[$cod_usu] == $cod_usu)
+              $imagem = "colaborador.jpeg";
             else if ($lista_visitantes[$cod_usu] == $cod_usu)
               $imagem = "visitante.jpeg";
             else
               $imagem = "aluno.gif";
             if($max_qtde != 0)
-              echo("          <td><img src=figuras/".$imagem." border=0 height=5 width=".($msgs_qtde[$cod_usu]*400/$max_qtde).">&nbsp;".(int)$msgs_qtde[$cod_usu]."</td>\n");
+              echo("          <td><img src=\"figuras/".$imagem."\" border=\"0\" height=\"5\" width=\"".($msgs_qtde[$cod_usu]*400/$max_qtde)."\">&nbsp;".(int)$msgs_qtde[$cod_usu]."</td>\n");
             else
               echo("          <td>".(int)$msgs_qtde[$cod_usu]."</td>\n");
           }

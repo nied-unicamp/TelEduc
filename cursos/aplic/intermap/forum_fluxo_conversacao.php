@@ -48,22 +48,22 @@
 
   if (count($foruns)>0)
   {
-    echo("<form name=mapa action=forum_fluxo_conversacao2.php target=Intermap method=get>\n");
+    echo("<form name=\"mapa\" action=\"forum_fluxo_conversacao2.php\" target=\"Intermap\" method=\"get\">\n");
     //echo(RetornaSessionIDInput()."\n");
-    echo("<input type=hidden name=cod_curso value=".$cod_curso." />\n");
-    echo("<input type=hidden name=todos value=sim />\n");
+    echo("<input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso." />\n");
+    echo("<input type=\"hidden\" name=\"todos\"     value=\"sim\" />\n");
 
     echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
     echo("  <tr class=\"head\">\n");
     // 29 - F�rum de Discuss�o:
-    echo("    <td width=50%>".RetornaFraseDaLista($lista_frases,29)."</td>\n");
+    echo("    <td width=\"50%\">".RetornaFraseDaLista($lista_frases,29)."</td>\n");
     // 25 - Exibir:
     echo("    <td>".RetornaFraseDaLista($lista_frases,25)."</td>\n");
     echo("  </tr>\n");
 
     echo("  <tr>\n");
     echo("    <td>\n");
-    echo("      <select class=input name=cod_forum>\n");
+    echo("      <select class=\"input\" name=\"cod_forum\">\n");
     foreach($foruns as $cod_forum => $linha)
     {
       echo("        <option value=".$cod_forum.">");
@@ -81,9 +81,9 @@
 
     echo("    <td>\n");
     // 24 - Estrutura de Respostas
-    echo("      <input type=radio checked class=g1field name=exibir value=estrutura />".RetornaFraseDaLista($lista_frases,24)."<br/>\n");
+    echo("      <input type=\"radio\" checked class=\"g1field\" name=\"exibir\" value=\"estrutura\" />".RetornaFraseDaLista($lista_frases,24)."<br/>\n");
     // 35 - Interven��o do Professor
-    echo("      <input type=radio class=g1field name=exibir value=intervencao />".RetornaFraseDaLista($lista_frases,35)."<br/>\n");
+    echo("      <input type=\"radio\" class=\"g1field\" name=\"exibir\" value=\"intervencao\" />".RetornaFraseDaLista($lista_frases,35)."<br/>\n");
     echo("    </td>\n");
     echo("  </tr>\n");
 
@@ -91,7 +91,7 @@
 
     echo("<div align=\"right\">\n");
     // 53 - Ok
-    echo("  <input class=input type=submit value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
+    echo("  <input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
     echo("</div>\n");
     echo("</form>\n");
   }

@@ -72,7 +72,7 @@
   /* Obt�m dados da mensagem.           */
   list($total, $mensagem_dados) = RetornaMensagem($sock, $cod_msg, $cod_forum);
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -103,8 +103,8 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
@@ -121,18 +121,18 @@
     /* Exibe os nomes dos campos da tabela.                                  */
     echo("        <tr class=\"head\">\n");
     // 71 - T�tulo
-    echo("          <td width=40%>".RetornaFraseDaLista($lista_frases,71)."</td>\n");
+    echo("          <td width=\"40%\">".RetornaFraseDaLista($lista_frases,71)."</td>\n");
     // 22 - Emissor
-    echo("          <td width=30%>".RetornaFraseDaLista($lista_frases,22)."</td>\n");
+    echo("          <td width=\"30%\">".RetornaFraseDaLista($lista_frases,22)."</td>\n");
     // 17 - Data
-    echo("          <td width=30%>".RetornaFraseDaLista($lista_frases,17)."</td>\n");
+    echo("          <td width=\"30%\">".RetornaFraseDaLista($lista_frases,17)."</td>\n");
     echo("        </tr>\n");
 
     /* Exibe os dados da emissao da mensagem: titulo, nome do emissor e data */
     echo("        <tr>\n");
     /* Exibe o titulo da mensagem eliminando algumas tags HTML.              */
     echo("          <td>".LimpaTitulo($mensagem_dados['titulo'])."</td>\n");
-    echo("          <td><a href=# onClick=return(OpenWindowPerfil(".$mensagem_dados['cod_usuario']."));>".$nome_usuario."</a></td>\n");
+    echo("          <td><a href=\"#\" onClick=\"return(OpenWindowPerfil(".$mensagem_dados['cod_usuario']."));\">".$nome_usuario."</a></td>\n");
     echo("          <td>".$data.", ".$hora."</td>\n");
     echo("        </tr>\n");
 
@@ -144,7 +144,7 @@
     /* Exibe o conte�do da mensagem convertendo quebras de linhas em tags  */
     /* <BR> e elimina algumas tags HTML.                                   */
     echo("        <tr>\n");
-    echo("          <td colspan=3>".Enter2BR(LimpaConteudo($mensagem_dados['mensagem']))."</td>\n");
+    echo("          <td colspan=\"3\">".Enter2BR(LimpaConteudo($mensagem_dados['mensagem']))."</td>\n");
     echo("        </tr>\n");
     // Fim Tabela Interna
     echo("      </table>\n");

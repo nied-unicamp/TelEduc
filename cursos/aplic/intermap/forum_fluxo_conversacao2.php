@@ -52,7 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  echo("<script language=javascript>\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
+  echo("<script language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -109,10 +111,10 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
@@ -124,8 +126,8 @@
 
   if (count($fluxo)>0)
   {
-    $lista_usuarios=RetornaAlunosFormadoresCodUsuarioNome($sock, $cod_curso);
-    $lista_formadores=RetornaListaCodUsuarioFormador($sock, $cod_curso);
+    $lista_usuarios   = RetornaAlunosFormadoresCodUsuarioNome($sock, $cod_curso);
+    $lista_formadores = RetornaListaCodUsuarioFormador($sock, $cod_curso);
 
     if ($exibir=="estrutura")
     {
@@ -138,7 +140,7 @@
           $cor="#2a6686";
         else
           $cor="FFE0C0";
-        echo("          <td><a href=# onClick=return(OpenWindowPerfil(".$cod_usu."));><font color=".$cor.">".$nome."</font></a></td>\n");
+        echo("          <td><a href=\"#\" onClick=\"return(OpenWindowPerfil(".$cod_usu."));\"><font color=\"".$cor."\">".$nome."</font></a></td>\n");
       }
       echo("        </tr>\n");
       foreach ($fluxo as $cod_msg => $linha)
@@ -149,11 +151,18 @@
         foreach($lista_usuarios as $cod_usu => $nome)
         {
           echo("          <td>");
-          if ($cod_usu == $linha['cod_usuario'])
-            echo("            <a href=# onclick=return(AbreMensagem(".$cod_msg."));><img src=figuras/poucas.gif width=7 height=4 border=0></a>\n");
-          if (count($respostas[$cod_usu])>0)
-            foreach($respostas[$cod_usu] as $cod_msg => $data)
-              echo("            <a href=# onclick=return(AbreMensagem(".$cod_msg."));><img src=figuras/muitas.gif width=7 height=4 border=0></a>\n");
+          if ($cod_usu == $linha['cod_usuario']) {
+            echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$cod_msg."));\">\n");
+            echo("              <img src=\"figuras/poucas.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+            echo("            </a>\n");
+          }
+          if (count($respostas[$cod_usu])>0) {
+            foreach($respostas[$cod_usu] as $cod_msg => $data) {
+              echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$cod_msg."));\">\n");
+              echo("              <img src=\"figuras/muitas.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+              echo("            </a>\n");
+            }
+          }
           echo("          </td>\n");
         }
         echo("        </tr>\n");
@@ -177,18 +186,30 @@
 
         $respostas=AgrupaArrayRespostasPorData($linha['respostas']);
         echo("          <td>\n"); 
-        if ($lista_formadores[$linha['cod_usuario']]==$linha['cod_usuario'])
-          echo("            <a href=# onclick=return(AbreMensagem(".$cod_msg."));><img src=figuras/formador.gif width=7 height=4 border=0></a>\n");
-        else
-          echo("            <a href=# onclick=return(AbreMensagem(".$cod_msg."));><img src=figuras/aluno.gif width=7 height=4 border=0></a>\n");
+        if ($lista_formadores[$linha['cod_usuario']]==$linha['cod_usuario']) {
+          echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$cod_msg."));\">\n");
+          echo("              <img src=\"figuras/formador.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+          echo("            </a>\n");
+        }
+        else {
+          echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$cod_msg."));\">\n");
+          echo("              <img src=\"figuras/aluno.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+          echo("            </a>\n");
+        }
         if (count($respostas)>0)
         {
           foreach($respostas as $data => $linha1)
           {
-            if ($lista_formadores[$linha1['cod_usuario']]==$linha1['cod_usuario'])
-              echo("            <a href=# onclick=return(AbreMensagem(".$linha1['cod_msg']."));><img src=figuras/formador.gif width=7 height=4 border=0></a>\n");
-            else
-              echo("            <a href=# onclick=return(AbreMensagem(".$linha1['cod_msg']."));><img src=figuras/aluno.gif width=7 height=4 border=0></a>\n");
+            if ($lista_formadores[$linha1['cod_usuario']]==$linha1['cod_usuario']) {
+              echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$linha1['cod_msg']."));\">\n");
+              echo("              <img src=\"figuras/formador.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+              echo("            </a>\n");
+            }
+            else {
+              echo("            <a href=\"#\" onclick=\"return(AbreMensagem(".$linha1['cod_msg']."));\">\n");
+              echo("              <img src=\"figuras/aluno.gif\" width=\"7\" height=\"4\" border=\"0\">\n");
+              echo("            </a>\n");
+            }
           }
         }
         echo("          </td>\n");
@@ -216,18 +237,18 @@
     // 36 - Legenda:
     echo("      <b>".RetornaFraseDaLista($lista_frases,36)."</b>\n");
     // 40 - Mensagem inicial de um assunto
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/poucas.gif width=7 height=4 border=0> ".RetornaFraseDaLista($lista_frases,40));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/poucas.gif\" width=\"7\" height=\"4\" border=\"0\"> ".RetornaFraseDaLista($lista_frases,40));
     // 62 - Resposta de mensagens iniciais
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/muitas.gif width=7 height=4 border=0> ".RetornaFraseDaLista($lista_frases,62));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/muitas.gif\" width=\"7\" height=\"4\" border=\"0\"> ".RetornaFraseDaLista($lista_frases,62));
   }
   else
   {
     // 36 - Legenda:
     echo("      <b>".RetornaFraseDaLista($lista_frases,36)."</b>\n");
     // 45 - Mensagens de formadores
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/formador.gif width=7 height=4 border=0> ".RetornaFraseDaLista($lista_frases,45));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/formador.gif\" width=\"7\" height=\"4\" border=\"0\"> ".RetornaFraseDaLista($lista_frases,45));
     // 44 - Mensagens de alunos
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/aluno.gif width=7 height=4 border=0> ".RetornaFraseDaLista($lista_frases,44));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/aluno.gif\" width=\"7\" height=\"4\" border=\"0\"> ".RetornaFraseDaLista($lista_frases,44));
   }
 
   echo("    </td>\n");

@@ -52,7 +52,9 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -107,15 +109,15 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar (geral) */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
   if (!$SalvarEmArquivo && $apresentacao=="tabela")
   {
     /* 22 - Salvar Em Arquivo */
-    echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
   }
   echo("      </ul>\n");
   echo("    </td>\n");
@@ -157,8 +159,8 @@
   else if ($exibir=="aluno")
     // 65 - Somente Alunos
     echo("            ".RetornaFraseDaLista($lista_frases,65));
-  else if ($exibir == "convidado")
-    // 84 - Somente Convidados
+  else if ($exibir == "colaborador")
+    // 84 - Somente Colaboradores
     echo("            ".RetornaFraseDaLista($lista_frases,84));
   echo("          </td>\n");
   echo("        </tr>\n");
@@ -176,8 +178,8 @@
          $msgs_qtde[$cod]['qtde']=(int)$linha['qtde_formador'];
        else if ($exibir=="aluno")
          $msgs_qtde[$cod]['qtde']=(int)$linha['qtde_aluno'];
-       else if ($exibir == "convidado")
-         $msgs_qtde[$cod]['qtde']=(int)$linha['qtde_convidado'];
+       else if ($exibir == "colaborador")
+         $msgs_qtde[$cod]['qtde']=(int)$linha['qtde_colaborador'];
        if ($max_qtde<$msgs_qtde[$cod]['qtde'])
          $max_qtde=$msgs_qtde[$cod]['qtde'];
      }
@@ -188,8 +190,8 @@
        $classe="Aluno";
      else if ($exibir=="formador")
        $classe="Formador";
-     else if ($exibir == "convidado")
-       $classe="Convidado";
+     else if ($exibir == "colaborador")
+       $classe="Colaborador";
 
      $total=0;
 
@@ -202,8 +204,8 @@
        // Fim Tabela Interna
        echo("      </table>\n");
        echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-       echo("        <tr valign=bottom align=center>\n");
-       echo("          <td class=text valign=middle align=right>&nbsp;</td>\n");
+       echo("        <tr valign=\"bottom\" align=\"center\">\n");
+       echo("          <td class=\"text\" valign=\"middle\" align=\"right\">&nbsp;</td>\n");
        foreach($msgs_qtde as $periodo => $linha)
        {
          $total+=$linha['qtde'];
@@ -214,13 +216,15 @@
 
          switch($exibir)
          {
-           case "todos"     : $imagem = "todos.gif";      break;
-           case "aluno"     : $imagem = "aluno.gif";      break;
-           case "formador"  : $imagem = "formador.gif";   break;
-           case "convidado" : $imagem = "convidado.jpeg"; break;
+           case "todos"       : $imagem = "todos.gif";        break;
+           case "aluno"       : $imagem = "aluno.gif";        break;
+           case "formador"    : $imagem = "formador.gif";     break;
+           case "colaborador" : $imagem = "colaborador.jpeg"; break;
          }
 
-         echo("          <td class=text>".$linha['qtde']."<br><img src=figuras/".$imagem." border=0 width=5 height=".$tam." ></td>\n");
+         echo("          <td class=\"text\">".$linha['qtde']."<br>\n");
+         echo("            <img src=\"figuras/".$imagem."\" border=\"0\" width=\"5\" height=\"".$tam."\" >\n");
+         echo("          </td>\n");
        }
        echo("        </tr>\n");
 
@@ -231,14 +235,14 @@
        foreach($msgs_qtde as $periodo => $linha)
        {
          $tmp=explode("/",$periodo);
-         echo("          <td class=text>&nbsp;".$tmp[0]."&nbsp;</td>\n");
+         echo("          <td class=\"text\">&nbsp;".$tmp[0]."&nbsp;</td>\n");
          $number++;
        }
        echo("        </tr>\n");
 
-       echo("        <tr valign=bottom>\n");
+       echo("        <tr valign=\"bottom\">\n");
        // 46 - M�s
-       echo("          <td class=text align=right><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
+       echo("          <td class=\"text\" align=\"right\"><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
 
        $mes_anterior="-1";
        unset($meses);
@@ -256,7 +260,7 @@
        }
        foreach($meses as $cod => $linha)
        {
-         echo("          <td class=text colspan=".$linha['num_dias'].">&nbsp;".$linha['nome']."&nbsp;</td>\n");
+         echo("          <td class=\"text\" colspan=".$linha['num_dias'].">&nbsp;".$linha['nome']."&nbsp;</td>\n");
        }
        echo("        </tr>\n");
      }
@@ -312,17 +316,19 @@
 
            switch($exibir)
            {
-             case "todos"     : $imagem = "todos.gif";      break;
-             case "aluno"     : $imagem = "aluno.gif";      break;
-             case "formador"  : $imagem = "formador.gif";   break;
-             case "convidado" : $imagem = "convidado.jpeg"; break;
+             case "todos"       : $imagem = "todos.gif";        break;
+             case "aluno"       : $imagem = "aluno.gif";        break;
+             case "formador"    : $imagem = "formador.gif";     break;
+             case "colaborador" : $imagem = "colaborador.jpeg"; break;
            }
-           echo("          <td align=left><img src=figuras/".$imagem." border=0 width=".$tam." height=5>&nbsp;".$linha['qtde']."</td>\n");
+           echo("          <td align=\"left\">\n");
+           echo("            <img src=\"figuras/".$imagem."\" border=\"0\" width=\"".$tam."\" height=\"5\">&nbsp;".$linha['qtde']."\n");
+           echo("          </td>\n");
          }
          else
          {
            $i = ($i + 1) % 2;
-           echo("          <td class=text align=center>".$linha['qtde']."</td>\n");
+           echo("          <td class=\"text\" align=\"center\">".$linha['qtde']."</td>\n");
          }
          echo("        </tr>\n");
        }
@@ -331,7 +337,7 @@
      {
        echo("        <tr class=\"head01\">\n");
        // 63 - Semana
-       echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,63)."</td>\n");
+       echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,63)."</td>\n");
        // 60 - Quantidade de Mensagens
        echo("          <td>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
        echo("        </tr>\n");
@@ -361,17 +367,19 @@
            $mes2=$tmp2[0]."/".$mes2;
          }
          echo("        <tr>\n");
-         echo("          <td colspan=2>&nbsp;".$mes1."&nbsp;a&nbsp;".$mes2."</td>\n");
+         echo("          <td colspan=\"2\">&nbsp;".$mes1."&nbsp;a&nbsp;".$mes2."</td>\n");
          switch($exibir)
          {
-           case "todos"     : $imagem = "todos.gif";      break;
-           case "aluno"     : $imagem = "aluno.gif";      break;
-           case "formador"  : $imagem = "formador.gif";   break;
-           case "convidado" : $imagem = "convidado.jpeg"; break;
+           case "todos"       : $imagem = "todos.gif";        break;
+           case "aluno"       : $imagem = "aluno.gif";        break;
+           case "formador"    : $imagem = "formador.gif";     break;
+           case "colaborador" : $imagem = "colaborador.jpeg"; break;
          }
          if ($apresentacao=="grafico")
          {
-           echo("          <td align=left><img src=figuras/".$imagem." border=0 width=".$tam." height=5>&nbsp;".$linha['qtde']."</td>\n");
+           echo("          <td align=left>\n");
+           echo("            <img src=\"figuras/".$imagem."\" border=\"0\" width=\"".$tam."\" height=\"5\">&nbsp;".$linha['qtde']."\n");
+           echo("          </td>\n");
          }
          else
          {
@@ -393,7 +401,7 @@
      {
        echo("        <tr class=\"head01\">\n");
        // 76 - Total de mensagens enviadas:
-       echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
+       echo("          <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,76)."&nbsp;<a>".$total."</a></td>\n");
        echo("        </tr>\n");
      }
   }

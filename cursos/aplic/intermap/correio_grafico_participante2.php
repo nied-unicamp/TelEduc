@@ -52,13 +52,15 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+
   if (!isset($limite_baixo) || !isset($limite_alto))
   {
     $limite_baixo=2;
     $limite_alto=6;
   }
 
-  echo("<script type=\"text/javascript\" language=javascript>\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("  function Iniciar() \n");
   echo("  { \n");
@@ -117,15 +119,15 @@
   echo("  <tr>\n");
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
-  // 26 - Fechar
-  echo("        <li><span title=\"Fechar\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases,26)."</span></li>\n");
+  /* 13 - Fechar */
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,13)."\" onClick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
   /* 14 - Imprimir (geral) */
-  echo("        <li><span title=\"Imprimir\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,14)."\" onClick=\"ImprimirRelatorio();\">".RetornaFraseDaLista($lista_frases_geral,14)."</span></li>\n");
 
   if (!$SalvarEmArquivo && $apresentacao=="tabela")
   {
     /* 22 - Salvar Em Arquivo */
-    echo("        <li><span title=\"Salvar em Arquivo\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
+    echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,50)."\" onClick=\"SalvarEmArquivo();\">".RetornaFraseDaLista($lista_frases_geral,50)."</span></li>\n");
   }
   echo("      </ul>\n");
   echo("    </td>\n");
@@ -173,8 +175,8 @@
   echo("          </td>\n");
   echo("        </tr>\n");
 
-  $lista_formadores = RetornaListaCodUsuarioFormador($sock, $cod_curso);
-  $lista_convidados = RetornaCodUsuarioConvidado($sock, $cod_curso);
+  $lista_formadores    = RetornaListaCodUsuarioFormador($sock, $cod_curso);
+  $lista_colaboradores = RetornaCodUsuarioColaborador($sock, $cod_curso);
 
   if ($cod_usu>=0)
   {
@@ -195,11 +197,11 @@
          $classe = "Formador";
          $imagem = "formador.gif";
        }
-       else if ($lista_convidados[$cod_usu]==$cod_usu)
+       else if ($lista_colaborador[$cod_usu]==$cod_usu)
        {
-         $exibir = "convidado";
-         $classe = "Convidado";
-         $imagem = "convidado.jpeg";
+         $exibir = "colaborador";
+         $classe = "Colaborador";
+         $imagem = "colaborador.jpeg";
        }
        else
        {
@@ -214,13 +216,13 @@
        {
          echo("        <tr class=\"head01\">\n");
          // 79 - Quantidade de Mensagens por Dia
-         echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,79)."</td>\n");
+         echo("          <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,79)."</td>\n");
          echo("        </tr>\n");
          // Fim Tabela Interna
          echo("      <table>\n");
          echo("      <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
-         echo("        <tr valign=bottom align=center>\n");
-         echo("          <td class=text valign=middle align=right>&nbsp;</td>\n");
+         echo("        <tr valign=\"bottom\" align=\"center\">\n");
+         echo("          <td class=\"text\" valign=\"middle\" align=\"right\">&nbsp;</td>\n");
          foreach($msgs_qtde as $periodo => $linha)
          {
            $total+=$linha['qtde'];
@@ -228,25 +230,25 @@
              $tam=$linha['qtde']*200/$max_qtde;
            else
              $tam=1;
-           echo("          <td class=text>".$linha['qtde']."<br><img src=figuras/".$imagem." border=0 width=5 height=".$tam."></td>\n");
+           echo("          <td class=\"text\">".$linha['qtde']."<br><img src=\"figuras/".$imagem."\" border=\"0\" width=\"5\" height=\"".$tam."\"></td>\n");
          }
          echo("        </tr>\n");
 
-         echo("        <tr valign=bottom align=center>\n");
+         echo("        <tr valign=\"bottom\" align=\"center\">\n");
          // 21 - Dia
-         echo("          <td class=text align=right><b>".RetornaFraseDaLista($lista_frases,21)."</b></td>\n");
+         echo("          <td class=\"text\" align=\"right\"><b>".RetornaFraseDaLista($lista_frases,21)."</b></td>\n");
          $number=0;
          foreach($msgs_qtde as $periodo => $linha)
          {
            $tmp=explode("/",$periodo);
-           echo("          <td class=text>&nbsp;".$tmp[0]."&nbsp;</td>\n");
+           echo("          <td class=\"text\">&nbsp;".$tmp[0]."&nbsp;</td>\n");
            $number++;
          }
          echo("        </tr>\n");
 
-         echo("        <tr valign=bottom>\n");
+         echo("        <tr valign=\"bottom\">\n");
          // 46 - M�s
-         echo("          <td class=text align=right><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
+         echo("          <td class=\"text\" align=\"right\"><b>".RetornaFraseDaLista($lista_frases,46)."</b></td>\n");
 
          $mes_anterior="-1";
          unset($meses);
@@ -264,7 +266,7 @@
          }
          foreach($meses as $cod => $linha)
          {
-           echo("          <td class=text colspan=".$linha['num_dias'].">&nbsp;".$linha['nome']."&nbsp;</td>\n");
+           echo("          <td class=\"text\" colspan=".$linha['num_dias'].">&nbsp;".$linha['nome']."&nbsp;</td>\n");
          }
          echo("        </tr>\n");
        }
@@ -317,7 +319,7 @@
                $tam=$linha['qtde']*600/$max_qtde;
              else
                $tam=1;
-             echo("          <td align=left><img src=figuras/".$imagem." border=0 width=".$tam." height=5> ".$linha['qtde']."</td>\n");
+             echo("          <td align=\"left\"><img src=\"figuras/".$imagem."\" border=\"0\" width=\"".$tam."\" height=\"5\"> ".$linha['qtde']."</td>\n");
            }
            else
            {
@@ -331,7 +333,7 @@
        {
          echo("        <tr class=\"head01\">\n");
          // 63 - Semana
-         echo("          <td colspan=2>".RetornaFraseDaLista($lista_frases,63)."</td>\n");
+         echo("          <td colspan=\"2\">".RetornaFraseDaLista($lista_frases,63)."</td>\n");
          // 60 - Quantidade de Mensagens
          echo("          <td>".RetornaFraseDaLista($lista_frases,60)."</td>\n");
          echo("        </tr>\n");
@@ -364,7 +366,7 @@
            echo("        <tr>\n");
            echo("          <td colspan=2>".$mes1."&nbsp;a&nbsp;".$mes2."</td>\n");
            if ($apresentacao=="grafico")
-             echo("          <td align=left><img src=figuras/".$imagem." border=0 width=".$tam." height=5>&nbsp;".$linha['qtde']."</td>\n");
+             echo("          <td align=\"left\"><img src=\"figuras/".$imagem."\" border=\"0\" width=\"".$tam."\" height=\"5\">&nbsp;".$linha['qtde']."</td>\n");
            else
            {
              $i = ($i + 1) % 2;
@@ -385,7 +387,7 @@
        {
          echo("        <tr class=\"head01\">\n");
          // 76 - Total de mensagens enviadas:
-         echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,76)."&nbsp<a>".$total."</a></td>\n");
+         echo("          <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,76)."&nbsp<a>".$total."</a></td>\n");
          echo("        </tr>\n");
        }
     }
@@ -393,7 +395,7 @@
     {
       echo("        <tr>\n");
       // 51 - Nenhuma mensagem enviada no per�odo selecionado!
-      echo("          <td colspan=3>".RetornaFraseDaLista($lista_frases,51)."</td>");
+      echo("          <td colspan=\"3\">".RetornaFraseDaLista($lista_frases,51)."</td>");
       echo("        </tr>\n");
     }
   }
@@ -506,11 +508,11 @@
             else
             {
               if ($linha['qtde']<=$limite_baixo)
-                echo("          <td><img src=figuras/poucas.gif border=0></td>\n");
+                echo("          <td><img src=\"figuras/poucas.gif\" border=\"0\"></td>\n");
               else if ($linha['qtde']<=$limite_alto)
-                echo("          <td><img src=figuras/medias.gif border=0></td>\n");
+                echo("          <td><img src=\"figuras/medias.gif\" border=\"0\"></td>\n");
               else
-                echo("          <td><img src=figuras/muitas.gif border=0></td>\n");
+                echo("          <td><img src=\"figuras/muitas.gif\" border=\"0\"></td>\n");
             }
           }
           else
@@ -541,9 +543,9 @@
     // 36 - Legenda:
     echo("      <b>".RetornaFraseDaLista($lista_frases,36)."</b>\n");
     // 42 - mensagens enviadas
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/poucas.gif border=0> 1 - ".$limite_baixo." ".RetornaFraseDaLista($lista_frases,42));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/poucas.gif\" border=\"0\"> 1 - ".$limite_baixo." ".RetornaFraseDaLista($lista_frases,42));
     // 42 - mensagens enviadas
-    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/medias.gif border=0> ".($limite_baixo+1)." - ".$limite_alto." ".RetornaFraseDaLista($lista_frases,42));
+    echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=\"figuras/medias.gif\" border=\"0\"> ".($limite_baixo+1)." - ".$limite_alto." ".RetornaFraseDaLista($lista_frases,42));
     // 37 - Mais de
     // 42 - mensagens enviadas
     echo("      &nbsp;&nbsp;&nbsp;&nbsp;<img src=figuras/muitas.gif border=0> ".RetornaFraseDaLista($lista_frases,37)." ".$limite_alto." ".RetornaFraseDaLista($lista_frases,42));

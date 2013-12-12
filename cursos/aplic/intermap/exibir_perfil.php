@@ -58,7 +58,7 @@
 
   echo("<html>\n");
 
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\">\n");
   echo("  window.open(\"../perfil/exibir_perfis.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario_perfil."\",\"PerfilDisplay\",\"width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
   echo("</script>\n");
 

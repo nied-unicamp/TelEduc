@@ -90,8 +90,8 @@ function RetornaMapaInteracaoPeriodo($sock,$data_inicio,$data_fim,$noh_todos,$ex
     
     // PROBLEMA ! Veja que essas duas listas estao considerando msg 'fantasmas' 
     // (que foram enviadas, mas o usuario foi removido do curso ou transformado em 
-    // convidado nao-interativo)
-    // Vai ser preciso eliminar esses convidados da lista depois, faco isso abaixo
+    // Visitante)
+    // Vai ser preciso eliminar esses usuarios da lista depois, faco isso abaixo
   }
   else
   {
@@ -113,7 +113,7 @@ function RetornaMapaInteracaoPeriodo($sock,$data_inicio,$data_fim,$noh_todos,$ex
   }
 
   // criamos uma lista com os usuarios que tem permissao para aparecer na saida:
-  // alunos, formadores e convidados interativos. Os que nao estao nesse array sao fantasmas
+  // alunos, formadores e colaboradores. Os que nao estao nesse array sao fantasmas
   $query = "select UC.cod_usuario from ".$_SESSION['dbnamebase'].".Usuario_curso UC where binary UC.tipo_usuario='A' or binary UC.tipo_usuario='F' or binary UC.tipo_usuario='Z'";
   $res   = Enviar($sock, $query);
   $lista_permitidos = array();
@@ -186,7 +186,7 @@ function RetornaMapaInteracaoPeriodoTodos($sock,$data_inicio,$data_fim,$lista_us
       {
         $saida[$linha['cod_usuario_emissor']]=$linha['qtde'];
       }
-    }    
+    }
   }
   return $saida;
 }
@@ -201,7 +201,7 @@ function RetornaMapaInteracaoPeriodoTodos($sock,$data_inicio,$data_fim,$lista_us
    Saida: array 
                 [$periodo]['qtde_aluno']
                 [$periodo]['qtde_formador']
-                [$periodo]['qtde_convidado']
+                [$periodo]['qtde_colaborador']
                 [$periodo]['qtde_total']
                 [$periodo]['fim_periodo'] - Somente se $agrupar="semana"
    Obs: $periodo - no formato DD/MM/AAAA (dia) SS/MM/AAAA (semana) ou MM/AAAA(ano)
@@ -213,8 +213,8 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
   $inicio=Data2UnixTime($data_inicio);
   $fim=Data2UnixTime($data_fim) + 24*60*60-1;
 
-  $lista_formadores = RetornaListaCodUsuarioFormador($sock, $cod_curso);
-  $lista_convidados = RetornaCodUsuarioConvidado($sock, $cod_curso);
+  $lista_formadores    = RetornaListaCodUsuarioFormador($sock, $cod_curso);
+  $lista_colaboradores = RetornaCodUsuarioColaborador($sock, $cod_curso);
   
   if ($agrupar=="dia")
   {
@@ -235,7 +235,7 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
       $saida[$data]['qtde_total']+=0;
       $saida[$data]['qtde_formador']+=0;
       $saida[$data]['qtde_aluno']+=0;
-      $saida[$data]['qtde_convidado']+=0;
+      $saida[$data]['qtde_colaborador']+=0;
       $unixtime_inicio=DiaMesAno2Unixtime(Unixtime2Dia($unixtime_inicio)+1,Unixtime2Mes($unixtime_inicio),Unixtime2Ano($unixtime_inicio));
     }
 
@@ -247,9 +247,9 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
         if ($lista_formadores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
           // formador
           $saida[$linha['periodo']]['qtde_formador']+=$linha['qtde'];
-        else if ($lista_convidados[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
-          // convidado
-          $saida[$linha['periodo']]['qtde_convidado']+=$linha['qtde'];
+        else if ($lista_colaboradores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
+          // colaborador
+          $saida[$linha['periodo']]['qtde_colaborador']+=$linha['qtde'];
         else
           // aluno
           $saida[$linha['periodo']]['qtde_aluno']+=$linha['qtde'];
@@ -277,7 +277,7 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
       $saida[$data]['qtde_total']+=0;
       $saida[$data]['qtde_formador']+=0;
       $saida[$data]['qtde_aluno']+=0;
-      $saida[$data]['qtde_convidado']+=0;
+      $saida[$data]['qtde_colaborador']+=0;
       $unixtime_inicio=DiaMesAno2Unixtime(1,Unixtime2Mes($unixtime_inicio)+1,Unixtime2Ano($unixtime_inicio));
     }
 
@@ -289,9 +289,9 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
         if ($lista_formadores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
           // formador
           $saida[$linha['periodo']]['qtde_formador']+=$linha['qtde'];
-        else if ($lista_convidados[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
-          // convidado
-          $saida[$linha['periodo']]['qtde_convidado']+=$linha['qtde'];
+        else if ($lista_colaboradores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
+          // colaborador
+          $saida[$linha['periodo']]['qtde_colaborador']+=$linha['qtde'];
         else
           // aluno
           $saida[$linha['periodo']]['qtde_aluno']+=$linha['qtde'];
@@ -325,7 +325,7 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
       $saida[$data]['qtde_formador']=0;
       $saida[$data]['qtde_aluno']=0;
       $saida[$data]['qtde_total']=0;
-      $saida[$data]['qtde_convidado']=0;
+      $saida[$data]['qtde_colaborador']=0;
       $saida[$data]['fim_periodo']=Unixtime2Dia($unixtime_sem)."/".Unixtime2Mes($unixtime_sem)."/".Unixtime2Ano($unixtime_sem);
 
       if (count($lista)>0)
@@ -335,9 +335,9 @@ function RetornaQtdeMsgsPeriodo($sock,$cod_curso,$data_inicio,$data_fim,$agrupar
           if ($lista_formadores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
             // formador
             $saida[$data]['qtde_formador']+=$linha['qtde'];
-          else if ($lista_convidados[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
-            // convidado
-            $saida[$data]['qtde_convidado']+=$linha['qtde'];
+          else if ($lista_colaboradores[$linha['cod_usuario_emissor']]==$linha['cod_usuario_emissor'])
+            // colaborador
+            $saida[$data]['qtde_colaborador']+=$linha['qtde'];
           else
             // aluno
             $saida[$data]['qtde_aluno']+=$linha['qtde'];

@@ -62,25 +62,25 @@
   echo("  }\n");
   echo("</script>\n"); 
 
-  echo("<form name=mapa action=correio_mapa_interacao2.php target=Intermap method=get onsubmit=return(Valida())>\n");
+  echo("<form name=\"mapa\" action=\"correio_mapa_interacao2.php\" target=\"Intermap\" method=\"get\" onsubmit=\"return(Valida());\">\n");
   //echo(RetornaSessionIDInput()."\n");
-  echo("<input type=hidden name=cod_curso value=".$cod_curso." />\n");
-  echo("<input type=hidden name=mensagens_para_todos value=sim />\n");
+  echo("<input type=\"hidden\" name=\"cod_curso\"            value=\"".$cod_curso."\" />\n");
+  echo("<input type=\"hidden\" name=\"mensagens_para_todos\" value=\"sim\" />\n");
 
   echo("<table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("  <tr class=\"head\">\n");
   // 7 - Apresenta��o: 
-  echo("    <td width=50%>".RetornaFraseDaLista($lista_frases,7)."</td>\n");
+  echo("    <td width=\"50%\">".RetornaFraseDaLista($lista_frases,7)."</td>\n");
   // 58 - Per�odo:
-  echo("    <td width=50%>".RetornaFraseDaLista($lista_frases,58)."</td>\n");
+  echo("    <td width=\"50%\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
   echo("  </tr>\n");
 
   echo("  <tr>\n");
   echo("    <td>\n");
   // 34 - Grafo
-  echo("      <input type=radio checked class=g1field name=apresentacao value=grafo />".RetornaFraseDaLista($lista_frases,34));
+  echo("      <input type=\"radio\" checked class=\"g1field\" name=\"apresentacao\" value=\"grafo\" />".RetornaFraseDaLista($lista_frases,34));
   // 68 - Tabela
-  echo("      <br/><input type=radio class=g1field name=apresentacao value=tabela />".RetornaFraseDaLista($lista_frases,68));
+  echo("      <br/><input type=\"radio\" class=\"g1field\" name=\"apresentacao\" value=\"tabela\" />".RetornaFraseDaLista($lista_frases,68));
   echo("    </td>\n");
 
   echo("    <td>\n");
@@ -102,7 +102,7 @@
 
   echo("<div align=\"right\">\n");
   // 53 - Ok
-  echo("  <input class=input type=submit value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
+  echo("  <input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases,53)."' />\n");
   echo("</div>\n");
   echo("</form>\n");
 

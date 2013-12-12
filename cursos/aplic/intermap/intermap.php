@@ -51,22 +51,6 @@
   $cod_pagina_ajuda=1;
   include("../topo_tela.php");
 
-  /* topo_tela.php faz isso
-  $cod_usuario=VerificaAutenticacao($cod_curso);
-
-  $sock=Conectar("");
-
-  $lista_frases=RetornaListaDeFrases($sock,19);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-  $sock=Conectar($cod_curso);
-
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
-
-  MarcaAcesso($sock,$cod_usuario,19); */
-
   /*
   ==================
   Funcoes JavaScript
@@ -145,6 +129,12 @@
 
   echo("</script>\n\n");
 
+  include("../menu_principal.php");
+
+  echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   if (!isset($menu))
     $menu="Correio";
   if (!isset($submenu))
@@ -212,10 +202,6 @@
       $cod_pagina=28;
     }
   }
-
-  include("../menu_principal.php");
-
-  echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* 1 - Intermap */
   echo("<h4>".RetornaFraseDaLista($lista_frases, 1));
