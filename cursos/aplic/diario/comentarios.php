@@ -231,6 +231,8 @@
 
   echo("          <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+
   /* 1 - Diï¿½rio de Bordo */
   echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
   /* 12 - Comentï¿½rios */
@@ -311,36 +313,33 @@
   echo("                        <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");
   echo("                        <input type=\"hidden\" name=\"acao\" value=\"comentar\" />\n");
 
-  // Usuários visitantes não têm direito a fazer comentários.
-  if (!$usr_visitante) {
-    if (count($item_coment) > 0)
-      echo("                        <div id=\"text_coment\" class=\"divHidden\">\n");
-    else
-      echo("                        <div id=\"text_coment\" class=\"divShow\">\n");
-  
-    /* 3 - Comentar (Ger) */
-    echo("                          <b>".RetornaFraseDaLista($lista_frases_geral, 3).":</b><br />\n");
-    echo("                          <textarea name=\"comentario\" id=\"textArea_coment\" rows=\"8\" cols=\"70\" style=\"border: 2px solid #9bc;\"></textarea><br /><br />\n");
+  if (count($item_coment) > 0)
+    echo("                        <div id=\"text_coment\" class=\"divHidden\">\n");
+  else
+    echo("                        <div id=\"text_coment\" class=\"divShow\">\n");
+
+  /* 3 - Comentar (Ger) */
+  echo("                          <b>".RetornaFraseDaLista($lista_frases_geral, 3).":</b><br />\n");
+  echo("                          <textarea name=\"comentario\" id=\"textArea_coment\" rows=\"8\" cols=\"70\" style=\"border: 2px solid #9bc;\"></textarea><br /><br />\n");
+  echo("                        </div>\n");
+
+  if (count($item_coment) > 0)
+  {
+    echo("                        <div id=\"button_coment\" class=\"divHidden\">\n");
+    /* 18 - Ok (Ger) */
+    echo("                          <input type=\"submit\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" class=\"input\" />\n");
+    /* 2 - Cancelar (Ger) */
+    echo("                          <input type=\"button\" id=\"cancComent\" onclick=\"CancelarComent();\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" class=\"input\" />\n");
     echo("                        </div>\n");
-  
-    if (count($item_coment) > 0)
-    {
-      echo("                        <div id=\"button_coment\" class=\"divHidden\">\n");
-      /* 18 - Ok (Ger) */
-      echo("                          <input type=\"submit\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" class=\"input\" />\n");
-      /* 2 - Cancelar (Ger) */
-      echo("                          <input type=\"button\" id=\"cancComent\" onclick=\"CancelarComent();\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" class=\"input\" />\n");
-      echo("                        </div>\n");
-    }
-    else
-    {
-      echo("                        <div id=\"button_coment\" class=\"divShow\">\n");
-      /* 18 - Ok (Ger) */
-      echo("                          <input type=\"submit\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" class=\"input\" />\n");
-      /* 2 - Cancelar (Ger) */
-      echo("                          <input type=\"button\" id=\"cancComent\" onclick=\"window.location='ver_item.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."';\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" class=\"input\" />\n");
-      echo("                        </div>\n");
-    }
+  }
+  else
+  {
+    echo("                        <div id=\"button_coment\" class=\"divShow\">\n");
+    /* 18 - Ok (Ger) */
+    echo("                          <input type=\"submit\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" class=\"input\" />\n");
+    /* 2 - Cancelar (Ger) */
+    echo("                          <input type=\"button\" id=\"cancComent\" onclick=\"window.location='ver_item.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."';\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" class=\"input\" />\n");
+    echo("                        </div>\n");
   }
 
   echo("                      </form>\n");
