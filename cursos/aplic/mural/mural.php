@@ -93,8 +93,8 @@
   $status_curso=RetornaStatusCurso($sock,$cod_curso);
 
   /* Verifica se o usuario eh formador. */
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
@@ -128,12 +128,10 @@
     $status = 'A';
   }
 
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
+  if (!$usr_visitante){
     echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
     echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   }
-  
-  
   
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      function OpenWindowLink(status) \n");
@@ -219,7 +217,7 @@
     
   echo("        EscondeLayers();\n");
 
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
+  if (!$usr_visitante){
     if($existe_mensagem){
       echo("        CancelarNovaMsg();\n");
       echo("        ExibeMsgPagina(".$pag_atual.");\n");
@@ -610,10 +608,10 @@
         echo("        }\n");
         echo("      }\n");
   
-  		echo("      function ApagarAtual(cod_mural){\n");
-  		echo("      	document.location='acoes.php?cod_curso=".$cod_curso."&acao=apagarMuralAtual&cod_mural='+cod_mural+'&pag_atual='+pag_atual+'&ordem=".$ordem."&todas_abertas='+todas_abertas;\n");
-  		echo("      }\n");
-  		
+        echo("      function ApagarAtual(cod_mural){\n");
+        echo("        document.location='acoes.php?cod_curso=".$cod_curso."&acao=apagarMuralAtual&cod_mural='+cod_mural+'&pag_atual='+pag_atual+'&ordem=".$ordem."&todas_abertas='+todas_abertas;\n");
+        echo("      }\n");
+
         echo("      function ApagarMsgSelecionadas(){\n");
         echo("        var j=0;\n");
         echo("        var elementos = document.getElementsByName('chk')\n");
@@ -633,11 +631,11 @@
     }
   }
 
-  /* Se usuÃ¡rio nÃ£o Ã© convidado passivo, ou o curso ainda estÃ¡ ativo ou ele Ã©      */
-  /* formador, permite escrita de mensavem                                         */
+  /* Se usuário não é visitante, ou o curso ainda está ativo ou ele é      */
+  /* formador, permite escrita de mensagem.                                */
   
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)) {
-    if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
+  if (!$usr_visitante) {
+    if (!($status_curso=='E' && !$usr_formador)){
       echo("      function ComporMensagem(){\n");
       echo("        if(!isIE){\n");
       echo("          document.getElementById('divNovaMsg').className=\"\";\n");
@@ -721,8 +719,8 @@
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   /* Se o usuario FOR Formador entao exibe os controles. */
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)) {
-    if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
+  if (!$usr_visitante) {
+    if (!($status_curso=='E' && !$usr_formador)){
       echo("                <ul class=\"btAuxTabs\">\n");
       /* Se estiver visualizando os fÃ³runs disponÃ­veis entÃ£o cria um link para o */
       /* layer novo_forum e outro para a funÃ§Ã£o JavaScript VerLixeira().         */
@@ -733,11 +731,11 @@
       }
     }
     if(isset($status)){
-	  	echo("				  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
-	}
-	else{
-	  	echo("				  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
-	}
+      echo("                  <li><a onclick=\"OpenWindowLink(1);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
+    }
+    else{
+      echo("                  <li><a onclick=\"OpenWindowLink(0);\" href=\"#\">".RetornaFraseDaLista($lista_frases, 28)."</a></li>");
+    }
   }
   echo("                </ul>\n");
   /* Repassa o status da mensagens que serï¿½ selecionadas: A ou D (Lixeira)            */
@@ -748,11 +746,11 @@
   echo("            </tr>\n");
 
 
-/* Se o curso estiver encerrado e for um aluno, nï¿½o pode inserir mensagens */
-  /* Convidados passivos e visitantes nï¿½o podem postar mensagens             */
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)) {
+  /* Se o curso estiver encerrado e for um aluno, não pode inserir mensagens */
+  /* Visitantes não podem postar mensagens.                                  */
+  if (!$usr_visitante) {
 
-    if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
+    if (!($status_curso=='E' && !$usr_formador)){
       echo("            <tr id=\"trNovaMsg\">\n");
       echo("              <td colspan=\"5\">\n");
       echo("                <table border=\"0\" width=\"100%\" cellspacing=\"0\" class=\"tabInterna\" style=\"border-collapse:collapse;\">\n");
@@ -769,12 +767,12 @@
       echo("                          <input type=\"text\" id=\"msg_titulo\" name=\"msg_titulo\" size=\"40\" maxlength=\"100\" value='".$msg_titulo."' style=\"border: 2px solid #9bc;\" /><br /><br />\n");
       /* 21 - Mensagem */
       echo("                          <b>".RetornaFraseDaLista($lista_frases,21)."</b><br />\n");
-      echo("							<textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>");
+      echo("                          <textarea name=\"msg_corpo\" style=\"width:90%;height:100px;\"></textarea>");
       /*echo("                          <script type=\"text/javascript\">\n");
       echo("                            writeRichText('msg_corpo', '', 600, 200, true, false, 1);\n");
       echo("                          </script>\n");*/
       echo("                          <script type=\"text/javascript\">\n");
-      echo("							CKEDITOR.replace( 'msg_corpo',
+      echo("                            CKEDITOR.replace( 'msg_corpo',
 										    {		    });");
       echo("                          </script>\n");
       echo("                          <br />\n");
@@ -845,7 +843,7 @@
   echo("                  <input type=\"hidden\" name=\"Selecionados\" value=\"''\" />\n");
   echo("                  <table border=\"0\" width=\"100%\" cellspacing=\"0\" style=\"cellspadding:0pt;\" class=\"tabInterna\" id=\"tabelaMsgs\">\n");
   echo("                      <tr class=\"head\">\n");
-  if(EFormador($sock,$cod_curso,$cod_usuario) )
+  if($usr_formador)
      /* Checkbox que controla a selecao ou nao de todos os itens do mural */
     echo("                        <td width=\"9\"><input type=\"checkbox\" name=\"cabecalho\" onclick=\"MarcaOuDesmarcaTodos(pag_atual);\" /></td>\n");
 
@@ -916,7 +914,7 @@
         /* o qual nao exibirï¿½ o tï¿½tulo.                                  */
   
         echo("                      <tr id=\"tr_".$cod_mural."\" style=\"".$style."\" class=\"altColor".($num_msg%2)."\">\n");
-        if(EFormador($sock,$cod_curso,$cod_usuario) ){
+        if($usr_formador){
           echo("                        <td width=\"1%\" class=\"wtfield\"><input type=\"checkbox\" name=\"chk\" value=\"".$cod_mural."\" onclick=\"ControlaSelecao(this);\" /></td>\n");
 
         }
