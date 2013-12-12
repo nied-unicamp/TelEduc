@@ -78,17 +78,14 @@
   $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
   
-  $tela_visitante     = EVisitante($sock,$cod_curso,$cod_usuario);
+  $tela_visitante         = EVisitante($sock,$cod_curso,$cod_usuario);
 
   $tela_formador          = EFormador($sock,$cod_curso,$cod_usuario);
   $tela_formadormesmo     = EFormadorMesmo($sock,$cod_curso,$cod_usuario);
 
-  // booleano, indica se usuario eh convidado
-  $tela_convidado         = EConvidado ($sock, $cod_usuario, $cod_curso);
-  // especifica que tipo de convidado eh
-  $tela_convidado_ativo   = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $tela_convidado_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
-  
+  // booleano, indica se usuario eh colaborador
+  $tela_colaborador       = EColaborador($sock, $cod_curso, $cod_usuario);
+
   /* Fim dos Ajustes necessï¿½rios para independer do topo_tela.php */
   Desconectar($sock);
   
@@ -113,8 +110,7 @@
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmlgoodies_calendar.js\"></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
-  echo("	<style>body{padding-top:20px;}</style>");
-  
+  echo("    <style>body{padding-top:20px;}</style>");
 
   require_once("../xajax_0.2.4/xajax.inc.php");
   
@@ -169,8 +165,8 @@
   $status_curso=RetornaStatusCurso($sock,$cod_curso);
 
   /* Verifica se o usuario eh formador. */
-  $usr_conv_ativo = EConvidadoAtivo($sock, $cod_usuario, $cod_curso);
-  $usr_conv_passivo = EConvidadoPassivo($sock, $cod_usuario, $cod_curso);
+  $usr_visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $usr_colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
   $usr_aluno = EAluno($sock, $cod_curso, $cod_usuario);
 
@@ -272,7 +268,7 @@
   echo("        relevIni= getLayer(\"relev\");\n");
   echo("        EscondeLayers();\n");
 
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
+  if (!$usr_visitante){
     if($existe_mensagem){
       echo("        CancelarNovaMsg();\n");
       echo("        ExibeMsgPagina(".$pag_atual.");\n");
@@ -580,7 +576,7 @@
     echo("        final = tabela.rows.length-1;\n");
     echo("        for (i=1; i < final; i++){\n");
     echo("          if (!tabela.rows[i]) break;\n");
-    echo("          tabela.rows[i].style.display=\"none\";\n");    
+    echo("          tabela.rows[i].style.display=\"none\";\n");
     echo("        }\n\n");
 
       /* 26 - Exibir todas */
@@ -634,7 +630,7 @@
         echo("        var i;\n");
         echo("        var inicio;\n");
         echo("        var final;\n");
-        echo("        var elementos = document.getElementsByName('chk')\n");      
+        echo("        var elementos = document.getElementsByName('chk')\n");
         echo("        inicio = ((pag_atual-1)*10);\n");
         echo("        final = ((pag_atual)*10);\n");
         echo("        if(todas_abertas==1){\n");
@@ -677,11 +673,11 @@
     }
   }
 
-  /* Se usuÃ¡rio nÃ£o Ã© convidado passivo, ou o curso ainda estÃ¡ ativo ou ele Ã©      */
-  /* formador, permite escrita de mensavem                                         */
+  /* Se usuário não é visitante, ou o curso ainda está ativo ou ele é      */
+  /* formador, permite escrita de mensagem.                                */
   
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)) {
-    if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
+  if (!$usr_visitante) {
+    if (!($status_curso=='E' && !$usr_formador)){
       echo("      function ComporMensagem(){\n");
       echo("        if(!isIE){\n");
       echo("          document.getElementById('divNovaMsg').className=\"\";\n");
@@ -819,7 +815,7 @@
   echo("                  <input type=\"hidden\" name=\"Selecionados\" value=\"''\" />\n");
   echo("                  <table border=\"0\" width=\"100%\" cellspacing=\"0\" style=\"cellspadding:0pt;\" class=\"tabInterna\" id=\"tabelaMsgs\">\n");
   echo("                      <tr class=\"head\">\n");
-  if(EFormador($sock,$cod_curso,$cod_usuario) )
+  if($usr_formador)
      /* Checkbox que controla a selecao ou nao de todos os itens do mural */
     echo("                        <td width=\"9\"><input type=\"checkbox\" name=\"cabecalho\" onclick=\"MarcaOuDesmarcaTodos(pag_atual);\" /></td>\n");
 
@@ -895,7 +891,7 @@
         /* o qual nao exibirï¿½ o tï¿½tulo.                                  */
   
         echo("                      <tr id=\"tr_".$cod_mural."\" style=\"".$style."\" class=\"altColor".($num_msg%2)."\">\n");
-        if(EFormador($sock,$cod_curso,$cod_usuario) ){
+        if($usr_formador){
           echo("                        <td width=\"1%\" class=\"wtfield\"><input type=\"checkbox\" name=\"chk\" value=\"".$cod_mural."\" onclick=\"ControlaSelecao(this);\" /></td>\n");
 
         }
@@ -964,7 +960,7 @@
 
   echo("        </td>\n");
    
-  echo("      </tr>\n");  
+  echo("      </tr>\n");
 
   include("../tela2.php");
 

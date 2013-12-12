@@ -184,8 +184,8 @@ function EliminaEspacos($frase)
 
 /********************************************************************
   Fun√ßao SalvaMensagemMural - Salva mensagem
-  Se o convidado for ativo, retorna true se a opera√ßao for bem sucedida ou false
-    se ocorrer um erro.
+  Se o usuario n„o for visitante, retorna true se a operaÁ„o for bem
+  sucedida ou false se ocorrer um erro.
   Entradas: $sock - sock de conexao,
             $cod_usuario - codigo do usuario,
             $titulo - titulo da mensagem,
@@ -194,7 +194,7 @@ function EliminaEspacos($frase)
 ******************************************************/  
 function SalvaMensagemMural($sock, $cod_curso, $cod_usuario, $titulo, $mensagem, $status_curso)
 {
-  if (!EConvidadoPassivo($sock, $cod_usuario, $cod_curso)){
+  if (!EVisitante($sock, $cod_curso, $cod_usuario)){
     if (!($status_curso=='E' && !EFormador($sock,$cod_curso,$cod_usuario))){
       $titulo = EliminaScript($titulo);
       $titulo = LimpaTitulo($titulo);
