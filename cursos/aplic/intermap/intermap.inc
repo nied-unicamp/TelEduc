@@ -241,7 +241,6 @@ function RetornaAlunosFormadoresCodUsuarioNome($sock, $cod_curso)
              $cod_curso - código do curso
     saida:   array [$cod_usuario] = cod_usuario dos colaboradores
 */
-function RetornaCodUsuarioConvidado($sock, $cod_curso) { RetornaCodUsuarioColaborador($sock, $cod_curso); }
 function RetornaCodUsuarioColaborador($sock, $cod_curso)
 {
 
@@ -256,18 +255,6 @@ function RetornaCodUsuarioColaborador($sock, $cod_curso)
     $lista[ $linha[cod_usuario] ] = $linha[cod_usuario];
   }
   return $lista;
-}
-
-/* *********************************************************************
-   RetornaCodUsuarioConvidadoComSemInteracao - retorna todos os convidados
-   entrada: $sock - sock de conexao
-            $cod_curso - código do curso
-   saida: array [ cod_usuario ] == cod_usuario, array com todos os convidados do curso
-   OBS: Esta funcao � utilizada no Intermap do bate-papo, que � a �nica ferramenta de comunica��o acessivel aos convidados sem interacao e visitantes
-*/
-function RetornaCodUsuarioConvidadoComSemInteracao($sock, $cod_curso)
-{
-  return null;
 }
 
 /* *********************************************************************
