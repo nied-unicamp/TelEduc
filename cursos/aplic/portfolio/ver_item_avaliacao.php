@@ -828,7 +828,7 @@ echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInte
 	  echo("					  <br /><br />");
 	  echo("					  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 18)."\" class=\"input\" id=\"OKAval\" onclick=\"EditaAval(1);\"/> ");
 	  echo("					  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 2)."\" class=\"input\" id=\"cancAval\" onclick=\"EditaAval(0);\"/> ");
-	  echo("					  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases, 160)."\" class=\"input\" onclick=\"xajax_DesassociaAvaliacaoDinamic(".$cod_curso.", ".$cod_usuario.", ".$cod_item.", '" . RetornaFraseDaLista($lista_frases_geral, 36) . "', '".RetornaFraseDaLista($lista_frases, 213)."');\";/> ");
+	  echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases, 160) . "\" class=\"input\" onclick=\"xajax_VerificaSePodeDesassociar(" . $cod_curso . ", " . $cod_usuario . ", " . $cod_item . ", '" . RetornaFraseDaLista($lista_frases_geral, 36) . "', '" . RetornaFraseDaLista($lista_frases, 213) . "', '" . RetornaFraseDaLista($lista_frases, 221) . "');\";/> ");
       echo("                      </div>\n");
       echo("                    </td>\n");
       echo("                  </tr>\n");

@@ -4256,7 +4256,7 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 	$res=Enviar($sock,$query);
 	$status = RetornaLinha($res);
 	
-	if(($status[0]!='X') && ($status[0]!='A')){
+	if($status[0]!='X' && $status[0]!='A'){
 	
 	$query="select cod_atividade from Avaliacao where cod_avaliacao=".$linha[0];
 	$res=Enviar($sock,$query);
@@ -4286,7 +4286,7 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 
    Saida: XML da funÃ§Ã£o Ajax
 */
-function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avaliacao, $msg1, $msg2){
+function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avaliacao, $msg1, $msg2, $msg_erro){
 
   $objResponse = new xajaxResponse('ISO-8859-1');
 
@@ -4295,22 +4295,33 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
   $query="select * from Portfolio_itens_avaliacao where cod_item='".$cod_item."'";
   $res=Enviar($sock, $query);
   $linha=RetornaArrayLinhas($res);
-
+  
+  
+  $cod_avaliacao_atual = $linha[0]['cod_avaliacao'];
+      
   // Se cod_avaliacao nao for vazio, foi selecionada uma avaliacao no radiobox
   if ($cod_avaliacao!="") {
     
     if ($linha[0]=="") {  // Se nao existe avaliacao associada ao $cod_item
       AssociarItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Associa a avaliacao no BD
+      $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
+      $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+	  $atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
+      $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
     } else {  //Se jah existe uma avaliacao associada ao $cod_item
-      AlterarAssociacaoItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Altera a associacao no BD
-      $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");  //Mostra o radiobox da antiga avaliacao associada
+        $foi_avaliado = FoiAvaliado($sock, $cod_avaliacao, $cod_usuario);
+        if($foi_avaliado){
+          $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+        }
+        else{
+          AlterarAssociacaoItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Altera a associacao no BD
+          $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");  //Mostra o radiobox da antiga avaliacao associada
+          $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
+          $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+          $atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
+          $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
+      }
     }
-
-    $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
-    $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
-	
-	$atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
-    $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
     
   } else {  // Nao foi selecionada avaliacao
     $objResponse->addScript("alert('".$msg1."');");
@@ -4369,6 +4380,44 @@ function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg1, 
   return $objResponse->getXML();
 }
 
+function VerificaSePodeDesassociar($cod_curso, $cod_usuario, $cod_item, $msg1, $msg2, $msg_erro){
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  
+  $sock=Conectar($cod_curso);
+
+  $query="select * from Portfolio_itens_avaliacao where cod_item='".$cod_item."'";
+  $res=Enviar($sock, $query);
+  $linha=RetornaArrayLinhas($res);
+  
+  if($linha[0]!=""){
+    
+    $cod_avaliacao = $linha[0]['cod_avaliacao'];
+    
+    $foi_avaliado = FoiAvaliado($sock, $cod_avaliacao, $cod_usuario);
+    
+    if (!$foi_avaliado){
+      DesassociarItemAvaliacao($sock,$cod_item);
+      $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
+      AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
+      
+      $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg1);
+      $objResponse->addClear("associadoItem", "innerHTML");
+      $objResponse->addAssign("assocAval", "className", "link");
+      $objResponse->addEvent("assocAval", "onClick", "AssociarAvaliacao()");
+      $objResponse->addScript("document.getElementById('tituloAval').removeChild(document.getElementById('tituloAval').lastChild);");
+      $objResponse->addScript("cancelarElemento=null;");
+      $objResponse->addScript("DesmarcaRadios();");
+      $objResponse->addAssign("divAvaliacoes", "className", "divHidden");
+      $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+    }
+    else{
+      $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+    }
+    Desconectar($sock);
+  }
+  return $objResponse->getXML();
+   
+  }
 /* *********************************************************************
    IndentarComentario - Indenta o texto com os espaÃ§os passados por parÃ¢metro
    Entrada: $texto - texto a ser alterado
@@ -4468,22 +4517,70 @@ function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_
 
 }
 
-/************************************************************************************************************
+/* ***********************************************************************************************************
    haArquivosVisiveisDir - verifica se ha arquivo visivel dentro da pasta
    Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
-   Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
-*************************************************************************************************************/
+   Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso contrario
+*/
 function haArquivosVisiveisDir($dir, $lista_arq_vis){    
-    foreach($lista_arq_vis as $cod => $linha)
-    { 
-	if(!($linha['Status'])){
-		if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
-			return true;
-		}
-	}
+  foreach($lista_arq_vis as $cod => $linha){ 
+    if(!($linha['Status'])){
+	  if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+	    return true;
+	  }
     }
+  }
+  return false;
+}
+
+/* ***********************************************************************************************************
+   PodeAlterarPortfolio - verifica as condições de um item com avaliação, para que ele possa ou não alterar a sessão
+   de arquivos, associar a uma nova avaliação ou desassociar o item da avaliação
+   Entrada: $cod_curso, $cod_usuario e $cod_item
+   Saida: Retorna true se o item ainda não foi avaliado e se a avaliação ainda está ocorrendo (ainda não terminou), e false caso contrário 
+*/
+function PodeAlterarPortfolio($cod_curso, $cod_usuario, $cod_item){
+  $sock=Conectar($cod_curso);
+  
+  $data_atual = time();
+  
+  $query="select * from Portfolio_itens_avaliacao where cod_item='".$cod_item."'";
+  $res=Enviar($sock, $query);
+  $linha=RetornaArrayLinhas($res);
+  
+  $ha_avaliacao = $linha[0]!="";
+  
+  if($ha_avaliacao){
+    $cod_avaliacao = $linha[0]['cod_avaliacao'];
+   
+    $query2="select * from Avaliacao where cod_avaliacao='".$cod_avaliacao."'";
+    $res2=Enviar($sock, $query2);
+    $linha2=RetornaArrayLinhas($res2);
     
-    return false;
+    $data_termino = $linha2[0]['data_termino'];
+    
+    $foi_avaliado = FoiAvaliado($sock, $cod_avaliacao, $cod_usuario);
+    
+    Desconectar($sock);
+
+   if (($data_atual < $data_termino) && (!$foi_avaliado)){
+      return true;
+   }
+   return false;
+  }
+}
+
+function TemAvaliacao($cod_curso, $cod_item){
+  $sock=Conectar($cod_curso);
+  
+  $query="select * from Portfolio_itens_avaliacao where cod_item='".$cod_item."'";
+  $res=Enviar($sock, $query);
+  $linha=RetornaArrayLinhas($res);
+  
+  if ($linha[0]!=""){
+    return true;
+  }
+  return false;
 }
 
 

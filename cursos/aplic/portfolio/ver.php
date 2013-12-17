@@ -69,7 +69,7 @@ $objAjax->registerFunction("MoverItensDinamic");
 $objAjax->registerFunction("RetornaFraseDinamic");
 $objAjax->registerFunction("RetornaFraseGeralDinamic");
 $objAjax->registerFunction("AssociaAvaliacaoDinamic");
-$objAjax->registerFunction("DesassociaAvaliacaoDinamic");
+$objAjax->registerFunction("VerificaSePodeDesassociar");
 
 //Manda o xajax executar os pedidos acima.
 $objAjax->processRequests();
@@ -103,11 +103,16 @@ $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
 Desconectar($sock2);
 
 $sock = Conectar($cod_curso);
+
 $dir_item_temp = CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
 $linha_item = RetornaDadosDoItem($sock, $cod_item);
 
 $lista_arq = RetornaArquivosMaterialVer($cod_curso, $dir_item_temp['link']);
+
+$pode_editar = PodeAlterarPortfolio($cod_curso, $cod_usuario, $cod_item);
+
+$tem_avaliacao = TemAvaliacao($cod_curso, $cod_item);
 
 if ((count($lista_arq))>0){
     $i=0;
@@ -715,7 +720,8 @@ if ($linha_item['status'] == "E") {
 		if ($dono_portfolio) {
 			//se existe uma avalia?o ligada ao item
 			if (is_array($lista)) {
-				$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
+				//$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
+				$foiavaliado=FoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_usuario']);
 				//talvez arrumar a funcao ItemFoiAvaliado, pois da forma que ta se o item tiver sido avaliado, mas tiver compartilhado so com
 				//formadores, o aluno nao sabe que foi avaliado, mas nao consegue editar o item, o que fazer?
 
@@ -748,8 +754,9 @@ else
 		if ($linha_item['status'] != "C") {
 			if ($dono_portfolio) {
 				if (is_array($lista)) {
-					$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
-					if ($foiavaliado) { //arrumar - nÃ£o pode mais editar
+					//$foiavaliado = ItemFoiAvaliado($sock, $lista['cod_avaliacao'], $linha_item['cod_item']);
+					$foiavaliado=FoiAvaliado($sock,$lista['cod_avaliacao'],$linha['cod_usuario']);
+				  if ($foiavaliado) { //arrumar - nÃ£o pode mais editar
 						$titulo = "<span id=\"tit_" . $linha_item['cod_item'] . "\">" . $linha_item['titulo'] . "</span>";
 						$compartilhamentospan = "<span id=\"comp_" . $linha_item['cod_item'] . "\" class=\"link\" onclick=\"js_cod_item='" . $linha_item['cod_item'] . "';AtualizaComp('" . $linha_item['tipo_compartilhamento'] . "');MostraLayer(cod_comp,140,event);return(false);\">" . $compartilhamento . "</span>";
 						$renomear = "<span onclick=\"AlteraTitulo(" . $linha_item['cod_item'] . ");\" id=\"renomear_" . $linha_item['cod_item'] . "\">" . $renomear . "</span>";
@@ -859,12 +866,21 @@ if ((($linha_item['texto'] != "") && ($linha_item['texto'] != "<P>&nbsp;</P>") &
 }
 
 $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
+
+
 if (($num_arq_vis > 0) || ($dono_portfolio)) {
 	echo ("                  <tr class=\"head\">\n");
 	/* 71 - Arquivos */
 	echo ("                    <td colspan=\"4\">" . RetornaFraseDaLista($lista_frases, 71) . "</td>\n");
 	echo ("                  </tr>\n");
-
+    
+	if((($dono_portfolio) && (!$pode_editar) && ($tem_avaliacao)) && (count($lista_arq)==0)){
+	  echo("                <tr>\n");
+	  /* Frase #218 - Diretório Vazio */
+      echo("                    <td colspan=\"6\">".RetornaFraseDaLista($lista_frases, 218)."</td>\n");
+      echo("				</tr>\n");
+	}
+	
 	if (is_array($lista_arq) && count($lista_arq)>0){
 
 		$conta_arq = 0;
@@ -888,7 +904,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 						$temp = explode("/", $linha['Diretorio']);
 						$nivel = count($temp) - 1;
 						for ($c = 0; $c <= $nivel; $c++) {
-						    if($dono_portfolio){
+						    if($dono_portfolio && $pode_editar){
                             $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
                             $espacos2.="  ";
                           }
@@ -947,7 +963,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 
 							echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
 
-							if ($dono_portfolio) {
+							if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
 								echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
 							}
 
@@ -980,7 +996,7 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 							$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
 							echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
 							echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
-							if ($dono_portfolio) {
+							if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
 								echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
 							}
 							echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
@@ -1001,12 +1017,17 @@ if (($num_arq_vis > 0) || ($dono_portfolio)) {
 			}
 			while ($nivel >= 0);
 		}
+		if((($dono_portfolio) && (!$pode_editar)) && ($tem_avaliacao)){
+		  /*Não é possível editar a sessão de arquivos caso o item estiver associado a uma avaliação e o
+		   * mesmo já tiver sido avaliado ou o prazo da atividade relacionada já estiver terminado.*/
+		  echo("<br>".RetornaFraseDaLista($lista_frases, 219)."\n");
+		}		
 		echo ("                      <script type=\"text/javascript\">js_conta_arq=" . $conta_arq . ";</script>\n");
 		echo ("                    </td>\n");
 		echo ("                  </tr>\n");
 	}
 
-	if ($dono_portfolio) {
+	if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
 		echo ("                  <tr>\n");
 		echo ("                    <td align=\"left\" colspan=\"4\">\n");
 		echo ("                      <ul>\n");
@@ -1135,10 +1156,10 @@ if ($dono_portfolio) {
 		/* 152 - Associar item Ã  AvaliaÃ§Ã£o */
 		echo ("                      <div id=\"divAvaliacao\"><img alt=\"\" src=\"../imgs/portfolio/lapis.gif\" border=0 /><span id=\"assocAval\" class=\"link\" onclick=\"AssociarAvaliacao();\">" . RetornaFraseDaLista($lista_frases, 152) . "</span></div>\n");
 		echo ("                      <div id=\"divAvaliacaoEdit\" class=\"divHidden\">\n");
-		echo ("                        <img alt=\"\" src=\"../imgs/portfolio/lapis.gif\" border=0 /><span class=\"destaque\" >" . RetornaFraseDaLista($lista_frases, 152) . "</span>\n");
+		echo ("                        <img alt=\"\" src=\"../imgs/portfolio/lapis.gif\" border=\"0\" /><span class=\"destaque\" >" . RetornaFraseDaLista($lista_frases, 152) . "</span>\n");
 		echo ("                        <span> - " . RetornaFraseDaLista($lista_frases, 153) . "</span><br /><br /><br />\n");
 		echo ("                        <table id=\"tableAvaliacao\" cellspacing=\"0\" cellspading=\"0\">\n");
-		echo ("                          <tr class=\"head\" align=center>\n");
+		echo ("                          <tr class=\"head\" align=\"center\">\n");
 		echo ("                            <td>&nbsp;</td>\n");
 		// 168 - Atividades
 		echo ("                            <td width=\"30%\">" . RetornaFraseDaLista($lista_frases, 168) . "</td>\n");
@@ -1224,7 +1245,7 @@ if ($dono_portfolio) {
 		echo ("					  <br /><br />");
 		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases_geral, 18) . "\" class=\"input\" id=\"OKAval\" onclick=\"EditaAval(1);\"/> ");
 		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases_geral, 2) . "\" class=\"input\" id=\"cancAval\" onclick=\"EditaAval(0);FechaDivAvaliacoes();\"/> ");
-		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases, 160) . "\" class=\"input\" onclick=\"xajax_DesassociaAvaliacaoDinamic(" . $cod_curso . ", " . $cod_usuario . ", " . $cod_item . ", '" . RetornaFraseDaLista($lista_frases_geral, 36) . "', '" . RetornaFraseDaLista($lista_frases, 213) . "');\";/> ");
+		echo ("					  <input type=\"submit\" value=\"" . RetornaFraseDaLista($lista_frases, 160) . "\" class=\"input\" onclick=\"xajax_VerificaSePodeDesassociar(" . $cod_curso . ", " . $cod_usuario . ", " . $cod_item . ", '" . RetornaFraseDaLista($lista_frases_geral, 36) . "', '" . RetornaFraseDaLista($lista_frases, 213) . "', '" . RetornaFraseDaLista($lista_frases, 221) . "');\";/> ");
 		echo ("                      </div>\n");
 		echo ("                    </td>\n");
 		echo ("                  </tr>\n");

@@ -315,7 +315,7 @@ function EditaAval(opt){
   document.getElementById('divAvaliacao').className='';
   //document.getElementById('divAvaliacaoEdit').className='divHidden';
   if (opt){
-    xajax_AssociaAvaliacaoDinamic(cod_curso, cod_usuario, cod_item, cod_avaliacao, lista_frases_geral.msg_ger35, lista_frases.msg212);
+    xajax_AssociaAvaliacaoDinamic(cod_curso, cod_usuario, cod_item, cod_avaliacao, lista_frases_geral.msg_ger35, lista_frases.msg212, lista_frases.msg220);
   }else{
     radios = document.getElementsByName('cod_avaliacao');
     for (i=0; i<radios.length; i++){
