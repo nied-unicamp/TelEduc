@@ -65,7 +65,6 @@ ExisteOrientacao
 RetornaListaEscolaridade
 ModificaSenha
 EnviaPerfil
-ListaConvidados
 CoordComoFormador
 RetornaDadosPerfilDinamic
 EditarPerfilDinamic
@@ -76,7 +75,7 @@ EditarPerfilDinamic
   ListaUsuario - Retorna uma lista com o codigo, nome e tipo de usuario (ou formador)
                  do curso, dado o tipo
   Entradas: $sock - sock de conexao,
-            $tipo_usuario - Tipo do Usuario("A","F","Z","z"),
+            $tipo_usuario - Tipo do Usuario("A","F","Z","V"),
   Saida:   Array com: ['cod_usuario'] - codigo usuario
                       ['nome'] - nome
                       ['tipo_usuario'] - tipo de usuario
@@ -86,12 +85,13 @@ function ListaUsuario($sock,$tipo_usuario,$cod_curso)
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $query = "select UC.cod_usuario, U.nome, UC.tipo_usuario
-            from ".$dbnamebase.".Usuario_curso UC
-            inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-            where UC.cod_usuario!=-1 and binary UC.tipo_usuario=\"".$tipo_usuario."\"
-            and UC.cod_curso=\"".$cod_curso."\"
-            order by nome";
+  $query  = "select UC.cod_usuario, U.nome, UC.tipo_usuario ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario!=-1 ";
+  $query .= "  and binary UC.tipo_usuario=\"".$tipo_usuario."\" ";
+  $query .= "  and UC.cod_curso=\"".$cod_curso."\" ";
+  $query .= "order by nome";
   $res=Enviar($sock,$query);
 
   $lista=RetornaArrayLinhas($res);
@@ -115,12 +115,13 @@ function ListaCoordenador($sock, $cod_curso)
   $res=Enviar($sock,$query);
   $linha=RetornaLinha($res);
 
-  $query = "select UC.cod_usuario, U.nome, Cf.valor 'status'
-            from Config as Cf, ".$dbnamebase.".Usuario_curso as UC
-            inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-            where UC.cod_usuario = ".$linha['cod_coordenador']."
-            and UC.cod_curso = '".$cod_curso."'
-            and Cf.item = 'status_coordenador'";
+  $query  = "select UC.cod_usuario, U.nome, Cf.valor 'status' ";
+  $query .= "from Config as Cf, ".$dbnamebase.".Usuario_curso as UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario = ".$linha['cod_coordenador']." ";
+  $query .= "and UC.cod_curso = '".$cod_curso."' ";
+  $query .= "and Cf.item = 'status_coordenador'";
+
   $res = Enviar($sock,$query);
 
   $linha = RetornaLinha($res);
@@ -253,7 +254,7 @@ function AtualizaFichaUsuario($sock,$cod_curso,$cod_usuario,$nome,$endereco,$cid
 function FuncaoPorExtenso($sock, $lista_frases,$funcao)
 {
   /* 19 - aluno,formador,candidato a aluno,candidato a formador,visitante,
-          aluno rejeitado,formador rejeitado,administrador do sistema,Coordenador,Convidado,Convidado */
+          aluno rejeitado,formador rejeitado,administrador do sistema,coordenador,colaborador,colaborador rejeitado */
   $funcoes=RetornaFraseDaLista($lista_frases,19);
   $letras="A,F,a,f,V,r,R,S,C,Z,z";
 
@@ -295,8 +296,7 @@ function RetornaPerfil($sock,$cod_usuario_ficha)
   }
   else
   {
-    unset ($linha);
-    return ($linha);
+    return null;
   }
 }
 
@@ -377,7 +377,7 @@ function AtualizaArquivo($sock,$arquivo,$nomefinal,$diretorio_temp,$cod_curso)
   }
   
   AtualizaFerramentasNova($sock, 13, 'T');
-    
+  
   return (RealizaUpload($arquivo,$camreal."/".$nomefinal));
 
 }
@@ -569,32 +569,6 @@ function EnviaPerfil($sock,$cod_usuario,$tempo,$perfil)
   }
 
   AtualizaFerramentasNova($sock, 13, 'T');
-}
-
-
-/*****************************************************************************************
-   ListaConvidados - retorna lista de convidados no curso, com e sem interacao
-   Entrada: $sock - conexao com a base de dados
-   Saida:   array []['cod_usuario'] - codigo de usuario
-                  []['nome'] - nome
-                  []['tipo_usuario'] - tipo do usuario
-   Obs:  ordenado por nome
-*****************************************************************************************/
-function ListaConvidados ($sock, $cod_curso)
-{
-
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-
-  $query = "select UC.cod_usuario, U.nome, UC.tipo_usuario
-            from ".$dbnamebase.".Usuario_curso UC
-            inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global)
-            where UC.cod_curso='".$cod_curso."' and 
-            (binary UC.tipo_usuario='Z' or binary UC.tipo_usuario='z')
-            order by nome";
-  $res   = Enviar ($sock, $query);
-  $lista = RetornaArrayLinhas ($res);
-  return $lista;
 }
 
 
