@@ -51,105 +51,105 @@
   $cod_ferramenta=9;
   include("../topo_tela.php");
 
-//=================================
-//Inicio das fun�es em JavaScript 
-//=================================
-echo("<script type=\"text/javascript\">\n");
+  //=================================
+  //Inicio das fun�es em JavaScript 
+  //=================================
+  echo("<script type=\"text/javascript\">\n");
 
-echo("    function Iniciar()\n");
-echo("    {\n");
-echo("      startList();\n");
-echo("    }\n\n");
+  echo("    function Iniciar()\n");
+  echo("    {\n");
+  echo("      startList();\n");
+  echo("    }\n\n");
 
-echo("function RetornaElemento(nome)\n");
-echo("{\n");
-echo("  var temp;\n");
-echo("  for (var j=0; j < document.frmConf.elements.length; j++)\n");
-echo("    if (document.frmConf.elements[j].name==nome)\n");
-echo("      temp=document.frmConf.elements[j];\n");
-echo("  return temp;\n");
-echo("}\n\n");
+  echo("function RetornaElemento(nome)\n");
+  echo("{\n");
+  echo("  var temp;\n");
+  echo("  for (var j=0; j < document.frmConf.elements.length; j++)\n");
+  echo("    if (document.frmConf.elements[j].name==nome)\n");
+  echo("      temp=document.frmConf.elements[j];\n");
+  echo("  return temp;\n");
+  echo("}\n\n");
 
-// função seleciona_elementos_grupo : marca como selecionado todos os elementos
-// do select
-echo("function seleciona_elementos_grupo()\n");
-echo("{\n");
-echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
-echo("  tamanho_destino=destino.length;\n");
-echo("  for (var i=tamanho_destino-1; i>=0; i--)\n");
-echo("    destino.options[i].selected=true;\n");
-echo("  return (true);\n");
-echo("}\n");
+  // função seleciona_elementos_grupo : marca como selecionado todos os elementos
+  // do select
+  echo("function seleciona_elementos_grupo()\n");
+  echo("{\n");
+  echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("  tamanho_destino=destino.length;\n");
+  echo("  for (var i=tamanho_destino-1; i>=0; i--)\n");
+  echo("    destino.options[i].selected=true;\n");
+  echo("  return (true);\n");
+  echo("}\n");
 
-//------------------------------------------
-// Adicionar, Remover, Esvaziar Participantes
-//------------------------------------------
-echo("function adicionar()\n");
-echo("{\n");
-echo("  var usuarios=RetornaElemento('select_participantes[]');\n");
-echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
-echo("  tamanho_usuarios=usuarios.length;\n");
-echo("  for (var i=0; i < tamanho_usuarios; i++)\n");
-echo("  {\n");
-echo("    if (usuarios.options[i].selected)\n");
-echo("    {\n");
-echo("      valor=usuarios[i].value;\n");
-echo("      nome=usuarios[i].text;\n");
-echo("      if (!ja_existe(valor) && nome.charAt(0)!='-')\n");
-echo("      {\n");
-echo("        var option0 = new Option(nome, valor);\n");
-echo("        destino.options[destino.length]=option0;\n");
-echo("      }\n");
-echo("    }\n");
-echo("  }\n");
-echo("}\n");
+  //------------------------------------------
+  // Adicionar, Remover, Esvaziar Participantes
+  //------------------------------------------
+  echo("function adicionar()\n");
+  echo("{\n");
+  echo("  var usuarios=RetornaElemento('select_participantes[]');\n");
+  echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("  tamanho_usuarios=usuarios.length;\n");
+  echo("  for (var i=0; i < tamanho_usuarios; i++)\n");
+  echo("  {\n");
+  echo("    if (usuarios.options[i].selected)\n");
+  echo("    {\n");
+  echo("      valor=usuarios[i].value;\n");
+  echo("      nome=usuarios[i].text;\n");
+  echo("      if (!ja_existe(valor) && nome.charAt(0)!='-')\n");
+  echo("      {\n");
+  echo("        var option0 = new Option(nome, valor);\n");
+  echo("        destino.options[destino.length]=option0;\n");
+  echo("      }\n");
+  echo("    }\n");
+  echo("  }\n");
+  echo("}\n");
 
-echo("function remover()\n");
-echo("{\n");
-echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
-echo("  tamanho_destino=destino.length;\n");
-echo("  for (var i=tamanho_destino-1; i>=0; i--)\n");
-echo("    if (destino.options[i].selected)\n");
-echo("      destino.options[i]=null;\n");
-echo("}\n");
+  echo("function remover()\n");
+  echo("{\n");
+  echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("  tamanho_destino=destino.length;\n");
+  echo("  for (var i=tamanho_destino-1; i>=0; i--)\n");
+  echo("    if (destino.options[i].selected)\n");
+  echo("      destino.options[i]=null;\n");
+  echo("}\n");
 
-echo("function esvaziar()\n");
-echo("{\n");
-/* 110  - Você quer realmente apagar a lista de alunos com permissão? */
-echo("  if (confirm('".RetornaFraseDaLista($lista_frases,110)."'))\n");
-echo("  {\n");
-echo("    var destino=RetornaElemento('select_participantes_permissao[]');\n");
-echo("    tamanho_destino=destino.length;\n");
-echo("    for (var i=tamanho_destino-1; i>=0; i--)\n");
-echo("      destino.options[i]=null;\n");
-echo("  }\n");
-echo("}\n");
+  echo("function esvaziar()\n");
+  echo("{\n");
+  /* 110  - Você quer realmente apagar a lista de alunos com permissão? */
+  echo("  if (confirm('".RetornaFraseDaLista($lista_frases,110)."'))\n");
+  echo("  {\n");
+  echo("    var destino=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("    tamanho_destino=destino.length;\n");
+  echo("    for (var i=tamanho_destino-1; i>=0; i--)\n");
+  echo("      destino.options[i]=null;\n");
+  echo("  }\n");
+  echo("}\n");
 
-//--------------------------------------
+  //--------------------------------------
 
-echo("function ja_existe(valor)\n");
-echo("{\n");
-echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
-echo("  tamanho_destino=destino.length;\n");
-echo("  var i=0;\n");
-echo("  var achei=false;\n");
-echo("  while (i < tamanho_destino && !achei)\n");
-echo("    achei=(destino[i++].value==valor);\n");
-echo("  return(achei);\n");
-echo("}\n");
+  echo("function ja_existe(valor)\n");
+  echo("{\n");
+  echo("  var destino=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("  tamanho_destino=destino.length;\n");
+  echo("  var i=0;\n");
+  echo("  var achei=false;\n");
+  echo("  while (i < tamanho_destino && !achei)\n");
+  echo("    achei=(destino[i++].value==valor);\n");
+  echo("  return(achei);\n");
+  echo("}\n");
 
 
-echo("function ChecaVazio()\n");
-echo("{\n");
-echo("    var n_participantes_permissao=RetornaElemento('select_participantes_permissao[]');\n");
-echo("    tamanho_n_participantes_permissao=n_participantes_permissao.length;\n");
-echo("    if (tamanho_n_participantes_permissao == 0){\n");
-/* 112 - Lista de alunos com permissão neste fórum está vazia. Por favor, preencha com algum participante. */
-echo("      alert('".RetornaFraseDaLista($lista_frases,112)."');\n");
-echo("      return false;\n");
-echo("    }\n");
-echo("    return true;\n");
-echo("}\n");
+  echo("function ChecaVazio()\n");
+  echo("{\n");
+  echo("    var n_participantes_permissao=RetornaElemento('select_participantes_permissao[]');\n");
+  echo("    tamanho_n_participantes_permissao=n_participantes_permissao.length;\n");
+  echo("    if (tamanho_n_participantes_permissao == 0){\n");
+  /* 112 - Lista de alunos com permissão neste fórum está vazia. Por favor, preencha com algum participante. */
+  echo("      alert('".RetornaFraseDaLista($lista_frases,112)."');\n");
+  echo("      return false;\n");
+  echo("    }\n");
+  echo("    return true;\n");
+  echo("}\n");
 
   echo("  function mudafonte(tipo) {\n");
   echo("    if ( tipo == 0 ) {");
@@ -166,10 +166,10 @@ echo("}\n");
   echo("    }\n");
   echo("  }\n");
 
-echo("</script>\n\n");
-//================================
-//Fim das funções em JavaScript
-//================================
+  echo("</script>\n\n");
+  //================================
+  //Fim das funções em JavaScript
+  //================================
 
   echo("  </head>\n");
   echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" onload=\"this.focus();Iniciar();\">\n");
@@ -259,7 +259,7 @@ echo("</script>\n\n");
   $lista=RetornaCodigoGruposDoCurso($sock, $cod_curso);
   $num= count($lista);
   if(!empty($lista)){
-  
+
     // 32 - Todos os grupos
     if ($ferramenta_grupos = StatusFerramentaGrupos ($sock, $cod_curso, $cod_usuario)){
       echo("                          <option value=\"G*\">".RetornaFraseDaLista($lista_frases_grupos,32)."</option>\n");
@@ -295,7 +295,7 @@ echo("</script>\n\n");
   /* 7 - Confirmar */
   echo("                          <input class=\"input\" type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases_geral, 7)."\" />\n");  
   echo("                      </td>\n");
- 
+
   echo("                    </tr>\n");
 /*
   status G: Define os usuários com permissão de escrita e leitura no forum
