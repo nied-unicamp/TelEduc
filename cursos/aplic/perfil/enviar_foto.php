@@ -102,8 +102,8 @@ Funcoes JavaScript
 
   if (isset($alunocod))
     echo("            <input type=\"hidden\" name=\"alunocod\" value=\"".$alunocod."\" />\n");
-  if (isset($convidadocod))
-    echo("            <input type=\"hidden\" name=\"convidadocod\" value=\"".$convidadocod."\" />\n");
+  if (isset($colaboradorcod))
+    echo("            <input type=\"hidden\" name=\"$colaboradorcod\" value=\"".$colaboradorcod."\" />\n");
   if (isset($visitantecod))
     echo("            <input type=\"hidden\" name=\"visitantecod\" value=\"".$visitantecod."\" />\n");
   if (isset($formadorcod))
@@ -114,6 +114,7 @@ Funcoes JavaScript
   echo("            <br />\n");
   if ($erro==sim)
   {
+    /* 107 - Ocorreu um erro ao tentar enviar a foto. Por Favor, tente novamente. */
     echo("           ". RetornaFraseDaLista($lista_frases,107));
     echo("            <br />\n");
     echo("            <br />\n");
@@ -121,7 +122,7 @@ Funcoes JavaScript
   
  
   /* 96 - Pressione o bot� Browse (ou Procurar) abaixo para selecionar o arquivo a ser anexado; em seguida, pressione 'Anexar foto' para prosseguir.*/
-  echo(RetornaFraseDaLista($lista_frases,96)."<br />\n");
+  echo("            ".RetornaFraseDaLista($lista_frases,96)."<br />\n");
   echo("            <br />\n");
   echo("            <input class=\"input\" type=\"file\" name=\"arquivo\" /><br />\n");
   echo("            <br />\n");

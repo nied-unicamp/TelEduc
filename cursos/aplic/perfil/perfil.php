@@ -166,8 +166,8 @@
   echo("        }\n");
   echo("        if (funcao == 3)\n");
   echo("        {\n");
-  echo("          nome_var='cod_convidado[]';\n");
-  echo("          nome_var_all='cod_convidado_all';\n");
+  echo("          nome_var='cod_colaborador[]';\n");
+  echo("          nome_var_all='cod_colaborador_all';\n");
   echo("        }\n");
   echo("        if (funcao == 4)\n");
   echo("        {\n");
@@ -198,7 +198,7 @@
   echo("        if (funcao==2)\n");
   echo("          nome_var_all='cod_formador_all';\n");
   echo("        else if (funcao == 3)\n");
-  echo("          nome_var_all='cod_convidado_all';\n");
+  echo("          nome_var_all='cod_colaborador_all';\n");
   echo("        else if (funcao == 4)\n");
   echo("          nome_var_all='cod_visitante_all';\n");
   echo("        var i=0;\n");
@@ -223,7 +223,7 @@
   echo("        if (funcao==2)\n");
   echo("          nome_var_all='cod_formador_all';\n");
   echo("        else if (funcao == 3)\n");
-  echo("          nome_var_all='cod_convidado_all';\n");
+  echo("          nome_var_all='cod_colaborador_all';\n");
   echo("        else if (funcao == 4)\n");
   echo("          nome_var_all='cod_visitante_all';\n");
   echo("        var i;\n");
@@ -248,7 +248,7 @@
   echo("      {\n");
   echo("        var elem=document.Perfil;\n");
   echo("        var check = new Array(5)\n");
-  echo("		for (var j = 0;j<5;j++) check[j] = false;\n");
+  echo("        for (var j = 0;j<5;j++) check[j] = false;\n");
   echo("        var i = 0;\n");
   echo("        while (i < elem.length)\n");
   echo("        {\n");
@@ -262,21 +262,21 @@
   echo("			document.getElementById('MostrarSelFormadoresB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
   echo("			document.getElementById('ImprimirSelFormadoresB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[1] = true;}\n");
-  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_convidado[]' && check[2] == false){\n"); 
-  echo("		  	document.getElementById('MostrarSelConvidados').className = 'menuUp02';\n");
-  echo("			document.getElementById('MostrarSelConvidadosB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
-  echo("			document.getElementById('ImprimirSelConvidadosB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
+  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_colaborador[]' && check[2] == false){\n"); 
+  echo("		  	document.getElementById('MostrarSelColaboradores').className = 'menuUp02';\n");
+  echo("			document.getElementById('MostrarSelColaboradoresB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
+  echo("			document.getElementById('ImprimirSelColaboradoresB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
   echo("			check[2] = true;}\n");
-  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_visitante[]' && check[3] == false){\n"); 
+  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_visitante[]' && check[3] == false){\n");
   echo("		  	document.getElementById('MostrarSelVisitantes').className = 'menuUp02';\n");
   echo("			document.getElementById('MostrarSelVisitantesB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
-  echo("			document.getElementById('ImprimirSelConvidadosB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
-  echo("			check[3] = true;}\n");  		  	
-  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_coordenador[]' && check[4] == false){\n"); 
+  echo("			document.getElementById('ImprimirSelVisitantesB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
+  echo("			check[3] = true;}\n");
+  echo("  		  if(elem.elements[i].checked == true && elem.elements[i].name == 'cod_coordenador[]' && check[4] == false){\n");
   echo("		  	document.getElementById('MostrarSelCoordenadores').className = 'menuUp02';\n");
   echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = function(){setImprimir(0);OpenWindow();document.Perfil.submit();};\n");
   echo("			document.getElementById('ImprimirSelCoordenadoresB').onclick = function(){setImprimir(1);OpenWindow();document.Perfil.submit();};\n");
-  echo("			check[4] = true;}\n");  			
+  echo("			check[4] = true;}\n");
   echo("          i++;\n");
   echo("        }\n");
   echo("		if (check[0] == false && (li = document.getElementById('MostrarSelAlunos'))){\n");
@@ -285,15 +285,15 @@
   echo("		if (check[1] == false && (li = document.getElementById('MostrarSelFormadores'))){\n");
   echo("		  	li.className = 'menuUp';\n");
   echo("			document.getElementById('MostrarSelFormadoresB').onclick = '';}\n");
-  echo("		if (check[2] == false && (li = document.getElementById('MostrarSelConvidados'))){\n");
+  echo("		if (check[2] == false && (li = document.getElementById('MostrarSelColaboradores'))){\n");
   echo("		  	li.className = 'menuUp';\n");
-  echo("			document.getElementById('MostrarSelConvidadosB').onclick = '';}\n");
+  echo("			document.getElementById('MostrarSelColaboradoresB').onclick = '';}\n");
   echo("		if (check[3] == false && (li = document.getElementById('MostrarSelVisitantes'))){\n");
   echo("		  	li.className = 'menuUp';\n");
   echo("			document.getElementById('MostrarSelVisitantesB').onclick = '';}\n");
   echo("		if (check[4] == false && (li = document.getElementById('MostrarSelCoordenadores'))){\n");
   echo("		  	li.className = 'menuUp';\n");
-  echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = '';}\n");   
+  echo("			document.getElementById('MostrarSelCoordenadoresB').onclick = '';}\n");
   echo("      }\n\n");
   
   /********************************************************************
@@ -532,13 +532,13 @@
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 1 - Perfil */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");
-   /* 509 - Voltar */
+  /* 509 - Voltar */
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-  
+
   echo("          <div id=\"mudarFonte\">\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
-  echo("	    <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(1)\"><img src=\"../imgs/btFont2.gif\" alt=\"Letra tamanho 2\" width=\"15\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
+  echo("            <a href=\"#\" onclick=\"mudafonte(0)\"><img src=\"../imgs/btFont3.gif\" alt=\"Letra tamanho 1\" width=\"14\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
   echo("          </div>\n");
 
   echo("          <!-- Tabelao -->\n");
@@ -551,7 +551,6 @@
   
   if (EFormador($sock,$cod_curso,$cod_usuario)&&(!$_SESSION['visao_aluno_s']))
   {
-    
     echo("                  <li><a href=\"editar_orientacao.php?cod_curso=".$cod_curso."\">");
     /* 2-Editar orientação para preenchimento do Perfil */
     echo(RetornaFraseDaLista($lista_frases,2)."</a></li>");
@@ -593,9 +592,9 @@
   /* Se estiver setada, verifica se a pagina eh maior que o total de paginas, se for */
   /* atribui o valor de $total_pag  a $pag_atual.                                    */
   if ((!isset($pag_atual))or($pag_atual=='')or($pag_atual==0)) {
-  	$pag_atual =  1;
+    $pag_atual =  1;
   } else {
-  	$pag_atual = min($pag_atual, $total_pag);
+    $pag_atual = min($pag_atual, $total_pag);
   }
 
 
@@ -625,14 +624,14 @@
       $bclose_tag = "";
 
       // Se houve alteracao no Perfil
-      if ((isset($linha)) && ($linha['data'] > $ultimo_acesso)) {
-      	// Coloca em negrito
+      if ((!empty($linha)) && ($linha['data'] > $ultimo_acesso)) {
+        // Coloca em negrito
         $bopen_tag = "<b>";
         $bclose_tag = "</b>";
         // Coloca sublinhado
         $classe="class=\"novo\"";
       } else {
-      	// Senao, deixa sem negrito e sublinhado
+        // Senao, deixa sem negrito e sublinhado
         $classe="class=\"antigo\"";
       }
 
@@ -644,7 +643,7 @@
       echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
       echo("                      </td>\n");
 
-      if (isset($linha)){
+      if (!empty($linha)){
         echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($linha['data']).$bclose_tag."\n");
       }
       else{
@@ -670,33 +669,33 @@
     echo("                    </tr>\n");
   }
   else{
-  	echo("<tr>\n");
-  	/* 133 - Nenhum
-  	   18  - Aluno
-  	   134 - encontrado */
-	echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,18)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
-	echo("</tr>\n");
+    echo("<tr>\n");
+    /* 133 - Nenhum
+       18  - Aluno
+       134 - encontrado */
+    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,18)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("</tr>\n");
   }
 
 
 
   /*
-  =====================
-  Tabela dos Convidados
-  =====================
+  ========================
+  Tabela dos Colaboradores
+  ========================
   */
-  $lista_convidados = ListaConvidados ($sock, $cod_curso);
+  $lista_colaboradores = ListaUsuario($sock,"Z",$cod_curso);
 
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
-  /* 124-Convidados */
+  /* 124 - Colaboradores */
   echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,124)."</div>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
-  if (count($lista_convidados) > 0)
+  if (count($lista_colaboradores) > 0)
   {
     echo("                    <tr class=\"head\">\n");
-    echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_convidado_all\" value=\"1\" onclick=\"CheckAll(3);Seek_Checked();\" /></td>\n");
+    echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_colaborador_all\" value=\"1\" onclick=\"CheckAll(3);Seek_Checked();\" /></td>\n");
     /* 4-Nome */
     echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
@@ -704,7 +703,7 @@
     echo("                    </tr>\n");
 
     $num_usuario=0;
-    foreach ($lista_convidados as $i => $dados)
+    foreach ($lista_colaboradores as $i => $dados)
     {
       if ($dados['cod_usuario'] >= 0)
       {
@@ -713,28 +712,28 @@
         $bopen_tag = "";
         $bclose_tag = "";
         
-      	// Se houve alteracao no Perfil
-      	if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
-      	{
-      		// Coloca em negrito
-      		$bopen_tag = "<b>";
-      		$bclose_tag = "</b>";
-      		// Coloca sublinhado
-      		$classe="class=\"novo\"";
-      	} else {
-      		// Senao, deixa sem negrito e sublinhado
-      		$classe="class=\"antigo\"";
-      	}
+        // Se houve alteracao no Perfil
+        if ((!empty($tupla)) && ($tupla['data'] > $ultimo_acesso))
+        {
+          // Coloca em negrito
+          $bopen_tag = "<b>";
+          $bclose_tag = "</b>";
+          // Coloca sublinhado
+          $classe="class=\"novo\"";
+        } else {
+          // Senao, deixa sem negrito e sublinhado
+          $classe="class=\"antigo\"";
+        }
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td>\n");
-        echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_convidado[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(3);CheckHeader(3,'cod_convidado[]');Seek_Checked();\" />\n");
+        echo("                        <input class=\"input\" type=\"checkbox\" name=\"cod_colaborador[]\" value=\"".$dados['cod_usuario']."\" onclick=\"UnCheckHeader(3);CheckHeader(3,'cod_colaborador[]');Seek_Checked();\" />\n");
         echo("                      </td>\n");
         echo("                      <td align=\"left\">\n");
         echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
         echo("                      </td>\n");
 
-        if (isset($tupla))
+        if (!empty($tupla))
         {
           echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
@@ -750,24 +749,24 @@
     echo("                    <tr>\n");
     echo("                      <td colspan=\"3\">\n");
     echo("                        <ul >\n");
-    echo("                          <li id=\"MostrarSelConvidados\" class=\"menuUp\">\n");
+    echo("                          <li id=\"MostrarSelColaboradores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelConvidadosB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelColaboradoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelConvidadosB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelColaboradoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
-    echo("                          </li>\n");    
+    echo("                          </li>\n");
     echo("                        </ul>\n");
     echo("                      </td>\n");
     echo("                    </tr>\n");
   }
   else{
-	echo("<tr>\n");
-  	/* 133 - Nenhum
-  	   135 - Convidado
-  	   134 - encontrado	*/	
-  	echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,135)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
-	echo("</tr>\n");
+    echo("<tr>\n");
+    /* 133 - Nenhum
+       135 - Colaborador
+       134 - encontrado	*/
+    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,135)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("</tr>\n");
   }
 
   /*
@@ -804,17 +803,17 @@
         $bopen_tag = "";
         $bclose_tag = "";
 
-        if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
+        if ((!empty($tupla)) && ($tupla['data'] > $ultimo_acesso))
         {
-      		// Coloca em negrito
-      		$bopen_tag = "<b>";
-      		$bclose_tag = "</b>";
-      		// Coloca sublinhado
-      		$classe="class=\"novo\"";
-      	} else {
-      		// Senao, deixa sem negrito e sublinhado
-      		$classe="class=\"antigo\"";
-		}
+          // Coloca em negrito
+          $bopen_tag = "<b>";
+          $bclose_tag = "</b>";
+          // Coloca sublinhado
+          $classe="class=\"novo\"";
+        } else {
+          // Senao, deixa sem negrito e sublinhado
+          $classe="class=\"antigo\"";
+        }
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td align=\"center\">\n");
@@ -824,7 +823,7 @@
         echo("                        ".$icone." <a ".$classe."href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>");
         echo("                      </td>\n");
 
-        if (isset($tupla))
+        if (!empty($tupla))
         {
           echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
@@ -847,17 +846,17 @@
     echo("                            <span id=\"ImprimirSelVisitantesB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
-    echo("                        </ul>\n");    
+    echo("                        </ul>\n");
     echo("                      </td>\n");
     echo("                    </tr>\n");
   }
   else{
-	echo("<tr>\n");
-  	/* 133 - Nenhum
-  	   136 - Visitante
-  	   134 - encontrado	*/
-  	echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,136)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
-	echo("</tr>\n");
+    echo("<tr>\n");
+    /* 133 - Nenhum
+       136 - Visitante
+       134 - encontrado	*/
+    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,136)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("</tr>\n");
   }
 
   /*
@@ -920,17 +919,17 @@
         $bopen_tag = "";
         $bclose_tag = "";
 
-        if ((isset($tupla)) && ($tupla['data'] > $ultimo_acesso))
+        if ((!empty($tupla)) && ($tupla['data'] > $ultimo_acesso))
         {
-      		// Coloca em negrito
-      		$bopen_tag = "<b>";
-      		$bclose_tag = "</b>";
-      		// Coloca sublinhado
-      		$classe="class=\"novo\"";
-      	} else {
-      		// Senao, deixa sem negrito e sublinhado
-      		$classe="class=\"antigo\"";
-		}
+          // Coloca em negrito
+          $bopen_tag = "<b>";
+          $bclose_tag = "</b>";
+          // Coloca sublinhado
+          $classe="class=\"novo\"";
+        } else {
+          // Senao, deixa sem negrito e sublinhado
+          $classe="class=\"antigo\"";
+        }
 
         echo("                    <tr class=\"altColor".($num_usuario%2)."\">\n");
         echo("                      <td align=\"center\">\n");
@@ -940,7 +939,7 @@
         echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados['cod_usuario']."));\" class=\"text\">".$dados['nome']."</a>\n");
         echo("                      </td>\n");
 
-        if (isset($tupla))
+        if (!empty($tupla))
         {
           echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
@@ -969,12 +968,12 @@
     echo("                    </tr>\n");
   }
   else{
-	echo("<tr>\n");
-  	/* 133 - Nenhum
-  	   137 - Formador
-  	   134 - encontrado	*/
-  	echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,137)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
-	echo("</tr>\n");
+    echo("<tr>\n");
+    /* 133 - Nenhum
+       137 - Formador
+       134 - encontrado	*/
+    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,137)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("</tr>\n");
   }
 
   /*
@@ -1003,16 +1002,16 @@
     $bopen_tag = "";
     $bclose_tag = "";
 
-    if ((isset($linha_perfil)) && ($linha_perfil['data'] > $ultimo_acesso))
+    if ((!empty($linha_perfil)) && ($linha_perfil['data'] > $ultimo_acesso))
     {
-    	// Coloca em negrito
-    	$bopen_tag = "<b>";
-    	$bclose_tag = "</b>";
-    	// Coloca sublinhado
-    	$classe="class=\"novo\"";
+      // Coloca em negrito
+      $bopen_tag = "<b>";
+      $bclose_tag = "</b>";
+      // Coloca sublinhado
+      $classe="class=\"novo\"";
     } else {
-    	// Senao, deixa sem negrito e sublinhado
-    	$classe="class=\"antigo\"";
+      // Senao, deixa sem negrito e sublinhado
+      $classe="class=\"antigo\"";
     }
 
 
@@ -1025,9 +1024,9 @@
     echo("                      </td>\n");
 
     # $linha = RetornaPerfil($sock, $linha['cod_usuario']);
-    if (isset($linha_perfil))
+    if (!empty($linha_perfil))
     {
-        echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($linha_perfil['data']).$bclose_tag."\n");
+      echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($linha_perfil['data']).$bclose_tag."\n");
     }
     else
     {
@@ -1045,7 +1044,7 @@
     echo("                            <span id=\"ImprimirSelCoordenadoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
-    echo("                        </ul>\n");    
+    echo("                        </ul>\n");
     echo("                      </td>\n");
     echo("                    </tr>\n");
   }

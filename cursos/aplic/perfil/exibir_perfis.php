@@ -90,8 +90,8 @@ Programa Principal
   Desconectar($sock);
   $sock=Conectar($cod_curso);
 
-  $eformador  = EFormador ($sock, $cod_curso, $cod_usuario);
-  $econvidado = EConvidado($sock, $cod_usuario, $cod_curso);
+  $eformador    = EFormador ($sock, $cod_curso, $cod_usuario);
+  $ecolaborador = EColaborador($sock, $cod_curso, $cod_usuario);
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
@@ -220,7 +220,7 @@ Programa Principal
   */
 
   echo("  </head>\n");
-  if($_GET['imprimir'] == 1){
+  if(isset($_GET['imprimir']) && $_GET['imprimir'] == 1){
     echo("  <body bgcolor=\"white\" onload=\"Iniciar();self.print();\">\n");
   }
   else{
@@ -246,12 +246,12 @@ Programa Principal
     Como funciona o fluxo desta pagina: É possivel chegar aqui através de perfil.php (e os usuarios a exibir vem atraves da checkbox)
     ou é possivel ir desta pagina para outra, e voltar para c�depois (entao os usuarios a exibir estao nos 5 arrays abaixo)
   */
-  if (isset($alunocod) || isset($formadorcod) || isset($coordenadorcod) || isset($convidadocod) || isset($visitantecod))
+  if (isset($alunocod) || isset($formadorcod) || isset($coordenadorcod) || isset($colaboradorcod) || isset($visitantecod))
   {
     unset($cod_aluno);
     unset($cod_formador);
     unset($cod_coordenador);
-    unset($cod_convidado);
+    unset($cod_colaborador);
     unset($cod_visitante);
 
     if (isset($alunocod))
@@ -260,8 +260,8 @@ Programa Principal
       $cod_formador = explode("_", $formadorcod);
     if (isset($coordenadorcod))
       $cod_coordenador = explode("_", $coordenadorcod);
-    if (isset($convidadocod))
-      $cod_convidado = explode ("_", $convidadocod);
+    if (isset($colaboradorcod))
+      $cod_colaborador = explode ("_", $colaboradorcod);
     if (isset($visitantecod))
       $cod_visitante = explode ("_", $visitantecod);
   }
@@ -278,8 +278,8 @@ Programa Principal
     foreach($cod_visitante as $valor)
       $perfil_Cod_usuario[$i++] = $valor;
 
-  if (is_array ($cod_convidado))
-    foreach($cod_convidado as $cod => $valor)
+  if (is_array ($cod_colaborador))
+    foreach($cod_colaborador as $cod => $valor)
       $perfil_Cod_usuario[$i++] = $valor;
 
   if (count($cod_formador)>0)
@@ -325,10 +325,10 @@ Programa Principal
       $coordenadorcod = implode("_",$cod_coordenador);
       echo("            <input type=\"hidden\" name=\"coordenadorcod\" value=\"".$coordenadorcod."\" />\n");
     }
-    if (is_array($cod_convidado))
+    if (is_array($cod_colaborador))
     {
-      $convidadocod = implode ("_", $cod_convidado);
-      echo("            <input type=\"hidden\" name=\"convidadocod\" value=\"".$convidadocod."\" />\n");
+      $colaboradorcod = implode ("_", $cod_colaborador);
+      echo("            <input type=\"hidden\" name=\"$colaboradorcod\" value=\"".$colaboradorcod."\" />\n");
     }
     if (is_array($cod_visitante))
     {
@@ -351,7 +351,7 @@ Programa Principal
 
       $linha = RetornaPerfil($sock, $cod_usuario_ficha);
 
-      $perfil_existe = ((count($linha)>0)&&($linha!="")&&($linha!="<P>&nbsp;</P>")&&($linha!="<br>"));
+      $perfil_existe = (!empty($linha)&&($linha!="<p>&nbsp;</p>")&&($linha!="<br>"));
 
       echo("            <input type=\"hidden\" name=\"perfil_existe\" value=\"".$perfil_existe."\" />\n");
 
@@ -393,7 +393,7 @@ Programa Principal
         {
           /* 20 - Ver dados pessoais */
           echo("                    <li><span onclick=\"MostraDadosPessoais('$cod_usuario_ficha');\">".RetornaFraseDaLista($lista_frases,20)."</span></li>\n");
-                  }
+        }
       }
       else /* não eh dono do perfil */
       {
@@ -410,8 +410,8 @@ Programa Principal
       echo("                </td>\n");
       echo("              </tr>\n");
       echo("            </table>\n");
-      if($_GET['imprimir'] == 0){
-      	echo("            <br />\n");
+      if(empty($_GET['imprimir'])){
+        echo("            <br />\n");
       }
 
       echo("            <table border=\"0\" width=\"100%\" cellspacing=\"0\">\n");
@@ -470,11 +470,11 @@ Programa Principal
 
       echo("                  <div id=\"dados1_".$cod_usuario_ficha."\">\n");
       echo("                    <b>".$nome."</b>\n");
-      if($_GET['imprimir'] == 0){
-      	echo("                    <br />\n");
+      if(empty($_GET['imprimir'])){
+        echo("                    <br />\n");
       }
 
-      if (! $econvidado)
+      if ($eformador)
         /* 33 - Email */
         echo("                    <b>".RetornaFraseDaLista($lista_frases,33).":</b> <a href=\"mailto:".$email."\">$email</a><br />\n");
 
@@ -516,7 +516,7 @@ Programa Principal
       }
 
       echo("            </table>\n");
-      if($_GET['imprimir'] == 0){
+      if(empty($_GET['imprimir'])){
         echo("            <br />\n");
       }
       echo("            <div class=\"divRichText\" id=\"text_".$cod_usuario_ficha."\">\n");
@@ -537,8 +537,8 @@ Programa Principal
       //echo("            	<input type=\"button\" class=\"input\" id=\"OKComent\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" onclick=\"EdicaoTexto('".$cod_usuario_ficha."','msg_corpo', 'ok')\" style=\"display:none;margin-bottom:5px;\" />\n");
       /* 2 - Cancelar */
       //echo("            	<input type=\"button\" class=\"input\" id=\"cancComent\" onclick=\"EdicaoTexto('$cod_usuario_ficha','msg_corpo','canc')\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" style=\"display:none;margin-bottom:5px;\" />\n");
-      if($_GET['imprimir'] == 0){
-      	echo("            <br /><br />\n");
+      if(empty($_GET['imprimir'])){
+        echo("            <br /><br />\n");
       }
       echo("            <hr />\n");
       echo("            <div align=\"right\">\n");

@@ -70,8 +70,8 @@ Programa Principal
 
   if (isset($alunocod))
     $setalunocod="&alunocod=".$alunocod;
-  if (isset($convidadocod))
-    $setconvidadocod="&convidadocod".$convidadocod;
+  if (isset($colaboradorcod))
+    $setcolaboradorcod="&colaboradorcod".$colaboradorcod;
   if (isset($visitantecod))
     $setvisitantecod="&visitantecod=".$visitantecod;
   if (isset($formadorcod))
@@ -90,5 +90,5 @@ Programa Principal
   }
 
   Desconectar($sock);
-  header("location:exibir_perfis.php?".$setalunocod.$setconvidadocod.$setvisitantecod.$setformadorcod.$setcoordenadorcod."&cod_curso=".$cod_curso."&acao=apagarFoto&atualizacao=".$atualizacao);
+  header("location:exibir_perfis.php?".$setalunocod.$setcolaboradorcod.$setvisitantecod.$setformadorcod.$setcoordenadorcod."&cod_curso=".$cod_curso."&acao=apagarFoto&atualizacao=".$atualizacao);
 ?>

@@ -57,36 +57,34 @@ function RealizaUpload($arquivo,$destino)
   $flag=true;
 
   $num = 0;	
-  $destinoAux = $destino;    
+  $destinoAux = $destino;
   while($flag){
-  	if(ExisteArquivo($destinoAux)){
-  	  $num++;  		
-	  $destinoAux = explode("/", $destino);
-	  $tamCamArq = count($destinoAux);
-	  
-	  $nomeArq = $destinoAux[$tamCamArq-1];
-	  
-	  $nomeArq = explode(".", $nomeArq);
-	  $nomeArq[0] .= "(".$num.")";
-	  $nomeArq = implode(".", $nomeArq);
-	  $destinoAux[$tamCamArq-1] = $nomeArq;
-	  
-	  $destinoAux=implode("/",$destinoAux);
-	  //$destino = implode("/", $camArq);
-	  
-	  
-	  /*$destino = preg_replace_callback(
-	  	$pattern,
-		  'acrescentaNum',
-	  	$destino
-	  );*/
-	  	  
-	  $flag= true;
-  	}else{
-  	  $destino = $destinoAux;
-  	  $flag=false;
-  	}
-  	
+    if(ExisteArquivo($destinoAux)){
+      $num++;
+      $destinoAux = explode("/", $destino);
+      $tamCamArq = count($destinoAux);
+
+      $nomeArq = $destinoAux[$tamCamArq-1];
+
+      $nomeArq = explode(".", $nomeArq);
+      $nomeArq[0] .= "(".$num.")";
+      $nomeArq = implode(".", $nomeArq);
+      $destinoAux[$tamCamArq-1] = $nomeArq;
+
+      $destinoAux=implode("/",$destinoAux);
+      //$destino = implode("/", $camArq);
+
+      /*$destino = preg_replace_callback(
+          $pattern,
+          'acrescentaNum',
+          $destino
+      );*/
+      $flag= true;
+    }else{
+      $destino = $destinoAux;
+      $flag=false;
+    }
+  
   }
 
   $r1 = move_uploaded_file($arquivo,$destino);
