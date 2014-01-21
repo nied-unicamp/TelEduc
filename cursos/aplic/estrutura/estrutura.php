@@ -131,7 +131,7 @@
   echo("                      <td width=5%><span id=\"span_aut\" class=\"link\" onClick=\"MostraTr(this.id,".$i.",1);\">[+]</span></td>\n");
   echo("                    <tr class=\"altColor".($i++)%(2)."\" id=\"tr_aut_".($i)."\" style=\"display:none;\">\n");
   echo("                      <td align=left colspan=2>\n");
-  /* 4 - O ambiente possui um esquema de autentica��o de acesso aos cursos. Para que formadores e alunos tenham acesso ao curso � necess�ria uma senha e identifica��o pessoal (login) que s�o solicitadas ao participante sempre que ele acessar ao curso. */
+  /* 4 - O ambiente possui um esquema de autentica��o de acesso aos cursos. Para que formadores, coordenadores, alunos, colaboradores e visitantes tenham acesso ao curso � necess�ria uma senha e identifica��o pessoal (login) que s�o solicitadas ao participante sempre que ele acessar ao curso. */
   /* 5 - Para garantia da integridade sempre saia do navegador (Netscape Navigator/Microsoft Internet Explorer) ao terminar uma sess�o de acesso. */
   echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,4)."</p>\n");
   echo("                        <p style=\"text-indent:15px;\">".RetornaFraseDaLista($lista_frases,5)."</p>\n");
