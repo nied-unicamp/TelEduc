@@ -134,12 +134,12 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
     
 	if ($nome_topico[0] == '#' && $nome_topico[1] == 'U'){
     	$cod_usuario = RetornaCodUsuarioTopico($sock, $tabela, $cod_topico_raiz);
-    	$sock = MudarDB($sock);    	
-    	$nome_topico = RetornaUsuario($sock,$cod_usuario);		
+    	$sock = MudarDB($sock);
+    	$nome_topico = RetornaUsuario($sock,$cod_usuario);
     	$sock = MudarDB($sock,$cod_curso);
     }
     
-	$path=$path.'/'.$nome_topico;  
+	$path=$path.'/'.$nome_topico;
 	
   	// limpa a hierarquia de pastas
   	RemovePastasVazias($path);
@@ -182,7 +182,7 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
   	}
   	Desconectar($sock);
   	return $objResponse->getXML();
-  	
+  
 }
 
 
@@ -200,7 +200,7 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
 *******************************************************************************************/
 function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos){
     // adequa as variaveis internas de acordo com a ferramenta
-	switch ($cod_ferramenta) {
+    switch ($cod_ferramenta) {
     case 3 :
         $tabela="Atividade";
         $dir="atividades";
@@ -214,7 +214,7 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
     case 5 :
         $tabela="Leitura";
         $dir="leituras";
-        $nome_topico="Leituras";  
+        $nome_topico="Leituras";
         break;
     case 7 :
         $tabela="Obrigatoria";
@@ -222,21 +222,21 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
         $nome_topico="Parada_obrigatoria";
         break;
     case 15 :
-    	$tabela="Portfolio";
-    	$dir="portfolio/item";
-    	$nome_topico="Portfolio";
-    	break;
+        $tabela="Portfolio";
+        $dir="portfolio/item";
+        $nome_topico="Portfolio";
+        break;
     }
     // se nao for o topico raiz, adequa $nome_topico ao nome do topico atual
     // modificar para buscar o nome de usuario quando o nome do topico for do tipo #Un
-    if($cod_topico != 1) $nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico);    
+    if($cod_topico != 1) $nome_topico=RetornaNomeTopico($sock,$tabela,$cod_topico);
     if ($nome_topico[0] == '#' && $nome_topico[1] == 'U'){
-    	// TODO: quero trocar o #Un pelo nome do usuario, mas tah tenso
-    	// consigo pegar de boa o codigo do usuario, mas tah osso pegar o nome
-    	$cod_usuario = RetornaCodUsuarioTopico($sock, $tabela, $cod_topico);
-    	$sock = MudarDB($sock);
-    	$nome_topico = RetornaUsuario($sock,$cod_usuario);
-    	$sock = MudarDB($sock,$cod_curso);
+        // TODO: quero trocar o #Un pelo nome do usuario, mas tah tenso
+        // consigo pegar de boa o codigo do usuario, mas tah osso pegar o nome
+        $cod_usuario = RetornaCodUsuarioTopico($sock, $tabela, $cod_topico);
+        $sock = MudarDB($sock);
+        $nome_topico = RetornaUsuario($sock,$cod_usuario);
+        $sock = MudarDB($sock,$cod_curso);
     }
     //$sock = Conectar($cod_curso);
     $new_path=$path.'/'.$nome_topico;
@@ -249,9 +249,9 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
     // verifica se o topico possui itens
     if($itens){
         foreach ($itens as $item){
-        	// caso possua itens, cria uma pasta para cada item e copia os anexos do item
+            // caso possua itens, cria uma pasta para cada item e copia os anexos do item
             $item_path=$new_path.'/'.$item["titulo"];
-            mkdir($item_path);            
+            mkdir($item_path);
             $copy_path=$diretorio_arquivos.'/'.$cod_curso.'/'.$dir.'/'.$item["cod_item"].'/';
             $item_arquivos=scandir($copy_path);
             foreach ($item_arquivos as $item_arquivo){            	
@@ -277,7 +277,7 @@ function CriaArvorePastasTopico($sock, $cod_topico, $path, $cod_curso, $cod_ferr
     if($filhos){
         foreach ($filhos as $filho){
         	// se tiver, tail call pra cada filho
-            CriaArvorePastasTopico($sock,$filho["cod_topico"],$new_path,$cod_curso,$cod_ferramenta,$diretorio_arquivos);        
+            CriaArvorePastasTopico($sock,$filho["cod_topico"],$new_path,$cod_curso,$cod_ferramenta,$diretorio_arquivos);
         }    
     }
 }
@@ -349,7 +349,7 @@ function TemSubPastas($path){
    Saida: bool
 *******************************************************************************************/
 function TemArquivos($path){
-	$subpastas=scandir($path);	
+	$subpastas=scandir($path);
 	if(count($subpastas)>2){
 	foreach ($subpastas as $subpasta){
 			if($subpasta != "." && $subpasta != ".."){
@@ -416,7 +416,7 @@ function RetornaNomeItem($sock,$tabela,$cod_item)
 {
   $consulta="select titulo from ".$tabela."_itens where cod_item=".$cod_item;
   $res=Enviar($sock, $consulta);
-  $lista=RetornaArrayLinhas($res);  
+  $lista=RetornaArrayLinhas($res);
   return($lista[0][0]);
 }
 
@@ -1429,14 +1429,14 @@ function RetornaTopicosBase ($sock, $cod_usuario, $cod_usuario_portfolio, $eform
             unset($port_meus_grp);
             foreach ($lista as $c => $linha_port)
             {            
-               $cod_grupo = $linha_port['cod_grupo']; 
+               $cod_grupo = $linha_port['cod_grupo'];
                if ($grupos_usr[ $cod_grupo ])                                                                                              {                           
                   $port_meus_grp [ $cod_topico = $linha_port['cod_topico'] ] = $linha_port;
                   // 77 - Portfolio do grupo
                   $port_meus_grp [ $cod_topico ]['topico'] = RetornaFraseDaLista ($lista_frases, 77)." ".$lista_grupos[$cod_grupo]['nome'];
                   // verifica se o grupo ainda existe
                   if ($lista_grupos[ $cod_grupo = $linha_port['cod_grupo'] ]['status'] != 'X')
-                     $port_meus_grp [ $cod_topico ]['figura'] = "icPasta2";                      
+                     $port_meus_grp [ $cod_topico ]['figura'] = "icPasta2";
                   else
                      $port_meus_grp [ $cod_topico ]['figura'] = "icPasta3";
                }   
@@ -1725,7 +1725,7 @@ function RetornaTopicosBase ($sock, $cod_usuario, $cod_usuario_portfolio, $eform
         uasort ($port_grupos_x, CompareArrayTopicos);
         foreach ($port_grupos_x as $cod_topico => $portfolio)
         {
-          $comp='P'; 
+          $comp='P';
           $num_itens = RetornaNumItensPortfolio ($sock, $cod_topico, $comp);
           // LEONEL - 23/07/2003 - Cancelei esta restricao de somente retornar o portfolio se tiver itens. Agora, todo portfolio aparece no retorno.
           // if ($num_itens > 0)
@@ -2777,7 +2777,7 @@ function MontaMenu($cod_curso, $acao_portfolio_s)
 
     echo("<table width=100% border=0 cellspacing=2 cellpadding=0><tr align=middle>\n");
    //174 - Meus portfolios 
-    echo("<td class=menu><a class=".$css_myp." href=ver_portfolios.php?cod_curso=".$cod_curso."&exibir=myp>".RetornaFraseDaLista($lista_frases,174)."</a></td>\n");    
+    echo("<td class=menu><a class=".$css_myp." href=ver_portfolios.php?cod_curso=".$cod_curso."&exibir=myp>".RetornaFraseDaLista($lista_frases,174)."</a></td>\n");
     // 74 - Portfolios Individuais
     echo("<td class=menu><a class=".$css_ind." href=ver_portfolios.php?cod_curso=".$cod_curso."&exibir=ind>".RetornaFraseDaLista($lista_frases,74)."</a></td>\n");
       // 75 - Portfolios de Grupos
@@ -3722,7 +3722,7 @@ function AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, $acao){
   if ($acao){
     $consulta="insert into Portfolio_itens_historicos values (".$cod_item.", ".$cod_usuario.", ".$data.", 'F')";
   }else{
-    $consulta="insert into Portfolio_itens_historicos values (".$cod_item.", ".$cod_usuario.", ".$data.", 'D')";    
+    $consulta="insert into Portfolio_itens_historicos values (".$cod_item.", ".$cod_usuario.", ".$data.", 'D')";
   }
 
   $res=Enviar($sock, $consulta);
@@ -3762,7 +3762,7 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
   if($acao){
     $consulta="insert into Portfolio_itens_historicos values ('".$cod_item."', '".$cod_usuario."', '".$data."', 'F')";
   }else{
-    $consulta="insert into Portfolio_itens_historicos values ('".$cod_item."', '".$cod_usuario."', '".$data."', 'D')";  
+    $consulta="insert into Portfolio_itens_historicos values ('".$cod_item."', '".$cod_usuario."', '".$data."', 'D')";
   }
 
   $res=Enviar($sock, $consulta);
@@ -3851,7 +3851,7 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_i
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
     $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,true);
@@ -3890,7 +3890,7 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_
   $objResponse = new xajaxResponse('ISO-8859-1');
 
   foreach($nomes_arquivos as $cod => $linha){
-    $nome_arquivo = implode("/", explode("//", $linha[0])); 
+    $nome_arquivo = implode("/", explode("//", $linha[0]));
     $nome_arquivo = str_replace("%20"," ",$nome_arquivo);
 
     AlteraStatusArquivo($nome_arquivo,false);
@@ -4592,5 +4592,85 @@ function TemAvaliacao($cod_curso, $cod_item){
   return false;
 }
 
+/* *********************************************************************
+   ExpulsaVisitante - verifica se o usuario eh visitante e impede seu
+                      acesso se for
+   entrada: $sock        - sock de conexao
+            $cod_curso   - código do curso atual.
+            $cod_usuario - código do usuário o qual pretende-se testar o
+                           acesso à ferramenta correio.
+            $eh_popup    - booleano que indica se a página que o chamou
+                           é ou não um popup. Se não for, devemos fechar
+                           as tags html do template comum de uma página
+                           de ferramenta (com rodapé, fechando o tabelão,
+                           etc).
+            saida:   nenhuma
+   OBS:     Para impedir o acesso, exibe tela com restricao de acesso e
+            executa o comando exit
+*/
+function ExpulsaVisitante($sock, $cod_curso, $cod_usuario, $eh_popup = false) {
+
+  global $lista_frases;
+  global $lista_frases_geral;
+
+  if (EVisitante($sock, $cod_curso, $cod_usuario)) {
+
+    //if (!$ehPopup) {
+    //  include("../menu_principal.php");
+    //  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+    //}
+    if ($eh_popup) {
+      echo("  </head>\n");
+      echo("  <body>\n");
+      echo("    <h3 style=\"margin-top:20px;\">".NomeCurso($sock,$cod_curso)."</h3>\n");
+    }
+
+    /* 1 - Portfólio 504 - Área restrita a alunos e formadores */
+    echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases_geral,504)."</h4>\n");
+
+    if (!$eh_popup) {
+      echo("          <ul class=\"btsNav\">\n");
+      echo("            <li>\n");
+      /* 509 - Voltar */
+      echo("              <span onclick=\"javascript:history.back(-1);\">\n");
+      echo("                &nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;\n");
+      echo("              </span>\n");
+      echo("            </li>\n");
+      echo("          </ul>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("          <div id=\"mudarFonte\">\n");
+      echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+      echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+      echo("          </div>\n");
+    }
+
+    if ($eh_popup) {
+      /* 13 - Fechar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 13)."\" onclick=\"javascript:self.close();\" />\n");
+      echo("          </form>\n");
+    }
+    else {
+      /* 23 - Voltar */
+      echo("          <form>\n");
+      echo("            <input class=\"input\" type=\"button\" value=\"".RetornaFraseDaLista($lista_frases_geral, 23)."\" onclick=\"javascript:history.go(-1);\" />\n");
+      echo("          </form>\n");
+    }
+
+    if (!$eh_popup) {
+      echo("        </td>\n");
+      echo("      </tr>\n");
+      include("../tela2.php");
+    }
+
+    echo("  </body>\n");
+    echo("</html>\n");
+    Desconectar($sock);
+    exit();
+  }
+}
 
 ?>

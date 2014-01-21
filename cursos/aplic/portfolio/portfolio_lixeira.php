@@ -67,8 +67,8 @@
   $feedbackObject->addAction("recuperarItens", 204, 0);
 
 
-  $eformador=EFormador($sock,$cod_curso,$cod_usuario);
-  $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
+  $eformador   = EFormador($sock,$cod_curso,$cod_usuario);
+  $colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
 
 
   // verificamos se a ferramenta de Avaliacoes estah disponivel

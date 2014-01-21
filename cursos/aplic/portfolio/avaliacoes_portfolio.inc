@@ -391,7 +391,9 @@ function RetornaAvaliacaoPortfolio($sock, $tipo, $cod_curso, $cod_usuario)
 {
   if (EFormador($sock, $cod_curso, $cod_usuario))
     $comp = "(At.tipo_compartilhamento='F' or At.tipo_compartilhamento='T')";
-  else if (EAluno($sock, $cod_curso, $cod_usuario) || EConvidado($sock, $cod_usuario, $cod_curso))
+  else if (EAluno($sock, $cod_curso, $cod_usuario)     || 
+           EVisitante($sock, $cod_curso, $cod_usuario) ||
+           EColaborador($sock, $cod_curso, $cod_usuario))
     $comp = "At.tipo_compartilhamento='T'";
   else
   {
@@ -399,22 +401,21 @@ function RetornaAvaliacaoPortfolio($sock, $tipo, $cod_curso, $cod_usuario)
     die();
   }
   $data=time();
-  $query="select Av.cod_avaliacao, Av.cod_atividade, Av.valor, Av.data_inicio, Av.data_termino
-            from Avaliacao Av, Atividade_itens At
-           where At.cod_item=Av.cod_atividade
-             and ".$comp."
-             and Av.ferramenta='P'
-             and Av.tipo='".$tipo."'
-             and Av.status!='X'
-             and Av.status!='A'
-             and Av.status!='C' 
-             and Av.data_termino>=$data";
+  $query  = "select Av.cod_avaliacao, Av.cod_atividade, Av.valor, Av.data_inicio, Av.data_termino ";
+  $query .= "from Avaliacao Av, Atividade_itens At ";
+  $query .= "where At.cod_item=Av.cod_atividade ";
+  $query .= "and ".$comp." ";
+  $query .= "and Av.ferramenta='P' ";
+  $query .= "and Av.tipo='".$tipo."' ";
+  $query .= "and Av.status!='X' ";
+  $query .= "and Av.status!='A' ";
+  $query .= "and Av.status!='C' ";
+  $query .= "and Av.data_termino>=$data";
+
   $res=Enviar($sock,$query);
   $lista=RetornaArrayLinhas($res);
   return $lista;
 }
-
-
 
 /* ********************************************************************************
   AlterarAssociacaoItemAvaliacao - altera associa�o de um item de portf�io a uma avalia�o criada

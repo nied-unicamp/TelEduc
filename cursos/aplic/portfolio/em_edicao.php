@@ -62,29 +62,6 @@
 
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta);
   
-  if (EConvidadoPassivo ($sock, $cod_usuario, $cod_curso))
-  {
-    echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-    echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-    echo("<html lang=\"pt\">\n");
-    /* 1 - Portfólio */
-    echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title></head>\n");
-    echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-
-    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Portfólio */
-    $cabecalho = "<br><br><h5>".RetornaFraseDaLista($lista_frases, 1);
-    /* 129 - Área restrita a alunos e formadores */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 129)."</h5>";
-    echo($cabecalho);
-
-    echo("    <br>\n");
-    echo("  </body>\n");
-    echo("  </html>\n");
-    Desconectar($sock);
-    exit();
-  }
-
   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
   echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
   echo("<html lang=\"pt\">\n");
@@ -92,6 +69,9 @@
   echo("  <head>\n");
   echo("    <title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
   echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
+  
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
+  
   echo("  </head>\n");
   echo("  <body link=#0000ff vlink=#0000ff onLoad=\"self.focus();\">\n");
 
@@ -134,7 +114,7 @@
   }
   else
   {
-    echo("            <script language=javascript>\n");
+    echo("            <script language=\"javascript\">\n");
     echo("               opener.document.location='".$origem.".php?".RetornaSessionID()."&amp;cod_curso=".$cod_curso."&amp;cod_topico=".$cod_topico_raiz."&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_item=".$cod_item."&amp;cod_usuario_portfolio=".$cod_usuario_portfolio."&amp;cod_grupo_portfolio=".$cod_grupo_portfolio."';\n");
     echo("            </script>\n");
     echo("          </ul>\n");

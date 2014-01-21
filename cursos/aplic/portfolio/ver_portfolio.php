@@ -54,8 +54,9 @@
   session_register("cod_topico_s");
   unset($cod_topico_s);
 
-  $eformador=EFormador($sock,$cod_curso,$cod_usuario);
-  $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
+  $eformador = EFormador($sock,$cod_curso,$cod_usuario);
+  $visitante = EVisitante($sock, $cod_curso, $cod_usuario);
+  $colaborador = EColaborador($sock, $cod_curso, $cod_usuario);
 
   // verificamos se a ferramenta de Avaliacoes estah disponivel
   $ferramenta_avaliacao = TestaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, 22);
@@ -77,16 +78,9 @@
   else{
     $acao_portfolio_s='I';
   }
-   
-
-  if (EConvidadoPassivo($sock, $cod_usuario, $cod_curso))
-  {
-    Desconectar($sock);
-    exit();
-  }
 
   session_register ("ferramenta_grupos_s");
-  $ferramenta_grupos_s = StatusFerramentaGrupos ($sock);
+  $ferramenta_grupos_s = StatusFerramentaGrupos($sock);
 
   // 75 - Portfolios de grupos
   // 74 - Portfolios individuais
@@ -100,8 +94,7 @@
      else
      // ajuda para portfolios individuais sem ferramenta avaliacao
          $cod_pagina = 33;
-                                     
-  } 
+  }
   else if ($ferramenta_grupos_s && 'G' == $acao_portfolio_s)
   {
     $cod_frase = 75;
@@ -130,14 +123,12 @@
          $cod_pagina = 32;
       else
       // ajuda para portfolios de grupos encerrados sem ferramenta avaliacao
-         $cod_pagina = 32;                                               
+         $cod_pagina = 32;
   }
-
 
   echo("    <script type='text/javascript' src='../js-css/bib_ajax.js'> </script>\n");
   echo("    <script type='text/javascript'>\n");
 
- 
   echo("      function Iniciar()\n");
   echo("      {\n");
   echo("        startList();\n");
@@ -208,80 +199,81 @@
   echo("    }\n");
   echo(" \n\n");
 
-
-
   echo("  </script>\n");
 
   include("../menu_principal.php");
 
   echo("          <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+  
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
+  
   echo("            <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases, $cod_frase)."</h4>\n");
 
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\">\n");
-  echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("            <div id=\"mudarFonte\">\n");
+  echo("              <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+  echo("              <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+  echo("              <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-    echo("            <ul id=\"legenda\">\n");
+  /* 509 - Voltar */
+  echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("          <ul id=\"legenda\">\n");
 
 
-    if ('I' == $acao_portfolio_s)
+  if ('I' == $acao_portfolio_s)
+  {
+    if (!$colaborador)
     {
-      if (!$convidado)
-      {
-        // 130 - Meu Portfólio
-        echo("              <li><img src=\"../imgs/icPasta.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,130)."</li>\n");
-
-        // 131 - Portfólios de outros participantes
-        $frase_outros_participantes = 131;
-      }
-
-      //else = é convidado
-      else
-      {
-        // 135 - Portfólios dos participates do curso
-        $frase_outros_participantes = 135;
-      }
-
-      echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,$frase_outros_participantes)."</li>\n");
-      // 121 - Portfólios de ex-alunos
-      echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,121)."</li>\n");
-
-    }
-    else if ('G' == $acao_portfolio_s)
-    {
-      if (! $convidado)
-      {
-        // 133 - 'Portfólios dos meus grupos'
-        echo("              <li><img src=\"../imgs/icPasta.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,133)."</li>\n");
-
-        // 134 - 'Portf�ios de outros grupos'
-        $frase_outros_grupos = 134;
-      }
-      else
-      {
-        // 75 - Portf�ios de grupos
-        $frase_outros_grupos = 75;
-      }
-
-      echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,$frase_outros_grupos)."</li>\n");
-      // 122 - 'Portf�ios de grupos encerrados'
-    }
-    else if('M' == $acao_portfolio_s)
-    {
+      // 130 - Meu Portfólio
       echo("              <li><img src=\"../imgs/icPasta.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,130)."</li>\n");
-      echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDalista($lista_frases,185)."</li>\n");
-      echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,186)."</li>\n");
+
+      // 131 - Portfólios de outros participantes
+      $frase_outros_participantes = 131;
     }
-    else if('F' == $acao_portfolio_s)
+
+    //else = é colaborador
+    else
     {
-      // 122 - 'Portfólios de grupos encerrados'
-      echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,122)."</li>\n");
+      // 135 - Portfólios dos participates do curso
+      $frase_outros_participantes = 135;
     }
+
+    echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,$frase_outros_participantes)."</li>\n");
+    // 121 - Portfólios de ex-alunos
+    echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,121)."</li>\n");
+
+  }
+  else if ('G' == $acao_portfolio_s)
+  {
+    if (!$colaborador)
+    {
+      // 133 - 'Portfólios dos meus grupos'
+      echo("              <li><img src=\"../imgs/icPasta.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,133)."</li>\n");
+
+      // 134 - 'Portf�ios de outros grupos'
+      $frase_outros_grupos = 134;
+    }
+    else
+    {
+      // 75 - Portf�ios de grupos
+      $frase_outros_grupos = 75;
+    }
+
+    echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,$frase_outros_grupos)."</li>\n");
+    // 122 - 'Portf�ios de grupos encerrados'
+  }
+  else if('M' == $acao_portfolio_s)
+  {
+    echo("              <li><img src=\"../imgs/icPasta.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,130)."</li>\n");
+    echo("              <li><img src=\"../imgs/icPasta2.gif\" alt=\"\" border=\"0\" />".RetornaFraseDalista($lista_frases,185)."</li>\n");
+    echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,186)."</li>\n");
+  }
+  else if('F' == $acao_portfolio_s)
+  {
+    // 122 - 'Portfólios de grupos encerrados'
+    echo("              <li><img src=\"../imgs/icPasta3.gif\" alt=\"\" border=\"0\" />".RetornaFraseDaLista($lista_frases,122)."</li>\n");
+  }
 
   echo("            </ul>\n");
   echo("            <!-- Tabelao -->\n");
@@ -292,14 +284,14 @@
   echo("                  <ul class=\"btAuxTabs\">\n");
 
    //174 - Meus portfolios 
-  echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=myp\">".RetornaFraseDaLista($lista_frases,174)."</a></li>\n");    
+  echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=myp\">".RetornaFraseDaLista($lista_frases,174)."</a></li>\n");
   // 74 - Portfolios Individuais
-  echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=ind\">".RetornaFraseDaLista($lista_frases,74)."</a></li>\n"); 
+  echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=ind\">".RetornaFraseDaLista($lista_frases,74)."</a></li>\n");
   // 75 - Portfolios de Grupos
   if ((isset($ferramenta_grupos_s))&&($ferramenta_grupos_s)){
-    echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=grp\">".RetornaFraseDaLista($lista_frases,75)."</a></li>\n"); 
+    echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=grp\">".RetornaFraseDaLista($lista_frases,75)."</a></li>\n");
     // 177 - Portfolios encerrados
-    echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=enc\">".RetornaFraseDaLista($lista_frases,177)."</a></li>\n"); 
+    echo("                    <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=enc\">".RetornaFraseDaLista($lista_frases,177)."</a></li>\n");
   }
 
   echo("                  </ul>\n");
@@ -346,8 +338,8 @@
       /* 148 - Itens não Avaliados */
       echo("                      <td width=\"110\" align=\"center\">".RetornaFraseDaLista($lista_frases,148)."</td>\n");
     }
-  echo("                    </tr>\n");
-	
+    echo("                    </tr>\n");
+
     foreach ($lista_topicos as $cod_topico => $linha_topico)
     {
       if ($dono_portfolio)
@@ -360,7 +352,7 @@
 
       if ($data_acesso<$max_data)
       {
-      	$marcatr="class=\"novoitem\"";
+        $marcatr="class=\"novoitem\"";
       }
       else
       {
