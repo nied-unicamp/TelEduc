@@ -43,14 +43,11 @@
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("portfolio.inc");
- 
-  $cod_usuario_global=VerificaAutenticacao($cod_curso);
-  
-  $sock=Conectar("");
 
   $cod_ferramenta = 15;
-  $lista_frases=RetornaListaDeFrases($sock,15);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
+  include("../topo_tela.php");
+  
+  $sock=Conectar("");
  
   $diretorio_arquivos=RetornaDiretorio($sock,'Arquivos');
   $diretorio_temp=RetornaDiretorio($sock,'ArquivosWeb');
@@ -58,49 +55,8 @@
   Desconectar($sock);
 
   $sock=Conectar($cod_curso);
-  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
-  VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
-  if (EConvidadoPassivo ($sock, $cod_usuario, $cod_curso))
-  {
-    echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"); echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-    echo("<html lang=\"pt\">\n");
-    /* 1 - Portf�io */
-    echo("  <head><title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
-    echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-    echo(" <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
-    echo("  </head>\n");
-    echo("  <body link=#0000ff vlink=#0000ff bgcolor=white>\n");
-    /* 1 - Portf�io */
-    $cabecalho = "  <br /><br /><h5>".RetornaFraseDaLista($lista_frases, 1);
-    /* 129 - �ea restrita a alunos e formadores */
-    $cabecalho .= " - ".RetornaFraseDaLista($lista_frases, 129)."</h5>";
-    echo($cabecalho);
-    echo("    <br />\n");
-    echo("  </body>\n");
-    echo("</html>\n");
-    Desconectar($sock);
-    exit();
-  }
-  
-
-    include("../topo_tela.php");
-//   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"); echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-//   echo("<html lang=\"pt\">\n");
-//   /* 1 - Portf�io */
-//   echo("  <head>\n");
-//   echo("    <title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
-//   echo("    <link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-//   echo("    <script type=\"text/javascript\">\n");
-//   echo("      function OpenWindowPerfil(id)\n");
-//   echo("      {\n");
-//   echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+id,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-//   echo("        return(false);\n");
-//   echo("      }\n");
-//   echo("    </script>\n");
-//   echo(" <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
-//   echo("  </head>\n");
-//   echo("  <body link=#0000ff vlink=#0000ff onLoad=\"this.focus();\">\n");
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario, true);
 
   $linha_item=RetornaDadosDoItem($sock, $cod_item);
 
@@ -123,7 +79,7 @@
   $cabecalho.= (" - ".$tipo_portfolio." / ".RetornaFraseDaLista($lista_frases,72)."</h4>\n");
   echo($cabecalho);
   // 3 A's - Muda o Tamanho da fonte
-  echo("<div id=\"mudarFonte\" style=\"top: 42px;\">\n");
+  echo("      <div id=\"mudarFonte\" style=\"top: 42px;\">\n");
   echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
   echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
   echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
@@ -155,7 +111,7 @@
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
-  echo("        <td colspan=3>\n");    
+  echo("        <td colspan=3>\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("            <tr>\n");
   echo("              <td  align=right><b>".RetornaFraseDaLista($lista_frases,125).":&nbsp;</b></td>\n");

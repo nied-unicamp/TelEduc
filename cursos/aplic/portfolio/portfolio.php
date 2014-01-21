@@ -39,18 +39,13 @@
 /*==========================================================
   ARQUIVO : cursos/aplic/portfolio/portfolio.php
   ========================================================== */
-/*
-  $sock1 = Conectar("");
-  $diretorio_arquivos=RetornaDiretorio($sock1,'Arquivos');
-  $diretorio_temp=RetornaDiretorio($sock1,'ArquivosWeb');
-  Desconectar($sock1);
-*/
+
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
   require_once("../xajax_0.2.4/xajax.inc.php");
-       
+  
   // Estancia o objeto XAJAX
   $objMudarComp = new xajax();
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
@@ -90,8 +85,8 @@
   $feedbackObject->addAction("moverItens", 202, 0);
   $feedbackObject->addAction("criarTopico", 206, 0);
 
-  $eformador=EFormador($sock,$cod_curso,$cod_usuario);
-  $convidado = EConvidado($sock, $cod_usuario, $cod_curso);
+  $eformador = EFormador($sock,$cod_curso,$cod_usuario);
+  $visitante = EVisitante($sock, $cod_curso, $cod_usuario);
   
   
   // cria o diretorio temporario da ferramenta
@@ -107,10 +102,10 @@
 
   $var = $diretorio_temp."/portfolio_".$cod_curso."_*_".$cod_usuario;
 
-  foreach (glob($var) as $filename) 
+  foreach (glob($var) as $filename)
   {
-      if(ExisteArquivo($filename))
-        (RemoveArquivo($filename)); 
+    if(ExisteArquivo($filename))
+      (RemoveArquivo($filename));
   }
 
   $data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
@@ -135,10 +130,7 @@
 
       $cod_topico_raiz_usuario=RetornaPastaRaizUsuario($sock,$cod_usuario,"");
 
-
     }
-
-
 
     $cod_topico_raiz=$cod_topico_raiz_usuario;
     $cod_usuario_portfolio=$cod_usuario;
@@ -149,7 +141,7 @@
 
   }
 
-  if ($cod_topico_raiz=="NULL") 
+  if ($cod_topico_raiz=="NULL")
     // nao ha um topico selecionado: redirecionamos o usuario para exibir os portfolios do curso
   {
     Desconectar($sock);
@@ -168,33 +160,33 @@
   $ferramenta_grupos_s = StatusFerramentaGrupos ($sock);
   
   if ($eformador){
-  	echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
-    echo("		function redirecionaDownloadAnexos(url){\n");
-    echo("			window.location=url;\n");
-    echo("		}\n");
-    echo(" 	</script>\n");
+    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("      function redirecionaDownloadAnexos(url){\n");
+    echo("        window.location=url;\n");
+    echo("      }\n");
+    echo("    </script>\n");
   }
   
   if (!$dono_portfolio){
     //JS utilizado para mover as colunas da tabela
-  echo("    <script type='text/javascript'>\n");
-  echo("      function OpenWindowPerfil(id)\n");
-  echo("      {\n");
-  echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+id,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
-  echo("        return(false);\n");
-  echo("      }\n");
+    echo("    <script type='text/javascript'>\n");
+    echo("      function OpenWindowPerfil(id)\n");
+    echo("      {\n");
+    echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+id,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+    echo("        return(false);\n");
+    echo("      }\n");
   
-  	echo ("      function WindowOpenAvalia(id)\n");
-	echo ("      {\n");
-	echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
-	echo ("        return(false);\n");
-	echo ("      }\n");
+    echo ("      function WindowOpenAvalia(id)\n");
+    echo ("      {\n");
+    echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+    echo ("        return(false);\n");
+    echo ("      }\n");
 
   }else{
     
     echo("    <script type='text/javascript'>\n");
   
-     echo("      function OpenWindowPerfil(id)\n");
+    echo("      function OpenWindowPerfil(id)\n");
     echo("      {\n");
     echo("         window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=\"+id,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
     echo("        return(false);\n");
@@ -228,20 +220,20 @@
     echo("        Xpos = (isMinNS4) ? e.pageX : event.clientX;\n");
     echo("      }\n\n");
   
-   echo("      function getPageScrollY()\n");
-   echo("      {\n");
-   echo("        if (isNav)\n");
-   echo("          return(window.pageYOffset);\n");
-   echo("        if (isIE){\n");
-   echo("          if(document.documentElement.scrollLeft>=0){\n");
-   echo("            return document.documentElement.scrollTop;\n");
-   echo("          }else if(document.body.scrollLeft>=0){\n");
-   echo("            return document.body.scrollTop;\n");
-   echo("          }else{\n");
-   echo("            return window.pageYOffset;\n");
-   echo("          }\n");
-   echo("        }\n");
-   echo("      }\n");
+    echo("      function getPageScrollY()\n");
+    echo("      {\n");
+    echo("        if (isNav)\n");
+    echo("          return(window.pageYOffset);\n");
+    echo("        if (isIE){\n");
+    echo("          if(document.documentElement.scrollLeft>=0){\n");
+    echo("            return document.documentElement.scrollTop;\n");
+    echo("          }else if(document.body.scrollLeft>=0){\n");
+    echo("            return document.body.scrollTop;\n");
+    echo("          }else{\n");
+    echo("            return window.pageYOffset;\n");
+    echo("          }\n");
+    echo("        }\n");
+    echo("      }\n");
   
     echo("      function AjustePosMenuIE()\n");
     echo("      {\n");
@@ -269,16 +261,16 @@
     echo ("         }\n\n");
     echo ("         if ( tecla == 13 )\n");
     echo ("         {\n");
-    echo ("             EdicaoNomePasta(id,'ok');\n"); 
+    echo ("             EdicaoNomePasta(id,'ok');\n");
     echo ("         }\n\n");
     echo ("         return true;\n");
     echo ("     }\n\n");
 
-	echo ("      function WindowOpenAvalia(id)\n");
-	echo ("      {\n");
-	echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
-	echo ("        return(false);\n");
-	echo ("      }\n");
+    echo ("      function WindowOpenAvalia(id)\n");
+    echo ("      {\n");
+    echo ("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&cod_avaliacao='+id,'VerAvaliacao','width=620,height=450,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
+    echo ("        return(false);\n");
+    echo ("      }\n");
     
     echo("      function AlterarNomePasta(){\n");
     echo("        id = 'nome_topico_atual';\n");
@@ -372,7 +364,7 @@
     echo("          return false;\n");
     echo("        }\n");
     echo("        return true;\n");
-    echo("      }\n\n");  
+    echo("      }\n\n");
     
     echo("      function VerificaNovoItemTopico(textbox) {\n");
     echo("        texto=textbox.value;\n");
@@ -422,18 +414,18 @@
     echo("      }\n\n");
   
     echo("      function MostraLayer(cod_layer, ajuste, ev){\n");
-   echo("        EscondeLayers();\n");
-   echo("        ev = ev || window.event;\n");
-   echo("        if(ev.pageX || ev.pageY){\n");
-   echo("          Xpos = ev.pageX;\n");
-   echo("          Ypos = ev.pageY;\n");
-   echo("        }else{\n");
-   echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
-   echo("          Ypos = ev.clientY + getPageScrollY();\n");
-   echo("        }\n");
-   echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
-   echo("        showLayer(cod_layer);\n");
-   echo("      }\n\n");
+    echo("        EscondeLayers();\n");
+    echo("        ev = ev || window.event;\n");
+    echo("        if(ev.pageX || ev.pageY){\n");
+    echo("          Xpos = ev.pageX;\n");
+    echo("          Ypos = ev.pageY;\n");
+    echo("        }else{\n");
+    echo("          Xpos = ev.clientX + document.body.scrollLeft - document.body.clientLeft;\n");
+    echo("          Ypos = ev.clientY + getPageScrollY();\n");
+    echo("        }\n");
+    echo("        moveLayerTo(cod_layer,Xpos-100,Ypos);\n");
+    echo("        showLayer(cod_layer);\n");
+    echo("      }\n\n");
   
     echo("      function EscondeLayer(cod_layer)\n");
     echo("      {\n");
@@ -508,17 +500,14 @@
     echo("          document.form_dados.submit();\n");
     echo("        }\n");
     echo("      }\n\n");
-  
+
     echo("      function MoverSelecionados(topico_destino){\n");
     echo("        xajax_MoverItensDinamic('".$cod_curso."', '".$cod_usuario."', '".$cod_topico_raiz."', topico_destino, array_topicos, array_itens);\n");
     echo("      }\n\n");
 
-
     echo("      function Redirecionar(cod_topico_raiz, acao, atualizacao){\n");
     echo("         window.location='portfolio.php?cod_curso=".$cod_curso."&cod_topico_raiz='+cod_topico_raiz+'&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&acao='+acao+'&atualizacao='+atualizacao;\n");
     echo("      }\n\n");
-
-    
 
     echo("      function EscondeLayers()\n");
     echo("      {\n");
@@ -528,25 +517,25 @@
     echo("        hideLayer(cod_novoitem);\n");
     echo("        hideLayer(cod_novapasta);\n");
     echo("      }\n\n");
-    
-}
-      echo("      function Iniciar()\n");
-    echo("      {\n");
-    if($dono_portfolio){
-      echo("        cod_comp = getLayer(\"comp\");\n");
-      echo("        cod_mover = getLayer(\"mover\");\n");
-      echo("        cod_mover_selec = getLayer(\"mover_selec\");\n");
-      echo("        cod_novoitem = getLayer(\"novoitem\");\n");
-      echo("        cod_novapasta = getLayer(\"novapasta\");\n");
-      echo("        cod_topicos = getLayer(\"topicos\");\n");  
-      echo("        EscondeLayers();\n");
-      echo("        tableDnD = new TableDnD();\n");
-      echo("        table = document.getElementById('tab_interna');\n");
-      echo("        if(table) tableDnD.init(table);\n");
-    }
-    $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-    echo("        startList();\n");
-    echo("      }\n\n");
+  
+  }
+  echo("      function Iniciar()\n");
+  echo("      {\n");
+  if($dono_portfolio){
+    echo("        cod_comp = getLayer(\"comp\");\n");
+    echo("        cod_mover = getLayer(\"mover\");\n");
+    echo("        cod_mover_selec = getLayer(\"mover_selec\");\n");
+    echo("        cod_novoitem = getLayer(\"novoitem\");\n");
+    echo("        cod_novapasta = getLayer(\"novapasta\");\n");
+    echo("        cod_topicos = getLayer(\"topicos\");\n");
+    echo("        EscondeLayers();\n");
+    echo("        tableDnD = new TableDnD();\n");
+    echo("        table = document.getElementById('tab_interna');\n");
+    echo("        if(table) tableDnD.init(table);\n");
+  }
+  $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+  echo("        startList();\n");
+  echo("      }\n\n");
 
   echo("      function AbreJanelaComponentes(id)\n");
   echo("      {\n");
@@ -561,6 +550,8 @@
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
+  ExpulsaVisitante($sock, $cod_curso, $cod_usuario);
 
   /* P?ina Principal */
 
@@ -661,15 +652,15 @@
   echo("                <ul class=\"btAuxTabs\">\n");
 
    //174 - Meus portfolios 
-  echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=myp\">".RetornaFraseDaLista($lista_frases,174)."</a></li>\n");    
+  echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=myp\">".RetornaFraseDaLista($lista_frases,174)."</a></li>\n");
   // 74 - Portfolios Individuais
-  echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=ind\">".RetornaFraseDaLista($lista_frases,74)."</a></li>\n"); 
+  echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=ind\">".RetornaFraseDaLista($lista_frases,74)."</a></li>\n");
 
   // 75 - Portfolios de Grupos
   if ((isset($ferramenta_grupos_s)) && ($ferramenta_grupos_s)) {
-    echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=grp\">".RetornaFraseDaLista($lista_frases,75)."</a></li>\n"); 
+    echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=grp\">".RetornaFraseDaLista($lista_frases,75)."</a></li>\n");
     // 177 - Portfolios encerrados
-    echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=enc\">".RetornaFraseDaLista($lista_frases,177)."</a></li>\n"); 
+    echo("                  <li><a href=\"ver_portfolio.php?cod_curso=".$cod_curso."&amp;exibir=enc\">".RetornaFraseDaLista($lista_frases,177)."</a></li>\n");
   }
 
   echo("                </ul>\n");
@@ -680,7 +671,7 @@
   echo("                <ul class=\"btAuxTabs03\">\n");
 
   // 69 - Atualizar
-	echo("		<li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
+  echo("                  <li> <span onclick=\"window.location.reload();\">".RetornaFraseDaLista($lista_frases,69)."</span></li>\n");
   
   // download de todos os anexos do portfolio de um aluno
   // TODO: falta fazer a funcao dinamica para pegar os anexos e montar o zip
@@ -806,7 +797,7 @@
 
         $max_data=RetornaMaiorData($sock,$linha['cod_topico'],$varTmp,$linha['data']);
         $num_comentarios=RetornaNumComentariosTopico($sock,$cod_usuario,$linha['cod_topico'],$varTmp,$linha['data'], $cod_curso);
-        if ($data_acesso<$max_data) $marcatr=" class=\"novoitem\"";        
+        if ($data_acesso<$max_data) $marcatr=" class=\"novoitem\"";
         else $marcatr="";
 
         echo("<tr ".$marcatr." id=\"tr_top_".$linha['cod_topico']."\">");
@@ -926,7 +917,7 @@
           else
           {
             /* 54 - Em Edição */
-            $data="<a href=\"#\" class=\"text\" onclick=\"window.open('em_edicao.php?cod_curso=".$cod_curso."&amp;cod_item=".$linha['cod_item']."&amp;origem=portfolio&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_usuario_portfolio=".$cod_usuario_portfolio."&amp;cod_grupo_portfolio=".$cod_grupo_portfolio."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases_geral,54)."</a>"; 
+            $data="<a href=\"#\" class=\"text\" onclick=\"window.open('em_edicao.php?cod_curso=".$cod_curso."&amp;cod_item=".$linha['cod_item']."&amp;origem=portfolio&amp;cod_topico_raiz=".$cod_topico_raiz."&amp;cod_usuario_portfolio=".$cod_usuario_portfolio."&amp;cod_grupo_portfolio=".$cod_grupo_portfolio."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".RetornaFraseDaLista($lista_frases_geral,54)."</a>";
             $titulo=$linha['titulo'];
             $marcatr="";
           }
@@ -993,14 +984,14 @@
           $tituloAvaliacao = RetornaTituloAvaliacaoDoItem($sock, $linha['cod_item']);
           
           if($tituloAvaliacao!= ""){
-		    $tituloavalia = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . $tituloAvaliacao . "</span>";
-            }
-            else{
+            $tituloavalia = "<span id=\"estadoAvaliacao\" class=\"link\" onclick=\"WindowOpenAvalia(".$lista['cod_avaliacao']."); return false;\" >" . $tituloAvaliacao . "</span>";
+          }
+          else{
             //36 - Nao
-              $tituloavalia = "<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 36) . "</span>";
-            }
-		    if ($ferramenta_avaliacao)
-            {
+            $tituloavalia = "<span id=\"estadoAvaliacao\">" . RetornaFraseDaLista($lista_frases_geral, 36) . "</span>";
+          }
+          if ($ferramenta_avaliacao)
+          {
             echo("<td width=\"110\" align=\"center\"><span>");
             if (is_array($lista))
             {
@@ -1036,27 +1027,27 @@
           }
         }
         
-          echo("<td width=\"110\">&nbsp;");
+        echo("<td width=\"110\">&nbsp;");
 
-          if ($linha['num_comentarios_alunos']>0){
-            echo("<span class=\"cAluno\">(c)</span>");
-          }
-          if ($linha['num_comentarios_formadores']>0){
-            echo("<span class=\"cForm\">(c)</span>");
-          }
-          if ($linha['num_comentarios_usuario']>0){
-            echo("<span class=\"cMim\">(c)</span>");
-          }
-          if ($linha['data_comentarios']>$data_acesso){
-            echo("<span class=\"cNovo\">*</span>");
-          }   
-          echo("</td>");
-		echo("<td width=\"70\"><span id=\"data_".$linha['cod_item']."\">".$data."</span></td>");
+        if ($linha['num_comentarios_alunos']>0){
+          echo("<span class=\"cAluno\">(c)</span>");
+        }
+        if ($linha['num_comentarios_formadores']>0){
+          echo("<span class=\"cForm\">(c)</span>");
+        }
+        if ($linha['num_comentarios_usuario']>0){
+          echo("<span class=\"cMim\">(c)</span>");
+        }
+        if ($linha['data_comentarios']>$data_acesso){
+          echo("<span class=\"cNovo\">*</span>");
+        }   
+        echo("</td>");
+        echo("<td width=\"70\"><span id=\"data_".$linha['cod_item']."\">".$data."</span></td>");
         echo("<td width=\"110\"><span>".$compartilhamento."</span></td>");
         echo("</tr>");
       } //fecha foreach
     }
-  echo("</table>\n"); 
+    echo("</table>\n");
   } //fecha else = existem topicos ou pastas
 
 
