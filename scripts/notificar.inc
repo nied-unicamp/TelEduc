@@ -252,7 +252,7 @@ function RetornaNovidadeFerramentasNotificar($sock,$cod_curso,$cod_usuario)
   if ((EVisitante($sock,$cod_curso,$cod_usuario)) || 
       (!EAluno($sock, $cod_curso, $cod_usuario) && 
        !EFormador($sock, $cod_curso, $cod_usuario) && 
-       !EConvidado($sock, $cod_usuario, $cod_curso)
+       !EColaborador($sock, $cod_curso, $cod_usuario)
       )
      )
   {
