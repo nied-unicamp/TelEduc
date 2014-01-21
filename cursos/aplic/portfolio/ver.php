@@ -802,7 +802,12 @@ if ($dono_portfolio) {
 	echo ("                    </td>\n");
 }
 
-echo ("                    <td align=\"center\">" . $compartilhamentospan . "</td>\n");
+if (!($dono_portfolio)){
+  echo(" <td align=\"center\">".$compartilhamento."</td>\n");
+}
+else{
+  echo ("                    <td align=\"center\">" . $compartilhamentospan . "</td>\n");
+}
 
   $tituloAvaliacao = RetornaTituloAvaliacaoDoItem($sock, $linha_item['cod_item']);
           
