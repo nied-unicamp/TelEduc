@@ -92,7 +92,7 @@ function RetornaStatusUsuario($sock,$cod_curso,$cod_usuario)
             'F' se for Formador
             'A' se for Aluno
             'V' se for Visitante
-            'C' se for Convidado
+            'Z' se for Colaborador
 */   
 function getTipoAtor($sock, $cod_curso, $cod_usuario){
 
@@ -106,9 +106,7 @@ function getTipoAtor($sock, $cod_curso, $cod_usuario){
     $sigla= 'V';
   } elseif (EColaborador($sock, $cod_curso, $cod_usuario)){
     $sigla= 'Z';
-  }/* elseif (EConvidado($sock, $cod_usuario, $cod_curso)){
-    $sigla= 'Z';
-  }*/
+  }
 
   return $sigla;
 
@@ -783,72 +781,6 @@ function EColaborador($sock, $cod_curso, $cod_usuario)
   $res   = Enviar ($sock, $query);
   $linha = RetornaLinha ($res);
   return ($linha ['tipo_usuario'] == 'Z');
-}
-
-/* *********************************************************************
- * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
- * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
- * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
-/* *********************************************************************
-   EConvidado - Retorna se o usuario eh convidado
-   entrada: $sock - sock de conexao
-            $cod_usuario - codigo do usuario a verificar
-   saida: true - o usuario eh convidado.
-          false - o usuario nao eh convidado
-*/
-function EConvidado ($sock, $cod_usuario, $cod_curso)
-{
-
-  // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-  $query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaStringQuery($cod_curso);
-  $res   = Enviar ($sock, $query);
-  $linha = RetornaLinha ($res);
-  return ($linha ['tipo_usuario'] == 'Z' || $linha['tipo_usuario'] == 'z' || $linha['tipo_usuario'] == 'V');
-}
-
-/* *********************************************************************
- * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
- * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
- * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
-/* *********************************************************************
-   EConvidadoAtivo - Retorna se o usuario eh convidado com interacao (tipo_usuario 'Z' maiusculo)
-   entrada: $sock - sock de conexao
-            $cod_usuario - codigo do usuario a verificar
-   saida: true - o usuario eh convidado com interacao.
-          false - o usuario nao eh convidado, ou ï¿½convidado sem interacao com o ambiente
-*/
-function EConvidadoAtivo ($sock, $cod_usuario, $cod_curso)
-{
-
-//PASSAR COD_CURSO POR PARAMETRO
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-  $query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaStringQuery($cod_curso);
-  $res   = Enviar ($sock, $query);
-  $linha = RetornaLinha ($res);
-  return ($linha ['tipo_usuario'] == 'Z');
-}
-
-/* *********************************************************************
- * FUNÇÃO OBSOLETA, UMA VEZ QUE O PAPEL CONVIDADO NÃO EXISTE MAIS. ESSA
- * FUNÇÃO SERÁ MANTIDA ATÉ QUE A ERRADICAÇÃO DESSE PAPEL ESTEJA COMPLETA,
- * POR QUESTÃOES DE COMPATIBILIDADE, E ENTÃO ENTÃO DEVERÁ SER APAGADA.
-/* *********************************************************************
-   EConvidadoPassivo - Retorna se o usuario eh convidado sem interacao (tipo_usuario 'z' minusculo)
-   entrada: $sock - sock de conexao
-            $cod_usuario - codigo do usuario a verificar
-   saida: true - o usuario eh convidado sem interacao.
-          false - o usuario nao eh convidado, ou ï¿½convidado com interacao com o ambiente
-*/
-function EConvidadoPassivo ($sock, $cod_usuario, $cod_curso)
-{
-   // 2Session
-  $dbnamebase = $_SESSION['dbnamebase'];
-  $query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".VerificaNumeroQuery($cod_usuario)." and cod_curso=".VerificaStringQuery($cod_curso);
-  $res   = Enviar ($sock, $query);
-  $linha = RetornaLinha ($res);
-  return ($linha ['tipo_usuario'] == 'z' || $linha['tipo_usuario'] == 'V');
 }
 
 function RetornaCodLinguaUsuario($sock,$cod_usuario)
