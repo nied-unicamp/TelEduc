@@ -152,9 +152,9 @@
         $cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $linha['cod_curso']);
         Desconectar($sock);
         $tem_acesso_curso = ParticipaDoCurso($linha['cod_curso']);
-        //$rejeitado_curso = RejeitadoDoCurso($linha['cod_curso']);
+        $rejeitado_curso = RejeitadoDoCurso($linha['cod_curso']);
         $sock=Conectar("");
-        
+
         echo("                  <tr>\n");
         echo("                    <td align=\"left\">".$linha['nome_curso']."</td>\n");
         if ($linha['acesso_visitante']=="A")
@@ -168,13 +168,17 @@
         }
         
         if($tem_acesso_curso) {
-//          if($rejeitado_curso) {
-//            /* 223 - Inscrio no aceita */
-//            echo("                    <td>".RetornaFraseDaLista($lista_frases,223)."<input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,53)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
-//          }else{
+          if($rejeitado_curso) {
+            /* 223 - Inscrio no aceita */
+            echo("                    <td>\n");
+            echo("                      ".RetornaFraseDaLista($lista_frases,223)."\n");
+            /* 235 - Inscrever-se novamente */
+            echo("                      <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,235)."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" />\n");
+            echo("                    </td>\n");
+          }else{
               /* 55 - Entrar */
               echo("                    <td><input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,55)."\" onClick=\"document.location='../cursos/aplic/index.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
-//          }
+          }
         }
         else
         {
