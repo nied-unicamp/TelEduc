@@ -603,6 +603,24 @@ function RetornaUsuarios($sock, $cod_curso)
   return ($lista1);
 }
 
+function RetornaNomeUsuario($sock, $cod_curso, $cod_usuario)
+{
+
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query = "select UC.cod_usuario,U.nome from ".$dbnamebase.".Usuario_curso UC ".
+           " inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global and UC.cod_curso='".$cod_curso."') ".
+           " where UC.cod_usuario='".$cod_usuario."'".
+           " and (binary UC.tipo_usuario='A' or ".
+           "      binary UC.tipo_usuario='F') ".
+           " order by U.nome";
+  $res=Enviar($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+  
+  return $lista;
+  
+}
+
 /* ********************************************************************************
    RetornaDadosNota - Retorna a nota do aluno selecionado
    Entrada:  $sock - BASE DO CURSO
@@ -1456,6 +1474,25 @@ function RetornaListaGrupos($sock)
   }
   return ($lista1);
 }
+
+
+/*function RetornaNomeGrupo($sock, $cod_grupo)
+{
+  
+  $query="select cod_grupo,nome from Grupos where status <> 'X' and cod_grupo='".$cod_grupo."'";
+  $res=Enviar ($sock,$query);
+  $lista=RetornaArrayLinhas($res);
+
+  unset($nome);
+  if (count($lista) > 0)
+  {
+    foreach($lista as $cod=>$linha)
+    {
+      $nome[$linha['cod_grupo']]=$linha['nome'];
+    }
+  }
+  return ($nome);
+}*/
 
 
 /* *********************************************************************
@@ -4985,17 +5022,32 @@ function RegistrarAvaliacaoDinamic($cod_curso, $cod_avaliacao, $cod_aluno_grupo,
 
   $cod_nota = $dados_nota['cod_nota'];
 
-  Desconectar($sock);
-
   $objResponse->addScript("AtualizaTr('".$id."',".$cod_nota.",'".FormataNota($nota)."','".UnixTime2Data(time())."','".$compartilhamento."',".$cod_aluno.",'".$cod_grupo."');");
   $objResponse->addScript("DesabilitaTr('".$id."'+'_avaliar');");
-
+  
+  if (!($dados['Tipo'] == 'G')){
+    $lista_nomes = RetornaNomeUsuario($sock, $cod_curso, $cod_aluno);
+    unset($lista1);
+    
+    foreach($lista_nomes as $cod=>$linha)
+    {
+      $nome = $lista1[$linha['cod_usuario']]=$linha['nome'];
+    }
+  }
+  else{
+    $nome = RetornaNomeGrupo($sock, $cod_grupo);
+  }
+    
+  Desconectar($sock);
+  
   /* Feedback Ã© sempre bom nÃ©? */
   $cod_lingua = (int) $_SESSION['cod_lingua_s'];
-  $cod_ferramenta = 22;
-  $cod_texto = 216;
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
-  $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
+  /* #237 - A nota da avaliação de */
+  $texto1 = RetornaTexto($cod_lingua, 22, 237);
+  /* #238 - foi alterada com sucesso */
+  $texto2 = RetornaTexto($cod_lingua, 22, 238);
+  
+  $objResponse->addScriptCall("mostraFeedback", $texto1." ".$nome." ".$texto2, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse->getXML();
