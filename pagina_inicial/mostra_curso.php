@@ -141,14 +141,22 @@
   echo("              </td>\n");
   echo("            </tr>\n");
 
-  if ($dados_curso['inscricao_inicio']<=$hoje &&
-      $dados_curso['inscricao_fim']>=$ontem   &&
-      !ParticipaDoCurso($cod_curso))
-  {
+  if ($dados_curso['inscricao_inicio'] <= $hoje  &&
+      $dados_curso['inscricao_fim']    >= $ontem &&
+      (
+        // Se o aluno não se inscreveu ou se inscreveu e foi rejeitado.
+        !ParticipaDoCurso($cod_curso) ||
+        RejeitadoDoCurso($cod_curso)
+      )
+  ) {
     echo("            <tr>\n");
     echo("              <td align=right>\n");
-    /* 67 - Inscreva-se! */
-    echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,67)."\" onclick=\"document.location='inscricao.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."';\" type=\"button\" />\n");
+    if (!ParticipaDoCurso($cod_curso))
+      /* 67 - Inscreva-se! */
+      echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,67)."\" onclick=\"document.location='inscricao.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."';\" type=\"button\" />\n");
+    if (RejeitadoDoCurso($cod_curso))
+      /* 235 - Inscrever-se novamente */
+      echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,235)."\" onclick=\"document.location='inscricao.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso."';\" type=\"button\" />\n");
     echo("              </td>\n");
     echo("            </tr>\n");
   }

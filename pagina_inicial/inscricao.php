@@ -112,6 +112,9 @@
   $hoje=time();
   $ontem=$hoje - 86400;
 
+  $participa_curso = ParticipaDoCurso($cod_curso);
+  $rejeitado_curso = RejeitadoDoCurso($cod_curso);
+
   if ($dados_curso['inscricao_fim']<$ontem)
   {
     /* 100 - Esse curso j� teve suas inscri��es encerradas. */
@@ -119,10 +122,19 @@
     echo("                    <td>".RetornaFraseDaLista($lista_frases,100)."</td>\n");
     echo("                  </tr>\n");
   }
-  else if(!ParticipaDoCurso($cod_curso))
+  else if(!$participa_curso || $rejeitado_curso)
   {
-    $sock = Conectar("");
-    $cod_usuario = CadastraUsuario($sock,$_SESSION["cod_usuario_global_s"],$cod_curso);
+    if (!$participa_curso) {
+      $sock = Conectar("");
+      $cod_usuario = CadastraUsuario($sock,$_SESSION["cod_usuario_global_s"],$cod_curso);
+    }
+    if($rejeitado_curso) {
+      $data_inscricao = RetornaDataInscricao($cod_curso);
+      $sock = Conectar($cod_curso);
+      $cod_usuario = ReCadastraUsuario($sock,$_SESSION["cod_usuario_global_s"],$cod_curso);
+      Desconectar($sock);
+      $sock = Conectar("");
+    }
 
     $dados_usuario = RetornaDadosUsuario($sock,$_SESSION["cod_usuario_global_s"]);
     /* Tudo ok */
@@ -178,6 +190,17 @@
     $remetente = RetornaDadosConfig('adm_email');
     $mensagem_envio = MontaMsg($host, $raiz_www, $cod_curso, $mensagem_coord, $assunto, -1, $linha['nome_coordenador']);
     MandaMsg($linha['email'], $destino,$assunto,$mensagem_envio);
+    if($rejeitado_curso) {
+      echo("                  <tr>\n");
+      echo("                    <td align=left>\n");
+      echo("                      <p style=\"text-indent:15px;\">\n");
+      /* 221 - Desculpe-nos, mas voc� j� solicitou inscri��o para este curso no dia */
+      /* 222 - e seu pedido foi rejeitado.*/
+      echo("                        ".RetornaFraseDaLista($lista_frases,221)." ".$data_inscricao." ".RetornaFraseDaLista($lista_frases,222)."\n");
+      echo("                      </p>\n");
+      echo("                    </td>\n");
+      echo("                  </tr>\n");
+    }
     /* 108 - Seu pedido de matr�cula no curso */
     /* 109 - foi realizado corretamente. */
     /* 110 - O coordenador e os formadores do curso analisar�o o seu pedido e em breve entrar�o em contato por e-mail com voc� aceitando-o ou n�o como aluno em sua disciplina.  */
@@ -194,16 +217,8 @@
   {
     echo("                  <tr>\n");
     echo("                    <td>\n");
-    
-    if(RejeitadoDoCurso($cod_curso)){
-      /* 221 - Desculpe-nos, mas voc� j� solicitou inscri��o para este curso no dia */
-      /* 222 - e seu pedido foi rejeitado.*/
-      echo("                      ".RetornaFraseDaLista($lista_frases,221)." ".RetornaDataInscricao($cod_curso)." ".RetornaFraseDaLista($lista_frases,222)."\n");
-    }
-    else{
-      // 160 - Usuario ja participa deste curso!
-      echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
-    }
+    // 160 - Usuario ja participa deste curso!
+    echo("                      ".RetornaFraseDaLista($lista_frases,160)."\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }

@@ -315,12 +315,37 @@ function CadastraUsuario($sock,$cod_usuario_global,$cod_curso)
 {
   $cod_usuario_prox = RetornaProximoCodigoUsuarioNoCurso($sock,$cod_usuario_global,$cod_curso);
 
-  $query = "insert into Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values (".VerificaNumeroQuery($cod_usuario_global).",".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).",'i',".time().")";
+  $query  = "insert into Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) ";
+  $query .= "values (".VerificaNumeroQuery($cod_usuario_global).",".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).",'i',".time().")";
   Enviar($sock,$query);
 
-  $query = "insert into Usuario_config (cod_usuario,cod_curso) values (".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).")";
+  $query  = "insert into Usuario_config (cod_usuario,cod_curso) ";
+  $query .= "values (".$cod_usuario_prox.",".VerificaNumeroQuery($cod_curso).")";
   Enviar($sock, $query);
 
+}
+
+/* *****************************************************************************
+  ReCadastraUsuario - Recadastra o usuário na tabela, alterando sua inscrição para
+                      não avaliada.
+  Entrada: $sock               - sock da base do Curso
+           $cod_usuario_global - código global do usuario, disponível no mmomento
+                                 em que ele se inscreve em um curso.
+           $cod_curso          - código do curso.
+  Saida: nenhuma
+*/
+function ReCadastraUsuario($sock,$cod_usuario_global,$cod_curso)
+{
+  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
+  
+  // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query  = "update ".$dbnamebase.".Usuario_curso set tipo_usuario = 'i', data_inscricao = ".time()." ";
+  $query .= "where cod_usuario = ".$cod_usuario." and ";
+  $query .=       "cod_curso   = ".VerificaNumeroQuery($cod_curso);
+
+  Enviar($sock, $query);
 }
 
 /* ****************************************************************************************

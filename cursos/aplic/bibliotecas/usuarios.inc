@@ -628,7 +628,7 @@ function RetornaCodigoUsuarioGlobalPorEmail($sock, $email)
 }
 
 /* *********************************************************************
-   RetornaCodigoUsuarioCurso - Retorna codugo local do usuario no curso
+   RetornaCodigoUsuarioCurso - Retorna codigo local do usuario no curso
    Entradas: $sock - Sock aberto para a base
              $cod_usuario_global - Codigo global do usuario 
              $cod_curso - Codigo do curso
