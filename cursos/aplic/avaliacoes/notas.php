@@ -65,6 +65,18 @@
 
   $sock = MudarDB($sock, $cod_curso);
   $media=RetornaInformacoesMedia($sock);
+  // No primeiro acesso desta página, não existe nenhuma
+  // expressão ou norma para a média salva no banco. É preciso
+  // definir uma média default para evitar comportamentos imprevistos.
+  if (empty($media)) {
+    $media = array (
+      'cod_expressao' => null,
+      'expressao' => '',
+      'norma' => '',
+      'tipo_compartilhamento' => 'F',
+      'data' => null,
+    );
+  }
   $lista_avaliacoes=RetornaAvaliacoes($sock,$usr_formador);
   $expressao = "";
   $norma = "";
@@ -179,7 +191,7 @@
             echo("      ".$linha['Ferramenta'].$contador."v[".$j."] = ".$nota.";\n");
 
           } elseif($foiavaliado && $linha['Ferramenta']=='E') { //Exercicios
-          	$dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
+            $dados_nota=RetornaDadosNota($sock, $cod, $linha['Cod_avaliacao'],$cod_usuario,$usr_formador);
             $tipo_compartilhamento=$dados_nota['tipo_compartilhamento'];
             $cod_nota=$dados_nota['cod_nota'];
             $nota=FormataNota($dados_nota['nota']);
@@ -962,23 +974,25 @@
     echo("          }\n");
     echo("        }\n");
     echo("        if (i != 0) {\n");
-    if (($media['tipo_compartilhamento'] == 'T') || ($media['tipo_compartilhamento'] == 'F' && $usr_formador) || ($media['tipo_compartilhamento'] == 'A')) {
-       if ($media['tipo_compartilhamento'] == 'A' && !$usr_formador) {
-         echo("          if (codv[i-1] == $cod_usuario) {\n");
-       }
-    echo("            if (ok && norma != '') {\n");
-    echo("              var normalizacao=nota*(10/norma);\n");
-    echo("            } else {\n");
-    echo("              var normalizacao=nota;\n");
-    echo("            }\n");
-    echo("            if (ok && (!isUndefined(normalizacao)) && (!isNaN(normalizacao))) {\n");
-    echo("              document.getElementById('media' + i).innerHTML=normalizacao.toFixed(2);\n");
-    echo("            }else {\n");
-    echo("              document.getElementById('media' + i).innerHTML='0.00';\n");
-    echo("            }\n");
-       if ($media['tipo_compartilhamento'] == 'A' && !$usr_formador) {
-    echo("          }\n");
-       }
+    if (($media['tipo_compartilhamento'] == 'T')                  ||
+        ($media['tipo_compartilhamento'] == 'F' && $usr_formador) ||
+        ($media['tipo_compartilhamento'] == 'A')) {
+      if ($media['tipo_compartilhamento'] == 'A' && !$usr_formador) {
+        echo("          if (codv[i-1] == $cod_usuario) {\n");
+      }
+      echo("            if (ok && norma != '') {\n");
+      echo("              var normalizacao=nota*(10/norma);\n");
+      echo("            } else {\n");
+      echo("              var normalizacao=nota;\n");
+      echo("            }\n");
+      echo("            if (ok && (!isUndefined(normalizacao)) && (!isNaN(normalizacao))) {\n");
+      echo("              document.getElementById('media' + i).innerHTML=normalizacao.toFixed(2);\n");
+      echo("            }else {\n");
+      echo("              document.getElementById('media' + i).innerHTML='0.00';\n");
+      echo("            }\n");
+      if ($media['tipo_compartilhamento'] == 'A' && !$usr_formador) {
+        echo("          }\n");
+      }
     }
     echo("        } else {\n");
     echo("          if (norma != '' && !norma_com_digito_estranho(norma)) {\n");
