@@ -394,8 +394,8 @@
   
   if($dono_diario)
   {
-  /*  - Opcoes */
-  echo("                    <td width=\"15%\">Op&ccedil;&otilde;es</td>\n");
+    /* 70(ger) - Op&ccedil;&otilde;es */
+    echo("                    <td width=\"15%\">".RetornaFraseDaLista($lista_frases_geral, 70)."</td>\n");
   }
   
   /* 10 - Data */
@@ -560,9 +560,9 @@
 
 
     // Mudar Compartilhamento
-    echo("          <div class=popup id=\"layer_comp\" style=\"visibility:hidden oncontextmenu:return(false);\">\n");
+    echo("          <div class=\"popup\" id=\"layer_comp\" style=\"visibility:hidden oncontextmenu:return(false);\">\n");
     echo("            <div class=\"posX\"><span onclick=\"EscondeLayer(lay_comp);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
-    echo("            <div class=int_popup>\n");
+    echo("            <div class=\"int_popup\">\n");
     echo("            <form name=\"form_comp\" id=\"form_comp\" action=\"\">\n");
     echo("              <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\" />\n");
     echo("              <input type=\"hidden\" name=\"cod_item\" value=\"".$cod_item."\" />\n");

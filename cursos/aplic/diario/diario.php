@@ -217,7 +217,7 @@
   echo("                var tipo_comp = new Array(document.getElementById('tipo_comp_T'), document.getElementById('tipo_comp_F'), document.getElementById('tipo_comp_P')); \n");
   echo("              } \n");
   echo("            } \n");
-  echo("            var imagem=\"<img src='../imgs/checkmark_blue.gif' />\" \n");
+  echo("            var imagem=\"<img src='../imgs/checkmark_blue.gif' />\";\n");
   echo("            if (js_tipo_comp=='F') { \n");
   echo("              tipo_comp[0].innerHTML=imagem; \n");
   echo("              tipo_comp[1].innerHTML=\"&nbsp;\"; \n");
@@ -324,7 +324,7 @@
   if ($dono_diario)
   {
     /* 4 - Incluir nova anotacao */
-    echo("                  <li><span title=\"Incluir nova anotacao\" onclick=\"MostraLayer(cod_novoitem, 140,event);document.getElementById('titulo').focus(); document.getElementById('titulo').value=''\">".RetornaFraseDaLista($lista_frases, 4)."</span></li>\n");
+    echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases, 4)."\" onclick=\"MostraLayer(cod_novoitem, 140,event);document.getElementById('titulo').focus(); document.getElementById('titulo').value=''\">".RetornaFraseDaLista($lista_frases, 4)."</span></li>\n");
   }
 
   /* 5 - Ver outros diarios */
@@ -502,8 +502,8 @@
   echo("            <div class=\"int_popup\">\n");
   echo("              <form name=\"form_novo_item\" method=\"post\" action=\"acoes.php\" onsubmit='return (VerificaNovoItemTitulo(document.form_novo_item.titulo));'>\n");
   echo("              <div class=\"ulPopup\">\n");
-  /* 180 - Digite o nome do item a ser criado aqui: */
-  echo("                Digite o nome do item a ser criado aqui: <br />\n");
+  /* 73 - Digite o nome do item a ser criado aqui: */
+  echo("                ".RetornaFraseDaLista($lista_frases,73)." <br />\n");
 
   echo("                <input class=\"input\" type=\"text\" name=\"titulo\" id=\"titulo\" value=\"".$titulo."\" maxlength=\"150\" /><br />\n");
   echo("                <input type=\"hidden\" name=\"tipo_compartilhamento\" value=\"T\" />\n");

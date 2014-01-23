@@ -44,24 +44,6 @@
   include($bibliotecas."geral.inc");
   include("diario.inc");
 
-  /* topo_tela.php faz isso
- $cod_usuario = VerificaAutenticacao($cod_curso);
-
- $sock = Conectar("");
-
- $lista_frases = RetornaListaDeFrases($sock, 14);
- $lista_frases_geral = RetornaListaDeFrases($sock,-1);
-
- Desconectar($sock);
-
- $sock = Conectar($cod_curso);
-
- VerificaAcessoAoCurso($sock, $cod_curso, $cod_usuario);
-
- VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,14); */
- 
-
-  
   $cod_ferramenta=14;
   $cod_ferramenta_ajuda=$cod_ferramenta;
   $cod_pagina_ajuda=6;
@@ -140,7 +122,8 @@
   echo("              <td valign=\"top\">\n");
   echo("                <table id=\"tabelaInterna\" cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
-  echo("                    <td width=\"45%\" align=\"center\">Di&aacute;rios</td>\n");
+  /* 74 - Di&aacute;rios */
+  echo("                    <td width=\"45%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 74)."</td>\n");
   /* 10 - Data */
   echo("                    <td width=\"20%\" align=\"center\">".RetornaFraseDaLista($lista_frases, 10)."</td>\n");
   /* 11 - Itens */
@@ -168,7 +151,12 @@
     /* 56 - Diário de */
     echo("                      <a href=\"diario.php?&amp;cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."&amp;cod_propriet=".$cod_usr."&amp;origem=diario\">".$negrito_abre.RetornaFraseDaLista($lista_frases, 56)." ".$linha_diario['nome'].$negrito_fecha."</a>\n");
     echo("                    </td>\n");
-    echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.UnixTime2DataHora($linha_diario['data']).$negrito_fecha."</td>\n");
+    echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre."\n");
+    if ($linha_diario['data'])
+      echo(UnixTime2DataHora($linha_diario['data']));
+    else
+      echo("-");
+    echo($negrito_fecha."</td>\n");
     echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.$linha_diario['num_itens'].$negrito_fecha."</td>\n");
     echo("                    <td align=\"center\" class=\"g1field\">".$negrito_abre.$linha_diario['num_itens_nao_comentados'].$negrito_fecha."</td>\n");
     echo("                  </tr>\n");

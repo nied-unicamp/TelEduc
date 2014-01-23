@@ -208,8 +208,8 @@
   echo("  function submitForm(){\n");
   echo("    if(document.getElementById('textArea_coment').value==''){\n");
               /* 106 - Seu coment�io est� vazio. Para n�o envia-lo, pressione o botao Cancelar. */
-  echo("      alert('Seu coment�rio est� vazio. Para n�o envia-lo, pressione o bot�o Cancelar.');\n");
-  //echo("      alert('".RetornaFraseDaLista($lista_frases,106)."');\n");
+  //echo("      alert('Seu coment�rio est� vazio. Para n�o envia-lo, pressione o bot�o Cancelar.');\n");
+  echo("      alert('".RetornaFraseDaLista($lista_frases,106)."');\n");
   echo("      return false;\n");
   echo("    }\n");
   echo("    element=document.getElementsByName('input_files[]');\n");
