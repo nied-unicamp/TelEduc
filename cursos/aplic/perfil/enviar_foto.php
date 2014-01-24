@@ -121,7 +121,6 @@ Funcoes JavaScript
   
  
   /* 96 - Pressione o bot� Browse (ou Procurar) abaixo para selecionar o arquivo a ser anexado; em seguida, pressione 'Anexar foto' para prosseguir.*/
-  echo("            ".RetornaFraseDaLista($lista_frases,81));
   echo(RetornaFraseDaLista($lista_frases,96)."<br />\n");
   echo("            <br />\n");
   echo("            <input class=\"input\" type=\"file\" name=\"arquivo\" /><br />\n");
