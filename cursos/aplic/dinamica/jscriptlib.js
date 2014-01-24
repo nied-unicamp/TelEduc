@@ -285,7 +285,7 @@ function VerificaChkBox(alpha){
 
 function Apagar(){
   checks = document.getElementsByName('chkArq');
-  if (confirm('Deseja realmente apagar o(s) arquivo(s) e/ou a(s) pasta(s) selecionado(s)?')){
+  if (confirm(lista_frases.msg59)){
 
     xajax_AbreEdicao(cod_curso,cod_item,cod_usuario);
 

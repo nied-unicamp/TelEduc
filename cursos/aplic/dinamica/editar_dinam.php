@@ -360,8 +360,8 @@
 
                 echo("<span id=\"local_entrada_".$conta_arq."\">");
                 if ($linha['Status']) 
-                  // ?? - entrada
-                    echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>entrada</span></span>");
+                  // 34 - entrada
+                    echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>".RetornaFraseDaLista($lista_frases,34)."</span></span>");
                 echo("</span>\n");
                 echo("                          ".$espacos2."<br />\n");
                 echo("                        ".$espacos2."</span>\n");
