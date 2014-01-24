@@ -9411,7 +9411,7 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 (67, 3, 12, 'List Groups'),
 (68, 3, 12, 'Component'),
 (69, 3, 12, 'Member&#39;s groups'),
-(70, 3, 12, 'View Perfil'),
+(70, 3, 12, 'View Profile'),
 (71, 3, 12, 'Enter the title of the group to be created:'),
 (72, 3, 12, 'Save/Print'),
 (73, 3, 12, 'Configuration changed successfully'),
