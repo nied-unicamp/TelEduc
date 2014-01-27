@@ -130,7 +130,8 @@
     echo("              <tr>\n");
     echo("                <td align=\"center\">\n");
     echo("                  <ul class=\"btAuxTabs\">\n");
-    echo("                    <li><span onclick=\"self.close();\">Fechar</span></li>\n");
+     /* 13 (ger) - Fechar */
+    echo("                    <li><span onclick=\"self.close();\">".RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
     echo("                  </ul>\n");
     echo("                </td>\n");
     echo("              </tr>\n");

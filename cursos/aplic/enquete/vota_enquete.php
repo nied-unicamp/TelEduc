@@ -172,7 +172,8 @@
 	echo("                  <tr  class=\"altColor0\" style=\"text-align:left\">\n");
 	echo("                    <td colspan=\"2\">\n");
 	echo("                      <script type=\"text/javascript\" language=\"JavaScript\"> num_respostas = ".($count--)."</script>\n");
-	echo("                      <input type=\"submit\" class=\"input\" value=\"Votar\">\n");
+	/* 45 - Votar */
+	echo("                      <input type=\"submit\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,45)."\">\n");
         /* 2 - Cancelar */
 	echo("                      <input type=button onclick=\"CancelaVoto();\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,2)."\">\n");
 	echo("                    </td>\n");
