@@ -93,8 +93,10 @@
   echo("      arrayMostraGrupo[0]='".RetornaFraseDaLista($lista_frases,18)."';\n");
   /* 19 - Formador */
   echo("      arrayMostraGrupo[1]='".RetornaFraseDaLista($lista_frases,19)."';\n");
-  echo("      arrayMostraGrupo[2]='Incluir Componentes';\n");
-  echo("      arrayMostraGrupo[3]='Excluir Selecionados';\n");
+  /* 86 - Incluir Componentes */
+  echo("      arrayMostraGrupo[2]='".RetornaFraseDaLista($lista_frases,86)."';\n");
+  /* 87 - Excluir Selecionados */
+  echo("      arrayMostraGrupo[3]='".RetornaFraseDaLista($lista_frases,87)."';\n");
   /* 31 - Não há integrantes neste grupo.*/
   echo("      arrayMostraGrupo[4]='".RetornaFraseDaLista($lista_frases,31)."';\n");
   /* 12 - Integrantes do grupo: */
