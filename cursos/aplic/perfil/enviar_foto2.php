@@ -68,6 +68,7 @@
 
   $ext=$pieces[count($pieces)-1];
   $nomefinal="cod_usuario_".$cod_usuario.".".$ext;
+  error_log("\$nomefinal = ".$nomefinal);
   if(!AtualizaArquivo($sock,$arquivo,$nomefinal,$diretorio_temp,$cod_curso)){
 
    if (isset($alunocod))
