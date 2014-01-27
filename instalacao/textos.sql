@@ -2578,6 +2578,7 @@ INSERT INTO `Lingua_textos` (`cod_texto`, `cod_lingua`, `cod_ferramenta`, `texto
 (114, 1, 10, 'A avaliacão não pode ter valor negativo.'),
 (115, 1, 10, 'Erro ao marcar a sessão.'),
 (116, 1, 10, 'Erro ao desmarcar sessão.'),
+(117, 1, 10, 'Usu&aacute;rios Online'),
 (1, 1, 11, 'Correio'),
 (2, 1, 11, 'Compondo Mensagem'),
 (3, 1, 11, 'Mensagens Novas'),
