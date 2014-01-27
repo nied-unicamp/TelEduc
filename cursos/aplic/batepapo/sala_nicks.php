@@ -65,7 +65,7 @@
 
   VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
-  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10); 
+  VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,10);
 
   $cod_sessao=RetornaSessaoCorrente($sock);
 
@@ -113,14 +113,14 @@
   echo("        }\n");
   echo("        if (cod_aluno == ' ')\n");	/* perfil de todos os alunos */
   echo("        {\n");
-    				$url_exibir_todos = "window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso;
-    				if(is_array($lista_apelidos)) {
-    					foreach($lista_apelidos as $cod => $apelido){
-    						$url_exibir_todos .= "&cod_aluno[]=".$cod;
-    					}
-    				}
-    				$url_exibir_todos .= "\",'PerfilDisplay',\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\"); \n";
-  echo(				$url_exibir_todos);
+  $url_exibir_todos = "window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso;
+  if(is_array($lista_apelidos)) {
+    foreach($lista_apelidos as $cod => $apelido){
+      $url_exibir_todos .= "&cod_aluno[]=".$cod;
+    }
+  }
+  $url_exibir_todos .= "\",'PerfilDisplay',\"width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\"); \n";
+  echo("          ".$url_exibir_todos);
   echo("        }\n");
   echo("        return(false);\n");
   echo("      }\n\n");
@@ -129,9 +129,10 @@
   echo("  </head>\n");
   echo("  <body style=\"background:none;border-left:1px solid; padding-left:5px;\">\n");
   echo("    <br />\n");
-  //echo("    <b>Usu&aacute;rios Online</b><br >\n");
-  echo("    <b>".RetornaFraseDaLista($lista_frases,110)."</b><br>\n");
-  //echo("    <a href=\"#\" onclick=\"OpenWindowLink(' ');\">Todos</a><br />\n");
+  /* 117 - Usu&aacute;rios Online */
+  echo("    <b>".RetornaFraseDaLista($lista_frases,117)."</b><br>\n");
+  /* 20 - Todos */
+  //echo("    <a href=\"#\" onclick=\"OpenWindowLink(' ');\">".RetornaFraseDaLista($lista_frases,20)."</a><br />\n");
   foreach($lista_apelidos as $cod => $apelido){
      if ($cod!=$cod_usuario)
       echo("    <a href=\"#\" onclick=\"OpenWindowLink(".$cod.");\">".html_entity_decode($apelido)."</a><br />\n");
