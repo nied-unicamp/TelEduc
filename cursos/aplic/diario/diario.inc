@@ -106,7 +106,7 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
   }
 
   // Lista dos itens de diarios e seus respectivos usuários.
-  $query  = "select DI.cod_usuario, U.nome, count(cod_comentario) as 'num_comentarios', ";
+  $query  = "select DI.cod_item as codigo_item, DI.cod_usuario, U.nome, ";
   $query .= "       MAX(DI.data) as data_item, MAX(DC.data) as data_comentario ";
   $query .= "from ".$dbnamebase.".Usuario U ";
   $query .= "inner join ".$dbnamebase.".Usuario_curso UC on U.cod_usuario  = UC.cod_usuario_global ";
@@ -125,7 +125,7 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
 
   $res         = Enviar ($sock, $query);
   $lista_itens = RetornaArrayLinhas ($res);
-
+  
   if (is_array ($lista_itens))
   {
 
@@ -136,6 +136,9 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
 
       $cod_usr   = $item['cod_usuario'];
       $data_item = max($item['data_item'], $item['data_comentario']);
+      $cod_item = $item['codigo_item'];
+      
+      $foi_comentado = ItemFoiComentado ($sock, $cod_item);
 
       if (!isset($lista_diarios[$cod_usr])) {
         $lista_diarios[$cod_usr]['nome']                     = $item['nome'];
@@ -157,7 +160,7 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
 
       // Verifica se o item estah comentado. Se nao estiver,
       // aumenta o numero de itens nao comentados no diario.
-      if (!$item['num_comentarios'])
+      if (!$foi_comentado)
         $lista_diarios[$cod_usr]['num_itens_nao_comentados']++;
 
     }
@@ -174,6 +177,23 @@ function RetornaDiarios($sock, $cod_curso, $cod_usuario)
   uasort ($lista_diarios, Compara);
 
   return $lista_diarios;
+}
+
+function ItemFoiComentado ($sock, $cod_item){
+  $status = 'A';
+  
+  $query = "select count(cod_comentario) as quantos from Diario_comentarios where status = '".$status."'";
+  $query .=" and cod_item = ".$cod_item."";
+  $res = Enviar($sock, $query);
+  $qtd = RetornaLinha($res);
+  
+  if($qtd != NULL){
+    if ($qtd['quantos'] != 0){
+      return true;
+    }
+  }
+  return false;
+ 
 }
 
 /* ******************************************************
