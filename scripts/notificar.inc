@@ -50,7 +50,7 @@
 */
 function RetornaListaDeFrasesNotificar($sock, $cod_ferramenta, $cod_lingua)
 {
-  $query = "SELECT cod_texto, texto FROM Lingua_textos WHERE ";
+  $query  = "SELECT cod_texto, texto FROM Lingua_textos WHERE ";
   $query .= "cod_lingua=".$cod_lingua." AND ";
   $query .= "cod_ferramenta=".$cod_ferramenta." ";
   $query .= "ORDER BY cod_texto";
@@ -66,10 +66,10 @@ function RetornaListaDeFrasesNotificar($sock, $cod_ferramenta, $cod_lingua)
   else
   {
     // Erro na execu��o da cl�usula : terminar o programa
-    $msg = "<H3>ERRO : N�o foi poss�vel executar a cl�usula SQL<H3>";
-    $msg .= "<BR><B>SQL : </B><BR>".$query;
-    $msg .= "<BR><B>Mensagem de erro do Msql : </B><BR>".msql_error();
-    $msg .= "<BR><a href=# onclick=history.go(-1);>Voltar</a>";
+    $msg = "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL</h3>";
+    $msg .= "<br><b>SQL : </b><br>".$query;
+    $msg .= "<br><b>Mensagem de erro do Msql : </b><brR>".msql_error();
+    $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
     die($msg);
   }
 

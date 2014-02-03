@@ -69,10 +69,13 @@
   
   //$lista_frases = RetornaListaDeFrases($sock, -8, 1);
 
-  echo("<html>\n");
+  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
+  echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+  echo("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
   echo("  <head>\n");
   // 1 - Notifica��o de novidades
   echo("    <title>TelEduc - ".RetornaFraseDaListaNotificar($lista_frases_total[1], 1)."</title>\n");
+  echo("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
   echo("  </head>\n");
   echo("  <body>\n");
   echo("    <pre>\n");
@@ -94,7 +97,7 @@
   if (strcmp($L_host, $R_host) != 0)
   {
     // 2 - Este script n�o pode ser executado remotamente.
-    echo("<br><font color=tomato size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br>");
+    echo("<br /><font color=tomato size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br />");
     exit(); // Executado remotamente sa�.
   }
 
@@ -167,11 +170,11 @@
     $dados_curso = DadosCursoParaEmail($sock, $lista[$i]['cod_curso']);
     
     // 8 - Nome do curso:
-    echo(RetornaFraseDaListaNotificar($lista_frases_total[1], 8).$dados_curso['nome_curso']."<br>\n");
+    echo(RetornaFraseDaListaNotificar($lista_frases_total[1], 8).$dados_curso['nome_curso']."<br />\n");
 
     // Determina o assunto do e-mail.
     // 1 - Notifica��o de novidades
-    $assunto = "TelEduc: - ".$dados_curso['nome_curso']." - ".RetornaFraseDaListaNotificar($lista_frases, 1);
+    $assunto = "TelEduc: - ".$dados_curso['nome_curso']." - ".RetornaFraseDaListaNotificar($lista_frases_total[1], 1);
 
     $url_acesso = "<a href='";
     $url_acesso.= "http://".$host.$raiz_www."/cursos/aplic/index.php?cod_curso=".$lista[$i]['cod_curso'];
@@ -182,7 +185,7 @@
     for ($j = 0; $j < $total_usuarios; $j++)
     {
 
-      $notificar_email_usuario = $linha[$j]['notificar_email'];	  
+      $notificar_email_usuario = $linha[$j]['notificar_email'];
       // Caso o usu�rio n�o queira ser notificado (notificar_email == 0)
       if (($notificar_email_usuario > 0) && ($notificar_email_usuario < 3))
       {
