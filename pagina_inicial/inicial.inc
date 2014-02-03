@@ -1427,7 +1427,7 @@ function AtualizaIdiomaDinamic($dadosForm)
   $objResponse->addScript("window.location.reload();");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();  
+  return $objResponse->getXML();
 }
 
 /********************************************************************

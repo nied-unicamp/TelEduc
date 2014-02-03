@@ -45,51 +45,13 @@
   include("exibe_cursos.inc");
   include("inicial.inc");
   $pag_atual = "exibe_cursos.php";
-  // Inicio TopoTela
+  
   $sock=Conectar("");
-  
-  if (isset($cod_lin))
-    MudancaDeLingua($sock,$cod_lin);
-    
-// Comentado parte do codigo abaixo, pois estava sempre mudando a lingua da usuario para o padrao. Nao deixava a lingua com o idioma 
-// esolhido.    
-//  else if(!empty($_SESSION['login_usuario_s']))
-//  {
-//    $cod_lin = RetornaCodLinguaUsuario($sock,$_SESSION['cod_usuario_global_s']);
-//    $cod_lin = ($cod_lin == NULL) ? 1 : $cod_lin;
-//    MudancaDeLingua($sock,$cod_lin);
-//  }
-	
-
-  $cod_ferramenta = -3;//Cursos
-  $lista_frases = RetornaListaDeFrases($sock,$cod_ferramenta);
-  
-  // instanciar o objeto, passa a lista de frases por parametro
-  $feedbackObject =  new FeedbackObject($lista_frases);
-  //adicionar as acoes possiveis, 1o parametro 
-  $feedbackObject->addAction("logar", 197, 0);
-  
-  
-  
-  $lista_frases=RetornaListaDeFrases($sock,-3);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-  $lista_frases_configurar = RetornaListaDeFrases($sock,-7);
-
-  $query="select valor from Config where item = 'host'";
-  $res=Enviar($sock,$query);
-  $linha=RetornaLinha($res);
-  $tela_host=$linha['valor'];
-  // Fim do TopoTela
-  // Foi colocado manualmente para omitir os echo's que causavam
-  // problemas com as chamadas de header
-  
-  $lista_frases_autenticacao = RetornaListaDeFrases($sock, 25);
-
   /* Caso o usu�rio n�o esteja logado, manda para tela de login. */
   if (empty ($_SESSION['login_usuario_s']))
   {
-    header("Location: ../cursos/aplic/index.php");
     Desconectar($sock);
+    header("Location: ../cursos/aplic/index.php");
     exit;
   }
   /* Caso o usu�rio não tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
@@ -107,9 +69,15 @@
     exit;
   }
 
-  
   include("../topo_tela_inicial.php");
-  
+
+  // instanciar o objeto, passa a lista de frases por parametro
+  $feedbackObject =  new FeedbackObject($lista_frases);
+  //adicionar as acoes possiveis, 1o parametro 
+  $feedbackObject->addAction("logar", 197, 0);
+
+  $lista_frases_autenticacao = RetornaListaDeFrases($sock, 25);
+
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      function Iniciar()\n");
@@ -235,7 +203,6 @@
 
   list ($lista_cursos, $total_cursos) = RetornaCursosEmAndamento($sock, $_SESSION['codigo_usuario_s']);
 
-  
   if (($total_cursos)==0)
   {
     echo("                  <tr>\n");

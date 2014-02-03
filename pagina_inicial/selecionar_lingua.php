@@ -148,7 +148,7 @@
     $sel="";
     if ($cod_lin == $cod_lingua_usuario)
       $sel="selected=\"selected\"";
-  echo("                            <option ".$sel."  value=\"".$cod_lin."\">".$lingua."</option>\n");
+    echo("                            <option ".$sel."  value=\"".$cod_lin."\">".$lingua."</option>\n");
   }
 
   echo("                          </select>\n");
