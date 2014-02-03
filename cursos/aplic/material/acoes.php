@@ -199,7 +199,7 @@
     AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, 1);
     $atualizacao='true';
     AtualizaFerramentasNova($sock, $cod_ferramenta, 'T');
-    header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);	
+    header("Location:ver.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_usuario=".$cod_usuario."&cod_topico_raiz=".$cod_topico_raiz."&cod_item=".$cod_item."&acao=".$acao."&atualizacao=".$atualizacao);
   }
 
   else if ($acao=="moveritem")

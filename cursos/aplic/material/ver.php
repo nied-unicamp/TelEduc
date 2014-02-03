@@ -329,7 +329,7 @@
     echo("        mostrando=0;\n");
     echo("      }\n");
 
-echo("      function TestaDatas()\n");
+    echo("      function TestaDatas()\n");
     echo("      {\n");
     echo("        var data_inicio=document.getElementById('DataInicioAval');\n");
     echo("        var data_termino=document.getElementById('DataTerminoAval');\n");
@@ -612,6 +612,7 @@ echo("      function TestaDatas()\n");
     echo("          document.formFiles.submit();\n");
     echo("        }\n");
     echo("        else {\n");
+    /* 150 - Nome do anexo com acentos ou caracteres inválidos! Renomeie o arquivo e tente novamente. */
     echo("          alert('".RetornaFraseDaLista($lista_frases, 150)."');\n");
     echo("          document.getElementById('input_files').style.visibility='hidden';\n");
     echo("          document.getElementById('input_files').value='';\n");

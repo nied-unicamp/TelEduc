@@ -60,8 +60,10 @@ include ("../topo_tela.php");
 $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro Ã©
+/* 155 - Este curso não compartilha o conteúdo da/do NOME_DA_FERRAMENTA */
 $feedbackObject->addAction("validarImportacao", 0, 155);
-$feedbackObject->addAction("falhaImportacao", 0, 153);
+/* 154 - Houve um erro ao importar os/as NOME_DA_FERRAMENTA do curso. */
+$feedbackObject->addAction("falhaImportacao", 0, 154);
 
 // **************** VARIAVEIS DE ENTRADA ****************
 //    codigo do curso

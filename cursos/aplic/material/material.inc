@@ -2897,7 +2897,7 @@ function ApagaAvaliacaoPortfolioDinamic ($cod_item, $cod_curso, $cod_usuario)
   $cod_ferramenta = 3;
   $cod_texto = 149;
   /* 149 - A avaliação foi apagada com sucesso. */
-  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
 
   /* Adiciona a chamada do feedback a resposta do xajax */
   $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
