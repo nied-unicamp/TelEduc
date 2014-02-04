@@ -127,7 +127,7 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/javacrypt.js\" defer></script>\n");
 
-  if($opcao == "dados")
+  if($action_ger == "dados")
   {
     echo("    <script type=\"text/javascript\">\n");
     echo("      function OpenWindowPerfil(funcao)\n");
