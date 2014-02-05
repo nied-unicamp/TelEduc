@@ -59,29 +59,18 @@
     }
   }
   
-  /* Desnecessário
-  $cod_curso = $_GET['cod_curso'];
-  */
-  
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
   
   /* Desnecessário
-  $auxiliar = $_SESSION['cod_lingua_s'];
-  $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-  // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases. 
-  if($auxiliar != $_SESSION['cod_lingua_s']){
-  	unset($_SESSION['lista_frases_s']);
-  }
-  */
-  
-  $auxiliar = RetornaLinguaCurso($sock,$cod_curso);
+  $lingua_curso = RetornaLinguaCurso($sock,$cod_curso);
 
   // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
-  //  if($auxiliar != $_SESSION['cod_lingua_s']){
-  //  	unset($_SESSION['lista_frases_s']);
-  //  }
-  
+  if($lingua_curso != $_SESSION['cod_lingua_s']) {
+    MudancaDeLingua($sock, $lingua_curso);
+  }
+  */
+
   $cod_ferramenta = 9;
   $cod_ferramenta_ajuda = $cod_ferramenta;
 

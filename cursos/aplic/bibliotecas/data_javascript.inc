@@ -57,8 +57,9 @@
 */
 function RetornaFraseData($num_frase)
 {
-  /* A lista estar�em mem�ia, ent� $sock n� �necess�io */
-  $lista_frases=RetornaListaDeFrases(0,-2);
+  $sock = Conectar("");
+
+  $lista_frases = RetornaListaDeFrases($sock,-2);
 
   return RetornaFraseDaLista($lista_frases,$num_frase);
 }

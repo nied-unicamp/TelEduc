@@ -381,9 +381,9 @@ function Conectar($cod_curso, $opt = NULL)
 */  
 function Desconectar($sock)
 {
-	if(mysql_ping($sock))
-	  if (! mysql_close($sock))
-	    die("ERRO : mysql_close = ".mysql_error()."<br />\n");
+  if(mysql_ping($sock))
+    if (! mysql_close($sock))
+      die("ERRO : mysql_close = ".mysql_error()."<br />\n");
 }
 
 /* **********************************************

@@ -105,17 +105,17 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
   $dbnamebase = $_SESSION['dbnamebase'];
 
   $cod_lingua=$_SESSION['cod_lingua_s'];
-       
+  
   /* Se ja estiver em memoria, vai direto... */
   if (isset($_SESSION['lista_frases_s'][$cod_ferramenta]) && count($_SESSION['lista_frases_s'][$cod_ferramenta])>0)
-    return ($_SESSION['lista_frases_s'][$cod_ferramenta]); 
+    return ($_SESSION['lista_frases_s'][$cod_ferramenta]);
   
   /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)*/
   if (is_null($cod_lingua))
     $cod_lingua = 1;
-  $query = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
-  $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
-  $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta)." ";
+  $query  = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
+  $query .= "cod_lingua = ".VerificaNumeroQuery($cod_lingua)." AND ";
+  $query .= "cod_ferramenta = ".VerificaNumeroQuery($cod_ferramenta)." ";
   $query .= "ORDER BY cod_texto";
   $textos = "";
   if ($id_query = Enviar($sock, $query))
@@ -261,7 +261,7 @@ function MudancaDeLingua($sock, $cod_lingua)
  
   if ($_SESSION['cod_lingua_s'] != $cod_lingua)
   {
-    $_SESSION['cod_lingua_s']=$cod_lingua;
+    $_SESSION['cod_lingua_s'] = $cod_lingua;
     foreach($_SESSION['lista_frases_s'] as $cod_fer => $lista)
     {
       MemorizaListaDeFrases($sock,$cod_fer);

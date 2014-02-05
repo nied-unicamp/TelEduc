@@ -44,18 +44,27 @@
   
   //ini_set("display_errors","on"); //APGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
   
-  
   /* Ajustes necess�rios para independer do topo_tela.php */
-  $cod_curso = $_GET['cod_curso'];
+
+  /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
+  if (!isset($cod_curso)){
+    if (isset($_GET['cod_curso'])){
+      $cod_curso = $_GET['cod_curso'];
+    } else if (isset($_POST['cod_curso'])){
+      $cod_curso = $_POST['cod_curso'];
+    }
+  }
+
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
-  
-  $auxiliar = $_SESSION['cod_lingua_s'];
-  $_SESSION['cod_lingua_s'] = RetornaLinguaCurso($sock,$cod_curso);
-  // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases. 
-  if($auxiliar != $_SESSION['cod_lingua_s']){
-  	unset($_SESSION['lista_frases_s']);
+
+  $lingua_curso = RetornaLinguaCurso($sock,$cod_curso);
+
+  // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
+  if($lingua_curso != $_SESSION['cod_lingua_s']) {
+    MudancaDeLingua($sock, $lingua_curso);
   }
+
   $cod_ferramenta = 8;
   
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);

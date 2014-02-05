@@ -53,29 +53,27 @@
     }
   }
 
-  $cod_usuario_global=VerificaAutenticacao($cod_curso);
-  $sock=Conectar("");
+  $cod_usuario_global = VerificaAutenticacao($cod_curso);
+  $sock = Conectar("");
 
-  $auxiliar = RetornaLinguaCurso($sock,$cod_curso);
+  $lingua_curso = RetornaLinguaCurso($sock,$cod_curso);
 
   // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
-//  if($auxiliar != $_SESSION['cod_lingua_s']){
-//    unset($_SESSION['lista_frases_s']);
-//  }
+  if($lingua_curso != $_SESSION['cod_lingua_s']) {
+    MudancaDeLingua($sock, $lingua_curso);
+  }
 
   if (!isset($cod_ferramenta))
     $cod_ferramenta = 1; /* Agenda */
 
-  $lista_frases_menu=RetornaListaDeFrases($sock,-4);
+  $lista_frases_menu  = RetornaListaDeFrases($sock, -4);
+  $lista_frases       = RetornaListaDeFrases($sock, $cod_ferramenta);
+  $lista_frases_geral = RetornaListaDeFrases($sock, -1);
 
-  $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
-
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  $tela_ordem_ferramentas=RetornaOrdemFerramentas($sock);
-  $tela_lista_ferramentas=RetornaListaFerramentas($sock);
-  $tela_lista_titulos=RetornaListaTitulos($sock, $_SESSION['cod_lingua_s']);
-  $tela_email_suporte=RetornaConfiguracao($sock,"adm_email");
+  $tela_ordem_ferramentas = RetornaOrdemFerramentas($sock);
+  $tela_lista_ferramentas = RetornaListaFerramentas($sock);
+  $tela_lista_titulos     = RetornaListaTitulos($sock, $_SESSION['cod_lingua_s']);
+  $tela_email_suporte     = RetornaConfiguracao($sock,"adm_email");
 
   $query="select diretorio from Diretorio where item='raiz_www'";
   $res=Enviar($sock,$query);
