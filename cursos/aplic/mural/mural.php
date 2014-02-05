@@ -934,7 +934,7 @@
         echo("                        <td colspan=\"2\" id=\"td_msg_".$cod_mural."\" align=\"left\">\n");
         /* 21 - Mensagem */
         echo("                          <b>".RetornaFraseDaLista($lista_frases, 21).":</b><br /><br />\n");
-        echo("                          <div class=\"divRichText\" style=\"overflow:auto;\";>". PreparaExibicaoMensagem($dados['texto'])."</div>\n");
+        echo("                          <div class=\"divRichText\" style=\"overflow:auto;\">". PreparaExibicaoMensagem($dados['texto'])."</div>\n");
         echo("                        </td>\n");
         echo("                        <td id=\"td_close".$cod_mural."\">\n");
         /* 13 - Fechar */

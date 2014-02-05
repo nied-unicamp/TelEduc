@@ -43,7 +43,7 @@
   $sock=Conectar("");
 
   if (isset($cod_lin))
-     MudancaDeLingua($sock,$cod_lin);
+    MudancaDeLingua($sock,$cod_lin);
 
 // Comentado parte do codigo abaixo, pois estava sempre mudando a lingua do usuario para o padrao
 //  else if(!empty($_SESSION['login_usuario_s']))

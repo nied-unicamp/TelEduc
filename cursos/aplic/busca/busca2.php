@@ -64,7 +64,7 @@
   ==================
   */
 
-  echo("    <script type=\"text/javascript\" language=JavaScript>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");

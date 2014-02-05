@@ -104,7 +104,7 @@
   MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
   echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
-  echo("<html lang=\"pt\">\n"); 
+  echo("<html lang=\"pt\">\n");
   echo("  <head>\n");
   echo("    <title>TelEduc - ".$tela_lista_titulos[$cod_ferramenta]."</title>\n");
   echo("    <meta name=\"robots\" content=\"follow,index\">\n");

@@ -68,13 +68,13 @@ function RetornaFrase($sock, $cod_texto, $cod_ferramenta)
       $linha = RetornaLinha($id_query);
       $texto = $linha[0];
       if (! isset($texto))
-        $texto = "(ERRO : Texto correspondente a essa l�gua n� cadastrado: ".$cod_texto.")";
+        $texto = "(ERRO : Texto correspondente a essa l&iacute;ngua n&atilde;o cadastrado: ".$cod_texto.")";
     }
     else
     {
       // Erro na execu�o da cl�sula : terminar o programa
       $msg  = "</script></table></div></table></div></table></div>";
-      $msg .= "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL<h3>";
+      $msg .= "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL</h3>";
       $msg .= "<br><strong>SQL : </strong><br>".$query;
       $msg .= "<br><strong>Mensagem de erro do MySql : </strong><br>".mysql_error();
       $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
@@ -129,10 +129,10 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
   else
   {
     // Erro na execução da cláusula : terminar o programa
-    $msg = "<H3>ERRO : Não foi possível executar a cláusula SQL<H3>";
-    $msg .= "<BR><B>SQL : </B><BR>".$query;
-    $msg .= "<BR><B>Mensagem de erro do MySql : </B><BR>".mysql_error();
-    $msg .= "<BR><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
+    $msg = "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL</h3>";
+    $msg .= "<br><b>SQL : </b><br>".$query;
+    $msg .= "<br><b>Mensagem de erro do MySql : </b><br>".mysql_error();
+    $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
     die($msg);
   }
   $_SESSION['lista_frases_s'][$cod_ferramenta]=$textos;
@@ -148,20 +148,20 @@ function RetornaListaDeFrases($sock, $cod_ferramenta)
 */
 function RetornaFraseDaLista($textos, $cod_texto)
 {
-	if(ConverteAspas2Html($textos[$cod_texto]) != "")
-  		return(ConverteAspas2Html($textos[$cod_texto]));
-  	else{
-  		switch($_SESSION['cod_lingua_s']){
-  			case 1://Portugu�s
-  				return("Falta o texto");
-  			case 2://Espanhol
-  				return("Falta texto");
-  			case 3://Ingl�s
-  				return("Missing Text");
-  			case 4://Portugu�s PT
-  				return("Falta o texto");
-  		}
-  	}
+  if(ConverteAspas2Html($textos[$cod_texto]) != "")
+    return(ConverteAspas2Html($textos[$cod_texto]));
+  else{
+    switch($_SESSION['cod_lingua_s']){
+      case 1://Portugu�s
+        return("Falta o texto");
+      case 2://Espanhol
+        return("Falta texto");
+      case 3://Ingl�s
+        return("Missing Text");
+      case 4://Portugu�s PT
+        return("Falta o texto");
+    }
+  }
 }
 
 /* ************************************************************************
@@ -195,13 +195,13 @@ function ListaLinguas($sock)
   return $saida;
 }
 function LinguaLocal($sock,$cod_lin){
-	$dbnamebase = $_SESSION['dbnamebase'];
-	$query="select texto from ".$dbnamebase.".Lingua_textos where cod_ferramenta=-6 and cod_lingua=".$cod_lin." and cod_texto=".$cod_lin."";
-	$res=Enviar($sock,$query);
-	$linha=RetornaLinha($res);
-	$texto=$linha['texto'];
-	return($texto);
-	
+  $dbnamebase = $_SESSION['dbnamebase'];
+  $query="select texto from ".$dbnamebase.".Lingua_textos where cod_ferramenta=-6 and cod_lingua=".$cod_lin." and cod_texto=".$cod_lin."";
+  $res=Enviar($sock,$query);
+  $linha=RetornaLinha($res);
+  $texto=$linha['texto'];
+  return($texto);
+
 }
 
 /* ************************************************************************
@@ -221,8 +221,8 @@ function MemorizaListaDeFrases($sock, $cod_ferramenta)
 
   /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)*/
   if (is_null($cod_lingua))
-  	$cod_lingua = 1;
-  $query = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
+    $cod_lingua = 1;
+  $query  = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
   $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
   $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta)." ";
   $query .= "ORDER BY cod_texto";
@@ -233,17 +233,17 @@ function MemorizaListaDeFrases($sock, $cod_ferramenta)
     unset($textos);
 
   if (RetornaNumLinhas($id_query) > 0)
-      while($linha = RetornaLinha($id_query))
-        $textos[$linha["cod_texto"]] = $linha["texto"];
+    while($linha = RetornaLinha($id_query))
+      $textos[$linha["cod_texto"]] = $linha["texto"];
   }
   else
   {
     // Erro na execu�o da cl�sula : terminar o programa
-    $msg = "<H3>ERRO : N� foi poss�el executar a cl�sula SQL<H3>";
-    $msg .= "<BR><B>SQL : </B><BR>".$query;
+    $msg = "<h3>ERRO : N&atilde;o foi poss&iacute;vel executar a cl&aacute;usula SQL</h3>";
+    $msg .= "<br><b>SQL : </b><br>".$query;
     $msg .= "<br><b>Arquivo: </b><br>lingua.inc";
-    $msg .= "<BR><B>Mensagem de erro do MySql : </B><BR>".mysql_error();
-    $msg .= "<BR><a href=# onclick=history.go(-1);>Voltar</a>";
+    $msg .= "<br><b>Mensagem de erro do MySql : </b><br>".mysql_error();
+    $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
     die($msg);
   }
   $_SESSION['lista_frases_s'][$cod_ferramenta]=$textos;
@@ -281,22 +281,22 @@ function MudancaDeLingua($sock, $cod_lingua)
    Saida: string
 */
 function AbreviaturaLingua($cod_lingua){
-	$abreviatura = "pt";
-	switch ($cod_lingua){
-		case '1':
-			$abreviatura = "pt";
-		break;
-		case '2':
-			$abreviatura = "es";
-		break;
-		case '3':
-			$abreviatura = "en";
-		break;
-		case '4':
-			$abreviatura = "pt";
-		break;	
-	}
-	return $abreviatura;
+  $abreviatura = "pt";
+  switch ($cod_lingua){
+    case '1':
+      $abreviatura = "pt";
+    break;
+    case '2':
+      $abreviatura = "es";
+    break;
+    case '3':
+      $abreviatura = "en";
+    break;
+    case '4':
+      $abreviatura = "pt";
+    break;
+  }
+  return $abreviatura;
 }
 
 

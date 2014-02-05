@@ -167,7 +167,7 @@ function MandaMsg($remetente,$destino,$assunto,$mensagem, $nomearquivo='')
     pclose($fp);
   }
   else
-  {      
+  {
       MandaMsgMultiplos($remetente,$destino,$assunto,$mensagem,$nomearquivo);
   }
 
@@ -201,7 +201,7 @@ function MandaMsgMultiplos($remetente,$destino,$assunto,$mensagem, $nomearquivo=
     }
   }
   if (isset($destinopequeno)){
-      MandaMsg($remetente,$destinopequeno,$assunto,$mensagem,$nomearquivo);
+    MandaMsg($remetente,$destinopequeno,$assunto,$mensagem,$nomearquivo);
   }
 }
 
@@ -218,7 +218,7 @@ if (!isset($caminho_sendmail_s))
   $linha=RetornaLinha($res);
   $caminho_sendmail_s=$linha[0];
 
-	Desconectar($sock);
+  Desconectar($sock);
 }
 
 ?>
