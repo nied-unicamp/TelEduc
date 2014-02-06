@@ -290,7 +290,7 @@ function ConectarDB($base, $opt = NULL)
     $password = $_SESSION['dbpassword'];
   }
 
-  if (! $sock = mysql_connect($host.":".$port, $user, $password))
+  if (!($sock = mysql_connect($host.":".$port, $user, $password)))
     die("Erro de SQL: mysql_connect(): ".mysql_error()."<br />\n");
 
   else
@@ -299,11 +299,8 @@ function ConectarDB($base, $opt = NULL)
     {
       if (!mysql_select_db($base, $sock))
         die("Erro de SQL: mysql_select_db(): ".mysql_error()."<br />\n");
-      else
-        return($sock);
     }
-    else
-      return($sock);
+    return($sock);
   }
 }
 

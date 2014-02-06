@@ -170,13 +170,12 @@
       CancelaEdicao($sock, $tabela, $dir, $cod_item, $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp,$criacao_avaliacao);
     }
   }
-  
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");

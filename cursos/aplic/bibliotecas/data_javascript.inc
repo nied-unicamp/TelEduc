@@ -55,10 +55,8 @@
    entrada: numero da frase dentro da lista de frases da biblioteca
    saida:   Frase correspondente ao numero
 */
-function RetornaFraseData($num_frase)
+function RetornaFraseData($sock, $num_frase)
 {
-  $sock = Conectar("");
-
   $lista_frases = RetornaListaDeFrases($sock,-2);
 
   return RetornaFraseDaLista($lista_frases,$num_frase);
@@ -78,6 +76,7 @@ function RetornaFraseData($num_frase)
 function GeraJSVerificacaoData()
 {
   global $data_invertida_g;
+  global $sock;
 
   echo("<script type=\"text/javascript\">\n");
   echo("var ndias=new Array(31,28,31,30,31,30,31,31,30,31,30,31);\n");
@@ -202,7 +201,7 @@ function GeraJSVerificacaoData()
   echo("  {\n");
   // 17 - Voc�deixou um campo de data vazio.
   // 18 - Por favor preencha-o com uma data.
-  echo("    alert('".RetornaFraseData(17)." ".RetornaFraseData(18)."');\n");
+  echo("    alert('".RetornaFraseData($sock, 17)." ".RetornaFraseData($sock, 18)."');\n");
   echo("    return(false);\n");
   echo("  }\n");
   echo("  else \n");
@@ -213,7 +212,7 @@ function GeraJSVerificacaoData()
   echo("    {\n");
   // 19 - Data inv�ida:
   // 20 - Por favor retorne e corrija.
-  echo("      alert('".RetornaFraseData(19)." '+data+'. ".RetornaFraseData(20)."');\n");
+  echo("      alert('".RetornaFraseData($sock, 19)." '+data+'. ".RetornaFraseData($sock, 20)."');\n");
   echo("      return false;\n");
   echo("    }\n");
   echo("    if (TemCaracteresEstranhos(data)) \n");
@@ -221,7 +220,7 @@ function GeraJSVerificacaoData()
   // 21 - Voc�digitou caracteres estranhos nesta data.
   // 22 - Use apenas d�itos de 0 a 9 e a barra ( / ) para separar dia, m� e ano (exemplo: 31/01/2000).
   // 20 - Por favor retorne e corrija.
-  echo("      alert('".RetornaFraseData(21)."\\n".RetornaFraseData(22)."\\n".RetornaFraseData(20)."');\n");
+  echo("      alert('".RetornaFraseData($sock, 21)."\\n".RetornaFraseData($sock, 22)."\\n".RetornaFraseData($sock, 20)."');\n");
   echo("      return(false);\n");
   echo("    }\n");
   echo("    else \n");
@@ -241,7 +240,7 @@ function GeraJSVerificacaoData()
   echo("      {\n");
   // 19 - Data inv�ida:
   // 20 - Por favor retorne e corrija.
-  echo("        alert('".RetornaFraseData(19)."'+data+'. ".RetornaFraseData(20)."');\n");
+  echo("        alert('".RetornaFraseData($sock, 19)."'+data+'. ".RetornaFraseData($sock, 20)."');\n");
   echo("        return(false);\n");
   echo("      } \n");
   echo("      else \n");
@@ -250,7 +249,7 @@ function GeraJSVerificacaoData()
   echo("        {\n");
   // 19 - Data inv�ida:
   // 20 - Por favor retorne e corrija.
-  echo("          alert('".RetornaFraseData(19)." '+data+'. ".RetornaFraseData(20)."');\n");
+  echo("          alert('".RetornaFraseData($sock, 19)." '+data+'. ".RetornaFraseData($sock, 20)."');\n");
   echo("          return(false);\n");
   echo("        }\n");
   echo("      }\n");
@@ -398,14 +397,12 @@ function GeraJSComparacaoDatas()
 */
 function GeraCampoData($nome_campo,$valor_ini)
 {
-	
 
-  return ("\t\t<input type=text size=10 maxlength=10 id=".$nome_campo." name=".$nome_campo." value='".$valor_ini."' onChange=\"check=true;\" onBlur=\"DataValida(this);\" />\n\t\t<a href=# onClick='document.data_calendar.campo.value=\"$nome_campo\";  MudaMes(document.getElementById(\"$nome_campo\").value); MostraLayer(lay_calendario); return false;'>\n\t\t<img alt=\"\" style='border: none' src='../calendario/ico_calendario.gif'/></a><input type=hidden name=data_hoje value=".UnixTime2Data(time())." />\n
-  ");
+  return ("\t\t<input type=\"text\" size=\"10\" maxlength=\"10\" id=\"".$nome_campo."\" name=\"".$nome_campo."\" value='".$valor_ini."' onChange=\"check=true;\" onBlur=\"DataValida(this);\" />\n\t\t<a href=\"#\" onClick='document.data_calendar.campo.value=\"$nome_campo\";  MudaMes(document.getElementById(\"$nome_campo\").value); MostraLayer(lay_calendario); return false;'>\n\t\t<img alt=\"\" style='border: none' src='../calendario/ico_calendario.gif'/></a><input type=\"hidden\" name=\"data_hoje\" value=\"".UnixTime2Data(time())."\" />\n");
   
   //echo("				<a href=# onClick='document.data_calendar.campo.value=\"data_inicio\";  MudaMes(document.enquete.data_inicio.value); MostraLayer(lay_calendario); return false;'> <img style='border: none' src='ico_calendario.gif'/></a>\n");
-	//echo("                  <input type=hidden name=data_hoje value=".UnixTime2Data(time()).">\n");
-  
+  //echo("                  <input type=hidden name=data_hoje value=".UnixTime2Data(time()).">\n");
+
 }
 
 ?>
