@@ -217,14 +217,16 @@ function MemorizaListaDeFrases($sock, $cod_ferramenta)
 
   $dbnamebase = $_SESSION['dbnamebase'];
 
-  $cod_lingua=$_SESSION['cod_lingua_s'];
-
-  /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)*/
-  if (is_null($cod_lingua))
+  /* Evitar erro caso a variavel de sessão cod_lingua_s esteja vazia. Valor default = 1 (pt)*/
+  if (isset($_SESSION['cod_lingua_s']) && !is_null($_SESSION['cod_lingua_s']))
+    $cod_lingua = $_SESSION['cod_lingua_s'];
+  else
     $cod_lingua = 1;
+
+  error_log("debug_backtrace() = ".print_r(debug_backtrace(), true));
   $query  = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
-  $query .= "cod_lingua=".VerificaNumeroQuery($cod_lingua)." AND ";
-  $query .= "cod_ferramenta=".VerificaNumeroQuery($cod_ferramenta)." ";
+  $query .= "cod_lingua = ".VerificaNumeroQuery($cod_lingua)." AND ";
+  $query .= "cod_ferramenta = ".VerificaNumeroQuery($cod_ferramenta)." ";
   $query .= "ORDER BY cod_texto";
   $textos = "";
   

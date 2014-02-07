@@ -47,10 +47,10 @@
   session_start();
   include($bibliotecas."teleduc.inc");
   include($bibliotecas."acesso_sql.inc");
+  include($bibliotecas."conversor_texto.inc");
   include($bibliotecas."linguas.inc");
   include($bibliotecas."email.inc");
   include($bibliotecas."data.inc");
-  include($bibliotecas."conversor_texto.inc");
   include($bibliotecas."usuarios.inc");
   include($bibliotecas."cursos.inc");
 
@@ -69,9 +69,9 @@
   
   //$lista_frases = RetornaListaDeFrases($sock, -8, 1);
 
-  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-  echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
   echo("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+
   echo("  <head>\n");
   // 1 - Notifica��o de novidades
   echo("    <title>TelEduc - ".RetornaFraseDaListaNotificar($lista_frases_total[1], 1)."</title>\n");
@@ -97,7 +97,7 @@
   if (strcmp($L_host, $R_host) != 0)
   {
     // 2 - Este script n�o pode ser executado remotamente.
-    echo("<br /><font color=tomato size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br />");
+    echo("<br /><font color=\"tomato\" size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br />");
     exit(); // Executado remotamente sa�.
   }
 
