@@ -191,9 +191,12 @@ function ListaLinguas($sock)
   $saida = "";
   unset ($saida);
   while ($linha=RetornaLinha($res))
-    $saida[$linha['cod_lingua']]=$linha['lingua'];
+    if($linha['cod_lingua']!=2){ //retirando temporariamente o espanhol, por falta de tradução
+      $saida[$linha['cod_lingua']]=$linha['lingua'];
+    }
   return $saida;
 }
+
 function LinguaLocal($sock,$cod_lin){
   $dbnamebase = $_SESSION['dbnamebase'];
   $query="select texto from ".$dbnamebase.".Lingua_textos where cod_ferramenta=-6 and cod_lingua=".$cod_lin." and cod_texto=".$cod_lin."";
