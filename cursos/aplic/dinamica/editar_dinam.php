@@ -333,65 +333,65 @@
               }
 
               if ($linha['Status']) $arqEntrada="arqEntrada='sim'";
-                else $arqEntrada="arqEntrada='nao'";
+              else $arqEntrada="arqEntrada='nao'";
 
-                if (eregi(".zip$",$linha['Arquivo']))
-                {
-                  // arquivo zip
-                  $imagem    = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
-                  $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."'); return(false);\" tipoArq=\"zip\" nomeArq=\"".htmlentities($caminho_arquivo)."\" arqZip=\"".$linha['Arquivo']."\" ". $arqEntrada.">";
-                }
-                else
-                {
-                  // arquivo comum
-                  $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
-                  $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."'); return(false);\" tipoArq=\"comum\" nomeArq=\"".htmlentities($caminho_arquivo)."\" ".$arqEntrada.">";
-                }
-
-                $tag_fecha = "</a>";
-
-                echo("                        ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
-
-                if ($usr_formador){
-                  echo("                          ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\" />\n");
-                }
-
-                echo("                          ".$espacos2.$espacos.$imagem.$tag_abre.$linha['Arquivo'].$tag_fecha." - (".round(($linha['Tamanho']/1024),2)."Kb)");
-
-                echo("<span id=\"local_entrada_".$conta_arq."\">");
-                if ($linha['Status']) 
-                  // 34 - entrada
-                    echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>".RetornaFraseDaLista($lista_frases,34)."</span></span>");
-                echo("</span>\n");
-                echo("                          ".$espacos2."<br />\n");
-                echo("                        ".$espacos2."</span>\n");
+              if (eregi(".zip$",$linha['Arquivo']))
+              {
+                // arquivo zip
+                $imagem    = "<img alt=\"\" src=\"../imgs/arqzip.gif\" border=\"0\" />";
+                $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."'); return(false);\" tipoArq=\"zip\" nomeArq=\"".htmlentities($caminho_arquivo)."\" arqZip=\"".$linha['Arquivo']."\" ". $arqEntrada.">";
               }
-              else{
-                if ($nivel_anterior>=$nivel){
-                  $i=$nivel_anterior-$nivel;
-                  $j=$i;
-                  $espacos3="";
-                  do{
-                    $espacos3.="  ";
-                    $j--;
-                  }while($j>=0);
-                  do{
-                    echo("                      ".$espacos3."</span>\n");
-                    $i--;
-                  }while($i>=0);
-                }
-                // pasta
-                $imagem    = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
-                echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
-                echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
-                if ($usr_formador){
-                  echo("                        ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\" />\n");
-                }
-                echo("                        ".$espacos2.$espacos.$imagem.$temp[$nivel]."\n");
-                echo("                        ".$espacos2."<br />\n");
-             }
+              else
+              {
+                // arquivo comum
+                $imagem    = "<img alt=\"\" src=\"../imgs/arqp.gif\" border=\"0\" />";
+                $tag_abre  = "<a href=\"".ConverteUrl2Html($caminho_arquivo)."\" id=\"nomeArq_".$conta_arq."\" onclick=\"WindowOpenVer('".ConverteUrl2Html($caminho_arquivo)."'); return(false);\" tipoArq=\"comum\" nomeArq=\"".htmlentities($caminho_arquivo)."\" ".$arqEntrada.">";
+              }
 
+              $tag_fecha = "</a>";
+
+              echo("                        ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
+
+              if ($usr_formador){
+                echo("                          ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\" />\n");
+              }
+
+              echo("                          ".$espacos2.$espacos.$imagem.$tag_abre.$linha['Arquivo'].$tag_fecha." - (".round(($linha['Tamanho']/1024),2)."Kb)");
+
+              echo("<span id=\"local_entrada_".$conta_arq."\">");
+              if ($linha['Status']) 
+                // 34 - entrada
+                  echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>".RetornaFraseDaLista($lista_frases,34)."</span></span>");
+              echo("</span>\n");
+              echo("                          ".$espacos2."<br />\n");
+              echo("                        ".$espacos2."</span>\n");
             }
+            else{
+              if ($nivel_anterior>=$nivel){
+                $i=$nivel_anterior-$nivel;
+                $j=$i;
+                $espacos3="";
+                do{
+                  $espacos3.="  ";
+                  $j--;
+                }while($j>=0);
+                do{
+                  echo("                      ".$espacos3."</span>\n");
+                  $i--;
+                }while($i>=0);
+              }
+              // pasta
+              $imagem    = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
+              echo("                      ".$espacos2."<span id=\"arq_".$conta_arq."\">\n");
+              echo("                        ".$espacos2."<span class=\"link\" id=\"nomeArq_".$conta_arq."\" tipoArq=\"pasta\" nomeArq=\"".htmlentities($caminho_arquivo)."\"></span>\n");
+              if ($usr_formador){
+                echo("                        ".$espacos2."<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_".$conta_arq."\" />\n");
+              }
+              echo("                        ".$espacos2.$espacos.$imagem.$temp[$nivel]."\n");
+              echo("                        ".$espacos2."<br />\n");
+           }
+
+          }
           $conta_arq++;
         }
         do{

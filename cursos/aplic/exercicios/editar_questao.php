@@ -674,7 +674,24 @@
   echo("      check.setAttribute(\"name\", \"chkAlt\");\n");
   echo("      check.setAttribute(\"value\", cod);\n");
   echo("      check.onclick= function(){ VerificaChkBoxAlt(1); };\n");
-  echo("      return check;\n");
+  echo("      var containerCheck = document.createElement(\"div\");\n");
+  echo("      containerCheck.className = 'containerCheck';\n");
+  echo("      containerCheck.appendChild(check);\n");
+  echo("      return containerCheck;\n");
+  echo("    }\n\n");
+
+  echo("    function CriaTextArea(cod)\n");
+  echo("    {\n");
+  echo("      var textarea = document.createElement(\"textarea\");\n");
+  echo("      textarea.setAttribute(\"id\",'textAlt_'+cod);\n");
+  echo("      textarea.setAttribute(\"name\", \"textAlt\");\n");
+  echo("      textarea.setAttribute(\"rows\", 3);\n");
+  echo("      textarea.className = 'input';\n");
+  echo("      var containerTextArea = document.createElement(\"div\");");
+  echo("      containerTextArea.setAttribute(\"id\",'containerTextArea_'+cod);\n");
+  echo("      containerTextArea.className = 'containerTextArea';\n");
+  echo("      containerTextArea.appendChild(textarea);\n");
+  echo("      return containerTextArea;\n");
   echo("    }\n\n");
 
   echo("    function CriaSelectAlt(cod)\n");
@@ -719,11 +736,12 @@
   echo("      return span;\n");
   echo("    }\n\n");
 
-  echo("    function CriaSpanAlt(cod)\n");
+  echo("    function CriaDivAlt(cod)\n");
   echo("    {\n");
-  echo("      var span = document.createElement(\"span\");\n");
-  echo("      span.setAttribute(\"id\",'span_'+cod);\n");
-  echo("      return span;\n");
+  echo("      var divAlt = document.createElement(\"div\");\n");
+  echo("      divAlt.setAttribute(\"id\",'divAlt_'+cod);\n");
+  echo("      divAlt.className = \"divAlt\";\n");
+  echo("      return divAlt;\n");
   echo("    }\n\n");
 
   echo("    function CriaSpanDiv(cod)\n");
@@ -800,19 +818,21 @@
   //função que cria o campo de edicao quando o usuario quer adicionar nova alternativa
   echo("    function CriaCamposEdicaoNovaAlternativa(conteudo,cod)\n");
   echo("    {\n");
-  echo("      var span;\n");
-  echo("      span = document.getElementById('span_'+cod);\n");
-  echo("      span.appendChild(CriaInputAlt(conteudo,cod));\n");
+  echo("      var divAlt;\n");
+  echo("      divAlt = document.getElementById('divAlt_'+cod);\n");
   if($tp_questao == 'O' || $tp_questao == 'M')
   {
-    echo("      span.appendChild(CriaSpanEspAlt(2));\n");
-    echo("      span.appendChild(document.createTextNode(' Validade:'));\n");
-    echo("      span.appendChild(CriaSelectAlt(cod));\n");
+    echo("      var selectLabel = document.createElement(\"label\");\n");
+    echo("      selectLabel.setAttribute(\"for\", \"select_\"+cod);\n");
+    //TODO: Traduzir este label.
+    echo("      selectLabel.innerHTML = \"Validade:\";\n");
+    echo("      divAlt.appendChild(selectLabel);\n");
+    echo("      divAlt.appendChild(CriaSelectAlt(cod));\n");
   }
-  echo("      span.appendChild(CriaSpanEspAlt(8));\n");
-  echo("      span.appendChild(CriaSpanOk(cod));\n");
-  echo("      span.appendChild(CriaSpanEspAlt(2));\n");
-  echo("      span.appendChild(CriaSpanCancNovaAlternativa(cod));\n");
+  echo("      divAlt.appendChild(CriaSpanEspAlt(8));\n");
+  echo("      divAlt.appendChild(CriaSpanOk(cod));\n");
+  echo("      divAlt.appendChild(CriaSpanEspAlt(2));\n");
+  echo("      divAlt.appendChild(CriaSpanCancNovaAlternativa(cod));\n");
   echo("    }\n\n");
 
 
@@ -877,11 +897,11 @@
   echo("      tr.setAttribute(\"id\",'trAlt_'+cod);\n");
   echo("      tr.setAttribute(\"name\",'Alt[ ]')\n");
   echo("      td = document.createElement(\"td\");\n");
-  echo("      td.className = 'itens';\n");
+  echo("      td.className = 'itens edicao';\n");
   echo("      td.setAttribute(\"colSpan\",\"6\");\n");
   echo("      td.appendChild(CriaCheckBoxAlt(cod));\n");
-  echo("      td.appendChild(CriaSpanEspAlt(5));\n");
-  echo("      td.appendChild(CriaSpanAlt(cod));\n");
+  echo("      td.appendChild(CriaTextArea(cod));\n");
+  echo("      td.appendChild(CriaDivAlt(cod));\n");
   echo("      td.appendChild(CriaSpanDiv(cod));\n");
   echo("      tr.appendChild(td);\n");
   //echo("      tBody_alternativas.appendChild(tr);\n");
@@ -1128,8 +1148,11 @@
   if($tp_questao == 'O' || $tp_questao == 'M')
   {
     echo("    function ConfirmaEdicaoAlternativa(cod){\n");
-    echo("      var span,conteudo,posi,stringGabarito;\n");
-    echo("      span = document.getElementById('span_'+cod);\n");
+    echo("      var divAlt, containerTextArea, conteudo, posi, stringGabarito, td;\n");
+    echo("      divAlt = document.getElementById('divAlt_'+cod);\n");
+    echo("      containerTextArea = document.getElementById('containerTextArea_'+cod);\n");
+    echo("      td = document.getElementById('trAlt_'+cod).firstElementChild;\n");
+    echo("      td.className = \"itens\";\n");
     echo("      conteudo = document.getElementById('textAlt_'+cod).value;\n");
     echo("      posi = RetornaPosiAlternativa(cod);\n");
     echo("      gabarito[posi] = document.getElementById('select_'+cod).value;\n");
@@ -1139,8 +1162,9 @@
 //      echo("      resposta=\"\";\n");
 //    }
     echo("      stringGabarito = FormaGabarito();\n");
-    echo("      DeletaCamposEdicao(span);\n");
-    echo("      span.innerHTML = conteudo;\n");
+    echo("      DeletaCamposEdicao(divAlt);\n");
+    echo("      containerTextArea.parentNode.removeChild(containerTextArea);");
+    echo("      divAlt.innerHTML = conteudo;\n");
     if($tp_questao == 'O') {
       echo("      xajax_EditarAlternativaObjDinamic(".$cod_curso.",".$cod_questao.",cod,conteudo,stringGabarito);\n");
     } elseif ($tp_questao == 'M') {
@@ -1761,9 +1785,12 @@
           echo("                  <tr name=\"Alt[ ]\" id=\"trAlt_".$linha_item['cod_alternativa']."\">\n");
           echo("                    <td class=\"itens\" colspan=\"6\">\n");
           if(!$aplicada) {
-           echo("                     <input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+            echo("                     <div class=\"containerCheck\">\n");
+            echo("                       <input type=\"checkbox\" name=\"chkAlt\" id=\"alt_".$linha_item['cod_alternativa']."\" onclick=\"VerificaChkBoxAlt(1);\" value=\"".$linha_item['cod_alternativa']."\" />\n");
+            echo("                     </div>\n");
           }
-          echo("                      <span id=\"span_".$linha_item['cod_alternativa']."\">".$texto."</span><span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span>");
+          echo("                      <div id=\"divAlt_".$linha_item['cod_alternativa']."\" class=\"divAlt\">".$texto."</div>\n");
+          echo("                      <span id=\"div_".$linha_item['cod_alternativa']."\">&nbsp;</span>\n");
           echo("                    </td>\n");
           echo("                  </tr>\n");
 

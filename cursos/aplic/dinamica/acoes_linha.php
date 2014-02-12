@@ -74,7 +74,7 @@
   {
 
     $atualizacao="true";
-  	AtualizaFerramentasNova($sock, 16, 'T');
+    AtualizaFerramentasNova($sock, 16, 'T');
     /* Verifica a existência do diretório a ser movido o arquivo */
     if (!file_exists($diretorio_arquivos."/".$cod_curso)) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso);
@@ -85,12 +85,13 @@
     if (!file_exists($diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/")) {
       CriaDiretorio($diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/");
     }
-	
+
     $dir=$diretorio_arquivos."/".$cod_curso."/dinamica/".$cod_item."/";
 
-    $nome_arquivo = $_FILES[input_files][name];
+    $nome_arquivo = $_FILES['input_files']['name'];
     if (function_exists('mb_convert_encoding'))
       $nome_arquivo = mb_convert_encoding($nome_arquivo, "UTF-8", "ISO-8859-1");
+
     if (!RealizaUpload($input_files,$dir.$nome_arquivo))
     {
       /* 52 - Atenção: o arquivo que você anexou não existe ou tem mais de %dMb.*/

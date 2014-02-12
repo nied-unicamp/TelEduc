@@ -389,5 +389,40 @@ border-style : dotted solid none solid;
 text-align : left;
 }
 
+/* -------------------------------------------
+    ALTERANTIVAS DE EXERCÍCIOS
+---------------------------------------------- */
 
- 
+tbody#tBody_alternativas input{
+margin-right:10px;
+}
+
+tbody#tBody_alternativas div.containerCheck {
+float: left;
+}
+
+tbody#tBody_alternativas div.containerTextArea {
+margin-left: 30px;
+width: auto;
+padding: 2px;
+}
+
+tbody#tBody_alternativas div.containerTextArea textarea{
+width: 100%;
+padding: 0;
+resize:vertical;
+}
+
+tbody#tBody_alternativas div.divAlt {
+display: inline-block;
+word-wrap: break-word;
+}
+
+tbody#tBody_alternativas .edicao div.divAlt {
+margin-left: 30px;
+clear: both;
+}
+
+tbody#tBody_alternativas .edicao input{
+vertical-align: top;
+}
