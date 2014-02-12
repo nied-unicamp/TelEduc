@@ -226,7 +226,6 @@ function MemorizaListaDeFrases($sock, $cod_ferramenta)
   else
     $cod_lingua = 1;
 
-  error_log("debug_backtrace() = ".print_r(debug_backtrace(), true));
   $query  = "SELECT cod_texto, texto FROM ".$dbnamebase.".Lingua_textos WHERE ";
   $query .= "cod_lingua = ".VerificaNumeroQuery($cod_lingua)." AND ";
   $query .= "cod_ferramenta = ".VerificaNumeroQuery($cod_ferramenta)." ";
