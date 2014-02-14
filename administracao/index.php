@@ -44,11 +44,8 @@
   include($bibliotecas."geral.inc");
   include("admin.inc");
   
-  VerificaAutenticacaoAdministracao();
- 
   include("../topo_tela_inicial.php");
-
-    
+  
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
   //adicionar as acoes possiveis, 1o parametro 
@@ -67,19 +64,12 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  if (isset($cod_lingua) && $cod_lingua!="")
-  {
-    $cod_lingua_s=$cod_lingua;
-  
-    for ($c=-5;$c<20;$c++)
-      if (ListaDeFrasesEmMemoria($c))
-        MemorizaListaDeFrases($sock, $c);
-  }
-
   $lista_frases=RetornaListaDeFrases($sock,-5);
 
-  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+  
+  VerificaAutenticacaoAdministracao();
+  
   /* 1 - Administração */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");
 
@@ -133,7 +123,7 @@
       echo("<b>".RetornaFraseDaLista($lista_frases,135)."</b><br><br>");
 
       // 18 - OK
-      echo("<form><input type=button value='".RetornaFraseDaLista($lista_frases_geral,18)."' onclick='document.location=\"index.php?\";'></form>");
+      echo("<form><input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,18)."' onclick='document.location=\"index.php?\";'></form>");
 
 
       echo("</body>\n");

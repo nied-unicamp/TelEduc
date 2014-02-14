@@ -115,11 +115,12 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='consultar_base.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='consultar_base.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   if (eregi("^(select|desc|show|describe) ",$consulta)) {
     echo("                  <li>");
     echo("                  <form method=\"post\" action=\"exportar_resultados.php\">");
-    echo("                  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,533)."\"/>\n");
+    /* 333 - Exportar para csv */
+    echo("                  <input type=\"submit\" value=\"".RetornaFraseDaLista($lista_frases,333)."\"/>\n");
     echo("                  </form>");
     echo("                  </li>");
   }

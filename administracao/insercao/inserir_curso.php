@@ -46,7 +46,7 @@
   include("../administracao/admin.inc");
   include("insercao.inc");
 //   include("../extracao/extracao.inc");
-  include("../topo_tela_inicial.php");
+  include("../../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
   echo("<script language=\"javascript\" type=\"text/javascript\">\n");
@@ -58,17 +58,10 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  VerificaAutenticacaoAdministracao();
-
   $sock=Conectar("");
 
-  $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
-
-  Desconectar($sock);
-
-
   echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+  VerificaAutenticacaoAdministracao();
   /* 141 - Inser��o de Curso */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,141)."</h4>\n");
 
@@ -84,13 +77,13 @@
   
 
   echo("<!-- Tabelao -->\n");
-  echo("<form name=fmrInsere action=verifica_versao.php? method=post>\n");
+  echo("<form name=\"fmrInsere\" action=\"verifica_versao.php\" method=\"post\">\n");
   echo("<table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabExterna\">\n");
   echo("<tr>\n");
   echo("<td><ul class=\"btAuxTabs\">\n");
 
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"voltar\" onClick=\"document.location='../administracao/index.php'\"  >".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"voltar\" onClick=\"document.location='../administracao/index.php'\"  >".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -113,15 +106,15 @@
 
   if (count($lista_inseriveis)>0)
   {
-    echo("<select class=input name=cod_pasta>\n");
-    /* 333 - Vers�o */
+    echo("<select class=\"input\" name=\"cod_pasta\">\n");
+    /* 512 (geral) - Vers�o */
     foreach ($lista_inseriveis as $cod_pasta => $dados_curso) {
-    	if (!Curso_Existe($dados_curso, $lista_cursos)) 
-    		echo("  <option value='$cod_pasta'>".$dados_curso['nome_curso']." -  ".$dados_curso['data_extracao']." - (".RetornaFraseDaLista($lista_frases,333)." ".$dados_curso['versao']." )</option>\n");
-		else
-      	/* 334 - Curso j� inserido*/
-			echo("  <option value='$cod_pasta'>(".RetornaFraseDaLista($lista_frases,334).") ".$dados_curso['nome_curso']." - ".$dados_curso['data_extracao']." - (".RetornaFraseDaLista($lista_frases,333)." ".$dados_curso['versao'].")</option>\n");
-  	 }
+      if (!Curso_Existe($dados_curso, $lista_cursos)) 
+        echo("  <option value='$cod_pasta'>".$dados_curso['nome_curso']." -  ".$dados_curso['data_extracao']." - (".RetornaFraseDaLista($lista_frases_geral, 512)." ".$dados_curso['versao']." )</option>\n");
+      else
+        /* 334 - Curso j� inserido*/
+        echo("  <option value='$cod_pasta'>(".RetornaFraseDaLista($lista_frases,334).") ".$dados_curso['nome_curso']." - ".$dados_curso['data_extracao']." - (".RetornaFraseDaLista($lista_frases_geral, 512)." ".$dados_curso['versao'].")</option>\n");
+      }
     echo("</select><br />\n");
   } else {
     /* 118 - Nenhum curso dispon�vel. */
@@ -133,7 +126,7 @@
 
   if (count($categoria) > 0) {
 
-     echo("<select class=input name=categoria>\n");
+     echo("<select class=\"input\" name=\"categoria\">\n");
      echo("<option value='null'>&nbsp;</option>\n");
   
      foreach ($categoria as $categ => $cod_categoria) {
