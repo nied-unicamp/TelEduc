@@ -50,7 +50,7 @@
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
-  echo("<script language=JavaScript>\n");
+  echo("<script language=\"javascript\">\n");
   echo("  function Iniciar() {\n");
   echo("	startList();\n");
   echo("  }\n");

@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : administracao/insercao/verifica_versao.php
+    Arquivo : administracao/verifica_versao.php
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
  */
 
 /*==========================================================
-  ARQUIVO : administracao/insercao/verifica_versao.php
+  ARQUIVO : administracao/verifica_versao.php
   ========================================================== */
 
   $bibliotecas="../cursos/aplic/bibliotecas/";
@@ -50,10 +50,12 @@
 
   VerificaAutenticacaoAdministracao();
 
-  $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
+  include("../topo_tela_inicial.php");
 
   $sock=Conectar("");
+  
+  include("../menu_principal_tela_inicial.php");
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   //Agora verificamos se a vers�o do curso a ser extraido � a mesma do TelEduc. 
   //Primeiro pegamos a versao atual na tabela Config
@@ -68,10 +70,8 @@
   $versao_curso = rtrim ($versao_curso);
   
   if (strcmp($versao_curso,$versao_atual)==0)
-		header("Location: inserir_curso2.php?cod_pasta=$cod_pasta&categoria=$categoria");
-      
+    header("Location: inserir_curso2.php?cod_pasta=$cod_pasta&categoria=$categoria");
   
-  PreparaCabecalhoInsercao($lista_frases);
   // 340 - Incompatibilidade de vers�es.
   echo ("<center>".RetornaFraseDaLista($lista_frases, 340)."");
   // 341 - A vers�o do curso que voc� est� inserindo � a
@@ -82,12 +82,15 @@
   
   echo ("<form action='inserir_curso2.php'>");
   
-  echo ("<input type=hidden name=cod_pasta value='$cod_pasta' >");
-  echo ("<input type=hidden name=categoria value='$categoria' >");
+  echo ("<input type=\"hidden\" name=\"cod_pasta\" value='$cod_pasta' >");
+  echo ("<input type=\"hidden\" name=\"categoria\" value='$categoria' >");
   // 35 - Sim
   // 36 - N�o
-  echo ("<input type=submit Value='".RetornaFraseDaLista($lista_frases_geral, 35)."' >");
-  echo ("<input type=button Value='".RetornaFraseDaLista($lista_frases_geral, 36)."' onclick='javascript: window.location.href=\"inserir_curso.php\"'>");
+  echo ("<input type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral, 35)."' >");
+  echo ("<input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral, 36)."' onclick='javascript: window.location.href=\"inserir_curso.php\"'>");
   echo ("</center>");
-  
+
+  include("../cursos/aplic/tela2.php");
+  echo("</body>\n");
+  echo("</html>\n");
 ?>

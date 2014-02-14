@@ -44,9 +44,10 @@
   include($bibliotecas."geral.inc");
   include("../administracao/admin.inc");
   include("estat.inc");
-  include("../topo_tela_inicial.php");
 
   VerificaAutenticacaoAdministracao();
+
+  include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
   echo("<script language=\"javascript\" type=\"text/javascript\">\n");
@@ -82,16 +83,16 @@
   echo("<td><ul class=\"btAuxTabs\">\n");
 
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
   /* 154 - Quantidade de Cursos */
-  echo("<li><span style=\"href: #\" title=\"Quantidade de Cursos\" onClick=\"document.location='num_cursos.php'\">".RetornaFraseDaLista($lista_frases,154)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,154)."\" onClick=\"document.location='num_cursos.php'\">".RetornaFraseDaLista($lista_frases,154)."</span></li>\n");
 
   /* 155 - Quantidade de Alunos e Formadores por Curso */
-  echo("<li><span style=\"href: #\" title=\"Quantidade de Alunos e Formadores por Curso\" onClick=\"document.location='alunos_curso.php'\">".RetornaFraseDaLista($lista_frases,155)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,155)."\" onClick=\"document.location='alunos_curso.php'\">".RetornaFraseDaLista($lista_frases,155)."</span></li>\n");
 
   /* 156 - Tamanho dos Arquivos dos Cursos */
-  echo("<li><span style=\"href: #\" title=\"Tamanho dos Arquivos dos Cursos\" onClick=\"document.location='tam_curso.php'\">".RetornaFraseDaLista($lista_frases,156)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,156)."\" onClick=\"document.location='tam_curso.php'\">".RetornaFraseDaLista($lista_frases,156)."</span></li>\n");
 
   echo("</ul></td></tr>\n");
 

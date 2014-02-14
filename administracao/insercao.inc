@@ -3,7 +3,7 @@
 <!--
 -------------------------------------------------------------------------------
 
-    Arquivo : administracao/insercao/insercao.inc
+    Arquivo : administracao/insercao.inc
 
     TelEduc - Ambiente de Ensino-Aprendizagem a Dist�ncia
     Copyright (C) 2001  NIED - Unicamp
@@ -37,7 +37,7 @@
 */
 
 /*==========================================================
-  ARQUIVO : administracao/insercao/insercao.inc
+  ARQUIVO : administracao/insercao.inc
   ========================================================== */
 
  @include_once ("insercao_fachada.inc");
@@ -666,91 +666,6 @@ function AtualizaTabelasSequencia($cod_curso)
       $res = Enviar($sock, $query2);
       }
  } 
-}
-
-/* **********************************************************************
-   PreparaCabecalhoInsercao - Monta o Cabecalho padr�o da p�gina da administracao
-   Entrada: Nenhuma
-   Saida: Monta o cabe�alho no HTML
-*/
- function PreparaCabecalhoInsercao($lista_frases)
- {
-  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-  echo("<html lang=\"pt\">\n");
-  echo("<head>\n");
-  /* 1- Administra��o */
-  echo("<title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
-  echo("<meta name=\"robots\" content=\"follow,index\" />\n");
-  echo("<meta name=\"description\" content=\"\" />\n");
-  echo("<meta name=\"keywords\" content=\"\" />\n");
-  echo("<meta name=\"owner\" content=\"\" />\n");
-  echo("<meta name=\"copyright\" content=\"\" />\n");
-  echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />\n");
-  echo("<link href=\"../js-css/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
-  echo("</head>\n");
-
-  echo("<body text=#000000 bgcolor=#FFFFFF link=#0000FF vlink=#0000FF ALINK=#0000FF>\n");
-  echo("<a name=\"topo\"></a>\n");
-  echo("<h1><a href=\"index.htm\"><img src=\"../imgs/logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o a Dist&acirc;ncia\" /></a></h1>\n");
-  echo("<table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
-  echo("<tr>\n");
-  echo("<td></td>\n");
-  echo("<td valign=\"top\" id=\"topo\"><!--NAVEGACAO NIVEL 3-->\n");
-  echo("<h3>".RetornaFraseDaLista($lista_frases,2)."</h3>\n");
-  echo("</tr>\n");
-  echo("<tr>\n");
-  echo("<td valign=\"top\"><!--NAVEGACAO PRINCIPAL-->\n");
-  echo("<ul id=\"nav\">\n");
-
-  /* 3 - Cria��o de Curso */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,3),"index_criar_curso.php","");
-
-  /* 125 - Editar Categorias */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,125),"editar_categoria.php","");
-
-  /* 131 - Selecionar Categoria dos Cursos */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,131),"selecionar_categoria.php","");
-
-  /* 4 - Extra��o de Curso */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,4),"extracao/extrair_curso.php","");
-
-  /* 141 - Inser��o de Cursos Extra�dos */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,141),"insercao/inserir_curso.php","");
-
-  /* 245 - Reutiliza��o de Cursos Encerrados */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,245),"resetar_curso.php","");
-
-  /* 293 - Reenvio de dados aos coordenadores*/
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,293),"infocurso/reenvio.php","");
-
-  /* 9 - Enviar e-mail para usu�rios */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,9),"enviar_email.php","");
-
-  /* 8 - Trocar login */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,8),"trocar_login.php","");
-
-  /* 5 - Consulta a Base de Dados */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,5),"consultar_base.php","");
-
-  /* 153 - Estat�sticas do Ambiente */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,153),"estatistica/index.php","");
-
-  /* 183 - Configurar dados do ambiente */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,183), "configurar.php", "");
-
-  /* 11 - Cadastro de L�nguas */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,11),"cadastro_linguas.php","");
-
-  /* 171 - Cadastro de texto da Ajuda */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,171),"ajuda/index.php","");
-
-  /* 13 - Contato - NIED - Unicamp */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,13),"mailto:curso@nied.unicamp.br","");
-
-  echo("</ul>\n");
-  echo("<p align=\"center\"><a href=\"#\"><img src=\"../imgs/logoNied.gif\" alt=\"Nied\" width=\"28\" height=\"38\" border=\"0\" style=\"margin-right:8px;\" /></a> <a href=\"#\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" width=\"44\" height=\"38\" border=\"0\" style=\"margin-right:6px;\" /></a> <a href=\"#\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" width=\"35\" height=\"38\" border=\"0\" /></a></p>\n");
-  echo("</td>\n");
-  echo("<td width=\"100%\" valign=\"top\" style=\"padding-bottom:40px; padding-top:22px;\">\n");
 }
 
 /* **********************************************************************

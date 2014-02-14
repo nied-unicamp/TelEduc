@@ -111,7 +111,7 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><a href=\"#\" title=\"Voltar\" onClick=\"document.location='index.php?cod_ferramenta=".$cod_ferramenta."&cod_lingua=".$cod_lingua."&tipo_usuario=".$tipo_usuario."&modo=".$modo."';\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+  echo("                  <li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php?cod_ferramenta=".$cod_ferramenta."&cod_lingua=".$cod_lingua."&tipo_usuario=".$tipo_usuario."&modo=".$modo."';\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -237,10 +237,10 @@
     echo("                </table>\n");
   }
 
-  echo("                <input type=hidden name=cod_pagina value=".$cod_pagina.">\n");
-  echo("                <input type=hidden name=cod_lingua value=".$cod_lingua.">\n");
-  echo("                <input type=hidden name=tipo_usuario value=".$tipo_usuario.">\n");
-  echo("                <input type=hidden name=criar value=".$criar.">\n");
+  echo("                <input type=\"hidden\" name=\"cod_pagina\"   value=\"".$cod_pagina."\">\n");
+  echo("                <input type=\"hidden\" name=\"cod_lingua\"   value=\"".$cod_lingua."\">\n");
+  echo("                <input type=\"hidden\" name=\"tipo_usuario\" value=\"".$tipo_usuario."\">\n");
+  echo("                <input type=\"hidden\" name=\"criar\"        value=\"".$criar."\">\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");

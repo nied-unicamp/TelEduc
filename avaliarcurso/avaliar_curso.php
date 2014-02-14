@@ -109,11 +109,11 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"voltar\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 98 - Criar Curso */
-  echo("                  <li><span style=\"href: #\" title=\"Criar Curso\" onClick=\"document.location='../administracao/criar_curso.php'\">".RetornaFraseDaLista($lista_frases,98)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,98)."\" onClick=\"document.location='../administracao/criar_curso.php'\">".RetornaFraseDaLista($lista_frases,98)."</span></li>\n");
   /* 244 - Avaliar requisi��es para abertura de cursos */
-  echo("                  <li><span style=\"href: #\" title=\"Avaliar requisi��es para abertura de cursos\" onClick=\"document.location='avaliar_curso.php'\">".RetornaFraseDaLista($lista_frases,244)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,244)."\" onClick=\"document.location='avaliar_curso.php'\">".RetornaFraseDaLista($lista_frases,244)."</span></li>\n");
   echo("                  </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

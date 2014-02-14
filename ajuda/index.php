@@ -83,7 +83,7 @@
   echo("<tr>\n");
   echo("<td><ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 

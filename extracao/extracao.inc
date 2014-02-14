@@ -41,32 +41,6 @@
   ========================================================== */
 
 /* **********************************************************************
-   PreparaCabecalhoAdmin - Monta o Cabecalho padr�o da p�gina da administracao
-   Entrada: Nenhuma
-   Saida: Monta o cabe�alho no HTML
-*/
-function PreparaCabecalhoAdmin($lista_frases)
-{
-  echo("<html><head>\n");
-
-  /* 1- Administra��o */
-  echo("<title>TelEduc - ".RetornaFraseDaLista($lista_frases,1)."</title>\n");
-  echo("</head>\n");
-  echo("<body text=#000000 bgcolor=#FFFFFF link=#0000FF vlink=#0000FF ALINK=#0000FF>\n");
-  echo("<table width=100% cols=2>\n");
-  echo("  <tr valign=bottom>\n");
-  echo("    <td><img SRC=../../figuras/teleduc.gif border=0 height=79 width=172></td>\n");
-  echo("    <td align=right>\n");
-
-  /* 2- P�gina da Administra��o */
-  echo("      <font face=Verdana,Arial,Helvetica color=#990000 size=+1>".RetornaFraseDaLista($lista_frases,2)."</font>\n");
-  echo("    </td>\n");
-  echo("  </tr>\n");
-  echo("</table>\n");
-  echo("<hr><p>\n");
-}
-
-/* **********************************************************************
    PreparaCabecalhoOpcao - Prepara o cabecalho da op��o da administra��o
    Entrada: Nenhuma
    Saida: Monta o cabe�alho no HTML

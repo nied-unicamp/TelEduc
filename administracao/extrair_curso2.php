@@ -47,10 +47,11 @@
 
   VerificaAutenticacaoAdministracao();
 
+  include("../topo_tela_inicial.php");
+
   $sock=Conectar("");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
    // 2Session
   $dbnamebase = $_SESSION['dbnamebase'];

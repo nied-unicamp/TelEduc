@@ -108,11 +108,11 @@
   echo("<tr>\n");
   echo("<td><ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 71 - Apagar anota��es */
-  echo("<li><a style=\"href: #\" title=\"Apagar anota��es\" onClick=\"document.location='consultar_base.php?apagar_anotacoes=sim'\">".RetornaFraseDaLista($lista_frases,71)."</a></li>\n");
+  echo("<li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases,71)."\" onClick=\"document.location='consultar_base.php?apagar_anotacoes=sim'\">".RetornaFraseDaLista($lista_frases,71)."</a></li>\n");
   /* 532 - Apagar Consulta */
-  echo("<li><a style=\"href: #\" title=\"Apagar Consulta\" onClick=\"document.location='consultar_base.php?apagar_consulta=sim'\">".RetornaFraseDaLista($lista_frases,532)."</a></li>\n");
+  echo("<li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases,532)."\" onClick=\"document.location='consultar_base.php?apagar_consulta=sim'\">".RetornaFraseDaLista($lista_frases,532)."</a></li>\n");
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 

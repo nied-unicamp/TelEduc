@@ -43,6 +43,9 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -55,13 +58,9 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  VerificaAutenticacaoAdministracao();
-
-
   $sock=Conectar("");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
   Desconectar($sock);
 
@@ -86,19 +85,19 @@
   echo("<td><ul class=\"btAuxTabs\">\n");
 
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php?'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php?'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
   /* 137 - Selecionar Idioma Padr�o */
-  echo("<li><span style=\"href: #\" title=\"Selecionar L�ngua Padr�o\" onClick=\"document.location='selecionar_lingua.php?'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,137)."\" onClick=\"document.location='selecionar_lingua.php?'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
 
   /* 504 - Configurações */
-  echo("<li><span style=\"href: #\" title=\"Configuração\" onClick=\"document.location='selecionar_lingua_conf.php?'\">".RetornaFraseDaLista($lista_frases,504)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,504)."\" onClick=\"document.location='selecionar_lingua_conf.php?'\">".RetornaFraseDaLista($lista_frases,504)."</span></li>\n");
 
   /* 505 - Alterações */
-    echo("<li><span style=\"href: #\" title=\"Alterações\" onClick=\"document.location='selecionar_lingua_alt.php?'\">".RetornaFraseDaLista($lista_frases,505)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,505)."\" onClick=\"document.location='selecionar_lingua_alt.php?'\">".RetornaFraseDaLista($lista_frases,505)."</span></li>\n");
 
   /* 7 - Atualizar lista de respons�veis pelo Ambiente */
-  echo("<li><span style=\"href: #\" title=\"Atualizar lista de respons�veis pelo Ambiente\" onClick=\"document.location='atualizar_responsaveis.php?'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases,7)."\" onClick=\"document.location='atualizar_responsaveis.php?'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
 
   echo("</ul></td></tr>\n");
 

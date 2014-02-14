@@ -142,9 +142,6 @@
   echo("        </td>\n");
   echo("      </tr>\n");
   include("../cursos/aplic/tela2.php");
-
-  
-
   echo("</body>\n");
   echo("</html>\n");
 ?>

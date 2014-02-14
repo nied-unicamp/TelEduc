@@ -223,7 +223,6 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   include("../menu_principal_tela_inicial.php");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -246,7 +245,7 @@ function HTMLNovaCategoria(pasta, cod_pasta, frase, frase2){
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

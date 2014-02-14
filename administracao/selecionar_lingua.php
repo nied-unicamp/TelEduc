@@ -102,15 +102,15 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 137 - Selecionar Idioma Padr�o */
-  echo("                  <li><span style=\"href: #\" title=\"Selecionar L�ngua Padr�o\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,137)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
   /* 518 - Configurações */
-  echo("                  <li><span style=\"href: #\" title=\"Configuração\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,518)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,518)."\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,518)."</span></li>\n");
   /* 519 - Alterações */
-  echo("                  <li><span style=\"href: #\" title=\"Alterações\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,519)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,519)."\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,519)."</span></li>\n");
   /* 7 - Atualizar lista de respons�veis pelo Ambiente */
-  echo("                  <li><span style=\"href: #\" title=\"Atualizar lista de respons�veis pelo Ambiente\" onClick=\"document.location='atualizar_responsaveis.php'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,7)."\" onClick=\"document.location='atualizar_responsaveis.php'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -124,7 +124,7 @@
   /* 138 - Selecione abaixo qual l�ngua deseja que seja a primeira a ser exibida ao ser acessada a p�gina principal */
   echo("                  <tr>\n");
   echo("                    <td>".RetornaFraseDaLista($lista_frases,138)."\n");
-  echo("                      <form id=\"form_lingua\" name=\"form_lingua\" action=selecionar_lingua2.php method=post>\n");
+  echo("                      <form id=\"form_lingua\" name=\"form_lingua\" action=\"selecionar_lingua2.php\" method=\"post\">\n");
   echo("                        <select class=\"input\" name=\"cod_lin\" onchange=\"xajax_AtualizaIdiomaDinamic(this.value);\">\n");
 
   $sock=Conectar("");

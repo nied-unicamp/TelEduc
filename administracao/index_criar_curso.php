@@ -46,10 +46,11 @@
 
   VerificaAutenticacaoAdministracao();
 
+  include("../topo_tela_inicial.php");
+
   $sock = Conectar("");
 
   $lista_frases = RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral = RetornaListaDeFrases($sock,-1);
 
   Desconectar($sock);
 
@@ -72,22 +73,22 @@
   echo("<td><ul class=\"btAuxTabs\">\n");
 
   /* 98 - Criar Curso */
-  echo("<li><a href=\"#\" title=\"Criar Curso\" onClick=\"document.location='criar_curso.php'\">".RetornaFraseDaLista($lista_frases,98)."</a></li>\n");
+  echo("<li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases,98)."\" onClick=\"document.location='criar_curso.php'\">".RetornaFraseDaLista($lista_frases,98)."</a></li>\n");
 
 
   /* 244 - Avaliar requisi��es para abertura de cursos */
-  echo("<li><a href=\"#\" title=\"Avaliar requisi��es para abertura de cursos\" onClick=\"document.location='avaliarcurso/avaliar_curso.php'\">".RetornaFraseDaLista($lista_frases,244)."</a></li>\n");
+  echo("<li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases,244)."\" onClick=\"document.location='avaliarcurso/avaliar_curso.php'\">".RetornaFraseDaLista($lista_frases,244)."</a></li>\n");
 
 
-  echo("<form name=frmIndex action=index.php?>\n");
+  echo("<form name=\"frmIndex\" action=\"index.php\">\n");
   /* 23 - Voltar (Ger) */
-  echo("<li><a href=\"#\" title=\"voltar\" onCLick=\"document.frmIndex.submit();\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+  echo("<li><a href=\"#\" title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onCLick=\"document.frmIndex.submit();\">".RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
   echo("</form>\n");
   echo("</ul>\n");
 
   echo("</td></tr></table>\n");
 
-  echo("  <script type=text/javascript defer>\n\n");
+  echo("  <script type=\"text/javascript\" defer>\n\n");
 
   echo("    document.frmIndex.cmdVoltar.focus();\n");
 

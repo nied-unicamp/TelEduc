@@ -151,15 +151,15 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 137 - Selecionar Idioma Padr�o */
-  echo("                  <li><span style=\"href: #\" title=\"Selecionar L�ngua Padr�o\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,137)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases,137)."</span></li>\n");
   /* 518 - Configurações */
-  echo("                  <li><span style=\"href: #\" title=\"Configuração\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,518)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,518)."\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,518)."</span></li>\n");
   /* 519 - Alteracoes */
-    echo("                <li><span style=\"href: #\" title=\"Alterações\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,519)."</span></li>\n");
+    echo("                <li><span title=\"".RetornaFraseDaLista($lista_frases,519)."\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,519)."</span></li>\n");
   /* 7 - Atualizar lista de respons�veis pelo Ambiente */
-  echo("                  <li><span style=\"href: #\" title=\"Atualizar lista de respons�veis pelo Ambiente\" onClick=\"document.location='atualizar_responsaveis.php'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,7)."\" onClick=\"document.location='atualizar_responsaveis.php'\">".RetornaFraseDaLista($lista_frases,7)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

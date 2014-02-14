@@ -43,6 +43,9 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -55,12 +58,9 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  VerificaAutenticacaoAdministracao();
-
   $sock=Conectar("");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
   Desconectar($sock);
 
@@ -87,7 +87,7 @@
   echo("<tr>\n");
   echo("<td><ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("<tr><td>\n");

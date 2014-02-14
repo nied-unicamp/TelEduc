@@ -342,10 +342,23 @@ function VerificaAutenticacaoAdministracao()
   }
   else if($_SESSION['login_usuario_s'] != "admtele")
   {
+    include("../topo_tela_inicial.php");
+    /* Inicio do JavaScript */
+    echo("    <script language=\"javascript\"  type=\"text/javascript\">\n");
+  
+    echo("      function Iniciar() {\n");
+    echo("        startList();\n");
+    echo("      }\n");
+  
+    echo("    </script>\n");
+    /* Fim do JavaScript */
+    include("../menu_principal_tela_inicial.php");
+    echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
     /* 4 - Autoriza�o necess�ia para entrar no Ambiente de Administra�o do TelEduc. */
     /* 23 - Voltar */
-    echo(RetornaFrase($sock,4,-2)." <a href=\"#\" onclick=\"history.go(-1);\">".RetornaFrase($sock,23,-1)."</a>\n");
-    echo("</td></tr>\n");
+    echo(RetornaFrase($sock,4,-2)." <a href=\"#\" onclick=\"history.back(); return false;\">".RetornaFrase($sock,23,-1)."</a>\n");
+    echo("</td>\n");
+    echo("</tr>\n");
     include("../rodape_tela_inicial.php");
     echo("</body>\n");
     echo("</html>\n");

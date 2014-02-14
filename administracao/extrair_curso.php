@@ -46,6 +46,8 @@
 
   VerificaAutenticacaoAdministracao();
 
+  include("../topo_tela_inicial.php");
+
   $sock=Conectar("");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
@@ -88,10 +90,10 @@
 
   if (count($lista)>0)
     /* 110 - Extrair */
-    echo("<input type=submit value='".RetornaFraseDaLista($lista_frases,110)."'>&nbsp;&nbsp;&nbsp;&nbsp;\n");
+    echo("<input type=\"submit\" value='".RetornaFraseDaLista($lista_frases,110)."'>&nbsp;&nbsp;&nbsp;&nbsp;\n");
 
   /* 2 - Cancelar (Ger) */
-  echo("<input type=button value='".RetornaFraseDaLista($lista_frases_geral,2)."' onClick=history.go(-1);>\n");
+  echo("<input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,2)."' onClick=\"history.go(-1);\">\n");
 
   echo("</b><br><br>\n");
 

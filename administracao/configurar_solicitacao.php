@@ -72,7 +72,7 @@
   $lista_frases_adm=RetornaListaDeFrases($sock,-5);
 
   /* Inicio do JavaScript */
-  echo("    <script type=text/javascript defer>\n\n");
+  echo("    <script type=\"text/javascript\" defer>\n\n");
  
   echo("      function RespostaUsuario(sucesso)\n");
   echo("      {\n");
@@ -133,13 +133,13 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 184 - Configurar forma de solicita��o de curso */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar forma de solicita��o de curso\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,184)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,184)."\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,184)."</span></li>\n");
   /* 6 - Configurar dados instituicionais */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar dados instituicionais\" onClick=\"document.location='configurar_dados_institucionais.php'\">".RetornaFraseDaLista($lista_frases,6)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,6)."\" onClick=\"document.location='configurar_dados_institucionais.php'\">".RetornaFraseDaLista($lista_frases,6)."</span></li>\n");
   /* 194 - Configurar endere�o para acesso e estrutura de pastas */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar endere�o para acesso e estrutura de pastas\" onClick=\"document.location='configurar_pastas.php'\">".RetornaFraseDaLista($lista_frases,194)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,194)."\" onClick=\"document.location='configurar_pastas.php'\">".RetornaFraseDaLista($lista_frases,194)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

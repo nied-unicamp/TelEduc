@@ -145,11 +145,11 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 191 - Altera��o de dados do administrador */
-  echo("                  <li><span style=\"href: #\" title=\"Altera��o de dados do administrador\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,191)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,191)."\" onClick=\"document.location='atualizar_administrador.php'\">".RetornaFraseDaLista($lista_frases,191)."</span></li>\n");
   /* 10 - Altera��o de Senha da Administra��o */
-  echo("                  <li><span style=\"href: #\" title=\"Altera��o de Senha da Administra��o\" onClick=\"document.location='alterar_senha.php'\">".RetornaFraseDaLista($lista_frases,10)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,10)."\" onClick=\"document.location='alterar_senha.php'\">".RetornaFraseDaLista($lista_frases,10)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

@@ -44,6 +44,8 @@
   include($bibliotecas."geral.inc");
   include("admin.inc");
   
+  VerificaAutenticacaoAdministracao();
+  
   include("../topo_tela_inicial.php");
   
   // instanciar o objeto, passa a lista de frases por parametro
@@ -67,8 +69,6 @@
   $lista_frases=RetornaListaDeFrases($sock,-5);
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  
-  VerificaAutenticacaoAdministracao();
   
   /* 1 - Administração */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");

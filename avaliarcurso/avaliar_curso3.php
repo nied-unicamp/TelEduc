@@ -53,8 +53,8 @@
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
-  echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor.js\"></script>");
-  echo("<script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor.js\"></script>");
+  echo("    <script type=\"text/javascript\" src=\"../cursos/aplic/bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../cursos/aplic/bibliotecas/javacrypt.js\"></script>\n");
   echo("    <script type=\"text/javascript\">\n");
 

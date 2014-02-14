@@ -46,6 +46,9 @@
   include("../administracao/admin.inc");
   include("insercao.inc");
 //   include("../extracao/extracao.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -61,7 +64,6 @@
   $sock=Conectar("");
 
   echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-  VerificaAutenticacaoAdministracao();
   /* 141 - Inser��o de Curso */
   echo("          <h4>".RetornaFraseDaLista($lista_frases,141)."</h4>\n");
 
@@ -83,7 +85,7 @@
   echo("<td><ul class=\"btAuxTabs\">\n");
 
   /* 23 - Voltar (Ger) */
-  echo("<li><span title=\"voltar\" onClick=\"document.location='../administracao/index.php'\"  >".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='../administracao/index.php'\"  >".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
 
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");

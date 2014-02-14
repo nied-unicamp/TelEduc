@@ -45,6 +45,9 @@
   include("../admin.inc");
   include($bibliotecas."extracao.inc");  
   include("insercao.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -57,12 +60,9 @@
 
   include("../menu_principal_tela_inicial.php");
 
-  VerificaAutenticacaoAdministracao();
-
   $sock=Conectar("");
 
   $lista_frases=RetornaListaDeFrases($sock,-5);
-  $lista_frases_geral=RetornaListaDeFrases($sock,-1);
 
   Desconectar($sock);
 
@@ -99,7 +99,7 @@
   echo("<form action=../index.php?>\n");
 
   /* 23 - Voltar (Ger) */
-  echo("<input type=submit value='".RetornaFraseDaLista($lista_frases_geral,23)."'>\n");
+  echo("<input type=\"submit\" value='".RetornaFraseDaLista($lista_frases_geral,23)."'>\n");
 
   echo("</form>\n");
 

@@ -83,7 +83,7 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='enviar_email.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='enviar_email.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -108,7 +108,7 @@
       }
 
       echo("                  <tr class=\"head\">\n");
-      /* ?? - Mensagem enviada para: */
+      /* 53 - Mensagem enviada para: */
       echo("                    <td>".RetornaFraseDaLista($lista_frases,53)."</td>\n");
       echo("                  </tr>\n");
 
@@ -121,7 +121,7 @@
     }
     else
     {
-      /* ?? - N�o existe nenhum curso ativo. */
+      /* 54 - N�o existe nenhum curso ativo. */
       echo("                  <tr>\n");
       echo("                    <td>".RetornaFraseDaLista($lista_frases,54)."</td>\n");
       echo("                  </tr>\n");
@@ -132,7 +132,7 @@
     $mensagem_enviar=MontaMsg($host, $raiz_www, $cod_curso, $mensagem, $assunto, -1, '');
     $destinos=EnviarMensagem($cod_curso,$coordenadores,$formadores,$alunos,$assunto,$mensagem_enviar,"");
     echo("                  <tr class=\"head\">\n");
-    /* ?? - Mensagem enviada para: */
+    /* 53 - Mensagem enviada para: */
     echo("                    <td>".RetornaFraseDaLista($lista_frases,53)."</td>\n");
     echo("                  </tr>\n");
 

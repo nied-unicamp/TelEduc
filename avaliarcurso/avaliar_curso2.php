@@ -50,7 +50,7 @@
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
-  echo("<script type=text/javascript>\n\n");
+  echo("<script type=\"text/javascript\">\n\n");
 
   /* *********************************************************************
   Funcao Submissao - JavaScript. Transforma a form de Navega��o (anterior, pr�xima)
@@ -125,7 +125,7 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 2 - Cancelar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"voltar\" onClick=\"Cancela();\">".RetornaFraseDaLista($lista_frases_geral,2)."</span></li>\n");
+  echo("                  <li><span stitle=\"".RetornaFraseDaLista($lista_frases_geral,2)."\" onClick=\"Cancela();\">".RetornaFraseDaLista($lista_frases_geral,2)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");

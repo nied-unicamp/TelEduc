@@ -43,6 +43,9 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -54,8 +57,6 @@
   /* Fim do JavaScript */
 
   include("../menu_principal_tela_inicial.php");
-
-  VerificaAutenticacaoAdministracao();
 
   $sock=Conectar("");
 

@@ -82,7 +82,7 @@
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php?cod_ferramenta=".$cod_ferramenta."&amp;cod_lingua=".$cod_lingua."&amp;tipo_usuario=".$tipo_usuario."&amp;modo=".$modo."'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php?cod_ferramenta=".$cod_ferramenta."&amp;cod_lingua=".$cod_lingua."&amp;tipo_usuario=".$tipo_usuario."&amp;modo=".$modo."'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -174,11 +174,11 @@
     echo("                  <input class=\"input\" type=\"submit\" value='".RetornaFraseDaLista($lista_frases,172)." *' onclick=\"document.alterar.criar.value='sim'\" />\n");
   }
   echo("                </div>\n");
-  echo("                <input type=\"hidden\" name=\"criar\" value='nao' />\n");
+  echo("                <input type=\"hidden\" name=\"criar\"          value='nao' />\n");
   echo("                <input type=\"hidden\" name=\"cod_ferramenta\" value='".$cod_ferramenta."' />\n");
-  echo("                <input type=\"hidden\" name=\"cod_lingua\" value='".$cod_lingua."' />\n");
-  echo("                <input type=\"hidden\" name=\"tipo_usuario\" value='".$tipo_usuario."' />\n");
-  echo("                <input type=\"hidden\" name=\"modo\" value='".$modo."' />\n");
+  echo("                <input type=\"hidden\" name=\"cod_lingua\"     value='".$cod_lingua."' />\n");
+  echo("                <input type=\"hidden\" name=\"tipo_usuario\"   value='".$tipo_usuario."' />\n");
+  echo("                <input type=\"hidden\" name=\"modo\"           value='".$modo."' />\n");
   echo("              </td>\n");
   echo("            </tr>\n");
   echo("          </table>\n");

@@ -43,6 +43,9 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
+
+  VerificaAutenticacaoAdministracao();
+
   include("../topo_tela_inicial.php");
 
   /* Inicio do JavaScript */
@@ -54,8 +57,6 @@
   /* Fim do JavaScript */
 
   include("../menu_principal_tela_inicial.php");
-
-  VerificaAutenticacaoAdministracao();
 
   $sock=Conectar("");
 
@@ -79,12 +80,12 @@
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   echo("<!-- Tabelao -->\n");
-  echo("<form name=linguas action=cadastrar_textos.php method=post>\n");
+  echo("<form name=\"linguas\" action=\"cadastrar_textos.php\" method=\"post\">\n");
   echo("<table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("<tr>\n");
   echo("<td><ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("<li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("<li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("</ul></td></tr>\n");
   echo("<tr><td valign=\"top\"><table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 
@@ -153,7 +154,10 @@
 
   echo("</select></td></tr>\n");
 
-  echo("<tr><td><input type=\"radio\" name=\"opcao\" value=\"E\" checked />Editar</td><td><input type=\"radio\" name=\"opcao\" value=\"V\" />Visualizar</td></tr>\n");
+  /* 9 (geral) - Editar */
+  echo("<tr><td><input type=\"radio\" name=\"opcao\" value=\"E\" checked />".RetornaFraseDaLista($lista_frases_geral, 9)."</td>\n");
+  /* 179 - Visualizar */
+  echo("<td><input type=\"radio\" name=\"opcao\" value=\"V\" />".RetornaFraseDaLista($lista_frases, 179)."</td></tr>\n");
 
   /* 73 - Ser� exibido o texto base (portugu�s), para preenchimento */
   echo("<tr><td colspan=2><font size=-3>* ".RetornaFraseDaLista($lista_frases,73)."</font></td></tr></table>\n");
