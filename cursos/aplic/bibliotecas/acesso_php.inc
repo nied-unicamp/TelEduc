@@ -56,7 +56,7 @@ function AcessoNegado()
   $sock=Conectar($sock);
   /* 1 - Erro de Acesso */
   /* 2 - Sinto muito, mas voc�n� tem acesso a esta �ea. */
-  echo("<HTML><BODY BGCOLOR=white><H1>TelEduc</H1><h2>".RetornaFrase($sock,1,-2)."</h2>".RetornaFrase($sock,2,-2));
+  echo("<html><body bgcolor=\"white\"><h1>TelEduc</h1><h2>".RetornaFrase($sock,1,-2)."</h2>".RetornaFrase($sock,2,-2));
   Desconectar($sock);
   die("");
 }
@@ -332,8 +332,8 @@ function VerificaAutenticacao($cod_curso)
 */
 function VerificaAutenticacaoAdministracao()
 {
-   $sock=Conectar("");
-  	
+  $sock=Conectar("");
+  
   if (!isset($_SESSION['login_usuario_s']))
   {
     header("Location:../pagina_inicial/autenticacao_cadastro.php");
@@ -344,7 +344,11 @@ function VerificaAutenticacaoAdministracao()
   {
     /* 4 - Autoriza�o necess�ia para entrar no Ambiente de Administra�o do TelEduc. */
     /* 23 - Voltar */
-    echo RetornaFrase($sock,4,-2).' <a href=# onclick=history.go(-1);>'.RetornaFrase($sock,23,-1).'</a>';
+    echo(RetornaFrase($sock,4,-2)." <a href=\"#\" onclick=\"history.go(-1);\">".RetornaFrase($sock,23,-1)."</a>\n");
+    echo("</td></tr>\n");
+    include("../rodape_tela_inicial.php");
+    echo("</body>\n");
+    echo("</html>\n");
     Desconectar($sock);
     exit;
   }
