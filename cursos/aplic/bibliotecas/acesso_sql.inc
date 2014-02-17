@@ -58,7 +58,7 @@ function EnviaEmailComErro($erro, $cod){
   $headers.= "Content-Type: text/html; charset=ISO-8859-1\n";
   $headers.= "Content-Transfer-Encoding: 7bit\n";
 
-  $destinatario = "Suporte TelEduc <curso@nied.unicamp.br>";
+  $destinatario = "Suporte TelEduc <equipe.teleduc@gmail.com>";
 
   $assunto = "[TelEduc Error] ".$cod;
 
