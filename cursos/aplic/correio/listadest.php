@@ -215,7 +215,7 @@ RetornaNomeUsuarioDeCodigo($sock, $codColaboradores[$i]['cod_usuario'],$cod_curs
   $checked ="";
   if(is_array($codGrupos) && ($cont > 0)){
 
-    /* 32 - Todos os alunos*/
+    /* 32 - Todos os grupos*/
     echo("                            <li>\n");
     echo("                              <input name=\"chkTodosG\" id=\"chkTodosG\" type=\"checkbox\" value=\"G*\" onclick=\"MarcaOuDesmarcaTodos('G');\" /> ".RetornaFraseDaLista($lista_frases, 32)." <span id=\"mostraG\" class=\"link\" style=ver:nao onclick=\"MostraEscondeUsers('G')\">[ + ]</span><br />\n");
     echo("                            </li>\n");

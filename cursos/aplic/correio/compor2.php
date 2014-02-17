@@ -165,14 +165,18 @@
 
   if($chkG){
     $numG = count($chkG);
-    $aux  =  $contDest;
     foreach($chkG as $inf){
+      $user = RetornaUsuariosGrupo($sock, $inf, $cod_curso);
+      $destsCorreio[$contDest]['nome'] = $user['nome'];
+      $destsCorreio[$contDest]['mail'] = $user['email'];
+      $destsCorreio[$contDest]['cod_usuario'] = $inf;
 
-    $listaCod[$contDest]['codDestino'] = $inf;
-    $listaCod[$contDest]['categDestino'] = 'g';
+      $listaCod[$contDest]['codDestino'] = $inf;
+      $listaCod[$contDest]['categDestino'] = 'g';
+      $contDest++;
     }
   }
-
+  
   InsereMsgCorreioListaDestinos($sock, $codMsg, $destsCorreio, $contDest, $cod_usuario, $listaCod, $cod_curso);
 	
   /* Se existem arquivos enviados via $_FILES (novos arquivos anexos)
@@ -293,9 +297,8 @@
         RemoveArquivo($nomearquivo);
       RemoveDiretorio($dir_temp_msg);
     }
-
   }
-
+  
   echo("    <script type=\"text/javascript\">\n");
   echo("      function esperaEFecha(){\n");
   echo("       window.setTimeout(\"this.close()\", 2000);\n");

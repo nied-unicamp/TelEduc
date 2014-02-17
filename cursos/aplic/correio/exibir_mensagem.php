@@ -124,6 +124,11 @@
   echo("      return(false);\n");
   echo("    }\n");
 
+  echo("      function AbreGrupo(id){\n");
+  echo("        window.open(\"../grupos/exibir_grupo.php?");
+  echo("cod_curso=".$cod_curso."&cod_grupo=\" + id, \"GrupoDisplay\",\"width=600,height=400,");
+  echo("top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");\n");
+  echo("      }\n\n");
 
   echo("    function ImprimirRelatorio(){ \n");
   echo("      if ((navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.indexOf('5.')>=0) || navigator.appName == 'Netscape')\n");
