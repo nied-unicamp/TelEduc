@@ -188,7 +188,7 @@
   PreparaBoldLink(RetornaFraseDaLista($lista_frases,5),"\"consultar_base.php\"","");
 
   /* 13 - Contato - NIED - Unicamp */
-  PreparaBoldLink(RetornaFraseDaLista($lista_frases,13),"\"mailto:curso@nied.unicamp.br\"","");
+  PreparaBoldLink(RetornaFraseDaLista($lista_frases,13),"\"mailto:equipe.teleduc@gmail.com\"","");
 
   echo("</ul>\n");
   echo("</td>\n");
