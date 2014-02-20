@@ -198,12 +198,21 @@
     }
 
     for($i = 0; $i < count($destsCorreio); $i++){
-      $vetorNomeAux[$i] = $destsCorreio[$i]['nome'];
+      $vetorNomeAux[$i] = RetornaGrupoComCodigo($sock, $destsCorreio[$i]['cod_usuario']);
       $vetorMailAux[$i] = $destsCorreio[$i]['mail'];
-    }
-
-    $mnomes = implode(',', $vetorNomeAux);
-    $memail = implode(',', $vetorMailAux);
+        
+      $quantos = count($destsCorreio)-1;
+        
+      if($i == $quantos){ //Verifica se é o último. Se for, tira a virgula
+        $virgula=" ";
+      }
+      else{
+        $virgula=",";
+      }
+      
+      $mnomes = implode(',', $vetorNomeAux).$virgula;
+      $memail .= implode(',', $vetorMailAux[$i]).$virgula;
+      }
 
     /* Obtem os arquivos contidos na pasta. */
 
@@ -298,7 +307,8 @@
       RemoveDiretorio($dir_temp_msg);
     }
   }
-  
+
+   
   echo("    <script type=\"text/javascript\">\n");
   echo("      function esperaEFecha(){\n");
   echo("       window.setTimeout(\"this.close()\", 2000);\n");
