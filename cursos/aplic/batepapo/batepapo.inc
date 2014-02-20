@@ -845,6 +845,28 @@ function RetornaSessoesDeUmAssunto($sock,$cod_assunto)
 }
 
 /*********************************************************************
+     RetornaListaApelidosOnlineDinamic - usado para atualizar a lista
+                                         de usuários do bate-papo
+     Entrada: $cod_curso   - Codigo do curso
+              $cod_sessao  - Codigo da sessao
+              $cod_usuario - Codigo do usuário atual para não incluir 
+                             na lista. 
+ */
+function RetornaListaApelidosOnlineDinamic($cod_curso, $cod_sessao, $cod_usuario) {
+
+  $objResponse = new xajaxResponse('ISO-8859-1');
+  $sock = Conectar($cod_curso);
+  
+  $lista_apelidos = RetornaListaApelidosOnline($sock, $cod_sessao);
+  
+  unset($lista_apelidos[$cod_usuario]);
+  Desconectar($sock);
+
+  $objResponse->addScriptCall("AtualizaLista", $lista_apelidos);
+  return $objResponse->getXML();
+}
+
+/*********************************************************************
      MudarStatusDinamic - Muda o status das sessï¿½es, dinamicamente
      Entrada: $cod_curso - codigo do curso
               $cod_sessao - array com o codigo das sessï¿½es

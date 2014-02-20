@@ -79,7 +79,7 @@
 
   echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("      var timeoutnick;\n");
-  echo("        timeoutnick=setTimeout(\"Recarrega()\", 1000)\n");
+  echo("      timeoutnick=setTimeout(\"Recarrega()\", 1000)\n");
 
   echo("      function Iniciar() \n");
   echo("      { \n");

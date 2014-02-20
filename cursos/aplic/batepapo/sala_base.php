@@ -44,6 +44,13 @@
   include($bibliotecas."geral.inc");
   include("batepapo.inc");
 
+  require_once("../xajax_0.2.4/xajax.inc.php");
+  // Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
+  $objAjax->registerFunction("RetornaListaApelidosOnlineDinamic");
+  $objAjax->processRequests();
+
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=1;
@@ -102,6 +109,8 @@
   echo("      var ScrollDownIniciado = false;\n");
   echo("      var step = 2;\n");
   echo("      var y = 0;\n");
+  echo("      var intervalSelect;\n");
+  echo("      intervalSelect = setInterval(\"xajax_RetornaListaApelidosOnlineDinamic(".$cod_curso.", ".$cod_sessao.", ".$cod_usuario.")\", 1000);\n");
 
   echo("      function Iniciar() \n");
   echo("      { \n");
@@ -128,13 +137,39 @@
   echo("        clearTimeout(timeout);\n");
   echo("      }\n");
   
-  echo("      function AtualizaLista()\n");
+  echo("      function AtualizaLista(lista_apelidos)\n");
   echo("      {\n");
-  echo("        var item='';\n");
-  echo("        if (document.formBaixo.scrollbox.checked)\n");
-  echo("          item='&scrollbox=sim';\n");
-  echo("        document.location='sala_base.php?cod_curso=".$cod_curso."'+item;\n");
-  echo("        return false;");
+  /* 20 - Todos */
+  echo("        var valorDefault = '".RetornaFraseDaLista($lista_frases,20)."';\n");
+  echo("        var valorAnterior = valorDefault;\n");
+  echo("        var select = document.getElementById('select_cod_usuario_r');\n");
+  
+  // Pega o valor anteriormente selecionado.
+  echo("        var apelidoOption = select.options[select.selectedIndex];\n");
+  echo("        if (apelidoOption != null)\n");
+  echo("          valorAnterior = apelidoOption.value;\n");
+  
+  // Limpa as opcções do select.
+  echo("        select.options.length = 0;\n");
+  
+  echo("        apelidoOption = document.createElement('option');\n");
+
+  echo("        apelidoOption.innerHTML = valorDefault;\n");
+  echo("        select.appendChild(apelidoOption);\n");
+
+  // Coloca os apelidos vindos do ajax.
+  echo("        if (typeof(lista_apelidos) == 'object') {\n");
+  echo("          for (var cod_usu in lista_apelidos) {\n");
+  echo("            if (typeof(lista_apelidos[cod_usu]) == 'string') {\n");
+  echo("              apelidoOption = document.createElement('option');\n");
+  echo("              apelidoOption.setAttribute('value', cod_usu);\n");
+  echo("              apelidoOption.innerHTML = lista_apelidos[cod_usu];\n");
+  echo("              select.appendChild(apelidoOption);\n");
+  echo("            }\n");
+  echo("          }\n");
+  echo("        }\n");
+  
+  echo("        select.value = valorAnterior;\n");
   echo("      }\n");
 
   echo("      function Valida()\n");
@@ -168,6 +203,9 @@
   echo("      }\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript("../xajax_0.2.4/");
+
   echo("  </head>\n");
 
   echo("    <body onLoad=\"Iniciar();\">\n");
@@ -180,15 +218,6 @@
 
   /* <!----------------- Tabelao -----------------> */
   echo("        <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
-  echo("          <tr>\n");
-//   echo("          <td valign=\"top\">\n");
-// 
-//   echo("            <ul class=\"btAuxTabs\">\n");
-//   /* 22 - Atualizar lista de pessoas */
-//   echo("              <li><span onClick=return(AtualizaLista()); class=textsmall>".RetornaFraseDaLista($lista_frases,22)."</span></li>\n");
-//   echo("            </ul>\n");
-//   echo("          </td>\n");
-  echo("        </tr>\n");
   echo("        <tr>\n");
   echo("          <td valign=\"top\">\n");
   echo("            <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
@@ -211,7 +240,7 @@
   echo("                  </select></td>\n");
 
   echo("                <td width=\"15%\">\n");
-   echo("                  <select class=\"input\" name=\"cod_usuario_r\">\n");
+   echo("                  <select id=\"select_cod_usuario_r\" class=\"input\" name=\"cod_usuario_r\">\n");
    $selected="";
    if (!isset($cod_usuario_r))
      $selected="selected";

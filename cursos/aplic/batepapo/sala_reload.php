@@ -56,7 +56,7 @@
 // Lista as mensagem do sistema Imprimindo-as
 // N�O RETIRE ESSAS LINHAS DO TEMPLATE !!!
 
-  var timeout = setTimeout("javascript:delayReload();", "5000"); 
+  var timeout = setTimeout("javascript:delayReload();", "5000");
 
   function delayReload() {
     if (navigator.userAgent.indexOf("MSIE") != "-1"){
