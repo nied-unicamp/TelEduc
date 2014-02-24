@@ -6,14 +6,6 @@
   $cod_ferramenta=24;
 
   include("../topo_tela.php");
-  include("../menu_principal.php");
-
-  $enquete = getEnquete($sock, $idEnquete);
-  $status_enquete = getStatusEnquete($sock, $enquete);
-  $input_type = getInputType($enquete['num_escolhas']);
-  $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* INICIO - JavaScript */
   echo("<script type=\"text/javascript\">\n\n");
@@ -30,6 +22,15 @@
   echo("  }\n\n");
   echo("</script>\n\n");
   /* FIM - JavaScript */
+
+  include("../menu_principal.php");
+
+  $enquete = getEnquete($sock, $idEnquete);
+  $status_enquete = getStatusEnquete($sock, $enquete);
+  $input_type = getInputType($enquete['num_escolhas']);
+  $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* SE tem permiss� para votar e a enquete est�em andamento, pode acessar */
   if (($vota = votaEnquete($sock, $ator, $enquete)) && ((strcmp($status_enquete, "ANDAMENTO") == 0)))
@@ -79,15 +80,13 @@
     /* 23 - Voltar */
     echo("            <input type=\"submit\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral, 23)."'>\n");
     echo("          </form>\n");
-    echo("        </td>\n");
-    echo("      </tr>\n"); 
-
-    include("../tela2.php");
-
-    echo("  </body>\n");
-    echo("</html>\n");
   }
 
+  echo("        </td>\n");
+  echo("      </tr>\n"); 
+  include("../tela2.php");
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
   exit;
 ?>

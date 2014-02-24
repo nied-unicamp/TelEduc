@@ -57,7 +57,7 @@
 
   if ($ecoordenador = ECoordenador($sock,$cod_curso,$cod_usuario))
   {
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
     echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
     echo("      var versao = (navigator.appVersion.substring(0,3));\n");
@@ -116,7 +116,7 @@
     echo("        moveLayerTo(cod_layer, Xpos, Ypos + AjustePosMenuIE());\n");
     echo("        showLayer(cod_layer);\n");
     echo("      }\n\n");
-  	
+
     echo("      function verifica_intervalos()\n");
     echo("      {\n");
     echo("        var i_ini = document.altera_dados.inscricao_inicio;\n");
@@ -188,7 +188,6 @@
   echo("        startList();\n");
   echo("      }\n\n");
   echo("    </script>\n");
-
 
   include("../menu_principal.php");
 

@@ -47,12 +47,9 @@
   $cod_ferramenta=24;
 
   include("../topo_tela.php");
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* INICIO - JavaScript */
-  echo("<script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n\n");
   echo("  function Iniciar()\n");
   echo("  {\n");
   echo("    startList();\n");
@@ -67,40 +64,43 @@
   echo("</script>\n\n");
   /* FIM - JavaScript */
 
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
   if ($tela_formador)
   {
     if (deleteEnquete($sock, $idEnquete))
     {
       $atualizacao = "true";
       Desconectar($sock);
-      echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
       exit;
     }
     else
     {
       $atualizacao = "true";
       Desconectar($sock);
-      echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
       exit;
     }
   }
   else
-  {  
+  {
     /* 1 - Enquete */
-    echo("          <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("          <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 37 - �ea restrita ao formador. */
-    echo("          <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,37)."</b><br>\n");
+    echo("          <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,37)."</b><br>\n");
 
     /* 23 - Voltar (gen) */
-    echo("          <form><input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
-    echo("        </td>\n");
-    echo("      </tr>\n"); 
-
-    include("../tela2.php");
-    echo("  </body>\n");
-    echo("</html>\n");
+    echo("          <form><input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
   }
 
+  echo("        </td>\n");
+  echo("      </tr>\n"); 
+  include("../tela2.php");
+  echo("  </body>\n");
+  echo("</html>\n");
   Desconectar($sock);
   exit;
 ?>

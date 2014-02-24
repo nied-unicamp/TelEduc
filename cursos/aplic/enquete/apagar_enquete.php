@@ -47,16 +47,13 @@
   $cod_ferramenta=24;
 
   include("../topo_tela.php");
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* INICIO - JavaScript */
-  echo("<script type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  echo("<script type=\"text/javascript\" language=\"javascript\">\n\n");
   echo("  function Iniciar()\n");
   echo("  {\n");
   echo("    startList();\n");
-  echo("  }\n"); 
+  echo("  }\n");
 
   /* Volta a Pagina de edicao desta Enquete */
   echo("  function VoltaPaginaPrincipal(atualizacao)\n");
@@ -67,40 +64,44 @@
   echo("</script>\n\n");
   /* FIM - JavaScript */
 
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
   if ($tela_formador)
-  { 
+  {
     if (apagarEnquete($sock, $idEnquete))
     {
         $atualizacao="true";
         Desconectar($sock);
-        echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+        echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
         exit;
     }
     else
     {
         $atualizacao="false";
         Desconectar($sock);
-        echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
+        echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."');</script>");
         exit;
     }
   }
   else
-  {  
-     /* 1 - Enquete */
+  {
+    /* 1 - Enquete */
     /* 37 - Area restrita ao formador. */
     echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,37)."</h4>\n");
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
     /* 23 - Voltar (gen) */
-    echo("          <form><input type=button class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
-    echo("        </td>\n");
-    echo("      </tr>\n"); 
-
-    include("../tela2.php");
-    echo("  </body>\n");
-    echo("</html>\n");
+    echo("          <form><input type=\"button\" class=\"input\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
   }
+
+  echo("        </td>\n");
+  echo("      </tr>\n");
+  include("../tela2.php");
+  echo("  </body>\n");
+  echo("</html>\n");
 
   Desconectar($sock);
   exit;

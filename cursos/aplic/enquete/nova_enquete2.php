@@ -48,11 +48,6 @@
 
   include("../topo_tela.php");
 
-  include("../menu_principal.php");
-
-  $data_inicio=DataHora2Unixtime($data_inicio." ".$hora_inicio.":00");
-  $data_fim=DataHora2Unixtime($data_fim." ".$hora_fim.":00");
-
   /* INICIO - JavaScript */
   echo("<script type=\"text/javascript\" language=\"javascript\">\n\n");
   echo("  function Iniciar()\n");
@@ -68,6 +63,11 @@
   echo("  }\n\n");
   echo("</script>\n\n");
   /* FIM - JavaScript */
+
+  include("../menu_principal.php");
+
+  $data_inicio=DataHora2Unixtime($data_inicio." ".$hora_inicio.":00");
+  $data_fim=DataHora2Unixtime($data_fim." ".$hora_fim.":00");
 
   # FAVZ
   for ($i = 0; $i <= 3; $i++) {

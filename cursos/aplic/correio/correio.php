@@ -49,12 +49,12 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
   $objAjax->register(XAJAX_FUNCTION,"trocaEstadoMsg");
   $objAjax->register(XAJAX_FUNCTION,"VerificaMsgNova");
   $objAjax->register(XAJAX_FUNCTION,"RemoveLinkSimbolico");
-  $objAjax->processRequest();
 
   $cod_ferramenta = 11;
   $cod_ferramenta_ajuda = 11;
@@ -131,9 +131,6 @@
   if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
     $pagAtual =  1;
   else $pagAtual = min($pagAtual, $totalPag);
-
-  $objAjax->printJavascript('../xajax_0.2.4');
-  $objAjax->setCharEncoding('ISO-8859-1');
 
   if($totalMsg){
     echo("    <script type=\"text/javascript\" src=\"../js-css/sorttablePaginado.js\"></script>\n");

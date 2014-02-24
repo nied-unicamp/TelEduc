@@ -49,10 +49,10 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"SugerirLoginDinamic");
-  $objAjax->processRequest();
 
   switch($tipo_usuario)
   {
@@ -368,8 +368,6 @@
   echo("    }\n");
 
   echo("    </script>\n\n");
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

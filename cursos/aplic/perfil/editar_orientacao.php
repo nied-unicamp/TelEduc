@@ -64,7 +64,6 @@
   
   include("../menu_principal.php");
   
-  
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
  
   if (!$eformador)

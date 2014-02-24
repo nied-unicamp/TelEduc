@@ -49,9 +49,8 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
-
-  //$objAjax->debugOn();
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
@@ -75,11 +74,6 @@
   $objAjax->register(XAJAX_FUNCTION,"AlteraStatusExercicioDinamic");
   $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
-  
-
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -999,8 +993,6 @@
   echo("    }\n");
 
   echo("    </script>\n\n");
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

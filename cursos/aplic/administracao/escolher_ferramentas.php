@@ -44,7 +44,6 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
 
-
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 4;
@@ -66,7 +65,6 @@
   echo("       startList();\n");
   echo("     }\n\n");
   echo("    </script>\n");
-
 
   include("../menu_principal.php");
 

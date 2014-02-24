@@ -166,7 +166,6 @@
   
     /**************** ajax ****************/
 
-  $objMaterial->printJavascript();
   echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("        function redirecionaDownloadAnexos(url){\n");
   echo("            window.location=url;\n");
@@ -177,10 +176,10 @@
     /**************** ajax ****************/
 
     /* Fun��es JavaScript */
-    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\" src='../bibliotecas/dhtmllib.js'></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\" src='../js-css/tablednd.js'></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("      var qtosChecados = 0;\n");
     echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
     echo("      var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
@@ -523,7 +522,7 @@
     echo("        return false;\n");
     echo("      }\n\n");
 
-    if(($cod_ferramenta==3) && ($AcessoAvaliacaoM))    {
+    if(($cod_ferramenta==3) && ($AcessoAvaliacaoM)) {
       echo("      function VerAvaliacao(id) {\n");
       echo("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&VeioDaAtividade=1&origem=../material/material&cod_topico=".$cod_topico_raiz."&cod_avaliacao='+id,'VerAvaliacao','width=450,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
       echo("        return(false);\n");
@@ -532,8 +531,8 @@
     echo("\n");
   }//if = eh formador
   else{//n�o � formador
-  	echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("      function Iniciar(){\n");
     echo("        startList();\n");
     echo("      }\n");

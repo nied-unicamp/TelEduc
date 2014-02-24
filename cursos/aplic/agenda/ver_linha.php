@@ -47,23 +47,21 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
-   $objAjax = new xajax();
-   $objAjax->configure("characterEncoding", 'ISO-8859-1');
-   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-   $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
-   $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
-   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
-   $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
-   $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
-   $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
-   $objAjax->register(XAJAX_FUNCTION,"SelecionarEntradaDinamic");
-   $objAjax->register(XAJAX_FUNCTION,"RetirarEntradaDinamic");
-   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
-   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-   $objAjax->processRequest();
+  $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"SelecionarEntradaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetirarEntradaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
 
   $sock=Conectar("");
   $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
@@ -220,7 +218,6 @@
   echo("      }\n\n");
   
   echo("    </script>\n\n");
-  $objAjax->printJavascript();
   echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
 
   include("../menu_principal.php");

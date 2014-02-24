@@ -43,6 +43,7 @@
 /* ******************************************************************* */
   $bibliotecas="../bibliotecas/";
   include("menu.inc");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
   if (!isset($cod_curso)){
@@ -158,5 +159,18 @@
     foreach ($codigos_js as $js){
       echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
     }
+
+    // Instancia, se não estiver instanciado ainda, um objeto ajax.
+    if (!isset($objAjax) || !($objAjax instanceof xajax)) {
+      // Estancia o objeto XAJAX
+      $objAjax = new xajax();
+      $objAjax->configure("characterEncoding", 'ISO-8859-1');
+      $objAjax->setFlag("decodeUTF8Input",true);
+      $objAjax->configure('javascript URI', "../xajax_0.5");
+    }
+    // Registra funções para uso de menu_principal.php
+    $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+    $objAjax->processRequest();
+    $objAjax->printJavascript();
 
   }

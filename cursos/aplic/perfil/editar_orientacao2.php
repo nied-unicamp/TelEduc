@@ -74,7 +74,7 @@
     /* 1 - Perfil */
     $cabecalho = "<h4>".RetornaFraseDaLista($lista_frases, 1);
     /* 130 - �ea restrita a formadores */
-    $cabecalho .= "  <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases, 130)."</h4>";
+    $cabecalho .= "  <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases, 130)."</h4>";
     echo("          ".$cabecalho);
     echo("        </td>\n");
     echo("      </tr>\n");

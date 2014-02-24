@@ -47,13 +47,12 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMudarComp = new xajax();
-  $objMudarComp->configure("characterEncoding", 'ISO-8859-1');
-  $objMudarComp->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objMudarComp->register(XAJAX_FUNCTION,"ExcluirComentDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMudarComp->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirComentDinamic");
 
   $cod_ferramenta = 14;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -226,8 +225,6 @@
   echo("      }\n\n");
 
   echo("    </script>\n");
-
-  $objMudarComp->printJavascript();
 
   include("../menu_principal.php");
 

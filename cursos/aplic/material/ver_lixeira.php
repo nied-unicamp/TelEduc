@@ -52,7 +52,7 @@
 
   if ($cod_ferramenta==3)
     include("avaliacoes_material.inc");
-    
+  
   /**************** ajax ****************/
   
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
@@ -64,8 +64,6 @@
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
   $objMaterial->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
   $objMaterial->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
   
   /************* fim ajax ****************/
   
@@ -114,8 +112,8 @@
 
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");
@@ -147,11 +145,11 @@
   echo("         window.open(end,'MaterialURL','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
   echo("      }\n");
 
-  echo("  function WindowOpenVer(end)\n");
-  echo("  {\n");
-  echo("    popup = window.open(end,'MaterialVer','top=50,left=100,width=600,height=400,resizable=yes,menubar=yes,status=yes,toolbar=yes,scrollbars=yes');\n");
-  echo("    popup.focus();\n");
-  echo("  }\n\n");
+  echo("      function WindowOpenVer(end)\n");
+  echo("      {\n");
+  echo("        popup = window.open(end,'MaterialVer','top=50,left=100,width=600,height=400,resizable=yes,menubar=yes,status=yes,toolbar=yes,scrollbars=yes');\n");
+  echo("        popup.focus();\n");
+  echo("      }\n\n");
 
   echo("      function Iniciar(){\n");
   echo("        startList();\n");
@@ -160,12 +158,6 @@
   echo("    </script>\n");
 
   include("../menu_principal.php");
-
-  /**************** ajax ****************/
-
-  $objMaterial->printJavascript();
-
-  /**************** ajax ****************/
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
     /* Pagina Principal */

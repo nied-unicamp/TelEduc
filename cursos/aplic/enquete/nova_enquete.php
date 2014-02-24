@@ -51,9 +51,6 @@
   $categ = "N";
 
   include("../topo_tela.php");
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
@@ -306,6 +303,10 @@
   echo("\n</script>\n\n");
   /* fim - JavaScript */
   /*********************************************************/
+
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if ($tela_formador)
   {

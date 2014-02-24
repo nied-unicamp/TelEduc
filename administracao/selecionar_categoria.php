@@ -50,6 +50,7 @@
 
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
   $objAjax->register(XAJAX_FUNCTION,"TrocaCategoriaDinamic");
   //Manda o xajax executar os pedidos acima.

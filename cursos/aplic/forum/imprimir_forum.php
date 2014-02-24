@@ -45,9 +45,21 @@
   include("forum.inc");
   include("avaliacoes_forum.inc");
   include("../menu.inc");
-  
+
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
-  
+
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
+
+  $cod_ferramenta = 9;
+  $cod_ferramenta_ajuda = $cod_ferramenta;
+
   /* Ajustes necess�rios para independer do topo_tela.php */
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
@@ -61,18 +73,13 @@
   
   $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock=Conectar("");
-  
-  /* Desnecessário
+
   $lingua_curso = RetornaLinguaCurso($sock,$cod_curso);
 
   // Se diferente, ent�o l�ngua do curso � diferente da l�ngua do usu�rio, atualiza a lista de frases
   if($lingua_curso != $_SESSION['cod_lingua_s']) {
     MudancaDeLingua($sock, $lingua_curso);
   }
-  */
-
-  $cod_ferramenta = 9;
-  $cod_ferramenta_ajuda = $cod_ferramenta;
 
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
 
@@ -109,12 +116,6 @@
   VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta);
   MarcaAcesso($sock,$cod_usuario,$cod_ferramenta);
 
-  /* Desnecessário
-  if (!isset($cod_ferramenta))
-    $cod_ferramenta=1; // Agenda
-  */
-  /* Fim dos Ajustes necess�rios para independer do topo_tela.php */
-
   echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
   echo("<html lang=\"pt\">\n"); 
   echo("  <head>\n");
@@ -131,18 +132,13 @@
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmlgoodies_calendar.js\"></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
-  echo("	<style>body{padding-top:20px;}</style>");
-  
-  //Estancia o objeto XAJAX
-  $objAjax = new xajax();
-  $objAjax->configure("characterEncoding", 'ISO-8859-1');
-  $objAjax->configure('javascript URI', "../xajax_0.5");
-  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
-  $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
+  echo("    <style>body{padding-top:20px;}</style>");
   
   //Manda o xajax executar os pedidos acima.
   $objAjax->processRequest();
+  $objAjax->printJavascript();
+
+  /* Fim dos Ajustes necess�rios para independer do topo_tela.php */
 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
@@ -764,8 +760,6 @@
   }
 
   echo("    </script>\n\n");
-
-  $objAjax->printJavascript();
 
   //include("../menu_principal.php");
   echo("<body onload=\"ExibirTodasMsgs(); self.print();\">");

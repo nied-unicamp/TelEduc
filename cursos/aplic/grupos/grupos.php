@@ -51,6 +51,7 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
 //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MostraGrupoDinamic");
@@ -59,9 +60,6 @@
   $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"ExcluirComponentesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"VerificaNovoTituloDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta=12;
   $cod_ferramenta_ajuda=$cod_ferramenta;
@@ -85,8 +83,6 @@
   FUN�ES JAVASCRIPT
   ==================
   */
-  
-  
 
   echo("    <script type=\"text/javascript\">\n");
   
@@ -154,7 +150,7 @@
   {
     if (EFormador($sock,$cod_curso,$cod_usuario))
     {
-    echo("        lay_conf = getLayer('layer_conf');\n");
+      echo("        lay_conf = getLayer('layer_conf');\n");
     }
     echo("        lay_novo = getLayer('layer_novo');\n");
   }
@@ -554,8 +550,6 @@
   echo("}");
 
   echo("    </script>\n");
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

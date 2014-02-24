@@ -62,28 +62,27 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objMaterial->register(XAJAX_FUNCTION,"MudarCompartilhamento");
-  $objMaterial->register(XAJAX_FUNCTION,"EditarTitulo");
-  $objMaterial->register(XAJAX_FUNCTION,"EditarTexto");
-  $objMaterial->register(XAJAX_FUNCTION,"InsereEnderecoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"InsereAvaliacaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"ApagaAvaliacaoPortfolioDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"AbreEdicao");
-  $objMaterial->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"ExcluirArquivo");
-  $objMaterial->register(XAJAX_FUNCTION,"ExcluirEndereco");
-  $objMaterial->register(XAJAX_FUNCTION,"DecodificaString");
-  $objMaterial->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MoverItensDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"InsereEnderecoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"InsereAvaliacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ApagaAvaliacaoPortfolioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirEndereco");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
 
   /**************** ajax ****************/
 
@@ -1115,12 +1114,6 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   }
 
   echo("    </script>\n");
-
-  /**************** ajax ****************/
-
-  $objMaterial->printJavascript();
-
-  /**************** ajax ****************/
 
   include("../menu_principal.php");
 

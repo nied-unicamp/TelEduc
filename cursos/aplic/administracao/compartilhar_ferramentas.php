@@ -49,16 +49,14 @@
   
   /** AJAX **/
   // Estancia Objeto XAJAX
-  $objFerramenta = new xajax();
-  $objFerramenta->configure("characterEncoding", 'ISO-8859-1');
-  $objFerramenta->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das funções em PHP que voc� quer chamar atrav�s do xajax
-  $objFerramenta->register(XAJAX_FUNCTION,"AlterarFerramCompartilhadasDinamic");
-  $objFerramenta->register(XAJAX_FUNCTION,"AlteraTodasFerramCompartilhadasDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objFerramenta->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"AlterarFerramCompartilhadasDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlteraTodasFerramCompartilhadasDinamic");
 
-  
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 17;
@@ -128,8 +126,6 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-
-  $objFerramenta->printJavascript();
 
   include("../menu_principal.php");
 

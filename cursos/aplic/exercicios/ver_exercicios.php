@@ -37,8 +37,8 @@
  */
 
 /*==========================================================
- ARQUIVO : cursos/aplic/exercicios/ver_exercicios.php
- ========================================================== */
+  ARQUIVO : cursos/aplic/exercicios/ver_exercicios.php
+  ========================================================== */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
@@ -49,11 +49,10 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $visualizar = $_GET['visualizar'];
@@ -189,8 +188,6 @@
   echo("  </script>\n\n");
   /* fim - JavaScript */
   /*********************************************************/
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

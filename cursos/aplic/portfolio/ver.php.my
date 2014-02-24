@@ -50,6 +50,7 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
@@ -70,10 +71,6 @@
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
   $objAjax->register(XAJAX_FUNCTION,"AssociaAvaliacaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DesassociaAvaliacaoDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
-
 
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
@@ -105,7 +102,7 @@
 
   $sock = Conectar($cod_curso);
   $dir_item_temp=CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
-  
+
   echo("    <script type=\"text/javascript\">");
   echo("      function WindowOpenVer(id)\n");
   echo("      {\n");
@@ -168,10 +165,8 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript();
   echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
-  
-  
+
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -610,11 +605,11 @@
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }
-  
+
 
   $lista_arq=RetornaArquivosMaterialVer($cod_curso, $dir_item_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
-  
+
   if (($num_arq_vis>0)||($dono_portfolio)){
     echo("                  <tr class=\"head\">\n");
     /* 71 - Arquivos */
@@ -799,7 +794,7 @@
     {
       foreach ($lista_url as $cod => $linha)
       {
-  
+
         $linha['endereco'] = RetornaURLValida($linha['endereco']);
 
         echo("                      <span id='end_".$linha['cod_endereco']."'>\n");
@@ -894,7 +889,7 @@
       // 166 - Data de término
       echo("                            <td width=\"20%\">".RetornaFraseDaLista($lista_frases, 166)."</td>\n");
       echo("                          </tr>\n");
-  
+
       // esta var indica se precisamos colocar uma legenda explicando o que eh o termo "associado" na frente da avaliacao 
       $legenda_associado = false;
 
@@ -941,7 +936,7 @@
         echo("                          <tr>\n");
         echo("                            <td width=\"1%\">".$radio."</td>\n");
         echo("                            <td align=\"left\"><span class=\"link\" onclick=\"WindowOpenVerAvaliacao(".$linha['cod_avaliacao'].");EscondeLayers();return(false);\">".$atividade."</span>".$assoc."</td>\n");
-    
+
         if (!strcmp($tipo_portfolio,'I')){
           // 161 - Individual
           echo("                            <td align=\"center\">".RetornaFraseDaLista($lista_frases, 161)."<br /></td>\n");
@@ -977,8 +972,6 @@
   echo("          </table>\n"); //TabExterna
   echo("        </td>\n");
   echo("      </tr>\n");
-  
- 
 
   include("../tela2.php");
   include("layer.php");

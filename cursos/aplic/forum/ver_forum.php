@@ -50,13 +50,11 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
@@ -703,8 +701,6 @@
   }
 
   echo("    </script>\n\n");
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

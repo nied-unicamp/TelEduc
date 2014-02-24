@@ -48,6 +48,7 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
@@ -55,8 +56,6 @@
   $objAjax->register(XAJAX_FUNCTION,"ApagarAvalicaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostrarParticipacoesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"GravarExpressaoDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -1140,7 +1139,8 @@
   echo("    </script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
 
-  if (!$SalvarEmArquivo) $objAjax->printJavascript();
+  $sock = MudarDB($sock, $cod_curso);
+  include("../menu_principal.php");
 
   echo("    <form name=\"frmAvaliacao\" method=\"get\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
@@ -1149,9 +1149,6 @@
   // tela_avaliacao eh a variavel que indica se esta tela deve mostrar avaliacoes 'P'assadas, 'A'tuais ou 'F'uturas
   echo("      <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\">\n");
   echo("    </form>\n");
-
-  $sock = MudarDB($sock, $cod_curso);
-  include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 

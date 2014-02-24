@@ -59,9 +59,6 @@ $objAjax->register(XAJAX_FUNCTION,"EditarComentarioQuestaoDissDinamic");
 $objAjax->register(XAJAX_FUNCTION,"AtualizaNotaDinamicDiss");
 $objAjax->register(XAJAX_FUNCTION,"VerificaEntregaDinamic");
 
-//Manda o xajax executar os pedidos acima.
-$objAjax->processRequest();
-
 // Descobre os diretorios de arquivo, para os portfolios com anexo
 $sock = Conectar("");
 $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
@@ -313,9 +310,6 @@ if($ehFormador){
   echo("  </script>\n\n");
   /* fim - JavaScript */
   /*********************************************************/
-
-  $objAjax->printJavascript();
-
 
   include("../menu_principal.php");
 

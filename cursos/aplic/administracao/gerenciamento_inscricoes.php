@@ -59,19 +59,17 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objMaterial->register(XAJAX_FUNCTION,"AtivarDesativarPortDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"PaginacaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MudaGuiaDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MudaDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"Paginacao");
-  $objMaterial->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
-  
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"AtivarDesativarPortDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaGuiaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"Paginacao");
+  $objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
 
   $cod_ferramenta       = 0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -170,8 +168,6 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-
-  $objMaterial->printJavascript();
 
   include("../menu_principal.php");
 

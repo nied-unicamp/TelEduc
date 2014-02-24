@@ -49,11 +49,10 @@
   //Instancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->register(XAJAX_FUNCTION,"ListaUsuariosPaginaDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -84,8 +83,6 @@
   $total_usuarios = RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
 
   /*Funcao JavaScript*/
-  $objAjax->printJavascript();
-  
   echo("    <script type=\"text/javascript\">\n\n");
 
   echo("      var numLogins = 5;\n");

@@ -57,12 +57,12 @@
   ==================
   */
 
-  echo("  <script type=\"text/javascript\" language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\" src=../bibliotecas/dhtmllib.js></script>\n");
 
   /* AJAX para o calend�rio */
   //echo("<script src='../bibliotecas/ajax.js'></script>\n");
 
-  echo("  <script type=\"text/javascript\" language=JavaScript>\n\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\">\n\n");
 
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var versao = (navigator.appVersion.substring(0,3));\n");

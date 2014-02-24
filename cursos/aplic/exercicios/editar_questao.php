@@ -49,6 +49,7 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
@@ -76,10 +77,6 @@
   $objAjax->register(XAJAX_FUNCTION,"MudaTipoQuestaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
-  
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
-
 
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -136,13 +133,13 @@
 
   /*********************************************************/
   /* inicio - JavaScript */
-  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\" src='../js-css/tablednd.js'></script>\n");
   echo("  <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("  <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-  echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"micoxUpload2.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\" src=\"micoxUpload2.js\"></script>\n");
 
-  echo("  <script  type=\"text/javascript\" language=\"JavaScript\">\n\n");
+  echo("  <script  type=\"text/javascript\" language=\"javascript\">\n\n");
 
   if($tp_questao == 'O' || $tp_questao == 'M'){
     echo("    var posiAlt = new Array();\n");
@@ -1556,7 +1553,6 @@
   echo("        }\n");
   echo("      }\n\n");
   echo("    </script>\n\n");
-  $objAjax->printJavascript();
   /* fim - JavaScript */
   /*********************************************************/
 

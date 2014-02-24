@@ -47,25 +47,23 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   // Estancia o objeto XAJAX
-  $objMudarComp = new xajax();
-  $objMudarComp->configure("characterEncoding", 'ISO-8859-1');
-  $objMudarComp->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
-  $objMudarComp->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
-  $objMudarComp->register(XAJAX_FUNCTION,"MoverItensDinamic");
-  $objMudarComp->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
-  $objMudarComp->register(XAJAX_FUNCTION,"AtualizaPosicoes");
-  $objMudarComp->register(XAJAX_FUNCTION,"DecodificaString");
-  $objMudarComp->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
-  $objMudarComp->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
-  $objMudarComp->register(XAJAX_FUNCTION,"CriaZipDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaPosicoes");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CriaZipDinamic");
   
-  // Manda o xajax executar os pedidos acima.
-  $objMudarComp->processRequests();
   /* Necess?io para a lixeira. */
   session_register("cod_topico_s");
   unset($cod_topico_s);
-
 
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
@@ -89,7 +87,6 @@
 
   $eformador = EFormador($sock,$cod_curso,$cod_usuario);
   $visitante = EVisitante($sock, $cod_curso, $cod_usuario);
-  
   
   // cria o diretorio temporario da ferramenta
   $dir_tmp_ferramenta = $diretorio_arquivos_dinamic.'/'.$cod_curso.'/portfolio/tmp';
@@ -162,7 +159,7 @@
   $ferramenta_grupos_s = StatusFerramentaGrupos ($sock);
   
   if ($eformador){
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("      function redirecionaDownloadAnexos(url){\n");
     echo("        window.location=url;\n");
     echo("      }\n");
@@ -548,7 +545,6 @@
   echo("    </script>\n");
   echo("    <script type='text/javascript' src='../js-css/tablednd.js'></script>\n");
 
-  $objMudarComp->printJavascript();
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

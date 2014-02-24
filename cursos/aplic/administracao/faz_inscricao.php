@@ -44,16 +44,6 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
 
-  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
-
-  //Estancia o objeto XAJAX
-  $objAjax = new xajax();
-  $objAjax->configure("characterEncoding", 'ISO-8859-1');
-  $objAjax->configure('javascript URI', "../xajax_0.5");
-  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-
-  $objAjax->processRequest();
-
   $cod_ferramenta = 0;
 
   include("../topo_tela.php");
@@ -187,7 +177,6 @@
 
     echo("    </script>\n\n");
 
-    $objAjax->printJavascript();
     include("../menu_principal.php");
 
     echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

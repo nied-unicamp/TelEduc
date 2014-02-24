@@ -52,13 +52,12 @@
   
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
-  $objPerguntas = new xajax();
-  $objPerguntas->configure("characterEncoding", 'ISO-8859-1');
-  $objPerguntas->configure('javascript URI', "../xajax_0.5");
-  $objPerguntas->register(XAJAX_FUNCTION,"EditarTexto");
-//  $objPerguntas->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
-  $objPerguntas->processRequests();
-  
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+//  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
   
   include("../topo_tela.php");
   
@@ -373,8 +372,6 @@
   echo("  }\n");
 
   echo("</script>\n\n");
-
-  $objPerguntas->printJavascript();
 
   include("../menu_principal.php");
   $sock = MudarDB($sock, $cod_curso_origem);

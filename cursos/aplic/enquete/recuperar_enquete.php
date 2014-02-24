@@ -47,60 +47,63 @@
   $cod_ferramenta=24;
 
   include("../topo_tela.php");
+
+  if ($tela_formador)
+  {
+    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("      function Iniciar()\n");
+    echo("      {\n");
+    echo("        startList();\n");
+    echo("      }\n");
+
+    echo("      function VoltaPaginaPrincipal(atualizacao,categ)\n");
+    echo("      {\n");
+    echo("        if(categ != '')\n");
+    echo("          document.location.href='enquete.php?cod_curso=".$cod_curso."&categ='+categ+'&acao=recuperarEnquete&atualizacao='+atualizacao;\n");
+    echo("        else\n");
+    echo("          document.location.href='enquete.php?cod_curso=".$cod_curso."&acao=recuperarEnquete&atualizacao='+atualizacao;\n");
+    echo("        return(true);\n");
+    echo("      }\n\n");
+    echo("    </script>\n");
+  }
+
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   if ($tela_formador)
-  { 
+  {
     /* 1 - Enquete */
     /* 106 - Recuperar Enquete */
-
-    echo("            <script type=\"text/javascript\" language=\"JavaScript\">\n");
-    echo("              function Iniciar()\n");
-    echo("              {\n");
-    echo("                startList();\n");
-    echo("              }\n");
-
-    echo("              function VoltaPaginaPrincipal(atualizacao,categ)\n");
-    echo("              {\n");
-    echo("                if(categ != '')\n");
-    echo("                   document.location.href='enquete.php?cod_curso=".$cod_curso."&categ='+categ+'&acao=recuperarEnquete&atualizacao='+atualizacao;\n");
-    echo("                else\n");
-    echo("                   document.location.href='enquete.php?cod_curso=".$cod_curso."&acao=recuperarEnquete&atualizacao='+atualizacao;\n");
-    echo("                return(true);\n");
-    echo("              }\n\n");
-    echo("            </script>\n"); 
-
     echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".RetornaFraseDaLista($lista_frases,106)."</h4>\n");
-   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+    /* 509 - Voltar */
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
     if (recuperarEnquete($sock, $idEnquete))
     { 
       $atualizacao = "true";
       $categ = getCodStatusEnquete($sock, $idEnquete);
       Desconectar($sock);
-      echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."',".$categ.");</script>");
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."',".$categ.");</script>");
       exit;
     }
     else
     {
       $atualizacao = "false";
       Desconectar($sock);
-      echo("  <script type=\"text/javascript\" language=\"JavaScript\">VoltaPaginaPrincipal('".$atualizacao."','');</script>");
+      echo("  <script type=\"text/javascript\" language=\"javascript\">VoltaPaginaPrincipal('".$atualizacao."','');</script>");
       exit;
     }
   }
   else
-  {  
+  {
     /* 1 - Enquete */
-    echo("          <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>\n");
+    echo("          <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>\n");
     /* 37 - �ea restrita ao formador. */
-    echo("          <b class=subtitulo> - ".RetornaFraseDaLista($lista_frases,37)."</b><br>\n");
+    echo("          <b class=\"subtitulo\"> - ".RetornaFraseDaLista($lista_frases,37)."</b><br>\n");
 
     /* 23 - Voltar (gen) */
-    echo("          <form><input type=button value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
+    echo("          <form><input type=\"button\" value='".RetornaFraseDaLista($lista_frases_geral,23)."' onclick=history.go(-1);></form>\n");
 
   }
 

@@ -57,17 +57,15 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xaja
-  //$objMaterial->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MudaDinamic");
-  //$objMaterial->register(XAJAX_FUNCTION,"PaginacaoDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  //$objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
+  //$objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
 
-  
   include("../topo_tela.php");
   
   // instanciar o objeto, passa a lista de frases por parametro
@@ -107,7 +105,6 @@
   
 
   /* Funções javascript */
-  $objMaterial->printJavascript();
   echo("    <script type=\"text/javascript\">\n");
   /* <Variaveis globais> */
   echo(" 	  var imprimir_perfil = 0;\n");

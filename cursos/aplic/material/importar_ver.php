@@ -64,8 +64,6 @@
   $objMaterial->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
   $objMaterial->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
   $objMaterial->register(XAJAX_FUNCTION,"MoverItensDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
 
   /**************** ajax ****************/
 
@@ -142,7 +140,7 @@
   if ($linha['acao']=="E") {
     if($linha['inicio_edicao']>(time()-1800) || $cod_usuario!=$linha['cod_usuario']) {
       /* Est? em edi??o... */
-      echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+      echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
       echo("       window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver&cod_topico_raiz=".$cod_topico_raiz_import."','EmEdicao','width=300,height=220,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\n");
       echo("       document.location='material.php?cod_curso=".$cod_curso."&cod_item=".$linha_item['cod_item']."&origem=ver&cod_topico=".$cod_topico_raiz_import."';\n");
       echo("    </script>\n");

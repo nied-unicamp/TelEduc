@@ -50,28 +50,24 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objMaterial->register(XAJAX_FUNCTION,"AlterarNomenclaturaDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"AlterarNomenclaturaDinamic");
 
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 12;
   include("../topo_tela.php");
+
   /*Funcao JavaScript*/
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      function Iniciar(){\n");
   echo("        startList();\n");
   echo("      }\n");
   echo("    </script>\n");
-  /**************** ajax ****************/
 
-  $objMaterial->printJavascript();
-
-  /**************** ajax ****************/
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

@@ -50,11 +50,10 @@
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarStatusDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
 
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -297,8 +296,6 @@
   echo("      }\n\n");
 
   echo("    </script>\n");
-
-  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 
