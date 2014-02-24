@@ -148,20 +148,20 @@
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
   
   echo("          <!-- Tabelao -->\n");
-  echo("          <form name=\"frmConfig\" action=\"configurar_pastas2.php\" method=\"post\" onSubmit=\"return(Confirma());\">\n");  
+  echo("          <form name=\"frmConfig\" action=\"configurar_pastas2.php\" method=\"post\" onSubmit=\"return(Confirma());\">\n");
   echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
 
   echo("              <td>\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                  <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='selecionar_lingua.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   /* 184 - Configurar forma de solicita��o de curso */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar forma de solicita��o de curso\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,184)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,184)."\" onClick=\"document.location='configurar_solicitacao.php'\">".RetornaFraseDaLista($lista_frases,184)."</span></li>\n");
   /* 6 - Configurar dados instituicionais */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar dados instituicionais\" onClick=\"document.location='configurar_dados_institucionais.php'\">".RetornaFraseDaLista($lista_frases,6)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,6)."\" onClick=\"document.location='configurar_dados_institucionais.php'\">".RetornaFraseDaLista($lista_frases,6)."</span></li>\n");
   /* 194 - Configurar endere�o para acesso e estrutura de pastas */
-  echo("                  <li><span style=\"href: #\" title=\"Configurar endere�o para acesso e estrutura de pastas\" onClick=\"document.location='configurar_pastas.php'\">".RetornaFraseDaLista($lista_frases,194)."</span></li>\n");
+  echo("                  <li><span title=\"".RetornaFraseDaLista($lista_frases,194)."\" onClick=\"document.location='configurar_pastas.php'\">".RetornaFraseDaLista($lista_frases,194)."</span></li>\n");
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
