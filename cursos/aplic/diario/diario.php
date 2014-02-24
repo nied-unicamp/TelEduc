@@ -44,15 +44,17 @@
   include($bibliotecas."geral.inc");
   include("diario.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objAjax->registerFunction("MudaTipoCompartilhamento");
-  $objAjax->registerFunction("ApagaItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaTipoCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"ApagaItensDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=14;
   $cod_ferramenta_ajuda=$cod_ferramenta;
@@ -272,7 +274,7 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

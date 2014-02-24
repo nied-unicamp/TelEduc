@@ -44,19 +44,21 @@
   include($bibliotecas."geral.inc");
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   // Estancia o objeto XAJAX
   $objMudarComp = new xajax();
+  $objMudarComp->configure("characterEncoding", 'ISO-8859-1');
+  $objMudarComp->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
-  $objMudarComp->registerFunction("MudarCompartilhamentoEAtualiza");
-  $objMudarComp->registerFunction("MoverItensDinamic");
-  $objMudarComp->registerFunction("AcabaEdicaoDinamic");
-  $objMudarComp->registerFunction("AtualizaPosicoes");
-  $objMudarComp->registerFunction("DecodificaString");
-  $objMudarComp->registerFunction("CriaTopicoDinamic");
-  $objMudarComp->registerFunction("RenomearTopicoDinamic");
-  $objMudarComp->registerFunction("CriaZipDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
+  $objMudarComp->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"AtualizaPosicoes");
+  $objMudarComp->register(XAJAX_FUNCTION,"DecodificaString");
+  $objMudarComp->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"CriaZipDinamic");
   
   // Manda o xajax executar os pedidos acima.
   $objMudarComp->processRequests();
@@ -546,7 +548,7 @@
   echo("    </script>\n");
   echo("    <script type='text/javascript' src='../js-css/tablednd.js'></script>\n");
 
-  $objMudarComp->printJavascript("../xajax_0.2.4/");
+  $objMudarComp->printJavascript();
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

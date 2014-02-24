@@ -376,7 +376,7 @@ function RenomeiaItem($sock, $cod_item, $titulo)
 */
 function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -388,22 +388,22 @@ function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   Desconectar($sock);
 
   // Imprime no div valores do formul?io
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
-  //$objResponse->addAssign("tit_".$cod_item, "className", "linkTexto");
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
+  //$objResponse->assign("tit_".$cod_item, "className", "linkTexto");
 
   $atualizacao='false';
   if($res) $atualizacao='true';
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, $atualizacao);  
+  $objResponse->call("mostraFeedback", $texto, $atualizacao);  
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
@@ -414,17 +414,17 @@ function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   Desconectar($sock);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
 
   $atualizacao='false';
   if($res) $atualizacao='true';
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, $atualizacao);  
+  $objResponse->call("mostraFeedback", $texto, $atualizacao);  
 
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* ******************************************************
@@ -701,7 +701,7 @@ function AlteraTipoCompartilhamento ($sock, $cod_item, $tipo_comp)
 
 function MudaTipoCompartilhamento ($dados_form, $novo_comp)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_curso = $dados_form['cod_curso'];
   $cod_item = $dados_form['cod_item'];
@@ -714,14 +714,14 @@ function MudaTipoCompartilhamento ($dados_form, $novo_comp)
 
   Desconectar($sock);
 
-  $objResponse->addScript("MudaSpanCompartilhamento('span_".$cod_item."','".$novo_comp."','".$tipo_comp."',".$cod_item.");");
+  $objResponse->script("MudaSpanCompartilhamento('span_".$cod_item."','".$novo_comp."','".$tipo_comp."',".$cod_item.");");
 
   $atualizacao = 'false';
   if($res) $atualizacao = 'true';
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, $atualizacao);  
+  $objResponse->call("mostraFeedback", $texto, $atualizacao);  
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* ******************************************************
@@ -936,7 +936,7 @@ function IndentarComentario($texto, $spaces){
  */
   function ExcluirComentDinamic($cod_curso, $cod_itens, $cod_ferramenta, $cod_usuario){
  
-    $objResponse = new xajaxResponse('ISO-8859-1');
+    $objResponse = new xajaxResponse();
  
     $sock=Conectar($cod_curso);
  
@@ -947,10 +947,10 @@ function IndentarComentario($texto, $spaces){
     AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario);
     Desconectar($sock);
 
-    $objResponse->addScriptCall("Recarregar", "excluir_comentario", "true");
+    $objResponse->call("Recarregar", "excluir_comentario", "true");
 
  
-    return $objResponse->getXML();
+    return $objResponse;
  }
 
 /*********************************************************************
@@ -962,7 +962,7 @@ function IndentarComentario($texto, $spaces){
  */
 function ApagaItensDinamic($cod_curso, $cod_itens,$cod_ferramenta, $cod_usuario){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -973,9 +973,9 @@ function ApagaItensDinamic($cod_curso, $cod_itens,$cod_ferramenta, $cod_usuario)
   AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario);
   Desconectar($sock);
 
-  $objResponse->addScriptCall("Recarregar", "apagar_itens", "true");
+  $objResponse->call("Recarregar", "apagar_itens", "true");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 ?>

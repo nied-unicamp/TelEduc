@@ -44,7 +44,7 @@
   	include($bibliotecas."geral.inc");
   	include("grupos.inc");
 
-  	require_once("../xajax_0.2.4/xajax.inc.php");
+  	require_once("../xajax_0.5/xajax_core/xajax.inc.php");
  
   	$cod_ferramenta=12;
   	$cod_ferramenta_ajuda=12;

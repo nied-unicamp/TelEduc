@@ -52,11 +52,13 @@
   
     /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objPerguntas = new xajax();
-  $objPerguntas->registerFunction("AlteraDadosAssuntoDinamic");
+  $objPerguntas->configure("characterEncoding", 'ISO-8859-1');
+  $objPerguntas->configure('javascript URI', "../xajax_0.5");
+  $objPerguntas->register(XAJAX_FUNCTION,"AlteraDadosAssuntoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objPerguntas->processRequests(); 
   
@@ -498,7 +500,7 @@
 	      
   echo("</script>\n\n");
 
-  $objPerguntas->printJavascript("../xajax_0.2.4/");
+  $objPerguntas->printJavascript();
   
   include("../menu_principal.php");
   

@@ -50,11 +50,13 @@
   $cod_ferramenta = 6;
   $tabela = "Pergunta";
   
-  require_once("../xajax_0.2.4/xajax.inc.php");  
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   $objPerguntas = new xajax();
-  $objPerguntas->registerFunction("EditarTexto");
-//  $objPerguntas->registerFunction("AcabaEdicaoDinamic");
+  $objPerguntas->configure("characterEncoding", 'ISO-8859-1');
+  $objPerguntas->configure('javascript URI', "../xajax_0.5");
+  $objPerguntas->register(XAJAX_FUNCTION,"EditarTexto");
+//  $objPerguntas->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
   $objPerguntas->processRequests();
   
   
@@ -372,7 +374,7 @@
 
   echo("</script>\n\n");
 
-  $objPerguntas->printJavascript("../xajax_0.2.4/");
+  $objPerguntas->printJavascript();
 
   include("../menu_principal.php");
   $sock = MudarDB($sock, $cod_curso_origem);

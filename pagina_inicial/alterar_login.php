@@ -44,19 +44,21 @@
   include($bibliotecas."geral.inc");
   include("inicial.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("AtualizaLoginUsuarioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaLoginUsuarioDinamic");
 
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_usuario = $_SESSION['cod_usuario_global_s'];
   $pag_atual = "alterar_login.php";
-  include("../topo_tela_inicial.php");  
+  include("../topo_tela_inicial.php");
 
   /* Caso o usuário naum esteja logado, direciona para páigna de login */
   if (empty($_SESSION['login_usuario_s']))
@@ -121,7 +123,7 @@
 
   echo("    </script>\n");
   
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal_tela_inicial.php");
 

@@ -44,14 +44,16 @@
   include($bibliotecas."geral.inc");
   include("admin.inc");
 
-  require_once("../cursos/aplic/xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
 
   VerificaAutenticacaoAdministracao();
 
   $objAjax = new xajax();
-  $objAjax->registerFunction("TrocaCategoriaDinamic");
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
+  $objAjax->register(XAJAX_FUNCTION,"TrocaCategoriaDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   include("../topo_tela_inicial.php");
 

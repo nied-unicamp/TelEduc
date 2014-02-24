@@ -665,14 +665,14 @@ function AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario)
 
 function AtualizaFerramentasNovaUsuarioJS($cod_curso,$cod_ferramenta,$cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   
   $sock = Conectar($cod_curso);
   $query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('U', ".VerificaNumeroQuery($cod_usuario)." , '".VerificaStringQuery($cod_ferramenta)."' , ".time().")" ;
   Enviar($sock,$query);
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function AtualizaFerramentasNovaGrupo($sock,$cod_ferramenta,$cod_grupo)
@@ -866,14 +866,14 @@ function AtualizaVisita($sock, $cod_usuario) {
  * @param $cod_usuario - codigo do usuario a ser deslogado
  */
 function DeslogaUsuarioCursoDinamic($cod_curso, $cod_usuario) {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
   $query = "update Usuarios_online set logado = 0 where cod_usuario = ".VerificaNumeroQuery($cod_usuario);
   $res=Enviar($sock,$query);
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /**

@@ -46,15 +46,17 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun??es em PHP que voc? quer chamar atrav?s do xajax
-  $objMaterial->registerFunction("MudaTipoCompartilhamento");
-  $objMaterial->registerFunction("EditarTexto");
-  $objMaterial->registerFunction("EditarTitulo");
-  $objMaterial->registerFunction("DecodificaString");
+  $objMaterial->register(XAJAX_FUNCTION,"MudaTipoCompartilhamento");
+  $objMaterial->register(XAJAX_FUNCTION,"EditarTexto");
+  $objMaterial->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objMaterial->register(XAJAX_FUNCTION,"DecodificaString");
   $objMaterial->processRequests();
   
   /**************** ajax ****************/
@@ -383,7 +385,7 @@
 
   echo("</script>\n");
 
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript();
 
   include("../menu_principal.php");
 

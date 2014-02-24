@@ -54,14 +54,16 @@
   
   $tipo_usuario="A";
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xaja
-  //$objMaterial->registerFunction("IniciaPaginacaoDinamic");
-  $objMaterial->registerFunction("MudaDinamic");
-  //$objMaterial->registerFunction("PaginacaoDinamic");
+  //$objMaterial->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"MudaDinamic");
+  //$objMaterial->register(XAJAX_FUNCTION,"PaginacaoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
 
@@ -105,7 +107,7 @@
   
 
   /* Funções javascript */
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript();
   echo("    <script type=\"text/javascript\">\n");
   /* <Variaveis globais> */
   echo(" 	  var imprimir_perfil = 0;\n");

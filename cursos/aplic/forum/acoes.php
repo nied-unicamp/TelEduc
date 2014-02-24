@@ -46,7 +46,7 @@
   include($bibliotecas."geral.inc");
   include("forum.inc");
   include("avaliacoes_forum.inc");
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   $cod_ferramenta=9;
   $cod_usuario_global=VerificaAutenticacao($cod_curso);

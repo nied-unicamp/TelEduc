@@ -46,14 +46,16 @@
 
   VerificaAutenticacaoAdministracao();
 
-  require_once("../cursos/aplic/xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
 
   $objAjax = new xajax();
-  $objAjax->registerFunction("AlteraTextoDinamic");
-  $objAjax->registerFunction("InsereTextoDinamic");
-  $objAjax->registerFunction("ApagaTextoDinamic");
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
+  $objAjax->register(XAJAX_FUNCTION,"AlteraTextoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"InsereTextoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ApagaTextoDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   include("../topo_tela_inicial.php");
 

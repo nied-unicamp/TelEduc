@@ -45,16 +45,18 @@
   include("forum.inc");
   include("avaliacoes_forum.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax->registerFunction("MudarConfiguracaoDinamic");
-  $objAjax->registerFunction("EditarTituloDinamic");
-  $objAjax->registerFunction("DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=9;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -496,7 +498,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

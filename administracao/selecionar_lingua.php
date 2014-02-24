@@ -44,17 +44,19 @@
   include($bibliotecas."geral.inc");
   include("admin.inc");
 
-  require_once("../cursos/aplic/xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
 
   VerificaAutenticacaoAdministracao();
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("AtualizaIdiomaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaIdiomaDinamic");
 
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
 
   include("../topo_tela_inicial.php");

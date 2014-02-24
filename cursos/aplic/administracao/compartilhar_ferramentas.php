@@ -45,14 +45,16 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   /** AJAX **/
   // Estancia Objeto XAJAX
   $objFerramenta = new xajax();
+  $objFerramenta->configure("characterEncoding", 'ISO-8859-1');
+  $objFerramenta->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das funções em PHP que voc� quer chamar atrav�s do xajax
-  $objFerramenta->registerFunction("AlterarFerramCompartilhadasDinamic");
-  $objFerramenta->registerFunction("AlteraTodasFerramCompartilhadasDinamic");
+  $objFerramenta->register(XAJAX_FUNCTION,"AlterarFerramCompartilhadasDinamic");
+  $objFerramenta->register(XAJAX_FUNCTION,"AlteraTodasFerramCompartilhadasDinamic");
   // Manda o xajax executar os pedidos acima.
   $objFerramenta->processRequests();
 
@@ -127,7 +129,7 @@
 
   echo("    </script>\n\n");
 
-  $objFerramenta->printJavascript("../xajax_0.2.4/");
+  $objFerramenta->printJavascript();
 
   include("../menu_principal.php");
 

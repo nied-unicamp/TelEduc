@@ -600,7 +600,7 @@ function CoordComoFormador($sock)
 *************************************************************************************************/
 function RetornaDadosPerfilDinamic($cod_curso, $cod_usuario){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -624,20 +624,20 @@ function RetornaDadosPerfilDinamic($cod_curso, $cod_usuario){
   else
     $sexo="Feminino";
   
-  $objResponse->addAssign("tdNome_".$cod_usuario,"innerHTML", $nome."<br />");
-  $objResponse->addAssign("tdEnd_".$cod_usuario,"innerHTML", $endereco."<br />".$cidade." - ".$estado." - ".$pais);
-  $objResponse->addAssign("tdTel_".$cod_usuario,"innerHTML", $telefone);
-  $objResponse->addAssign("tdNasc_".$cod_usuario,"innerHTML", $data_nasc);
-  $objResponse->addAssign("tdEmail_".$cod_usuario, "innerHTML", "<a href=mailto:".$email.">".$email."</a>");
-  $objResponse->addAssign("tdLocalTrab_".$cod_usuario,"innerHTML", $local_trab);
-  $objResponse->addAssign("tdProfis_".$cod_usuario,"innerHTML", $profissao);
+  $objResponse->assign("tdNome_".$cod_usuario,"innerHTML", $nome."<br />");
+  $objResponse->assign("tdEnd_".$cod_usuario,"innerHTML", $endereco."<br />".$cidade." - ".$estado." - ".$pais);
+  $objResponse->assign("tdTel_".$cod_usuario,"innerHTML", $telefone);
+  $objResponse->assign("tdNasc_".$cod_usuario,"innerHTML", $data_nasc);
+  $objResponse->assign("tdEmail_".$cod_usuario, "innerHTML", "<a href=mailto:".$email.">".$email."</a>");
+  $objResponse->assign("tdLocalTrab_".$cod_usuario,"innerHTML", $local_trab);
+  $objResponse->assign("tdProfis_".$cod_usuario,"innerHTML", $profissao);
   
   if($informacoes != ""){
-    $objResponse->addClear("tdInfo_".$cod_usuario, "innerHTML");
-    $objResponse->addAssign("tdInfo_".$cod_usuario,"innerHTML", $informacoes);
+    $objResponse->clear("tdInfo_".$cod_usuario, "innerHTML");
+    $objResponse->assign("tdInfo_".$cod_usuario,"innerHTML", $informacoes);
   }
   
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -650,7 +650,7 @@ function RetornaDadosPerfilDinamic($cod_curso, $cod_usuario){
 *******************************************************************************/
 function EditarPerfilDinamic($cod_curso, $cod_usuario, $novo_nome, $texto){
  
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
@@ -658,11 +658,11 @@ function EditarPerfilDinamic($cod_curso, $cod_usuario, $novo_nome, $texto){
   
   EnviaPerfil($sock,$cod_usuario,$tempo,$novo_nome);
 
-  $objResponse->addScript("top.opener.document.getElementById('data_".$cod_usuario."').innerHTML='<b>".UnixTime2DataHora($tempo)."</b>'");
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->script("top.opener.document.getElementById('data_".$cod_usuario."').innerHTML='<b>".UnixTime2DataHora($tempo)."</b>'");
+  $objResponse->call("mostraFeedback", $texto, 'true');
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
  
 }
 
@@ -673,7 +673,7 @@ function EditarPerfilDinamic($cod_curso, $cod_usuario, $novo_nome, $texto){
  * @param $ordem
  */
 function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem) {
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 	$sock=Conectar("");
 	$lista_usuarios=ListaUsuario($sock,$tipo_usuario,$cod_curso);
 	$total_usuarios=count($lista_usuarios);
@@ -689,9 +689,9 @@ function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem) {
 		$prox="L";
 	}
 
-	$objResponse->addScriptCall("Inicial",(int)$paginas,$prox);
+	$objResponse->call("Inicial",(int)$paginas,$prox);
 
-	return $objResponse->getXML();
+	return $objResponse;
 
 }
 
@@ -704,7 +704,7 @@ function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem) {
  * @param unknown_type $ordem
  */
 function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 	$sock=Conectar("");
 	$lista_usuarios=ListaUsuario($sock,$tipo_usuario,$cod_curso);
 	$total_usuarios=count($lista_usuarios);
@@ -730,10 +730,10 @@ function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
 		$intervalo=1;
 		$status='BV';
 	}
-	$objResponse->addScriptCall("MudaIntervalo",$intervalo);
-	$objResponse->addScriptCall("ApagaPagina",'N');
-	$objResponse->addScriptCall("Paginacao",$status);
-	return $objResponse->getXML();
+	$objResponse->call("MudaIntervalo",$intervalo);
+	$objResponse->call("ApagaPagina",'N');
+	$objResponse->call("Paginacao",$status);
+	return $objResponse;
 }
 
 /**
@@ -749,7 +749,7 @@ function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
  * @param $desativado
  */
 function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$acao,$ativado,$desativado){
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 
 	/* Busca no banco os registros a serem mostrados */
 	$sock=Conectar("");
@@ -772,7 +772,7 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
 	}
 
 	/* apaga todas as mensagens anteriores.Teremos 10 mensagens ou ateh terminar caso seja a ultima pagina */
-	$objResponse->addScriptCall("ApagaPagina",'T');
+	$objResponse->call("ApagaPagina",'T');
 
 	/* colocamos na pagina o conteudo da respectiva pagina */
 	$control=1;
@@ -784,18 +784,18 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
 				else
 				$port=$desativado;
 			}
-			$objResponse->addScriptCall("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$acao,$port);
+			$objResponse->call("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$acao,$port);
 		}
 		$control++;
 	}
 	
 	/* muda a variavel atual via javascript, para tirar o evento onclick da pagina que
 	 esta sendo mostrada*/
-	$objResponse->addScriptCall("MudaAtual",$pag_atual);
+	$objResponse->call("MudaAtual",$pag_atual);
 
-	$objResponse->addScriptCall("Paginacao",$aux);
-	$objResponse->addScriptCall("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
-	return $objResponse->getXML();
+	$objResponse->call("Paginacao",$aux);
+	$objResponse->call("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
+	return $objResponse;
 }
 
 ?>

@@ -47,11 +47,13 @@
   include ($bibliotecas . "geral.inc");
   include ($bibliotecas . "importar.inc");
 
-  require_once ("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
-  $objMaterial->registerFunction("AlterarPeriodoDinamic");
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objMaterial->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
 
@@ -232,7 +234,7 @@
   echo ("      </script>\n\n");
 
   /**************** ajax ****************/
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript();
 
   include ("../menu_principal.php");
 

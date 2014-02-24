@@ -68,7 +68,7 @@ function RetornaListaTodosLogins($sock)
 
 function SugerirLoginDinamic($pal,$frase,$pos){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock = Conectar("");
   $logins_usuarios = RetornaListaTodosLogins($sock);
   Desconectar($sock);
@@ -90,15 +90,15 @@ function SugerirLoginDinamic($pal,$frase,$pos){
   }
   if($hint != ""){
     $hint = "<ul><li><i>".$frase."</i></li>".$hint."</ul>";
-    $objResponse->addScript("document.getElementById('divSugs').style.display = '';");
-    $objResponse->addAssign("divSugs", "innerHTML", $hint);
-    $objResponse->addScriptCall("XajaxMostraLayer",$pos);
+    $objResponse->script("document.getElementById('divSugs').style.display = '';");
+    $objResponse->assign("divSugs", "innerHTML", $hint);
+    $objResponse->call("XajaxMostraLayer",$pos);
   }
   else{
-    $objResponse->addScriptCall('XajaxEscondeLayer');
+    $objResponse->call('XajaxEscondeLayer');
   }
 
-  return $objResponse->getXML();
+  return $objResponse;
  }
 
 
@@ -790,7 +790,7 @@ function RetornaListaUsuarios($sock, $cod_curso, $tipo_usuario, $ordem)
 }
 
 function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$frase_ativado,$frase_desativado){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   /*busca no banco os registros a serem mostrados*/
   $sock=Conectar("");
@@ -814,7 +814,7 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
     $limite=$num;
 
   /*apaga todas as mensagens anteriores.Teremos 10 mensagens ou at� terminar caso seja a ultima pagina*/
-  $objResponse->addScriptCall("ApagaPagina",'T');
+  $objResponse->call("ApagaPagina",'T');
 
   /*colocamos na p�gina o conteudo da respectiva pagina*/
   $control=1;
@@ -826,24 +826,24 @@ function PaginacaoDinamic($aux,$pag,$pag_atual,$cod_curso,$tipo_usuario,$ordem,$
         else
           $frase_port=$frase_desativado;
       }
-      $objResponse->addScriptCall("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$mostra_portfolio,$frase_port);
+      $objResponse->call("CriaElementoTab",$linha['nome'],Unixtime2Data($linha['data_inscricao']),"dados",$cod_usuario_l,$mostra_portfolio,$frase_port);
     }
     $control++;
   }
   /*muda a variavel atual via javascript, para tirar o evento onclick da pagina que 
      esta sendo mostrada*/
 
-  $objResponse->addScriptCall("MudaAtual",$pag_atual);
+  $objResponse->call("MudaAtual",$pag_atual);
 
-  $objResponse->addScriptCall("Paginacao",$aux);
-  $objResponse->addScriptCall("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
-  return $objResponse->getXML();
+  $objResponse->call("Paginacao",$aux);
+  $objResponse->call("MudaControleDetalhes",$aux,$pag_atual,$pag,'L');
+  return $objResponse;
 
 }
 /*func�o responsavel por criar a pagina��o na primeira vez*/
 
 function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar("");
   $lista_usuarios=RetornaListaUsuarios($sock,$cod_curso,$tipo_usuario,$ordem);
   $num=count($lista_usuarios);
@@ -858,16 +858,16 @@ function IniciaPaginacaoDinamic($cod_curso,$tipo_usuario,$ordem){
     $numpagInt=5;
     $prox="L";
   }
-  $objResponse->addScriptCall("Inicial",(int)$numpagInt,$prox);
+  $objResponse->call("Inicial",(int)$numpagInt,$prox);
 
-  return $objResponse->getXML();
+  return $objResponse;
 
 }
 
 /*func�o que controla a mudan�a no intervalo de paginacao*/
 
 function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar("");
   $lista_usuarios=RetornaListaUsuarios($sock,$cod_curso,$tipo_usuario,$ordem);
   $num=count($lista_usuarios);
@@ -893,10 +893,10 @@ function MudaDinamic($intervalo,$flag,$cod_curso,$tipo_usuario,$ordem){
     $intervalo=1;
     $status='BV';
   }
-  $objResponse->addScriptCall("MudaIntervalo",$intervalo);
-  $objResponse->addScriptCall("ApagaPagina",'N');
-  $objResponse->addScriptCall("Paginacao",$status);
-  return $objResponse->getXML();
+  $objResponse->call("MudaIntervalo",$intervalo);
+  $objResponse->call("ApagaPagina",'N');
+  $objResponse->call("Paginacao",$status);
+  return $objResponse;
 }
 
 
@@ -1094,25 +1094,25 @@ function RetornaListaUsuariosGlobal($sock,$busca,$inicio,$num_registros)
 */
 
 function ListaUsuariosPaginaDinamic($pagina, $tam_pagina, $cod_curso, $busca="") {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $inicio = ($pagina-1) * $tam_pagina;
   $sock=Conectar("");
   $lista = RetornaListaUsuariosGlobal($sock,$busca,$inicio,$tam_pagina);
   Desconectar($sock);
 
-  $objResponse->addScriptCall("RemovePaginaAntiga");
+  $objResponse->call("RemovePaginaAntiga");
 
   $i=0;
   foreach($lista as $user) {
     $flag = CadastradoCurso($sock, $user['cod_usuario'], $cod_curso)?'B':'L';
-    $objResponse->addScriptCall("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email'],$flag, $i++);
+    $objResponse->call("IncluiUsuarioTabela", $user['cod_usuario'], $user['nome'], $user['login'],$user['email'],$flag, $i++);
   }
 
-  $objResponse->addScriptCall("IncluiControlePaginacao");
-  $objResponse->addScriptCall("ExibeControles", $pagina);
+  $objResponse->call("IncluiControlePaginacao");
+  $objResponse->call("ExibeControles", $pagina);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -1327,7 +1327,7 @@ function StatusPortfolio($sock,$cod_curso, $cod_usuario, $opcao)
 }
 
 function AlterarNomenclaturaDinamic($cod_curso, $status, $cod_ferramenta){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar("");
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
 
@@ -1349,16 +1349,16 @@ function AlterarNomenclaturaDinamic($cod_curso, $status, $cod_ferramenta){
       $confirma='false';
     }
 
-  $objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+  $objResponse->call("mostraFeedback",$frase,$confirma);
   }
   Desconectar($sock);
 
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function AtivarDesativarPortDinamic($cod_curso, $cod_usu, $opcao, $frase1, $frase2){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);
   foreach($cod_usu as $cod => $cod_usuario){
     StatusPortfolio($sock,$cod_curso, $cod_usuario, $opcao);
@@ -1373,18 +1373,18 @@ function AtivarDesativarPortDinamic($cod_curso, $cod_usu, $opcao, $frase1, $fras
     }
 
     $test="status_port".$cod_usuario;
-    $objResponse->addAssign($test,"innerHTML",$msg);
+    $objResponse->assign($test,"innerHTML",$msg);
 
   }
   $confirma='true';
-  $objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+  $objResponse->call("mostraFeedback",$frase,$confirma);
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function AlteraTodasFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $status)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar($cod_curso);
   $lista_ferramentas_disp = RetornaFerramCompartilhaveis($sock);
@@ -1427,14 +1427,14 @@ function AlteraTodasFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $st
       }
     }
   }
-  $objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+  $objResponse->call("mostraFeedback",$frase,$confirma);
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function AlterarFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $cod_ferramenta_compart, $status)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock = Conectar("");
   $lista_frases = RetornaListaDeFrases($sock, $cod_ferramenta);
 
@@ -1467,9 +1467,9 @@ function AlterarFerramCompartilhadasDinamic($cod_curso, $cod_ferramenta, $cod_fe
     }
   }
 
-  $objResponse->addScriptCall("mostraFeedback",$frase,$confirma);
+  $objResponse->call("mostraFeedback",$frase,$confirma);
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 

@@ -47,32 +47,34 @@ include ($bibliotecas . "geral.inc");
 include ("portfolio.inc");
 include ("avaliacoes_portfolio.inc");
 
-require_once ("../xajax_0.2.4/xajax.inc.php");
+require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
 //Estancia o objeto XAJAX
 $objAjax = new xajax();
+$objAjax->configure("characterEncoding", 'ISO-8859-1');
+$objAjax->configure('javascript URI', "../xajax_0.5");
 //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-$objAjax->registerFunction("MudarCompartilhamentoEAtualiza");
-$objAjax->registerFunction("EditarTitulo");
-$objAjax->registerFunction("EditarTexto");
-$objAjax->registerFunction("InsereEnderecoDinamic");
-$objAjax->registerFunction("AbreEdicao");
-$objAjax->registerFunction("AcabaEdicaoDinamic");
-$objAjax->registerFunction("CancelaEdicaoDinamic");
-$objAjax->registerFunction("ExcluirArquivo");
-$objAjax->registerFunction("ExcluirEndereco");
-$objAjax->registerFunction("DecodificaString");
-$objAjax->registerFunction("OcultarArquivosDinamic");
-$objAjax->registerFunction("DesocultarArquivosDinamic");
-$objAjax->registerFunction("MoverArquivosDinamic");
-$objAjax->registerFunction("MoverItensDinamic");
-$objAjax->registerFunction("RetornaFraseDinamic");
-$objAjax->registerFunction("RetornaFraseGeralDinamic");
-$objAjax->registerFunction("AssociaAvaliacaoDinamic");
-$objAjax->registerFunction("VerificaSePodeDesassociar");
+$objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
+$objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+$objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+$objAjax->register(XAJAX_FUNCTION,"InsereEnderecoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+$objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+$objAjax->register(XAJAX_FUNCTION,"ExcluirEndereco");
+$objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+$objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+$objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+$objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+$objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+$objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+$objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+$objAjax->register(XAJAX_FUNCTION,"AssociaAvaliacaoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"VerificaSePodeDesassociar");
 
 //Manda o xajax executar os pedidos acima.
-$objAjax->processRequests();
+$objAjax->processRequest();
 
 $cod_ferramenta = 15;
 $cod_ferramenta_ajuda = 15;
@@ -440,7 +442,7 @@ echo ("     function EditaTituloEnter(campo, evento, id)\n");
     echo("      }\n\n");
     echo ("    </script>\n");
 
-$objAjax->printJavascript("../xajax_0.2.4/");
+$objAjax->printJavascript();
 
 echo ("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 

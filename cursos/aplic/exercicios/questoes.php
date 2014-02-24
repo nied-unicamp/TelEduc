@@ -44,15 +44,17 @@ $bibliotecas="../bibliotecas/";
 include($bibliotecas."geral.inc");
 include("exercicios.inc");
 
-require_once("../xajax_0.2.4/xajax.inc.php");
+require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
 //Estancia o objeto XAJAX
 $objAjax = new xajax();
+$objAjax->configure("characterEncoding", 'ISO-8859-1');
+$objAjax->configure('javascript URI', "../xajax_0.5");
 //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-$objAjax->registerFunction("AlteraStatusQuestaoDinamic");
-$objAjax->registerFunction("MudarCompartilhamentoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"AlteraStatusQuestaoDinamic");
+$objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
 //Manda o xajax executar os pedidos acima.
-$objAjax->processRequests();
+$objAjax->processRequest();
 
 $cod_ferramenta = 23;
 $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -619,7 +621,7 @@ echo("\n</script>\n\n");
 /* fim - JavaScript */
 /*********************************************************/
 
-$objAjax->printJavascript("../xajax_0.2.4/");
+$objAjax->printJavascript();
 
 include("../menu_principal.php");
 

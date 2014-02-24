@@ -142,7 +142,7 @@ RecuperarItensDinamic
 *******************************************************************************************/
 function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diretorio_arquivos,$tabela,$bibliotecas,$nome_ferramenta,$diretorio_temp){
   	// inicializa��o do ajax
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 	$sock = Conectar($cod_curso);
 	// cria a hierarquia de pastas
 	CriaArvorePastasTopico($sock, $cod_topico_raiz, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos);
@@ -180,14 +180,14 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
   		$DownloadPath.="/".$zipName;
   		copy($FilePath,$DownloadPath);
   		// faz a m�gica do download
-  		$objResponse->addScriptCall("redirecionaDownloadAnexos",$DownloadPath);
+  		$objResponse->call("redirecionaDownloadAnexos",$DownloadPath);
   	}
   	else{
   		// se n�o tem anexos emite um alerta, mais percept�vel que um feedback
-  		$objResponse->addAlert("Nao existem anexos a serem baixados!\n");
+  		$objResponse->alert("Nao existem anexos a serem baixados!\n");
   	}
   	Desconectar($sock);
-  	return $objResponse->getXML();
+  	return $objResponse;
   	
 }
 
@@ -823,7 +823,7 @@ function RenomearTopico ($sock, $tabela, $cod_topico, $novo_nome)
 *************************************************************************************************/
 function MudarCompartilhamento ($dadosForm,$tabela,$novo_comp)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $tipo_comp = $dadosForm['tipo_comp'];
   $cod_item = $dadosForm['cod_item'];
@@ -856,19 +856,19 @@ function MudarCompartilhamento ($dadosForm,$tabela,$novo_comp)
     if($cod_pagina == 2) // ver.php
       $data_agora=UnixTime2DataHora($data_agora);
   
-    $objResponse->addAssign("data_".$cod_item, "innerHTML", $data_agora);
-    $objResponse->addAssign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
-    $objResponse->addScript("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
+    $objResponse->assign("data_".$cod_item, "innerHTML", $data_agora);
+    $objResponse->assign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
+    $objResponse->script("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
 
-    $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
+    $objResponse->assign("tr_".$cod_item, "className", "novoitem");
   }
   else // nÃ£o editou
     AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 0);
 
 	/* Feedback */
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  	$objResponse->call("mostraFeedback", $texto, 'true');
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2418,7 +2418,7 @@ function VerificaAnexo($str_anexo)
 **************************************************************************************************/
 function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $cod_topico_ant, $cod_topico_raiz, $cod_topicos, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -2438,7 +2438,7 @@ function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $
     if (EPaiTopicos($sock, $tabela, $cod_topico_raiz, $cod_topicos))
     /* 2 - Você não pode mover uma pasta para ela mesma ou para uma subpasta dela. */
     /* 72- Verifique as pastas selecionadas.  */
-      $objResponse->addAlert(RetornaFraseDaLista($lista_frases,2)."\n".RetornaFraseDaLista($lista_frases_geral,72));
+      $objResponse->alert(RetornaFraseDaLista($lista_frases,2)."\n".RetornaFraseDaLista($lista_frases_geral,72));
     else
     {
       $existe = 0;
@@ -2464,13 +2464,13 @@ function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $
             MoverItem($sock, $tabela, $cod_itens[$i], $cod_usuario, $cod_topico_raiz);
           }
         }
-        $objResponse->addScript('Redirecionar('.$cod_topico_ant.');');
+        $objResponse->script('Redirecionar('.$cod_topico_ant.');');
       }      
       else //existe topico com mesmo nome no diretorio destino
       {
         /* 71 (ger) - Não foi possível mover a pasta, pois já existe uma pasta com mesmo nome no diretório destino. */
         /* 72 (ger) - Verifique as pastas selecionadas.  */
-        $objResponse->addAlert(RetornaFraseDaLista($lista_frases_geral,71)."\n".RetornaFraseDaLista($lista_frases_geral,72));
+        $objResponse->alert(RetornaFraseDaLista($lista_frases_geral,71)."\n".RetornaFraseDaLista($lista_frases_geral,72));
       }
 
     }
@@ -2488,7 +2488,7 @@ function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $
         MoverItem($sock, $tabela, $cod_itens, $cod_usuario, $cod_topico_raiz);
       }
     }
-    $objResponse->addScript('window.location="material.php?cod_curso='.$cod_curso.'&cod_usuario='.$cod_usuario.'&cod_ferramenta='.$cod_ferramenta.'&cod_topico_raiz='.$cod_topico_raiz.'";');
+    $objResponse->script('window.location="material.php?cod_curso='.$cod_curso.'&cod_usuario='.$cod_usuario.'&cod_ferramenta='.$cod_ferramenta.'&cod_topico_raiz='.$cod_topico_raiz.'";');
 
   }
 
@@ -2497,7 +2497,7 @@ function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2508,7 +2508,7 @@ function MoverItensDinamic($tabela, $cod_curso, $cod_ferramenta, $cod_usuario, $
   Saida: XML da funcao ajax
 *******************************************************************************************************/
 function RetornaFraseDinamic($variavel, $cod_ferramenta){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -2524,9 +2524,9 @@ function RetornaFraseDinamic($variavel, $cod_ferramenta){
  
   $retorno.="\n}";
 
-  $objResponse->addScript($variavel." = ".$retorno.";");
+  $objResponse->script($variavel." = ".$retorno.";");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2540,7 +2540,7 @@ function RetornaFraseDinamic($variavel, $cod_ferramenta){
   Saida: XML da funcao ajax
 ********************************************************************************************************/
 function AtualizaPosicoes($cod_curso, $cod_usuario, $cod_topico, $lista_ids, $tabela){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
   PegaSemaforo($sock, $tabela);
@@ -2553,13 +2553,13 @@ function AtualizaPosicoes($cod_curso, $cod_usuario, $cod_topico, $lista_ids, $ta
     }else{
       $query = "update ".$tabela."_itens set posicao_item = ".($cod+1)." where cod_topico=".$cod_topico." and cod_item=".$vetor[1];
     }
-//      $objResponse->addAlert($query);
+//      $objResponse->alert($query);
     Enviar($sock, $query);
   }
 
   LiberaSemaforo($sock, $tabela);
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2574,7 +2574,7 @@ function AtualizaPosicoes($cod_curso, $cod_usuario, $cod_topico, $lista_ids, $ta
            $id - id
 ****************************************************************************************************/
 function RenomearTopicoDinamic ($cod_curso, $cod_topico, $cod_usuario, $tabela, $novo_nome, $msg_erro, $id){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);
 
   $novo_nome=ConverteAspas2BarraAspas(htmlentities($novo_nome));
@@ -2587,14 +2587,14 @@ function RenomearTopicoDinamic ($cod_curso, $cod_topico, $cod_usuario, $tabela, 
   if (NaoExisteTopPeloTexto($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario, $cod_topico))
   {
     RenomearTopico ($sock, $tabela, $cod_topico, $novo_nome);
-    $objResponse->addAssign("nome_topico_atual", "innerHTML", htmlentities($novo_nome));
+    $objResponse->assign("nome_topico_atual", "innerHTML", htmlentities($novo_nome));
 
   }else{
-    $objResponse->addAlert($msg_erro);
-    $objResponse->addScript("document.getElementById('nome_topico_atual').innerHTML=nome_topico_atual;");
+    $objResponse->alert($msg_erro);
+    $objResponse->script("document.getElementById('nome_topico_atual').innerHTML=nome_topico_atual;");
   }
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 
 }
 
@@ -2611,7 +2611,7 @@ function RenomearTopicoDinamic ($cod_curso, $cod_topico, $cod_usuario, $tabela, 
   Saida: XML da funcao ajax 
 **************************************************************************************************/
 function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_ferramenta, $tabela, $cod_topico_raiz, $dirname, $novo_nome, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar("");
 
@@ -2625,15 +2625,15 @@ function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_ferramenta, $tabela, $
   if (NaoExisteTopPeloTexto($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario))
   {
     $cod_topico=CriarTopico($sock, $tabela, $cod_topico_raiz, $novo_nome, $cod_usuario);
-    $objResponse->addRedirect("material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico."&cod_usuario=".$cod_usuario);
+    $objResponse->redirect("material.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_topico_raiz=".$cod_topico."&cod_usuario=".$cod_usuario);
 
   }else{
-    $objResponse->addAlert($msg_erro);
+    $objResponse->alert($msg_erro);
   }
 
 
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 
 }
 
@@ -2648,7 +2648,7 @@ function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_ferramenta, $tabela, $
 ***************************************************************************************/
 function EditarTitulo ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario,$texto='')
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -2660,17 +2660,17 @@ function EditarTitulo ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario,
   Desconectar($sock);
 
   // Imprime no div valores do formul?io
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
-  //$objResponse->addAssign("tit_".$cod_item, "className", "linkTexto");
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
+  //$objResponse->assign("tit_".$cod_item, "className", "linkTexto");
  // $objResponse->addEvent("tit_".$cod_item, "onClick", "AlteraTitulo('".$cod_item."');");
-  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2DataHora($data));
+  $objResponse->assign("data_".$cod_item, "innerHTML", UnixTime2DataHora($data));
 
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
   if($texto!='')
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  	$objResponse->call("mostraFeedback", $texto, 'true');
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2684,7 +2684,7 @@ function EditarTitulo ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario,
 *********************************************************************************************/
 function EditarTexto ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
 
@@ -2698,11 +2698,11 @@ function EditarTexto ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
-  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2DataHora(time()));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
+  $objResponse->assign("data_".$cod_item, "innerHTML", UnixTime2DataHora(time()));
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2718,7 +2718,7 @@ function EditarTexto ($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
 function InsereEnderecoDinamic ($tabela, $nome, $endereco, $cod_item, $cod_curso, $cod_usuario,$texto='')
 {
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -2727,7 +2727,7 @@ function InsereEnderecoDinamic ($tabela, $nome, $endereco, $cod_item, $cod_curso
   $res=Enviar($sock, $consulta);
 
   $linha=RetornaLinha($res);
-  if ($linha[0]!='') return $objResponse->getXML();
+  if ($linha[0]!='') return $objResponse;
 
   $num=RetornaNumLinhas($res);
   if ($num>0)
@@ -2752,36 +2752,36 @@ function InsereEnderecoDinamic ($tabela, $nome, $endereco, $cod_item, $cod_curso
   $linha=RetornaLinha($res);
   $cod_endereco=$linha['cod_endereco'];
 
-  $objResponse->addCreate("listaEnderecos", "span", "end_".$cod_endereco);
-  $objResponse->addCreate("end_".$cod_endereco, "span", "link_".$cod_endereco);
-  $objResponse->addAssign("link_".$cod_endereco, "className", "link");
+  $objResponse->create("listaEnderecos", "span", "end_".$cod_endereco);
+  $objResponse->create("end_".$cod_endereco, "span", "link_".$cod_endereco);
+  $objResponse->assign("link_".$cod_endereco, "className", "link");
 
   if ($num==0){
     if ($nome!=''){
-      $objResponse->addAssign("link_".$cod_endereco, "innerHTML", $nome);
-      $objResponse->addInsertAfter("link_".$cod_endereco, "span", "endEndereco_".$cod_endereco);
-      $objResponse->addAssign("endEndereco_".$cod_endereco, "innerHTML", "&nbsp;&nbsp;(".RetornaURLValida($endereco).") - \n");
+      $objResponse->assign("link_".$cod_endereco, "innerHTML", $nome);
+      $objResponse->insertAfter("link_".$cod_endereco, "span", "endEndereco_".$cod_endereco);
+      $objResponse->assign("endEndereco_".$cod_endereco, "innerHTML", "&nbsp;&nbsp;(".RetornaURLValida($endereco).") - \n");
     }else{
-      $objResponse->addAssign("link_".$cod_endereco, "innerHTML", RetornaURLValida($endereco)." - ");
+      $objResponse->assign("link_".$cod_endereco, "innerHTML", RetornaURLValida($endereco)." - ");
     }
   }
 
   $objResponse->addEvent("link_".$cod_endereco, "onClick", "WindowOpenVerURL('".ConverteSpace2Mais(RetornaURLValida($endereco))."');return(false);");
 
-  $objResponse->addCreate("end_".$cod_endereco, "span", "endApagar_".$cod_endereco);
-  $objResponse->addAssign("endApagar_".$cod_endereco, "className", 'link');
-  $objResponse->addAssign("endApagar_".$cod_endereco, "innerHTML", 'Apagar<br>');
+  $objResponse->create("end_".$cod_endereco, "span", "endApagar_".$cod_endereco);
+  $objResponse->assign("endApagar_".$cod_endereco, "className", 'link');
+  $objResponse->assign("endApagar_".$cod_endereco, "innerHTML", 'Apagar<br>');
   $objResponse->addEvent("endApagar_".$cod_endereco, "onClick", "ApagarEndereco('".$cod_curso."', '".$cod_endereco."');");
 
   if($texto!='')
-  		$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  		$objResponse->call("mostraFeedback", $texto, 'true');
   
   Desconectar($sock);
 
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 	
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -2815,7 +2815,7 @@ function RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto){
 **********************************************************************************************************/
 function InsereAvaliacaoDinamic ($data_inicio, $data_termino, $valor, $tipo_atividade, $objetivos, $criterios, $cod_item, $cod_curso, $cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $data = time();
   $data_inicio= Data2UnixTime($data_inicio);
@@ -2863,11 +2863,11 @@ function InsereAvaliacaoDinamic ($data_inicio, $data_termino, $valor, $tipo_ativ
   $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto); 
 
   /* Adiciona a chamada do feedback a resposta do xajax */
-  $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
+  $objResponse->call("mostraFeedback", $texto_feedback, 'true');
   
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /***********************************************************************************************************
@@ -2879,7 +2879,7 @@ function InsereAvaliacaoDinamic ($data_inicio, $data_termino, $valor, $tipo_ativ
 **********************************************************************************************************/
 function ApagaAvaliacaoPortfolioDinamic ($cod_item, $cod_curso, $cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -2900,10 +2900,10 @@ function ApagaAvaliacaoPortfolioDinamic ($cod_item, $cod_curso, $cod_usuario)
   $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
 
   /* Adiciona a chamada do feedback a resposta do xajax */
-  $objResponse->addScriptCall("mostraFeedback", $texto_feedback, 'true');
+  $objResponse->call("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /*****************************************************************************************************
@@ -2918,7 +2918,7 @@ function ApagaAvaliacaoPortfolioDinamic ($cod_item, $cod_curso, $cod_usuario)
 *****************************************************************************************************/
 function AbreEdicao($tabela, $cod_curso, $cod_item, $cod_usuario, $cod_topico_raiz){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -2936,9 +2936,9 @@ function AbreEdicao($tabela, $cod_curso, $cod_item, $cod_usuario, $cod_topico_ra
   $linha_historico=RetornaUltimaPosicaoHistorico($sock, $tabela, $cod_item);
 
   if (($linha['status']=="E")&&($cod_usuario !=$linha_historico['cod_usuario'])){
-    $objResponse->addScript("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
+    $objResponse->script("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
 
-    $objResponse->addScript("document.location='material.php?cod_usuario=".$cod_usuario."&cod_curso=".$cod_curso."&cod_item=".$cod_item."'");
+    $objResponse->script("document.location='material.php?cod_usuario=".$cod_usuario."&cod_curso=".$cod_curso."&cod_item=".$cod_item."'");
   }else if ($linha['status']!="E"){
     $consulta="update ".$tabela."_itens set status='E', cod_usuario=".$cod_usuario.", inicio_edicao=".$data." where cod_item=".$cod_item;
     $res=Enviar($sock,$consulta);
@@ -2948,7 +2948,7 @@ function AbreEdicao($tabela, $cod_curso, $cod_item, $cod_usuario, $cod_topico_ra
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2963,24 +2963,24 @@ function AbreEdicao($tabela, $cod_curso, $cod_item, $cod_usuario, $cod_topico_ra
 *******************************************************************************************/
 function ExcluirArquivo($tabela, $numero, $arq, $cod_curso, $cod_item, $cod_usuario,$texto=''){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $arq=htmlspecialchars_decode($arq);
   $arq = str_replace("%20"," ",$arq);
 
   $removido = RemoveDiretorio($arq);
   //if(!$removido){
-	//$objResponse->addAlert("Falha ao apagar arquivo(s). Por favor verifique se a pasta '../cursos/diretorio' está com permissão de escrita e atualize a página.");
+	//$objResponse->alert("Falha ao apagar arquivo(s). Por favor verifique se a pasta '../cursos/diretorio' está com permissão de escrita e atualize a página.");
   //}else{
-  	$objResponse->addRemove('arq_'.$numero); 
-  	$objResponse->AddScript('js_conta_arq=0');
+  	$objResponse->remove('arq_'.$numero); 
+  	$objResponse->script('js_conta_arq=0');
   	if($texto!='')
-  		$objResponse->addScriptCall("mostraFeedback", $texto, 'true'); 	
+  		$objResponse->call("mostraFeedback", $texto, 'true'); 	
   //	}
   
   
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -2994,23 +2994,23 @@ function ExcluirArquivo($tabela, $numero, $arq, $cod_curso, $cod_item, $cod_usua
 **********************************************************************************/
 function ExcluirEndereco ($tabela, $cod_curso, $cod_endereco, $cod_item, $cod_usuario,$texto='')
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
   $consulta="delete from ".$tabela."_itens_enderecos where cod_endereco=".$cod_endereco;
   $res=Enviar($sock, $consulta);
 
-  $objResponse->addRemove('end_'.$cod_endereco);
+  $objResponse->remove('end_'.$cod_endereco);
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
   
   if($texto!='')
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  	$objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3025,7 +3025,7 @@ function ExcluirEndereco ($tabela, $cod_curso, $cod_endereco, $cod_item, $cod_us
    Saida: XML da função Ajax
 *******************************************************************************************/
 function OcultarArquivosDinamic($tabela, $nomes_arquivos, $msg_oculto, $cod_curso, $cod_item, $cod_usuario,$texto){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0]));
@@ -3033,22 +3033,22 @@ function OcultarArquivosDinamic($tabela, $nomes_arquivos, $msg_oculto, $cod_curs
 
     AlteraStatusArquivo($nome_arquivo,true);
 
-    $objResponse->addCreate('local_oculto_'.$linha[1], 'span', 'arq_oculto_'.$linha[1]);
+    $objResponse->create('local_oculto_'.$linha[1], 'span', 'arq_oculto_'.$linha[1]);
 
-    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in1_'.$linha[1]);
-    $objResponse->addAssign('arq_oculto_in1_'.$linha[1], 'innerHTML', '&nbsp;- ');
+    $objResponse->create('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in1_'.$linha[1]);
+    $objResponse->assign('arq_oculto_in1_'.$linha[1], 'innerHTML', '&nbsp;- ');
 
-    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in2_'.$linha[1]);
-    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'innerHTML', $msg_oculto);
-    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'className', 'arqOculto');
+    $objResponse->create('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in2_'.$linha[1]);
+    $objResponse->assign('arq_oculto_in2_'.$linha[1], 'innerHTML', $msg_oculto);
+    $objResponse->assign('arq_oculto_in2_'.$linha[1], 'className', 'arqOculto');
 
-    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'sim\');');
+    $objResponse->script('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'sim\');');
   }
   $objResponse->addEvent('sArq_ocultar', 'onclick', 'Desocultar();');
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
   if($texto!='')
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
-  return $objResponse->getXML();
+  	$objResponse->call("mostraFeedback", $texto, 'true');
+  return $objResponse;
 }
 
 
@@ -3062,7 +3062,7 @@ function OcultarArquivosDinamic($tabela, $nomes_arquivos, $msg_oculto, $cod_curs
    Saida: XML da função Ajax
 ***********************************************************************************************/
 function DesocultarArquivosDinamic($tabela, $nomes_arquivos, $cod_curso, $cod_item, $cod_usuario,$texto=''){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0]));
@@ -3070,15 +3070,15 @@ function DesocultarArquivosDinamic($tabela, $nomes_arquivos, $cod_curso, $cod_it
 
     AlteraStatusArquivo($nome_arquivo,false);
 
-    $objResponse->addRemove('arq_oculto_'.$linha[1]);
-    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'nao\');');
+    $objResponse->remove('arq_oculto_'.$linha[1]);
+    $objResponse->script('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'nao\');');
 
   }
   $objResponse->addEvent('sArq_ocultar', 'onclick', 'Ocultar();');
   AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 	if($texto!='')
-  	$objResponse->addScriptCall("mostraFeedback", $texto, 'true');
-  return $objResponse->getXML();
+  	$objResponse->call("mostraFeedback", $texto, 'true');
+  return $objResponse;
 }
 
 
@@ -3093,7 +3093,7 @@ function DesocultarArquivosDinamic($tabela, $nomes_arquivos, $cod_curso, $cod_it
 ********************************************************************************************************/
 function AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, $acao){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -3123,7 +3123,7 @@ function AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, $acao)
   //Correção feita para não acontecer de os horários ficarem iguais no banco e atrapalhar o status do item
    if ($linha[0]!=""){ sleep(1); }
   
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3176,19 +3176,19 @@ function AcabaEdicao($tabela, $sock, $cod_curso, $cod_item, $cod_usuario, $acao)
    Saida: XML da função Ajax
 *****************************************************************************/
 function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usuario, $cod_ferramenta, $cod_topico_raiz, $tabela){
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 
 	// Se a origem ou destino forem vazios retorna false
 	if (($origem == "") || ($destino == ""))
-	return $objResponse->getXML();
+	return $objResponse;
 
 	// Resolve o caminho da origem ('realpath' testa tambem se o arquivo existe).
 	$origem = eregi_replace("%20", " ", $origem);
 	$origem = realpath($origem);
 	if ($origem == false){
-		$objResponse->addScript("EscondeLayers();");
-		$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
-		return $objResponse->getXML();
+		$objResponse->script("EscondeLayers();");
+		$objResponse->redirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
+		return $objResponse;
 	}
 
 	// Se retornar mais que um elemento (ou seja, pelo menos
@@ -3202,18 +3202,18 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 
 	if (ExisteArquivo($dest)){
 		AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
-		$objResponse->addScript("EscondeLayers();");
-		$objResponse->addScript("window.location='material.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta.";");
-		return $objResponse->getXML();
+		$objResponse->script("EscondeLayers();");
+		$objResponse->script("window.location='material.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&cod_ferramenta=".$cod_ferramenta.";");
+		return $objResponse;
 	}
 
 	// O teste aqui tambem eh necessario para ver se 'RemoveArquivo'
 	// nao retornou false.
 	$stat = RetornaStatusArquivo($conteudo);
 	if ( !copy($origem, $dest) || !AlteraStatusArquivo($dest, $stat) || !RemoveArquivo($origem) ) {
-		$objResponse->addScript("EscondeLayers()");
-		$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
-		return $objResponse->getXML();
+		$objResponse->script("EscondeLayers()");
+		$objResponse->redirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=false");
+		return $objResponse;
 	}
 
 	clearstatcache();
@@ -3225,8 +3225,8 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 
 	AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 
-	$objResponse->addRedirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=".$flag);
-	return $objResponse->getXML();
+	$objResponse->redirect("ver.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&cod_topico_raiz=".$cod_topico_raiz."&acao=moverArquivo&atualizacao=".$flag);
+	return $objResponse;
 }
 
 
@@ -3239,7 +3239,7 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 *************************************************************************/
 function ExcluirItensDinamic($tabela, $cod_curso, $cod_usuario, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -3253,9 +3253,9 @@ function ExcluirItensDinamic($tabela, $cod_curso, $cod_usuario, $cod_itens){
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar();");
+  $objResponse->script("Recarregar();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3269,7 +3269,7 @@ function ExcluirItensDinamic($tabela, $cod_curso, $cod_usuario, $cod_itens){
 *********************************************************************************************/
 function RecuperarItensDinamic($tabela, $cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -3284,8 +3284,8 @@ function RecuperarItensDinamic($tabela, $cod_curso, $cod_usuario, $cod_grupo_por
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar();");
+  $objResponse->script("Recarregar();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 ?>

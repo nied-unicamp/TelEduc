@@ -44,17 +44,19 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objMaterial->registerFunction("AtivarDesativarPortDinamic");
-  $objMaterial->registerFunction("PaginacaoDinamic");
-  $objMaterial->registerFunction("MudaGuiaDinamic");
-  $objMaterial->registerFunction("MudaDinamic");
-  $objMaterial->registerFunction("Paginacao");
-  $objMaterial->registerFunction("IniciaPaginacaoDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"AtivarDesativarPortDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"PaginacaoDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"MudaGuiaDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"MudaDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"Paginacao");
+  $objMaterial->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
 
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
@@ -235,7 +237,7 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript();
 
   include("../menu_principal.php");
 

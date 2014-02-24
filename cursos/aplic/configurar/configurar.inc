@@ -89,7 +89,7 @@ function AlteraPlanoNotificacao($sock, $cod_usuario, $plano, $cod_curso)
 
 function AtualizaPlanoNotificacaoDinamic($dadosForm)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_curso=$dadosForm['cod_curso'];
   $cod_usuario=$dadosForm['cod_usuario'];
@@ -101,15 +101,15 @@ function AtualizaPlanoNotificacaoDinamic($dadosForm)
   {
     $lista_frases = RetornaListaDeFrases($sock, -7);
     /* 26 - Erro ao alterar o plano de notifica��es de novidades */
-    $objResponse->addAlert(RetornaFraseDaLista($lista_frases, 26));
+    $objResponse->alert(RetornaFraseDaLista($lista_frases, 26));
   }
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar();");
+  $objResponse->script("Recarregar();");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 ?>

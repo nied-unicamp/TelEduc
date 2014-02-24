@@ -43,18 +43,20 @@
   include($bibliotecas."geral.inc");
   include("avaliacoes.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("MostrarAvaliacoesDinamic");
-  $objAjax->registerFunction("ApagarAvalicaoDinamic");
-  $objAjax->registerFunction("MostrarParticipacoesDinamic");
-  $objAjax->registerFunction("GravarExpressaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostrarAvaliacoesDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ApagarAvalicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostrarParticipacoesDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"GravarExpressaoDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -1138,7 +1140,7 @@
   echo("    </script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
 
-  if (!$SalvarEmArquivo) $objAjax->printJavascript("../xajax_0.2.4/");
+  if (!$SalvarEmArquivo) $objAjax->printJavascript();
 
   echo("    <form name=\"frmAvaliacao\" method=\"get\">\n");
   echo("      <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");

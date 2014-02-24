@@ -46,7 +46,7 @@
   include("avaliacoes_forum.inc");
   include("../menu.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   /* Ajustes necess�rios para independer do topo_tela.php */
 
@@ -135,12 +135,14 @@
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("MudarRelevanciaDinamic");
-  $objAjax->registerFunction("MostraMensagemDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
   
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
@@ -763,7 +765,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   //include("../menu_principal.php");
   echo("<body onload=\"ExibirTodasMsgs(); self.print();\">");

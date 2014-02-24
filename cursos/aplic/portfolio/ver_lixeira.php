@@ -45,16 +45,18 @@
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
 
-   require_once("../xajax_0.2.4/xajax.inc.php");
+   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
        
   //Estancia o objeto XAJAX
-   $objAjax = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("ExcluirItensDinamic");
-  $objAjax->registerFunction("RecuperarItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
 
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta =15;
   $cod_ferramenta_ajuda = 15;
@@ -128,7 +130,7 @@
   
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

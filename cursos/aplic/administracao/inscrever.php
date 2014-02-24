@@ -46,11 +46,13 @@
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("SugerirLoginDinamic");
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"SugerirLoginDinamic");
+  $objAjax->processRequest();
 
   switch($tipo_usuario)
   {
@@ -367,7 +369,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

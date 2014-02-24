@@ -44,39 +44,41 @@
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("RetornaFraseDinamic");
-  $objAjax->registerFunction("RetornaFraseGeralDinamic");
-  $objAjax->registerFunction("EditarAlternativaObjDinamic");
-  $objAjax->registerFunction("EditarAlternativaMultDinamic");
-  $objAjax->registerFunction("EditarAlternativaDissDinamic");
-  $objAjax->registerFunction("CriarAlternativaDinamic");
-  $objAjax->registerFunction("ApagarAlternativaDinamic");
-  $objAjax->registerFunction("AtualizarNivelDinamic");
-  $objAjax->registerFunction("AtualizarTopicoDinamic");
-  $objAjax->registerFunction("CriaNovoTopicoDinamic");
-  $objAjax->registerFunction("EditarTituloQuestaoDinamic");
-  $objAjax->registerFunction("EditarEnunciadoDinamic");
-  $objAjax->registerFunction("EditarGabaritoQuestaoDissDinamic");
-  $objAjax->registerFunction("EditarGabaritoQuestaoMultDinamic");
-  $objAjax->registerFunction("EditarGabaritoQuestaoObjDinamic");
-  $objAjax->registerFunction("ExcluiArquivoDinamic");
-  $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
-  $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
-  $objAjax->registerFunction("AtualizaPosicoesDasAlternativasDinamic");
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("AtualizaIconesDinamic");
-  $objAjax->registerFunction("MudaTipoQuestaoDinamic");
-  $objAjax->registerFunction("OcultarArquivosDinamic");
-  $objAjax->registerFunction("DesocultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarAlternativaObjDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarAlternativaMultDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarAlternativaDissDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CriarAlternativaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ApagarAlternativaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizarNivelDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizarTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CriaNovoTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloQuestaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarEnunciadoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarGabaritoQuestaoDissDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarGabaritoQuestaoMultDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarGabaritoQuestaoObjDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluiArquivoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExibeArquivoAnexadoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaExistenciaArquivoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaPosicoesDasAlternativasDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaIconesDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaTipoQuestaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
   
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
 
   $cod_ferramenta = 23;
@@ -1554,7 +1556,7 @@
   echo("        }\n");
   echo("      }\n\n");
   echo("    </script>\n\n");
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
   /* fim - JavaScript */
   /*********************************************************/
 

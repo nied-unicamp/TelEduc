@@ -47,12 +47,14 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objMaterial->registerFunction("AlterarNomenclaturaDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"AlterarNomenclaturaDinamic");
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
 
@@ -67,7 +69,7 @@
   echo("    </script>\n");
   /**************** ajax ****************/
 
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objMaterial->printJavascript();
 
   /**************** ajax ****************/
   include("../menu_principal.php");

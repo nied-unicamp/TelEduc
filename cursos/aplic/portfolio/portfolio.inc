@@ -124,7 +124,7 @@ ExecutaAcao
 function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diretorio_arquivos,$tabela,$bibliotecas,$nome_ferramenta,$diretorio_temp){
   	// FIXME
 	// inicializa��o do ajax
-	$objResponse = new xajaxResponse('ISO-8859-1');
+	$objResponse = new xajaxResponse();
 	$sock = Conectar($cod_curso);
 	// cria a hierarquia de pastas
 	CriaArvorePastasTopico($sock, $cod_topico_raiz, $path, $cod_curso, $cod_ferramenta,$diretorio_arquivos);
@@ -174,14 +174,14 @@ function CriaZipDinamic($cod_topico_raiz,$path,$cod_curso,$cod_ferramenta,$diret
   		$DownloadPath.="/".$zipName;
   		copy($FilePath,$DownloadPath);
   		// faz a m�gica do download
-  		$objResponse->addScriptCall("redirecionaDownloadAnexos",$DownloadPath);
+  		$objResponse->call("redirecionaDownloadAnexos",$DownloadPath);
   	}
   	else{
   		// se n�o tem anexos emite um alerta, mais percept�vel que um feedback
-  		$objResponse->addAlert("Nao existem anexos a serem baixados!\n");
+  		$objResponse->alert("Nao existem anexos a serem baixados!\n");
   	}
   	Desconectar($sock);
-  	return $objResponse->getXML();
+  	return $objResponse;
   
 }
 
@@ -1074,7 +1074,7 @@ function MudarCompartilhamentoEAtualiza($dadosForm, $novo_comp){
 */
 function MudarCompartilhamento ($dadosForm, $novo_comp)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $tipo_comp=$dadosForm['tipo_comp'];
   $cod_item=$dadosForm['cod_item'];
@@ -1099,18 +1099,18 @@ function MudarCompartilhamento ($dadosForm, $novo_comp)
   Desconectar($sock);
 
   // Imprime no div valores do formul?io
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("comp_".$cod_item, "innerHTML", print_r($novo_comp, true));
   //addEvent não suporta o parametro 'event'
-  $objResponse->addScript("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
-  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2Data(time()));
+  $objResponse->script("document.getElementById('comp_".$cod_item."').onclick = function(event) { js_cod_item='".$cod_item."'; AtualizaComp('".$tipo_comp."'); MostraLayer(cod_comp,140, event); }" );
+  $objResponse->assign("data_".$cod_item, "innerHTML", UnixTime2Data(time()));
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3511,7 +3511,7 @@ function InsereComentario2($sock,  $comentario, $cod_comentario)
 */
 function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -3523,16 +3523,16 @@ function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   Desconectar($sock);
 
   // Imprime no div valores do formul?io
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("tit_".$cod_item, "innerHTML", htmlentities($novo_nome));
   $objResponse->addEvent("renomear_".$cod_item, "onclick", "AlteraTitulo('".$cod_item."');");
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3545,7 +3545,7 @@ function EditarTitulo ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 */
 function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
@@ -3558,13 +3558,13 @@ function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3579,7 +3579,7 @@ function EditarTexto ($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 function InsereEnderecoDinamic ($nome, $endereco, $cod_item, $cod_curso, $cod_usuario, $texto)
 {
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -3588,7 +3588,7 @@ function InsereEnderecoDinamic ($nome, $endereco, $cod_item, $cod_curso, $cod_us
   $res=Enviar($sock, $consulta);
 
   $linha=RetornaLinha($res);
-  if ($linha[0]!='') return $objResponse->getXML();
+  if ($linha[0]!='') return $objResponse;
 
   $num=RetornaNumLinhas($res);
   if ($num>0)
@@ -3613,35 +3613,35 @@ function InsereEnderecoDinamic ($nome, $endereco, $cod_item, $cod_curso, $cod_us
   $linha=RetornaLinha($res);
   $cod_endereco=$linha['cod_endereco'];
 
-  $objResponse->addCreate("listaEnderecos", "span", "end_".$cod_endereco);
-  $objResponse->addCreate("end_".$cod_endereco, "span", "link_".$cod_endereco);
-  $objResponse->addAssign("link_".$cod_endereco, "className", "link");
+  $objResponse->create("listaEnderecos", "span", "end_".$cod_endereco);
+  $objResponse->create("end_".$cod_endereco, "span", "link_".$cod_endereco);
+  $objResponse->assign("link_".$cod_endereco, "className", "link");
 
   if ($num==0){
     if ($nome!=''){
-      $objResponse->addAssign("link_".$cod_endereco, "innerHTML", $nome);
-      $objResponse->addInsertAfter("link_".$cod_endereco, "span", "endEndereco_".$cod_endereco);
-      $objResponse->addAssign("endEndereco_".$cod_endereco, "innerHTML", "&nbsp;&nbsp;(".RetornaURLValida($endereco).") - \n");
+      $objResponse->assign("link_".$cod_endereco, "innerHTML", $nome);
+      $objResponse->insertAfter("link_".$cod_endereco, "span", "endEndereco_".$cod_endereco);
+      $objResponse->assign("endEndereco_".$cod_endereco, "innerHTML", "&nbsp;&nbsp;(".RetornaURLValida($endereco).") - \n");
     }else{
-      $objResponse->addAssign("link_".$cod_endereco, "innerHTML", RetornaURLValida($endereco)." - ");
+      $objResponse->assign("link_".$cod_endereco, "innerHTML", RetornaURLValida($endereco)." - ");
     }
   }
 
   $objResponse->addEvent("link_".$cod_endereco, "onClick", "WindowOpenVerURL('".ConverteSpace2Mais(RetornaURLValida($endereco))."');return(false);");
 
-  $objResponse->addCreate("end_".$cod_endereco, "span", "endApagar_".$cod_endereco);
-  $objResponse->addAssign("endApagar_".$cod_endereco, "className", 'link');
-  $objResponse->addAssign("endApagar_".$cod_endereco, "innerHTML", 'Apagar<br>');
+  $objResponse->create("end_".$cod_endereco, "span", "endApagar_".$cod_endereco);
+  $objResponse->assign("endApagar_".$cod_endereco, "className", 'link');
+  $objResponse->assign("endApagar_".$cod_endereco, "innerHTML", 'Apagar<br>');
   $objResponse->addEvent("endApagar_".$cod_endereco, "onClick", "ApagarEndereco('".$cod_curso."', '".$cod_endereco."');");
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3657,7 +3657,7 @@ function InsereEnderecoDinamic ($nome, $endereco, $cod_item, $cod_curso, $cod_us
 */
 function AbreEdicao($cod_curso, $cod_item, $cod_usuario, $cod_usuario_portfolio, $cod_grupo_portfolio, $cod_topico_raiz){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data ="";
@@ -3677,9 +3677,9 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario, $cod_usuario_portfolio,
   $linha_historico=RetornaUltimaPosicaoHistorico($sock, $cod_item);
 
   if (($linha['status']=="E")&&($cod_usuario !=$linha_historico['cod_usuario'])){
-    $objResponse->addScript("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
+    $objResponse->script("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
 
-    $objResponse->addScript("document.location='portfolio.php?cod_usuario=".$cod_usuario."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_topico_raiz=".$cod_topico_raiz."'");
+    $objResponse->script("document.location='portfolio.php?cod_usuario=".$cod_usuario."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_topico_raiz=".$cod_topico_raiz."'");
   }else if ($linha['status']!="E"){
     $consulta="update Portfolio_itens set status='E', cod_usuario=".$cod_usuario.", inicio_edicao=".$data." where cod_item=".$cod_item;
     $res=Enviar($sock,$consulta);
@@ -3689,7 +3689,7 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario, $cod_usuario_portfolio,
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3741,7 +3741,7 @@ function AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, $acao){
 */
 function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -3772,7 +3772,7 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
   //Correção feita para não acontecer de os horários ficarem iguais no banco e atrapalhar o status do item
    if ($linha[0]!=""){ sleep(1); }
   
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
   if ( !function_exists('htmlspecialchars_decode') )
@@ -3794,18 +3794,18 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, $acao){
 */
 function ExcluirArquivo($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $texto){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $arq=htmlspecialchars_decode($arq);
   $arq=str_replace("%20"," ",$arq);
   
   RemoveDiretorio($arq);
-  $objResponse->addRemove('arq_'.$numero);
+  $objResponse->remove('arq_'.$numero);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3819,22 +3819,22 @@ function ExcluirArquivo($numero, $arq, $cod_curso, $cod_item, $cod_usuario, $tex
 */
 function ExcluirEndereco ($cod_curso, $cod_endereco, $cod_item, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
   $consulta="delete from Portfolio_itens_enderecos where cod_endereco=".$cod_endereco;
   $res=Enviar($sock, $consulta);
 
-  $objResponse->addRemove('end_'.$cod_endereco);
+  $objResponse->remove('end_'.$cod_endereco);
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -3848,7 +3848,7 @@ function ExcluirEndereco ($cod_curso, $cod_endereco, $cod_item, $cod_usuario, $t
    Saida: XML da função Ajax
 */
 function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_item, $cod_usuario, $texto){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0]));
@@ -3856,23 +3856,23 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_i
 
     AlteraStatusArquivo($nome_arquivo,true);
 
-    $objResponse->addCreate('local_oculto_'.$linha[1], 'span', 'arq_oculto_'.$linha[1]);
+    $objResponse->create('local_oculto_'.$linha[1], 'span', 'arq_oculto_'.$linha[1]);
 
-    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in1_'.$linha[1]);
-    $objResponse->addAssign('arq_oculto_in1_'.$linha[1], 'innerHTML', '&nbsp;- ');
+    $objResponse->create('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in1_'.$linha[1]);
+    $objResponse->assign('arq_oculto_in1_'.$linha[1], 'innerHTML', '&nbsp;- ');
 
-    $objResponse->addCreate('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in2_'.$linha[1]);
-    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'innerHTML', $msg_oculto);
-    $objResponse->addAssign('arq_oculto_in2_'.$linha[1], 'className', 'arqOculto');
+    $objResponse->create('arq_oculto_'.$linha[1], 'span', 'arq_oculto_in2_'.$linha[1]);
+    $objResponse->assign('arq_oculto_in2_'.$linha[1], 'innerHTML', $msg_oculto);
+    $objResponse->assign('arq_oculto_in2_'.$linha[1], 'className', 'arqOculto');
 
-    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'sim\');');
+    $objResponse->script('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'sim\');');
   }
   $objResponse->addEvent('sArq_ocultar', 'onclick', 'Desocultar();');
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3887,7 +3887,7 @@ function OcultarArquivosDinamic($nomes_arquivos, $msg_oculto, $cod_curso, $cod_i
    Saida: XML da função Ajax
 */
 function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_usuario, $texto){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   foreach($nomes_arquivos as $cod => $linha){
     $nome_arquivo = implode("/", explode("//", $linha[0]));
@@ -3895,16 +3895,16 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_
 
     AlteraStatusArquivo($nome_arquivo,false);
 
-    $objResponse->addRemove('arq_oculto_'.$linha[1]);
-    $objResponse->addScript('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'nao\');');
+    $objResponse->remove('arq_oculto_'.$linha[1]);
+    $objResponse->script('document.getElementById(\'nomeArq_'.$linha[1].'\').setAttribute(\'arqOculto\', \'nao\');');
 
   }
   $objResponse->addEvent('sArq_ocultar', 'onclick', 'Ocultar();');
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -3920,11 +3920,11 @@ function DesocultarArquivosDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_
    Saida: XML da função Ajax
 */
 function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usuario, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // Se a origem ou destino forem vazios retorna false
   if (($origem == "") || ($destino == ""))
-    return $objResponse->getXML();
+    return $objResponse;
 
   // Vari?el de retorno da fun?o
   $flag = true;
@@ -3936,9 +3936,9 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
   $origem = eregi_replace("%20", " ", $origem);
   $origem = realpath($origem);
   if ($origem == false){
-    $objResponse->addScript("EscondeLayers();");
-    $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
-    return $objResponse->getXML();
+    $objResponse->script("EscondeLayers();");
+    $objResponse->call("mostraFeedback", $msg_erro, 'false');
+    return $objResponse;
   }
 
   // Se retornar mais que um elemento (ou seja, pelo menos
@@ -3952,9 +3952,9 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 
       if (ExisteArquivo($dest)){
         AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
-        $objResponse->addScript("EscondeLayers();");
-        $objResponse->addScript("window.location='ver.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio+'&acao=moverarquivos&atualizacao=true';");
-        return $objResponse->getXML();
+        $objResponse->script("EscondeLayers();");
+        $objResponse->script("window.location='ver.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio+'&acao=moverarquivos&atualizacao=true';");
+        return $objResponse;
       }
 
       // O teste aqui tamb? ?necess?io para ver se 'RemoveArquivo'
@@ -3967,21 +3967,21 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
           if (AlteraStatusArquivo($dest, $stat))
           {
             if (!RemoveArquivo($origem)){
-              $objResponse->addScript("EscondeLayers()");;
-              $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
-              return $objResponse->getXML();
+              $objResponse->script("EscondeLayers()");;
+              $objResponse->call("mostraFeedback", $msg_erro, 'false');
+              return $objResponse;
             }
           }
           else{
-            $objResponse->addScript("EscondeLayers();");
-            $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
-            return $objResponse->getXML();
+            $objResponse->script("EscondeLayers();");
+            $objResponse->call("mostraFeedback", $msg_erro, 'false');
+            return $objResponse;
           }
         }
         else{
-          $objResponse->addScript("EscondeLayers();");
-          $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
-          return $objResponse->getXML();
+          $objResponse->script("EscondeLayers();");
+          $objResponse->call("mostraFeedback", $msg_erro, 'false');
+          return $objResponse;
         }
       }
 
@@ -3990,11 +3990,11 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
   if (is_dir($origem))
     $flag = RemoveDiretorio($origem);
 
-  $objResponse->addScript("window.location='ver.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio+'&acao=moverarquivos&atualizacao=true';");
+  $objResponse->script("window.location='ver.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_topico_ant+'&cod_usuario_portfolio='+cod_usuario_portfolio+'&acao=moverarquivos&atualizacao=true';");
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -4011,7 +4011,7 @@ function MoverArquivosDinamic($origem, $destino, $cod_curso, $cod_item, $cod_usu
 */
 function MoverItensDinamic($cod_curso, $cod_usuario, $cod_topico_raiz, $cod_topico_novo, $cod_topicos, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -4029,7 +4029,7 @@ function MoverItensDinamic($cod_curso, $cod_usuario, $cod_topico_raiz, $cod_topi
     if (EPaiTopicos($sock, $cod_topico_novo, $cod_topicos))
     {
       //28 - Você não pode mover uma pasta para ela mesma ou para uma subpasta dela.
-      $objResponse->addScriptCall("mostraFeedback", RetornaFraseDaLista($lista_frases,28), 'false');
+      $objResponse->call("mostraFeedback", RetornaFraseDaLista($lista_frases,28), 'false');
     }
     else
     {
@@ -4056,13 +4056,13 @@ function MoverItensDinamic($cod_curso, $cod_usuario, $cod_topico_raiz, $cod_topi
             MoverItem($sock, $cod_itens[$i], $cod_usuario, $cod_topico_novo);
           }
         }
-        $objResponse->addScript('Redirecionar('.$cod_topico_raiz.', "moverItens", "true");');
+        $objResponse->script('Redirecionar('.$cod_topico_raiz.', "moverItens", "true");');
       }
       //só existem itens
       else //existe topico com mesmo nome no diretorio destino
       {
          /* 71- Não foi possível mover a pasta, pois já existe uma pasta com mesmo nome no diretório destino. */
-        $objResponse->addScriptCall("mostraFeedback", RetornaFraseDaLista($lista_frases,71), 'false');
+        $objResponse->call("mostraFeedback", RetornaFraseDaLista($lista_frases,71), 'false');
       }
     }
   }
@@ -4075,7 +4075,7 @@ function MoverItensDinamic($cod_curso, $cod_usuario, $cod_topico_raiz, $cod_topi
         MoverItem($sock, $cod_itens[$i], $cod_usuario, $cod_topico_novo);
       }
     }
-    $objResponse->addScript('Redirecionar('.$cod_topico_raiz.', "moverItens", "true");');
+    $objResponse->script('Redirecionar('.$cod_topico_raiz.', "moverItens", "true");');
   }
 
   ArrumaPosicoes($sock, $cod_topico_novo);
@@ -4083,7 +4083,7 @@ function MoverItensDinamic($cod_curso, $cod_usuario, $cod_topico_raiz, $cod_topi
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -4143,7 +4143,7 @@ function EPaiTopicos($sock, $cod_topico_dest, $v_topicos)
 */
 function ExcluirItensDinamic($cod_curso, $cod_usuario, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -4157,9 +4157,9 @@ function ExcluirItensDinamic($cod_curso, $cod_usuario, $cod_itens){
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar('excluirItens', 'true');");
+  $objResponse->script("Recarregar('excluirItens', 'true');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -4174,7 +4174,7 @@ function ExcluirItensDinamic($cod_curso, $cod_usuario, $cod_itens){
 */
 function RecuperarItensDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_itens){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
   
@@ -4188,9 +4188,9 @@ function RecuperarItensDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar('recuperarItens', 'true');");
+  $objResponse->script("Recarregar('recuperarItens', 'true');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -4201,7 +4201,7 @@ function RecuperarItensDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $
 */
 function RetornaFraseDinamic($variavel){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -4218,9 +4218,9 @@ function RetornaFraseDinamic($variavel){
   
   $retorno.="\n}";
 
-  $objResponse->addScript($variavel." = ".$retorno.";");
+  $objResponse->script($variavel." = ".$retorno.";");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -4231,7 +4231,7 @@ function RetornaFraseDinamic($variavel){
 */
 function RetornaFraseGeralDinamic($variavel){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -4248,10 +4248,10 @@ function RetornaFraseGeralDinamic($variavel){
   
   $retorno.="\n}";
 
-  $objResponse->addScript($variavel." = ".$retorno.";");
+  $objResponse->script($variavel." = ".$retorno.";");
 
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
@@ -4297,7 +4297,7 @@ function RetornaTituloAvaliacaoDoItem($sock, $cod_item){
 */
 function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avaliacao, $msg1, $msg2, $msg_erro){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -4313,35 +4313,35 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
     
     if ($linha[0]=="") {  // Se nao existe avaliacao associada ao $cod_item
       AssociarItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Associa a avaliacao no BD
-      $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
-      $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+      $objResponse->script("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
+      $objResponse->call("mostraFeedback", $msg2, 'true');
 	  $atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
-      $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
+      $objResponse->assign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
     } else {  //Se jah existe uma avaliacao associada ao $cod_item
         $foi_avaliado = FoiAvaliado($sock, $cod_avaliacao, $cod_usuario);
         if($foi_avaliado){
-          $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+          $objResponse->call("mostraFeedback", $msg_erro, 'false');
         }
         else{
           AlterarAssociacaoItemAvaliacao($sock,$cod_item,$cod_avaliacao);  // Altera a associacao no BD
-          $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");  //Mostra o radiobox da antiga avaliacao associada
-          $objResponse->addScript("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
-          $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+          $objResponse->script("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");  //Mostra o radiobox da antiga avaliacao associada
+          $objResponse->script("AtualizaAssociacaoForm(".$cod_avaliacao.")");  // Esconde o radiobox da avaliacao na listagem
+          $objResponse->call("mostraFeedback", $msg2, 'true');
           $atividade=RetornaTituloAvaliacaoDoItem($sock, $cod_item);
-          $objResponse->addAssign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
+          $objResponse->assign("estadoAvaliacao","innerHTML", "<a class=text href=# onClick=\"window.open('../avaliacoes/ver_popup.php?&cod_curso=".$cod_curso."&cod_avaliacao=".$cod_avaliacao."','VerAvaliacao','width=450,height=450,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');EscondeLayers();return(false);\">".$atividade."</a><br />");
       }
     }
     
   } else {  // Nao foi selecionada avaliacao
-    $objResponse->addScript("alert('".$msg1."');");
-    $objResponse->addScript("FechaDivAvaliacoes();");
+    $objResponse->script("alert('".$msg1."');");
+    $objResponse->script("FechaDivAvaliacoes();");
   }
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -4356,7 +4356,7 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
 */
 function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg1, $msg2){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   global $lista_frases_geral;
 
@@ -4369,28 +4369,28 @@ function DesassociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item, $msg1, 
   //Existe Associação
   if ($linha[0]!=""){
     DesassociarItemAvaliacao($sock,$cod_item);
-    $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
+    $objResponse->script("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
   }
 
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
 
-  $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg1);
-  $objResponse->addClear("associadoItem", "innerHTML");
-  $objResponse->addAssign("assocAval", "className", "link");
+  $objResponse->assign("estadoAvaliacao","innerHTML", $msg1);
+  $objResponse->clear("associadoItem", "innerHTML");
+  $objResponse->assign("assocAval", "className", "link");
   $objResponse->addEvent("assocAval", "onClick", "AssociarAvaliacao()");
-  $objResponse->addScript("document.getElementById('tituloAval').removeChild(document.getElementById('tituloAval').lastChild);");
-  $objResponse->addScript("cancelarElemento=null;");
-  $objResponse->addScript("DesmarcaRadios();");
-  $objResponse->addAssign("divAvaliacoes", "className", "divHidden");
-  $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+  $objResponse->script("document.getElementById('tituloAval').removeChild(document.getElementById('tituloAval').lastChild);");
+  $objResponse->script("cancelarElemento=null;");
+  $objResponse->script("DesmarcaRadios();");
+  $objResponse->assign("divAvaliacoes", "className", "divHidden");
+  $objResponse->call("mostraFeedback", $msg2, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function VerificaSePodeDesassociar($cod_curso, $cod_usuario, $cod_item, $msg1, $msg2, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $sock=Conectar($cod_curso);
 
@@ -4406,25 +4406,25 @@ function VerificaSePodeDesassociar($cod_curso, $cod_usuario, $cod_item, $msg1, $
     
     if (!$foi_avaliado){
       DesassociarItemAvaliacao($sock,$cod_item);
-      $objResponse->addScript("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
+      $objResponse->script("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
       AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
       
-      $objResponse->addAssign("estadoAvaliacao","innerHTML", $msg1);
-      $objResponse->addClear("associadoItem", "innerHTML");
-      $objResponse->addAssign("assocAval", "className", "link");
+      $objResponse->assign("estadoAvaliacao","innerHTML", $msg1);
+      $objResponse->clear("associadoItem", "innerHTML");
+      $objResponse->assign("assocAval", "className", "link");
       $objResponse->addEvent("assocAval", "onClick", "AssociarAvaliacao()");
-      $objResponse->addScript("document.getElementById('tituloAval').removeChild(document.getElementById('tituloAval').lastChild);");
-      $objResponse->addScript("cancelarElemento=null;");
-      $objResponse->addScript("DesmarcaRadios();");
-      $objResponse->addAssign("divAvaliacoes", "className", "divHidden");
-      $objResponse->addScriptCall("mostraFeedback", $msg2, 'true');
+      $objResponse->script("document.getElementById('tituloAval').removeChild(document.getElementById('tituloAval').lastChild);");
+      $objResponse->script("cancelarElemento=null;");
+      $objResponse->script("DesmarcaRadios();");
+      $objResponse->assign("divAvaliacoes", "className", "divHidden");
+      $objResponse->call("mostraFeedback", $msg2, 'true');
     }
     else{
-      $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+      $objResponse->call("mostraFeedback", $msg_erro, 'false');
     }
     Desconectar($sock);
   }
-  return $objResponse->getXML();
+  return $objResponse;
    
   }
 /* *********************************************************************
@@ -4439,7 +4439,7 @@ function IndentarComentario($texto, $spaces){
 }
 
 function AtualizaPosicoes($cod_curso, $cod_usuario, $cod_topico, $tabela, $texto, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -4458,20 +4458,20 @@ function AtualizaPosicoes($cod_curso, $cod_usuario, $cod_topico, $tabela, $texto
     }
 
     LiberaSemaforo($sock, "Portfolio");
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->call("mostraFeedback", $texto, 'true');
   }
   else
   {
-    $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+    $objResponse->call("mostraFeedback", $msg_erro, 'false');
   }
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 function RenomearTopicoDinamic ($cod_curso, $cod_usuario, $cod_topico, $novo_nome, $texto, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
@@ -4484,22 +4484,22 @@ function RenomearTopicoDinamic ($cod_curso, $cod_usuario, $cod_topico, $novo_nom
   if (NaoExisteTop($sock, $cod_topico_raiz[0], $novo_nome, $cod_usuario))
   {
     RenomearTopico ($sock, $cod_topico, $novo_nome);
-    $objResponse->addAssign("nome_topico_atual", "innerHTML", htmlentities($novo_nome));
-    $objResponse->addScript("EscondeLayers();");
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->assign("nome_topico_atual", "innerHTML", htmlentities($novo_nome));
+    $objResponse->script("EscondeLayers();");
+    $objResponse->call("mostraFeedback", $texto, 'true');
   }else{
-    $objResponse->addScript("document.getElementById('nome_topico_atual').innerHTML=nome_topico_atual;");
-    $objResponse->addScript("EscondeLayers();");
-    $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+    $objResponse->script("document.getElementById('nome_topico_atual').innerHTML=nome_topico_atual;");
+    $objResponse->script("EscondeLayers();");
+    $objResponse->call("mostraFeedback", $msg_erro, 'false');
   }
 
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 
 }
 
 function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_usuario_portfolio, $cod_topico_raiz, $dirname, $novo_nome, $msg_erro){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar("");
 
@@ -4514,15 +4514,15 @@ function CriaTopicoDinamic($cod_curso, $cod_usuario, $cod_grupo_portfolio, $cod_
   {
     $cod_topico=CriarTopico($sock, $cod_topico_raiz, $novo_nome, $cod_usuario, $cod_grupo_portfolio);
 
-    $objResponse->addRedirect("portfolio.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico."&cod_usuario=".$cod_usuario."&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&acao=criarTopico&atualizacao=true");
+    $objResponse->redirect("portfolio.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico."&cod_usuario=".$cod_usuario."&cod_usuario_portfolio=".$cod_usuario_portfolio."&cod_grupo_portfolio=".$cod_grupo_portfolio."&acao=criarTopico&atualizacao=true");
 
   }else{
-    $objResponse->addScriptCall("mostraFeedback", $msg_erro, 'false');
+    $objResponse->call("mostraFeedback", $msg_erro, 'false');
   }
 
 
   Desconectar($sock);
-  return $objResponse->getXML();
+  return $objResponse;
 
 }
 

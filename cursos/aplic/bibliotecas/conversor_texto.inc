@@ -331,11 +331,11 @@ function RetornaURLValida($endereco)
  */
 function DecodificaString($id, $texto, $local){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
-  $objResponse->addAssign($id, $local, html_entity_decode($texto));
+  $objResponse->assign($id, $local, html_entity_decode($texto));
  
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************

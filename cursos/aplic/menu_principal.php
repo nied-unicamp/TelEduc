@@ -1,13 +1,15 @@
 <?php
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
-  $objAjax->registerFunction("DeslogaUsuarioCursoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->processRequest();
+  $objAjax->printJavascript();
 
   $sock=Conectar($cod_curso);
 

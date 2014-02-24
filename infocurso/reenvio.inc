@@ -314,11 +314,11 @@ $cor=$j%2;
 */
 function AlterarEmailDinamic($cod_curso,$novo_email)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $res=AlteraEmail($cod_curso,$novo_email);
-  $objResponse->addScript("EmailAlterado(".$res.");");
+  $objResponse->script("EmailAlterado(".$res.");");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 ?>

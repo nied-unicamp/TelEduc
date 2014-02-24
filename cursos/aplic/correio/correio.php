@@ -44,16 +44,17 @@
   include($bibliotecas."geral.inc");
   include("correio.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax = new xajax();
-  $objAjax->registerFunction("trocaEstadoMsg");
-  $objAjax->registerFunction("VerificaMsgNova");
-  $objAjax->registerFunction("RemoveLinkSimbolico");
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"trocaEstadoMsg");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaMsgNova");
+  $objAjax->register(XAJAX_FUNCTION,"RemoveLinkSimbolico");
+  $objAjax->processRequest();
 
   $cod_ferramenta = 11;
   $cod_ferramenta_ajuda = 11;

@@ -503,7 +503,7 @@ function CriaLinkVisualizar($sock,$dirname,$cod_curso,$cod_usuario,$cod_item,$di
 */
 function RetornaFraseDinamic($variavel){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -520,9 +520,9 @@ function RetornaFraseDinamic($variavel){
   
   $retorno.="\n}";
 
-  $objResponse->addScript($variavel." = ".$retorno.";");
+  $objResponse->script($variavel." = ".$retorno.";");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -533,7 +533,7 @@ function RetornaFraseDinamic($variavel){
 */
 function RetornaFraseGeralDinamic($variavel){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -550,10 +550,10 @@ function RetornaFraseGeralDinamic($variavel){
   
   $retorno.="\n}";
 
-  $objResponse->addScript($variavel." = ".$retorno.";");
+  $objResponse->script($variavel." = ".$retorno.";");
 
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -594,7 +594,7 @@ function VerificaTexto($texto){
 */
 function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
   $sock=Conectar($cod_curso);
@@ -604,13 +604,13 @@ function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
   AtualizaFerramentasNova($sock, 16, 'T');
   Desconectar($sock);
   // Imprime no div valores do formulário
-  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
+  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas(VerificaTexto($novo_nome))), true));
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -622,15 +622,15 @@ function EditarTexto($cod_curso, $cod_item, $novo_nome, $cod_usuario, $texto)
 */
 function ExcluirArquivo($numero, $arq){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $arq=htmlspecialchars_decode($arq);
   $arq = str_replace("%20"," ",$arq);
 
   RemoveDiretorio($arq);
 
-  $objResponse->addRemove('arq_'.$numero);
+  $objResponse->remove('arq_'.$numero);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -646,7 +646,7 @@ function SelecionarEntradaDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_u
 {
   AbreEdicao($cod_curso, $cod_item, $cod_usuario);
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   foreach($nomes_arquivos as $cod => $linha)
   {
@@ -658,8 +658,8 @@ function SelecionarEntradaDinamic($nomes_arquivos, $cod_curso, $cod_item, $cod_u
   }
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario);
-  $objResponse->addScript('window.location = "editar_dinam.php?cod_curso='.$cod_curso.'&cod_usuario='.$cod_usuario.'&cod_ferramenta=16&acao=selecionarEntrada&atualizacao=true"');
-  return $objResponse->getXML();
+  $objResponse->script('window.location = "editar_dinam.php?cod_curso='.$cod_curso.'&cod_usuario='.$cod_usuario.'&cod_ferramenta=16&acao=selecionarEntrada&atualizacao=true"');
+  return $objResponse;
 }
 
 
@@ -676,15 +676,15 @@ function RetirarEntradaDinamic($nome_arquivo, $cod_curso, $cod_item, $cod_usuari
 
   AbreEdicao($cod_curso, $cod_item, $cod_usuario);  
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   AlteraStatusArquivo($nome_arquivo,false);
 
   AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -697,7 +697,7 @@ function RetirarEntradaDinamic($nome_arquivo, $cod_curso, $cod_item, $cod_usuari
 */
 function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -709,7 +709,7 @@ function AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario){
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -739,16 +739,16 @@ function AcabaEdicao($sock, $cod_item){
 */
 function AbreEdicao($cod_curso, $cod_item, $cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
   
   $linha=RetornaDadosDinamica($sock);
 
   if (($linha['status']=="E")&&($cod_usuario!=$linha['cod_usuario'])){
-    $objResponse->addScript("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
+    $objResponse->script("window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."','EmEdicao','width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');");
 
-    $objResponse->addScript("document.location='dinamica.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."cod_ferramenta=16'");
+    $objResponse->script("document.location='dinamica.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."cod_ferramenta=16'");
   }else {	
     $consulta="update Dinamica set status='E',cod_usuario=".VerificaNumeroQuery($cod_usuario)." where cod_dinamica=".VerificaNumeroQuery($cod_item);
     $res=Enviar($sock,$consulta);
@@ -756,7 +756,7 @@ function AbreEdicao($cod_curso, $cod_item, $cod_usuario)
 
   Desconectar($sock);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************

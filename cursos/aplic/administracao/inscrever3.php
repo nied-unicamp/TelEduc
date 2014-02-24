@@ -44,14 +44,16 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   //Instancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objAjax->registerFunction("ListaUsuariosPaginaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ListaUsuariosPaginaDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -82,7 +84,7 @@
   $total_usuarios = RetornaContagemUsuariosGlobal($sock,$cod_curso,$busca);
 
   /*Funcao JavaScript*/
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
   
   echo("    <script type=\"text/javascript\">\n\n");
 

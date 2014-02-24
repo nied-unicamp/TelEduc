@@ -44,24 +44,26 @@
   include($bibliotecas."geral.inc");
   include("avaliacoes.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("EditarTexto");
-  $objAjax->registerFunction("EditarValor");
-  $objAjax->registerFunction("EditarTitulo");
-  $objAjax->registerFunction("AlterarPeriodoDinamic");
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("RetornaFraseGeralDinamic");
-  $objAjax->registerFunction("AbreEdicao");
-  $objAjax->registerFunction("AcabaEdicaoDinamic");
-  $objAjax->registerFunction("AlertaFraseFerramenta");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"EditarValor");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objAjax->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlertaFraseFerramenta");
 
 
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -370,7 +372,7 @@
  
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
   //echo("    <script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");

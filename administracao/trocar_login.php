@@ -46,15 +46,17 @@
 
   VerificaAutenticacaoAdministracao();
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("SugerirLoginDinamic");
-  $objAjax->registerFunction("TrocaLoginUsuario");
+  $objAjax->register(XAJAX_FUNCTION,"SugerirLoginDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"TrocaLoginUsuario");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   include("../topo_tela_inicial.php");
 
@@ -65,13 +67,13 @@
   echo("      var flagOnDivSugs=0;");
 
   echo("      function Iniciar() {\n");
-  echo("	startList();\n");
+  echo("        startList();\n");
   echo("      }\n");
 
   echo("      function TrocaLogin(login_antigo,novo_login)\n");
   echo("      {\n");
   echo("        if(login_antigo != '' && novo_login != '')\n");
-  echo("	  xajax_TrocaLoginUsuario(login_antigo,novo_login);\n");
+  echo("          xajax_TrocaLoginUsuario(login_antigo,novo_login);\n");
   echo("        else\n");
   //504 - Ambos os campos devem ser preenchidos! 
   echo("          alert('".RetornaFraseDaLista($lista_frases_adm,504)."');\n");
@@ -81,20 +83,20 @@
   echo("      function RespostaUsuario(res)\n");
   echo("      {\n");
   //505 - Novo login ja existe.Escolha um login diferente.
-  echo("	if(res == 0)\n");
+  echo("        if(res == 0)\n");
   echo("        {\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases_adm,505)."');\n");
   echo("          document.getElementById('novo_login').value = '';\n");
   echo("        }\n");
   //506 - Login alterado com sucesso ! 
-  echo("	if(res == 2)\n");
+  echo("        if(res == 2)\n");
   echo("        {\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases_adm,506)."');\n");
   echo("          document.getElementById('login').value = '';\n");
   echo("          document.getElementById('novo_login').value = '';\n");
   echo("        }\n");
   //507 - Login Atual inexistente.Digite-o novamente ou utilize a sugestao de login (recomendado). 
-  echo("	if(res == 1)\n");
+  echo("        if(res == 1)\n");
   echo("        {\n");
   echo("          alert('".RetornaFraseDaLista($lista_frases_adm,507)."');\n");
   echo("          document.getElementById('login').value = '';\n");
@@ -112,7 +114,7 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
   //   fim do javascript
 
   include("../menu_principal_tela_inicial.php");

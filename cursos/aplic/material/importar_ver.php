@@ -47,21 +47,23 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
   $objMaterial = new xajax();
+  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
+  $objMaterial->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun??es em PHP que voc? quer chamar atrav?s do xajax
-  $objMaterial->registerFunction("AbreEdicao");
-  $objMaterial->registerFunction("AcabaEdicaoDinamic");
-  $objMaterial->registerFunction("CancelaEdicaoDinamic");
-  $objMaterial->registerFunction("ExcluirArquivo");
-  $objMaterial->registerFunction("ExcluirEndereco");
-  $objMaterial->registerFunction("DecodificaString");
-  $objMaterial->registerFunction("OcultarArquivosDinamic");
-  $objMaterial->registerFunction("DesocultarArquivosDinamic");
-  $objMaterial->registerFunction("MoverArquivosDinamic");
-  $objMaterial->registerFunction("MoverItensDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objMaterial->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objMaterial->register(XAJAX_FUNCTION,"ExcluirEndereco");
+  $objMaterial->register(XAJAX_FUNCTION,"DecodificaString");
+  $objMaterial->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+  $objMaterial->register(XAJAX_FUNCTION,"MoverItensDinamic");
   // Manda o xajax executar os pedidos acima.
   $objMaterial->processRequests();
 

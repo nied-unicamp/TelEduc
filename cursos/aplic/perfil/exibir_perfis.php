@@ -48,7 +48,7 @@ Programa Principal
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("perfil.inc");
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
 
 //   Global $cod_lingua_s;
@@ -56,9 +56,11 @@ Programa Principal
 
   // Estancia o objeto XAJAX
   $objMudarComp = new xajax();
+  $objMudarComp->configure("characterEncoding", 'ISO-8859-1');
+  $objMudarComp->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objMudarComp->registerFunction("RetornaDadosPerfilDinamic");
-  $objMudarComp->registerFunction("EditarPerfilDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
+  $objMudarComp->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
 
   // Manda o xajax executar os pedidos acima.
   $objMudarComp->processRequests();
@@ -212,7 +214,7 @@ Programa Principal
 
   echo("    </script>\n");
 
-  $objMudarComp->printJavascript("../xajax_0.2.4/");
+  $objMudarComp->printJavascript();
   /*
   =============================
   Retorno ao programa principal
