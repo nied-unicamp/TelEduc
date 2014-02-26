@@ -50,12 +50,12 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
-  $objMaterial->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
 
   // **************** VARIAVEIS DE ENTRADA ****************
@@ -232,9 +232,6 @@
   echo ("      }\n\n");
 
   echo ("      </script>\n\n");
-
-  /**************** ajax ****************/
-  $objMaterial->printJavascript();
 
   include ("../menu_principal.php");
 

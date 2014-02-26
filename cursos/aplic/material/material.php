@@ -49,23 +49,23 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objMaterial->register(XAJAX_FUNCTION,"MudarCompartilhamento");
-  $objMaterial->register(XAJAX_FUNCTION,"AbreEdicao");
-  $objMaterial->register(XAJAX_FUNCTION,"DecodificaString");
-  $objMaterial->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"MoverItensDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"AtualizaPosicoes");
-  $objMaterial->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"CriaZipDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaPosicoes");
+  $objAjax->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CriaZipDinamic");
   
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
   /**************** ajax ****************/
 

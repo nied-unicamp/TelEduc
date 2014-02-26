@@ -55,15 +55,15 @@ Programa Principal
   $cod_lingua = $_SESSION['cod_lingua_s'];
 
   // Estancia o objeto XAJAX
-  $objMudarComp = new xajax();
-  $objMudarComp->configure("characterEncoding", 'ISO-8859-1');
-  $objMudarComp->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->configure('javascript URI', "../xajax_0.5");
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objMudarComp->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
-  $objMudarComp->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
 
   // Manda o xajax executar os pedidos acima.
-  $objMudarComp->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=13;
   include("../topo_tela.php");
@@ -214,7 +214,6 @@ Programa Principal
 
   echo("    </script>\n");
 
-  $objMudarComp->printJavascript();
   /*
   =============================
   Retorno ao programa principal
