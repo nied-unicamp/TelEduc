@@ -102,6 +102,20 @@
   VerificaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, $cod_ferramenta);
   MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
+  if (!$SalvarEmArquivo) {
+    // Instancia, se não estiver instanciado ainda, um objeto ajax.
+    if (!isset($objAjax) || !($objAjax instanceof xajax)) {
+      // Estancia e configura o objeto XAJAX
+      $objAjax = new xajax();
+      $objAjax->configure("characterEncoding", 'ISO-8859-1');
+      $objAjax->setFlag("decodeUTF8Input",true);
+      $objAjax->configure('javascript URI', "../xajax_0.5");
+    }
+    // Registra funções para uso de menu_principal.php
+    $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+    $objAjax->processRequest();
+  }
+
   echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
   echo("<html lang=\"pt\">\n");
   echo("  <head>\n");
@@ -160,17 +174,7 @@
       echo("    <script type=\"text/javascript\" src=\"".$js."\"></script>\n");
     }
 
-    // Instancia, se não estiver instanciado ainda, um objeto ajax.
-    if (!isset($objAjax) || !($objAjax instanceof xajax)) {
-      // Estancia o objeto XAJAX
-      $objAjax = new xajax();
-      $objAjax->configure("characterEncoding", 'ISO-8859-1');
-      $objAjax->setFlag("decodeUTF8Input",true);
-      $objAjax->configure('javascript URI', "../xajax_0.5");
-    }
-    // Registra funções para uso de menu_principal.php
-    $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
-    $objAjax->processRequest();
+    // Imprime o codigo javascript necessário para o funcionamento do xajax.
     $objAjax->printJavascript();
 
   }
