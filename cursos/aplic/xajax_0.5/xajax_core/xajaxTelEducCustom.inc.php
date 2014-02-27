@@ -14,6 +14,8 @@
 	
 */
 
+require 'xajax.inc.php';
+
 class xajaxTelEducCustom extends xajax
 {
 	function __wakeup()
