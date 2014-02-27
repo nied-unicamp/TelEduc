@@ -65,11 +65,17 @@ class xajaxTelEducCustomResponseManager extends xajaxResponseManager
 
 	function sendError($sMessage)
 	{
+		if ($this->objResponse == NULL)
+			$this->objResponse = new xajaxResponse();
 		if ($this->sErrorHandlerCallback) {
-			if ($this->objResponse == NULL)
-				$this->objResponse = new xajaxResponse();
-
 			$this->objResponse->call($this->sErrorHandlerCallback, $sMessage);
+		}
+		else {
+			/* Erro personalizado TelEduc */
+			$sock = Conectar("");
+			$lista_frases = RetornaListaDeFrases($sock, -1);
+			/* 80 (geral) - Ocorreu um erro interno. */
+			$this->objResponse->call('mostraFeedback', RetornaFraseDaLista($lista_frases, 80));
 		}
 	}
 }
