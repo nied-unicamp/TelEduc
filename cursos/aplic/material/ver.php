@@ -1312,7 +1312,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
               $temp=explode("/",$linha['Diretorio']);
               $nivel=count($temp)-1;
               for ($c=0;$c<=$nivel;$c++){
-              if($exercicio['situacao']=='C') {
+              if($eformador) {
                 $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
                 $espacos2.="  ";
               }
