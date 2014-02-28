@@ -1312,9 +1312,15 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
               $temp=explode("/",$linha['Diretorio']);
               $nivel=count($temp)-1;
               for ($c=0;$c<=$nivel;$c++){
+              if($exercicio['situacao']=='C') {
                 $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
                 $espacos2.="  ";
               }
+              else{
+                $espacos.="";
+                $espacos2.="";
+              }
+            }
 
               $caminho_arquivo = $dir_item_temp['link'].$linha['Diretorio']."/".$linha['Arquivo'];
               $caminho_arquivo = preg_replace("/\/\//", "/", $caminho_arquivo);

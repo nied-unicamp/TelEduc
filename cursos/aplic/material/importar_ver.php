@@ -319,8 +319,14 @@
               $temp=explode("/",$linha['Diretorio']);
               $nivel=count($temp)-1;
               for ($c=0;$c<=$nivel;$c++){
-                $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
-                $espacos2.="  ";
+                if ($eformador){
+                  $espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
+                  $espacos2.="  ";
+                }
+                else{
+                  $espacos.="";
+                  $espacos2.="";
+                }
               }
 
               $caminho_arquivo = $dir_item_temp['link'].ConverteUrl2Html($linha['Diretorio']."/".$linha['Arquivo']);

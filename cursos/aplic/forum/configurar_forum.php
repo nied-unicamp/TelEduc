@@ -227,23 +227,23 @@
   /* 30 - Todos os formadores */
   echo("                          <option value=\"F*\">".RetornaFraseDaLista($lista_frases_grupos,30)."</option>\n");
   /* Formadores um por um */
-  $linha= RetornaCodigoFormadoresDoCurso($sock, $cod_curso);
-  $num= count($linha);
-  for($c=0; $c<$num; $c++)
-    if ($linha[$c]['cod_usuario']>=0) /* exclui o administrador do TelEduc da Lista */
-      echo("                          <option value=\"".$linha[$c]['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha[$c]['cod_usuario']), 35)."</option>\n");
+  $lista_formadores= ListaUsuarios($sock,'F',$cod_curso);
+  $num= count($lista_formadores);
+  for($c=0; $c<$num && $lista_formadores != ""; $c++)
+    if ($lista_formadores[$c]['cod_usuario']>=0) /* exclui o administrador do TelEduc da Lista */
+      echo("                          <option value=\"".$lista_formadores[$c]['cod_usuario']."\">".TruncaString($lista_formadores[$c]['nome'], 35)."</option>\n");
   /* Separador entre ultimo formador-Todos os alunos */
   echo("                          <option value=\"\">--------------------</option>\n");
   /* 31 - Todos os alunos */
   echo("                          <option value=\"A*\">".RetornaFraseDaLista($lista_frases_grupos,31)."</option>\n");
   /* Alunos um por um */
-  $linha= RetornaCodigoAlunosDoCurso($sock, $cod_curso);
-  $num= count($linha);
-  for($c=0; $c<$num && $linha != ""; $c++)
-    echo("                          <option value=\"".$linha[$c]['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha[$c]['cod_usuario']), 35)."</option>\n");
+  $lista_alunos= ListaUsuarios($sock,'A',$cod_curso);
+  $num= count($lista_alunos);
+  for($c=0; $c<$num && $lista_alunos != ""; $c++)
+    echo("                          <option value=\"".$lista_alunos[$c]['cod_usuario']."\">".TruncaString($lista_alunos[$c]['nome'], 35)."</option>\n");
   /* Separador entre ultimo aluno e colaboradores */
   echo("                          <option value=\"\">--------------------</option>\n");
-  $lista_colaboradores = RetornaTodosColaboradores($sock, $cod_curso);
+  $lista_colaboradores = ListaUsuarios($sock,'Z',$cod_curso);
   $num=count($lista_colaboradores);
   if($num >0){
     // 117 - Todos os colaboradores
@@ -251,7 +251,7 @@
     // Colaboradores um por um
     if (is_array ($lista_colaboradores))
       foreach ($lista_colaboradores as $c => $linha_colaborador)
-        echo("                        <option value=\"".$linha_colaborador['cod_usuario']."\">".TruncaString(RetornaNomeUsuarioDeCodigo($sock, $linha_colaborador['cod_usuario']), 35)."</option>\n");
+        echo("                        <option value=\"".$linha_colaborador['cod_usuario']."\">".TruncaString($linha_colaborador['nome'], 35)."</option>\n");
     /* Separador entre ultimo colaborador e grupos */
     echo("                          <option value=\"\">--------------------</option>\n");
   }

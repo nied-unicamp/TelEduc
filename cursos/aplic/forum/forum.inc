@@ -1616,7 +1616,7 @@ function RetornaCodigoFormadoresDoCurso($sock, $cod_curso)
   $query="select cod_usuario from ".$dbnamebase.".Usuario_curso where cod_curso=".$cod_curso." and binary tipo_usuario='F' order by cod_usuario";
   $res=Enviar($sock,$query);
   $linha=RetornaArrayLinhas($res);
-
+  
   return $linha;
 }
 
@@ -2052,4 +2052,21 @@ return($linha);
 
 }
 
+function ListaUsuarios($sock,$tipo_usuario,$cod_curso)
+{
+   // 2Session
+  $dbnamebase = $_SESSION['dbnamebase'];
+
+  $query  = "select UC.cod_usuario, U.nome, UC.tipo_usuario ";
+  $query .= "from ".$dbnamebase.".Usuario_curso UC ";
+  $query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
+  $query .= "where UC.cod_usuario!=-1 ";
+  $query .= "  and binary UC.tipo_usuario=\"".$tipo_usuario."\" ";
+  $query .= "  and UC.cod_curso=\"".$cod_curso."\" ";
+  $query .= "order by nome";
+  $res=Enviar($sock,$query);
+
+  $lista=RetornaArrayLinhas($res);
+  return ($lista);
+}
 ?>
