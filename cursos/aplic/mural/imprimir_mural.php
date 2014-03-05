@@ -49,11 +49,14 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamicMural");
   $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 8;
   $cod_ferramenta_ajuda=$cod_ferramenta;
@@ -748,7 +751,6 @@
 
   echo("    </script>\n\n");
 
-  //include("../menu_principal.php");
   echo("<body onload=\"ExibirTodasMsgs(); self.print();\">");
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

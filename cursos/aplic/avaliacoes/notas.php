@@ -50,12 +50,17 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostrarAvaliacoesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"ApagarAvalicaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostrarParticipacoesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"GravarExpressaoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -1138,6 +1143,8 @@
 
   echo("    </script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>");
+
+  $objAjax->printJavascript();
 
   $sock = MudarDB($sock, $cod_curso);
   include("../menu_principal.php");

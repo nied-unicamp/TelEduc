@@ -51,10 +51,15 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
   $objAjax->register(XAJAX_FUNCTION,"trocaEstadoMsg");
   $objAjax->register(XAJAX_FUNCTION,"VerificaMsgNova");
   $objAjax->register(XAJAX_FUNCTION,"RemoveLinkSimbolico");
+  // Registra fun��es para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 11;
   $cod_ferramenta_ajuda = 11;
@@ -630,6 +635,8 @@
   echo("      }\n\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

@@ -52,6 +52,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
   $objAjax->register(XAJAX_FUNCTION,"ApagarDinamic");

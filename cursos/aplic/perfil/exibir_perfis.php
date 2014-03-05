@@ -57,11 +57,12 @@ Programa Principal
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
   $objAjax->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
-
   // Manda o xajax executar os pedidos acima.
   $objAjax->processRequest();
 
@@ -73,7 +74,6 @@ Programa Principal
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("enviarFoto", 106, 107);
   $feedbackObject->addAction("apagarFoto", 128, 129);
-
 
 
   $sock=Conectar("");
@@ -213,6 +213,8 @@ Programa Principal
   echo("      }\n\n");*/
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   /*
   =============================

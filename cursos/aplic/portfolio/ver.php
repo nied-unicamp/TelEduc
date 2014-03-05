@@ -52,6 +52,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
   $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
@@ -71,6 +72,10 @@
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
   $objAjax->register(XAJAX_FUNCTION,"AssociaAvaliacaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"VerificaSePodeDesassociar");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
@@ -241,204 +246,203 @@
   echo ("}\n");
 
   echo ("     function EditaTituloEnter(campo, evento, id)\n");
-    echo ("     {\n");
-    echo ("         var tecla;\n");
-    echo ("         CheckTAB=true;\n\n");
-    echo ("         if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
-    echo ("         {\n");
-    echo ("             tecla = evento.which;\n");
-    echo ("         }\n");
-    echo ("         else\n");
-    echo ("         {\n");
-    echo ("             tecla = evento.keyCode;\n");
-    echo ("         }\n\n");
-    echo ("         if ( tecla == 13 )\n");
-    echo ("         {\n");
-    echo ("             EdicaoTitulo(id, 'tit_'+id, 'ok');\n");
-    echo ("         }\n\n");
-    echo ("         return true;\n");
-    echo ("     }\n\n");
+  echo ("     {\n");
+  echo ("         var tecla;\n");
+  echo ("         CheckTAB=true;\n\n");
+  echo ("         if(navigator.userAgent.indexOf(\"MSIE\")== -1)\n");
+  echo ("         {\n");
+  echo ("             tecla = evento.which;\n");
+  echo ("         }\n");
+  echo ("         else\n");
+  echo ("         {\n");
+  echo ("             tecla = evento.keyCode;\n");
+  echo ("         }\n\n");
+  echo ("         if ( tecla == 13 )\n");
+  echo ("         {\n");
+  echo ("             EdicaoTitulo(id, 'tit_'+id, 'ok');\n");
+  echo ("         }\n\n");
+  echo ("         return true;\n");
+  echo ("     }\n\n");
 
-    echo("      function AlteraTitulo(id){\n");
-    echo("        var id_aux = id;\n");
-    echo("        if (editaTitulo==0){\n");
-    echo("          CancelaTodos();\n");
+  echo("      function AlteraTitulo(id){\n");
+  echo("        var id_aux = id;\n");
+  echo("        if (editaTitulo==0){\n");
+  echo("          CancelaTodos();\n");
 
-    echo("          xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
+  echo("          xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);\n");
 
-    echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
-    echo("          document.getElementById('tr_'+id).className='';\n");
-    echo("          document.getElementById('tit_'+id).className='';\n");
+  echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
+  echo("          document.getElementById('tr_'+id).className='';\n");
+  echo("          document.getElementById('tit_'+id).className='';\n");
 
-    echo("          createInput = document.createElement('input');\n");
-    echo("          document.getElementById('tit_'+id).innerHTML='';\n");
-    //echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
-    //echo("          document.getElementById('renomear_'+id).setAttribute('onclick', '');\n");
+  echo("          createInput = document.createElement('input');\n");
+  echo("          document.getElementById('tit_'+id).innerHTML='';\n");
+  //echo("          document.getElementById('renomear_'+id).onclick=function(){ };\n\n");
+  //echo("          document.getElementById('renomear_'+id).setAttribute('onclick', '');\n");
 
-    echo("          createInput.setAttribute('type', 'text');\n");
-    echo("          createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
-    echo("          createInput.setAttribute('id', 'tit_'+id+'_text');\n\n");
-    echo("          if (createInput.addEventListener){\n"); //not IE
-    echo("            createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
-    echo("          } else if (createInput.attachEvent){\n"); //IE
-    echo("            createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
-    echo("          }\n");
+  echo("          createInput.setAttribute('type', 'text');\n");
+  echo("          createInput.setAttribute('style', 'border: 2px solid #9bc');\n");
+  echo("          createInput.setAttribute('id', 'tit_'+id+'_text');\n\n");
+  echo("          if (createInput.addEventListener){\n"); //not IE
+  echo("            createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);\n");
+  echo("          } else if (createInput.attachEvent){\n"); //IE
+  echo("            createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});\n");
+  echo("          }\n");
 
-    echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
-    echo("          xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n\n");
+  echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
+  echo("          xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n\n");
 
-    echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
-    echo("          espaco = document.createElement('span');\n");
-    echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
-    echo("          document.getElementById('tit_'+id).appendChild(espaco);\n");
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n");
 
-    echo("          createSpan = document.createElement('span');\n");
-    echo("          createSpan.className='link';\n");
-    echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
-    echo("          createSpan.setAttribute('id', 'OkEdita');\n");
-    echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,18)."';\n");
-    echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
+  echo("          createSpan = document.createElement('span');\n");
+  echo("          createSpan.className='link';\n");
+  echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
+  echo("          createSpan.setAttribute('id', 'OkEdita');\n");
+  echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,18)."';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
 
-    echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
-    echo("          espaco = document.createElement('span');\n");
-    echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
-    echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
 
-    echo("          createSpan = document.createElement('span');\n");
-    echo("          createSpan.className='link';\n");
-    echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
-    echo("          createSpan.setAttribute('id', 'CancelaEdita');\n");
-    echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,2)."';\n");
-    echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
+  echo("          createSpan = document.createElement('span');\n");
+  echo("          createSpan.className='link';\n");
+  echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
+  echo("          createSpan.setAttribute('id', 'CancelaEdita');\n");
+  echo("          createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,2)."';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
 
-    echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
-    echo("          espaco = document.createElement('span');\n");
-    echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
-    echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
+  echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
+  echo("          espaco = document.createElement('span');\n");
+  echo("          espaco.innerHTML='&nbsp;&nbsp;';\n");
+  echo("          document.getElementById('tit_'+id).appendChild(espaco);\n\n");
 
-    echo("          startList();\n");
-    echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
-    echo("          document.getElementById('tit_'+id+'_text').select();\n");
-    echo("          editaTitulo++;\n");
-    echo("        }\n");
-    echo("      }\n\n");
+  echo("          startList();\n");
+  echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
+  echo("          document.getElementById('tit_'+id+'_text').select();\n");
+  echo("          editaTitulo++;\n");
+  echo("        }\n");
+  echo("      }\n\n");
 
-     echo("      function VerificaChkBox(alpha){\n");
-      echo("        CancelaTodos();\n");
-      echo("        checks = document.getElementsByName('chkArq');\n");
-      echo("        var i, j=0;\n");
-      echo("        var arqComum=0;\n");
-      echo("        var arqZip=0;\n");
-      echo("        var arqOculto=0;\n");
-      echo("        var pasta=0;\n\n");
-      echo("		  var listaDir = '".$lista_diretorios."';\n");
-      echo("		  var haDiretorios = listaDir.length;\n");
+  echo("      function VerificaChkBox(alpha){\n");
+  echo("         CancelaTodos();\n");
+  echo("        checks = document.getElementsByName('chkArq');\n");
+  echo("        var i, j=0;\n");
+  echo("        var arqComum=0;\n");
+  echo("        var arqZip=0;\n");
+  echo("        var arqOculto=0;\n");
+  echo("        var pasta=0;\n\n");
+  echo("        var listaDir = '".$lista_diretorios."';\n");
+  echo("        var haDiretorios = listaDir.length;\n");
 
-      echo("        for (i=0; i<checks.length; i++){\n");
-      echo("          if(checks[i].checked){\n");
-      echo("            j++;\n");
-      echo("            getNumber=checks[i].id.split(\"_\");\n");
-      echo("            tipo = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('tipoArq');\n");
-      echo("            switch (tipo){\n");
-      echo("              case ('pasta'): pasta=1;break;\n");
-      echo("              case ('comum'): arqComum++;break;\n");
-      echo("              case ('zip'): arqZip++;break;\n");
-      echo("            }\n\n");
+  echo("        for (i=0; i<checks.length; i++){\n");
+  echo("          if(checks[i].checked){\n");
+  echo("            j++;\n");
+  echo("            getNumber=checks[i].id.split(\"_\");\n");
+  echo("            tipo = document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('tipoArq');\n");
+  echo("            switch (tipo){\n");
+  echo("              case ('pasta'): pasta=1;break;\n");
+  echo("              case ('comum'): arqComum++;break;\n");
+  echo("              case ('zip'): arqZip++;break;\n");
+  echo("            }\n\n");
 
-      echo("            if (document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('arqOculto')=='sim'){\n");
-      echo("               arqOculto++;\n");
-      echo("            }\n\n");
+  echo("            if (document.getElementById(\"nomeArq_\"+getNumber[1]).getAttribute('arqOculto')=='sim'){\n");
+  echo("               arqOculto++;\n");
+  echo("            }\n\n");
 
-      echo("          }\n");
-      echo("        }\n");
+  echo("          }\n");
+  echo("        }\n");
 
-      echo("        if (pasta==1){\n");
-      echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n");
+  echo("        if (pasta==1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n");
 
-      echo("          document.getElementById('mArq_apagar').onclick= function(){ Apagar(); };\n");
-      echo("          document.getElementById('mArq_ocultar').onclick= function(){  };\n");
-      echo("          document.getElementById('mArq_mover').onclick= function(){  };\n");
-      echo("          document.getElementById('mArq_descomp').onclick= function(){  };\n\n");
+  echo("          document.getElementById('mArq_apagar').onclick= function(){ Apagar(); };\n");
+  echo("          document.getElementById('mArq_ocultar').onclick= function(){  };\n");
+  echo("          document.getElementById('mArq_mover').onclick= function(){  };\n");
+  echo("          document.getElementById('mArq_descomp').onclick= function(){  };\n\n");
 
-      echo("        }else if((arqComum==1)||(arqZip>1)){\n");
-      echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-      echo("			if (haDiretorios>0){\n");
-      echo("          	document.getElementById('mArq_mover').className=\"menuUp02\";\n");
-      echo("			}\n");
-      echo("			else{\n");
-      echo("          	document.getElementById('mArq_mover').className=\"menuUp\";\n");
-      echo("			}\n");
-      echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+  echo("        }else if((arqComum==1)||(arqZip>1)){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          if (haDiretorios>0){\n");
+  echo("            document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            document.getElementById('mArq_mover').className=\"menuUp\";\n");
+  echo("        }\n");
+  echo("        document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
 
-      echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
-      echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
-      echo("			if (haDiretorios>0){\n");
-      echo("          	document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
-      echo("			}\n");
-      echo("			else{\n");
-      echo("          	document.getElementById('sArq_mover').onclick= function(){  };\n");
-      echo("			}\n");
-      echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
-      echo("        }else if(arqComum>1){\n");
-      echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+  echo("        document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
+  echo("        document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("        if (haDiretorios>0){\n");
+  echo("          document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+  echo("        }\n");
+  echo("        else{\n");
+  echo("          document.getElementById('sArq_mover').onclick= function(){  };\n");
+  echo("        }\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
+  echo("        }else if(arqComum>1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("          document.getElementById('sArq_mover').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
+  echo("        }else if(arqZip==1){\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
+  echo("          if (haDiretorios>0){\n");
+  echo("            document.getElementById('mArq_mover').className=\"menuUp02\";\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            document.getElementById('mArq_mover').className=\"menuUp\";\n");
+  echo("          }\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp02\";\n\n");
 
-      echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
-      echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
-      echo("          document.getElementById('sArq_mover').onclick= function(){  };\n");
-      echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n\n");
-      echo("        }else if(arqZip==1){\n");
-      echo("          document.getElementById('mArq_apagar').className=\"menuUp02\";\n");
-      echo("          document.getElementById('mArq_ocultar').className=\"menuUp02\";\n");
-      echo("			if (haDiretorios>0){\n");
-      echo("          	document.getElementById('mArq_mover').className=\"menuUp02\";\n");
-      echo("			}\n");
-      echo("			else{\n");
-      echo("          	document.getElementById('mArq_mover').className=\"menuUp\";\n");
-      echo("			}\n");
-      echo("          document.getElementById('mArq_descomp').className=\"menuUp02\";\n\n");
+  echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
+  echo("          if (haDiretorios>0){\n");
+  echo("            document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
+  echo("          }\n");
+  echo("          else{\n");
+  echo("            document.getElementById('sArq_mover').onclick= function(){  };\n");
+  echo("          }\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){ Descompactar() };\n");
+  echo("        }else{\n");
+  echo("          document.getElementById('mArq_apagar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
+  echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
 
-      echo("          document.getElementById('sArq_apagar').onclick= function(){ Apagar(); };\n");
-      echo("          document.getElementById('sArq_ocultar').onclick= function(){ Ocultar(); };\n");
-      echo("			if (haDiretorios>0){\n");
-      echo("          	document.getElementById('sArq_mover').onclick= function(){  MostraLayer(cod_mover_arquivo,140); };\n");
-      echo("			}\n");
-      echo("			else{\n");
-      echo("          	document.getElementById('sArq_mover').onclick= function(){  };\n");
-       echo("			}\n");
-      echo("          document.getElementById('sArq_descomp').onclick= function(){ Descompactar() };\n");
-      echo("        }else{\n");
-      echo("          document.getElementById('mArq_apagar').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_ocultar').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_mover').className=\"menuUp\";\n");
-      echo("          document.getElementById('mArq_descomp').className=\"menuUp\";\n\n");
+  echo("          document.getElementById('sArq_apagar').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_ocultar').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_mover').onclick= function(){  };\n");
+  echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n");
+  echo("        }\n\n");
 
-      echo("          document.getElementById('sArq_apagar').onclick= function(){  };\n");
-      echo("          document.getElementById('sArq_ocultar').onclick= function(){  };\n");
-      echo("          document.getElementById('sArq_mover').onclick= function(){  };\n");
-      echo("          document.getElementById('sArq_descomp').onclick= function(){  };\n");
-      echo("        }\n\n");
+  echo("        //todos arquivos selecionados sao ocultos\n");
+  echo("        if ((j==arqOculto)&&(j!=0)) {\n");
+  echo("            document.getElementById('sArq_ocultar').onclick= function(){ Desocultar(); };\n");
+  echo("        }\n");
 
-      echo("        //todos arquivos selecionados sao ocultos\n");
-      echo("        if ((j==arqOculto)&&(j!=0)) {\n");
-      echo("            document.getElementById('sArq_ocultar').onclick= function(){ Desocultar(); };\n");
-      echo("        }\n");
+  echo("        //Nao foi chamado pela funcao CheckTodos\n");
+  echo("        if (alpha){\n");
+  echo("          if (j==checks.length){ document.getElementById('checkMenu').checked=true; }\n");
+  echo("          else document.getElementById('checkMenu').checked=false;\n");
+  echo("        }\n");
+  echo("      }\n\n");
+  echo ("    </script>\n");
 
-      echo("        //Nao foi chamado pela funcao CheckTodos\n");
-      echo("        if (alpha){\n");
-      echo("          if (j==checks.length){ document.getElementById('checkMenu').checked=true; }\n");
-      echo("          else document.getElementById('checkMenu').checked=false;\n");
-      echo("        }\n");
-      echo("      }\n\n");
-      echo ("    </script>\n");
-
-  echo ("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
+  $objAjax->printJavascript();
 
   include ("../menu_principal.php");
 

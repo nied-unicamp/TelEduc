@@ -54,12 +54,17 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RegistrarAvaliacaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostrarAvaliacoesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"AvaliarDinamic");
   $objAjax->register(XAJAX_FUNCTION,"ApagarAvalicaoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -1022,6 +1027,8 @@
 
     echo("    </script>\n\n");
   }
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">");

@@ -51,6 +51,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do x
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoEAtualiza");
   $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
@@ -60,6 +61,10 @@
   $objAjax->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"CriaZipDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
   
   /* Necess?io para a lixeira. */
   session_register("cod_topico_s");
@@ -543,7 +548,9 @@
   echo("      }\n");
 
   echo("    </script>\n");
-  echo("    <script type='text/javascript' src='../js-css/tablednd.js'></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"../js-css/tablednd.js\"></script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

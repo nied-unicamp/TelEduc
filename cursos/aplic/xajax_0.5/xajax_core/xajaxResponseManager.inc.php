@@ -52,6 +52,13 @@ class xajaxResponseManager
 	var $aDebugMessages;
 	
 	/*
+		String: sErrorHandlerCallback
+	
+		The name of the function which serves as callback to erros when they occur.
+	*/
+	var $sErrorHandlerCallback;
+	
+	/*
 		Function: xajaxResponseManager
 		
 		Construct and initialize the one and only xajaxResponseManager object.
@@ -90,7 +97,11 @@ class xajaxResponseManager
 	*/
 	function configure($sName, $mValue)
 	{
-		if ('characterEncoding' == $sName)
+		if ('ErrorHandlerCallback' == $sName)
+		{
+			$this->sErrorHandlerCallback = $mValue;
+		}
+		else if ('characterEncoding' == $sName)
 		{
 			$this->sCharacterEncoding = $mValue;
 			
@@ -201,6 +212,35 @@ class xajaxResponseManager
 			$this->aDebugMessages = array();
 			$this->objResponse->printOutput();
 		}
+	}
+	
+	/*
+		Function: sendError
+	
+		Calls the error callback function.
+	*/
+	function sendError($sMessage)
+	{
+		if ($this->objResponse == NULL)
+			$this->objResponse = new xajaxResponse();
+		if ($this->sErrorHandlerCallback) {
+			$this->objResponse->call($this->sErrorHandlerCallback, $sMessage);
+		}
+		else {
+			/* Erro personalizado TelEduc */
+			$sock = Conectar("");
+			$lista_frases = RetornaListaDeFrases($sock, -1);
+			/* 80 (geral) - Ocorreu um erro interno. */
+			$this->objResponse->call('mostraFeedback', RetornaFraseDaLista($lista_frases, 80));
+		}
+	}
+	
+	/*
+		Function: getErrorHandlerCallback
+	*/
+	function getErrorHandlerCallback()
+	{
+		return $this->sErrorHandlerCallback;
 	}
 	
 	/*

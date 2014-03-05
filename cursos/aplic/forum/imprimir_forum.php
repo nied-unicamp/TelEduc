@@ -53,9 +53,12 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 9;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -132,6 +135,7 @@
   echo("    <link href=\"../js-css/dhtmlgoodies_calendar.css\" rel=\"stylesheet\" type=\"text/css\">\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/dhtmlgoodies_calendar.js\"></script>\n");
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
+  $objAjax->printJavascript();
   echo("    <style>body{padding-top:20px;}</style>");
   
   //Manda o xajax executar os pedidos acima.
@@ -761,7 +765,6 @@
 
   echo("    </script>\n\n");
 
-  //include("../menu_principal.php");
   echo("<body onload=\"ExibirTodasMsgs(); self.print();\">");
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 

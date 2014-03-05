@@ -53,13 +53,18 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
-//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->configure('errorHandler', true);
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"MostraGrupoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
   $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
   $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"ExcluirComponentesDinamic");
   $objAjax->register(XAJAX_FUNCTION,"VerificaNovoTituloDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=12;
   $cod_ferramenta_ajuda=$cod_ferramenta;
@@ -550,6 +555,8 @@
   echo("}");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

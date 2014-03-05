@@ -66,6 +66,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
   $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
@@ -83,6 +84,10 @@
   $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   /**************** ajax ****************/
 
@@ -1114,6 +1119,8 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
   }
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

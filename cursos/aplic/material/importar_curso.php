@@ -53,8 +53,13 @@
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objAjax->processRequest();
 
@@ -241,6 +246,8 @@
   $feedbackObject->returnFeedback($_GET['acao_feedback'], $_GET['atualizacao']);
   echo ("      }\n\n");
   echo ("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include ("../menu_principal.php");
 

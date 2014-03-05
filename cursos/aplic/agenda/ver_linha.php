@@ -51,6 +51,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
   $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
@@ -62,6 +63,10 @@
   $objAjax->register(XAJAX_FUNCTION,"RetirarEntradaDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $sock=Conectar("");
   $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
@@ -87,7 +92,6 @@
   $dir_item_temp=CriaLinkVisualizar($sock,$dir_name, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
   /* Verifica se o usuario eh formador. */  
   $usr_formador = EFormador($sock, $cod_curso, $cod_usuario);
-
 
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
@@ -218,7 +222,9 @@
   echo("      }\n\n");
   
   echo("    </script>\n\n");
-  echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

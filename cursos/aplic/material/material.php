@@ -51,7 +51,9 @@
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
   $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
@@ -63,7 +65,8 @@
   $objAjax->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"CriaZipDinamic");
-  
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
   $objAjax->processRequest();
 
@@ -539,6 +542,8 @@
   }
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

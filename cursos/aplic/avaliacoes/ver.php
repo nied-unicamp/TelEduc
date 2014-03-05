@@ -51,6 +51,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
   $objAjax->register(XAJAX_FUNCTION,"EditarValor");
@@ -61,6 +62,10 @@
   $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
   $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"AlertaFraseFerramenta");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -86,6 +91,7 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
 
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
@@ -369,8 +375,8 @@
  
   echo("    </script>\n");
 
-  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
-  //echo("    <script type=\"text/javascript\" src=\"../js-css/jscripts.js\"></script>");
+  $objAjax->printJavascript();
+
   // A variavel tela_avaliacao indica quais avaliacoes devem ser listadas: 'P'assadas, 'A'tuais ou 'F'uturas
   if (!isset($tela_avaliacao) || !in_array($tela_avaliacao, array('P', 'A', 'F')))
   {

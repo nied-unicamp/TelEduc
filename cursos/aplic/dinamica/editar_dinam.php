@@ -51,6 +51,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
   $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
   $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
@@ -60,6 +61,10 @@
   $objAjax->register(XAJAX_FUNCTION,"RetirarEntradaDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
   $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $sock=Conectar("");
   $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
@@ -97,6 +102,7 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var cod_ferramenta ='".$cod_ferramenta."';\n");
   echo("      var cod_item       ='".$cod_item."';\n");
@@ -130,7 +136,8 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-  echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

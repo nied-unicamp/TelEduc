@@ -58,12 +58,18 @@
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
          
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->configure("characterEncoding", 'ISO-8859-1');
-  $objMaterial->configure('javascript URI', "../xajax_0.5");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
-  $objMaterial->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
-  $objMaterial->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
   
   /************* fim ajax ****************/
   
@@ -156,6 +162,8 @@
   echo("      }\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

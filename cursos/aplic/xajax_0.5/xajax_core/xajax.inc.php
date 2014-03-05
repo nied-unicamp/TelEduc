@@ -582,6 +582,8 @@ class xajax
 						$this->objLanguageManager->getText('LOGMSG:01') 
 						. $sErrorMessage
 						);
+					// This is the tweaked line for calling the callback on error.
+					$this->objResponseManager->sendError($sErrorMessage);
 				}
 			}
 

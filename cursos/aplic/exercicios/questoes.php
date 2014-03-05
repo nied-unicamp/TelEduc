@@ -51,9 +51,14 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
   $objAjax->register(XAJAX_FUNCTION,"AlteraStatusQuestaoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -617,6 +622,9 @@
   echo("    }\n\n");
 
   echo("\n</script>\n\n");
+
+  $objAjax->printJavascript();
+
   /* fim - JavaScript */
   /*********************************************************/
 

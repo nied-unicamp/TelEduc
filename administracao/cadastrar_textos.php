@@ -52,6 +52,7 @@
   $objAjax->configure("characterEncoding", 'ISO-8859-1');
   $objAjax->setFlag("decodeUTF8Input",true);
   $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   $objAjax->register(XAJAX_FUNCTION,"AlteraTextoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"InsereTextoDinamic");
   $objAjax->register(XAJAX_FUNCTION,"ApagaTextoDinamic");
