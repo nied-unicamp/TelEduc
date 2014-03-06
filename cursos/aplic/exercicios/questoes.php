@@ -109,7 +109,6 @@
     echo("  <script type=\"text/javascript\" src=\"../js-css/sorttablePaginado.js\"></script>\n");
   }
   echo("  <script  type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"javascript\">\n\n");
 
   echo("    var js_cod_item;\n");
@@ -624,6 +623,8 @@
   echo("\n</script>\n\n");
 
   $objAjax->printJavascript();
+
+  echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   /* fim - JavaScript */
   /*********************************************************/

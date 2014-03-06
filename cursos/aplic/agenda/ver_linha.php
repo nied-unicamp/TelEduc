@@ -222,9 +222,10 @@
   echo("      }\n\n");
   
   echo("    </script>\n\n");
-  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   $objAjax->printJavascript();
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   include("../menu_principal.php");
 

@@ -102,7 +102,6 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("    <script type=\"text/javascript\">\n\n");
   echo("      var cod_ferramenta ='".$cod_ferramenta."';\n");
   echo("      var cod_item       ='".$cod_item."';\n");
@@ -138,6 +137,8 @@
   echo("    </script>\n\n");
 
   $objAjax->printJavascript();
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   include("../menu_principal.php");
 

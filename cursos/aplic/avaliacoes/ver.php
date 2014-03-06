@@ -91,7 +91,6 @@
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
   echo("    <script type=\"text/javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
 
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
@@ -376,6 +375,8 @@
   echo("    </script>\n");
 
   $objAjax->printJavascript();
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"></script>\n");
 
   // A variavel tela_avaliacao indica quais avaliacoes devem ser listadas: 'P'assadas, 'A'tuais ou 'F'uturas
   if (!isset($tela_avaliacao) || !in_array($tela_avaliacao, array('P', 'A', 'F')))
