@@ -44,16 +44,22 @@
   include($bibliotecas."geral.inc");
   include("correio.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax = new xajax();
-  $objAjax->registerFunction("trocaEstadoMsg");
-  $objAjax->registerFunction("VerificaMsgNova");
-  $objAjax->registerFunction("RemoveLinkSimbolico");
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"trocaEstadoMsg");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaMsgNova");
+  $objAjax->register(XAJAX_FUNCTION,"RemoveLinkSimbolico");
+  // Registra fun��es para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 11;
   $cod_ferramenta_ajuda = 11;
@@ -130,9 +136,6 @@
   if ((!isset($pagAtual))or($pagAtual=='')or($pagAtual==0))
     $pagAtual =  1;
   else $pagAtual = min($pagAtual, $totalPag);
-
-  $objAjax->printJavascript('../xajax_0.2.4');
-  $objAjax->setCharEncoding('ISO-8859-1');
 
   if($totalMsg){
     echo("    <script type=\"text/javascript\" src=\"../js-css/sorttablePaginado.js\"></script>\n");
@@ -632,6 +635,8 @@
   echo("      }\n\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

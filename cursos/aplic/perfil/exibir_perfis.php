@@ -48,20 +48,23 @@ Programa Principal
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("perfil.inc");
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
 
 //   Global $cod_lingua_s;
   $cod_lingua = $_SESSION['cod_lingua_s'];
 
   // Estancia o objeto XAJAX
-  $objMudarComp = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objMudarComp->registerFunction("RetornaDadosPerfilDinamic");
-  $objMudarComp->registerFunction("EditarPerfilDinamic");
-
+  $objAjax->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMudarComp->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta=13;
   include("../topo_tela.php");
@@ -71,7 +74,6 @@ Programa Principal
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("enviarFoto", 106, 107);
   $feedbackObject->addAction("apagarFoto", 128, 129);
-
 
 
   $sock=Conectar("");
@@ -212,7 +214,8 @@ Programa Principal
 
   echo("    </script>\n");
 
-  $objMudarComp->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
+
   /*
   =============================
   Retorno ao programa principal

@@ -47,23 +47,29 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun??es em PHP que voc? quer chamar atrav?s do xajax
-  $objMaterial->registerFunction("AbreEdicao");
-  $objMaterial->registerFunction("AcabaEdicaoDinamic");
-  $objMaterial->registerFunction("CancelaEdicaoDinamic");
-  $objMaterial->registerFunction("ExcluirArquivo");
-  $objMaterial->registerFunction("ExcluirEndereco");
-  $objMaterial->registerFunction("DecodificaString");
-  $objMaterial->registerFunction("OcultarArquivosDinamic");
-  $objMaterial->registerFunction("DesocultarArquivosDinamic");
-  $objMaterial->registerFunction("MoverArquivosDinamic");
-  $objMaterial->registerFunction("MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirEndereco");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
   /**************** ajax ****************/
 
@@ -140,7 +146,7 @@
   if ($linha['acao']=="E") {
     if($linha['inicio_edicao']>(time()-1800) || $cod_usuario!=$linha['cod_usuario']) {
       /* Est? em edi??o... */
-      echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+      echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
       echo("       window.open('em_edicao.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver&cod_topico_raiz=".$cod_topico_raiz_import."','EmEdicao','width=300,height=220,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\n");
       echo("       document.location='material.php?cod_curso=".$cod_curso."&cod_item=".$linha_item['cod_item']."&origem=ver&cod_topico=".$cod_topico_raiz_import."';\n");
       echo("    </script>\n");
@@ -176,6 +182,8 @@
   echo("       }\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

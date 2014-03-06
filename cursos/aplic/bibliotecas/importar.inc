@@ -1019,7 +1019,7 @@ function MarcarAcessoCursoExtraidoTemporario($sock, $codigo)
 }
 
 function AlterarPeriodoDinamic($dadosForm){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_categoria=$dadosForm['cod_categoria'];
   $cod_topico_raiz=$dadosForm['cod_topico_raiz'];
@@ -1032,30 +1032,30 @@ function AlterarPeriodoDinamic($dadosForm){
   $sock=Conectar("");
 
   $todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $data_inicio, $data_fim);
-  $objResponse->addScript("var y;");
+  $objResponse->script("var y;");
   
   foreach($todos_cursos as $chave => $valor){
-    $objResponse->addScript("y= document.createElement('option');");
-    $objResponse->addScript("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
-    $objResponse->addScript("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
-    $objResponse->addScript("document.getElementById('cod_curso_todos').appendChild(y);");
+    $objResponse->script("y= document.createElement('option');");
+    $objResponse->script("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
+    $objResponse->script("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
+    $objResponse->script("document.getElementById('cod_curso_todos').appendChild(y);");
   }
 
 
   $cursos_compart = RetornaCursosEncerradosCompart($sock, $cod_ferramenta, $cod_categoria, $data_inicio, $data_fim);
-  $objResponse->addScript("var y;");
+  $objResponse->script("var y;");
   
   foreach($todos_cursos as $chave => $valor){
-    $objResponse->addScript("y= document.createElement('option');");
-    $objResponse->addScript("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
-    $objResponse->addScript("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
-    $objResponse->addScript("document.getElementById('cod_curso_compart').appendChild(y);");
+    $objResponse->script("y= document.createElement('option');");
+    $objResponse->script("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
+    $objResponse->script("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
+    $objResponse->script("document.getElementById('cod_curso_compart').appendChild(y);");
   }
 
   Desconectar($sock);
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 
   
 

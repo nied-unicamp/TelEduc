@@ -79,7 +79,7 @@ function ExisteAssunto($sock, $cod_assunto)
 /*
 function AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, $acao){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -109,13 +109,13 @@ function AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, $acao)
   //Correção feita para não acontecer de os horários ficarem iguais no banco e atrapalhar o status do item
    if ($linha[0]!=""){ sleep(1); }
   
-  return $objResponse->getXML();
+  return $objResponse;
 }
 */
 function EditarTexto($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
 {
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $novo_nome=ConverteAspas2BarraAspas($novo_nome);
 
@@ -132,12 +132,12 @@ function EditarTexto($tabela, $cod_curso, $cod_item, $novo_nome, $cod_usuario)
 //  AcabaEdicaoDinamic($tabela, $cod_curso, $cod_item, $cod_usuario, 1);
 
   // Imprime no div valores do formulário
-//  $objResponse->addAssign("tr_".$cod_item, "className", "novoitem");
-  $objResponse->addAssign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
-//  $objResponde->addAlert(".$consulta.");
-  //  $objResponse->addAssign("data_".$cod_item, "innerHTML", UnixTime2DataHora(time()));
+//  $objResponse->assign("tr_".$cod_item, "className", "novoitem");
+  $objResponse->assign("text_".$cod_item, "innerHTML", print_r(AjustaParagrafo(ConverteBarraAspas2Aspas($novo_nome)), true));
+//  $objResponde->alert(".$consulta.");
+  //  $objResponse->assign("data_".$cod_item, "innerHTML", UnixTime2DataHora(time()));
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************
@@ -159,9 +159,9 @@ function AlteraDadosAssuntoDinamic($id, $valor, $cod_assunto){
 	$texto = RetornaFrase($sock, ($campo == "nome") ? 81 : 82 , 6);
 	Desconectar($sock);
 	
-	$objResponse = new xajaxResponse('ISO-8859-1');
-	$objResponse->addScriptCall("mostraFeedback", $texto , "true");
-	return $objResponse->getXML();
+	$objResponse = new xajaxResponse();
+	$objResponse->call("mostraFeedback", $texto , "true");
+	return $objResponse;
 }
 
 /* *************************************************************

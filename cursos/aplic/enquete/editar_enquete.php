@@ -55,10 +55,6 @@
   //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("editarEnquete", 88, 89);
 
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-
   GeraJSVerificacaoData();
   GeraJSComparacaoDatas();
   
@@ -243,6 +239,10 @@
   echo("\n</script>\n\n");
   /* fim - JavaScript */
   /*********************************************************/
+
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   $enquete = getEnquete($sock, $idEnquete);
   $alternativas = getAlternativas($sock, $idEnquete);

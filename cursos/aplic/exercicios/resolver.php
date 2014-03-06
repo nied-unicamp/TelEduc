@@ -44,16 +44,22 @@
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("AtualizaRespostaDoUsuarioDinamic");
-  $objAjax->registerFunction("EditarRespostaQuestaoDissDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaRespostaDoUsuarioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarRespostaQuestaoDissDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   // Descobre os diretorios de arquivo, para os portfolios com anexo
   $sock = Conectar("");
@@ -358,11 +364,11 @@
   echo("    }\n");
 
   echo("  </script>\n\n");
+
+  $objAjax->printJavascript();
+
   /* fim - JavaScript */
   /*********************************************************/
-
-  $objAjax->printJavascript("../xajax_0.2.4/");
-
 
   include("../menu_principal.php");
 

@@ -44,24 +44,28 @@
   include($bibliotecas."geral.inc");
   include("dinamica.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
-       
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
+  
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("EditarTexto");
-  $objAjax->registerFunction("ExcluirArquivo");
-  $objAjax->registerFunction("AbreEdicao");
-  $objAjax->registerFunction("AcabaEdicaoDinamic");
-  $objAjax->registerFunction("SelecionarEntradaDinamic");
-  $objAjax->registerFunction("RetirarEntradaDinamic");
-  $objAjax->registerFunction("RetornaFraseDinamic");
-  $objAjax->registerFunction("RetornaFraseGeralDinamic");
-  
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"SelecionarEntradaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetirarEntradaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
- 
   $sock=Conectar("");
   $lista_frases_biblioteca=RetornaListaDeFrases($sock,-2);
   $diretorio_arquivos=RetornaDiretorio($sock,'Arquivos');
@@ -131,8 +135,10 @@
   echo("      }\n\n");
 
   echo("    </script>\n\n");
-  $objAjax->printJavascript("../xajax_0.2.4/");
-  echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
+
+  $objAjax->printJavascript();
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   include("../menu_principal.php");
 

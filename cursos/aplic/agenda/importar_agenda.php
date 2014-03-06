@@ -46,7 +46,6 @@
   include ($bibliotecas . "geral.inc");
   include ("agenda.inc");
 
-
   $cod_ferramenta = 1;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 6;

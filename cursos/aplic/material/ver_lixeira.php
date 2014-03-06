@@ -52,18 +52,24 @@
 
   if ($cod_ferramenta==3)
     include("avaliacoes_material.inc");
-    
+  
   /**************** ajax ****************/
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
          
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
-  $objMaterial->registerFunction("ExcluirItensDinamic");
-  $objMaterial->registerFunction("RecuperarItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
   
   /************* fim ajax ****************/
   
@@ -112,8 +118,8 @@
 
   $eformador=EFormador($sock,$cod_curso,$cod_usuario);
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
 
   echo("      function WindowOpenVerURL(end)\n");
   echo("      {\n");
@@ -145,11 +151,11 @@
   echo("         window.open(end,'MaterialURL','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
   echo("      }\n");
 
-  echo("  function WindowOpenVer(end)\n");
-  echo("  {\n");
-  echo("    popup = window.open(end,'MaterialVer','top=50,left=100,width=600,height=400,resizable=yes,menubar=yes,status=yes,toolbar=yes,scrollbars=yes');\n");
-  echo("    popup.focus();\n");
-  echo("  }\n\n");
+  echo("      function WindowOpenVer(end)\n");
+  echo("      {\n");
+  echo("        popup = window.open(end,'MaterialVer','top=50,left=100,width=600,height=400,resizable=yes,menubar=yes,status=yes,toolbar=yes,scrollbars=yes');\n");
+  echo("        popup.focus();\n");
+  echo("      }\n\n");
 
   echo("      function Iniciar(){\n");
   echo("        startList();\n");
@@ -157,13 +163,9 @@
 
   echo("    </script>\n");
 
+  $objAjax->printJavascript();
+
   include("../menu_principal.php");
-
-  /**************** ajax ****************/
-
-  $objMaterial->printJavascript("../xajax_0.2.4/");
-
-  /**************** ajax ****************/
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
     /* Pagina Principal */

@@ -90,16 +90,16 @@ Saida: XML da funçao ajax
 *********************************************************************/
 function MostraMensagemDinamicMural($cod_curso, $cod_mural, $mensagem)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);
   
   $pega_linha = ConteudoMensagem($sock, $cod_mural);
 
-  $objResponse->addAssign("td_msg_".$cod_mural, "innerHTML", "<b>".$mensagem.":</b><br /><br />". Enter2BR(LimpaConteudo($pega_linha['texto'])) );
+  $objResponse->assign("td_msg_".$cod_mural, "innerHTML", "<b>".$mensagem.":</b><br /><br />". Enter2BR(LimpaConteudo($pega_linha['texto'])) );
 //   
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 

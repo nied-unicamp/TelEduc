@@ -620,7 +620,7 @@ function RetornaGruposDoUsuario($sock,$cod_usuario)
 *********************************************************************************/
 function MostraGrupoDinamic($cod_curso, $cod_grupo, $frases)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);  
   
   $grupo_fechados=GruposFechados($sock);
@@ -632,9 +632,9 @@ function MostraGrupoDinamic($cod_curso, $cod_grupo, $frases)
     $lista = RetornaUsuariosSemGrupo($sock, $cod_curso);
   }
   if($lista==""){
-    $objResponse->addAppend('span_grupo_'.$cod_grupo, 'innerHTML', $frases[4]."<br />");
+    $objResponse->append('span_grupo_'.$cod_grupo, 'innerHTML', $frases[4]."<br />");
   }else{
-    $objResponse->addAppend('span_grupo_'.$cod_grupo, 'innerHTML', $frases[5].":<br /><br />");
+    $objResponse->append('span_grupo_'.$cod_grupo, 'innerHTML', $frases[5].":<br /><br />");
     foreach($lista as $cod => $linha){
 
       if ($linha['tipo_usuario'] == 'A')
@@ -648,42 +648,42 @@ function MostraGrupoDinamic($cod_curso, $cod_grupo, $frases)
 
       if(($linha['tipo_usuario'] == 'A') || ($linha['tipo_usuario'] == 'F')){ 
         if(!(($grupo_fechados) or ($cod_grupo==-1))){
-          $objResponse->addCreateInput('td_grupo_'.$cod_grupo, 'checkbox', 'chk_grupo_'.$cod_grupo, 'chk_grupo_'.$cod_grupo.'_cmp_'.$linha['cod_usuario']);
+          $objResponse->createInput('td_grupo_'.$cod_grupo, 'checkbox', 'chk_grupo_'.$cod_grupo, 'chk_grupo_'.$cod_grupo.'_cmp_'.$linha['cod_usuario']);
           $objResponse->addEvent('chk_grupo_'.$cod_grupo.'_cmp_'.$linha['cod_usuario'], 'onclick', 'VerificarCheckBox('.$cod_grupo.', '.$linha['cod_usuario'].');');
         }
 
-        $objResponse->addCreate('td_grupo_'.$cod_grupo, 'span', 'span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario']);
-        $objResponse->addAppend('span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario'], 'innerHTML', $tmp.' <a class="text" onclick="return(OpenWindowLink('.$linha['cod_usuario'].'));" href="#">'.$linha['nome'].'</a><br />');
+        $objResponse->create('td_grupo_'.$cod_grupo, 'span', 'span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario']);
+        $objResponse->append('span2_grupo_'.$cod_grupo.'_'.$linha['cod_usuario'], 'innerHTML', $tmp.' <a class="text" onclick="return(OpenWindowLink('.$linha['cod_usuario'].'));" href="#">'.$linha['nome'].'</a><br />');
       }
 
     }
   }
 
-  $objResponse->addAppend('td_grupo_'.$cod_grupo, 'style.padding', '10px 0px 10px 50px');
-  $objResponse->addCreate('td_grupo_'.$cod_grupo, 'br', '');
+  $objResponse->append('td_grupo_'.$cod_grupo, 'style.padding', '10px 0px 10px 50px');
+  $objResponse->create('td_grupo_'.$cod_grupo, 'br', '');
   if((!$grupo_fechados)&&($cod_grupo!=-1)){
-    $objResponse->addCreate('td_grupo_'.$cod_grupo, 'ul', 'ul_grupo_'.$cod_grupo);
-    $objResponse->addCreate('ul_grupo_'.$cod_grupo, 'li', 'li1_grupo_'.$cod_grupo);
-    $objResponse->addCreate('li1_grupo_'.$cod_grupo, 'span', 'span_li1_grupo_'.$cod_grupo);
+    $objResponse->create('td_grupo_'.$cod_grupo, 'ul', 'ul_grupo_'.$cod_grupo);
+    $objResponse->create('ul_grupo_'.$cod_grupo, 'li', 'li1_grupo_'.$cod_grupo);
+    $objResponse->create('li1_grupo_'.$cod_grupo, 'span', 'span_li1_grupo_'.$cod_grupo);
     $objResponse->addEvent('span_li1_grupo_'.$cod_grupo, 'onclick', 'IncluirComponentes('.$cod_grupo.');');
-    $objResponse->addAppend('li1_grupo_'.$cod_grupo, 'className', 'menuUp02');
-    $objResponse->addAppend('li1_grupo_'.$cod_grupo, 'style.float', 'right');
-    $objResponse->addAppend('span_li1_grupo_'.$cod_grupo, 'innerHTML', $frases[2]);
+    $objResponse->append('li1_grupo_'.$cod_grupo, 'className', 'menuUp02');
+    $objResponse->append('li1_grupo_'.$cod_grupo, 'style.float', 'right');
+    $objResponse->append('span_li1_grupo_'.$cod_grupo, 'innerHTML', $frases[2]);
 
-    $objResponse->addCreate('ul_grupo_'.$cod_grupo, 'li', 'li2_grupo_'.$cod_grupo);
-    $objResponse->addCreate('li2_grupo_'.$cod_grupo, 'span', 'span_li2_grupo_'.$cod_grupo);
-    $objResponse->addAppend('li2_grupo_'.$cod_grupo, 'className', 'menuUp');
-    $objResponse->addAppend('li2_grupo_'.$cod_grupo, 'style.float', 'right');
-    $objResponse->addAppend('span_li2_grupo_'.$cod_grupo, 'innerHTML', $frases[3]);
+    $objResponse->create('ul_grupo_'.$cod_grupo, 'li', 'li2_grupo_'.$cod_grupo);
+    $objResponse->create('li2_grupo_'.$cod_grupo, 'span', 'span_li2_grupo_'.$cod_grupo);
+    $objResponse->append('li2_grupo_'.$cod_grupo, 'className', 'menuUp');
+    $objResponse->append('li2_grupo_'.$cod_grupo, 'style.float', 'right');
+    $objResponse->append('span_li2_grupo_'.$cod_grupo, 'innerHTML', $frases[3]);
   }
-  $objResponse->addClear('usuarios_grupo_'.$cod_grupo, 'innerHTML');
-  $objResponse->addAppend('usuarios_grupo_'.$cod_grupo, 'innerHTML', ($cod+1));
+  $objResponse->clear('usuarios_grupo_'.$cod_grupo, 'innerHTML');
+  $objResponse->append('usuarios_grupo_'.$cod_grupo, 'innerHTML', ($cod+1));
 
 
 
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();  
+  return $objResponse;  
 }
 
 /**************************************************************************************
@@ -695,7 +695,7 @@ function MostraGrupoDinamic($cod_curso, $cod_grupo, $frases)
 *************************************************************************************/
 function EditarTituloDinamic ($cod_curso, $cod_grupo, $novo_nome, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -707,15 +707,15 @@ function EditarTituloDinamic ($cod_curso, $cod_grupo, $novo_nome, $texto)
   Desconectar($sock);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("grupo_".$cod_grupo, "innerHTML", htmlentities($novo_nome));
-  $objResponse->addAssign("grupo_".$cod_grupo, "className", "link");
-  $objResponse->addAssign("grupo_".$cod_grupo, "style.fontWeight", "bold");
+  $objResponse->assign("grupo_".$cod_grupo, "innerHTML", htmlentities($novo_nome));
+  $objResponse->assign("grupo_".$cod_grupo, "className", "link");
+  $objResponse->assign("grupo_".$cod_grupo, "style.fontWeight", "bold");
   $objResponse->addEvent("grupo_".$cod_grupo, "onClick", "MostrarComponentes('".$cod_grupo."');");
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, true);
+  $objResponse->call("mostraFeedback", $texto, true);
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -729,7 +729,7 @@ function EditarTituloDinamic ($cod_curso, $cod_grupo, $novo_nome, $texto)
 **************************************************************************************/
 function MudarConfiguracaoDinamic($dadosForm, $acao)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $cod_curso=$dadosForm['cod_curso'];
   $cod_forum=$dadosForm['cod_forum'];
@@ -740,10 +740,10 @@ function MudarConfiguracaoDinamic($dadosForm, $acao)
   AbrirFecharGrupos($sock,$acao);
   Desconectar($sock);
   
-  $objResponse->addRedirect("grupos.php?cod_curso=".$cod_curso."&acao=mudar_configuracao&atualizacao=true");
+  $objResponse->redirect("grupos.php?cod_curso=".$cod_curso."&acao=mudar_configuracao&atualizacao=true");
 
 //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -756,7 +756,7 @@ function MudarConfiguracaoDinamic($dadosForm, $acao)
 ***********************************************************************************************/
 function ExcluirComponentesDinamic($cod_curso, $cod_grupo, $arraySelect, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $sock=Conectar($cod_curso);
   
@@ -765,15 +765,15 @@ function ExcluirComponentesDinamic($cod_curso, $cod_grupo, $arraySelect, $texto)
   $query="delete from Grupos_usuario where cod_grupo='".$cod_grupo."' and cod_usuario in (".$participantes.")";
   Enviar($sock, $query);
 
-  $objResponse->addAssign('li2_grupo_'.$cod_grupo, 'className', 'menuUp');
+  $objResponse->assign('li2_grupo_'.$cod_grupo, 'className', 'menuUp');
   $objResponse->addEvent('span_li2_grupo_'.$cod_grupo, 'onClick', '');
 
   Desconectar($sock);
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, true);
+  $objResponse->call("mostraFeedback", $texto, true);
 
 //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -786,7 +786,7 @@ function ExcluirComponentesDinamic($cod_curso, $cod_grupo, $arraySelect, $texto)
 ******************************************************************************************/
 function MostraComponenteDinamic($cod_curso, $cod_usuario, $frases_grupo)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);  
   
@@ -795,28 +795,28 @@ function MostraComponenteDinamic($cod_curso, $cod_usuario, $frases_grupo)
 
   if($cod_grupo!=-1){
     $lista = RetornaGruposDoUsuario($sock,$cod_usuario);
-    $objResponse->addAppend('span_grupo_'.$cod_grupo, 'innerHTML', $frases_grupo[5].":<br /><br />");
+    $objResponse->append('span_grupo_'.$cod_grupo, 'innerHTML', $frases_grupo[5].":<br /><br />");
 
     if($lista!=""){
       foreach($lista as $cod => $linha){
-        $objResponse->addCreate('td_usuario_'.$cod_usuario, 'span', 'span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo']);
-        $objResponse->addAppend('span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo'], 'innerHTML', $frases_grupo[0]." ".$linha['nome'].'<br />');
+        $objResponse->create('td_usuario_'.$cod_usuario, 'span', 'span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo']);
+        $objResponse->append('span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo'], 'innerHTML', $frases_grupo[0]." ".$linha['nome'].'<br />');
       }
     }else{
-        $objResponse->addCreate('td_usuario_'.$cod_usuario, 'span', 'span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo']);
-        $objResponse->addAppend('span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo'], 'innerHTML', $frases_grupo[1].'<br />');
+        $objResponse->create('td_usuario_'.$cod_usuario, 'span', 'span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo']);
+        $objResponse->append('span2_usuario_'.$cod_usuario.'_'.$linha['cod_grupo'], 'innerHTML', $frases_grupo[1].'<br />');
     }
   }
 
-  $objResponse->addAppend('td_usuario_'.$cod_usuario, 'style.padding', '10px 0px 10px 50px');
-  $objResponse->addClear('usuarios_usuario_'.$cod_usuario, 'innerHTML');
-  $objResponse->addAppend('usuarios_usuario_'.$cod_usuario, 'innerHTML', ($cod+1));
-  $objResponse->addAppend('tr_usuario_'.$cod_usuario, 'className', 'altColor0');
-  $objResponse->addCreate('td_usuario_'.$cod_usuario, 'br', '');
+  $objResponse->append('td_usuario_'.$cod_usuario, 'style.padding', '10px 0px 10px 50px');
+  $objResponse->clear('usuarios_usuario_'.$cod_usuario, 'innerHTML');
+  $objResponse->append('usuarios_usuario_'.$cod_usuario, 'innerHTML', ($cod+1));
+  $objResponse->append('tr_usuario_'.$cod_usuario, 'className', 'altColor0');
+  $objResponse->create('td_usuario_'.$cod_usuario, 'br', '');
 
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -828,16 +828,16 @@ function MostraComponenteDinamic($cod_curso, $cod_usuario, $frases_grupo)
    Saida: XML da função Ajax
 *************************************************************************************************/
 function VerificaNovoTituloDinamic($cod_curso, $nome_grupo, $msg){
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso); 
   $query = "Select * from Grupos where nome like '".LimpaTitulo($nome_grupo)."' and status!='X'"; 
   $res = Enviar($sock, $query);
   $res2 = RetornaLinha($res);
   /* Já existe um grupo com este nome */
-  if($res2!="") {$objResponse->addAlert($msg);}
-  else{ $objResponse->addScript('document.form_novo_grupo.submit();'); }
+  if($res2!="") {$objResponse->alert($msg);}
+  else{ $objResponse->script('document.form_novo_grupo.submit();'); }
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();  
+  return $objResponse;  
 }
 ?>

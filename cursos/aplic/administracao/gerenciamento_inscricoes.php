@@ -56,20 +56,25 @@
     unset($_SESSION['login_existente']);
   }
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
-  $objMaterial->registerFunction("AtivarDesativarPortDinamic");
-  $objMaterial->registerFunction("PaginacaoDinamic");
-  $objMaterial->registerFunction("MudaGuiaDinamic");
-  $objMaterial->registerFunction("MudaDinamic");
-  $objMaterial->registerFunction("Paginacao");
-  $objMaterial->registerFunction("IniciaPaginacaoDinamic");
-  
+  $objAjax->register(XAJAX_FUNCTION,"AtivarDesativarPortDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaGuiaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"Paginacao");
+  $objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta       = 0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -169,7 +174,7 @@
 
   echo("    </script>\n\n");
 
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

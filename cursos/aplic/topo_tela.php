@@ -43,6 +43,7 @@
 /* ******************************************************************* */
   $bibliotecas="../bibliotecas/";
   include("menu.inc");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
   if (!isset($cod_curso)){

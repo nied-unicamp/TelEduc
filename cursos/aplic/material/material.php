@@ -46,24 +46,29 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objMaterial->registerFunction("MudarCompartilhamento");
-  $objMaterial->registerFunction("AbreEdicao");
-  $objMaterial->registerFunction("DecodificaString");
-  $objMaterial->registerFunction("AcabaEdicaoDinamic");
-  $objMaterial->registerFunction("MoverItensDinamic");
-  $objMaterial->registerFunction("RetornaFraseDinamic");
-  $objMaterial->registerFunction("AtualizaPosicoes");
-  $objMaterial->registerFunction("CriaTopicoDinamic");
-  $objMaterial->registerFunction("RenomearTopicoDinamic");
-  $objMaterial->registerFunction("CriaZipDinamic");
-  
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaPosicoes");
+  $objAjax->register(XAJAX_FUNCTION,"CriaTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RenomearTopicoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CriaZipDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
   /**************** ajax ****************/
 
@@ -164,7 +169,6 @@
   
     /**************** ajax ****************/
 
-  $objMaterial->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
   echo("        function redirecionaDownloadAnexos(url){\n");
   echo("            window.location=url;\n");
@@ -175,10 +179,10 @@
     /**************** ajax ****************/
 
     /* Funï¿½ï¿½es JavaScript */
-    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../bibliotecas/dhtmllib.js'></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\" src='../js-css/tablednd.js'></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("    <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\" src='../bibliotecas/dhtmllib.js'></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\" src='../js-css/tablednd.js'></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("      var qtosChecados = 0;\n");
     echo("      var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
     echo("      var isMinNS6 = ((navigator.userAgent.indexOf(\"Gecko\") != -1) && (isNav));\n");
@@ -521,7 +525,7 @@
     echo("        return false;\n");
     echo("      }\n\n");
 
-    if(($cod_ferramenta==3) && ($AcessoAvaliacaoM))    {
+    if(($cod_ferramenta==3) && ($AcessoAvaliacaoM)) {
       echo("      function VerAvaliacao(id) {\n");
       echo("         window.open('../avaliacoes/ver_popup.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&VeioDaAtividade=1&origem=../material/material&cod_topico=".$cod_topico_raiz."&cod_avaliacao='+id,'VerAvaliacao','width=450,height=300,top=150,left=250,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=no');\n");
       echo("        return(false);\n");
@@ -530,14 +534,16 @@
     echo("\n");
   }//if = eh formador
   else{//nï¿½o ï¿½ formador
-  	echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
-    echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+    echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
+    echo("    <script type=\"text/javascript\" language=\"javascript\">\n");
     echo("      function Iniciar(){\n");
     echo("        startList();\n");
     echo("      }\n");
   }
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

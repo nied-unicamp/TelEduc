@@ -854,7 +854,7 @@ function RetornaSessoesDeUmAssunto($sock,$cod_assunto)
  */
 function RetornaListaApelidosOnlineDinamic($cod_curso, $cod_sessao, $cod_usuario) {
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock = Conectar($cod_curso);
   
   $lista_apelidos = RetornaListaApelidosOnline($sock, $cod_sessao);
@@ -862,8 +862,8 @@ function RetornaListaApelidosOnlineDinamic($cod_curso, $cod_sessao, $cod_usuario
   unset($lista_apelidos[$cod_usuario]);
   Desconectar($sock);
 
-  $objResponse->addScriptCall("AtualizaLista", $lista_apelidos);
-  return $objResponse->getXML();
+  $objResponse->call("AtualizaLista", $lista_apelidos);
+  return $objResponse;
 }
 
 /*********************************************************************
@@ -876,7 +876,7 @@ function RetornaListaApelidosOnlineDinamic($cod_curso, $cod_sessao, $cod_usuario
  */
 function MudarStatusDinamic($cod_curso, $cod_sessao, $status){
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar($cod_curso);
 
@@ -887,9 +887,9 @@ function MudarStatusDinamic($cod_curso, $cod_sessao, $status){
 
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar('".$status."');");
+  $objResponse->script("Recarregar('".$status."');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /**************************************************************************
@@ -902,7 +902,7 @@ function MudarStatusDinamic($cod_curso, $cod_sessao, $status){
  */
 function DesmarcaSessaoDinamic($cod_curso, $array_cod_assunto, $array_cod_usuario)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);
 
   for($i=0;$i<count($array_cod_assunto);$i++)
@@ -915,9 +915,9 @@ function DesmarcaSessaoDinamic($cod_curso, $array_cod_assunto, $array_cod_usuari
   AtualizaFerramentasNova($sock, 10, 'T');
   Desconectar($sock);
 
-  $objResponse->addScript("Recarregar();");
+  $objResponse->script("Recarregar();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************

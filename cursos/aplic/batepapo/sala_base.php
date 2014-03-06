@@ -44,12 +44,17 @@
   include($bibliotecas."geral.inc");
   include("batepapo.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   // Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun��es em PHP que voc� quer chamar atrav�s do xajax
-  $objAjax->registerFunction("RetornaListaApelidosOnlineDinamic");
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"RetornaListaApelidosOnlineDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=10;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -204,7 +209,7 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   echo("  </head>\n");
 

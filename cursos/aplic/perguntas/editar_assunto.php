@@ -52,13 +52,20 @@
   
     /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objPerguntas = new xajax();
-  $objPerguntas->registerFunction("AlteraDadosAssuntoDinamic");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xaja
+  $objAjax->register(XAJAX_FUNCTION,"AlteraDadosAssuntoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objPerguntas->processRequests(); 
+  $objAjax->processRequest();
   
   include("../topo_tela.php");
   
@@ -68,7 +75,6 @@
   //adicionar as acoes possiveis, 1o parametro Ã©
   $feedbackObject->addAction("novoAssunto", 80, 0);
   
-  
   /* Verifica se o usuario eh formador. */
   if (EFormador($sock, $cod_curso, $cod_usuario))
     $usr_formador = true;
@@ -77,8 +83,8 @@
 
   $cod_assunto = $cod_assunto_pai;
   
-  echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
-  echo("<script language=JavaScript>\n\n");
+  echo("<script language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("<script language=\"javascript\">\n\n");
   
   echo("  img_icone = new Image();\n");
   echo("  img_icone.src = \"../figuras/assunto.gif\";\n\n");
@@ -495,38 +501,38 @@
     echo("  }\n\n");
 
   }
-	      
+  
   echo("</script>\n\n");
 
-  $objPerguntas->printJavascript("../xajax_0.2.4/");
-  
+  $objAjax->printJavascript();
+
   include("../menu_principal.php");
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   
   /* Se for Aluno, jï¿½ corta */
   if ($tela_formador != 1) {
-	echo ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
-	/* 73 - Acao exclusiva a formadores. */
-	echo ("    - " . RetornaFraseDaLista($lista_frases_geral, 76) . "</h4>");
+    echo ("          <h4>" . RetornaFraseDaLista($lista_frases, 1));
+    /* 73 - Acao exclusiva a formadores. */
+    echo ("    - " . RetornaFraseDaLista($lista_frases_geral, 76) . "</h4>");
 
-	/*Voltar*/
+    /*Voltar*/
    /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
-	
-	echo ("          <div id=\"mudarFonte\">\n");
-	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
-	echo ("          </div>\n");
+    echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
-	echo ("        </td>\n");
-	echo ("      </tr>\n");
-	echo ("    </table>\n");
-	echo ("  </body>\n");
-	echo ("</html>\n");
-	Desconectar($sock);
-	exit;
+    echo ("          <div id=\"mudarFonte\">\n");
+    echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
+    echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
+    echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+    echo ("          </div>\n");
+
+    echo ("        </td>\n");
+    echo ("      </tr>\n");
+    echo ("    </table>\n");
+    echo ("  </body>\n");
+    echo ("</html>\n");
+    Desconectar($sock);
+    exit;
 }
   
   /* 1 - Perguntas */
@@ -544,13 +550,13 @@
   echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
     
   /* 1 - Perguntas Freqï¿½entes */
-  $cabecalho = "  <b class=titulo>".RetornaFraseDaLista($lista_frases,1)."</b>";
+  $cabecalho = "  <b class=\"titulo\">".RetornaFraseDaLista($lista_frases,1)."</b>";
 
   //echo("  <br>\n");
   
-  echo("  <span class=\"btsNav2\"><a href=# onClick='MostraLayer(layer_estrutura,this);return(false);'><img src=../imgs/estrutura.gif border=0></a>\n");
+  echo("  <span class=\"btsNav2\"><a href=\"#\" onClick='MostraLayer(layer_estrutura,this);return(false);'><img src=\"../imgs/estrutura.gif\" border=0></a>\n");
   //echo("  <a href=# onMouseDown='MostraLayer(lay_estrutura,0);return(false);'><img src=../figuras/estrutura.gif border=0></a>\n");
-  echo("    <font id=\"topo_caminho\" class=text>".RetornaLinkCaminhoAssunto($sock, $cod_assunto_pai, $cod_curso, "perguntas"));
+  echo("    <font id=\"topo_caminho\" class=\"text\">".RetornaLinkCaminhoAssunto($sock, $cod_assunto_pai, $cod_curso, "perguntas"));
   echo("    </font></span>\n");
   echo("  \n");
 
@@ -594,7 +600,7 @@
   
   /* Se estiver na Lixeira o formulario submete as informaï¿½oes para */
   /* ver_pergunta_lixeira.php, do contrario, para ver_pergunta.php  */
-  echo("  <form method=post name=frm_pergunta action=");
+  echo("  <form method=\"post\" name=\"frm_pergunta\" action=");
   if ($cod_assunto_pai == 2)
     echo("ver_pergunta_lixeira.php");
   else
@@ -602,26 +608,26 @@
 
   echo(" target=_self onsubmit='return(MostrarSelecionadas());'>\n");
   
-  echo("  <form method=post name=frm_pergunta target=_self>");
+  echo("  <form method=\"post\" name=\"frm_pergunta\" target=_self>");
 
   //echo(RetornaSessionIDInput());
-  echo("<input type=hidden name=cod_curso value=".$cod_curso.">\n");
-  echo("<input type=hidden name=acao value=\"\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_curso\" value=\"".$cod_curso."\">\n");
+  echo("    <input type=\"hidden\" name=\"acao\" value=\"\">\n");
 
-  echo("    <input type=hidden name=cod_assunto_pai value=".$cod_assunto_pai.">\n");
-  echo("    <input type=hidden name=cod_assunto_dest value=\"\">\n");
-  echo("    <input type=hidden name=cod_assunto value=\"".$cod_assunto."\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_assunto_pai\" value=\"".$cod_assunto_pai."\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_assunto_dest\" value=\"\">\n");
+  echo("    <input type=\"hidden\" name=\"cod_assunto\" value=\"".$cod_assunto."\">\n");
   /* Especifica o documento da pagina principal, o qual chamou o    */
   /* ver_pergunta.php. Isto eh necessario para atualizar a pagina   */
   /* principal que pode ser perguntas.php ou exibir_todas.php.      */
-  echo("    <input type=hidden name=pagprinc value=perguntas>\n");
+  echo("    <input type=\"hidden\" name=\"pagprinc\" value=\"perguntas\">\n");
 
   if ($cod_assunto_pai == 2)
     /* Passa o 'cod_assunto_anterior', necessario para se voltar ao */
     /* assunto anterior a visualizaï¿½ao da lixeira.                  */
-    echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_anterior.">\n");
+    echo("  <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_anterior."\">\n");
   else
-    echo("  <input type=hidden name=cod_assunto_anterior value=".$cod_assunto_pai.">\n");
+    echo("  <input type=\"hidden\" name=\"cod_assunto_anterior\" value=\"".$cod_assunto_pai."\">\n");
 
   /* Especifica o documento da pagina principal, o qual chamou o    */
   /* perguntas.php, mas com o cod_assunto_pai = 2 (lixeira). Isto   */
@@ -630,9 +636,9 @@
   /* Se jah estiver setada entao usa o valor default. Isto eh     */
   /* necessario quando o cod_assunto_pai = 2 (LIXEIRA). Entao eh  */
   /* eh preciso voltar ao modo de visualizaï¿½ao anterior.          */
-    echo("    <input type=hidden name=pag_anterior value=".$pag_anterior.">\n");
+    echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"".$pag_anterior."\">\n");
   else
-    echo("    <input type=hidden name=pag_anterior value=perguntas>\n");
+    echo("    <input type=\"hidden\" name=\"pag_anterior\" value=\"perguntas\">\n");
 
 
   echo("              <tr>\n");
@@ -694,7 +700,7 @@
   echo("  <div id=\"layer_estrutura_mover\" class=\"popup\" visibility=hidden onContextMenu='return(false);'>\n");
   echo("    <div class=\"posX\"><span onclick=\"EscondeLayer(layer_estrutura_mover);return(false);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
   echo("      <div class=\"int_popup\">\n");
-  echo("        <div class=\"ulPopup\">\n"); 
+  echo("        <div class=\"ulPopup\">\n");
 
   echo("          ".EstruturaMoverAssunto($sock, $cod_assunto, $usr_formador));
 

@@ -37,21 +37,27 @@
  */
 
 /*==========================================================
- ARQUIVO : cursos/aplic/exercicios/ver_exercicios.php
- ========================================================== */
+  ARQUIVO : cursos/aplic/exercicios/ver_exercicios.php
+  ========================================================== */
 
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $visualizar = $_GET['visualizar'];
@@ -185,10 +191,11 @@
   echo("      }\n\n");
 
   echo("  </script>\n\n");
+
+  $objAjax->printJavascript();
+
   /* fim - JavaScript */
   /*********************************************************/
-
-  $objAjax->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
 

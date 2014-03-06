@@ -45,15 +45,21 @@
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMudarComp = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objMudarComp->registerFunction("ExcluirItensDinamic");
-  $objMudarComp->registerFunction("RecuperarItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RecuperarItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMudarComp->processRequests();
+  $objAjax->processRequest();
 
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
@@ -195,11 +201,9 @@
   echo("      window.location='portfolio_lixeira.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&cod_grupo_portfolio=".$cod_grupo_portfolio."&cod_usuario_portfolio=".$cod_usuario_portfolio."&acao='+acao+'&atualizacao='+atualizacao;\n");
   echo("    }\n\n");
 
- 
-
   echo("    </script>\n");
 
-  $objMudarComp->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

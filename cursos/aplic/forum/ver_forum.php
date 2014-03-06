@@ -45,16 +45,21 @@
   include("forum.inc");
   include("avaliacoes_forum.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax->registerFunction("MudarRelevanciaDinamic");
-  $objAjax->registerFunction("MostraMensagemDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"MudarRelevanciaDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   session_register('cod_forum_s');
   session_register('array_mensagens_s');
@@ -702,7 +707,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

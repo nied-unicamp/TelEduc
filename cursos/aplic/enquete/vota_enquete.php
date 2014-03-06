@@ -49,25 +49,22 @@
   $cod_pagina_ajuda = 10;
   
   include("../topo_tela.php");
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /*********************************************************/
   /* in�io - JavaScript */
 
   echo("  <script type=\"text/javascript\" language=\"JavaScript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("<script type=\"text/javascript\" language=\"JavaScript\">");  
-  echo("  function Iniciar()\n");
-  echo("  {\n");
-  echo("    startList();\n");
-  echo("  }\n"); 
+  echo("  <script type=\"text/javascript\" language=\"JavaScript\">");  
+  echo("    function Iniciar()\n");
+  echo("    {\n");
+  echo("      startList();\n");
+  echo("    }\n");
 
-  echo("  function CancelaVoto()\n");
-  echo("  {\n");
-  echo("    document.location.href=\"enquete.php?cod_curso=".$cod_curso."\"\n");
-  echo("    return(true);\n");
-  echo("  }\n\n");
+  echo("    function CancelaVoto()\n");
+  echo("    {\n");
+  echo("      document.location.href=\"enquete.php?cod_curso=".$cod_curso."\"\n");
+  echo("      return(true);\n");
+  echo("    }\n\n");
 
   echo("    var num_respostas;\n");
   
@@ -83,19 +80,23 @@
   echo("      return (false);\n");
   echo("    }\n");
   
-  echo("  function testa_campos()\n");
-  echo("  {\n");
-  echo("    if (testa_voto())\n");
+  echo("    function testa_campos()\n");
   echo("    {\n");
-  echo("      return(true);\n");
+  echo("      if (testa_voto())\n");
+  echo("      {\n");
+  echo("        return(true);\n");
+  echo("      }\n");
+  echo("      else\n");
+  echo("      {\n");
+  echo("        return(false);\n");
+  echo("      }\n");
   echo("    }\n");
-  echo("    else\n");
-  echo("    {\n");
-  echo("      return(false);\n");
-  echo("    }\n");
-  echo("  }\n");
 
-  echo("</script>\n\n");
+  echo("  </script>\n\n");
+
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   /* Pega a enquete, seu status, e o tipo do usu�io*/
   $enquete = getEnquete($sock, $idEnquete); 

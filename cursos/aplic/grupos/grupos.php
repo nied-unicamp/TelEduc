@@ -46,20 +46,25 @@
   include($bibliotecas."geral.inc");
   include("grupos.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
-//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("MostraGrupoDinamic");
-  $objAjax->registerFunction("EditarTituloDinamic");
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("MudarConfiguracaoDinamic");
-  $objAjax->registerFunction("ExcluirComponentesDinamic");
-  $objAjax->registerFunction("VerificaNovoTituloDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->register(XAJAX_FUNCTION,"MostraGrupoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirComponentesDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaNovoTituloDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=12;
   $cod_ferramenta_ajuda=$cod_ferramenta;
@@ -83,8 +88,6 @@
   FUNï¿½ES JAVASCRIPT
   ==================
   */
-  
-  
 
   echo("    <script type=\"text/javascript\">\n");
   
@@ -152,7 +155,7 @@
   {
     if (EFormador($sock,$cod_curso,$cod_usuario))
     {
-    echo("        lay_conf = getLayer('layer_conf');\n");
+      echo("        lay_conf = getLayer('layer_conf');\n");
     }
     echo("        lay_novo = getLayer('layer_novo');\n");
   }
@@ -553,7 +556,7 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

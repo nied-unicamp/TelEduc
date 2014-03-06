@@ -44,16 +44,20 @@
   include($bibliotecas."geral.inc");
   include("configurar.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-
-  $objAjax->registerFunction("AtualizaPlanoNotificacaoDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"AtualizaPlanoNotificacaoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=-7;
   // variaveis passadas para a funcao PreparaAjuda que eh chamada no menu_principal.php
@@ -95,7 +99,8 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
+
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

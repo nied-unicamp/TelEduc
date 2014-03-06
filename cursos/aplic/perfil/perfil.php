@@ -54,18 +54,23 @@
   
   $tipo_usuario="A";
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xaja
-  //$objMaterial->registerFunction("IniciaPaginacaoDinamic");
-  $objMaterial->registerFunction("MudaDinamic");
-  //$objMaterial->registerFunction("PaginacaoDinamic");
+  //$objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
+  //$objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
-  
   include("../topo_tela.php");
   
   // instanciar o objeto, passa a lista de frases por parametro
@@ -105,7 +110,6 @@
   
 
   /* FunÃ§Ãµes javascript */
-  $objMaterial->printJavascript("../xajax_0.2.4/");
   echo("    <script type=\"text/javascript\">\n");
   /* <Variaveis globais> */
   echo(" 	  var imprimir_perfil = 0;\n");
@@ -436,6 +440,8 @@
   echo("}\n");
 
   echo("    </script>\n");
+
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

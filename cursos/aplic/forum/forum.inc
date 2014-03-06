@@ -1318,7 +1318,7 @@ function ApagaMensagem($sock, $cod_msg, $cod_forum)
 ********************************************************************************************/
 function SalvaMensagem($sock, $cod_msg_pai, $cod_forum, $cod_usuario, $titulo, $mensagem, $cod_curso)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
 
   /* Se n�o fizer o magic quotes, nos fazemos =) */
@@ -1352,7 +1352,7 @@ function SalvaMensagem($sock, $cod_msg_pai, $cod_forum, $cod_usuario, $titulo, $
   $res = Enviar($sock, $query);
   
 
-  $objResponse->addRedirect("ver_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario);
+  $objResponse->redirect("ver_forum.php?cod_forum=".$cod_forum."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario);
 
   return($objResponse);
 }
@@ -1863,7 +1863,7 @@ function RetornaTodosColaboradores($sock, $cod_curso)
  *************************************************************************************/
 function MudarRelevanciaDinamic($dadosForm, $nova_relev)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $tipo_comp=$dadosForm['tipo_comp'];
   $cod_curso=$dadosForm['cod_curso'];
@@ -1889,13 +1889,13 @@ function MudarRelevanciaDinamic($dadosForm, $nova_relev)
   Desconectar($sock);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("msg_".$cod_msg, "innerHTML", "<b>".print_r($nova_relev, true)."</b>");
+  $objResponse->assign("msg_".$cod_msg, "innerHTML", "<b>".print_r($nova_relev, true)."</b>");
   $objResponse->addEvent("msg_".$cod_msg, "onClick", "AlteraCodMsg('".$cod_msg."', '".$nova_relevancia."'); MostraLayer(relevIni,0);");
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
 //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -1913,16 +1913,16 @@ function MudarRelevanciaDinamic($dadosForm, $nova_relev)
 ****************************************************************************************/
 function MostraMensagemDinamic($cod_curso, $cod_msg, $cod_forum, $status, $mensagem)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   $sock=Conectar($cod_curso);  
   
   list($total, $mensagem_dados) = RetornaMensagem($sock, $cod_msg, $cod_forum, $status);
   
-  $objResponse->addAssign("td_msg_".$cod_msg, "innerHTML", "<b>".$mensagem.":</b><br /><br />". Enter2BR(LimpaConteudo($mensagem_dados['mensagem'])) );
+  $objResponse->assign("td_msg_".$cod_msg, "innerHTML", "<b>".$mensagem.":</b><br /><br />". Enter2BR(LimpaConteudo($mensagem_dados['mensagem'])) );
   
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();  
+  return $objResponse;  
 }
 
 
@@ -1935,7 +1935,7 @@ function MostraMensagemDinamic($cod_curso, $cod_msg, $cod_forum, $status, $mensa
 *********************************************************************************************/
 function MudarConfiguracaoDinamic($dadosForm, $nova_conf)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
   
   $cod_curso=$dadosForm['cod_curso'];
   $cod_forum=$dadosForm['cod_forum'];
@@ -1951,12 +1951,12 @@ function MudarConfiguracaoDinamic($dadosForm, $nova_conf)
 
       $query="DELETE FROM Forum_permissoes WHERE Forum_permissoes.cod_forum=".$cod_forum; //limpa a tabela dos participantes e grupos com permiss�
       Enviar($sock,$query);
-      $objResponse->addScript("document.getElementById('forum_".$cod_forum."').setAttribute('status_conf', '".$nova_conf."');\n");
-      $objResponse->addScript("document.getElementById('forum_".$cod_forum."').style.fontWeight='bold';\n");
+      $objResponse->script("document.getElementById('forum_".$cod_forum."').setAttribute('status_conf', '".$nova_conf."');\n");
+      $objResponse->script("document.getElementById('forum_".$cod_forum."').style.fontWeight='bold';\n");
       if($nova_conf=='A'){
-        $objResponse->addScript("document.getElementById('forum_leitura_".$cod_forum."').innerHTML='';\n");
+        $objResponse->script("document.getElementById('forum_leitura_".$cod_forum."').innerHTML='';\n");
       }else{
-        $objResponse->addScript("document.getElementById('forum_leitura_".$cod_forum."').innerHTML=msg_40;\n");
+        $objResponse->script("document.getElementById('forum_leitura_".$cod_forum."').innerHTML=msg_40;\n");
       }
     }
     else
@@ -1965,13 +1965,13 @@ function MudarConfiguracaoDinamic($dadosForm, $nova_conf)
       $status = 'false';
       /* 57 - Erro ao alterar a configura�o. */
     }
-    $objResponse->addScriptCall("mostraFeedback", $texto, $status);
+    $objResponse->call("mostraFeedback", $texto, $status);
   }
 
   Desconectar($sock);
 
 //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -1985,7 +1985,7 @@ function MudarConfiguracaoDinamic($dadosForm, $nova_conf)
 ****************************************************************************************/
 function EditarTituloDinamic ($cod_curso, $cod_forum, $novo_nome, $texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   // como vou precisar atualizar campos de data, preciso saber a data em UnixTime
   $data = time();
@@ -1997,14 +1997,14 @@ function EditarTituloDinamic ($cod_curso, $cod_forum, $novo_nome, $texto)
   Desconectar($sock);
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("link_forum_".$cod_forum, "innerHTML", htmlentities($novo_nome));
-  $objResponse->addAssign("link_forum_".$cod_forum, "style.fontWeight", "bold");
-  $objResponse->addAssign("forumQtd_".$cod_forum, "style.fontWeight", "bold");  
+  $objResponse->assign("link_forum_".$cod_forum, "innerHTML", htmlentities($novo_nome));
+  $objResponse->assign("link_forum_".$cod_forum, "style.fontWeight", "bold");
+  $objResponse->assign("forumQtd_".$cod_forum, "style.fontWeight", "bold");  
 
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 

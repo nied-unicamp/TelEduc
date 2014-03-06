@@ -1865,17 +1865,17 @@ function UpgradeUsuarioRepetido($listaDestinatarios, $codUser, $cod_msg, $cod){
 }
 
 function trocaEstadoMsg($cod_usuario, $cod_curso, $modoVisualizacao, $msg, $estado, $texto='', $reload='', $recuperar=''){
-    $objResponse = new xajaxResponse('ISO-8859-1');
+    $objResponse = new xajaxResponse();
     $sock = Conectar($cod_curso);
 
     if(is_array($msg)){
       foreach($msg as $cod_msg){
         if($modoVisualizacao == 'R'){
           TrocaEstadoDaMensagemRecebidas($sock, $estado, $cod_msg, $cod_usuario);
-          $objResponse->addAssign("img_".$cod_msg, "src", "../imgs/icMensagemLida.gif");
-          $objResponse->addScript("document.getElementById('assunto_".$cod_msg."').style.fontWeight='';");
-          $objResponse->addScript("document.getElementById('remetente_".$cod_msg."').style.fontWeight='';");
-          $objResponse->addScript("document.getElementById('data_".$cod_msg."').style.fontWeight='';");
+          $objResponse->assign("img_".$cod_msg, "src", "../imgs/icMensagemLida.gif");
+          $objResponse->script("document.getElementById('assunto_".$cod_msg."').style.fontWeight='';");
+          $objResponse->script("document.getElementById('remetente_".$cod_msg."').style.fontWeight='';");
+          $objResponse->script("document.getElementById('data_".$cod_msg."').style.fontWeight='';");
         }else if($modoVisualizacao == 'E'){
           TrocaEstadoDaMensagemEnviadas($sock, $estado, $cod_msg, $cod_usuario);
         }else if($modoVisualizacao == 'L'){
@@ -1885,10 +1885,10 @@ function trocaEstadoMsg($cod_usuario, $cod_curso, $modoVisualizacao, $msg, $esta
     }else{
       if($modoVisualizacao == 'R'){
         TrocaEstadoDaMensagemRecebidas($sock, $estado, $msg, $cod_usuario);
-        $objResponse->addAssign("img_".$msg, "src", "../imgs/icMensagemLida.gif");
-        $objResponse->addScript("document.getElementById('assunto_".$msg."').style.fontWeight='';");
-        $objResponse->addScript("document.getElementById('remetente_".$msg."').style.fontWeight='';");
-        $objResponse->addScript("document.getElementById('data_".$msg."').style.fontWeight='';");
+        $objResponse->assign("img_".$msg, "src", "../imgs/icMensagemLida.gif");
+        $objResponse->script("document.getElementById('assunto_".$msg."').style.fontWeight='';");
+        $objResponse->script("document.getElementById('remetente_".$msg."').style.fontWeight='';");
+        $objResponse->script("document.getElementById('data_".$msg."').style.fontWeight='';");
       }else if($modoVisualizacao == 'E'){
         TrocaEstadoDaMensagemEnviadas($sock, $estado, $msg, $cod_usuario);
       }else if($modoVisualizacao == 'L'){
@@ -1896,28 +1896,28 @@ function trocaEstadoMsg($cod_usuario, $cod_curso, $modoVisualizacao, $msg, $esta
       }
     }
 
-//     if($reload == 'yes'){$objResponse->addScript("window.location.reload();");}
-       if($reload == 'yes'){$objResponse->addScript("window.location='correio.php?cod_curso=".$cod_curso."&modoVisualizacao=".$modoVisualizacao."&acao=atualizarPag&atualizacao=true&rec=".$recuperar."'");}
+//     if($reload == 'yes'){$objResponse->script("window.location.reload();");}
+       if($reload == 'yes'){$objResponse->script("window.location='correio.php?cod_curso=".$cod_curso."&modoVisualizacao=".$modoVisualizacao."&acao=atualizarPag&atualizacao=true&rec=".$recuperar."'");}
 
 
 //     if($modoVisualizacao != 'R'){
 	 if($texto!='')
-       $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+       $objResponse->call("mostraFeedback", $texto, 'true');
 //     }
 
     Desconectar($sock);
-    return $objResponse->getXML();
+    return $objResponse;
   }
 
   function VerificaMsgNova($cod_curso, $cod_usuario, $clock){
-    $objResponse = new xajaxResponse('ISO-8859-1');
+    $objResponse = new xajaxResponse();
     $sock = Conectar($cod_curso);
     //divide por mil pois no JS eh em milisegundos e no BD em segundos
     $query = "select * from Correio_mensagens CM left join Correio_destinos CD on CD.cod_msg = CM.cod_msg where (CM.data > ".($clock/1000).") and CD.cod_usuario = ".$cod_usuario;
     $res = Enviar($sock, $query);
 
     if(RetornaNumLinhas ($res) > 0){
-      $objResponse->addScript("window.location.reload();");
+      $objResponse->script("window.location.reload();");
     }
     return $objResponse;
   }

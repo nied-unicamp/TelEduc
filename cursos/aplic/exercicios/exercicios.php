@@ -44,19 +44,25 @@
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
-  $objAjax->registerFunction("AlteraStatusExercicioDinamic");
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
-  $objAjax->registerFunction("VerificaNotas");
-  $objAjax->registerFunction("AplicaExercicioDinamic");
-  $objAjax->registerFunction("ExcluirExercicioDinamic");
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"AlteraStatusExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaAplicacaoExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaNotas");
+  $objAjax->register(XAJAX_FUNCTION,"AplicaExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirExercicioDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -140,7 +146,6 @@
   /* inï¿½io - JavaScript */
   echo("  <script type=\"text/javascript\" src=\"../js-css/sorttable.js\"></script>\n");
   echo("  <script  type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
   echo("  <script  type=\"text/javascript\" language=\"javascript\">\n\n");
 
   echo("    var js_cod_item;\n");
@@ -797,10 +802,13 @@
   echo("    }\n\n");
 
   echo("\n</script>\n\n");
+
+  $objAjax->printJavascript();
+
+  echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
+
   /* fim - JavaScript */
   /*********************************************************/
-
-  $objAjax->printJavascript("../xajax_0.2.4/");
 
   include("../menu_principal.php");
 

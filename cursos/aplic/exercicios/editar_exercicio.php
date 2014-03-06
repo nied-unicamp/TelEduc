@@ -44,40 +44,41 @@
   include($bibliotecas."geral.inc");
   include("exercicios.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
-
-  //$objAjax->debugOn();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("RetornaFraseDinamic");
-  $objAjax->registerFunction("RetornaFraseGeralDinamic");
-  $objAjax->registerFunction("EditarTituloExercicioDinamic");
-  $objAjax->registerFunction("EditarTextoExercicioDinamic");
-  $objAjax->registerFunction("ExcluiArquivoDinamic");
-  $objAjax->registerFunction("ExibeArquivoAnexadoDinamic");
-  $objAjax->registerFunction("VerificaExistenciaArquivoDinamic");
-  $objAjax->registerFunction("MudarCompartilhamentoDinamic");
-  $objAjax->registerFunction("AtribuiValorAQuestaoDinamic");
-  $objAjax->registerFunction("ExluirQuestaoDoExercicioDinamic");
-  $objAjax->registerFunction("AplicaExercicioDinamic");
-  $objAjax->registerFunction("CancelaAplicacaoExercicioDinamic");
-  $objAjax->registerFunction("RetornaArquivosDiretorioDinamic");
-  $objAjax->registerFunction("DescompactarArquivoDinamic");
-  $objAjax->registerFunction("MudaStatusArquivosDinamic");
-  $objAjax->registerFunction("AlteraStatusExercicioInternoDinamic");
-  $objAjax->registerFunction("VerificaNotas");
-  $objAjax->registerFunction("ExcluirExercicioInternoDinamic");
-  $objAjax->registerFunction("AlteraStatusExercicioDinamic");
-  $objAjax->registerFunction("OcultarArquivosDinamic");
-  $objAjax->registerFunction("DesocultarArquivosDinamic");
-  
-
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTextoExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluiArquivoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExibeArquivoAnexadoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaExistenciaArquivoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamentoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AtribuiValorAQuestaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExluirQuestaoDoExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AplicaExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaAplicacaoExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaArquivosDiretorioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DescompactarArquivoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudaStatusArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlteraStatusExercicioInternoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"VerificaNotas");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirExercicioInternoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlteraStatusExercicioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 23;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -998,7 +999,7 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

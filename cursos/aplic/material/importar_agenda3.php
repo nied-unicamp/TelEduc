@@ -92,7 +92,7 @@
 
   $sock = Conectar($cod_curso);
 
-  echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
+  echo("    <script type=\"text/javascript\" language=\"Jjvascript\">\n");
 
   echo("      function Iniciar(event){\n");
   echo("        startList();\n");

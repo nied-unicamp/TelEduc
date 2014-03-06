@@ -503,7 +503,7 @@ function RetornaCursosUsuario($sock)
 
 function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $nome_curso=$dadosForm['nome_curso'];
   $duracao=$dadosForm['duracao'];
@@ -555,10 +555,10 @@ function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
   $sock = Conectar("");
   $cod_curso=RetornaCodCurso($sock);
   if(LoginRepetido($sock,$login)&&(!isset($_SESSION['cod_usuario_global_s']))){
-    $objResponse->addScriptCall("mostraFeedback", $error1, 'false');
+    $objResponse->call("mostraFeedback", $error1, 'false');
   }
   else if(EmailRepetido($sock,$email)&&(!isset($_SESSION['cod_usuario_global_s']))){
-    $objResponse->addScriptCall("mostraFeedback",$error2, 'false');
+    $objResponse->call("mostraFeedback",$error2, 'false');
   }
   else{
     if(!isset($_SESSION['cod_usuario_global_s'])){
@@ -601,9 +601,9 @@ function EnviaPedidoCriacaoDinamic($dadosForm,$error1,$error2)
 
   }
 
-  $objResponse->addScript("TrataEnvio('".$enviou."');");
+  $objResponse->script("TrataEnvio('".$enviou."');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -847,7 +847,7 @@ function FichaUsuario($sock,$cod_usuario)
 
 function AtualizaDadosUsuarioDinamic($dadosForm)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_usuario = $_SESSION['cod_usuario_global_s'];
   $nome_usuario=$dadosForm['nome_usuario'];
@@ -857,7 +857,7 @@ function AtualizaDadosUsuarioDinamic($dadosForm)
   $pais=$dadosForm['pais'];
   $telefone=$dadosForm['telefone'];
   $email=$dadosForm['email'];
-  $data=$dadosForm['data'];
+  $data=$dadosForm['data_nascimento'];
   $sexo=$dadosForm['sexo'];
   $local=$dadosForm['local'];
   $profissao=$dadosForm['profissao'];  
@@ -873,9 +873,9 @@ function AtualizaDadosUsuarioDinamic($dadosForm)
   AtualizaFichaUsuario($sock,$cod_usuario,$nome_usuario,$endereco,$cidade,$estado,$pais,$telefone,$email,$data,$sexo,$local,$profissao,$informacoes,$cod_escolaridade,$rg);
   Desconectar($sock);
 
-  $objResponse->addScript("trataEnvio();");
+  $objResponse->script("trataEnvio();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *****************************************************************************
@@ -963,7 +963,7 @@ function RetornaEmailUsuario($sock, $cod_usuario)
 
 function AtualizaLoginUsuarioDinamic($dadosForm,$texto,$erro)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_usuario = $_SESSION['cod_usuario_global_s'];
   $novo_login=$dadosForm['novo_login'];
@@ -974,13 +974,13 @@ function AtualizaLoginUsuarioDinamic($dadosForm,$texto,$erro)
 
   if ($res == true)  $_SESSION['login_usuario_s'] = $novo_login;
 
-  $objResponse->addScript("trataEnvio('".$res."','".$novo_login."');");
+  $objResponse->script("trataEnvio('".$res."','".$novo_login."');");
   //Seu login foi alterado com sucesso!
   if($res)
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->call("mostraFeedback", $texto, 'true');
   //O login escolhido ja existe.Por favor, escolha um novo login.
-  else $objResponse->addScriptCall("mostraFeedback", $erro, 'false');
-    return $objResponse->getXML();
+  else $objResponse->call("mostraFeedback", $erro, 'false');
+    return $objResponse;
 }
 
 /********************************************************************
@@ -991,7 +991,7 @@ function AtualizaLoginUsuarioDinamic($dadosForm,$texto,$erro)
 
 function AtualizaSenhaUsuarioDinamic($dadosForm,$texto,$erro)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_usuario = $_SESSION['cod_usuario_global_s'];
   $senha_antiga=$dadosForm['senha_antiga'];
@@ -1031,17 +1031,17 @@ function AtualizaSenhaUsuarioDinamic($dadosForm,$texto,$erro)
   $mensagem_envio = MontaMsg($host, $raiz_www, '', $mensagem, $assunto);
   MandaMsg($remetente,$destino,$assunto,$mensagem_envio);
   }
-  $objResponse->addScript("trataEnvio('".$res."');");
+  $objResponse->script("trataEnvio('".$res."');");
   if($res){
     /* 10 - Senha alterada com sucesso. */
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->call("mostraFeedback", $texto, 'true');
   }else{
     /* 17 - Ocorreu um erro ao registrar as alterações efetuadas. 
        verifique se sua senha antiga esta correta.*/
-    $objResponse->addScriptCall("mostraFeedback", $erro, 'false');
+    $objResponse->call("mostraFeedback", $erro, 'false');
 
   }
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 
@@ -1136,7 +1136,7 @@ function EmailRepetido($sock, $email)
 
 function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar("");
   $lista_frases_email   = RetornaListaDeFrases($sock,-2);
@@ -1213,8 +1213,8 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 
   Desconectar($sock);
 
-  $objResponse->addScript("trataEnvio(".$flag.");");
-  return $objResponse->getXML();
+  $objResponse->script("trataEnvio(".$flag.");");
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1229,7 +1229,7 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
   $tipo_curso = $_GET["tipo_curso"];
 
 
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $login            = $dadosForm['login'];
   $senha            = crypt($dadosForm['senha'],"AA");
@@ -1260,13 +1260,13 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 
   if(LoginRepetido($sock,$login)){
     $flag=1;
-    $objResponse->addScriptCall("mostraFeedback", $erro1, 'false');
+    $objResponse->call("mostraFeedback", $erro1, 'false');
   }else if(EmailRepetido($sock,$email)){
     $flag=2;
-    $objResponse->addScriptCall("mostraFeedback", $erro2, 'false');
+    $objResponse->call("mostraFeedback", $erro2, 'false');
   }else if($hash){
     $flag=3;
-    $objResponse->addScriptCall("mostraFeedback", $erro3, 'false');
+    $objResponse->call("mostraFeedback", $erro3, 'false');
   }else
   {
     $cod_usuario=RetornaProximoCodigo($sock,"Usuario");
@@ -1316,15 +1316,15 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
 
     // Fim da Notificacao
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->call("mostraFeedback", $texto, 'true');
   }
 
   Desconectar($sock);
 
 
-  $objResponse->addScript("trataEnvio('".$flag."');");
+  $objResponse->script("trataEnvio('".$flag."');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1375,7 +1375,7 @@ function ConfirmaUsuario($user, $seq) {
 
 function CadastrarLogar($form,$cod_curso,$tipo_curso)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $login=$form['login'];
   $senha=crypt($form['senha'],"AA");
@@ -1402,9 +1402,9 @@ function CadastrarLogar($form,$cod_curso,$tipo_curso)
 
   Desconectar($sock);
 
-  $objResponse->addRedirect("inscricao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."");
+  $objResponse->redirect("inscricao.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1414,7 +1414,7 @@ function CadastrarLogar($form,$cod_curso,$tipo_curso)
 ********************************************************************/
 function AtualizaIdiomaDinamic($dadosForm)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $cod_usuario=$dadosForm['cod_usuario'];
   $cod_lin=$dadosForm['cod_lin'];
@@ -1424,10 +1424,10 @@ function AtualizaIdiomaDinamic($dadosForm)
   $res=Enviar($sock,$query);
   Desconectar($sock);
 
-  $objResponse->addScript("window.location.reload();");
+  $objResponse->script("window.location.reload();");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1439,7 +1439,7 @@ function AtualizaIdiomaDinamic($dadosForm)
 ********************************************************************/
 function ExcluiUsuarios($lista_usuarios,$ordem,$pag_atual)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -1455,10 +1455,10 @@ function ExcluiUsuarios($lista_usuarios,$ordem,$pag_atual)
 
   Desconectar($sock);
 
-  $objResponse->addScript("document.location='admcadastro.php?ordem=".$ordem."&pag_atual=".$pag_atual."';");
+  $objResponse->script("document.location='admcadastro.php?ordem=".$ordem."&pag_atual=".$pag_atual."';");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************
@@ -1527,7 +1527,7 @@ function RetornaDadosTodosUsuariosEmail($sock,$email)
 */
 function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
   $lista_frases_mensagem = RetornaListaDeFrases($sock,0);
@@ -1629,10 +1629,10 @@ function EnviarSenhaLoginUsuarioDinamic($valor,$opt)
 
   Desconectar($sock);
 
-  $objResponse->addScript("trataEnvio('".$flag."');");
+  $objResponse->script("trataEnvio('".$flag."');");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* *********************************************************************

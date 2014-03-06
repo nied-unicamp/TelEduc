@@ -907,7 +907,7 @@ function RetornaCategorias()
 */
 function InserirCategoriaDinamic($nome_pasta,$texto,$textoErro)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
   $query="select * from Cursos_pastas where pasta like '".$nome_pasta."'";
@@ -940,14 +940,14 @@ function InserirCategoriaDinamic($nome_pasta,$texto,$textoErro)
     Enviar($sock,$query);
 
     /* 0 - Sucesso 1 - Fracasso */
-    $objResponse->addScript("HTMLNovaCategoria('$nome_pasta', '$cod_pasta', '$frase', '$frase2');");
-	$objResponse->addScript("escondetr(1)");
-    $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+    $objResponse->script("HTMLNovaCategoria('$nome_pasta', '$cod_pasta', '$frase', '$frase2');");
+    $objResponse->script("escondetr(1)");
+    $objResponse->call("mostraFeedback", $texto, 'true');
   } else {
-    $objResponse->addScriptCall("mostraFeedback", $textoErro, 'false');
+    $objResponse->call("mostraFeedback", $textoErro, 'false');
   }
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* **********************************************************************
@@ -991,12 +991,12 @@ function InserirCategoria($nome_pasta)
 */
 function TrocaCategoriaDinamic($cod_curso,$cod_pasta,$texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   AtualizaPastaCursos($cod_curso,$cod_pasta);
-  $objResponse->addScriptCall("mostraFeedback", $texto, 'true');
+  $objResponse->call("mostraFeedback", $texto, 'true');
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* **********************************************************************
@@ -1062,36 +1062,36 @@ function AlteraLinguaUsuario($sock,$cod_usuario,$cod_lingua)
 
 function AtualizaIdiomaDinamic($cod_lin)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
   $query="update Usuario set cod_lingua=".$cod_lin." where cod_usuario = -1";
   $res=Enviar($sock,$query);
   Desconectar($sock);
 
-  $objResponse->addScript("window.location.reload();");
+  $objResponse->script("window.location.reload();");
 
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();  
+  return $objResponse;
 }
 
 
 function ApagarDinamic($cod_pasta)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
     
   ApagarCategoria($cod_pasta);
-  $objResponse->addScript("document.getElementById('tr_master').parentNode.removeChild(document.getElementById('tr_".$cod_pasta."'))");
+  $objResponse->script("document.getElementById('tr_master').parentNode.removeChild(document.getElementById('tr_".$cod_pasta."'))");
   $sock=Conectar("");
   $query="select * from Cursos_pastas";
   $res = Enviar($sock,$query);
   $res = RetornaLinha($res);
   if(!$res){
-  	$objResponse->addScript("escondetr(0);");
+  	$objResponse->script("escondetr(0);");
   }
   Desconectar($sock);
   //  Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* **********************************************************************
@@ -1112,26 +1112,26 @@ function ApagarCategoria($cod_pasta)
 
 function EditarTituloDinamic($cod_curso, $cod_pasta, $novo_nome)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   RenomearCategoria($cod_pasta,htmlentities($novo_nome));
 
   // Imprime no div valores do formulário
-  $objResponse->addAssign("titulo_".$cod_pasta, "innerHTML", htmlentities($novo_nome));
-  $objResponse->addAssign("titulo_".$cod_pasta, "style.fontWeight", "bold");
+  $objResponse->assign("titulo_".$cod_pasta, "innerHTML", htmlentities($novo_nome));
+  $objResponse->assign("titulo_".$cod_pasta, "style.fontWeight", "bold");
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 if (!function_exists("DecodificaString")){
   function DecodificaString($id, $texto, $local){
   
-    $objResponse = new xajaxResponse('ISO-8859-1');
+    $objResponse = new xajaxResponse();
   
-    $objResponse->addAssign($id, $local, html_entity_decode($texto));
+    $objResponse->assign($id, $local, html_entity_decode($texto));
   
-    return $objResponse->getXML();
+    return $objResponse;
   }
 }
 
@@ -1147,7 +1147,7 @@ function RetornaListaTodosLogins($sock)
 
 function SugerirLoginDinamic($pal,$frase)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar("");
   $logins_usuarios = RetornaListaTodosLogins($sock);
@@ -1167,18 +1167,18 @@ function SugerirLoginDinamic($pal,$frase)
   if($hint != "")
   { 
     $hint = "<ul><li><i>".$frase."</i></li>".$hint."</ul>";
-    $objResponse->addScript("document.getElementById('divSugs').style.display = '';");
-    $objResponse->addScript("document.getElementById('tr_sugs').style.display = '';");
+    $objResponse->script("document.getElementById('divSugs').style.display = '';");
+    $objResponse->script("document.getElementById('tr_sugs').style.display = '';");
   }
   else 
   {
-    $objResponse->addScript("document.getElementById('divSugs').style.display = 'none';");
-    $objResponse->addScript("document.getElementById('tr_sugs').style.display = 'none';");
+    $objResponse->script("document.getElementById('divSugs').style.display = 'none';");
+    $objResponse->script("document.getElementById('tr_sugs').style.display = 'none';");
   }
 
-  $objResponse->addAssign("divSugs", "innerHTML", $hint);
+  $objResponse->assign("divSugs", "innerHTML", $hint);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /* **********************************************************************
@@ -1212,7 +1212,7 @@ function RetornaCodUsuarioLogin($sock,$login)
 */
 function ExisteLoginEmail($login,$email,$escolha)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock=Conectar("");
 
@@ -1222,14 +1222,12 @@ function ExisteLoginEmail($login,$email,$escolha)
   Desconectar($sock);
 
   $res = RetornaLinha($res);
-  //var_dump($res);
-  //$objResponse->addAlert("LOL");
   if($res != "" && $escolha == "nao" && $email != "" && $login != "")
-    $objResponse->addScript("EmailLoginRepetido();");
+    $objResponse->script("EmailLoginRepetido();");
   else
-    $objResponse->addScript("TestaForm();");
+    $objResponse->script("TestaForm();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1254,7 +1252,7 @@ function RetornaUsuariosCadastrados($sock,$ordem)
 ********************************************************************/
 function TrocaLoginUsuario($login_antigo,$novo_login)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $sock = Conectar("");
   $query = "select * from Usuario where login='".$novo_login."'";
@@ -1283,9 +1281,9 @@ function TrocaLoginUsuario($login_antigo,$novo_login)
 
   Desconectar($sock);
 
-  $objResponse->addScript("RespostaUsuario(".$res.");");
+  $objResponse->script("RespostaUsuario(".$res.");");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1298,12 +1296,12 @@ function TrocaLoginUsuario($login_antigo,$novo_login)
 ********************************************************************/
 function AlteraTextoDinamic($cod_texto,$cod_ferramenta,$cod_lin,$texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $num=AlteraTexto($cod_lin,$cod_ferramenta,$cod_texto,$texto);
-  $objResponse->addScript("RespostaUsuario('A',".$num.",'".$texto."');");
+  $objResponse->script("RespostaUsuario('A',".$num.",'".$texto."');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1315,12 +1313,12 @@ function AlteraTextoDinamic($cod_texto,$cod_ferramenta,$cod_lin,$texto)
 ********************************************************************/
 function InsereTextoDinamic($cod_ferramenta,$cod_lin,$texto)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $num=InsereTexto($cod_lin,$cod_ferramenta,$texto);
-  $objResponse->addScript("RespostaUsuario('I',".$num.",'".$texto."');");
+  $objResponse->script("RespostaUsuario('I',".$num.",'".$texto."');");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1331,11 +1329,11 @@ function InsereTextoDinamic($cod_ferramenta,$cod_lin,$texto)
 ********************************************************************/
 function ApagaTextoDinamic($cod_texto,$cod_ferramenta)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $num=ApagaTexto($cod_ferramenta,$cod_texto);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1347,12 +1345,12 @@ function ApagaTextoDinamic($cod_texto,$cod_ferramenta)
 ********************************************************************/
 function AtualizaDadosInstDinamic($nome,$informacoes,$link)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   AtualizaDadosIntituicao($nome,$informacoes,$link);
-  $objResponse->addScript("RespostaUsuario();");
+  $objResponse->script("RespostaUsuario();");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1363,13 +1361,13 @@ function AtualizaDadosInstDinamic($nome,$informacoes,$link)
 ********************************************************************/
 function AtualizaConfiguracoesDinamic($curso_form,$normas)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $lista_conf = array ("curso_form" => LimpaTags($curso_form), "normas" => $normas);
   $sucesso = AtualizaConfiguracoes($lista_conf);
-  $objResponse->addScript("RespostaUsuario(".$sucesso.");");
+  $objResponse->script("RespostaUsuario(".$sucesso.");");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1386,7 +1384,7 @@ function AtualizaConfiguracoesDinamic($curso_form,$normas)
 ********************************************************************/
 function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,$sendmail,$mysqldump,$mimetypes)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $lista_conf = array ("host" => LimpaTags($host));
   $lista_dir = array ("Arquivos" => LimpaTags($arquivos), "ArquivosWeb" => LimpaTags($arquivosweb),
@@ -1395,9 +1393,9 @@ function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,
 		      "mimetypes" => LimpaTags($mimetypes)
                      );
   $sucesso = (AtualizaConfiguracoes($lista_conf) && AtualizaDiretorios($lista_dir));
-  $objResponse->addScript("RespostaUsuario(".$sucesso.");");
+  $objResponse->script("RespostaUsuario(".$sucesso.");");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1408,13 +1406,13 @@ function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,
 ********************************************************************/
 function AtualizaDadosAdmDinamic($adm_nome,$adm_email)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $lista_conf = array ("adm_nome" => $adm_nome, "adm_email" => $adm_email);
   $sucesso = (AtualizaConfiguracoes($lista_conf));
   
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1425,22 +1423,22 @@ function AtualizaDadosAdmDinamic($adm_nome,$adm_email)
 ********************************************************************/
 function AtualizaSenhaAdmDinamic($senha_antiga,$senha_nova)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   $senha_antiga_cript=crypt($senha_antiga,"AA");
   $senha_nova=crypt($senha_nova,"AA");
 
   if ($senha_antiga_cript != RetornaSenhaAtual())
   {
-    $objResponse->addScript("RespostaUsuario(0);");
+    $objResponse->script("RespostaUsuario(0);");
   }
   else
   {
     AlteraSenhaAdministracao($senha_antiga,$senha_nova);
-    $objResponse->addScript("RespostaUsuario(1);");
+    $objResponse->script("RespostaUsuario(1);");
   }
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1452,12 +1450,12 @@ function AtualizaSenhaAdmDinamic($senha_antiga,$senha_nova)
 ********************************************************************/
 function CadastraResponsavelDinamic($nome,$email,$status)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   InsereContato($nome,$email,$status);
-  $objResponse->addScript("RespostaUsuario(1);");
+  $objResponse->script("RespostaUsuario(1);");
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************
@@ -1467,11 +1465,11 @@ function CadastraResponsavelDinamic($nome,$email,$status)
 ********************************************************************/
 function RemoveResponsavelDinamic($nome)
 {
-  $objResponse = new xajaxResponse('ISO-8859-1');
+  $objResponse = new xajaxResponse();
 
   RemoveContato($nome);
 
-  return $objResponse->getXML();
+  return $objResponse;
 }
 
 /********************************************************************

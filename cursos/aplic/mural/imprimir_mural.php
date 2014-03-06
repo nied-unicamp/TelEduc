@@ -41,9 +41,27 @@
   include($bibliotecas."geral.inc");
   include("../menu.inc");
   include("mural.inc");
+
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
-  //ini_set("display_errors","on"); //APGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-  
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  //Registre os nomes das funções em PHP que você quer chamar através do xajax
+  $objAjax->register(XAJAX_FUNCTION,"MudarConfiguracaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MostraMensagemDinamicMural");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
+
+  $cod_ferramenta = 8;
+  $cod_ferramenta_ajuda=$cod_ferramenta;
+  $cod_pagina_ajuda=1;
+
   /* Ajustes necess�rios para independer do topo_tela.php */
 
   /* Se o teleduc naum pegou o cod_curso, pegamos para ele =) */
@@ -65,8 +83,6 @@
     MudancaDeLingua($sock, $lingua_curso);
   }
 
-  $cod_ferramenta = 8;
-  
   $lista_frases_menu=RetornaListaDeFrases($sock,-4);
   
   $lista_frases=RetornaListaDeFrases($sock,$cod_ferramenta);
@@ -121,22 +137,10 @@
   echo("    <script type=\"text/javascript\" src=\"../js-css/jscript.js\"></script>\n");
   echo("    <style>body{padding-top:20px;}</style>");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
-  
-  //Estancia o objeto XAJAX
-  $objAjax = new xajax();
-  //Registre os nomes das funções em PHP que você quer chamar através do xajax
-  $objAjax->registerFunction("MudarConfiguracaoDinamic");
-  $objAjax->registerFunction("MostraMensagemDinamicMural");
-  $objAjax->registerFunction("EditarTituloDinamic");
-  $objAjax->registerFunction("DecodificaString");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();  
+  $objAjax->processRequest();
+  $objAjax->printJavascript();
 
-
-  $cod_ferramenta=8;
-  $cod_ferramenta_ajuda=$cod_ferramenta;
-  $cod_pagina_ajuda=1;
   //include("../topo_tela.php");
 
   /* Dereferência as variáveis, senão ainda seria possível acessá-las */
@@ -747,8 +751,6 @@
 
   echo("    </script>\n\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/"); 
-  //include("../menu_principal.php");
   echo("<body onload=\"ExibirTodasMsgs(); self.print();\">");
   
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");

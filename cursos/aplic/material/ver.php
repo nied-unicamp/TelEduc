@@ -59,29 +59,35 @@
 
   /**************** ajax ****************/
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xajax
-  $objMaterial->registerFunction("MudarCompartilhamento");
-  $objMaterial->registerFunction("EditarTitulo");
-  $objMaterial->registerFunction("EditarTexto");
-  $objMaterial->registerFunction("InsereEnderecoDinamic");
-  $objMaterial->registerFunction("InsereAvaliacaoDinamic");
-  $objMaterial->registerFunction("ApagaAvaliacaoPortfolioDinamic");
-  $objMaterial->registerFunction("AbreEdicao");
-  $objMaterial->registerFunction("AcabaEdicaoDinamic");
-  $objMaterial->registerFunction("CancelaEdicaoDinamic");
-  $objMaterial->registerFunction("ExcluirArquivo");
-  $objMaterial->registerFunction("ExcluirEndereco");
-  $objMaterial->registerFunction("DecodificaString");
-  $objMaterial->registerFunction("OcultarArquivosDinamic");
-  $objMaterial->registerFunction("DesocultarArquivosDinamic");
-  $objMaterial->registerFunction("MoverArquivosDinamic");
-  $objMaterial->registerFunction("MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"InsereEnderecoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"InsereAvaliacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ApagaAvaliacaoPortfolioDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirEndereco");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
   /**************** ajax ****************/
 
@@ -1114,11 +1120,7 @@ echo("      function AdicionaInputAvaliacao(div_hidden){\n");
 
   echo("    </script>\n");
 
-  /**************** ajax ****************/
-
-  $objMaterial->printJavascript("../xajax_0.2.4/");
-
-  /**************** ajax ****************/
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 

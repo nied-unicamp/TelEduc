@@ -44,17 +44,21 @@
   $bibliotecas="../cursos/aplic/bibliotecas/";
   include($bibliotecas."geral.inc");
   include("admin.inc");
-  require_once("../cursos/aplic/xajax_0.2.4/xajax.inc.php");
+  require_once("../cursos/aplic/xajax_0.5/xajax_core/xajax.inc.php");
 
   VerificaAutenticacaoAdministracao();
 
   $objAjax = new xajax();
-  $objAjax->registerFunction("EditarTituloDinamic");
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("ApagarDinamic");
-  $objAjax->registerFunction("InserirCategoriaDinamic");
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../cursos/aplic/xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  $objAjax->register(XAJAX_FUNCTION,"EditarTituloDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"ApagarDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"InserirCategoriaDinamic");
   //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
+  $objAjax->processRequest();
 
   include("../topo_tela_inicial.php");
 

@@ -45,33 +45,37 @@
   include("portfolio.inc");
   include("avaliacoes_portfolio.inc");
 
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   //Estancia o objeto XAJAX
   $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   //Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-  $objAjax->registerFunction("MudarCompartilhamento");
-  $objAjax->registerFunction("EditarTitulo");
-  $objAjax->registerFunction("EditarTexto");
-  $objAjax->registerFunction("InsereEnderecoDinamic");
-  $objAjax->registerFunction("AbreEdicao");
-  $objAjax->registerFunction("AcabaEdicaoDinamic");
-  $objAjax->registerFunction("CancelaEdicaoDinamic");
-  $objAjax->registerFunction("ExcluirArquivo");
-  $objAjax->registerFunction("ExcluirEndereco");
-  $objAjax->registerFunction("DecodificaString");
-  $objAjax->registerFunction("OcultarArquivosDinamic");
-  $objAjax->registerFunction("DesocultarArquivosDinamic");
-  $objAjax->registerFunction("MoverArquivosDinamic");
-  $objAjax->registerFunction("MoverItensDinamic");
-  $objAjax->registerFunction("RetornaFraseDinamic");
-  $objAjax->registerFunction("RetornaFraseGeralDinamic");
-  $objAjax->registerFunction("AssociaAvaliacaoDinamic");
-  $objAjax->registerFunction("DesassociaAvaliacaoDinamic");
-
-  //Manda o xajax executar os pedidos acima.
-  $objAjax->processRequests();
-
+  $objAjax->register(XAJAX_FUNCTION,"MudarCompartilhamento");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
+  $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
+  $objAjax->register(XAJAX_FUNCTION,"InsereEnderecoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AbreEdicao");
+  $objAjax->register(XAJAX_FUNCTION,"AcabaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"CancelaEdicaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirArquivo");
+  $objAjax->register(XAJAX_FUNCTION,"ExcluirEndereco");
+  $objAjax->register(XAJAX_FUNCTION,"DecodificaString");
+  $objAjax->register(XAJAX_FUNCTION,"OcultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesocultarArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverArquivosDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"MoverItensDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"RetornaFraseGeralDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AssociaAvaliacaoDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"DesassociaAvaliacaoDinamic");
+  // Registra funÁıes para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+    // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta = 15;
   $cod_ferramenta_ajuda = 15;
@@ -103,7 +107,7 @@
 
   $sock = Conectar($cod_curso);
   $dir_item_temp=CriaLinkVisualizar($sock, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
-  
+
   echo("    <script type=\"text/javascript\">");
   echo("      function WindowOpenVer(id)\n");
   echo("      {\n");
@@ -166,10 +170,10 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../xajax_0.2.4/");
-  echo("    <script type='text/javascript' src='jscriptlib.js'> </script>\n");
-  
-  
+  $objAjax->printJavascript();
+
+  echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
+
   include("../menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -608,11 +612,11 @@
     echo("                    </td>\n");
     echo("                  </tr>\n");
   }
-  
+
 
   $lista_arq=RetornaArquivosMaterialVer($cod_curso, $dir_item_temp['link']);
   $num_arq_vis = RetornaNumArquivosVisiveis($lista_arq);
-  
+
   if (($num_arq_vis>0)||($dono_portfolio)){
     echo("                  <tr class=\"head\">\n");
     /* 71 - Arquivos */
@@ -797,7 +801,7 @@
     {
       foreach ($lista_url as $cod => $linha)
       {
-  
+
         $linha['endereco'] = RetornaURLValida($linha['endereco']);
 
         echo("                      <span id='end_".$linha['cod_endereco']."'>\n");
@@ -892,7 +896,7 @@
       // 166 - Data de t√©rmino
       echo("                            <td width=\"20%\">".RetornaFraseDaLista($lista_frases, 166)."</td>\n");
       echo("                          </tr>\n");
-  
+
       // esta var indica se precisamos colocar uma legenda explicando o que eh o termo "associado" na frente da avaliacao 
       $legenda_associado = false;
 
@@ -939,7 +943,7 @@
         echo("                          <tr>\n");
         echo("                            <td width=\"1%\">".$radio."</td>\n");
         echo("                            <td align=\"left\"><span class=\"link\" onclick=\"WindowOpenVerAvaliacao(".$linha['cod_avaliacao'].");EscondeLayers();return(false);\">".$atividade."</span>".$assoc."</td>\n");
-    
+
         if (!strcmp($tipo_portfolio,'I')){
           // 161 - Individual
           echo("                            <td align=\"center\">".RetornaFraseDaLista($lista_frases, 161)."<br /></td>\n");
@@ -975,8 +979,6 @@
   echo("          </table>\n"); //TabExterna
   echo("        </td>\n");
   echo("      </tr>\n");
-  
- 
 
   include("../tela2.php");
   include("layer.php");

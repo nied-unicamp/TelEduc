@@ -47,13 +47,20 @@
   include ($bibliotecas . "geral.inc");
   include ($bibliotecas . "importar.inc");
 
-  require_once ("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
   // Estancia o objeto XAJAX
-  $objMaterial = new xajax();
-  $objMaterial->registerFunction("AlterarPeriodoDinamic");
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  // Registre os nomes das funcoes em PHP que voce quer chamar atraves do xajax
+  $objAjax->register(XAJAX_FUNCTION,"AlterarPeriodoDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objMaterial->processRequests();
+  $objAjax->processRequest();
 
 
   // **************** VARIAVEIS DE ENTRADA ****************
@@ -231,8 +238,7 @@
 
   echo ("      </script>\n\n");
 
-  /**************** ajax ****************/
-  $objMaterial->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include ("../menu_principal.php");
 

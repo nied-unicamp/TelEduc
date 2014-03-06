@@ -45,18 +45,23 @@
   include($bibliotecas."geral.inc");
   include("administracao.inc");
   
-  require_once("../xajax_0.2.4/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
   
   /** AJAX **/
   // Estancia Objeto XAJAX
-  $objFerramenta = new xajax();
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
   // Registre os nomes das funÃ§Ãµes em PHP que vocï¿½ quer chamar atravï¿½s do xajax
-  $objFerramenta->registerFunction("AlterarFerramCompartilhadasDinamic");
-  $objFerramenta->registerFunction("AlteraTodasFerramCompartilhadasDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlterarFerramCompartilhadasDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"AlteraTodasFerramCompartilhadasDinamic");
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
   // Manda o xajax executar os pedidos acima.
-  $objFerramenta->processRequests();
+  $objAjax->processRequest();
 
-  
   $cod_ferramenta=0;
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda = 17;
@@ -127,7 +132,7 @@
 
   echo("    </script>\n\n");
 
-  $objFerramenta->printJavascript("../xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal.php");
 
