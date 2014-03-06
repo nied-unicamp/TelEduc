@@ -857,7 +857,7 @@ function AtualizaDadosUsuarioDinamic($dadosForm)
   $pais=$dadosForm['pais'];
   $telefone=$dadosForm['telefone'];
   $email=$dadosForm['email'];
-  $data=$dadosForm['data'];
+  $data=$dadosForm['data_nascimento'];
   $sexo=$dadosForm['sexo'];
   $local=$dadosForm['local'];
   $profissao=$dadosForm['profissao'];  
