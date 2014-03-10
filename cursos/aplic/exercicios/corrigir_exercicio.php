@@ -66,10 +66,22 @@
   $objAjax->processRequest();
 
   // Descobre os diretorios de arquivo, para os portfolios com anexo
+  $cod_usuario_global = VerificaAutenticacao($cod_curso);
   $sock = Conectar("");
   $diretorio_arquivos = RetornaDiretorio($sock, 'Arquivos');
   $diretorio_temp = RetornaDiretorio($sock, 'ArquivosWeb');
+  
+  $cod_curso = $_GET['cod_curso'];
+  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
+
+  // Variável para descobrir se o usuário é formador, pois nenhum outro tipo
+  // pode corrigir exercícios. Não usamos a verificação de topo_tela.php pois
+  // esse arquivo usa echos, tornando impossível o redirecionamento pela função
+  // header que deve ser chamada antes de qualquer output.
+  $ehFormador = EFormador($sock,$cod_curso,$cod_usuario);
+
   Desconectar($sock);
+  $sock = Conectar($cod_curso);
 
   $cod_ferramenta = 23;
   $cod_resolucao = $_GET['cod_resolucao'];
@@ -78,7 +90,7 @@
   $exercicio = RetornaExercicio($sock,$resolucao['cod_exercicio']);
   $questoes = RetornaQuestoesExercicio($sock,$resolucao['cod_exercicio']);
   $aplicado = RetornaDadosExercicioAplicado($sock,$resolucao['cod_exercicio']);
-  $ehFormador = EFormador($sock,$cod_curso,$cod_usuario);
+  Desconectar($sock);
 
   if($ehFormador){
 

@@ -196,13 +196,15 @@
     // Ferramenta 12 - Grupos
     // Ferramenta 14 - Diário de bordo
     // Ferramenta 15 - Portfolio
+    // Ferramenta 18 - Acessos
+    // Ferramenta 19 - Intermap
     // Ferramenta 22 - Avaliacoes
     // Ferramenta 23 - Execicios
 
     // Lista das ferramentas a esconder de visitantes
-    $tela_array_visitante   = array (11, 12, 14, 15, 22, 23);
+    $tela_array_visitante   = array (11, 12, 14, 15, 18, 19, 22, 23);
     // Lista das ferramentas a esconder de colaboradores
-    $tela_array_colaborador = array (12, 14, 22, 23);
+    $tela_array_colaborador = array ();
 
     foreach($tela_ordem_ferramentas as $cod => $linha)
     {
