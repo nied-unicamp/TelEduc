@@ -197,22 +197,34 @@
       CriaDiretorio($dir_temp_msg);
     }
 
-    for($i = 0; $i < count($destsCorreio); $i++){
-      $vetorNomeAux[$i] = RetornaGrupoComCodigo($sock, $destsCorreio[$i]['cod_usuario']);
-      $vetorMailAux[$i] = $destsCorreio[$i]['mail'];
+    
+    if($chkG){
+      for($i = 0; $i < count($destsCorreio); $i++){
+        $vetorNomeAux[$i] = RetornaGrupoComCodigo($sock, $destsCorreio[$i]['cod_usuario']);
+        $vetorMailAux[$i] = $destsCorreio[$i]['mail'];
         
-      $quantos = count($destsCorreio)-1;
+        $quantos = count($destsCorreio)-1;
+          
+        if($i == $quantos){ //Verifica se é o último. Se for, tira a virgula
+          $virgula=" ";
+        }
+        else{
+          $virgula=",";
+        }
         
-      if($i == $quantos){ //Verifica se é o último. Se for, tira a virgula
-        $virgula=" ";
-      }
-      else{
-        $virgula=",";
-      }
-      
-      $mnomes = implode(',', $vetorNomeAux).$virgula;
-      $memail .= implode(',', $vetorMailAux[$i]).$virgula;
-      }
+        $mnomes = implode(',', $vetorNomeAux).$virgula;
+        $memail .= implode(',', $vetorMailAux[$i]).$virgula;
+     }
+    }
+    else{
+      for($i = 0; $i < count($destsCorreio); $i++){
+        $vetorNomeAux[$i] = $destsCorreio[$i]['nome'];
+        $vetorMailAux[$i] = $destsCorreio[$i]['mail'];
+        
+        $mnomes = implode(',', $vetorNomeAux);
+	  	$memail = implode(',', $vetorMailAux);
+      } 
+    }
 
     /* Obtem os arquivos contidos na pasta. */
 
@@ -308,10 +320,11 @@
     }
   }
 
+  var_dump($memail);
    
   echo("    <script type=\"text/javascript\">\n");
   echo("      function esperaEFecha(){\n");
-  echo("       window.setTimeout(\"this.close()\", 2000);\n");
+  echo("       window.setTimeout(\"this.close()\", 2000000);\n");
   echo("      }\n");
   echo("    </script>\n");
 
