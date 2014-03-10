@@ -319,12 +319,10 @@
       RemoveDiretorio($dir_temp_msg);
     }
   }
-
-  var_dump($memail);
    
   echo("    <script type=\"text/javascript\">\n");
   echo("      function esperaEFecha(){\n");
-  echo("       window.setTimeout(\"this.close()\", 2000000);\n");
+  echo("       window.setTimeout(\"this.close()\", 2000);\n");
   echo("      }\n");
   echo("    </script>\n");
 
