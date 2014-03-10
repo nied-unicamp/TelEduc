@@ -44,6 +44,19 @@
   include($bibliotecas."geral.inc");
   include("enquete.inc");
 
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
+
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  // Registra funções para uso de menu_principal.php
+  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
+
   $cod_ferramenta=24;
   $cod_ferramenta_ajuda = 24;
 
@@ -90,9 +103,7 @@
  // 117 - Enquete prorrogada com sucesso.
   $feedbackObject->addAction("prorrogarEnquete", 117, 0);
 
-  include("../menu_principal.php");
-
-  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+  $objAjax->printJavascript();
 
   $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);
 
@@ -138,6 +149,11 @@
   /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
   if ((!$tela_formador) && ($categ != '1') && ($categ != '2'))
   {
+
+    include("../menu_principal.php");
+
+    echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
+
     /* 1 - Enquete */
     echo("          <h4>".RetornaFraseDaLista($lista_frases, 1));
     /* 114 - Acao exclusiva a formadores. */
@@ -417,7 +433,7 @@
         break;
     }
   }
-  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EColaborador($sock, $cod_usuario, $cod_curso)))
+  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EColaborador($sock, $cod_curso, $cod_usuario)))
   {
     // Início da Página do Aluno, Visitante e Colaborador
     switch($categ)
@@ -433,6 +449,10 @@
         break;
     }
   }
+
+  include("../menu_principal.php");
+
+  echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
   // 1 - Enquete
   echo("          <h4>".RetornaFraseDaLista($lista_frases,1)." - ".$categoria."</h4>\n");
