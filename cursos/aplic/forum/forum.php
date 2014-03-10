@@ -94,11 +94,11 @@
 
   $objAjax->printJavascript();
 
-  /* Impede o acesso Ã  Lixeira aos usuÃ¡rios que nÃ£o sÃ£o formadores. */
-  /* status das mensagens: A - Ativo                                */
-  /*                       D - Deletado                             */
-  /*                       X - ExcluÃ­do                             */
-  if ((!$usr_formador) && (isset($status)) && ($status == 'D'))
+  // Impede o acesso à Lixeira aos usuários que não são formadores ou colaboradores.
+  // status das mensagens: A - Ativo
+  //                       D - Deletado
+  //                       X - Excluído
+  if ((!$usr_formador && !$usr_colaborador) && (isset($status)) && ($status == 'D'))
   {
     include("../menu_principal.php");
     echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -208,7 +208,7 @@
 
   echo("      function Iniciar()\n");
   echo("      {\n");
-  if (($usr_formador)&&($status=='A')){
+  if (($usr_formador || $usr_colaborador) && ($status == 'A')){
     echo("        lay_conf = getLayer('layer_conf');\n");
     echo("        lay_novo_forum = getLayer('layer_novo_forum');\n");
   }
@@ -228,7 +228,7 @@
   /* para criaï¿½o de um novo fï¿½um, para acesso ï¿½ opï¿½es (Ver, Configurar, */
   /* Renomear e Apagar) de cada fï¿½um e para acesso as opï¿½es (Editar, */
   /* Apagar, Ver Notas, Ver Atividades Entregues e Ver Atividades Pendentes) de avaliaï¿½o.                                                     */
-  if (($usr_formador)&&($status=='A'))
+  if (($usr_formador || $usr_colaborador) && ($status == 'A'))
   {
     echo("        hideLayer(lay_novo_forum);\n");
     echo("        hideLayer(lay_conf);\n");
@@ -268,7 +268,7 @@
 
   /* Se estiver visualizando os fï¿½uns disponï¿½eis entï¿½ cria as funï¿½es JavaScript */
   /* ApagarForum(id), VerLixeira(), Configurar(id), Renomear(id), ApagarAvaliacao(id), AlterarAvaliacao(id) e VerNotas(id).                  */
-  if ($usr_formador)
+  if ($usr_formador || $usr_colaborador)
   {
     if ($status == 'A') {
 
@@ -530,8 +530,8 @@
     echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
-  /* Se o usuario FOR Formador entao exibe os controles. */
-  if ($usr_formador)
+  /* Se o usuario FOR Formador ou Colaborador entao exibe os controles. */
+  if ($usr_formador || $usr_colaborador)
   {
     echo("                <ul class=\"btAuxTabs\">\n");
     /* Se estiver visualizando os fÃ³runs disponÃ­veis entÃ£o cria um link para o */
@@ -586,7 +586,7 @@
   /* 58 - FÃ³rum */
   echo("                    <td style=\"cursor:pointer\" class=\"alLeft\">".RetornaFraseDaLista($lista_frases,58)."</td>\n");
 
-  if($usr_formador){
+  if($usr_formador || $usr_colaborador){
     /* 70 (ger) - OpÃ§Ãµes */
     echo("                    <td class=\"sorttable_nosort\" align=\"center\">".RetornaFraseDaLista($lista_frases_geral,70)."</td>\n");
   }
@@ -650,11 +650,11 @@
       echo("</span>\n");
       echo("                    </td>\n");
 
-      /* Se o usuÃ¡rio for formador entÃ£o cria links com acesso Ã s opÃ§Ãµes  */
-      /* (Ver, Configurar, etc.), se estiver visualizando os fÃ³runs disponÃ­veis, */
-      /* cria liks com acesso Ã s opÃ§Ãµes (Ver, Excluir) se estiver visualizando a Lixeira. */
+      // Se o usuário for formador ou colaborador então cria links com acesso às opções
+      // (Ver, Configurar, etc.), se estiver visualizando os fóruns disponíveis, cria
+      // liks com acesso às opções (Ver, Excluir) se estiver visualizando a Lixeira.
       $EhAvaliacao = ForumEhAvaliacao($sock,$lista_foruns[$num]['cod_forum']);
-      if ($usr_formador){
+      if ($usr_formador || $usr_colaborador){
         echo("                    <td width=\"15%\" align=\"center\" valign=\"top\" class=\"botao2\">\n");
         echo("                      <ul>\n");
         if ($status == 'A')
@@ -666,7 +666,7 @@
           /* 1 - Apagar */
           echo("                        <li><span onclick='ApagarForum(\"".$lista_foruns[$num]['cod_forum']."\");'>".RetornaFraseDaLista($lista_frases_geral, 1)."</span></li>\n");
           /* 95 - Criar Avaliaï¿½o */
-          if($AcessoAvaliacaoF && !$EhAvaliacao)
+          if($AcessoAvaliacaoF && !$EhAvaliacao && $usr_formador)
             echo("                        <li><span onclick='CriarAvaliacao(\"".$lista_foruns[$num]['cod_forum']."\");'>".RetornaFraseDaLista($lista_frases, 95)."</span></li>\n");      
         }
         else if ($status == 'D')
@@ -736,7 +736,7 @@
 
 
 
-  if ($usr_formador)
+  if ($usr_formador || $usr_colaborador)
   {
     if ($status == 'A')
     {
