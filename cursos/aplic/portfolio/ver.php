@@ -443,6 +443,8 @@
   echo ("    </script>\n");
 
   $objAjax->printJavascript();
+  
+  echo("  <script  type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
   include ("../menu_principal.php");
 
@@ -968,7 +970,7 @@
 
   							echo ("                        " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
 
-  							if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
+  							if ((($dono_portfolio) && ($pode_editar)) || (($dono_portfolio) && (!$tem_avaliacao))){
   								echo ("                          " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\"/>\n");
   							}
 
@@ -1001,7 +1003,7 @@
   							$imagem = "<img alt=\"\" src=\"../imgs/pasta.gif\" border=\"0\" />";
   							echo ("                      " . $espacos2 . "<span id=\"arq_" . $conta_arq . "\">\n");
   							echo ("                        " . $espacos2 . "<span class=\"link\" id=\"nomeArq_" . $conta_arq . "\" tipoArq=\"pasta\" nomeArq=\"" . htmlentities($caminho_arquivo) . "\"></span>\n");
-  							if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
+  							if ((($dono_portfolio) && ($pode_editar)) || (($dono_portfolio) && (!$tem_avaliacao))){
   								echo ("                        " . $espacos2 . "<input type=\"checkbox\" name=\"chkArq\" onclick=\"VerificaChkBox(1);\" id=\"chkArq_" . $conta_arq . "\">\n");
   							}
   							echo ("                        " . $espacos2 . $espacos . $imagem . $temp[$nivel] . "\n");
@@ -1031,8 +1033,8 @@
   		echo ("                    </td>\n");
   		echo ("                  </tr>\n");
   	}
-
-  	if ((($dono_portfolio) && ($pode_editar)) || (!$tem_avaliacao)) {
+  	
+  	if ((($dono_portfolio) && ($pode_editar)) || (($dono_portfolio) && (!$tem_avaliacao))) {
   		echo ("                  <tr>\n");
   		echo ("                    <td align=\"left\" colspan=\"4\">\n");
   		echo ("                      <ul>\n");
