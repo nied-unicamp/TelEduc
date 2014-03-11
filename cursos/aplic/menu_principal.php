@@ -228,7 +228,7 @@
         }
         else if ($tela_visitante)
         {
-          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_colaborador);
+          $tela_exibir = ! in_array ($tela_cod_ferr, $tela_array_visitante);
         }
 
         if ($tela_exibir)
