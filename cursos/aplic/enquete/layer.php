@@ -1,6 +1,6 @@
 <?php
 /* Layers */
-if ($tela_formador)
+if ($tela_formador || $tela_colaborador)
 {
 	switch($categ)
 	{

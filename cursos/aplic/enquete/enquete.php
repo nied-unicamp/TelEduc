@@ -107,7 +107,7 @@
 
   $ator = getTipoAtor($sock, $cod_curso, $cod_usuario);
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     if ($acao=="adiantar_prorrogar")
     {
@@ -147,7 +147,7 @@
   } 
 
   /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
-  if ((!$tela_formador) && ($categ != '1') && ($categ != '2'))
+  if ((!$tela_formador && !$tela_colaborador) && ($categ != '1') && ($categ != '2'))
   {
 
     include("../menu_principal.php");
@@ -188,8 +188,8 @@
   
   /*********************************************************/
   /* início - JavaScript */
-  echo("  <script type=\"text/javascript\" language=\"Javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
-  echo("  <script type=\"text/javascript\" language=\"Javascript\">\n\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\" src=\"../bibliotecas/dhtmllib.js\"></script>\n");
+  echo("  <script type=\"text/javascript\" language=\"javascript\">\n\n");
 
   echo("    var isNav = (navigator.appName.indexOf(\"Netscape\") !=-1);\n");
   echo("    var versao = (navigator.appVersion.substring(0,3));\n");
@@ -240,12 +240,12 @@
     //case 0: echo("      lay_naoaplicada = getLayer('layer_naoaplicada');\n"); break;
     case 1: //echo("      lay_andamento = getLayer('layer_andamento');\n"); 
                 //echo("      lay_andamento_vota = getLayer('layer_andamento_vota');\n");
-                if ($tela_formador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n");
-                if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
+                if ($tela_formador || $tela_colaborador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n");
+                if ($tela_formador || $tela_colaborador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-    case 2: //if ($tela_formador) echo("      lay_encerrada = getLayer('layer_encerrada');\n");
-                if ($tela_formador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n"); 
-                if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
+    case 2: //if ($tela_formador || $tela_colaborador) echo("      lay_encerrada = getLayer('layer_encerrada');\n");
+                if ($tela_formador || $tela_colaborador) echo("      lay_adiantar_prorrogar = getLayer('layer_adiantar_prorrogar');\n"); 
+                if ($tela_formador || $tela_colaborador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
     //case 3: echo("      lay_lixeira = getLayer('layer_lixeira');\n"); break;
   }
@@ -281,12 +281,12 @@
     //case 0: echo("      hideLayer(lay_naoaplicada);\n"); break;
     case 1: //echo("      hideLayer(lay_andamento);\n");
                 //echo("      hideLayer(lay_andamento_vota);\n"); 
-                if ($tela_formador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
-                if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
+                if ($tela_formador || $tela_colaborador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
+                if ($tela_formador || $tela_colaborador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
-    case 2: //if ($tela_formador) echo("      hideLayer(lay_encerrada);\n"); 
-                if ($tela_formador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
-                if ($tela_formador) echo("      lay_calendario = getLayer('layer_calendario');\n");
+    case 2: //if ($tela_formador || $tela_colaborador) echo("      hideLayer(lay_encerrada);\n"); 
+                if ($tela_formador || $tela_colaborador) echo("      hideLayer(lay_adiantar_prorrogar);\n");
+                if ($tela_formador || $tela_colaborador) echo("      lay_calendario = getLayer('layer_calendario');\n");
                 break;
     //case 3: echo("      hideLayer(lay_lixeira);\n"); break;
   }
@@ -312,7 +312,7 @@
     echo("    }\n\n");
   }
 
-  if (($tela_formador) && ($categ == 0)) // enquete NAO_REALIZADA na visï¿½o do formador
+  if (($tela_formador || $tela_colaborador) && ($categ == 0)) // enquete NAO_REALIZADA na visï¿½o do formador
   {
     // Vai para a página de edição da enquete
     echo("    function Editar()\n");
@@ -330,7 +330,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && ($categ == 1)) // enquete em ANDAMENTO na visï¿½o do formador
+  if (($tela_formador || $tela_colaborador) && ($categ == 1)) // enquete em ANDAMENTO na visï¿½o do formador
   {
     // Finaliza a enquete
     echo("    function Finalizar()\n");
@@ -342,7 +342,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visão do formador 
+  if (($tela_formador || $tela_colaborador) && (($categ == 1) || $categ == 2)) //enquete EM ANDAMENTO ou ENCERRADA na visão do formador 
   {
     // Carrega data e hora final da enquete atual no formulário para  Adiantada/Prorrogada
     echo("    function CarregaDataHora()\n");
@@ -375,7 +375,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && ($categ != 3)) // enquete fora da LIXEIRA e é formador
+  if (($tela_formador || $tela_colaborador) && ($categ != 3)) // enquete fora da LIXEIRA e é formador
   {
     // Apaga a enquete , movendo-a para a lixeira
     echo("    function Apagar()\n");
@@ -387,7 +387,7 @@
     echo("    }\n\n");
   }
   
-  if (($tela_formador) && ($categ == 3)) // enquete na LIXEIRA
+  if (($tela_formador || $tela_colaborador) && ($categ == 3)) // enquete na LIXEIRA
   {
     // Exclui a enquete permanentemente
     echo("    function Excluir()\n");
@@ -415,7 +415,7 @@
   // Inicialmente, seta status de Enquetes que foram recentemente alteradas
   setStatusEnquetesRecentes($sock);
   
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     switch($categ)
     {
@@ -433,7 +433,7 @@
         break;
     }
   }
-  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)) || ( EColaborador($sock, $cod_curso, $cod_usuario)))
+  else if ((EAluno($sock,$cod_curso,$cod_usuario)) || (EVisitante($sock,$cod_curso,$cod_usuario)))
   {
     // Início da Página do Aluno, Visitante e Colaborador
     switch($categ)
@@ -473,7 +473,7 @@
 
   echo("                <ul class=\"btAuxTabs\">\n");
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     // 3 - Nova Enquete
     echo("                  <li><a href='nova_enquete.php?cod_curso=".$cod_curso."'>".RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
@@ -486,7 +486,7 @@
   // 41 - Enquetes encerradas
   echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=2'>".RetornaFraseDaLista($lista_frases,41)."</a></li>\n");
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     // 97 - Lixeira /
     echo("                  <li><a href='enquete.php?cod_curso=".$cod_curso."&amp;categ=3'>".RetornaFraseDaLista($lista_frases,97)."</a></li>\n");
@@ -505,7 +505,7 @@
   // 09 - Titulo
   echo("                    <td class=\"alLeft\">".RetornaFraseDaLista($lista_frases,9)."</td>\n");
 
-  if (($tela_formador) || ($categ == 1))
+  if (($tela_formador || $tela_colaborador) || ($categ == 1))
   {
     // 116 - Opções
     echo("                    <td width=\"140px\">".RetornaFraseDaLista($lista_frases,116)."</td>\n");
@@ -556,7 +556,7 @@
       echo("                    <td class=\"alLeft\"><a class=\"".$bi."\" id=\"link_enquete_".$lista_enquetes[$num]['idEnquete']."\" href='ver_enquete.php?cod_curso=".$cod_curso."&amp;idEnquete=".$lista_enquetes[$num]['idEnquete']."' >".$titulo."</a></td>\n");
 
       // Se o usuário for formador então cria links com acesso as opções
-      if ($tela_formador)
+      if ($tela_formador || $tela_colaborador)
       {
         switch($categ)
         {
