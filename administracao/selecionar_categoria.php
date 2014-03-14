@@ -186,7 +186,7 @@
   echo("      }\n\n");
   echo("    </script>\n");
 
-  $objAjax->printJavascript("../cursos/aplic/xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   /* Fim do JavaScript */
 

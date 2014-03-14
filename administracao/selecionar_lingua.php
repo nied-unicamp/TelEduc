@@ -79,7 +79,7 @@
   echo("    </script>\n");
   /* Fim do JavaScript */
 
-  $objAjax->printJavascript("../cursos/aplic/xajax_0.2.4/");
+  $objAjax->printJavascript();
 
   include("../menu_principal_tela_inicial.php");
 
