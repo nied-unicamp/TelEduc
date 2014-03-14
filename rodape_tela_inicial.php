@@ -48,13 +48,13 @@
   echo("        <td valign=\"bottom\" class=\"rodape\"> ");
   /*	Para fins de SEO existe um random que alterna o alt e title da imagem do teleduc  */
   if(rand(1,2) == 1){
-    echo("          <a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Ensino � dist�ncia\" title=\"TelEduc - Ensino � dist�ncia\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
+    echo("          <a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Ensino &agrave; dist&acirc;ncia\" title=\"TelEduc - Ensino &agrave; dist&acirc;ncia\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
   }
   else{
-    echo("          <a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Educa��o � dist�ncia\" title=\"TelEduc - Educa��o � dist�ncia\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
+    echo("          <a tabindex=\"1\" href=\"http://www.teleduc.org.br\"><img src=\"../imgs/teleduc-EAD.jpg\" alt=\"TelEduc: Educa&ccedil;&atilde;o &agrave; dist&acirc;ncia\" title=\"TelEduc - Educa&ccedil;&atilde;o &agrave; dist&acirc;ncia\" border=\"0\" style=\"margin-right:5px;\" /></a>&nbsp;|&nbsp;\n");
   }
   /*Logo do Nied*/
-  echo("          <a tabindex=\"2\" href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" acronym title=\"Nucleo de Informatica Aplicada a Educa��o\" alt=\"nied\" border=\"0\" style=\"margin-right: 8px; margin-bottom: 6px;\" /></a>&nbsp;|&nbsp;");
+  echo("          <a tabindex=\"2\" href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" acronym title=\"N&uacute;cleo de Inform&aacute;tica Aplicada a Educa&ccedil;&atilde;o\" alt=\"nied\" border=\"0\" style=\"margin-right: 8px; margin-bottom: 6px;\" /></a>&nbsp;|&nbsp;");
   /* Logo do IC*/
   echo("          <a tabindex=\"3\" href=\"http://www.ic.unicamp.br\" title=\"Instituto de Computa&ccedil;&atilde;o\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right: 6px; margin-bottom: -2px;\" /></a>&nbsp;|&nbsp;");
   /* Logo da Unicamp */

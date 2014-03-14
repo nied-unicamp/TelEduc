@@ -65,7 +65,6 @@
   Desconectar($sock);
 
 
-
   // Ser� avaliado antes da chamada � fun��o RetornaCaminhoExtracao
   $caminho_restricao = "\$campos_restricao = array ('codigo' => \$codigo_extracao);";
 
@@ -94,7 +93,7 @@
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("        <li><span title=\"Voltar\" onClick=\"document.location='extrair_curso.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("        <li><span title=\".RetornaFraseDaLista($lista_frases_geral,23).\" onClick=\"document.location='extrair_curso.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
@@ -341,12 +340,7 @@
   echo("  </td>\n");
   echo("  </tr> \n");
   echo("</table>\n");
-  echo("      <tr>\n");
-  echo("        <td valign=\"bottom\" height=\"80\"><a href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" alt=\"nied\" border=\"0\" style=\"margin-right:8px;\" /></a><a href=\"http://www.ic.unicamp.br\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right:6px;\" /></a><a href=\"http://www.unicamp.br\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" border=\"0\" /></a></td>\n");
-  echo("        <td valign=\"bottom\" id=\"rodape\">2008  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
-  echo("      </tr>\n");
-  echo("    </table>\n");
- 
+  include("../cursos/aplic/tela2.php");
   echo("</body>\n");
   echo("</html>\n");
 ?>

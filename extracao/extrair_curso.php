@@ -86,7 +86,7 @@
   echo("            <td>\n");
   echo("              <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("                <li><span style=\"href: #\" title=\"Voltar\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("                <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='../administracao/index.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("              </ul>\n");
   echo("            </td>\n");
   echo("          </tr>\n");
@@ -108,7 +108,7 @@
     echo("                <td width=\"45%\" align=\"right\">\n");
     echo("                  <select class=\"input\" name=\"cod_curso\">\n");
     foreach ($lista as $cod_curso => $nome)
-      echo("                    <option value=".$cod_curso.">".$nome."</option>\n");
+      echo("                    <option value=\"".$cod_curso."\">".$nome."</option>\n");
     echo("                  </select>\n");
     echo("                </td>\n");
     echo("                <td align=\"left\">\n");
@@ -122,10 +122,9 @@
 
   /* 333 - A Remocao de Curso eh uma ferramenta criada para salvar um curso exatamente no estado em que ele esta, e assim podendo transferir para outro servidor ou para usar posteriormente como um backup. Essa remocao extrai todos os dados e arquivos armazenados, salvando-os na pasta extraidos na home do TelEduc.*/
   /* 334 - Voce possui a opcao de Remover o curso da Base de Dados. Com essa opcao selecionada alem de extrair todos os dados e arquivos do curso, esse curso sera removido da lista de cursos do seu TelEduc. Caso voce queira salvar os dados do curso, porem nao gostaria que esse curso fosse removido da lista de cursos, deixe esta opcao desmarcada.*/
-  echo "<tr><td colspan=\"2\" align=\"left\"><p style=\"text-indent:15px\">* ".RetornaFraseDaLista($lista_frases,344)."</p>\n";
-  echo "<p style=\"text-indent:15px\">".RetornaFraseDaLista($lista_frases,345)."</p></td></tr>\n\n";
+  echo("<tr><td colspan=\"2\" align=\"left\"><p style=\"text-indent:15px\">* ".RetornaFraseDaLista($lista_frases,344)."</p>\n");
+  echo("<p style=\"text-indent:15px\">".RetornaFraseDaLista($lista_frases,345)."</p></td></tr>\n\n");
 
-  
   echo("              </table>\n");
 
   echo("              <div align=right>\n");
@@ -133,7 +132,6 @@
   if (count($lista)>0)
     /* 110 - Extrair */
     echo("                <input class=\"input\" value=\"".RetornaFraseDaLista($lista_frases,110)."\" onClick=\"document.frmExtrair.submit();\" type=\"button\" />\n");
-
 
   echo("              </div>\n");
   
