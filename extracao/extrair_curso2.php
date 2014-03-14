@@ -74,6 +74,7 @@
   $caminho_tar = RetornaDiretorio('tar');
   $caminho_base_extracao = RetornaDiretorio('Extracao');
 
+
   echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 4 - Extra��o de Curso */
   echo("  <h4>".RetornaFraseDaLista($lista_frases,4)."</h4>\n");

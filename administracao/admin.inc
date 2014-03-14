@@ -1390,7 +1390,7 @@ function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,
   $lista_dir = array ("Arquivos" => LimpaTags($arquivos), "ArquivosWeb" => LimpaTags($arquivosweb),
                       "Extracao" => LimpaTags($extraidos), "raiz_www" => LimpaTags($raizwww),
                       "sendmail" => LimpaTags($sendmail), "mysqldump" => LimpaTags($mysqldump),
-		      "mimetypes" => LimpaTags($mimetypes)
+                      "mimetypes" => LimpaTags($mimetypes)
                      );
   $sucesso = (AtualizaConfiguracoes($lista_conf) && AtualizaDiretorios($lista_dir));
   $objResponse->script("RespostaUsuario(".$sucesso.");");
