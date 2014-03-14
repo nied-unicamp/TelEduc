@@ -300,18 +300,21 @@ function CopiaDadosCursoParaExtraidos($sock, $codigo, $cod_curso, $versao)
   if (function_exists("CopiaDadosCursoParaExtraidosFachada"))
   {
     return(CopiaDadosCursoParaExtraidosFachada($sock, $codigo, $cod_curso, $versao));
-    
   }
-  $query = "insert into Cursos_extraidos
-              (codigo, nome, categoria, curso_inicio, curso_fim, versao_teleduc, caminho, montado, data_ultimo_acesso)
-              select ".$codigo.", C.nome_curso, Cp.pasta, C.curso_inicio, C.curso_fim, '".$versao."', '', 'nao', null
-                from Cursos C left join Cursos_pastas Cp
-                on C.cod_pasta = Cp.cod_pasta
-                where C.cod_curso = ".$cod_curso;
-      $res=EnviarNC($sock,$query);
-      if(ErroSql($sock)!=0)
-        return (-1);
-      return($res);
+
+  $query  = "insert into Cursos_extraidos ";
+  $query .= "(codigo, nome, categoria, curso_inicio, curso_fim, versao_teleduc, caminho, montado, data_ultimo_acesso) ";
+  $query .= "(select ".$codigo.", C.nome_curso, Cp.pasta, C.curso_inicio, C.curso_fim, '".$versao."', NULL, 'nao', NULL ";
+  $query .= "from Cursos C ";
+  $query .= "left join Cursos_pastas Cp on C.cod_pasta = Cp.cod_pasta ";
+  $query .= "where C.cod_curso = ".$cod_curso.")";
+
+  $res = Enviar($sock, $query);
+
+  if(ErroSql($sock)!=0)
+    return (-1);
+
+  return($res);
 }
 
 
@@ -329,17 +332,19 @@ function CopiaFerrCompartCursoParaExtraidos($sock, $codigo, $cod_curso)
   if (function_exists("CopiaFerrCompartCursoParaExtraidosFachada"))
   {
     return(CopiaFerrCompartCursoParaExtraidosFachada($sock, $codigo, $cod_curso));
-    
   }
-  $query = "insert into Cursos_extraidos_compart (codigo, cod_ferramenta)
-              select ".$codigo.", cod_ferramenta
-                 from Cursos_compart
-                 where cod_curso = ".$cod_curso;
+
+  $query  = "insert into Cursos_extraidos_compart (codigo, cod_ferramenta) ";
+  $query .= "(select ".$codigo.", cod_ferramenta ";
+  $query .= "from Cursos_compart ";
+  $query .= "where cod_curso = ".$cod_curso.")";
+
   $res=EnviarNC($sock, $query);
   
   if(ErroSql($sock)!=0)
     return(-1);
-    return($res);
+
+  return($res);
 }
 
   /* **********************************************************************

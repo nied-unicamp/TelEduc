@@ -596,9 +596,9 @@ function RetornaProximoCodigo($sock,$tabela,$cod_usuario_tmp='')
 //   global $cod_usuario;
   
   if ($cod_usuario_tmp==""){
-  	$cod_usuario_tmp=$_SESSION['cod_usuario'];
-  	if ($cod_usuario_tmp=="")
-  		$cod_usuario_tmp=0;
+    $cod_usuario_tmp=$_SESSION['cod_usuario'];
+    if ($cod_usuario_tmp=="")
+      $cod_usuario_tmp=0;
   }
 
   $data=time();
@@ -625,7 +625,7 @@ function RetornaProximoCodigo($sock,$tabela,$cod_usuario_tmp='')
     $linha=RetornaLinha($res);
     $query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
     $res=Enviar($sock,$query);
-    return ($linha[0]);     
+    return ($linha[0]);
   }
 }
 

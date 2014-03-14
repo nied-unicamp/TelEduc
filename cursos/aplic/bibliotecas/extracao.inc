@@ -489,16 +489,20 @@
    Saida: caminho resolvida:
              '/fixo1/fixo2/valor1/valor5/...'
   */
-  function RetornaCaminhoExtracao($sock, $campos_restricao)
+  function RetornaCaminhoExtracao($sock, $campos_restricao, $caminho_base_extracao)
   {
     // Obtem o caminho da tabela
     $query_template = RetornaSelectTemplate($sock);
 
-    $caminho = RetornaCaminhoVariavel($sock);
+    // Se não termina com '/', adicione-o no final.
+    if (substr($caminho_base_extracao, -1) != '/')
+      $caminho_base_extracao .= '/';
+
+    $caminho_variavel = RetornaCaminhoVariavel($sock);
+    $caminho          = $caminho_base_extracao.$caminho_variavel;
+    $caminho_variavel = ExtraiCaminhoVariavel($caminho_variavel);
     
-    $caminho_variavel = ExtraiCaminhoVariavel($caminho);
     // Verifica a existencia de parte configuravel do caminho: OBRIGATORIA a existencia
-    //if (ereg("\{[^}]+\}", $caminho))
     if (is_array($caminho_variavel))
     {
       if ($query_template == "")
@@ -536,7 +540,7 @@
       else
       {
         // 64 - ERRO: a consulta para obter informaï¿½ï¿½es utilizadas na montagem do caminho para extraï¿½ï¿½o de cursos nï¿½o retornou dados.
-        die(RetornaFraseDaLista);
+        die(RetornaFraseDaLista($lista_frases, 64));
         return(-6);
       }
     }

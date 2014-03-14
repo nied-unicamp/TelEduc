@@ -72,6 +72,7 @@
   $dir_arquivos = RetornaDiretorio('Arquivos');
   $caminho_mysqldump = RetornaDiretorio('mysqldump');
   $caminho_tar = RetornaDiretorio('tar');
+  $caminho_base_extracao = RetornaDiretorio('Extracao');
 
   echo("<td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 4 - Extra��o de Curso */
@@ -130,7 +131,7 @@
   // 3 - RESOLVER O CAMINHO PARA EXTRACAO
   // Obt�m o caminho completo para extra��o
   eval($caminho_restricao);
-  $caminho = RetornaCaminhoExtracao($sock, $campos_restricao);
+  $caminho = RetornaCaminhoExtracao($sock, $campos_restricao, $caminho_base_extracao);
 
   // Atualiza o campo caminho da tabela 'Cursos_extraidos'
   AtualizaCaminho($sock, $caminho, $codigo_extracao);
