@@ -93,7 +93,7 @@
   echo("    <td>\n");
   echo("      <ul class=\"btAuxTabs\">\n");
   /* 23 - Voltar (Ger) */
-  echo("        <li><span title=\".RetornaFraseDaLista($lista_frases_geral,23).\" onClick=\"document.location='extrair_curso.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+  echo("        <li><span title=\"".RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='extrair_curso.php'\">".RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
   echo("      </ul>\n");
   echo("    </td>\n");
   echo("  </tr>\n");
