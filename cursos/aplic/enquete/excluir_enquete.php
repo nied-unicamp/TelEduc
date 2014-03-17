@@ -68,7 +68,7 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     if (deleteEnquete($sock, $idEnquete))
     {

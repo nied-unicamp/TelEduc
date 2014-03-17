@@ -48,7 +48,7 @@
 
   include("../topo_tela.php");
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     echo("    <script type=\"text/javascript\" language=\"JavaScript\">\n");
     echo("      function Iniciar()\n");
@@ -71,7 +71,7 @@
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     /* 1 - Enquete */
     /* 106 - Recuperar Enquete */

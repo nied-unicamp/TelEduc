@@ -370,7 +370,7 @@ function recuperarEnquete($sock, $idEnquete)
   else
     $status = 'A';
 
-  $consulta="update Enquete set status = ".$status." where idEnquete=".VerificaNumeroQuery($idEnquete);
+  $consulta="update Enquete set status = '".$status."' where idEnquete=".VerificaNumeroQuery($idEnquete);
 
   // Atualiza para notifica��o Ferramentas_nova (caso 'A')
   if ($status == 'A')

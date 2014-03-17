@@ -247,7 +247,7 @@
   $enquete = getEnquete($sock, $idEnquete);
   $alternativas = getAlternativas($sock, $idEnquete);
 
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   {
     /* 1 - Enquete */
     /* 87 - Editar enquete */

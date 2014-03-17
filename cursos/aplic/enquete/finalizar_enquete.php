@@ -70,7 +70,7 @@
 
   $enquete = getEnquete($sock, $idEnquete);
   
-  if ($tela_formador)
+  if ($tela_formador || $tela_colaborador)
   { 
     if (finalizarEnquete($sock, $idEnquete))
     {
