@@ -94,8 +94,9 @@
   echo("          var raizwww = document.frmConfig.raizwww.value;\n");
   echo("          var sendmail = document.frmConfig.sendmail.value;\n");
   echo("          var mysqldump = document.frmConfig.mysqldump.value;\n");
+  echo("          var tar = document.frmConfig.tar.value;\n");
   echo("          var mimetypes = document.frmConfig.mimetypes.value;\n");
-  echo("          xajax_AtualizaPastasDinamic(host,arquivos,arquivosweb,extraidos,raizwww,sendmail,mysqldump,mimetypes);\n");
+  echo("          xajax_AtualizaPastasDinamic(host,arquivos,arquivosweb,extraidos,raizwww,sendmail,mysqldump,tar,mimetypes);\n");
   echo("        }\n");
   echo("        else\n");
   echo("        {\n");
@@ -222,6 +223,11 @@
   echo("                  <tr>\n");
   echo("                    <td width=\"20%\">".RetornaFraseDaLista($lista_frases, 205)."</td>\n");
   echo("                    <td><input class=\"input\" type=\"text\" name=\"mysqldump\" size=\"40\" value='".ConverteAspas2Html($diretorios['mysqldump'])."' /></td>\n");
+  echo("                  </tr>\n");
+  /* 346 - Caminho do tar (inclusive o executavel): */
+  echo("                  <tr>\n");
+  echo("                    <td width=\"20%\">".RetornaFraseDaLista($lista_frases, 346)."</td>\n");
+  echo("                    <td><input class=\"input\" type=\"text\" name=\"tar\" size=\"40\" value='".ConverteAspas2Html($diretorios['tar'])."' /></td>\n");
   echo("                  </tr>\n");
   /* 206 - Caminho do arquivo "mime.types" do Apache para resolu��o do arquivos (inclusive o nome do arquivo): */
   echo("                  <tr>\n");

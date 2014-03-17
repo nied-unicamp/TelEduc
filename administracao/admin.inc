@@ -1382,16 +1382,17 @@ function AtualizaConfiguracoesDinamic($curso_form,$normas)
              $mimetypes - caminho do arquivo "mime.types" do Apache para resolução do arquivos 
   Saida:     resposta XML
 ********************************************************************/
-function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,$sendmail,$mysqldump,$mimetypes)
+function AtualizaPastasDinamic($host,$arquivos,$arquivosweb,$extraidos,$raizwww,$sendmail,$mysqldump,$tar,$mimetypes)
 {
   $objResponse = new xajaxResponse();
 
-  $lista_conf = array ("host" => LimpaTags($host));
-  $lista_dir = array ("Arquivos" => LimpaTags($arquivos), "ArquivosWeb" => LimpaTags($arquivosweb),
-                      "Extracao" => LimpaTags($extraidos), "raiz_www" => LimpaTags($raizwww),
-                      "sendmail" => LimpaTags($sendmail), "mysqldump" => LimpaTags($mysqldump),
-                      "mimetypes" => LimpaTags($mimetypes)
+  $lista_conf = array("host" => LimpaTags($host));
+  $lista_dir  = array("Arquivos"  => LimpaTags($arquivos),  "ArquivosWeb" => LimpaTags($arquivosweb),
+                      "Extracao"  => LimpaTags($extraidos), "raiz_www"    => LimpaTags($raizwww),
+                      "sendmail"  => LimpaTags($sendmail),  "mysqldump"   => LimpaTags($mysqldump),
+                      "mimetypes" => LimpaTags($mimetypes), "tar"         => LimpaTags($tar)
                      );
+
   $sucesso = (AtualizaConfiguracoes($lista_conf) && AtualizaDiretorios($lista_dir));
   $objResponse->script("RespostaUsuario(".$sucesso.");");
 

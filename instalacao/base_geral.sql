@@ -192,7 +192,8 @@ CREATE TABLE IF NOT EXISTS `Cursos_requisicao` (
 
 CREATE TABLE IF NOT EXISTS `Diretorio` (
   `item` varchar(20) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  `diretorio` text
+  `diretorio` text,
+  PRIMARY KEY (`item`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -228,7 +229,8 @@ INSERT INTO `Escolaridade` (`cod_escolaridade`, `cod_texto_escolaridade`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Extracao` (
   `item` varchar(20) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  `valor` varchar(200) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL
+  `valor` varchar(200) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  PRIMARY KEY (`item`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

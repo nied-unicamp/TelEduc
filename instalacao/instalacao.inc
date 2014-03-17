@@ -117,6 +117,9 @@ function &verificaRequisitos($etapa) {
 			mysql_query("INSERT INTO Diretorio VALUES ('sendmail', '".$_SESSION['sendmail']."');", $sock);
 			mysql_query("INSERT INTO Diretorio VALUES ('ArquivosWeb', '../../diretorio');", $sock);
 			mysql_query("INSERT INTO Diretorio VALUES ('Extracao', '');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('tar', '');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('mysqldump', '');", $sock);
+			mysql_query("INSERT INTO Diretorio VALUES ('mimetypes', '');", $sock);
 			mysql_query("INSERT INTO Extracao VALUES ('diretorio', '{Cursos_extraidos.codigo}');", $sock);
 			mysql_query("INSERT INTO Extracao VALUES ('select_query','select codigo from Cursos_extraidos where codigo = \']codigo[\'');", $sock);
 			mysql_query("INSERT INTO Extracao VALUES ('compactar','S');", $sock);
