@@ -347,7 +347,7 @@
           }
 
           //$situacao=$marcaib.$situacao."</a>".$marcafb;
-          $titulo="<a id=\"tit_".$linha_item['cod_item']."\" onclick=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
+          $titulo="<a id=\"tit_".$linha_item['cod_item']."\" onclick=\"window.open('ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar');\">".$linha_item['titulo']."</a>";
         }
         else
         {
