@@ -1225,10 +1225,6 @@ function EnviarConfirmacaoUsuarioDinamic($valor, $opcao)
 function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 {
 
-  $cod_curso = $_GET["cod_curso"];
-  $tipo_curso = $_GET["tipo_curso"];
-
-
   $objResponse = new xajaxResponse();
 
   $login            = $dadosForm['login'];
@@ -1289,13 +1285,16 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     $lista_frases_email = RetornaListaDeFrases($sock,-2);
     $lista_frases_correio = RetornaListaDeFrases($sock,11);
 
+    $parametros_curso = "";
+    if (isset($_GET["cod_curso"]) && !empty($_GET["cod_curso"])) {
+      $parametros_curso .= "&c=".$_GET["cod_curso"];
+      if (isset($_GET["tipo_curso"]) && !empty($_GET["tipo_curso"]))
+        $parametros_curso .= "&t=".$_GET["tipo_curso"];
+    }
+
     //87 - Confirmação de cadastro TelEduc
     $assunto = RetornaFraseDaLista($lista_frases_email, 87);
-    if($cod_curso != NULL){
-      $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."&c=".$cod_curso."&t=".$tipo_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."&c=".$cod_curso."&t=".$tipo_curso."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-    }else{
-      $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-    }
+    $mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>".RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
     /*
     // 74 - Bem-Vindo ao TelEduc!
     $assunto = RetornaFraseDaLista($lista_frases_email, 74);
