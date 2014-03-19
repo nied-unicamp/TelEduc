@@ -46,7 +46,18 @@
   include($bibliotecas."geral.inc");
   include("forum.inc");
   include("avaliacoes_forum.inc");
+
   require_once("../xajax_0.5/xajax_core/xajax.inc.php");
+  //Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  //Registre os nomes das funções em PHP que você quer chamar através do xajax
+  $objAjax->register(XAJAX_FUNCTION,"SalvaMensagem");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
   
   $cod_ferramenta=9;
   $cod_usuario_global=VerificaAutenticacao($cod_curso);

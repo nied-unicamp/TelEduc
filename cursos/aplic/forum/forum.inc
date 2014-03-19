@@ -1865,7 +1865,6 @@ function MudarRelevanciaDinamic($dadosForm, $nova_relev)
 {
   $objResponse = new xajaxResponse();
   
-  $tipo_comp=$dadosForm['tipo_comp'];
   $cod_curso=$dadosForm['cod_curso'];
   $cod_msg = $dadosForm['cod_msg'];
   $nova_relevancia = $dadosForm['nova_relevancia'];
