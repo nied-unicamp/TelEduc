@@ -4303,7 +4303,7 @@ function AssociaAvaliacaoDinamic($cod_curso, $cod_usuario, $cod_item,$cod_avalia
 
   $query="select * from Portfolio_itens_avaliacao where cod_item='".$cod_item."'";
   $res=Enviar($sock, $query);
-  $linha=RetornaArrayLinhas($res);
+  $linha=RetornaLinha($res);
   
   
   $cod_avaliacao_atual = $linha[0]['cod_avaliacao'];
@@ -4407,6 +4407,7 @@ function VerificaSePodeDesassociar($cod_curso, $cod_usuario, $cod_item, $msg1, $
     if (!$foi_avaliado){
       DesassociarItemAvaliacao($sock,$cod_item);
       $objResponse->script("AtualizaDesassociacaoForm(".$linha[0]['cod_avaliacao'].")");
+      Desconectar($sock);
       AcabaEdicaoDinamic($cod_curso, $cod_item, $cod_usuario, 1);
       
       $objResponse->assign("estadoAvaliacao","innerHTML", $msg1);
@@ -4422,8 +4423,8 @@ function VerificaSePodeDesassociar($cod_curso, $cod_usuario, $cod_item, $msg1, $
     else{
       $objResponse->call("mostraFeedback", $msg_erro, 'false');
     }
-    Desconectar($sock);
   }
+
   return $objResponse;
    
   }
