@@ -101,7 +101,7 @@ if ($etapa == 0) {
 	$content_header = "Bem-Vindo(a) &agrave; Instala&ccedil;&atilde;o do TelEduc ".VERSAO."!";
 
 	$content  = "<p>Leia atentamente as instru&ccedil;&otilde;es contidas em cada passo da instala&ccedil;&atilde;o.</p>";
-	$content .= "<p>Em caso de d&uacute;vida, consulte o nosso <a href='doc/InstalacaoTelEduc4.pdf' target='_blank'>Guia de Instala&ccedil;&atilde;o.</a></p>";
+	$content .= "<p>Em caso de d&uacute;vida, consulte o nosso <a href='http://fenix.nied.unicamp.br/redmine/projects/teleduc/wiki/Instala%C3%A7%C3%A3o_do_Teleduc' target='_blank'>Guia de Instala&ccedil;&atilde;o.</a></p>";
 
 	$content .= "<div class='formulario'>";
 		$content .= "<form method='POST' action='index.php'>";
@@ -209,11 +209,13 @@ else if ($etapa == 4) {
 	$content .= "<p>Recomendamos a remo&ccedil;&atilde;o da pasta de instala&ccedil;&atilde;o por quest&otilde;es de seguran&ccedil;a.</p>";
 	$content .= "<br/>";
 	$content .= "<p>Habilite a notifica&ccedil;&atilde;o de novidades via email adicionando ao crontab:</p>";
-	$content .= "<pre>0 17 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=1";
+	$content .= "<pre>";
+	$content .= "0 17 * * * /usr/bin/lynx -dump http://".$_SESSION['host'].$_SESSION['www']."scripts/notificar.php?notificar_email=1";
 	$content .= "<br/>";
-	$content .= "0 9 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=2";
+	$content .= "0  9 * * * /usr/bin/lynx -dump http://".$_SESSION['host'].$_SESSION['www']."scripts/notificar.php?notificar_email=2";
 	$content .= "<br/>";
-	$content .= "0 18 * * * /usr/bin/lynx -dump http://hera.nied.unicamp.br/~teleduc4/scripts/notificar.php?notificar_email=2</pre>";
+	$content .= "0 18 * * * /usr/bin/lynx -dump http://".$_SESSION['host'].$_SESSION['www']."scripts/notificar.php?notificar_email=2";
+	$content .= "</pre>";
 	$content .= "<br />";
 	
 	$content .= "<input type='submit' value='Entrar' onClick=\"document.location='../'\" class='form'/><br />";

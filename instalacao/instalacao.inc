@@ -96,6 +96,12 @@ function &verificaRequisitos($etapa) {
 				}
 			}
 
+			// Verifica se o nome de host é válido. 
+			if (preg_match("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/", $_SESSION['host']) === 0) {
+				$flag |= 4;
+				break;
+			}
+
 			// Se conseguimos criar um link simbólico
 			// de teste, então o apagamos.
 			unlink($_SESSION['arquivos'].'/teste.txt');
@@ -127,6 +133,13 @@ function &verificaRequisitos($etapa) {
 			break;
 
 		case 4:
+
+			// Verifica se o email é válido.
+			if (preg_match("/^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}$/", $_SESSION['admtele_email'], $_SESSION['admtele_email']) === 0) {
+				$flag |= 1;
+				break;
+			}
+
 			$sock = mysql_quick_connect();
 			
 			mysql_query("TRUNCATE Usuario;");
@@ -241,22 +254,39 @@ function exibeErro($etapa,$erro) {
 				$content .= "<br />";
 				$content .= "<p>Isso impedir&aacute; o ambiente de fazer o upload de arquivos.</p>";
 				$content .= "<br />";
+
+				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio criar e configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
+				$content .= "<br />";
 			}
 			if ($erro & 2) {
 				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
 				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
-				$content .= "<pre>teleduc4/cursos/diretorio/</pre>";
+				$content .= "<pre>".$_SESSION['www']."/cursos/diretorio/</pre>";
 				$content .= "<br />";
 				$content .= "<p>O upload de arquivos &eacute; feito para uma pasta n&atilde;o acess&iacute;­vel pela web com o objetivo de proteger os arquivos de acessos n&atilde;o autorizados.</p>";
 				$content .= "<br />";
 				$content .= "<p>Quando um usu&aacute;rio autenticado tenta acessar um dos aos anexos, &eacute; feito um link da pasta tempor&aacute;ria para a pasta de arquivos.</p>";
 				$content .= "<br />";
+
+				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio criar e configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
+				$content .= "<br />";
 			}
-			$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio criar e configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
-			$content .= "<br />";
+			if ($erro & 4) {
+				$console .= "<p class='feedbackp'>O nome do servidor &eacute; inv&aacute;lido. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o, digite um nome de host v&aacute;lido.</p>";
+				$content .= "<br />";
+			}
+
 			break;
 		case 4:
+			if ($erro & 1) {
+				$console .= "<p class='feedbackp'>O endere&ccedil;o de email &eacute; inv&aacute;lido. <img src='../cursos/aplic/imgs/errado.png'></p>";
+
+				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o, digite um email v&aacute;lido.</p>";
+				$content .= "<br />";
+			}
 			break;
 	}
 
