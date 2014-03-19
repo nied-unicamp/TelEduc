@@ -98,6 +98,9 @@
   {
     // 2 - Este script n�o pode ser executado remotamente.
     echo("<br /><font color=\"tomato\" size=+1>".RetornaFraseDaListaNotificar($lista_frases_total[1], 2)."</font><br />");
+    echo("    </pre>\n");
+    echo("  </body>\n");
+    echo("</html>\n");
     exit(); // Executado remotamente sa�.
   }
 
@@ -117,6 +120,9 @@
     // 7 - 2 - resumo parcial duas vezes ao dia 
     echo(RetornaFraseDaListaNotificar($lista_frases_total[1], 7)."\n");
 
+    echo("    </pre>\n");
+    echo("  </body>\n");
+    echo("</html>\n");
     exit();
   }
 
