@@ -1302,7 +1302,9 @@
   echo("    }\n\n");
 
   echo("      function EdicaoArq(i, msg){\n");
-  echo("        if ((i==1)&&(ArquivoValido(document.getElementById('input_files').value))){ //OK\n");
+  echo("        var filename = document.getElementById('input_files').value;\n");
+  echo("        filename = filename.replace(\"C:\\\\fakepath\\\\\", \"\");\n");
+  echo("        if ((i==1) && ArquivoValido(filename)) { //OK\n");
   echo("          document.formFiles.submit();\n");
   echo("        }\n");
   echo("        else {\n");
