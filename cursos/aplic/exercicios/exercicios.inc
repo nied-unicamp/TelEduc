@@ -3098,6 +3098,7 @@ function AtualizaIconesDinamic($cod_questao,$cod_curso,$tp_questao){
   $alternativas = RetornaAlternativas($sock,$cod_questao);
 
   $numalt = count($alternativas);
+  $alt = '';
   for($i=0;$i<$numalt;$i++){
     if($i!=0) 
       $alt = $alt.".".$alternativas[$i]['cod_alternativa'];
