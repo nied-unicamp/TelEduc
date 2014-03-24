@@ -230,11 +230,13 @@ function getfilename(path)
 }
 
 function EdicaoArq(i, msg){
-  if ((i==1)&&(ArquivoValido(document.getElementById('input_files').value))){ //OK
+  var filename = document.getElementById('input_files').value;
+  filename = filename.replace("C:\\fakepath\\", "");
+  if ((i==1) && ArquivoValido(filename)) { //OK
     document.formFiles.submit();
   }
   else {
-	alert(lista_frases.msg216);
+    alert(lista_frases.msg216);
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
