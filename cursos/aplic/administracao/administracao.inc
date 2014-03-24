@@ -652,21 +652,25 @@ function CadastrarUsuarioExistente($sock,$cod_curso,$dados, $lista_frases)
 
   $data_inscricao = time();
 
-
   $cod_usuario_prox = RetornaProximoCodigoUsuarioCurso($sock,$cod_curso);
-  $dados['cod_usuario_global'] = RetornaCodigoUsuarioGlobalPorEmail($sock, $dados['email']);
-  $query="insert into ".$dbnamebase.".Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) values ('".$dados['cod_usuario_global']."','".$cod_usuario_prox."','".$cod_curso."','".$dados['tipo_usuario']."',".$data_inscricao.")";
+  $dados['cod_usuario_global'] = RetornaCodigoUsuarioGlobalPorLogin($sock, $dados['login']);
+
+  $query  = "insert into ".$dbnamebase.".Usuario_curso (cod_usuario_global,cod_usuario,cod_curso,tipo_usuario,data_inscricao) ";
+  $query .= "values ('".$dados['cod_usuario_global']."','".$cod_usuario_prox."','".$cod_curso."','".$dados['tipo_usuario']."',".$data_inscricao.")";
   Enviar($sock,$query);
 
-  $query = "insert into ".$dbnamebase.".Usuario_config (cod_usuario,cod_curso,notificar_email) values ('".$cod_usuario_prox."','".$cod_curso."','0')";
+  $query  = "insert into ".$dbnamebase.".Usuario_config (cod_usuario,cod_curso,notificar_email) values ";
+  $query .= "('".$cod_usuario_prox."','".$cod_curso."','0')";
   Enviar($sock, $query);
 
-  $dados_curso=DadosCursoParaEmail($sock, $cod_curso);
+  $dados_curso = DadosCursoParaEmail($sock, $cod_curso);
 
   $remetente=$dados_curso['email'];
 
-  $query = "select email from ".$dbnamebase.".Usuario where cod_usuario='".$dados['cod_usuario_global']."'";
+  $query  = "select email from ".$dbnamebase.".Usuario ";
+  $query .= "where cod_usuario='".$dados['cod_usuario_global']."'";
   $res=Enviar($sock,$query);
+
   $email=RetornaLinha($res);
   $destino=$email[0];
 
