@@ -595,10 +595,11 @@ function RetornaProximoCodigo($sock,$tabela,$cod_usuario_tmp='')
 {
 //   global $cod_usuario;
   
-  if ($cod_usuario_tmp==""){
-    $cod_usuario_tmp=$_SESSION['cod_usuario'];
-    if ($cod_usuario_tmp=="")
-      $cod_usuario_tmp=0;
+  if ($cod_usuario_tmp=="") {
+    if (isset($_SESSION['cod_usuario']) && !empty($_SESSION['cod_usuario']))
+      $cod_usuario_tmp = $_SESSION['cod_usuario'];
+    else
+      $cod_usuario_tmp = 0;
   }
 
   $data=time();
