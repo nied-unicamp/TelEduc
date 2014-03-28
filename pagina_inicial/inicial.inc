@@ -1254,6 +1254,7 @@ function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
     $hash = true;
   }
 
+  $flag = 0;
   if(LoginRepetido($sock,$login)){
     $flag=1;
     $objResponse->call("mostraFeedback", $erro1, 'false');
