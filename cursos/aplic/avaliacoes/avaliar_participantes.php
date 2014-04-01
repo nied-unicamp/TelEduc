@@ -70,6 +70,8 @@
   $cod_ferramenta_ajuda = $cod_ferramenta;
   $cod_pagina_ajuda=6;
   include("../topo_tela.php");
+  
+  session_register("visao_aluno_s");
 
   $usr_formador=EFormador($sock,$cod_curso,$cod_usuario);
   $VeioDaAtividade = ($VeioDaAtividade == 1);

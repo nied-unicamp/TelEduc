@@ -4720,7 +4720,7 @@ function ApagarAvalicaoDinamic($cod_curso,$cod_avaliacao,$cod_nota,$cod_aluno,$c
     }
   }
 
-  if (!$portifolio_grupo)
+  if (!$portfolio_grupo)
     //dados da ultima avaliacao
     $dados_nota=RetornaDadosNota($sock, $cod_aluno, $cod_avaliacao,$cod_usuario,$usr_formador);
   else
