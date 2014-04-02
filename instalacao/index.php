@@ -43,7 +43,7 @@
 include_once 'instalacao.inc';
 
 /* Versao do TelEduc */
-define("VERSAO", "4.3.1", true);
+define("VERSAO", "4.3.2", true);
 
 /* Limpeza de variaveis usadas para controlar as mensagens exibidas
  * na console e no "miolo" da pagina. */
