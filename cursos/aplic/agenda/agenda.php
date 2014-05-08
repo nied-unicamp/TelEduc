@@ -280,7 +280,7 @@
   {
     /* 4 - Nenhuma agenda adicionada ainda! */
     echo("                  <tr>\n");
-    echo("                    <td colspan=5>".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                    <td colspan=\"5\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
     echo("                  </tr>\n");
   }
 
