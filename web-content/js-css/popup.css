@@ -1,0 +1,25 @@
+/* -------------------------------------------
+	CSS . POPUPS
+---------------------------------------------- */
+body,h1,h2,h3,h4,h5,h6,p,form,ul,li,table {
+    margin:0;
+    padding:0;
+	border:none;
+    list-style:none;
+}
+
+body {
+	font:0.76em Arial, Verdana, Trebuchet MS; color:#4a4a4a;
+	margin:4px;
+	background:#c4c4c4;
+}
+a, a:visited { color:#ab4125; font-size:10px; text-decoration:underline; }
+a:hover { color:#8d351d; }
+
+ul {
+	width:86px; height:80px;
+	background:#FFFFFF;
+	margin-bottom:4px;
+	padding-left:8px; padding-top:4px;
+}
+li { padding:1px 0; }
