@@ -3,8 +3,6 @@ require_once 'cursos.inc';
 require_once 'usuarios.inc';
 class Email{
 	static function MontaMsg($host, $raiz_www, $cod_curso, $mensagem, $assunto, $cod_usuario_remetente='', $destinatarios=''){
-		echo "FUNCAO MONTE MSG\n";
-		echo "parametros: " . "host:" . $host . "\nraiz_www:" . $raiz_www . "\ncod_curso:" . $cod_curso . "\nmensagem:" . $mensagem . "\nassunto:" . $assunto;
 		$socket = AcessoSQL::Conectar("");
 		$lista_frases=Linguas::RetornaListaDeFrases($socket,11);
 	
@@ -12,7 +10,6 @@ class Email{
 		if($cod_curso!=''){
 			$sock = AcessoSQL::Conectar("");
 			$nome_curso = Cursos::NomeCurso($sock, $cod_curso);
-			echo "nome curso:" .$nome_curso;
 			AcessoSQL::Desconectar($sock);
 		}
 	
@@ -20,7 +17,6 @@ class Email{
 		if($cod_usuario_remetente!=''){
 			$sock = AcessoSQL::Conectar($cod_curso);
 			$nome_remetente = Usuarios::NomeUsuario($sock, $cod_usuario_remetente, $cod_curso);
-			echo "nome rementente:" . $nome_remetente;
 			AcessoSQL::Desconectar($sock);
 		}
 	
@@ -80,7 +76,6 @@ class Email{
 		$html_email.="</html>\n";
 		//  echo($html_email);exit();
 	
-		echo "montou mensagem com sucesso!\n";
 		return $html_email;
 	}
 	
@@ -94,7 +89,6 @@ class Email{
 	*/
 	static function MandaMsg($remetente,$destino,$assunto,$mensagem, $nomearquivo='')
 	{
-		echo "nome do arquivo: " . $nomearquivo;
 		$caminho_sendmail_s = Email::CaminhoSendmailS();
 		/* Verifica se o tamanho do remetente �seguro */
 	

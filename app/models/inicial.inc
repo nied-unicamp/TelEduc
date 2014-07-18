@@ -10,15 +10,18 @@ $erro2 = 'Email repetido';
 $erro3 = 'Caracteres invalidos';
 $texto = 'Sucesso';
 
-if (isset($_POST['acao'])){
+/*if (isset($_POST['acao'])){
 	$acao = $_POST['acao'];
 	switch($acao){
 		case 'CadastraDados':
-			Inicial::FuncaodeTeste();
 			//Inicial::CadastraDadosUsuario($erro1, $erro2, $erro3, $texto);
 			break;
 	}
 		
+}*/
+
+if (isset($_POST['login'])){ //TODO: ver porque não funciona o $_POST['acao'] ou $_POST['dados']
+	Inicial::CadastraDadosUsuario($erro1, $erro2, $erro3, $texto);
 }
 
 class Inicial{
@@ -392,7 +395,7 @@ class Inicial{
 		return ($linha['valor']);
 	}
 	
-	function CadastrarLogar($form,$cod_curso,$tipo_curso)
+	static function CadastrarLogar($form,$cod_curso,$tipo_curso)
 	{
 		$objResponse = new xajaxResponse();
 	

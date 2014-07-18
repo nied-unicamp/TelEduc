@@ -7,23 +7,8 @@ $diretorio_imgs  = "../../web-content/imgs/";
 
 require_once $diretorio_models.'geral.inc';
 require_once $diretorio_models.'inicial.inc';
-
-require_once("../../web-content/scripts/xajax_0.5/xajax_core/xajax.inc.php");
-
-$objAjax = new xajax();
-$objAjax->configure('debug', true);
-$objAjax->configure("characterEncoding", 'ISO-8859-1');
-$objAjax->setFlag("decodeUTF8Input",true);
-$objAjax->configure('javascript URI', "../../web-content/scripts/xajax_0.5");
-$objAjax->configure('errorHandler', true);
-//Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-$objAjax->register(XAJAX_FUNCTION,"CadastraDadosUsuarioDinamic");
-$objAjax->register(XAJAX_FUNCTION,"CadastrarLogar");
-
-//Manda o xajax executar os pedidos acima.
-$objAjax->processRequest();
-
 require_once $diretorio_views.'topo_tela_inicial.php';
+
 $sock = AcessoSQL::Conectar("");
 $lista_escolaridade=Inicial::RetornaListaEscolaridade($sock);
 
@@ -201,47 +186,42 @@ echo("        else \n");
 echo("          return(true);\n");
 echo("      }\n");
 
-//echo("    function confereDados()\n");
-//echo("    {\n");
-echo("		var dados = $('#formulario').serialize();\n");
+echo("    function confereDados()\n");
+echo("    {\n");
 echo("		$(document).ready(function(){\n");
-echo("			$('#formulario').submit(function(){");
-//echo("      		if(ValidaLogins() && ValidaSenhas() && verificar())\n");
-echo("					$.ajax({\n");
-echo("						url: '".$diretorio_models."inicial.inc', //caminho do arquivo a ser executado\n");
-//echo("						dataType: 'html', //tipo do retorno\n");
-echo("						type: 'post', //metodo de envio\n");
-echo("						data: {'dados': 'dados', 'acao': 'CadastraDados'}, //valores enviados ao script\n");
-echo("						complete: function(result){\n");
-echo("							alert('Dados enviados com sucesso' + result, true);\n");
-echo("						}\n");
-echo("					});\n");
-echo("			});\n");
+echo("      	if(ValidaLogins() && ValidaSenhas() && verificar())\n");
+echo("				$.ajax({\n");
+echo("					url: '".$diretorio_models."inicial.inc', //caminho do arquivo a ser executado\n");
+echo("					dataType: 'json', //tipo do retorno\n");
+echo("					type: 'post', //metodo de envio\n");
+echo("					data: {dados: $('#formulario').serialize(), acao: 'CadastraDados'}, //valores enviados ao script\n");
+echo("					complete: function(retorno){\n");
+echo("						trataEnvio(retorno);\n"); //TODO: precisa arrumar essa parte, não estou conseguindo pegar o retorno da função (flag)
+echo("					}\n");
+echo("				});\n");
 echo("		});\n");	
-//echo("        xajax_CadastraDadosUsuarioDinamic(xajax.getFormValues('formulario'),'".Linguas::RetornaFraseDaLista($lista_frases_configurar,74)."','".Linguas::RetornaFraseDaLista($lista_frases_configurar,75)."','".Linguas::RetornaFraseDaLista($lista_frases_configurar,76)."','".Linguas::RetornaFraseDaLista($lista_frases,184)."');\n");
-//echo("      return true;");
-//echo("    }\n\n");
+echo("    }\n\n");
 
 echo("      function trataEnvio(flag)\n");
 echo("      {\n");
 echo("        if (flag == '1')\n");
 echo("        {\n");
 //74 - Login digitado ja existe. Digite outro e tente novamente.
-//  echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
+echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
 echo("          document.formulario.login.value='';\n");
 echo("          document.formulario.login.focus();\n");
 echo("        }\n");
 echo("        else if(flag == '2')\n");
 echo("        {\n");
 //75 - E-mail digitado ja existe. Digite outro e tente novamente.
-//  echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
+echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
 echo("          document.formulario.email.value='';\n");
 echo("          document.formulario.email.focus();\n");
 echo("        }\n");
 echo("        else if(flag == '3')\n");
 echo("        {\n");
 //76 - Carecteres digitados nao conferem com os da imagem.Tente novamente.
-//  echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
+echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
 echo("          var imagem = document.getElementById('imagem');\n");
 //   echo("          var src = imagem.src;\n");
 //   echo("          imagem.src = '';\n");
@@ -278,8 +258,6 @@ echo("    }\n\n");
 
 echo("    </script> \n");
 
-$objAjax->printJavascript();
-
 include("./menu_principal_tela_inicial.php");
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -301,7 +279,7 @@ echo("          <!-- Tabelao -->\n");
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
 echo("              <td>\n");
-echo("                <form name=\"formulario\" id=\"formulario\" action=\"\" method=\"post\">\n");
+echo("                <form name=\"formulario\" id=\"formulario\" action=\"\" method=\"post\" onsubmit=\"return(confereDados());\">\n");
 //echo("                <form name=\"formulario\" id=\"formulario\" action=\"".$diretorio_ctrlers."realizar_cadastro.php?erro1=".$erro1."&erro2=".$erro2."&erro3=".$erro3."&texto=".$texto."\" method=\"post\" onsubmit=\"return(confereDados());\">\n");
 echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");

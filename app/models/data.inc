@@ -4,10 +4,10 @@ require_once 'adodb-time.inc.php';
 
 $_SESSION['cod_lingua_s'] = 1;
 
-/* if ($_SESSION['cod_lingua_s']==3)
+if ($_SESSION['cod_lingua_s']==3)
 	$data_invertida_g=true;
 else
-	$data_invertida_g=false; */
+	$data_invertida_g=false;
 
 
 class Data{
