@@ -164,7 +164,7 @@
     /* Endere�o do Link de gerenciamento */
     $link_gerenciamento = "<a href='";
     $link_gerenciamento.= "http://".$host.$raiz_www."/cursos/aplic/administracao/";
-    $link_gerenciamento.= "gerenciamento_inscricoes.php.php?cod_curso=".$dados_curso['cod_curso'];
+    $link_gerenciamento.= "gerenciamento_inscricoes.php?cod_curso=".$dados_curso['cod_curso'];
     $link_gerenciamento.= "&cod_usuario=".$dados_curso['cod_coordenador'];
     $link_gerenciamento.= "&cod_ferramenta=0&tipo_usuario=i";
     /* 215 - Gerenciamento de Inscri��es */
