@@ -4223,24 +4223,24 @@ function AbreEdicao($cod_curso, $cod_avaliacao, $cod_usuario, $tela_avaliacao){
 
 /* *********************************************************************
    AlterarPeriodoDinamic - Altera o periodo corresponde ao inicio e terminio de uma avaliacao
-   Entrada: $dadosForm -  variavel que contem os valores do formulario 
+   Entrada: $cod_curso - codigo do curso, para conectar ao banco de dados
+   			$cod_usuario - codigo que esta sendo utilizado pelo usuario
+   			$cod_avaliacao - avaliacao a qual o endereco esta associado
+   			$tela_avaliacao - identificador da tela de avaliacao (passadas, atuais ou futuras)
+   			$data_i - data de inicio da avaliacao (vinda do formulario, preenchido pelo usuario)
+   			$data_f - data de fim da avaliacao (vinda do formulario, preenchido pelo usuario)
 
    Saida: XML da função Ajax
 */
-function AlterarPeriodoDinamic($dadosForm){
-
+function AlterarPeriodoDinamic($cod_curso, $cod_usuario, $cod_avaliacao, $tela_avaliacao, $data_i, $data_f){
   $objResponse = new xajaxResponse();
-
-  $cod_curso = $dadosForm['cod_curso'];
-  $cod_usuario = $dadosForm['cod_usuario'];
-  $cod_avaliacao = $dadosForm['cod_avaliacao'];
-  $tela_avaliacao = $dadosForm['tela_avaliacao'];
-  $data_inicio=Data2UnixTime($dadosForm['data_inicio']);
+  
+  $data_inicio=Data2UnixTime($data_i);
 
   /* Aqui contamos que o dia acaba no ultimo segundo (23h59m59s)*/
-  $data_fim=Data2UnixTime($dadosForm['data_fim']) + 86399;
-  $texto = $dadosForm['texto']; /* Texto do feedback */
-
+  $data_fim=Data2UnixTime($data_f) + 86399;
+  //$texto = $dadosForm['texto']; /* Texto do feedback */
+  
   AbreEdicao($cod_curso, $cod_avaliacao, $cod_usuario, $tela_avaliacao);
 
   $sock=Conectar($cod_curso);
@@ -4250,12 +4250,17 @@ function AlterarPeriodoDinamic($dadosForm){
 
   $res=Enviar($sock,$consulta);
 
+
   Desconectar($sock);
 
   AcabaEdicaoDinamic($cod_curso, $cod_avaliacao, $cod_usuario, 1);
 
   /* Feedback é sempre bom né? */
-  $objResponse->call("mostraFeedback", $texto, 'true');
+  $cod_lingua = (int) $_SESSION['cod_lingua_s'];
+  $cod_ferramenta = 22;
+  $cod_texto = 214;
+  $texto_feedback = RetornaTexto($cod_lingua, $cod_ferramenta, $cod_texto);
+  $objResponse->call("mostraFeedback", $texto_feedback, 'true');
 
   // Retorna a resposta de XML gerada pelo objeto do xajaxResponse
   return $objResponse;

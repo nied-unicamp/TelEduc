@@ -135,9 +135,7 @@
   echo("        }\n");
   echo("      }\n\n"); 
 
-  echo("      function Valida()\n");
-  echo("      {\n");
-  echo("        hoje = '".UnixTime2Data(time())."';\n\n");
+  echo("function CheckDatas(){\n");
   echo("        if (ComparaData(document.getElementById('data_inicio'), document.getElementById('data_fim')) > 0)\n");
   echo("        {\n");
   //31(biblioteca) - Período Inválido! 
@@ -145,8 +143,17 @@
   echo("          document.frmAlteraPeriodo.data_inicio.value = document.frmAlteraPeriodo.data_fim.value;\n");
   echo("          return false;\n");
   echo("        }\n");
-  echo("        CancelaTodos();\n");
-  echo("        xajax_AlterarPeriodoDinamic(xajax.getFormValues('frmAlteraPeriodo'));\n");
+  echo("		return true;\n");
+  echo("}\n\n");
+ 
+  echo("      function Valida()\n");
+  echo("      {\n");
+  echo("        if (CheckDatas())\n");
+  echo("        {\n");
+  echo("        xajax_AlterarPeriodoDinamic(".$cod_curso.", ".$cod_usuario.", ".$cod_avaliacao.", '".$tela_avaliacao."', document.frmAlteraPeriodo.data_inicio.value, document.frmAlteraPeriodo.data_fim.value);\n");
+  echo("        }\n");
+  //echo("        CancelaTodos();\n");
+  echo("		return false;\n");
   echo("      }\n\n");
 
   if ($SalvarEmArquivo)
@@ -638,7 +645,7 @@
   echo("                  <tr>\n");
   if($usr_formador)
   {
-    echo("                    <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action=\"\" onsubmit=\"Valida(); return false;\">\n");
+    echo("                    <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action=\"\" onsubmit=\"return(Valida());\">\n");
     echo("                      <input type=\"hidden\" name=\"texto\"          value=\"".RetornaFraseDaLista($lista_frases, 214)."\">\n");
     echo("                      <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\">\n");
     echo("                      <input type=\"hidden\" name=\"cod_avaliacao\"  value=\"".$cod_avaliacao."\">\n");
@@ -651,14 +658,16 @@
     echo("                      <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size='10' maxlength='10' value=\"".$data_inicio."\" class=\"input\" /><img src=\"../imgs/ico_calendario.gif\" alt=\"\" onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" />\n");
   else
     echo("                      ".$data_inicio);
-  echo("                    </td>\n");
+    
+    echo("                    </td>\n");
   /* 17 - Data de T�rmino */
   echo("                    <td>\n");
   if($usr_formador)
     echo("                      <input type=\"text\" id=\"data_fim\" name=\"data_fim\" size='10' maxlength='10' value=\"".$data_fim."\" class=\"input\" /><img src=\"../imgs/ico_calendario.gif\" alt=\"\" onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
   else
     echo("                      ".$data_fim);
-  echo("                    </td>\n");
+ 
+    echo("                    </td>\n");
   if($usr_formador)
   {
     // 43(biblioteca) - Alterar Per�odo

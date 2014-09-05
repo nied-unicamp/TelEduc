@@ -44,6 +44,8 @@
   $bibliotecas = "../bibliotecas/";
   include ($bibliotecas . "geral.inc");
   include ("avaliacoes.inc");
+  
+  session_register('visao_aluno_s');
 
   $cod_ferramenta=22;
   $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -452,10 +454,14 @@ $cor_link2[$tela_avaliacao] = "</font>";
 //     echo("                    <option value=\"N\">Avaliacao Externa</option>\n");
 //     echo("                  </select><br>\n");
 
+     
     echo("                  <input type=\"hidden\" name=\"cod_curso\"      value=\"".$cod_curso."\" />\n");
     echo("                  <input type=\"hidden\" name=\"acao\"           value=\"criarAvaliacaoExt\" />\n");
     echo("                  <input type=\"hidden\" name=\"cod_usuario\"    value=\"".$cod_usuario."\">\n");
+    foreach ($lista_avaliacoes as $cod => $linha)
+    {
     echo("                  <input type=\"hidden\" name=\"ferramenta\"     value=\"".$linha['Ferramenta']."\" />\n");
+    }
     echo("                  <input type=\"hidden\" name=\"tela_avaliacao\" value=\"".$tela_avaliacao."\" />\n");
     /* 18 - Ok (gen) */
     echo("                  <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
