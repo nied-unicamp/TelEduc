@@ -46,11 +46,15 @@ $ferramenta_administracao = 'administracao';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $model_agenda = '../../'.$ferramenta_agenda.'/models/';
+$ctler_agenda = '../../'.$ferramenta_agenda.'/controllers/';
 $view_agenda = '../../'.$ferramenta_agenda.'/views/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
+$diretorio_jscss = '../../../web-content/js-css/';
+$diretorio_imgs = '../../../web-content/imgs/';
 
 require_once $model_geral.'geral.inc';
 require_once $model_agenda.'agenda.inc';
+//require_once $model_agenda.'abreedicao.php';
 
 /*$objAjax->register(XAJAX_FUNCTION,"EditarTitulo");
 $objAjax->register(XAJAX_FUNCTION,"EditarTexto");
@@ -69,8 +73,12 @@ $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");*/
 $sock=AcessoSQL::Conectar("");
 $lista_frases_biblioteca=Linguas::RetornaListaDeFrases($sock,-2);
 $diretorio_arquivos=Agenda::RetornaDiretorio($sock,'Arquivos');
+
 $diretorio_temp=Agenda::RetornaDiretorio($sock,'ArquivosWeb');
 AcessoSQL::Desconectar($sock);
+
+$cod_item = $_GET['cod_item'];
+$origem = $_GET['origem'];
 
 $cod_ferramenta=1;
 $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -91,12 +99,18 @@ $dir_name = "agenda";
 $dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 /* Verifica se o usuario eh formador. */
 $usr_formador = Usuarios::EFormador($sock, $cod_curso, $cod_usuario);
+$linha_item = Agenda::RetornaAgenda($sock, $cod_item);
 
-echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor.js\"></script>");
-echo("    <script type=\"text/javascript\" src=\"../bibliotecas/ckeditor/ckeditor_biblioteca.js\"></script>");
-echo("    <script type='text/javascript' src='../bibliotecas/dhtmllib.js'></script>\n");
+$id = $linha_item['cod_item'];
+
+echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
+
+echo("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."ckeditor/ckeditor.js\"></script>");
+echo("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."ckeditor/ckeditor_biblioteca.js\"></script>");
+echo("    <script type='text/javascript' src='".$diretorio_jscss."dhtmllib.js'></script>\n");
 
 echo("    <script type=\"text/javascript\">\n\n");
+
 
 echo("      var cod_item='".$cod_item."';\n");
 echo("      var cod_curso='".$cod_curso."';\n");
@@ -117,11 +131,12 @@ echo("      {\n");
 echo("        return(confirm(\"".Linguas::RetornaFraseDaLista($lista_frases,57)."\\n".Linguas::RetornaFraseDaLista($lista_frases,58)."\"));\n");
 echo("      }\n");
 
+
 echo("      function Ativar()\n");
 echo("      {\n");
 echo("        if(TemCertezaAtivar())\n");
 echo("        {\n");
-echo("          window.location='acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';\n");
+echo("          window.location='".$ctler_agenda."acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';\n");
 echo("        }\n");
 echo("        return false;\n");
 echo("      }\n");
@@ -156,12 +171,24 @@ echo ("         }\n\n");
 echo ("         return true;\n");
 echo ("     }\n\n");
 
-echo("      function AlteraTitulo(id){\n");
-echo("        var id_aux = id;\n");
-echo("        if (editaTitulo==0){\n");
-echo("          CancelaTodos();\n");
+//echo("      function AlteraTitulo(id){\n");
+echo("		$(document).ready(function(){\n");
+echo("			$('#renomear_".$id."').click(function(){\n");
+echo("        	if (editaTitulo==0){\n");
+echo("          	CancelaTodos();\n");
+echo("        	var id_aux = id;\n");
+echo("			var cod_curso = ".$cod_curso.";\n");
+echo("			var cod_item = ".$cod_item.";\n");
+echo("			var cod_usuario = ".$cod_usuario.";\n");
+echo("			var id = ".$id.";\n");
 
-echo("          xajax_AbreEdicao(".$cod_curso.", ".$cod_item.", ".$cod_usuario.", origem);\n");
+echo("			$.post(\"".$model_agenda."abreedicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, action:'abrirEdicao'}, \n");
+echo("				function(data){\n");
+echo("					var code = $.parseJSON(data);\n");
+//echo("					alert(code);\n");
+echo("			});\n");
+
+//echo("          xajax_AbreEdicao(".$cod_curso.", ".$cod_item.", ".$cod_usuario.", origem);\n");
 
 echo("          conteudo = document.getElementById('tit_'+id).innerHTML;\n");
 echo("          document.getElementById('tr_'+id).className='';\n");
@@ -182,7 +209,13 @@ echo("            createInput.attachEvent('onkeypress', function (event) {EditaT
 echo("          }\n");
 
 echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
-echo("          xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n\n");
+
+echo("			$.post(\"".$model_agenda."decodificastring.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
+echo("				function(data){\n");
+echo("					var code = $.parseJSON(data);\n");
+echo("					$('#tit_".$id."_text').val(code);\n");
+echo("			});\n");
+//echo("          xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');\n\n");
 
 echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
 echo("          espaco = document.createElement('span');\n");
@@ -218,25 +251,65 @@ echo("          cancelarElemento=document.getElementById('CancelaEdita');\n");
 echo("          document.getElementById('tit_'+id+'_text').select();\n");
 echo("          editaTitulo++;\n");
 echo("        }\n");
-echo("      }\n\n");
+//echo("      }\n\n");
+echo("			});\n");
+
+echo("		function EdicaoTitulo(codigo, id, valor){\n");
+echo("			//se o título não é vazio\n");
+echo("			if ((valor=='ok')&&(document.getElementById(id+'_text').value != \"\")){\n");
+echo("				novoconteudo = document.getElementById(id+'_text').value;\n");
+echo("				//Edita o título do item dado, dinâmicamente\n");
+echo("			$.post(\"".$model_agenda."editartitulo.php\",{cod_curso:cod_curso, cod_item:codigo, novo_nome:novoconteudo, cod_usuario:cod_usuario}, \n");
+echo("				function(data){\n");
+//echo("					var code = $.parseJSON(data);\n");
+echo("					$('#tr_".$id."').toggleClass('novoitem');\n");
+echo("					$('#tit_".$id."').html(novoconteudo);\n");
+echo("					mostraFeedback('".Linguas::RetornaFraseDaLista($lista_frases,103)."', 'true');\n");
+echo("			});\n");
+//echo("				xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);\n");
+echo("			//else - se o título for vazio.\n");
+echo("			}else{\n");
+echo("				/* 15 - O titulo nao pode ser vazio. */\n");
+echo("				if ((valor=='ok')&&(document.getElementById(id+'_text').value == \"\"))\n");
+echo("					alert(lista_frases.msg15);\n");
+echo("					document.getElementById(id).innerHTML=conteudo;\n");
+//echo("			if(navigator.appName.match(\"Opera\")){\n");
+//echo("				document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
+//echo("			}else{\n");
+//echo("				document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };\n");
+//echo("			}\n");
+echo("			//Cancela Edição\n");
+echo("			if (!cancelarTodos)\n");
+echo("			$.post(\"".$model_agenda."acabaedicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, acao: 0}, \n");
+echo("				function(data){\n");
+echo("					var code = $.parseJSON(data);\n");
+//echo("					alert(code);\n");
+echo("			});\n");
+//echo("				xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);\n");
+echo("			}\n");
+echo("		editaTitulo=0;\n");
+echo("		cancelarElemento=null;\n");
+echo("		}\n\n");
+echo("	});");
+//echo("		event.preventDefault();\n");
+
 
 echo("    </script>\n\n");
 
-$objAjax->printJavascript();
-
-echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
+echo("    <script type=\"text/javascript\" src=\"../../../web-content/js-css/jscriptlib.js\"> </script>\n");
 
 require_once $view_administracao.'menu_principal.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* VerificaÃ§Ã£o se o item estÃ¡ em EdiÃ§Ã£o */
 /* Se estiver, voltar a tela anterior, e disparar a tela de Em EdiÃ§Ã£o... */
-$linha=RetornaUltimaPosicaoHistorico($sock, $cod_item);
+
+$linha=Agenda::RetornaUltimaPosicaoHistorico($sock, $cod_item);
 
 if ($linha['acao']=="E")
 {
 	if (($linha['data']<(time()-1800)) || ($cod_usuario == $linha['cod_usuario'])){
-		AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 0);
+		Agenda::AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 0);
 	}else{
 		/* EstÃ¡ em ediÃ§Ã£o... */
 		echo("          <script language=\"javascript\">\n");
@@ -273,9 +346,9 @@ echo($cabecalho);
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
-  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"".$diretorio_imgs."btFont2.gif\"/></a>\n");
+  echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"".$diretorio_imgs."btFont3.gif\"/></a>\n");
   echo("          </div>\n");
 
   /*Voltar*/
@@ -327,7 +400,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			echo("                    <td class=\"alLeft\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases, 18)."</td>\n");
 
   					/*Conteudo da Agenda*/
-  			$linha_item = RetornaAgenda($sock, $cod_item);
+  			
 
   			if(($usr_formador) && ($linha_item['situacao'] != "H"))
   			{
@@ -344,16 +417,16 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			if ($linha_item['status']=="E")
   			{
 
-  				$linha_historico=RetornaUltimaPosicaoHistorico($sock, $linha_item['cod_item']);
+  				$linha_historico=Agenda::RetornaUltimaPosicaoHistorico($sock, $linha_item['cod_item']);
 
-  				if ($linha_item['inicio_edicao']<(time()-1800) || $cod_usuario == $linha_historico['cod_usuario'])
+  				if ($linha['data']<(time()-1800) || $cod_usuario == $linha_historico['cod_usuario'])
   				{
-  					CancelaEdicao($sock, $linha_item['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp);
+  					Agenda::CancelaEdicao($sock, $linha_item['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp);
   					if($usr_formador)
   					{
         $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
         // 106 - Renomear TÃ­tulo
-        $renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
+        $renomear="<span id=\"renomear_".$linha_item['cod_item']."\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
         /* 91 - Editar texto */
         $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".Linguas::RetornaFraseDaLista ($lista_frases, 91)."</span>";
         /* 92 - Limpar texto */
@@ -368,7 +441,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				{
   					$titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
   					// 106 - Renomear TÃ­tulo
-  					$renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\" id=\"renomear_".$linha_item['cod_item']."\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
+  					$renomear="<span id=\"renomear_".$linha_item['cod_item']."\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
   					/* 91 - Editar texto */
   					$editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".Linguas::RetornaFraseDaLista ($lista_frases, 91)."</span>";
   					/* 92 - Limpar texto */
@@ -588,13 +661,13 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				echo("                  </tr>\n");
   				echo("                  <tr>\n");
   				echo("                    <td align=left colspan=4>\n");
-  				echo("                      <form name=\"formFiles\" id=\"formFiles\" action='acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
+  				echo("                      <form name=\"formFiles\" id=\"formFiles\" action='".$ctler_agenda."acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
   				echo("                        <input type='hidden' name='cod_curso' value='".$cod_curso."' />\n");
   				echo("                        <input type='hidden' name='cod_item' value='".$cod_item."' />\n");
   				echo("                        <input type='hidden' name='acao' value='anexar' />\n");
   				echo("                        <input type='hidden' name='origem' value='".$origem."' />\n");
   				echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
-  				echo("                          <img alt=\"\" src=\"../imgs/paperclip.gif\" border=0 />\n");
+  				echo("                          <img alt=\"\" src=\"".$diretorio_imgs."paperclip.gif\" border=0 />\n");
   				echo("                          <span class=\"destaque\">".Linguas::RetornaFraseDaLista ($lista_frases_geral, 26)."</span>\n");
   				echo("                          <span> - ".Linguas::RetornaFraseDaLista ($lista_frases, 48).Linguas::RetornaFraseDaLista ($lista_frases, 49)."</span>\n");
   				echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
@@ -605,7 +678,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				//echo("                          <span onClick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">".Linguas::RetornaFraseDaLista ($lista_frases_geral, 2)."</span>\n");
   				echo("                        </div>\n");
   				/* 26 - Anexar arquivo (ger) */
-  				echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"../imgs/paperclip.gif\" border=0 /> <span class=\"link\" id =\"insertFile\" onClick=\"AcrescentarBarraFile(1);\">".Linguas::RetornaFraseDaLista($lista_frases_geral,26)."</span></div>\n");
+  				echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"".$diretorio_imgs."paperclip.gif\" border=0 /> <span class=\"link\" id =\"insertFile\" onClick=\"AcrescentarBarraFile(1);\">".Linguas::RetornaFraseDaLista($lista_frases_geral,26)."</span></div>\n");
   				echo("                      </form>\n");
   				echo("                    </td>\n");
   				echo("                  </tr>\n");
@@ -634,5 +707,5 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			require_once $view_administracao.'tela2.php';
   			echo("  </body>\n");
   			echo("</html>\n");
-  			Desconectar($sock);
+  			AcessoSQL::Desconectar($sock);
   			?>

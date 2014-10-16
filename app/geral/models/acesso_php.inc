@@ -205,7 +205,7 @@ class AcessoPHP{
 				$linha = AcessoSQL::RetornaLinha($result);
 	    	if ($num > 0)
 		    	{
-		    			$cod_curso_s=$cod_curso;
+		    			$_SESSION['cod_curso_s']=$cod_curso;
 						$cod_usuario_s=Usuarios::RetornaCodigoUsuarioCurso($sock, $_SESSION['cod_usuario_global_s'], $cod_curso);
 						$cod_lin=Usuarios::RetornaLinguaUsuario($sock,$linha[1], $cod_curso);
 						//Desconectar($sock);

@@ -1,5 +1,9 @@
 <?php
 require_once "teleduc.inc";
+
+if (!defined("TMPDB"))
+	define("TMPDB", "tmp");
+
 class AcessoSQL {
 
 	static function Conectar($cod_curso, $opt = NULL)
@@ -90,7 +94,7 @@ class AcessoSQL {
 			$msgerro .= "                      <b>Consulta enviada : </b>".$query."<br />\n";
 	
 	
-			ImprimeErroSemTela("de SQL", $msgerro, "S");
+			AcessoSQL::ImprimeErroSemTela("de SQL", $msgerro, "S");
 		}
 		else
 			return($ms); 
@@ -312,20 +316,20 @@ class AcessoSQL {
 	{
 		//   global $cod_usuario;
 	
-		if ($cod_usuario_tmp=="") {
+		/*if ($cod_usuario_tmp=="") {
 			if (isset($_SESSION['cod_usuario']) && !empty($_SESSION['cod_usuario']))
 				$cod_usuario_tmp = $_SESSION['cod_usuario'];
 			else
 				$cod_usuario_tmp = 0;
 		}
-	
+		
 		$data=time();
 		$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
 	
 		if (!($res=mysqli_query($sock, $query)))
-		{
+		{*/
 			/* Criar tabela e repetir */
-			$query = "CREATE TABLE ".$tabela."_sequencia (cod int PRIMARY KEY AUTO_INCREMENT,cod_usuario INT,data INT)";
+			/*$query = "CREATE TABLE ".$tabela."_sequencia (cod int PRIMARY KEY AUTO_INCREMENT,cod_usuario INT,data INT)";
 			$res=AcessoSQL::Enviar($sock,$query);
 			$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
 			$res=AcessoSQL::Enviar($sock,$query);
@@ -344,7 +348,139 @@ class AcessoSQL {
 			$query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
 			$res=AcessoSQL::Enviar($sock,$query);
 			return ($linha[0]);
-		}
+		}*/
+		
+		$query = "select max(cod_item) from Agenda_itens";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$linha = AcessoSQL::RetornaLinha($res);
+		
+		return ($linha[0]) + 1;
+	}
+	
+	/**************************************************************************
+	 EnviaEmailComErro - envia um e-mail com os dados do erro para o e-mail do
+		suporte
+	*/
+	static function EnviaEmailComErro($erro, $cod){
+	
+		$server_remetente = $_SERVER['SERVER_NAME'];
+		$headers = "From: <teleduc@".$server_remetente.">\n";
+		$headers.= "X-Mailer: PHP/".phpversion()."\n";
+		$headers .= "MIME-Version: 1.0\n";
+		$headers.= "Content-Type: text/html; charset=ISO-8859-1\n";
+		$headers.= "Content-Transfer-Encoding: 7bit\n";
+	
+		$destinatario = "Suporte TelEduc <camila.kna@gmail.com>"; //TODO
+	
+		$assunto = "[TelEduc Error] ".$cod;
+	
+		$mensagem = "<html>\n";
+		$mensagem.= "\t<head>\n";
+		$mensagem.= "\t\t<title>".$assunto."</title>\n";
+		$mensagem.= "\t</head>\n";
+		$mensagem.= "\t<body>\n";
+		$mensagem.= $erro;
+		$mensagem.= "\t\t<strong>Referer:</strong> ".@$_SERVER['HTTP_REFERER']."<br />";
+		$mensagem.= "\t\t<strong>Server:</strong> ".$_SERVER['SERVER_NAME']."<br />";
+		$mensagem.= "\t\t<strong>URL:</strong> ".$_SERVER['REQUEST_URI']."<br />";
+		$mensagem.= "\t</body>\n";
+		$mensagem.= "</html>\n";
+	
+		return mail($destinatario, $assunto, $mensagem, $headers);
+	
+	}
+	
+	/* **********************************************************************
+	 ImprimeErroSemTela - Para imprimir erros em que tela.php
+	(menu, header, etc..) não pode ser carregado.
+	*/
+	function ImprimeErroSemTela($tipo_erro, $erro, $prefixo)
+	{
+		$cod = rand(0, 268435454);
+		$cod_hex = dechex($cod);
+		$cod_fim = strtoupper($prefixo.str_pad($cod_hex, 7, "0", STR_PAD_LEFT));
+	
+		/* Obt� a raiz_www */
+		$sock = AcessoSQL::Conectar("");
+		$query = "select diretorio from Diretorio where item = 'raiz_www'";
+		$res = AcessoSQL::Enviar($sock,$query);
+		$linha = AcessoSQL::RetornaLinha($res);
+		$raiz_www = $linha[0];
+		AcessoSQL::Desconectar($sock);
+	
+		$caminho_jscss = $raiz_www."/web-content/js-css";
+	
+		echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+		echo("<html lang=\"pt\">\n");
+		echo("  <head>\n");
+		echo("    <title>TelEduc - Erro</title>\n");
+		echo("    <link href=\"".$caminho_jscss."/ambiente.css\" rel=\"stylesheet\" type=\"text/css\" />\n");
+		echo("    <script type=\"text/javascript\">\n");
+		echo("      function Iniciar(){\n");
+		echo("        document.getElementById('detalhes').style.display='none';\n");
+		echo("      }\n");
+		echo("      var status='none';\n");
+		echo("      function changeStatus(){\n");
+		echo("        if(status=='') status = 'none';\n");
+		echo("        else status = '';\n");
+		echo("        document.getElementById('detalhes').style.display=status;\n");
+		echo("      }\n");
+		echo("    </script>\n");
+		echo("  </head>\n");
+		echo("  <body onload=\"Iniciar();\">\n");
+		echo("    <br />\n");
+		echo("    <table id=\"container\" style=\"width:700px;\">");
+		echo("      <tr>\n");
+		echo("        <td colspan=\"2\" id=\"conteudo\" valign=\"top\">\n");
+		echo("          <h4>Erro ".$tipo_erro."</h4>\n");
+		echo("          <br />\n");
+		echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabExterna\">\n");
+		echo("            <tr>\n");
+		echo("              <td>\n");
+		echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
+		echo("                  <tr class=\"head\">\n");
+		echo("                    <td width=\"32%\" class=\"alLeft\">\n");
+		echo("                      Ocorreu um Erro\n");
+		echo("                    </td>\n");
+		echo("                  </tr>\n");
+		echo("                  <tr>\n");
+		echo("                    <td>\n");
+		echo("                      <p>Infelizmente o TelEduc comportou-se de forma inesperada. Houve um erro ".$tipo_erro." que impediu que a navega&ccedil;&atilde;o prosseguisse.</p>\n");
+		echo("                      <p>As informa&ccedil;&otilde;es foram enviadas automaticamente &agrave; Equipe do TelEduc para que as provid&ecirc;ncias necess&aacute;rias sejam tomadas.</p>\n");
+		echo("                      <p>Caso queira saber mais detalhes sobre o erro, entre em contato com a Equipe do TelEduc e informe o c&oacute;digo <strong>".$cod_fim."</strong>.</p>\n");
+		echo("                    </td>\n");
+		echo("                  </tr>\n");
+		echo("                  <tr>\n");
+		echo("                    <td style=\"text-align:right;\">\n");
+		echo("                      <span class=\"link\" onclick=\"changeStatus();\">+ Detalhes do Erro</span>\n");
+		echo("                    </td>\n");
+		echo("                  </tr>\n");
+		echo("                  <tr id=\"detalhes\">\n");
+		echo("                    <td class=\"alLeft\" style=\"padding: 10px 50px 10px 50px;\">\n");
+		echo("                      ".$erro."\n");
+		echo("                    </td>\n");
+		echo("                  </tr>\n");
+		echo("                </table>\n");
+		echo("              </td>\n");
+		echo("            </tr>\n");
+		echo("          </table>\n");
+		echo("          <span class=\"btsNavBottom\">\n");
+		echo("            <a href=\"javascript:history.back(-1);\"><img src=\"../imgs/btVoltar.gif\" border=\"0\" alt=\"Voltar\" /></a>\n");
+		echo("          </span>\n");
+		echo("        </td>\n");
+		echo("      </tr>\n");
+		echo("      <tr>\n");
+		echo("        <td valign=\"bottom\" height=\"80\"><a href=\"http://www.nied.unicamp.br\"><img src=\"../imgs/logoNied.gif\" alt=\"nied\" border=\"0\" style=\"margin-right:8px;\" /></a><a href=\"http://www.ic.unicamp.br\"><img src=\"../imgs/logoInstComp.gif\" alt=\"Instituto de Computa&ccedil;&atilde;o\" border=\"0\" style=\"margin-right:6px;\" /></a><a href=\"http://www.unicamp.br\"><img src=\"../imgs/logoUnicamp.gif\" alt=\"UNICAMP\" border=\"0\" /></a></td>\n");
+		echo("        <td valign=\"bottom\" id=\"rodape\">2006  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+		echo("      </tr>\n");
+		echo("    </table>\n");
+		echo("  </body>");
+		echo("</html>");
+	
+		AcessoSQL::EnviaEmailComErro($erro, $cod_fim);
+	
+		exit();
+	
 	}
 	
 

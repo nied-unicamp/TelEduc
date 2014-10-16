@@ -604,5 +604,15 @@ class Usuarios{
 		return false;
 	}
 	
+	static function AtualizaFerramentasNova($sock,$cod_ferramenta,$tipo_usuario)
+	{
+		$query="replace Ferramentas_nova (cod_ferramenta, tipo_compartilhamento, data) values (".$cod_ferramenta." , '".ConversorTexto::VerificaStringQuery($tipo_usuario)."' , ".time().")" ;
+		//if ($tipo_usuario=="F")
+		//  $query.=" and tipo_compartilhamento='F'";
+		AcessoSQL::Enviar($sock,$query);
+	}
+
+	
+	
 }
 ?>

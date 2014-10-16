@@ -12,8 +12,6 @@ $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $view_login = '../../'.$ferramenta_login.'/views/';
 $ctler_login = '../../'.$ferramenta_login.'/controllers/';
 
-
-
 require_once $model_geral.'geral.inc';
 require_once $model_geral.'inicial.inc';
 require_once $model_administracao.'exibe_cursos.inc';
@@ -37,7 +35,7 @@ else if(!Usuarios::PreencheuDadosPessoais($sock))
 else if($_SESSION['cod_usuario_global_s'] == -1)
 {
 	Desconectar($sock);
-	require_once $view_administracaos.'cursos_all.php';/*?tipo_curso=A*/
+	require_once $view_administracaos.'cursos_all.php?tipo_curso=A';
 	exit;
 }
 
@@ -115,7 +113,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos recém aceitos ou cursos que ainda não começaram*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosNaoIniciados($sock, $_SESSION['codigo_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosNaoIniciados($sock, $_SESSION['cod_usuario_s']);
 
 if (($total_cursos)==0)
 {
@@ -167,7 +165,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos em andamento*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosEmAndamento($sock, $_SESSION['codigo_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosEmAndamento($sock, $_SESSION['cod_usuario_s']);
 
 if (($total_cursos)==0)
 {
@@ -219,7 +217,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos jah oferecidos*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosPassados($sock, $_SESSION['codigo_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosPassados($sock, $_SESSION['cod_usuario_s']);
 
 
 if (($total_cursos)==0)
