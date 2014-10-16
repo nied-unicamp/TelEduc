@@ -1,6 +1,8 @@
 # arquivo de configuração da instalação do TelEduc
 cursos/aplic/bibliotecas/teleduc.inc
+app/geral/models/teleduc.inc
 
 cursos/diretorio/*
+diretorio/*
 *.DS_Store*
 *.metadata*
