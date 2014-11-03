@@ -88,7 +88,7 @@ require_once $view_administracao.'topo_tela.php';
 
 // instanciar o objeto, passa a lista de frases por parametro
 $feedbackObject =  new FeedbackObject($lista_frases);
-//adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
+//adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase para ser impressa se for "true", o terceiro caso "false"
 $feedbackObject->addAction("criarAgenda", 96, 0);
 $feedbackObject->addAction("anexar", 51, 98);
 $feedbackObject->addAction("descompactar", 99, 100);
@@ -118,16 +118,16 @@ echo("      var cod_usuario='".$cod_usuario."';\n");
 echo("      var origem='".$origem."';\n");
 echo("      var num_apagados = '0';\n");
 /* (ger) 18 - Ok */
-// Texto do botão Ok do ckEditor
+// Texto do botao Ok do ckEditor
 echo("    var textoOk = '".Linguas::RetornaFraseDaLista($lista_frases_geral, 18)."';\n\n");
 /* (ger) 2 - Cancelar */
-// Texto do botão Cancelar do ckEditor
+// Texto do botao Cancelar do ckEditor
 echo("    var textoCancelar = '".Linguas::RetornaFraseDaLista($lista_frases_geral, 2)."';\n\n");
 
 echo("      function TemCertezaAtivar()\n");
 echo("      {\n");
 /* 57 - Tem certeza que deseja ativar esta agenda? */
-/* 58 - (Uma vez ativada, nï¿½o haverï¿½ como desativï¿½-la) */
+/* 58 - (Uma vez ativada, nao havera como desativa-la) */
 echo("        return(confirm(\"".Linguas::RetornaFraseDaLista($lista_frases,57)."\\n".Linguas::RetornaFraseDaLista($lista_frases,58)."\"));\n");
 echo("      }\n");
 
@@ -301,8 +301,8 @@ echo("    <script type=\"text/javascript\" src=\"../../../web-content/js-css/jsc
 require_once $view_administracao.'menu_principal.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-/* VerificaÃ§Ã£o se o item estÃ¡ em EdiÃ§Ã£o */
-/* Se estiver, voltar a tela anterior, e disparar a tela de Em EdiÃ§Ã£o... */
+/* Verifica se o item esta em Edicao */
+/* Se estiver, voltar a tela anterior, e disparar a tela de Em Edicao... */
 
 $linha=Agenda::RetornaUltimaPosicaoHistorico($sock, $cod_item);
 
@@ -311,7 +311,7 @@ if ($linha['acao']=="E")
 	if (($linha['data']<(time()-1800)) || ($cod_usuario == $linha['cod_usuario'])){
 		Agenda::AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 0);
 	}else{
-		/* EstÃ¡ em ediÃ§Ã£o... */
+		/* Esta em edicao... */
 		echo("          <script language=\"javascript\">\n");
 		echo("            window.open('em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&origem=ver_linha','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
 		echo("            window.location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."';\n");
@@ -380,7 +380,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   $caminho="agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario;
 
   echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
-  /*34 - HistÃ³rico */
+  /*34 - Historico */
   			echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">".Linguas::RetornaFraseDaLista($lista_frases, 34)."</span></li>\n");
   			if($origem == "ver_editar"){
   			/*34 - Ativar */
@@ -425,7 +425,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   					if($usr_formador)
   					{
         $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
-        // 106 - Renomear TÃ­tulo
+        // 106 - Renomear Ti�tulo
         $renomear="<span id=\"renomear_".$linha_item['cod_item']."\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
         /* 91 - Editar texto */
         $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".Linguas::RetornaFraseDaLista ($lista_frases, 91)."</span>";
@@ -434,13 +434,13 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   					}
   				}
   			}
-  			//else = item nÃ£o estÃ¡ sendo editado
+  			//else = item nao esta sendo editado
   			else
   			{
   				if($usr_formador)
   				{
   					$titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
-  					// 106 - Renomear TÃ­tulo
+  					// 106 - Renomear Ti�tulo
   					$renomear="<span id=\"renomear_".$linha_item['cod_item']."\">".Linguas::RetornaFraseDaLista ($lista_frases, 106)."</span>";
   					/* 91 - Editar texto */
   					$editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">".Linguas::RetornaFraseDaLista ($lista_frases, 91)."</span>";
@@ -461,7 +461,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   					echo("                        <li>".$renomear."</li>\n");
   					echo("                        <li>".$editar."</li>\n");
   					echo("                        <li>".$limpar."</li>\n");
-  					/* SÃ³ pode apagar ou ativar agendas que estÃ£o na seÃ§Ã£o "Editar Agendas" ou que acabaram de ser criadas*/
+  					/* So pode apagar ou ativar agendas que estao na sessao "Editar Agendas" ou que acabaram de ser criadas*/
   					/*if($origem == "ver_editar")
   					 {*/
   					/*24 - Ativar*/

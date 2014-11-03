@@ -1,4 +1,11 @@
 <?php
+
+$ferramenta_login = 'login';
+$ferramenta_admin = 'admin';
+
+$view_login = '../../'.$ferramenta_login.'/views/';
+$view_admin = '../../'.$ferramenta_admin.'/views/';
+
 class AcessoPHP{
 	
 	static function VerificaLoginSenha ($login, $senha)
@@ -50,7 +57,7 @@ class AcessoPHP{
 	
 		if (!isset($_SESSION['login_usuario_s']))
 		{
-			require_once '../views/autenticacao_cadastro.php';
+			require_once $view_login.'autenticacao_cadastro.php';
 			AcessoSQL::Desconectar($sock);
 			exit;
 		}
@@ -66,14 +73,14 @@ class AcessoPHP{
 	
 			echo("    </script>\n");
 			/* Fim do JavaScript */
-			require_once '../views/menu_principal_tela_inicial.php';
+			require_once $view_admin.'menu_principal_tela_inicial.php';
 			echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 			/* 4 - Autoriza�o necess�ia para entrar no Ambiente de Administra�o do TelEduc. */
 			/* 23 - Voltar */
 			echo(Linguas::RetornaFrase($sock,4,-2)." <a href=\"#\" onclick=\"history.back(); return false;\">".Linguas::RetornaFrase($sock,23,-1)."</a>\n");
 			echo("</td>\n");
 			echo("</tr>\n");
-			require_once '../views/rodape_tela_inicial.php';
+			require_once $view_admin.'rodape_tela_inicial.php';
 			echo("</body>\n");
 			echo("</html>\n");
 			AcessoSQL::Desconectar($sock);
@@ -238,7 +245,29 @@ class AcessoPHP{
 						echo("Se voc�est�vendo essa mensagem, ocorreu um erro na codifica�o dos IFs");
 						exit;
 						return -1;
-					}
+	}
+	
+	/* *********************************************************************
+	 GeraSenha - Gera uma senha aleatoria para o usuario
+	Entrada: nenhuma
+	Saida: senha gerada de 8 caracteres
+	*/
+	static function GeraSenha()
+	{
+		//$caracteres="ABCDEFGHJLKMNPQRSTUVWXYZabcdefghjmnpqrstuvwxyz23456789";
+		$caracteres="abcdefghjkmnpqrstuvwxyz23456789";
+		list($usec, $sec) = explode(' ', microtime());
+		mt_srand((float) $sec + ((float) $usec * 100000));
+	
+		$senha="";
+	
+		for ($i=0;$i<8;$i++)
+		{
+		//$senha.=$caracteres[mt_rand(0,53)];
+		$senha.=$caracteres[mt_rand(0,30)];
+		}
+		return $senha;
+	}
 	
 }
 ?>

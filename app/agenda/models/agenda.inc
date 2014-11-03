@@ -718,6 +718,22 @@ class Agenda{
 			Arquivos::RemoveDiretorio($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item);
 	}
 	
+	/* *********************************************************************
+	 RetornaResHistoricoDoItem - Retorna todas as ocorr�ncias do historico de um item dado
+	Entrada: $sock - BASE DO CURSO
+	$cod_item - item
+	Saida: array []['cod_item']
+	[]['cod_usuario']
+	[]['data']
+	[]['acao']
+	*/
+	static function RetornaResHistoricoDoItem ($sock, $cod_item)
+	{
+		$consulta="select * from Agenda_itens_historicos where cod_item=".$cod_item." order by data desc,acao desc";
+		$res=AcessoSQL::Enviar($sock, $consulta);
+		return($res);
+	}
+	
 	
 	
 	

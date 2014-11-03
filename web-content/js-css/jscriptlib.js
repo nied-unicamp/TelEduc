@@ -17,12 +17,18 @@ var conteudo="";
 var input=0;
 var cancelarElemento=null;
 var cancelarTodos=0;
-var lista_frases;
 var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
-xajax_RetornaFraseDinamic('lista_frases');
-xajax_RetornaFraseGeralDinamic('lista_frases_geral');
+
+var lista_frases;
+	
+	lista_frases = $.post('../../../app/agenda/models/retornaFraseDinamic.php',
+		function(data){
+			var retorno = $.parseJSON(data);
+			return retorno;
+		});
+
 
 if (isNav)
 {
@@ -174,7 +180,7 @@ function WindowOpenVerURL(end)
 	    		    	var code = $.parseJSON(data);
 	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
 	    		    	$('#text_'+cod_item).html(code);
-	    		    	mostraFeedback('Texto alterado com sucesso', 'true');
+	    		    	mostraFeedback('Texto alterado com sucesso', 'true'); //TODO: texto harcorded
 	      });
 	      //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
 	    }
@@ -242,7 +248,13 @@ function WindowOpenVerURL(end)
 	      CancelaTodos();
 	      document.getElementById('text_'+id).innerHTML='';
 	
-	      xajax_EditarTexto(cod_curso, id, '', cod_usuario, lista_frases.msg93);
+	      $.post('../../../app/agenda/models/editartexto.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, novo_texto: ' '}, 
+	    		    function(data){
+	    		    	var code = $.parseJSON(data);
+	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
+	    		    	$('#text_'+cod_item).html(code);
+	    		    	mostraFeedback('Texto apagado com sucesso', 'true'); //TODO: texto harcorded
+	      });
 	    }
 	  }
 	  else{
@@ -582,7 +594,7 @@ function ApagarItem(){
   CancelaTodos();
 
   if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
-        window.location='../agenda/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem&origem='+origem;
+        window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem&origem='+origem;
   }
 }
 

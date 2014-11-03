@@ -1,9 +1,14 @@
 <?php
+$ferramenta_geral = 'geral';
+$ferramenta_administracao = 'administracao';
 
-$diretorio_models = "../models/";
-require_once $diretorio_models.'cursos.inc';
-require_once $diretorio_models.'administracao.inc';
-require_once $diretorio_models.'linguas.inc';
+$model_geral = '../../'.$ferramenta_geral.'/models/';
+$model_administracao = '../../'.$ferramenta_administracao.'/models/';
+$view_administracao = '../../'.$ferramenta_administracao.'/views/';
+
+require_once $model_geral.'cursos.inc';
+require_once $model_administracao.'administracao.inc';
+require_once $model_geral.'linguas.inc';
 
 $action = $_POST['action'];
 $cod_curso = $_POST['cod_curso'];
@@ -38,7 +43,7 @@ if($action == "alterarDadosCurso")
 		AcessoSQL::Desconectar($sock);
 		$confirma='true';
 	}
-	header("Location:".$diretorio_views."administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$action."&atualizacao=".$confirma."");
+	header("Location:".$view_administracao."administracao.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=".$cod_ferramenta."&acao=".$action."&atualizacao=".$confirma."");
 }
 
 ?>

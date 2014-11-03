@@ -13,11 +13,11 @@ $cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curs
 
 $acao = (isset($_GET['acao'])) ? $_GET['acao'] : $_POST['acao'];
 
-$input_files = isset($_POST['input_files']);
+$input_files = $_FILES['input_files']['name'];
 
-$origem = isset($_GET['origem']);
+$origem = (isset($_GET['origem'])) ? $_GET['origem'] : $_POST['origem'];
 
-$novo_titulo = isset($_POST['novo_titulo']);
+$novo_titulo = $_POST['novo_titulo'];
 //$novo_texto = $_POST['novo_texto'];
 $cod_usuario_global=AcessoPHP::VerificaAutenticacao($cod_curso);
 
@@ -124,6 +124,16 @@ if ($acao=='anexar'){
 		}else{
 			$atualizacao = "false";
 		}
+	
+		AcessoSQL::Desconectar($sock);
+		header("Location:".$view_agenda.$origem.".php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
+	}
+	
+	if ($acao=="apagarItem")
+	{
+		$cod_item = $_GET['cod_item'];
+		$atualizacao = "true";
+		Agenda::ApagarItem($sock,$cod_item,$cod_curso,$cod_usuario,$diretorio_arquivos,$diretorio_temp);
 	
 		AcessoSQL::Desconectar($sock);
 		header("Location:".$view_agenda.$origem.".php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);

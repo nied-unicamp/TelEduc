@@ -5,25 +5,6 @@ require_once 'email.inc';
 require_once 'acesso_sql.inc';
 require_once 'conversor_texto.inc';
 
-$erro1 = 'Login repetido';
-$erro2 = 'Email repetido';
-$erro3 = 'Caracteres invalidos';
-$texto = 'Sucesso';
-
-/*if (isset($_POST['acao'])){
-	$acao = $_POST['acao'];
-	switch($acao){
-		case 'CadastraDados':
-			//Inicial::CadastraDadosUsuario($erro1, $erro2, $erro3, $texto);
-			break;
-	}
-		
-}*/
-
-if (isset($_POST['login'])){ //TODO: ver porque não funciona o $_POST['acao'] ou $_POST['dados']
-	Inicial::CadastraDadosUsuario($erro1, $erro2, $erro3, $texto);
-}
-
 class Inicial{
 	static function CursoValido($sock, $cod_curso){
 		$query = "select cod_curso from Cursos where cod_curso = ".ConversorTexto::VerificaNumeroQuery($cod_curso);
@@ -47,13 +28,19 @@ class Inicial{
 	
 	static function RetornaListaDeCursosUsuario($sock){
 	
-	  echo("              <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">Meus Cursos<!--[if IE 7]><!--></a><!--<![endif]-->\n");
+	  $ferramenta_administracao = 'administracao';
+	  $ferramenta_login = 'login';
+	  
+	  $view_administracao = '../../'.$ferramenta_administracao.'/views/';
+	  $ctrl_login = '../../'.$ferramenta_login.'/controllers/';
+	  
+	  echo("              <li><a href=\"".$view_administracao."exibe_cursos.php\">Meus Cursos<!--[if IE 7]><!--></a><!--<![endif]-->\n");
 	  echo("                <!--[if lte IE 6]><table><tr><td><![endif]-->\n");
 	  echo("                <ul>\n");
 	
 	  $cursos = Inicial::RetornaNomeCodCursoUsuario($sock);
 	  foreach($cursos as $cod => $linha){
-	    echo("                  <li><a href=\"../index.php?cod_curso=".$linha['cod_curso']."\" title=\"".$linha['nome_curso']."\">".$linha['nome_curso']."</a></li>\n");
+	    echo("                  <li><a href=\"".$ctrl_login."index_curso.php?cod_curso=".$linha['cod_curso']."\" title=\"".$linha['nome_curso']."\">".$linha['nome_curso']."</a></li>\n");
 	
 	  }
 	  echo("                </ul>\n");

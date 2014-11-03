@@ -1,2 +1,3 @@
 <?php
-echo("PÃ¡gina: inscricao.php");
+echo("Página: inscricao.php");
+?>

@@ -1,18 +1,21 @@
 <?php
-$diretorio_models = "../models/";
-$diretorio_ctrlers = "../controllers/";
-$diretorio_views = "../views/";
-$diretorio_jscss = "../../../web-content/js-css/";
-$diretorio_imgs  = "../../web-content/imgs/";
+$ferramenta_geral = 'geral';
+$ferramenta_administracao = 'administracao';
 
-require_once $diretorio_models.'geral.inc';
-require_once $diretorio_models.'administracao.inc';
+$model_geral = '../../'.$ferramenta_geral.'/models/';
+$model_administracao = '../../'.$ferramenta_administracao.'/models/';
+$view_administracao = '../../'.$ferramenta_administracao.'/views/';
+$ctrl_administracao = '../../'.$ferramenta_administracao.'/controllers/';
+$diretorio_imgs = '../../../web-content/imgs/';
+
+require_once $model_geral.'geral.inc';
+require_once $model_administracao.'administracao.inc';
 
 $cod_ferramenta = 0;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 2;
 
-require_once $diretorio_views.'topo_tela.php';
+require_once $view_administracao.'topo_tela.php';
 
 DataJavaScript::GeraJSComparacaoDatas();
 DataJavaScript::GeraJSVerificacaoData();
@@ -153,7 +156,7 @@ echo("        startList();\n");
 echo("      }\n\n");
 echo("    </script>\n");
 
-require_once $diretorio_views.'menu_principal.php';
+require_once $view_administracao.'menu_principal.php';
 
 /* Fun�es javascript */
 
@@ -169,9 +172,9 @@ if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
 	echo("          <div id=\"mudarFonte\">\n");
-	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-	echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-	echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
+	echo("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"".$diretorio_imgs."btFont2.gif\"/></a>\n");
+	echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"".$diretorio_imgs."btFont3.gif\"/></a>\n");
 	echo("          </div>\n");
 
 	/* 23 - Voltar (gen) */
@@ -190,7 +193,7 @@ if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 
 /*Forms*/
 
-echo("    <form action =\"".$diretorio_ctrlers."acoes_administracao.php\" method=\"post\" name=\"altera_dados\" onSubmit='return(confirma());'>\n");
+echo("    <form action =\"".$ctrl_administracao."acoes_administracao.php\" method=\"post\" name=\"altera_dados\" onSubmit='return(confirma());'>\n");
 echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
 echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
 echo("      <input type=\"hidden\" name=\"action\" value='alterarDadosCurso'>\n");
@@ -213,9 +216,9 @@ else
 
 // 3 A's - Muda o Tamanho da fonte
 echo("      <div id=\"mudarFonte\">\n");
-echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
+echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"".$diretorio_imgs."btFont2.gif\"/></a>\n");
+echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"".$diretorio_imgs."btFont3.gif\"/></a>\n");
 echo("      </div>\n");
 
 /*Voltar*/
@@ -293,7 +296,7 @@ if ($ecoordenador)
 	echo("                              <li>\n");
 	echo("                                <div>\n");
 	echo("                                  <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"data_ini\" name=\"curso_inicio\" value=\"".Data::UnixTime2Data($linha['curso_inicio'])."\" />\n");
-	echo("                                   <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini'),'dd/mm/yyyy',this);\" />\n");
+	echo("                                   <img src=\"".$diretorio_imgs."ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_ini'),'dd/mm/yyyy',this);\" />\n");
 	echo("                                </div>\n");
 	echo("                              </li>\n");
 	echo("                            </ul>\n");
@@ -313,7 +316,7 @@ if ($ecoordenador)
 	echo("                              <li>\n");
 	echo("                                <div>\n");
 	echo("                                  <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"data_fim\" name=\"curso_fim\" value=\"".Data::UnixTime2Data($linha['curso_fim'])."\" />\n");
-	echo("                                   <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim'),'dd/mm/yyyy',this);\" />\n");
+	echo("                                   <img src=\"".$diretorio_imgs."ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('data_fim'),'dd/mm/yyyy',this);\" />\n");
 	echo("                                </div>\n");
 	echo("                              </li>\n");
 	echo("                            </ul>\n");
@@ -333,7 +336,7 @@ if ($ecoordenador)
 	echo("                              <li>\n");
 	echo("                                <div>\n");
 	echo("                                  <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"inscricao_inicio\" name=\"inscricao_inicio\" value=\"".Data::UnixTime2Data($linha['inscricao_inicio'])."\" />\n");
-	echo("                                   <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_inicio'),'dd/mm/yyyy',this);\" />\n");
+	echo("                                   <img src=\"".$diretorio_imgs."ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_inicio'),'dd/mm/yyyy',this);\" />\n");
 	echo("                                </div>\n");
 	echo("                              </li>\n");
 	echo("                            </ul>\n");
@@ -353,7 +356,7 @@ if ($ecoordenador)
 	echo("                              <li>\n");
 	echo("                                <div>\n");
 	echo("                                  <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"inscricao_fim\" name=\"inscricao_fim\" value=\"".Data::UnixTime2Data($linha['inscricao_fim'])."\" />\n");
-	echo("                                   <img src=\"../imgs/ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_fim'),'dd/mm/yyyy',this);\" />\n");
+	echo("                                   <img src=\"".$diretorio_imgs."ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById('inscricao_fim'),'dd/mm/yyyy',this);\" />\n");
 	echo("                                </div>\n");
 	echo("                              </li>\n");
 	echo("                            </ul>\n");
@@ -433,7 +436,7 @@ echo("          </table>\n");
 echo("        </form>\n");
 echo("        </td>\n");
 echo("      </tr>\n");
-require_once $diretorio_views.'tela2.php';
+require_once $view_administracao.'tela2.php';
 echo("  </body>\n");
 echo("</html>\n");
 AcessoSQL::Desconectar($sock);

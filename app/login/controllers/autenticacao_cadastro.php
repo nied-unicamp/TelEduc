@@ -30,16 +30,16 @@
 		//$raiz_www = RetornaRaizWWW($sock);
 		//$caminho 	= $raiz_www."/pagina_inicial";
 		
-		/* if (isset($_GET['cod_curso']) && ($_GET['cod_curso'] != ""))
+		if (isset($_GET['cod_curso']) && ($_GET['cod_curso'] != ""))
 		{
 			$cod_curso = $_GET['cod_curso'];
 		}
 		else if(isset($_POST['cod_curso']) && ($_POST['cod_curso'] != ""))
 		{
 			$cod_curso = $_POST['cod_curso'];
-		} */
+		}
 		
-		$cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
+		//$cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
 		
 		
 		$login = $_POST['login'];

@@ -3,11 +3,13 @@
 $ferramenta_geral = 'geral';
 $ferramenta_admin = 'admin';
 $ferramenta_login = 'login';
+$ferramenta_cadastro = 'cadastro';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $view_admin = '../../'.$ferramenta_admin.'/views/';
 $ctler_login = '../../'.$ferramenta_login.'/controllers/';
 $diretorio_imgs = '../../../web-content/imgs/';
+$view_cadastro = '../../'.$ferramenta_cadastro.'/views/';
 
 require_once $model_geral.'geral.inc';
 require_once $view_admin.'topo_tela_inicial.php';
@@ -171,11 +173,11 @@ echo("                    <td class=\"divide_meio\">\n");
 if($cod_curso != NULL){
 	// 90 - Se n�o tiver cadastro,
 	// 101 - clique aqui!
-	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href=\"cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
+	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
 }else{
 	// 90 - Se n�o tiver cadastro,
 	// 101 - clique aqui!
-	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href='cadastro.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
+	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href='".$view_cadastro."cadastro.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
 }
 // 67 - Se esqueceu seu login,
 // 101 - clique aqui!

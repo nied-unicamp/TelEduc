@@ -1,7 +1,10 @@
 <?php
-session_start();
 
-$diretorio_views = "../views/";
+$ferramenta_login = 'login';
+
+$view_login = "../../".$ferramenta_login.'/views/';
+
+session_start();
 
 //$_SESSION['logout_flag_s'] = 1;
 
@@ -17,5 +20,5 @@ session_destroy();
 
 //$_SESSION['logout_flag_s']=0;
 
-require_once $diretorio_views.'autenticacao_cadastro.php';/*?logout=1");*/
+header("Location: ".$view_login."autenticacao_cadastro.php?logout=1");
 exit;

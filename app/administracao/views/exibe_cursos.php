@@ -34,8 +34,8 @@ else if(!Usuarios::PreencheuDadosPessoais($sock))
 /* Caso o usuário seja o adm, manda para tela dos cursos em andamento. */
 else if($_SESSION['cod_usuario_global_s'] == -1)
 {
-	Desconectar($sock);
-	require_once $view_administracaos.'cursos_all.php?tipo_curso=A';
+	AcessoSQL::Desconectar($sock);
+	require_once $view_administracao.'cursos_all.php?tipo_curso=A';
 	exit;
 }
 
@@ -134,7 +134,7 @@ else
 
 		echo("                  <tr>\n");
 		echo("                    <td class=\"alLeft\">\n");
-		echo("                      <a href=\"".$diretorio_ctrlers."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
+		echo("                      <a href=\"".$ctler_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
 		echo("                    </td>\n");
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 
@@ -186,7 +186,7 @@ else
 
 		echo("                  <tr>\n");
 		echo("                    <td class=\"alLeft\">\n");
-		echo("                      <a href=\"".$diretorio_ctrlers."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
+		echo("                      <a href=\"".$ctler_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
 		echo("                    </td>\n");
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 

@@ -1,5 +1,10 @@
 <?php
-require_once $diretorio_models.'data.inc';
+$ferramenta_geral = 'geral';
+
+$model_geral = '../../'.$ferramenta_geral.'/models/';
+
+require_once $model_geral.'data.inc';
+
 class Administracao{
 	/* *********************************************************************
 	 RetornaDadosCurso - Atualiza o cronograma do curso
@@ -69,5 +74,5 @@ class Administracao{
 		$res=AcessoSQL::Enviar($sock,$query);
 		return $res;
 	}
-	
 }
+?>

@@ -1,6 +1,12 @@
  <?php 
- $diretorio_imgs = '../../../web-content/imgs/';
+$ferramenta_login = 'login';
+$ferramenta_administracao = 'administracao'; 
  
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
+$view_administracao = '../../'.$ferramenta_administracao.'/views/';
+$diretorio_imgs = '../../../web-content/imgs/';
+ 
+
  $sock=AcessoSQL::Conectar($cod_curso);
  
 
@@ -67,7 +73,7 @@
     	if ($tela_formador)
     	{
     
-    		$tela_hrefAluno="<li class=\"visoes\"><a href=\"../controllers/index_curso2.php?cod_curso=".$cod_curso."&amp;ativar_visao_aluno=sim\" >";
+    		$tela_hrefAluno="<li class=\"visoes\"><a href=\"".$ctrl_login."index_curso2.php?cod_curso=".$cod_curso."&amp;ativar_visao_aluno=sim\" >";
     
     		$tela_hrefFormador="<li class=\"visoes2\">";
     
@@ -80,7 +86,7 @@
     
     		$tela_hrefAluno="<li class=\"visoes2\">";
     
-    		$tela_hrefFormador="<li class=\"visoes\"><a href=\"../controllers/index_curso2.php?cod_curso=".$cod_curso."&amp;desativar_visao_aluno=sim\" >";
+    		$tela_hrefFormador="<li class=\"visoes\"><a href=\"".$ctrl_login."index_curso2.php?cod_curso=".$cod_curso."&amp;desativar_visao_aluno=sim\" >";
     
     		$tela_fechaHrefAluno = "";
     
@@ -113,7 +119,7 @@
     $tela_cod_ferr=-7;
     $tela_diretorio="configurar";
     echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
-    echo("              <li><a href=\"../".$tela_diretorio."/".$tela_diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$tela_cod_ferr."\">$tela_nome_ferramenta</a></li>\n");
+    echo("              <li><a href=\"".$view_administracao.$tela_diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$tela_cod_ferr."\">$tela_nome_ferramenta</a></li>\n");
     echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
     if ($tela_formador)
     {
@@ -128,7 +134,7 @@
     	$tela_diretorio="administracao";
     
     
-    	echo("              <li><a href=\"../".$tela_diretorio."/".$tela_diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$tela_cod_ferr."\">$tela_nome_ferramenta</a></li>\n");
+    	echo("              <li><a href=\"".$view_administracao.$tela_diretorio.".php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$tela_cod_ferr."\">$tela_nome_ferramenta</a></li>\n");
     	echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
     
     }
@@ -138,7 +144,7 @@
     echo("            ".Cursos::PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
     echo("            <li><img src=\"".$diretorio_imgs."icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
     //echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
-    echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\" onclick=javascript:FechandoNavegador();>".$tela_nome_ferramenta."</a></li>\n");
+    echo("            <li><a href=\"".$view_administracao."exibe_cursos.php\" onclick=javascript:FechandoNavegador();>".$tela_nome_ferramenta."</a></li>\n");
     
     echo("            </ul>\n");
     echo("          </div>\n");
@@ -229,3 +235,4 @@
     
 	
     }
+?>

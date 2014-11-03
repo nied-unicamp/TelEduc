@@ -316,7 +316,7 @@ class AcessoSQL {
 	{
 		//   global $cod_usuario;
 	
-		/*if ($cod_usuario_tmp=="") {
+		if ($cod_usuario_tmp=="") {
 			if (isset($_SESSION['cod_usuario']) && !empty($_SESSION['cod_usuario']))
 				$cod_usuario_tmp = $_SESSION['cod_usuario'];
 			else
@@ -327,9 +327,9 @@ class AcessoSQL {
 		$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
 	
 		if (!($res=mysqli_query($sock, $query)))
-		{*/
+		{
 			/* Criar tabela e repetir */
-			/*$query = "CREATE TABLE ".$tabela."_sequencia (cod int PRIMARY KEY AUTO_INCREMENT,cod_usuario INT,data INT)";
+			$query = "CREATE TABLE ".$tabela."_sequencia (cod int PRIMARY KEY AUTO_INCREMENT,cod_usuario INT,data INT)";
 			$res=AcessoSQL::Enviar($sock,$query);
 			$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
 			$res=AcessoSQL::Enviar($sock,$query);
@@ -348,13 +348,7 @@ class AcessoSQL {
 			$query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
 			$res=AcessoSQL::Enviar($sock,$query);
 			return ($linha[0]);
-		}*/
-		
-		$query = "select max(cod_item) from Agenda_itens";
-		$res = AcessoSQL::Enviar($sock, $query);
-		$linha = AcessoSQL::RetornaLinha($res);
-		
-		return ($linha[0]) + 1;
+		}
 	}
 	
 	/**************************************************************************

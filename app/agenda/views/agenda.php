@@ -21,7 +21,7 @@ AcessoSQL::Desconectar($sock);
 $cod_ferramenta=1;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda=1;
-$cod_curso = isset($_GET['cod_curso']);
+$cod_curso = $_GET['cod_curso'];
 
 require_once $view_administracao.'topo_tela.php';
 

@@ -1,14 +1,18 @@
 <?php
-$diretorio_models = "../models/";
-$diretorio_ctrlers = "../controllers/";
-$diretorio_views = "../views/";
+$ferramenta_geral = 'geral';
+$ferramenta_admin = 'admin';
+
 $diretorio_jscss = "../../../web-content/js-css/";
-$diretorio_imgs  = "../../web-content/imgs/";
+$diretorio_imgs  = "../../../web-content/imgs/";
+$view_admin = '../../'.$ferramenta_admin.'/views/';
+$model_geral = '../../'.$ferramenta_geral.'/models/';
+$model_admin = '../../'.$ferramenta_admin.'/models/';
+$view_agenda = '../../'.$ferramenta_agenda.'/views/';
 
-require_once $diretorio_models.'geral.inc';
-require_once $diretorio_models.'admin.inc';
+require_once $model_geral.'geral.inc';
+require_once $model_admin.'admin.inc';
 
-require_once $diretorio_views.'topo_tela_inicial.php';
+require_once $view_admin.'topo_tela_inicial.php';
 
 AcessoPHP::VerificaAutenticacaoAdministracao();
 
@@ -108,7 +112,7 @@ echo("<tr><td>\n");
 echo("<ul>\n");
 
 /* 3 - Cria��o de Curso */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,3),"\"criar_curso.php\"","");
+Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,3),"\"".$view_admin."criar_curso.php\"","");
 
 /* 4 - Extra��o de Curso */
 Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,4),"\"../extracao/extrair_curso.php\"","");
@@ -184,9 +188,8 @@ echo("</div>\n");
 echo("</td></tr></table>\n");
 echo("</td></tr>\n");
 
-require_once $diretorio_views.'rodape_tela_inicial.php';
+require_once $view_admin.'rodape_tela_inicial.php';
 echo("</body>\n");
 echo("</html>\n");
 AcessoSQL::Desconectar($sock);
-?>
 ?>

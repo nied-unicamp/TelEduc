@@ -490,7 +490,7 @@ class Usuarios{
 	static function RetornaUsuariosOnline($sock, $time_out) {
 		$agora=time();
 	
-		$query="select cod_usuario from Usuarios_online where (".ConversorTexto::VerificaNumeroQuery($agora)." - ultimo_acesso < ".ConversorTexto::VerificaNumeroQuery($time_out).") and logado = 1";
+		$query="select cod_usuario from Usuarios_online where (".$agora." - ultimo_acesso < ".$time_out.") and logado = 1";
 		$res=AcessoSQL::Enviar($sock,$query);
 		$linha=AcessoSQL::RetornaArrayLinhas($res);
 	
@@ -512,8 +512,8 @@ class Usuarios{
 		if ($cod_usuario == -2)
 			return ("Visitante");
 	
-		$cod_usuario = ConversorTexto::VerificaNumeroQuery($cod_usuario);
-		$cod_curso   = ConversorTexto::VerificaNumeroQuery($cod_curso);
+		$cod_usuario = $cod_usuario;
+		$cod_curso   = $cod_curso;
 		if ($cod_curso === '' || $cod_usuario === '') return '';
 	
 		$query  = "select U.nome ";
@@ -527,7 +527,7 @@ class Usuarios{
 		{
 			$cod_usuario_global = Usuarios::RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso);
 			$nome_usuario=Usuarios::AjustaNome($nome_usuario);
-			$query="update ".$dbnamebase.".Usuario set nome='".addslashes($nome_usuario)."' where cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario_global);
+			$query="update ".$dbnamebase.".Usuario set nome='".addslashes($nome_usuario)."' where cod_usuario=".$cod_usuario_global;
 			AcessoSQL::Enviar($sock,$query);
 		}
 	

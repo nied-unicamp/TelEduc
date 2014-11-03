@@ -5,6 +5,7 @@ $ferramenta_geral = 'geral';
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $diretorio_jscss = "../../../web-content/js-css/";
 
+
 require_once $model_geral.'geral.inc';
 require_once $model_geral.'menu.inc';
 require_once $model_geral.'inicial.inc';
@@ -123,3 +124,4 @@ Usuarios::MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
     }
 
   }
+?>

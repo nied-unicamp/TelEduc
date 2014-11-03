@@ -1,3 +1,3 @@
 <?php
-echo 'PÃ¡gina: administracao.php';
+echo 'Página: administracao.php';
 ?>

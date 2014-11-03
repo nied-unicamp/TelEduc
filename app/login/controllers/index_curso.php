@@ -16,7 +16,7 @@ if (empty($cod_curso)){
 	exit;
 }
 
-$visitante = isset($_GET['visitante']);
+$visitante = $_GET['visitante'];
 
 if ($visitante=="sim")
 	$_SESSION['visitante_s']="sim";

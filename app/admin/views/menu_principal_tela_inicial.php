@@ -2,20 +2,30 @@
 
 $ferramenta_geral = 'geral';
 $ferramenta_login = 'login';
+$ferramenta_admin = 'admin';
+$ferramenta_cadastro = 'cadastro';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $ctlr_login = '../../'.$ferramenta_login.'/controllers/';
 $view_login = '../../'.$ferramenta_login.'/views/';
-$diretorio_imgs  = "../../../web-content/imgs";
+$diretorio_imgs  = "../../../web-content/imgs/";
+$view_admin = '../../'.$ferramenta_admin.'/views/';
+$diretorio_imgs  = "../../../web-content/imgs/";
+$view_cadastro = '../../'.$ferramenta_cadastro.'/views/';
 
 require_once $model_geral.'geral.inc';
 //$_SESSION['cod_usuario_global_s'] = -1;
 
 $sock = AcessoSQL::Conectar("");
-/*AJUSTAR VARIAVEIS*/
-$cod_curso = $tipo_curso = "";
-/*AJUSTAR LINKS*/
-$pag_atual = $link = "";
+
+$cod_curso = $_GET["cod_curso"];
+$tipo_curso = $_GET["tipo_curso"];
+
+if(isset($pag_atual))
+	$link = "";
+else
+	$link = "../pagina_inicial/";
+
 echo("  </head>\n");
 echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\" onload=\"Iniciar();\" >\n");
 echo("    <a name=\"topo1\"></a>\n");
@@ -63,8 +73,8 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
 	* cod_texto=17: Administracao
 	* cod_texto=18: Area Restrita
 	* */
-	//if($_SESSION['cod_usuario_global_s'] == -1)
-		//echo("          <a href=\"../administracao/index.php\" title=\"".Linguas::RetornaFraseDaLista($lista_frases,17)." (".Linguas::RetornaFraseDaLista($lista_frases,18).")\"><img src=\"".$diretorio_imgs."btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
+	if($_SESSION['cod_usuario_global_s'] == -1)
+		echo("          <a href=\"".$view_admin."index_adm.php\" title=\"".Linguas::RetornaFraseDaLista($lista_frases,17)." (".Linguas::RetornaFraseDaLista($lista_frases,18).")\"><img src=\"".$diretorio_imgs."btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
   echo("          <h3>TelEduc</h3>\n");
   echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicitacao</span></div>\n");
   echo("        </td>\n");
@@ -80,10 +90,10 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
   if(empty($_SESSION['login_usuario_s']))
 	if($cod_curso != NULL){
 	//179 - Cadastre-se
-	echo("            <li><a href=\"".$link."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+	echo("            <li><a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
     }else{
     //179 - Cadastre-se
-    echo("            <li><a href=\"".$link."cadastro.php\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+    echo("            <li><a href=\"".$view_cadastro."cadastro.php\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
     }
     /*Se estiver logado e nao for o admtele, mostra links para o usuario acessar seus dados e seus cursos*/
     else if($_SESSION['cod_usuario_global_s'] != -1)
@@ -105,4 +115,5 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
   echo("          </ul>\n");
   echo("        </td>\n");
   echo("      </tr>\n");
-    echo("      <tr>\n");
+  echo("      <tr>\n");
+  ?>

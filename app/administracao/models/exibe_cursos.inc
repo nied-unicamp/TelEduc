@@ -83,6 +83,5 @@ class ExibeCursos{
 	
 		return array ($tuplas, $nCursos);
 	}
-	
-	
 }
+?>

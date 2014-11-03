@@ -41,8 +41,12 @@
   ========================================================== */
   
   /* Rodape */
+$ferramenta_admin = 'admin';
 
-$diretorio_imgs = '../../../web-content/imgs/';
+$model_admin = '../../'.$ferramenta_admin.'/models/';
+
+require_once $model_admin.'admin.inc';
+
 
 echo("      <tr>\n");
 echo("        <td valign=\"bottom\" height=\"80\">");
@@ -67,11 +71,9 @@ echo("      <tr>\n");
 echo("        <td valign=\"bottom\">");
 echo("        </td>\n");
 /* Versao Servidor Todos os direitos reservados...*/
-//$sock=Conectar("");
-//$versao = RetornaConfiguracao($sock,'versao');
-//$host = RetornaConfiguracao($sock,'host');
-$versao = "";
-$host = "";
+$sock=AcessoSQL::Conectar("");
+$versao = Admin::RetornaConfiguracao($sock,'versao');
+$host = Admin::RetornaConfiguracao($sock,'host');
 // 512 (geral) - Servidor
 // 513 (geral) - Versao
 echo("        <td valign=\"bottom\" class=\"rodape\" lang=\"pt\"> ".Linguas::RetornaFraseDaLista($lista_frases_geral, 513).": ".$versao." ".Linguas::RetornaFraseDaLista($lista_frases_geral, 512)." ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
@@ -81,3 +83,4 @@ echo("    </table>\n");
 
 echo("  </body>\n");
 echo("</html>\n");
+?>

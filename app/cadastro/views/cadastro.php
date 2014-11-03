@@ -1,13 +1,16 @@
 <?php
-$diretorio_models = "../models/";
-$diretorio_ctrlers = "../controllers/";
-$diretorio_views = "../views/";
-$diretorio_jscss = "../../../web-content/js-css/";
-$diretorio_imgs  = "../../web-content/imgs/";
+$ferramenta_geral = 'geral';
+$ferramenta_admin = 'admin';
+$ferramenta_cadastro = 'cadastro';
 
-require_once $diretorio_models.'geral.inc';
-require_once $diretorio_models.'inicial.inc';
-require_once $diretorio_views.'topo_tela_inicial.php';
+$model_geral = '../../'.$ferramenta_geral.'/models/';
+$view_geral = '../../'.$ferramenta_geral.'/views/';
+$view_admin = '../../'.$ferramenta_admin.'/views/';
+$model_cadastro = '../../'.$ferramenta_cadastro.'/models/';
+
+require_once $model_geral.'geral.inc';
+require_once $model_geral.'inicial.inc';
+require_once $view_admin.'topo_tela_inicial.php';
 
 $sock = AcessoSQL::Conectar("");
 $lista_escolaridade=Inicial::RetornaListaEscolaridade($sock);
@@ -212,16 +215,27 @@ echo("      }\n");
 //echo("    }\n\n");
 
 echo("	$(document).ready(function(){\n");
-echo("		$('#formulario').submit(\n");
-echo("			function (event) {\n");
+echo("		$('#formulario').submit(function(){\n");
 echo("				if(ValidaLogins() && ValidaSenhas() && verificar()){\n");
-echo("					$.post('".$diretorio_models."inicial.inc', $(\"#formulario\").serialize(),\n");
+echo("					$.post('".$model_cadastro."cadastra_dados_usuario.php', $('#formulario').serialize(),\n");
 echo("					function(data) {\n");
-echo("						var flag = $(data)[0].nodeName.toLowerCase();\n");
+echo("						var flag = $.parseJSON(data);\n");
 echo("						alert(flag);\n");
+//echo("							trataEnvio(flag);\n");
+//echo("							if (flag==1){\n");
+//echo("								$(\"#span_feedback\").html('".Linguas::RetornaFraseDaLista($lista_frases_configurar,74)."')\n");
+//echo("								$(\"#span_feedback\").addClass(\"feedback_error\")\n");
+//echo("								$(\"#feedback\").show();\n");
+//echo("							}\n");
+//echo("							else if (flag==2){\n");
+//echo("								alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
+//echo("							}\n");
+//echo("							else if (flag==3){\n");
+//echo("								alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
+//echo("							}\n");
+//echo("							alert('".Linguas::RetornaFraseDaLista($lista_frases,184)."');\n");
 echo("					});\n");
-echo("			}\n");
-echo("			return event.preventDefault();\n");
+echo("				}\n");
 echo("		});\n");
 echo("	});\n");
 
@@ -249,7 +263,7 @@ echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,7
 echo("          var imagem = document.getElementById('imagem');\n");
 //   echo("          var src = imagem.src;\n");
 //   echo("          imagem.src = '';\n");
-echo("          imagem.src = 'imagem.php?reload='+numReload;\n");
+echo("          imagem.src = '".$view_geral."imagem.php?reload='+numReload;\n");
 echo("          numReload++;");
 echo("          document.formulario.resultado.value='';\n");
 echo("          document.formulario.resultado.focus();\n");
@@ -282,7 +296,7 @@ echo("    }\n\n");
 
 echo("    </script> \n");
 
-include("./menu_principal_tela_inicial.php");
+require_once $view_admin.'menu_principal_tela_inicial.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
@@ -478,7 +492,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 //77 - Digite os cararacteres presentes na imagem ao lado.
 //78 - Digite os caracteres.
-echo("                            <td align=\"center\" style=\"border:none;text-align:right;\"><img id=\"imagem\" name=\"imagem\" src=\"imagem.php\" style=\"border: 1px dashed silver;\" /></td>\n");
+echo("                            <td align=\"center\" style=\"border:none;text-align:right;\"><img id=\"imagem\" name=\"imagem\" src=\"".$view_geral."imagem.php\" style=\"border: 1px dashed silver;\" /></td>\n");
 echo("                            <td align=\"center\" style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" name=\"resultado\" size=\"8\" /><br /><small>".Linguas::RetornaFraseDaLista($lista_frases_configurar,77)."</small>\n");
 echo("                            </td>\n");
@@ -499,7 +513,7 @@ echo("            </tr>\n");
 echo("          </table>\n");
 echo("        </td>\n");
 echo("      </tr>\n");
-include("./rodape_tela_inicial.php");
+require_once $view_admin.'rodape_tela_inicial.php';
 echo("  </body>\n");
 echo("</html>\n");
 
