@@ -20,6 +20,7 @@ class Admin{
 		echo("<li><a href=".$endereco."".$parametros." target=_top>".$nome."</a></li>\n");
 	}
 	
+<<<<<<< HEAD
 	/* **********************************************************************
 	 RetornaConfiguracao - Retorna o conteudo de um item da configuracao
 	Entrada: $sock - sock da base externa
@@ -253,3 +254,13 @@ class Admin{
 	}
 }
 ?>
+=======
+        
+        function test(){
+           
+            return false;
+        
+        }
+	
+}
+>>>>>>> da42724148168077c9998c77e52da716df3ad1a3
