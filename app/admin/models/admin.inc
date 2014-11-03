@@ -12,5 +12,11 @@ class Admin{
 		echo("<li><a href=".$endereco."".$parametros." target=_top>".$nome."</a></li>\n");
 	}
 	
+        
+        function test(){
+            
+            return true;
+        
+        }
 	
 }
