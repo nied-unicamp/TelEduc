@@ -15,7 +15,7 @@ class Admin{
         
         function test(){
            
-            return false;
+            return true;
         
         }
 	
