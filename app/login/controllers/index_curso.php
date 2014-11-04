@@ -15,13 +15,11 @@ if (empty($cod_curso)){
 	header("Location: ../../");
 	exit;
 }
-
-$visitante = isset($_GET['visitante']);
-
-if ($visitante=="sim")
+//Ver da onde vem isso
+/*if ($visitante=="sim")
 	$_SESSION['visitante_s']="sim";
 else
-	$_SESSION['visitante_s']="nao";
+	$_SESSION['visitante_s']="nao";*/
 
 $cod_usuario_global=AcessoPHP::VerificaAutenticacao($cod_curso);
 $sock = AcessoSQL::Conectar("");

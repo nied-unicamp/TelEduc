@@ -17,5 +17,5 @@ session_destroy();
 
 //$_SESSION['logout_flag_s']=0;
 
-require_once $diretorio_views.'autenticacao_cadastro.php';/*?logout=1");*/
+require_once $diretorio_views.'autenticação_cadastro.php';/*?logout=1");*/
 exit;
