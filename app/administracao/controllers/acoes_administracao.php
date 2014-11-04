@@ -1,5 +1,21 @@
 <?php
+/**
+* acoes_administacao.php
+*
+* Controller ações administrativas do modulo administração
+* 
+* Nestes blocos de código são feitas as alterações de um
+* dado curso que foi procurado a partir do cod_curso (id).
+* Primeiro são buscadas informações adicionais do curso na tabela Cursos a partir do cod_curso.
+* Em seguida é criada uma sessão com as frases relacionadas ao idioma escolhido e
+* por último os dados do curso são atualizados.
+* 
+*/
 
+
+/**
+ *  
+ */
 $diretorio_models = "../models/";
 require_once $diretorio_models.'cursos.inc';
 require_once $diretorio_models.'administracao.inc';
@@ -18,6 +34,7 @@ $tipo_inscricao = $_POST['tipo_inscricao'];
 $cod_lin = $_POST['cod_lin'];
 
 $sock = AcessoSQL::Conectar($cod_curso);
+
 
 if($action == "alterarDadosCurso")
 {

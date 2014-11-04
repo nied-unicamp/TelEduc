@@ -1,4 +1,13 @@
 <?php
+/**
+ * acoes_administacao.php
+ *
+ * View index_adm
+ */
+
+/**
+ * 
+ */
 $diretorio_models = "../models/";
 $diretorio_ctrlers = "../controllers/";
 $diretorio_views = "../views/";

@@ -27,7 +27,7 @@ echo("<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.mi
 
 echo("    <script type=\"text/javascript\">\n");
 
-//numero de reloads da imagem de autenticacao
+//numero de reloads da imagem de autenticação
 echo("    var numReload = 0;");
 //caminho utilizado no calendario
 echo("    var pathToImages = '".$diretorio_jscss."';\n");
@@ -261,7 +261,7 @@ echo("        {\n");
 //if($acao == "inscricao")
 	//echo("xajax_CadastrarLogar(xajax.getFormValues('formulario'),'".$cod_curso."','".$tipo_curso."');\n");
 //else
-	//echo("          window.location='autenticacao_cadastro.php?acao=emailConfirmacao&atualizacao=true';\n");
+	//echo("          window.location='autenticação_cadastro.php?acao=emailConfirmacao&atualizacao=true';\n");
 echo("        }\n"); 
 echo("      }\n\n");
 

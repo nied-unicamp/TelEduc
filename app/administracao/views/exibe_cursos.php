@@ -12,6 +12,8 @@ $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $view_login = '../../'.$ferramenta_login.'/views/';
 $ctler_login = '../../'.$ferramenta_login.'/controllers/';
 
+
+
 require_once $model_geral.'geral.inc';
 require_once $model_geral.'inicial.inc';
 require_once $model_administracao.'exibe_cursos.inc';
@@ -21,7 +23,7 @@ $sock=AcessoSQL::Conectar("");
 if (empty ($_SESSION['login_usuario_s']))
 {
 	AcessoSQL::Desconectar($sock);
-	require_once $view_login.'autenticacao_cadastro.php';
+	require_once $view_login.'autenticaÁ„o_cadastro.php';
 	exit;
 }
 /* Caso o usuÔøΩrio n√£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
@@ -35,13 +37,13 @@ else if(!Usuarios::PreencheuDadosPessoais($sock))
 else if($_SESSION['cod_usuario_global_s'] == -1)
 {
 	Desconectar($sock);
-	require_once $view_administracaos.'cursos_all.php?tipo_curso=A';
+	require_once $view_administracaos.'cursos_all.php';/*?tipo_curso=A*/
 	exit;
 }
 
 require_once $view_admin.'topo_tela_inicial.php';
 
-$lista_frases_autenticacao = Linguas::RetornaListaDeFrases($sock, 25);
+$lista_frases_autenticaÁ„o = Linguas::RetornaListaDeFrases($sock, 25);
 
 echo("    <script type=\"text/javascript\">\n\n");
 
@@ -52,7 +54,7 @@ echo("        startList();\n");
 echo("      }\n\n");
 
 echo("      function TestaNome(form){\n");
-/* Elimina os espa√ßos para verificar se o titulo nao eh formado por apenas espa√ßos */
+/* Elimina os espa√ßos para verificar se o titulo nao È formado por apenas espa√ßos */
 echo("        Campo_login = form.login.value;;\n");
 echo("        Campo_senha = form.senha.value;\n");
 echo("        while (Campo_login.search(\" \") != -1){\n");
@@ -60,7 +62,7 @@ echo("          Campo_login = Campo_login.replace(/ /, \"\");\n");
 echo("        }\n");
 echo("        if (Campo_login == ''){\n");
 /* 4 - Por favor preencha o campo 'Login'. */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticacao, 4)."');\n");
+echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticaÁ„o, 4)."');\n");
 echo("          document.formAutentica.login.focus();\n");
 echo("          return(false);\n");
 echo("        } else {\n");
@@ -69,7 +71,7 @@ echo("            Campo_senha = Campo_senha.replace(/ /, \"\");\n");
 echo("          }\n");
 echo("          if (Campo_senha == ''){\n");
 /* 5 - Por favor preencha o campo \"Senha\". */
-echo("            alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticacao, 5)."');\n");
+echo("            alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticaÁ„o, 5)."');\n");
 echo("          document.formAutentica.senha.focus();\n");
 echo("            return(false);\n");
 echo("          }\n");
@@ -113,7 +115,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos rec√©m aceitos ou cursos que ainda n√£o come√ßaram*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosNaoIniciados($sock, $_SESSION['cod_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosNaoIniciados($sock, $_SESSION['codigo_usuario_s']);
 
 if (($total_cursos)==0)
 {
@@ -165,7 +167,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos em andamento*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosEmAndamento($sock, $_SESSION['cod_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosEmAndamento($sock, $_SESSION['codigo_usuario_s']);
 
 if (($total_cursos)==0)
 {
@@ -217,7 +219,7 @@ echo("                  </tr>\n");
 
 /*Exibe cursos jah oferecidos*/
 
-list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosPassados($sock, $_SESSION['cod_usuario_s']);
+list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosPassados($sock, $_SESSION['codigo_usuario_s']);
 
 
 if (($total_cursos)==0)
