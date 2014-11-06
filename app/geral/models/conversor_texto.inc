@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe ConversorTexto2
+ * Classe ConversorTexto
  * @author     TelEduc
  * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
