@@ -6,8 +6,22 @@ $ferramenta_admin = 'admin';
 $view_login = '../../'.$ferramenta_login.'/views/';
 $view_admin = '../../'.$ferramenta_admin.'/views/';
 
+/**
+ * Classe AcessoPHP do modulo geral
+ * @author     TelEduc
+ * @copyright  20014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
 class AcessoPHP{
 	
+	/**
+	 * Metódo estático para verificar se as credências do usuário estão corretas buscando essas informações na tabela Usuário
+	 * Possue uma exceção para o login de usuário admtele ele é buscado na tabela Config
+	 *
+	 * @param string $login Login salvo na tabela Usuário ou Config
+	 * @param string $senha Senha relacionada ao login salvo na tabela Usuário ou Config
+	 * @return int Retorna o cod_usuario proveniente da tabela Usuário se o login e senha forem válidos,  0 se houver algum problema e -1 se login for administrador relacionado a tabela Config.
+	 */
 	static function VerificaLoginSenha ($login, $senha)
 	{
 		$senha_crypt = crypt($senha,"AA");
@@ -38,6 +52,12 @@ class AcessoPHP{
 		return (($num < 1) || ($senha_db != $senha_crypt) ? 0 : $cod_usuario);
 	}
 	
+	/**
+	 * Neste metódo estático é verificado se o Login da Tabela Usuário jah teve o email confirmado.
+	 *
+	 * @param string $login Login salvo na tabela Usuários
+	 * @return boolean Se validado True, caso contrario False
+	 */
 	static function VerificaConfirmacaoEmail ($login)
 	{
 		$sock = AcessoSQL::Conectar("");
@@ -51,6 +71,12 @@ class AcessoPHP{
 		return false;
 	}
 	
+	/**
+	 * O metódo estático VerificaAutenticacaoAdministracao se basea na sessão de login.
+	 * Caso a sessão nao exista o usuario será redirecionado para a tela de login.
+	 * Caso a sessão exista, mas não seja do administrador ele é  enviado para a tela inicial.
+	 * Caso a sessão exista e seja administrador nao acontecera nada.
+	 */
 	static function VerificaAutenticacaoAdministracao()
 	{
 		$sock=AcessoSQL::Conectar("");
@@ -90,6 +116,13 @@ class AcessoPHP{
 		AcessoSQL::Desconectar($sock);
 	}
 	
+	/**
+	 * Metódo estático que verefica a autenticação do usuario baseando-se
+	 * no cod_curso da tabela Cursos
+	 *
+	 * @param int $cod_curso Número de identificação primaria do usuario da tabela Cursos
+	 * @return int -1 Administrador (Formador), -2 Visitante, -3 Acesso negado e caso seja maior que 0 é cod_usuario referente a tabela Usuario
+	 */
 	static function VerificaAutenticacao($cod_curso)
 	{
 	
@@ -268,6 +301,6 @@ class AcessoPHP{
 		}
 		return $senha;
 	}
-	
 }
+   
 ?>

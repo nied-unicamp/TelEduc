@@ -32,7 +32,7 @@ $feedbackObject->addAction("criarAgenda", 0, 97);
 
 AcessoSQL::Desconectar($sock);
 $sock = AcessoSQL::Conectar($cod_curso);
-/* Verifica se o usuario eh formador. */
+/* Verifica se o usuario é formador. */
 $usr_formador = Usuarios::EFormador($sock, $cod_curso, $cod_usuario);
 
 /* Funï¿½ï¿½es JavaScript */
@@ -87,7 +87,7 @@ echo("      function Iniciar()\n");
 echo("      {\n");
 
 echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
-$feedbackObject->returnFeedback(isset($_GET['acao']), isset($_GET['atualizacao']));
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("        startList();\n");
 echo("      }\n\n");
 
@@ -180,6 +180,7 @@ echo("                  <tr class=\"head\">\n");
 /*18 - Titulo */
 echo("                    <td class=\"alLeft\">".Linguas::RetornaFraseDaLista($lista_frases,18)."</td>\n");
 echo("                  </tr>\n");
+
 /* Conteudo */
 
 $linha_item=Agenda::RetornaAgendaAtiva($sock);
@@ -187,7 +188,7 @@ $linha_item=Agenda::RetornaAgendaAtiva($sock);
 if (isset($linha_item['cod_item']))
 {
 	if($usr_formador)
-		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
+		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
 	else
 		$titulo=$linha_item['titulo'];
 

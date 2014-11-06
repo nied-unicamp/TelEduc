@@ -51,9 +51,9 @@ Usuarios::VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
 
 $tela_formador      = Usuarios::EFormador($sock, $cod_curso, $cod_usuario);
 $tela_formadormesmo = Usuarios::EFormadorMesmo($sock, $cod_curso, $cod_usuario);
-// booleano, indica se usuario eh colaborador
+// booleano, indica se usuario é colaborador
 $tela_colaborador   = Usuarios::EColaborador($sock, $cod_curso, $cod_usuario);
-// booleano, indica se usuario eh visitante
+// booleano, indica se usuario é visitante
 $tela_visitante     = Usuarios::EVisitante($sock, $cod_curso, $cod_usuario);
 
 $SalvarEmArquivo = (!isset($SalvarEmArquivo) || $SalvarEmArquivo != 1) ? 0 : 1;

@@ -1,6 +1,19 @@
 <?php
+
+/**
+ * Classe Model do modulo Administração
+ * @author     TelEduc
+ * @copyright  2014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
 class ExibeCursos{
-	
+	/**
+	 * Este metódo retorna os cursos que ainda não foram iniciados baseado no usuário.
+	 *
+	 * @param mysqli_connect $sock	Instância de conexão do mysql
+	 * @param int $cod_usuario Id com o código do usuário a ser consultado
+	 * @return Array Retorna array indexado por números e com os cursos não iniciados.
+	 */
 	static function RetornaCursosNaoIniciados($sock,$cod_usuario)
 	{
 		$query  = "SELECT CUR.cod_curso, CUR.nome_curso, USUC.tipo_usuario ";
@@ -20,6 +33,13 @@ class ExibeCursos{
 		return array ($tuplas, $nCursos);
 	}
 	
+	/**
+	 * Rertorna quais cursos o usuário tem em andamento baseado no seu id.
+	 *
+	 * @param mysqli_connect $sock	Instância de conexão do mysql
+	 * @param int $cod_usuario Id com o código do usuário a ser consultado
+	 * @return Array Retorna array indexado por números e com os cursos  iniciados
+	 */
 	static function RetornaCursosEmAndamento($sock,$cod_usuario)
 	{
 		/*
@@ -51,6 +71,13 @@ class ExibeCursos{
 		return array ($tuplas, $nCursos);
 	}
 	
+	/**
+	 * Rertorna quais cursos o usuário já fez baseado no seu id.
+	 *
+	 * @param mysqli_connect $sock	Instância de conexão do mysql
+	 * @param int $cod_usuario Id com o código do usuário a ser consultado
+	 * @return Array Retorna array indexado por números e com os cursos já finalizados
+	 */
 	static function RetornaCursosPassados($sock,$cod_usuario)
 	{
 		$hoje=time();

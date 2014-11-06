@@ -1,4 +1,9 @@
 <?php
+/**
+ * acoes_administacao.php
+ *
+ * View index_adm
+ */
 $ferramenta_geral = 'geral';
 $ferramenta_admin = 'admin';
 

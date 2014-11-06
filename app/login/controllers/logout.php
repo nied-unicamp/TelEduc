@@ -20,5 +20,7 @@ session_destroy();
 
 //$_SESSION['logout_flag_s']=0;
 
+
 header("Location: ".$view_login."autenticacao_cadastro.php?logout=1");
+
 exit;

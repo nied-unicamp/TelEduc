@@ -33,7 +33,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
 
   echo("  </head>\n");
 
-  /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo serao ocultados */
+  /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo seráo ocultados */
   if($SalvarEmArquivo){
 
     echo("  <body>\n");

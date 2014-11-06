@@ -1,39 +1,81 @@
 <?php
 
-class FeedbackObject{
+/**
+ * Classe FeedbackObject
+ * 
+ * Auxiliar ao Ajax, javascript.
+ * 
+ * @author     TelEduc
+ * @copyright  2014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
+class FeedbackObject {
 
-  var $actions; //acoes possiveis
-  var $listOfSentences;
-
-  function FeedbackObject($theListOfSentences){
-    $this->actions = array();
-    $this->listOfSentences = $theListOfSentences;
-  }
-
-  function addAction($newAction, $caseTrue, $caseFalse){
-    if((!isset($newAction)) || (!strcmp($newAction, ''))) return false;
-    $this->action[$newAction] = array( 0 => $caseFalse, 1 => $caseTrue);
-    return true;
-  }
-
-  function returnFeedback($theAction, $theCase){
-    if(!isset($this->action[$theAction]) || !$this->action[$theAction]) return false;
-
-    if(!strcmp($theCase, 'true')){
-      if(is_integer($this->action[$theAction][1])){
-        echo("        mostraFeedback('".htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][1]))."', 'true');\n");
-      }else{
-        echo("        mostraFeedback('".htmlentities($this->action[$theAction][1])."', 'true');\n");
-      }
-    }else if(!strcmp($theCase, 'false')){
-      if(is_integer($this->action[$theAction][0])){
-        echo("        mostraFeedback('".htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][0]))."', 'false');\n");
-      }else{
-        echo("        mostraFeedback('".htmlentities($this->action[$theAction][0])."', 'false');\n");
-      }
+    /**
+     * Ações possíveis
+     * 
+     * @var array 
+     */
+    var $actions; 
+    
+    /**
+     *
+     * @var array 
+     */
+    var $listOfSentences;
+    
+    /**
+     * Construtor da Classe 
+     * 
+     * @param array $theListOfSentences 
+     */
+    function FeedbackObject($theListOfSentences) {
+        $this->actions = array();
+        $this->listOfSentences = $theListOfSentences;
     }
-    return true;
-  }
+    
+   /**
+    * Cria ação dos objetos
+    * 
+    * @param string $newAction Ação a ser feita
+    * @param string $caseTrue Texto para caso a ação seja verdade
+    * @param type $caseFalse  Texto para caso a ação seja falso
+    * @return boolean Retorna True caso seja adicionada a ação, e false caso não seja possivel.
+    */
+    function addAction($newAction, $caseTrue, $caseFalse) {
+        if ((!isset($newAction)) || (!strcmp($newAction, '')))
+            return false;
+        $this->action[$newAction] = array(0 => $caseFalse, 1 => $caseTrue);
+        return true;
+    }
+    
+    /**
+     * Retorna função de Javascript para o Ajax.
+     * 
+     * @param string $theAction Ação escolhida 
+     * @param string $theCase Nesta string terá o valor true ou false, relacionada a ação
+     * @return boolean Caso seja possivel exibir o conteúdo da ação  retorna true, caso contrário false. 
+     */
+    function returnFeedback($theAction, $theCase) {
+        if (!isset($this->action[$theAction]) || !$this->action[$theAction])
+            return false;
+
+        if (!strcmp($theCase, 'true')) {
+            if (is_integer($this->action[$theAction][1])) {
+                echo("        mostraFeedback('" . htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][1])) . "', 'true');\n");
+            } else {
+                echo("        mostraFeedback('" . htmlentities($this->action[$theAction][1]) . "', 'true');\n");
+            }
+        } else if (!strcmp($theCase, 'false')) {
+            if (is_integer($this->action[$theAction][0])) {
+                echo("        mostraFeedback('" . htmlentities(RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][0])) . "', 'false');\n");
+            } else {
+                echo("        mostraFeedback('" . htmlentities($this->action[$theAction][0]) . "', 'false');\n");
+            }
+        }
+        return true;
+    }
+
 }
 
 ?>

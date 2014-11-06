@@ -1,4 +1,20 @@
 <?php
+
+/**
+ * acoes_linha.php
+ *
+ * Controller acoes da linha da agenda do modulo agenda
+ *
+ * Neste arquivo são recebidas algumas varias por post, incluindo titulo do compromisso da agenda.
+ * Em seguida é obtido o usuário logado no sistema a partir da sessão, depois as frases do idioma do usuario. 
+ * Logo apos obtem os  diretorios base  de cada item (item é um nome de variavel usado dentro do sistema. Ex.: CaminhoCurso) na tabela Diretorios.
+ * E cria-se uma nova agenda. 
+ * 
+ */
+/**
+ *
+ */
+
 $ferramenta_geral = 'geral';
 $ferramenta_agenda = 'agenda';
 
@@ -27,6 +43,7 @@ $lista_frases=Linguas::RetornaListaDeFrases($sock,1);
 
 $diretorio_arquivos=Agenda::RetornaDiretorio($sock,'Arquivos');
 $diretorio_temp=Agenda::RetornaDiretorio($sock,'ArquivosWeb');
+
 AcessoSQL::Desconectar($sock);
 
 $sock=AcessoSQL::Conectar($cod_curso);
@@ -34,6 +51,9 @@ $sock=AcessoSQL::Conectar($cod_curso);
 $cod_usuario = Usuarios::RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso);
 
 Usuarios::VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario);
+
+$dir_name = "agenda";
+$dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
 /* aÃ§Ã£o = Criar Nova Agenda - origem = ver_editar.php */
 if ($acao=="criarAgenda")
@@ -44,14 +64,12 @@ if ($acao=="criarAgenda")
 	$cod_item = Agenda::IniciaCriacao($sock, $cod_usuario, $cod_curso, $diretorio_temp, $novo_titulo, $novo_texto);
 	if($cod_item == -1) //erro na criacao! algum parametro da func. esta vazio
 	{
+		echo "chegou aqui\n";
 		$atualizacao="false";
 		AcessoSQL::Desconectar($sock);
 		header("Location:".$view_agenda."agenda.php?cod_curso=".$cod_curso."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
 		exit();
 	}
-	
-	$dir_name = "agenda";
-	$dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name,$cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
 
 	AcessoSQL::Desconectar($sock);
 	header("Location:".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);

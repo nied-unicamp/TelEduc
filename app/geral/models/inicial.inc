@@ -5,7 +5,19 @@ require_once 'email.inc';
 require_once 'acesso_sql.inc';
 require_once 'conversor_texto.inc';
 
+/**
+ * Classe Inicial do modulo geral
+ * @author     TelEduc
+ * @copyright  2014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
 class Inicial{
+	/**
+	 *
+	 * @param mysqli_connect $sock	instância de conexão do mysql
+	 * @param int $cod_curso Número de identificação primaria do curso da tabela Cursos
+	 * @return Array Um Array unidimensional com informações a respeito do curso.
+	 */
 	static function CursoValido($sock, $cod_curso){
 		$query = "select cod_curso from Cursos where cod_curso = ".ConversorTexto::VerificaNumeroQuery($cod_curso);
 		$res = AcessoSQL::Enviar($sock,$query);
@@ -26,6 +38,13 @@ class Inicial{
 	[]['acesso_visitante'] - 'A' se aceita, 'N' se nï¿½o
 	*/
 	
+	/**
+	 * Retorna os cursos do qual um usuário participa/participou baseado em seu e-mail ou login
+	 *
+	 * O retorno é um echo
+	 *
+	 * @param mysqli_connect $sock	instância de conexão do mysql
+	 */
 	static function RetornaListaDeCursosUsuario($sock){
 	
 	  $ferramenta_administracao = 'administracao';
@@ -48,11 +67,12 @@ class Inicial{
 	  echo("              </li>\n");
 	}
 	
-	/********************************************************************
-	 Funï¿½ao RetornaNomeCodCursoUsuario - Retorna os codigos e os nomes dos cursos dos quais o usuario tem acesso
-	Entradas: $sock - sock de conexao a base geral
-	Saida:    array contendo os codigos e os nomes dos cursos que o usuario tem acesso
-	********************************************************************/
+	/**
+     * Retorna os codigos e os nomes dos cursos dos quais o usuario tem acesso
+     * 
+     * @param mysqli_connect $sock	instância de conexão do mysql
+     * @return array Retorna matriz bidimensional indexada por numeros no seu primeiro nivel.
+     */
 	static function RetornaNomeCodCursoUsuario($sock)
 	{
 		// 2Session
@@ -76,6 +96,13 @@ class Inicial{
 	[]['cod_escolaridade']
 	[]['cod_texto_escolaridade']
 	*/
+	/**
+	 * Verifica se existe a orientacao na tabela Perfil_Orientacao
+	 * Saida:   array com []['cod_escolaridade'][]['cod_texto_escolaridade']
+	 *
+	 *  @param mysqli_connect $sock	instância de conexão do mysql EXTERNA
+	 *  @return array Retorna matriz bidimensional indexada por numeros no seu primeiro nivel.
+	 */
 	static function RetornaListaEscolaridade($sock)
 	{
 		$query="select * from Escolaridade order by cod_escolaridade";
@@ -89,6 +116,18 @@ class Inicial{
 	Entradas:  $dadosForm - dados do formulario de cadastro
 	Saida:    reposta XML
 	********************************************************************/
+	/**
+	 * Cadastra usuario, dinamicamente
+	 *
+	 * Metódo precisa ser reformulado.
+	 *
+	 * @param Array $dadosForm dados do formulario de cadastro um array (Nao utilizada efetivamente no metodo)
+	 * @param string $erro1 Texto com um erro ocorrido 1 (Pode ser passada vazia)
+	 * @param string $erro2 Texto com um erro ocorrido 1 (Pode ser passada vazia)
+	 * @param string $erro3 Texto com um erro ocorrido 1 (Pode ser passada vazia)
+	 * @param string $texto Será exibida como Echo no metodo, mais utilizado por funcoes ajax
+	 * @return xml Reposta XML
+	 */
 	static function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
 	{
 	
@@ -202,6 +241,16 @@ class Inicial{
 	Entradas:  $dadosForm - dados do formulario de cadastro
 	Saida:    reposta XML
 	********************************************************************/
+	/**
+	 * Cadastra usuario, dinamicamente
+	 *
+	 * @param string $erro1 Texto com um erro ocorrido 1 (Nao utlizado ono metodo)
+	 * @param string $erro2 Texto com um erro ocorrido 1 (Pode ser passada vazia)
+	 * @param string $erro3 Texto com um erro ocorrido 1 (Pode ser passada vazia)
+	 * @param string $texto Será exibida como Echo no metodo, mais utilizado por funcoes ajax
+	 * @return xml Reposta XML
+	
+	 */
 	static function CadastraDadosUsuario($erro1,$erro2,$erro3,$texto)
 	{
 		/* $dadosForm = $_POST['dados'];
@@ -323,6 +372,13 @@ class Inicial{
 	Saida:   true - se o login existe
 	false - caso contrario
 	*/
+	/**
+	 * Verifica se o login escolhido pelo usuario já existe
+	 *
+	 * @param mysqli_connect $sock Instancia de conexão do mysql
+	 * @param String $novo_login Uma string com um novo login
+	 * @return boolean True se o login já existir e False se o login nao existir.
+	 */
 	static function LoginRepetido($sock, $novo_login)
 	{
 		$query="select login from Usuario where login='".ConversorTexto::VerificaStringQuery($novo_login)."'";
@@ -341,6 +397,13 @@ class Inicial{
 	Saida:   true - se o email existe
 	false - caso contrario
 	*/
+	/**
+	 * Verifica se o e-mail escolhido pelo usuario já está na base de dados
+	 *
+	 * @param mysqli_connect $sock Instancia de conexão do mysql
+	 * @param string $email email que o usuario escolheu
+	 * @return boolean True se o email já estiver cadastro e False caso contrário.
+	 */
 	static function EmailRepetido($sock, $email)
 	{
 		$query="select email from Usuario where email='".ConversorTexto::VerificaStringQuery($email)."'";
@@ -357,6 +420,12 @@ class Inicial{
 	Entrada:  $digitos - tamanho da sequencia gerada
 	Saida:    String com a sequencia gerada
 	********************************************************************/
+	/**
+	 * Gera uma sequencia aleatoria de caracteres
+	 *
+	 * @param int  $digitos Tamanho da sequencia gerada
+	 * @return string String com a sequencia gerada
+	 */
 	static function GeraChave($digitos) {
 		$chave = '';
 		$caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -373,6 +442,12 @@ class Inicial{
 	$item - item a ser buscado
 	Saida: conteï¿½do
 		*/
+	/**
+	 *
+	 * @param @param mysqli_connect $sock Instancia de conexão do mysql
+	 * @param string $item Item é o nome uma variavel salva no banco na Tabela Config.
+	 * @return string Conteúdo da Variável
+	 */
 	static function RetornaConfiguracao($sock,$item)
 	{
 		$query="select valor from Config where item='".ConversorTexto::VerificaStringQuery($item)."'";
@@ -381,6 +456,13 @@ class Inicial{
 		return ($linha['valor']);
 	}
 	
+	/**
+	 *
+	 * @param Array $form Um array retornado por um formulario HTML por get ou post
+	 * @param @param int $cod_curso Numero de identificação primaria do curso da tabela Cursos
+	 * @param type $tipo_curso Nao usado atualmente pelo metodo.
+	 * @return xajaxResponse Xml para ser usado pelo Ajax
+	 */
 	static function CadastrarLogar($form,$cod_curso,$tipo_curso)
 	{
 		$objResponse = new xajaxResponse();
@@ -414,15 +496,6 @@ class Inicial{
 	
 		return $objResponse;
 	}
-	
-	static function FuncaodeTeste(){
-		
-		$sock = AcessoSQL::Conectar("");
-		
-		$dados = $_POST['dados'];
-		$nome = $dados['nome'];
-		$query = "insert into Teste values (1, '".$nome."')";
-		$res = AcessoSQL::Enviar($sock, $query);
-	}
 }
+
 ?>

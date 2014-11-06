@@ -7,20 +7,27 @@ $model_geral = '../../'.$ferramenta_geral.'/models/';
 require_once $model_geral.'teleduc.inc';
 require_once $model_geral.'sessao.inc';
 
+/**
+ * Classe Model do Modulo admin
+ * @author     TelEduc
+ * @copyright  2014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
 class Admin{
-	/* **********************************************************************
-	 PreparaBoldLink - Monta um link na pï¿½gina (completa com RetornaSessionID()
-	   Entrada: $nome - nome do link
-	 		$endereco - Endereco a ser chamado
-	 		$parametros - parametros a serem passados
-	   Saida: Monta o a href
-	 		*/
+	/**
+	 * Este metodo estático retorna um link para ser usado dentro de uma lista, dentro de tags UL. Ou seja, ele deve ser chamado dentro de um UL, pois retorna um <li> com um <a>.
+	 * 
+	 * @param string $nome          Texto que será usada como texto para o link
+	 * @param string $endereco	Caminho relativo Ex.:"\"../extracao/extrair_curso.php\""
+	 * @param string $parametros	Recebe parâmetros extras, opcional Ex.: ?id=10&app=10
+	 * @return Exibi link em lista baseado nos paramentos
+	 * @access public
+	 */
 	static function PreparaBoldLink($nome,$endereco,$parametros)
 	{
 		echo("<li><a href=".$endereco."".$parametros." target=_top>".$nome."</a></li>\n");
 	}
 	
-<<<<<<< HEAD
 	/* **********************************************************************
 	 RetornaConfiguracao - Retorna o conteudo de um item da configuracao
 	Entrada: $sock - sock da base externa
@@ -254,13 +261,3 @@ class Admin{
 	}
 }
 ?>
-=======
-        
-        function test(){
-           
-            return false;
-        
-        }
-	
-}
->>>>>>> da42724148168077c9998c77e52da716df3ad1a3

@@ -108,7 +108,7 @@ echo("                    ".Linguas::RetornaFraseDaLista($lista_frases,165)."\n"
 /*
  * === Formulario de Autenticacao (login) ===
 */
-echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctler_login."autenticacao_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
+echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctler_login."autenticação_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
 echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
 //echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
 echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"\" />\n");
@@ -164,7 +164,7 @@ echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senh
 
 // 92 - Se seu cadastro ainda nao foi autenticado, siga o link:
 // 93 - Autenticar meu login!
-echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
+echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticação.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
 */
 
 echo("                    </td>\n");
@@ -189,7 +189,7 @@ echo ("                    ".Linguas::RetornaFrase($sock, 24, -2)." <a href='esq
 
 // 92 - Se nï¿½o recebeu seu email de confirmaï¿½ï¿½o,
 // 101 - clique aqui!
-echo ("                    ".Linguas::RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br/>");
+echo ("                    ".Linguas::RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticação.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br/>");
 
 echo("                    </td>\n");
 

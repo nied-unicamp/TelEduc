@@ -5,24 +5,23 @@ $model_geral = '../../'.$ferramenta_geral.'/models/';
 
 require_once $model_geral.'data.inc';
 
+/**
+ * Classe Model do modulo Administração
+ * @author     TelEduc
+ * @copyright  2014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
+
 class Administracao{
-	/* *********************************************************************
-	 RetornaDadosCurso - Atualiza o cronograma do curso
-	Entrada: $sock - BASE DO CURSO ou BASE EXTERNA
-	$cod_curso= codigo do curso,
-	Saida:   array ['cod_curso'] = codigo do curso
-	['nome_curso'] = nome do curso
-	['inscricao_inicio'] = timestamp do dia de inicio da inscricao
-	['inscricao_fim'] = timestamp do dia de fim da inscricao
-	['curso_inicio'] = timestamp do dia de inicio do curso
-	['curso_fim'] = timestamp do dia de fim do curso
-	['informacoes'] = informacoes sobre o curso
-	['publico_alvo'] = Publico esperado
-	['tipo_inscricao'] = tipo de inscricao
-	['acesso_visitante'] = 'A' - Permite acesso de visitante
-	'N' - Nï¿½o permite
-	['cod_lingua'] = codigo da lingua padrï¿½o do curso (atual)
-	*/
+	/**
+     * Este método estático faz uma consulta ao banco a tabela Cursos e retorna um array 
+     * indexado pelos nomes das colunas.
+     *
+     * @param mysqli_connect $sock	Instância de conexão do mysql 
+     * @param int $cod_curso Id com o código do curso a ser consultado 
+     * @return array Retorna um array indexado pelos nomes das colunas da tabela Cursos
+     * @access public
+     */
 	static function RetornaDadosCursoAdm($sock,$cod_curso)
 	{
 		$query ="select * from Cursos where cod_curso=".$cod_curso;
@@ -30,24 +29,25 @@ class Administracao{
 		return (AcessoSQL::RetornaLinha($res));
 	}
 	
-	/* *********************************************************************
-	 CadastraDadosCurso - Atualiza o cronograma do curso
-	Entrada: $sock - BASE DO CURSO ou BASE EXTERNA
-	$cod_curso= codigo do curso,
-	$nome_curso = nome do curso
-	$inscricao_inicio = timestamp do dia de inicio da inscricao
-	$inscricao_fim = timestamp do dia de fim da inscricao
-	$curso_inicio = timestamp do dia de inicio do curso
-	$curso_fim = timestamp do dia de fim do curso
-	$informacoes = informacoes sobre o curso
-	$publico_alvo = Publico esperado
-	$tipo_inscricao = tipo de inscricao
-	$acesso_visitante = 'A' - Permite acesso de visitante
-	'N' - Nï¿½o permite
-	$cod_lingua - Codigo da lingua padrï¿½o a ser utilizada no curso
-	$horario - hora atual (em que se estï¿½ realizando a atualizaï¿½ï¿½o)
-	Saida: true se tudo ok.
-	*/
+	/**
+     * Este método estático atualiza a tabela Cursos e 
+     * retorna true se a operacao for bem sucedida 
+     *
+     * @param mysqli_connect sock Instância de conexão do mysql
+     * @param int $cod_curso Id com o código do curso a ser consultado
+     * @param string $nome_curso Nome do curso 
+     * @param string $inscricao_inicio Data de início da inscrição no formato dd/mm/yyyy ou mm/dd/yyyy
+     * @param string $curso_inicio Data do início do curso no formato dd/mm/yyyy ou mm/dd/yyyy 
+     * @param string $curso_fim Data do fim do curso no formato dd/mm/yyyy ou mm/dd/yyyy 
+     * @param string $informacoes Texto sobre informações adicionais
+     * @param string $publico_alvo Texto sobre publico alvo
+     * @param string $tipo_inscricao  Texto
+     * @param string $acesso_visitante Texto 
+     * @param int $cod_lingua Id relacionou da tabela de linguas
+     * @param string $horario Timestamp, funcao time() do php 
+     * @return boolean Se true operacao foi bem sucessidida
+     * @access public
+     */
 	static function CadastraDadosCurso($sock,$cod_curso,$nome_curso,$inscricao_inicio,$inscricao_fim,$curso_inicio,$curso_fim,$informacoes,$publico_alvo,$tipo_inscricao,$acesso_visitante,$cod_lingua,$horario)
 	{
 		if ($acesso_visitante!='A')

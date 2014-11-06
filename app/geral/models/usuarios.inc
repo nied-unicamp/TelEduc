@@ -1,7 +1,25 @@
 <?php
+
+/**
+ * 
+ */
 require_once "geral.inc";
+/**
+ * Classe Usuarios do modulo geral
+ * @author     TelEduc
+ * @copyright  20014 TelEduc
+ * @license    http://teleduc.org.br/
+ */
 class Usuarios{
 	
+	/**
+	 * Retorna código do usuário do curso baseado no codigo do usuário global do sistema
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario_global Usuario global - Número de identificação primaria do usuario
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 * @return int Codigo do usuario no curso
+	 */
 	static function RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso)
 	{
 		// 2Session
@@ -15,6 +33,12 @@ class Usuarios{
 		return ($cod_usuario);
 	}
 	
+	/**
+	 * Este metódo verifica se os dados do usuário foram preenchidos.
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @return boolean True se preencheu e False caso contrário
+	 */
 	static function PreencheuDadosPessoais($sock)
 	{
 		$query  = "select cod_usuario from Usuario ";
@@ -35,6 +59,15 @@ class Usuarios{
 			return false;
 	}
 	
+	/**
+	 * Lingua do usuário baseado nos parametros passados.
+	 *
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 * @return string Retorna string com a lingua do usuário
+	 */
 	static function RetornaLinguaUsuario($sock,$cod_usuario, $cod_curso)
 	{
 		//   global $cod_lingua_s;
@@ -70,6 +103,14 @@ class Usuarios{
 	Saida: Envia mensagem de acesso negado e interrompe a execuï¿½o, caso
 	aluno seja i ou r
 	*/
+	/**
+	 * Barra usuáros que ainda não foram aceitos ou que foram rejeitados de acessar a página
+	 * Exibi um echo.
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 */
 	static function VerificaAcessoAoCurso($sock,$cod_curso,$cod_usuario)
 	{
 		if($cod_usuario != "")
@@ -178,27 +219,29 @@ class Usuarios{
 		}
 	}
 	
-	/* *********************************************************************
-	 RetornaStatusUsuario - Retorna o status do Usuï¿½io
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	BASE DO CURSO
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	Saida: I - aluno invï¿½ido ou inexistente
-	i - Aluno inscrito
-	a - Aluno desligado
-	r - Aluno rejeitado
-	A - Aluno Aceito
-	f - Formador desligado
-	F - Formador
-	v - Visitante desligado
-	V - Visitante
-	z - Colaborador desligado
-	Z - Colaborador
-	OBS.: Esta funï¿½o retorna o status real do usuï¿½io.
-	Checar se nï¿½ ï¿½um formador querendo ter a visï¿½ do aluno com
-	$_SESSION['visao_aluno_s']==true
-	*/
+	/**
+	 * Retorna o status do Usuario
+	 * Saida:
+	 * I - aluno inválido ou inexistente
+	 * i - Aluno inscrito
+	 * a - Aluno desligado
+	 * r - Aluno rejeitado
+	 * A - Aluno Aceito
+	 * f - Formador desligado
+	 * F - Formador
+	 * v - Visitante desligado
+	 * V - Visitante
+	 * z - Colaborador desligado
+	 * Z - Colaborador
+	 * OBS.: Este metodo retorna o status real do usuário.
+	 * Checar se não há formador querendo ter a visão do aluno com
+	 * $_SESSION['visao_aluno_s']==true
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 * @return String  String baseada na descrição do metodo.
+	 */
 	static function RetornaStatusUsuario($sock,$cod_curso,$cod_usuario)
 	{
 		// 2Session
@@ -222,15 +265,16 @@ class Usuarios{
 			return ("I");
 		}
 	}
+
 	
-	/* *********************************************************************
-	 EFormador - Retorna true se usuï¿½io for formador ou se for administrador do ambiente
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	Saida: true se ï¿½formador e este nï¿½ esta com visao de aluno, false caso contrï¿½io
-	OBS.: O coordenador aparece tambï¿½ como formador
-	*/
+	/**
+	 * Retorna true se usuï¿½io for formador ou se for administrador do ambiente
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 * @return boolean True se é formador e este não está com visão de aluno, false caso contrário
+	 */
 	static function EFormador($sock,$cod_curso,$cod_usuario)
 	{
 		$sock =  AcessoSQL::Conectar($cod_curso);
@@ -251,15 +295,14 @@ class Usuarios{
 			return false;
 	}
 	
-	/* *********************************************************************
-	 EFormadorMesmo - Retorna true se usuï¿½io for formador ou se for administrador do ambiente
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	
-	Saida: true se ï¿½formador, false caso contrï¿½io
-	OBS.: O coordenador aparece tambï¿½ como formador
-	*/
+	/**
+     * Retorna true se usuário for formador ou se for administrador do ambiente
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     * @return boolean True se é formador, false caso contrário
+     */
 	static function EFormadorMesmo($sock,$cod_curso,$cod_usuario)
 	{
 		$estado=Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
@@ -273,13 +316,14 @@ class Usuarios{
 			return false;
 	}
 	
-	/* *********************************************************************
-	 EColaborador - Retorna se o usuario eh colaborador
-	entrada: $sock - sock de conexao
-	$cod_usuario - codigo do usuario a verificar
-	saida: true - o usuario eh colaborador.
-	false - o usuario nao eh colaborador.
-	*/
+/**
+     * Retorna se o usuario é colaborador
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     * @return  boolean  true - o usuario é colaborador., false - o usuario nao é colaborador.
+     */
 	static function EColaborador($sock, $cod_curso, $cod_usuario)
 	{
 	
@@ -291,13 +335,14 @@ class Usuarios{
 		return ($linha ['tipo_usuario'] == 'Z');
 	}
 	
-	/* *********************************************************************
-	 EVisitante - Retorna true se usuario for visitante
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	Saida: true se ï¿½aluno, false caso contrï¿½io
-	*/
+	/**
+     * Retorna true se usuário for visitante
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     * @return boolean Rrue se é aluno, false caso contrário
+     */
 	static function EVisitante($sock,$cod_curso,$cod_usuario)
 	{
 		$estado=Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
@@ -307,17 +352,17 @@ class Usuarios{
 			return false;
 	}
 	
-	/* *********************************************************************
-	 VerificaAcessoAFerramenta - Barra usuï¿½ios de entrar em ferramentas
-	desabilitadas
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	BASE EXTERNA
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	$cod_ferramenta - Codigo da ferramenta
-	Saida: Envia mensagem de acesso negado e interrompe a execuï¿½o, caso a ferramenta
-	esteja desabilitada (checa status de aluno)
-	*/
+	/**
+     * VerificaAcessoAFerramenta - Barra usuários de entrar em ferramentas desabilitadas
+     * 
+     * Saida: Envia mensagem de acesso negado e interrompe a execuï¿½o, caso a ferramenta
+     * esteja desabilitada (checa status de aluno)
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int  $cod_ferramenta  Número de identificação primaria da ferramenta da tabela Ferramentas
+     */
 	static function VerificaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta)
 	{
 		if (!Usuarios::TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta))
@@ -327,15 +372,15 @@ class Usuarios{
 		}
 	}
 	
-	/* *********************************************************************
-	 TestaAcessoAFerramenta - verifica se um usuï¿½ios tem acesso a uma ferramenta
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	BASE EXTERNA
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	$cod_ferramenta - Codigo da ferramenta
-	Saida: true, se possui acesso, false do contrï¿½io.
-	*/
+	/**
+     * Verifica se um usuários tem acesso a uma ferramenta
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int  $cod_ferramenta  Número de identificação primaria da ferramenta da tabela Ferramentas
+     * @return boolean True, se possui acesso, false do contrï¿½io.
+     */
 	static function TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta)
 	{
 		$status_usuario = Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
@@ -357,14 +402,13 @@ class Usuarios{
 		);
 	}
 	
-	/* *********************************************************************
-	 MarcaAcesso - Marca o acesso a determinada ferramenta pelo aluno
-	Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	$cod_ferramenta - Cï¿½igo da ferramenta. "" se Entrada no
-	TelEduc
-	Saida: nenhuma
-	*/
+/**
+     * Marca o acesso a determinada ferramenta pelo aluno
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+     */
 	static function MarcaAcesso($sock,$cod_usuario,$cod_ferramenta)
 	{
 		if ($cod_usuario<0)
@@ -395,14 +439,14 @@ class Usuarios{
 		}
 	}
 	
-	/* *********************************************************************
-	 ECoordenadorMesmo - Retorna true se usuï¿½io for coordenador ou se for
-	administrador do ambiente
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	Saida: true se ï¿½coordenador, false caso contrï¿½io
-	*/
+	/**
+	 * Retorna true se usuï¿½io for coordenador ou se for administrador do ambiente
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 * @return boolean True se é coordenador, false caso contrário
+	 */
 	static function ECoordenadorMesmo($sock,$cod_curso,$cod_usuario)
 	{
 		$estado=Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
@@ -421,15 +465,14 @@ class Usuarios{
 		return false;
 	}
 	
-	/* *********************************************************************
-	 PenultimoAcesso - Retorna o timestamp do penltimo acesso a determinada
-	ferramenta
-	Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	$cod_ferramenta - Cï¿½igo da ferramenta. "" se Entrada no
-	TelEduc
-	Saida: timestamp do ltimo acesso
-	*/
+	/**
+     *  Retorna o timestamp do penltimo acesso a determinada ferramenta
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_ferramenta  Número de identificação primaria do curso da tabela Cursos
+     * @return String Timestamp do último acesso 
+     */
 	static function PenultimoAcesso($sock,$cod_usuario,$cod_ferramenta)
 	{
 		if ($cod_usuario<0)
@@ -449,6 +492,12 @@ class Usuarios{
 			return 0;
 	}
 	
+	/**
+	 * Atualiza ultima visita no banco de dados
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+	 */
 	static function AtualizaVisita($sock, $cod_usuario) {
 		$agora = time();
 	
@@ -471,12 +520,12 @@ class Usuarios{
 		AcessoSQL::Enviar($sock,$query);
 	}
 	
-	/* *********************************************************************
-	 RetornaEmailUsuario - Retorna o email do usuario
-	Entradas: $sock - sock da base externa
-	$cod_usuario - o cod_usuario_global do usuario
-	Saida: email
-	*/
+	/**
+     * Retorna o email do usuario
+     * 
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @return string String com e-mail do usuário
+     */
 	static function RetornaEmailUsuario1($cod_usuario)
 	{
 		$sock = AcessoSQL::Conectar("");
@@ -487,6 +536,13 @@ class Usuarios{
 		return ($linha['email']);
 	}
 	
+	/**
+	 * Retorna usuários online iniciando pelo parametro e até o momento.
+	 *
+	 * @param mysqli_connect	$sock	instância de conexão do mysql
+	 * @param type $time_out Datetime com a data de início a ser verificada
+	 * @return string Número
+	 */
 	static function RetornaUsuariosOnline($sock, $time_out) {
 		$agora=time();
 	
@@ -497,13 +553,14 @@ class Usuarios{
 		return $linha;
 	}
 	
-	/* *********************************************************************
-	 NomeUsuario - Retorna o nome do usuario
-	Entradas: $sock - sock aberto para a base do curso (Conectar($cod_curso))
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	$cod_curso - Codigo do curso
-	Saida: nome
-	*/
+	/**
+     * Retorna o nome do usuario
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso Número de identificação primaria do curso da tabela Cursos
+     * @return string Nome do usário 
+     */
 	static function NomeUsuario($sock, $cod_usuario, $cod_curso)
 	{
 		// 2Session
@@ -534,11 +591,12 @@ class Usuarios{
 		return ($nome_usuario);
 	}
 	
-	/* *********************************************************************
-	 AjustaNome - Ajusta o nome do usuario em relaï¿½o as maiusculas e minusculas
-	Entradas: $nome_usuario
-	Saida: nome com maiusculas e minsculas corrigidas
-	*/
+	/**
+     * Ajusta o nome do usuario em relação as maiusculas e minusculas
+     * 
+     * @param string $nome_usuario
+     * @return string String arrumada.
+     */
 	static function AjustaNome($nome_usuario)
 	{
 		$tmp=explode(" ",$nome_usuario);
@@ -557,13 +615,14 @@ class Usuarios{
 		return $saida;
 	}
 	
-	/* *********************************************************************
-	 RetornaCodigoUsuarioGlobal - Retorna codugo global do usuario
-	Entradas: $sock - Sock aberto para a base
-	$cod_usuario - Codigo do usuario no curso especificado
-	$cod_curso - Codigo do curso
-	Saida: Codigo do usuario no curso especificado
-	*/
+	/**
+     * Retorna codugo global do usuario
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @param int $cod_curso Número de identificação primaria do curso da tabela Cursos
+     * @return int  Codigo Usuario Global
+     */
 	static function RetornaCodigoUsuarioGlobal($sock, $cod_usuario, $cod_curso)
 	{
 		// 2Session
@@ -577,13 +636,14 @@ class Usuarios{
 		return ($cod_usuario_global);
 	}
 	
-	/* *********************************************************************
-	 ECoordenador - Retorna true se usuï¿½io for coordenador ou se for administrador do ambiente
-	Entradas: $sock - Socket da base de dados (retorno do Conectar)
-	$cod_curso - Cï¿½igo do curso
-	$cod_usuario - Cï¿½igo do usuï¿½io a buscar a informaï¿½o
-	Saida: true se ï¿½coordenador e este nï¿½ esta com visao de aluno, false caso contrï¿½io
-	*/
+	/**
+     * Retorna true se usuário for coordenador ou se for administrador do ambiente
+     * 
+     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param int $cod_curso Número de identificação primaria do curso da tabela Cursos
+     * @param int $cod_usuario Número de identificação primaria do usuario da tabela Usuários
+     * @return boolean Rrue se é coordenador e este não está com visão de aluno, false caso contrário
+     */
 	static function ECoordenador($sock,$cod_curso,$cod_usuario)
 	{
 		//   global $visao_aluno_s;
@@ -611,8 +671,7 @@ class Usuarios{
 		//  $query.=" and tipo_compartilhamento='F'";
 		AcessoSQL::Enviar($sock,$query);
 	}
-
-	
-	
 }
+
+
 ?>

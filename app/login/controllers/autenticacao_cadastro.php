@@ -1,9 +1,5 @@
 <?php
 
-/*class AutenticacaoCadastro extends Controller{
-	
-	static function invoke(){*/
-
 	$ferramenta_geral = 'geral';
 	$ferramenta_admin = 'admin';
 	$ferramenta_login = 'login';
@@ -39,7 +35,7 @@
 			$cod_curso = $_POST['cod_curso'];
 		}
 		
-		//$cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
+		$cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
 		
 		
 		$login = $_POST['login'];
@@ -49,14 +45,14 @@
 		if ($cod_usuario == 0)
 		{
 			AcessoSQL::Desconectar($sock);
-			header("Location:".$view_login."autenticacao_cadastro.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
+			header("Location:".$view_login."autenticação_cadastro.php?cod_curso=".$cod_curso."&acao=erroAutenticacao&atualizacao=false");
 			exit;
 		}
 		
 		/* Verifica se o usuario jah confirmou o email */
 		if(!AcessoPHP::VerificaConfirmacaoEmail($login)) {
 			AcessoSQL::Desconectar($sock);
-			header("Location:".$view_login."autenticacao_cadastro.php?cod_curso=".$cod_curso."&acao=erroConfirmacao&atualizacao=false");
+			header("Location:".$view_login."autenticação_cadastro.php?cod_curso=".$cod_curso."&acao=erroConfirmacao&atualizacao=false");
 			exit;
 		}
 
@@ -71,7 +67,7 @@
 		//$_SESSION['visitante_s'] 			= $cod_visitante_s;
 		$_SESSION['visao_formador_s'] = 1;
 		
-		/* Se a autenticacao for para inscricao, manda para tela de inscricao */
+		/* Se a autenticação for para inscricao, manda para tela de inscricao */
 		if($_POST['destino']=="inscricao") {
 			AcessoSQL::Desconectar($sock);
 			header("Location:".$view_administracao."inscricao.php?cod_curso=".$cod_curso."&amp;tipo_curso=".$tipo_curso);
@@ -90,7 +86,7 @@
 		}
 		else
 		{
-			/* Verifica se quem esta fazendo login eh o administrador do ambiente, admtele */
+			/* Verifica se quem esta fazendo login é o administrador do ambiente, admtele */
 			if($_SESSION['cod_usuario_global_s'] == -1)
 			{
 				AcessoSQL::Desconectar($sock);
