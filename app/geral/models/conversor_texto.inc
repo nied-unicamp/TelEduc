@@ -6,7 +6,7 @@
  * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
  */
-class ConversorTexto2 {
+class ConversorTexto {
     /*     * ********************************************************************
       Enter2BR - Converte Enter para <br>
       Entrada: $linha - string a ser corrigida
