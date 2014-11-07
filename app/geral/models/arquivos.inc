@@ -7,6 +7,41 @@
  * @license    http://teleduc.org.br/
  */
 class Arquivos {
+
+     /**
+     * Dado uma string contendo um caminho para um arquivo, 
+     * esse metodo ira retornar true caso existe um arquivo arquivo no final do caminho enviado.
+     * 
+     * @param string $var Caminho a ser verificado 
+     * @return boolean Se true existe um arquivo no final desde caminho.
+     */
+    static function FiltraDiretorioRelativos($var) {
+        $v = basename($var);
+        return(($v != '.') && ($v != '..'));
+    }
+
+    /**
+     * Metódo estático auxiliar de uso interno para ordenacao,
+     * 
+     * Utilizado em um uasort como  funcao de comparação definida pelo usuário. 
+     * 
+     * @param array $ar1 Deve possuir o indexador Diretorio ou Arquivo $ar1['Diretorio'] ou $ar1['Arquivo']
+     * @param array $ar2 Deve possuir o indexador Diretorio ou Arquivo $ar2['Diretorio'] ou $ar2['Arquivo']
+     * @return int Retorna 0 se nao houve a comparacao, -1 caso o ar1 seja menor que ar2 e 1 caso o ar1 seja maior que ar2
+     */
+    static function CompareRetornaArrayDiretorio($ar1, $ar2) {
+        if ($ar1['Diretorio'] < $ar2['Diretorio'])
+            return -1;
+        else if ($ar1['Diretorio'] > $ar2['Diretorio'])
+            return 1;
+
+        if ($ar1['Arquivo'] < $ar2['Arquivo'])
+            return -1;
+        else if ($ar1['Arquivo'] > $ar2['Arquivo'])
+            return 1;
+        return 0;
+    }
+
     /*     * ***********************************************************************
       RetornaArrayDiretorio - Retorna um array com os arquivos do diretorio
       Entrada: $diretorio - diretorio a ser varrido.
@@ -54,7 +89,7 @@ class Arquivos {
             if (($e2 = glob($dir_cur . DIRECTORY_SEPARATOR . '.*')) === false)
                 return (array());
 
-            $e2 = array_filter($e2, "FiltraDiretorioRelativos");
+            $e2 = array_filter($e2, array('Arquivos', "FiltraDiretorioRelativos"));
             $encontrados = array_merge($e1, $e2);
 
             if (count($encontrados)) {
@@ -86,6 +121,9 @@ class Arquivos {
                     }
                     $cont++;
                 }
+                if (count($lista) > 0)
+                	uasort ($lista, array('Arquivos', "CompareRetornaArrayDiretorio"));
+                return ($lista);
             }
             // Lista os subdiretï¿½rios da pasta corrente e
             // adiciona-os na fila
@@ -95,7 +133,7 @@ class Arquivos {
 
             if (($c2 = glob($dir_cur . DIRECTORY_SEPARATOR . '.*')) === false)
                 return (array());
-            $c2 = array_filter($c2, "FiltraDiretorioRelativos");
+            $c2 = array_filter($c2, array('Arquivos', "FiltraDiretorioRelativos"));
 
             $conteudo = array_merge($c1, $c2);
 
@@ -108,9 +146,6 @@ class Arquivos {
                 }
             }
         }
-        if (count($lista) > 0)
-            uasort($lista, 'CompareRetornaArrayDiretorio');
-        return ($lista);
     }
 
     /*     * ***********************************************************************
@@ -156,53 +191,7 @@ class Arquivos {
             return (false);
     }
 
-    /*     * ***********************************************************************
-      FiltraDiretorioRelativos - Funï¿½ï¿½o utilizada pela funï¿½ï¿½o 'array_filter'.
-      Remove de um array contendo caminhos, o diretï¿½rio corrente ('.') e o
-      diretï¿½rio pai ('..').
-      Entrada: $var - caminho para arquivo
-      Saida: true - se for diferente de '.' e '..'
-     */
-
-    /**
-     * Dado uma string contendo um caminho para um arquivo, 
-     * esse metodo ira retornar true caso existe um arquivo arquivo no final do caminho enviado.
-     * 
-     * @param string $var Caminho a ser verificado 
-     * @return boolean Se true existe um arquivo no final desde caminho.
-     */
-    static function FiltraDiretorioRelativos($var) {
-        $v = basename($var);
-        return(($v != '.') && ($v != '..'));
-    }
-
-    /*     * ***********************************************************************
-      CompareRetornaArrayDiretorio - usado internamente (Diogo)
-      em RetornaArrayDiretorio
-      Compara o conteï¿½do de uma sequencia
-     */
-
-    /**
-     * Metódo estático auxiliar de uso interno para ordenacao,
-     * 
-     * Utilizado em um uasort como  funcao de comparação definida pelo usuário. 
-     * 
-     * @param array $ar1 Deve possuir o indexador Diretorio ou Arquivo $ar1['Diretorio'] ou $ar1['Arquivo']
-     * @param array $ar2 Deve possuir o indexador Diretorio ou Arquivo $ar2['Diretorio'] ou $ar2['Arquivo']
-     * @return int Retorna 0 se nao houve a comparacao, -1 caso o ar1 seja menor que ar2 e 1 caso o ar1 seja maior que ar2
-     */
-    static function CompareRetornaArrayDiretorio($ar1, $ar2) {
-        if ($ar1['Diretorio'] < $ar2['Diretorio'])
-            return -1;
-        else if ($ar1['Diretorio'] > $ar2['Diretorio'])
-            return 1;
-
-        if ($ar1['Arquivo'] < $ar2['Arquivo'])
-            return -1;
-        else if ($ar1['Arquivo'] > $ar2['Arquivo'])
-            return 1;
-        return 0;
-    }
+    
 
     /*     * ***********************************************************************
       Remove arquivo - Apaga arquivo e link simbolico
@@ -272,4 +261,203 @@ class Arquivos {
         return ($r1 && $r2);
     }
 
+    /* ************************************************************************
+	 RealizaUpload - Faz upload do arquivo e move para diretorio de
+	destino
+	OBS.: O FORM DE ENVIO DEVE TER OS SEGUINTES PARAMETROS:
+	<form action={prox_.php}" enctype="multipart/form-data" method=post>
+	Entrada: $arquivo - nome passado apos submit do arquivo
+	$destino - path e NOME do destino do arquivo
+	Saida: true - Se tudo ok, false - se ocorreu algum erro
+	*/
+	static function RealizaUpload($arquivo,$destino)
+	{
+	
+		if(preg_match("/.*((\.php(\.|$))|(\.php3(\.|$))|(\.phtml(\.|$))).*/", $destino)){ return false;}
+		$flag=true;
+	
+		$num = 0;
+		$destinoAux = $destino;
+		while($flag){
+			if(Arquivos::ExisteArquivo($destinoAux)){
+				$num++;
+				$destinoAux = explode("/", $destino);
+				$tamCamArq = count($destinoAux);
+	
+				$nomeArq = $destinoAux[$tamCamArq-1];
+	
+				$nomeArq = explode(".", $nomeArq);
+				$nomeArq[0] .= "(".$num.")";
+				$nomeArq = implode(".", $nomeArq);
+				$destinoAux[$tamCamArq-1] = $nomeArq;
+	
+				$destinoAux=implode("/",$destinoAux);
+				//$destino = implode("/", $camArq);
+	
+				/*$destino = preg_replace_callback(
+				 $pattern,
+						'acrescentaNum',
+						$destino
+				);*/
+				$flag= true;
+			}else{
+				$destino = $destinoAux;
+				$flag=false;
+			}
+	
+		}
+	
+		$r1 = move_uploaded_file($arquivo,$destino);
+		if (Arquivos::ExisteArquivo($destino))
+		{
+			$r2 = chmod($destino,0644);
+			return $r1;
+		}
+		else
+			return false;
+	}
+	
+	/* ************************************************************************
+	 RemoveDiretorio - Apaga diretorio e todo seu conteudo
+		Entrada: $diretorio - diretorio
+	Saida: false - se houver algum erro
+	*/
+	static function RemoveDiretorio($diretorio)
+	{
+		$flag = true;
+	
+		if ($diretorio == "")
+			return (false);
+	
+		// Verifica se o arquivo existe
+		if (($diretorio = realpath($diretorio)) === false)
+			return (false);
+	
+		clearstatcache();
+		if (($c1 = glob($diretorio.DIRECTORY_SEPARATOR."*")) === false)
+			return (false);
+	
+		if (($c2 = glob($diretorio.DIRECTORY_SEPARATOR.".*")) === false)
+			return (false);
+		$c2 = array_filter($c2, array('Arquivos', "FiltraDiretorioRelativos"));
+	
+		$conteudo = array_merge($c1, $c2);
+	
+		if (($total = count($conteudo)) > 0)
+		{
+			for ($i = 0; ($i < $total) && ($flag); $i++)
+			{
+			$nome_real = realpath($conteudo[$i]);
+	
+			if (($nome_real != ".") and ($nome_real != ".."))
+			{
+					clearstatcache();
+				if (filetype($nome_real) == "dir")
+					$flag = Arquivos::RemoveDiretorio($nome_real);
+					else
+					$flag = Arquivos::RemoveArquivo($nome_real);
+			}
+			}
+			}
+			clearstatcache();
+			if ((filetype($diretorio)) == 'dir')
+					$flag = rmdir($diretorio);
+					else
+  					{
+				// INCONSISTENTE: apenas para manter compatibilidade com algumas
+					// chamadas feitas no ambiente cujo parametro e um arquivo!!
+					$flag = Arquivos::RemoveArquivo($diretorio);
+				}
+	
+					return ($flag);
+	}
+	
+	/* ************************************************************************
+	 DescompactarArquivoZip - Descompactar arquivo zip.
+	Entrada: $zip - caminho e nome do arquivo zip
+	$destino - caminho onde descompactar o arquivo zip
+	Saida: true se tudo ok
+	*/
+	
+	static function DescompactarArquivoZip($zip,$destino)
+	{
+		$comando="unzip -q -o \"".$zip."\" -d \"".$destino."\"";
+		system($comando,$situacao);
+		if ((!Arquivos::RenomeiaPHPDoDiretorio($destino)) || (!Arquivos::SetaPermissoes($destino)))
+			return (false);
+	
+		return(!$situacao);
+	}
+	
+	/* ************************************************************************
+	 RenomeiaPHPDoDiretorio- Renomeia todo arquivo .PHP do diretorio para
+	.PHP.TXT
+	Entrada: $diretorio - caminho onde descompactar o arquivo zip.
+	Saida: true se tudo ok
+	*/
+	static function RenomeiaPHPDoDiretorio ($diretorio)
+	{
+		$flag = true;
+	
+		$lista = Arquivos::RetornaArrayDiretorio($diretorio);
+	
+		if ( ($total = count($lista)) > 0)   {
+			foreach($lista as $cod => $linha) {
+				if ($linha['Arquivo'] != "") {
+					if (eregi("php$", $linha['Arquivo'])) {
+						$flag = rename($linha['Caminho'], $linha['Caminho'].".txt");
+					}
+				}
+			}
+		} else {
+			return (false);
+		}
+	
+		return ($flag);
+	}
+	
+	/* ************************************************************************
+	 SetaPermissoes- Seta para 755 todos os diretorios, e para 644 os arquivos.
+	Entrada: $diretorio - diretorio cujas permissoes serao alteradas
+	Saida: true se tudo ok
+	*/
+	static function SetaPermissoes($diretorio)
+	{
+		$flag = true;
+	
+		$lista = Arquivos::RetornaArrayDiretorio($diretorio);
+		if (($total = count($lista)) > 0)
+		{
+			for ($i = 0; ($i < $total) && ($flag); $i++)
+			{
+			if ($lista[$i]['Arquivo'] == "")
+				$flag = chmod($diretorio.DIRECTORY_SEPARATOR.$lista[$i]['Diretorio'],0755);
+				else if (!$lista[$i]['Status'])
+						$flag = chmod($diretorio.DIRECTORY_SEPARATOR.$lista[$i]['Diretorio'].DIRECTORY_SEPARATOR.$lista[$i]['Arquivo'],0644);
+			}
+			}
+			else
+				return (false);
+	
+				return $flag;
+	}
+	
+	/* ************************************************************************
+	 AlteraStatusArquivo - Retorna 1 se perms do arquivo = rw-rw-r--
+	Entrada: $arquivo - nome do arquivo
+	$estado - true ativa, false desativa
+	Sem Saida
+	*/
+	static function AlteraStatusArquivo($arquivo,$estado)
+	{
+		clearstatcache();
+		$perms = fileperms($arquivo);
+		if ($estado)
+			$perms |= 0020;
+		else
+			$perms -= ($perms & 0020);
+		return(chmod($arquivo, $perms));
+	}
+
 }
+?>

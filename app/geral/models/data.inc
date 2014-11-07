@@ -40,6 +40,7 @@ class Data{
 			return (adodb_mktime(0,0,0,$data[1],$data[0],$data[2]));
 		}
 	}
+
 	/**
          * Mascara para data no formato invertido, usado no mysql. 
          * 
@@ -51,14 +52,8 @@ class Data{
 		$data = explode("/",$data);
 		return $data[2] . "-" . $data[1] . "-" . $data[0];
 	}
-	
-	/* ************************************************************************
-	UnixTime2DataHora - Converte inteiro UnixTime para data e hora
-	Entrada: $timestamp - Unixtime a ser convertido
-	Saï¿½da: string no formato: dd/mm/yyyy HH:MM:SS ou mm/dd/yyyy HH:MM:SS
-	*/
-        
-        /**
+
+	/**
          * Converte inteiro UnixTime para data e hora
          * 
          * @param String $timestamp  Unixtime a ser convertido
@@ -76,9 +71,8 @@ class Data{
 				$data=$temp['mday']."/".$temp['mon']."/".$temp['year']." ".$temp['hours'].":".$temp['minutes'].":".$temp['seconds'];
 				return ($data);
 	}
-        
-        
-        /**
+	
+ 	/**
          * Caso a data esteja com zeros faltantes, como por exemplo em 2/2/2002, serão adicionados 0 para ficar no formato 02/02/2002 
          * 
          * @param Array $data Datas separadas por indexadores, como em $data['dia']=5, $data['mes']=5 
@@ -91,7 +85,6 @@ class Data{
 			$data[$cod]="0".$data[$cod];
 		return ($data);
 	}
-	
 	/* ************************************************************************
 	 UnixTime2Data - Converte inteiro UnixTime para data
 	Entrada: $timestamp - Unixtime a ser convertido
@@ -116,5 +109,72 @@ class Data{
 			$data=$temp['mday']."/".$temp['mon']."/".$temp['year'];
 		return ($data);
 	}
+
+	/* ************************************************************************
+	 UnixTime2Hora - Converte inteiro UnixTime para hora
+	Entrada: $timestamp - Unixtime a ser convertido
+	Saida: string no formato: HH:MM:SS
+	*/
+	static function UnixTime2Hora($timestamp)
+	{
+		$temp=adodb_getdate($timestamp);
+		$temp=Data::CorrigeZeros($temp);
+		$data=$temp['hours'].":".$temp['minutes'].":".$temp['seconds'];
+		return ($data);
+	}
+	
+	/* ************************************************************************
+	 UnixTime2DataMesAbreviado - Converte inteiro UnixTime para data
+	Entrada: $timestamp - Unixtime a ser convertido
+	Saida: string no formato: dd/mes abrev./yyyy ou mes abrev./dd/yyyy
+	*/
+	static function UnixTime2DataMesAbreviado($timestamp)
+	{
+		global $data_invertida_g;
+	
+		$temp=adodb_getdate($timestamp);
+		$temp=Data::CorrigeZeros($temp);
+		if ($data_invertida_g)
+			$data=Data::NomeMesAbreviado($temp['mon'])."/".$temp['mday']."/".$temp['year'];
+		else
+			$data=$temp['mday']."/".Data::NomeMesAbreviado($temp['mon'])."/".$temp['year'];
+		return ($data);
+	}
+	
+	/* ************************************************************************
+	 NomeMesAbreviado - Retorna o nome do mes abreviado
+	Entrada: $nummes - Numero do mes
+	Saida: nome do mes abreviado
+	*/
+	static function NomeMesAbreviado($nummes)
+	{
+		/* 7 - Mes invalido,Jan,Fev,Mar,Abr,Mai,Jun,Jul,Ago,Set,Out,Nov,Dez */
+		return Data::TratamentoArrayDataGenerico($nummes,7);
+	}
+	
+	/* ************************************************************************
+	 TratamentoArrayDataGenerico - Retorna o elemento $num do array $numarray
+	do tabela -2 de Linguas, ou o elemento 0 se
+	$num < 1 ou $num > $limite
+	OBS.: ROTINA DE USO INTERNO DE DATA.INC
+	Entrada: $num - Numero do elemento a ser retornado
+	$numarray - Numero do array a ser usado
+	Saida: elemento requerido, ou elemento 0 se fora do limite
+	*/
+	static function TratamentoArrayDataGenerico($num,$numarray)
+	{
+		/* A lista estara em memoria, entao $sock nao eh necessario */
+		$sock = AcessoSQL::Conectar("");
+		
+		$lista_frases=Linguas::RetornaListaDeFrases($sock,-2);
+	
+		$Array=Linguas::RetornaFraseDaLista($lista_frases,$numarray);
+		$elems=explode(",",$Array);
+		if ($num>=0 && $num<count($elems))
+			return $elems[$num + 0];
+		else
+			return $elems[0];
+	}
 	
 }
+?>

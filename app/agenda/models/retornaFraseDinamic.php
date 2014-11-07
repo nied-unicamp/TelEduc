@@ -30,4 +30,6 @@ $retorno.="\n}";
 
 //$objResponse->script($variavel." = ".$retorno.";");
 
-echo json_encode($retorno);
+echo json_encode($retorno.";");
+
+?>

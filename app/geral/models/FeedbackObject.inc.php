@@ -68,7 +68,7 @@ class FeedbackObject {
             }
         } else if (!strcmp($theCase, 'false')) {
             if (is_integer($this->action[$theAction][0])) {
-                echo("        mostraFeedback('" . htmlentities(RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][0])) . "', 'false');\n");
+                echo("        mostraFeedback('" . htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][0])) . "', 'false');\n");
             } else {
                 echo("        mostraFeedback('" . htmlentities($this->action[$theAction][0]) . "', 'false');\n");
             }

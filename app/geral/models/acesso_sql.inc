@@ -5,6 +5,9 @@
  */
 require_once "teleduc.inc";
 
+if (!defined("TMPDB"))
+	define("TMPDB", "tmp");
+
 /**
  * Classe AcessoSQL do modulo geral
  * @author     TelEduc
@@ -114,7 +117,7 @@ class AcessoSQL {
             $msgerro .= "                      <b>Consulta enviada : </b>" . $query . "<br />\n";
 
 
-            ImprimeErroSemTela("de SQL", $msgerro, "S");
+            AcessoSQL::ImprimeErroSemTela("de SQL", $msgerro, "S");
         } else
             return($ms);
         //return mysql_query($query,$sock);
@@ -200,12 +203,6 @@ class AcessoSQL {
         return(mysqli_fetch_array($id));
     }
 
-    /*     * *********************************************************
-      RetornaUltimoAutoIncrement - Retorna o valor gerado a um campo
-      auto_increment, apï¿½ a ltima inserï¿½o.
-      Entrada: $sock - Sock da base a ser consultada
-      Saida: inteiro
-     */
     /**
      * 
      * O metodo retorna o ID gerado pela consulta em uma tabela com uma coluna com o atributo AUTO_INCREMENT. Se a ultima consulta nao foi um INSERT ou UPDATE ou se a tabela modificada nao tem uma coluna com o atributo AUTO_INCREMENT, esta funcao ira retornar zero.
@@ -219,11 +216,6 @@ class AcessoSQL {
         return(mysqli_insert_id($sock));
     }
 
-    /*     * *********************************************************
-      RetornaNumLinhas - Retorna o nmero de linhas do resultado
-      Entrada: $id - apontador de resultado da consulta
-      Saida: nmero de linhas
-     */
     /**
      * Retorna o numero de linhas do resultado
      * 
@@ -234,11 +226,6 @@ class AcessoSQL {
         return(mysqli_num_rows($result));
     }
 
-    /*     * *********************************************************
-      RetornaArrayLinhas - Retorna um array com todas as linhas
-      Entrada: $id - apontador de resultado da consulta
-      Saida: array das linhas
-     */
     /**
      * 
      * @param mysqli_result $result Retorno de uma consulta ao banco
@@ -257,12 +244,6 @@ class AcessoSQL {
         return($ar);
     }
 
-    /*     * *********************************************************
-      RetornaNumCampos- Retorna nmero de campos do resultado da consulta
-      Entrada: $id - apontador de resultado da consulta
-      Saida: nmero de campos
-     */
-    
     /**
      * Metódo estático que retorna numero de campos de uma determinada consulta
      * 
@@ -274,13 +255,6 @@ class AcessoSQL {
         return ($num);
     }
 
-    /*     * *********************************************************
-      RetornaCampos- Retorna array com os campos resultados da pesquisa
-      Entrada: $id - apontador de resultado da consulta
-      Saida: array com os campos 
-     */
-    
-    
     /**
     * Este metodo estático retorna um vetor com o nome das colunas da consulta enviada como parametro. 
     * 
@@ -302,6 +276,7 @@ class AcessoSQL {
         }
         return ($linha);
     }
+    
     /**
      * Este metodo estático retorna um array bidimensional indexada por numeros e que
      * possue informacoes especificas de cada coluna da tabela.
@@ -343,13 +318,6 @@ class AcessoSQL {
         return ($ar);
     }
 
-    /*     * ******************************************
-      MudarDB - Muda a base de dados acessada
-      Entrada: $base - nome da base de dados
-      Saida: socket do servidor de base de dados, se ok.
-      interrompe o cï¿½igo e envia alerta caso contrario
-     */
-    
     /**
      * Este metodo estático altera o banco 
      * de dados da instância de conexão passada para o 
@@ -379,12 +347,6 @@ class AcessoSQL {
             return($sock);
     }
 
-    /*     * ********************************************************************
-      RetornaProximoCodigo- Retorna o prï¿½imo nmero a ser usado nessa base
-      Entrada: $sock - sock da base em uso
-      $tabela - nome da tabela a ser retirada a sequencia
-      Saida: prï¿½imo numero da sequencia
-     */
     /**
      * Retorna o proximo numero a ser usado nessa base,  baseando-se na tabela e o usuario logado ou passado no parametro opcional  
      * 
@@ -427,192 +389,6 @@ class AcessoSQL {
             return ($linha[0]);
         }
     }
-
-	static function RetornaLinha($id)
-	{
-		return(mysqli_fetch_array($id));
-	}
-	
-	/* **********************************************************
-	 RetornaUltimoAutoIncrement - Retorna o valor gerado a um campo
-	auto_increment, apï¿½ a ltima inserï¿½o.
-	Entrada: $sock - Sock da base a ser consultada
-	Saida: inteiro
-	*/
-	static function RetornaUltimoAutoIncrement($sock)
-	{
-		return(mysqli_insert_id($sock));
-	}
-	
-	/* **********************************************************
-	 RetornaNumLinhas - Retorna o nmero de linhas do resultado
-	Entrada: $id - apontador de resultado da consulta
-	Saida: nmero de linhas
-	*/
-	static function RetornaNumLinhas($id)
-	{
-		return(mysqli_num_rows($id));
-	}
-	
-	
-	/* **********************************************************
-	 RetornaArrayLinhas - Retorna um array com todas as linhas
-	Entrada: $id - apontador de resultado da consulta
-	Saida: array das linhas
-	*/
-	static function RetornaArrayLinhas($id, $result_type = MYSQLI_BOTH)
-	{
-		$num=AcessoSQL::RetornaNumLinhas($id);
-		$cont=0;
-		$ar=array();
-		while ($num>0)
-		{
-			$num--;
-			$ar[$cont]=mysqli_fetch_array($id, $result_type);
-			$cont++;
-		}
-		return($ar);
-	}
-	
-	/* **********************************************************
-	 RetornaNumCampos- Retorna nmero de campos do resultado da consulta
-	Entrada: $id - apontador de resultado da consulta
-	Saida: nmero de campos
-	*/
-	static function RetornaNumCampos($id)
-	{
-		$num=mysqli_num_fields($id);
-		return ($num);
-	}
-	
-	 /* **********************************************************
-	   RetornaCampos- Retorna array com os campos resultados da pesquisa
-	   Entrada: $id - apontador de resultado da consulta
-	   Saida: array com os campos
-	*/
-	static function RetornaCampos($id)
-	{
-	
-	  $linha = "";
-	  unset($linha);
-	
-	
-	  $num=mysqli_num_fields($id);
-	  $c=0;
-	  while ($c<$num)
-	  {
-	    $field=mysqli_fetch_field($id);
-	    $linha[$c]=$field->name;
-	    $c++;    
-	  }  
-	  return ($linha);
-	}
-	
-	static function RetornaListaCampos($sock, $tabela)
-	{
-		$ar="";
-		unset($ar);
-	
-		$query = "select * from ".$tabela." limit 1";
-	
-		$id = Enviar($sock, $query);
-	
-		$num = mysqli_num_fields($id);
-		$i = 0;
-		while ($i < $num)
-		{
-			$field = mysqli_fetch_field($id);
-			$ar[$i] = array("name" => $field->name,
-					"table" => $field->table,
-					"max_length" => $field->max_length,
-					"not_null" => $field->not_null,
-					"primary_key" => $field->primary_key,
-					"unique_key" => $field->unique_key,
-					"multiple_key" => $field->multiple_key,
-					"numeric" => $field->numeric,
-					"blob" => $field->blob,
-					"type" => $field->type,
-					"unsigned" => $field->unsigned,
-					"zerofill" => $field->zerofill);
-			$i++;
-		}
-		return ($ar);
-	}
-	
-	/* *******************************************
-	 MudarDB - Muda a base de dados acessada
-	Entrada: $base - nome da base de dados
-	Saida: socket do servidor de base de dados, se ok.
-	interrompe o cï¿½igo e envia alerta caso contrario
-	*/
-	static function MudarDB($sock, $cod_curso="", $opt="")
-	{
-		//   global $_SESSION['dbnamecurso'], $_SESSION['dbtmpnamecurso'];
-	
-		// 2Session
-		//   $_SESSION['dbnamebase'] = $_SESSION['dbnamebase'];
-		if ($cod_curso!="")
-		{
-			// Conecta-se a base temporï¿½ia
-			if (isset($opt) && ($opt == TMPDB))
-				$base = $_SESSION['dbtmpnamecurso'].$cod_curso;
-			else
-				$base = $_SESSION['dbnamecurso'].$cod_curso;
-		}
-		else
-			$base=$_SESSION['dbnamebase'];
-	
-		if (! mysqli_select_db($sock, $base))
-			die("Erro de SQL: mysql_select_db = ".mysql_error()."<br />\n");
-		else
-			return($sock);
-	
-	}
-	
-	/* *********************************************************************
-	 RetornaProximoCodigo- Retorna o prï¿½imo nmero a ser usado nessa base
-	Entrada: $sock - sock da base em uso
-	$tabela - nome da tabela a ser retirada a sequencia
-	Saida: prï¿½imo numero da sequencia
-	*/
-	static function RetornaProximoCodigo($sock,$tabela,$cod_usuario_tmp='')
-	{
-		//   global $cod_usuario;
-	
-		if ($cod_usuario_tmp=="") {
-			if (isset($_SESSION['cod_usuario']) && !empty($_SESSION['cod_usuario']))
-				$cod_usuario_tmp = $_SESSION['cod_usuario'];
-			else
-				$cod_usuario_tmp = 0;
-		}
-		
-		$data=time();
-		$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
-	
-		if (!($res=mysqli_query($sock, $query)))
-		{
-			/* Criar tabela e repetir */
-			$query = "CREATE TABLE ".$tabela."_sequencia (cod int PRIMARY KEY AUTO_INCREMENT,cod_usuario INT,data INT)";
-			$res=AcessoSQL::Enviar($sock,$query);
-			$query="insert into ".$tabela."_sequencia (cod_usuario,data) values (".$cod_usuario_tmp.",".$data.")";
-			$res=AcessoSQL::Enviar($sock,$query);
-			$query="select cod from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-			$res=AcessoSQL::Enviar($sock,$query);
-			$linha=AcessoSQL::RetornaLinha($res);
-			$query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-			$res=AcessoSQL::Enviar($sock,$query);
-			return ($linha[0]);
-		}
-		else
-		{
-			$query="select cod from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-			$res=AcessoSQL::Enviar($sock,$query);
-			$linha=AcessoSQL::RetornaLinha($res);
-			$query="delete from ".$tabela."_sequencia where cod_usuario=".$cod_usuario_tmp." and data=".$data;
-			$res=AcessoSQL::Enviar($sock,$query);
-			return ($linha[0]);
-		}
-	}
 	
 	/**************************************************************************
 	 EnviaEmailComErro - envia um e-mail com os dados do erro para o e-mail do

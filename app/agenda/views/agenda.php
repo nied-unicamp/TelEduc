@@ -188,7 +188,7 @@ $linha_item=Agenda::RetornaAgendaAtiva($sock);
 if (isset($linha_item['cod_item']))
 {
 	if($usr_formador)
-		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
+		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
 	else
 		$titulo=$linha_item['titulo'];
 

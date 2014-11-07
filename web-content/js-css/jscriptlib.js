@@ -21,11 +21,12 @@ var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
 
-var lista_frases;
+var lista_frases = new Array();
 	
 	lista_frases = $.post('../../../app/agenda/models/retornaFraseDinamic.php',
 		function(data){
 			var retorno = $.parseJSON(data);
+			alert(retorno);
 			return retorno;
 		});
 
@@ -113,17 +114,18 @@ function AtualizaComp(js_tipo_comp)
 }
 
 function EdicaoTitulo(codigo, id, valor){
-	//se o tÃ­tulo nÃ£o Ã© vazio
+	//se o título não é vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
     novoconteudo = document.getElementById(id+'_text').value;
-    //Edita o tÃ­tulo do item dado, dinÃ¢micamente
+    //Edita o título do item dado, dinâmicamente
     xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
     
-    //else - se o tÃ­tulo for vazio.
+    //else - se o título for vazio.
   }else{
     /* 15 - O titulo nao pode ser vazio. */
     if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
-      alert(lista_frases.msg15);
+      //alert(lista_frases.msg15);
+    	alert('O titulo nao pode ser vazio'); //TODO: texto hardcoded
 	
     document.getElementById(id).innerHTML=conteudo;
     
@@ -133,7 +135,7 @@ function EdicaoTitulo(codigo, id, valor){
       document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };
     }
 
-    //Cancela EdiÃ§Ã£o
+    //Cancela Edição
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
   }
@@ -185,7 +187,7 @@ function WindowOpenVerURL(end)
 	      //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
 	    }
 	  else{
-	      //Cancela Ediï¿½o
+	      //Cancela Edicao
 	      if (!cancelarTodos)
 	        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
 	  }
@@ -232,8 +234,9 @@ function WindowOpenVerURL(end)
 	  else{
 	    if(checks.length > 0)
 	    {	
-		// 53 - A agenda nï¿½o pode ter texto e arquivos simultaneamente! 	
-	    	alert(lista_frases.msg53);
+		// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
+	    	//alert(lista_frases.msg53);
+	    	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
 	    }	
 	  }
 	}
@@ -243,8 +246,9 @@ function WindowOpenVerURL(end)
 	  checks = document.getElementsByName('chkArq');
 	
 	  if ((editaTexto==0)&&(checks.length==0)){
-	    // 95 - VocÃª tem certeza que deseja apagar o texto desta agenda?
-	    if (confirm(lista_frases.msg95)){
+	    // 95 - Você tem certeza que deseja apagar o texto desta agenda?
+	    //if (confirm(lista_frases.msg95)){
+		  if (confirm('Deseja realmente apagar o texto desta agenda?')){ //TODO: texto hardcoded
 	      CancelaTodos();
 	      document.getElementById('text_'+id).innerHTML='';
 	
@@ -261,7 +265,8 @@ function WindowOpenVerURL(end)
 	    if(checks.length > 0)
 	    {	
 		// 53 - A agenda nao pode ter texto e arquivos simultaneamente!
-	    	alert(lista_frases.msg53);
+	    	//alert(lista_frases.msg53);
+	    	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
 	    }	
 	  }
 	}
@@ -272,7 +277,7 @@ function ArquivoValido(path)
 	var file = getfilename(path);
 	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
 
-	// Usando expressÃ£o regular para identificar caracteres invÃ¡lidos
+	// Usando expressão regular para identificar caracteres inválidos
 	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
 		return false;
 	return true;
@@ -294,12 +299,13 @@ function EdicaoArq(i){
     document.formFiles.submit();
   }
   else {
-	alert(lista_frases.msg109);
+	//alert(lista_frases.msg109);
+	alert('Nome do anexo com acentos ou caracteres inválidos! Renomeie o arquivo e tente novamente.') //TODO: texto hardcoded
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
     document.getElementById('divArquivoEdit').className='divHidden';
-    //Cancela EdiÃ§Ã£o
+    //Cancela Edição
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
     input=0;
@@ -314,15 +320,22 @@ function AcrescentarBarraFile(apaga){
     	
     conteudo = document.getElementById('text_'+cod_item).innerHTML;
     if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
-	// 53 - A agenda nï¿½o pode ter texto e arquivos simultaneamente! 	
-	alert(lista_frases.msg53);
+	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
+	//alert(lista_frases.msg53);
+	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
 	return false;
     }
 						
     document.getElementById('input_files').style.visibility='visible';
     document.getElementById('divArquivoEdit').className='';
     document.getElementById('divArquivo').className='divHidden';
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
+    
+    $.post('../../../app/agenda/models/abreedicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
+    	    function(data){
+    	    	var code = $.parseJSON(data);
+    	    //echo("					alert(code);\n");
+    	    });
+    //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
 
     cancelarElemento=document.getElementById('cancFile');
 }
@@ -381,9 +394,13 @@ function Descompactar(){
     if(checks[i].checked){
       getNumber=checks[i].id.split("_");
       arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');
-      if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
-        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
-        window.location='acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=descompactar&origem='+origem+'&arq='+arqZip;
+      //if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
+      if (confirm('Você tem certeza de que deseja descompactar este arquivo? \n (o arquivo ZIP será apagado). \n importante: não é possível a descompactação de arquivos contendo pastas com espaços no nome. ')){ //TODO: texto hardcoded
+    	  $.post('../../../app/agenda/models/abreedicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
+    	    	    function(data){
+    	  });
+        //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
+        window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=descompactar&origem='+origem+'&arq='+arqZip;
       }
     } 
   }
@@ -503,11 +520,16 @@ function Apagar(){
       if(checks[i].checked){
         getNumber=checks[i].id.split("_");
         nomeArq = document.getElementById("nomeArq_"+getNumber[1]).getAttribute('nomeArq');
-        xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
+        
+        $.post('../../../app/agenda/models/excluir_arquivo.php',{numero: getNumber[1], arq: nomeArq, cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem: origem}, 
+    		    function(data){
+    		    	$('#arq_'+getNumber[1]).remove();
+        });
+      //xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
 	js_conta_arq--;
       }
     }
-    mostraFeedback(lista_frases.msg104, 'true');
+    mostraFeedback('Arquivo apagado com sucesso', 'true'); //TODO: frase hardcoded
   }
 
   if(document.getElementById("nomeArq_"+getNumber[1]).getAttribute('arqEntrada') == 'sim')
@@ -593,7 +615,8 @@ function Mover(caminhoDestino){
 function ApagarItem(){
   CancelaTodos();
 
-  if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
+  //if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
+  if (confirm('Você tem certeza de que deseja apagar esta agenda? \n (não haverá como recuperá-la!)')){ //TODO: texto hardcoded
         window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem&origem='+origem;
   }
 }

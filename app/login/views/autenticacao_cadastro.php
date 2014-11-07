@@ -4,35 +4,64 @@ $ferramenta_geral = 'geral';
 $ferramenta_admin = 'admin';
 $ferramenta_login = 'login';
 $ferramenta_cadastro = 'cadastro';
+$ferramenta_administracao = 'administracao';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $view_admin = '../../'.$ferramenta_admin.'/views/';
+$view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $ctler_login = '../../'.$ferramenta_login.'/controllers/';
 $diretorio_imgs = '../../../web-content/imgs/';
 $view_cadastro = '../../'.$ferramenta_cadastro.'/views/';
 
 require_once $model_geral.'geral.inc';
+require_once $model_geral.'inicial.inc';
+
+$cod_curso = $_GET["cod_curso"];
+$tipo_curso = $_GET["tipo_curso"];
+$destino = $_GET["destino"];
+$origem = $_GET["origem"];
+
+if(!isset($ordem))
+	$ordem="";
+
+if(!isset($todas_abertas))
+	$todas_abertas="";
+
+if(!isset($erro_autenticacao))
+	$erro_autenticacao="";
+
+if (!empty ($_SESSION['login_usuario_s']))
+{
+	header("Location: ".$view_administracao."exibe_cursos.php");
+}
+
+$pag_atual = "autenticacao_cadastro.php";
+
 require_once $view_admin.'topo_tela_inicial.php';
+
+// instanciar o objeto, passa a lista de frases por parametro
+$feedbackObject =  new FeedbackObject($lista_frases);
+// adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase
+// para ser impressa se for "true", o terceiro caso "false"
+//$feedbackObject->addAction("erroAutenticacao", 214, 180);
+$feedbackObject->addAction("erroAutenticacao", 214, 'Login e/ou senha incorretos. Digite novamente'); //TODO: texto hardcoded
+//$feedbackObject->addAction("erroConfirmacao", 0, 213);
+$feedbackObject->addAction("erroConfirmacao", 0, 'Usuário ainda não confirmado. Confirme o seu cadastro'); //TODO: texto hardcoded
+$feedbackObject->addAction("emailConfirmacao", 210, 0);
 
 $fraseLoginPadrao = Linguas::RetornaFraseDaLista($lista_frases, 216);
 if(!isset($login)){
 	$login = $fraseLoginPadrao;
 }
 
-$cod_curso = (isset($_GET["cod_curso"]));
-$tipo_curso = (isset($_GET["tipo_curso"]));
-$destino = (isset($_GET["destino"]));
-$origem = (isset($_GET["origem"]));
-
 echo("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."dhtmllib.js\"></script>\n");
 echo("    <script type=\"text/javascript\">\n\n");
 echo("      function Iniciar()\n");
 echo("      {\n");
-
-/*PULOU XAJAX*/
-
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("        startList();\n");
 echo("      }\n\n");
+
 echo("     function TestaNome(form){\n");
 echo("          Campo_login = form.login.value;\n");
 echo("          Campo_senha = form.senha.value;\n");
@@ -108,7 +137,7 @@ echo("                    ".Linguas::RetornaFraseDaLista($lista_frases,165)."\n"
 /*
  * === Formulario de Autenticacao (login) ===
 */
-echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctler_login."autenticação_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
+echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctler_login."autenticacao_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
 echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
 //echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
 echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"\" />\n");
@@ -164,18 +193,18 @@ echo ("                    ".RetornaFrase($sock, 24, -2)." <a href='esqueci_senh
 
 // 92 - Se seu cadastro ainda nao foi autenticado, siga o link:
 // 93 - Autenticar meu login!
-echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticação.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
+echo ("                    ".RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".RetornaFrase($sock, 93, -2)."</a><br/>");
 */
 
 echo("                    </td>\n");
 
 echo("                    <td class=\"divide_meio\">\n");
 if($cod_curso != NULL){
-	// 90 - Se nï¿½o tiver cadastro,
+	// 90 - Se nao tiver cadastro,
 	// 101 - clique aqui!
 	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
 }else{
-	// 90 - Se nï¿½o tiver cadastro,
+	// 90 - Se nao tiver cadastro,
 	// 101 - clique aqui!
 	echo("                    ".Linguas::RetornaFrase($sock, 90, -2)." <a href='".$view_cadastro."cadastro.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br />");
 }
@@ -187,9 +216,9 @@ echo ("                    <br/>".Linguas::RetornaFrase($sock, 67, -2)." <a href
 // 101 - clique aqui!
 echo ("                    ".Linguas::RetornaFrase($sock, 24, -2)." <a href='esqueci_senha.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br/>");
 
-// 92 - Se nï¿½o recebeu seu email de confirmaï¿½ï¿½o,
+// 92 - Se nao recebeu seu email de confirmacao,
 // 101 - clique aqui!
-echo ("                    ".Linguas::RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticação.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br/>");
+echo ("                    ".Linguas::RetornaFrase($sock, 92, -2)." <a href='reenviar_autenticacao.php'>".Linguas::RetornaFrase($sock, 101, -2)."</a><br/>");
 
 echo("                    </td>\n");
 

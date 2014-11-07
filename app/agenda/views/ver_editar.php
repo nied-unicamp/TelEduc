@@ -115,7 +115,7 @@ echo("      }\n\n");
 echo("      function ExcluirSelecionados(){\n");
 echo("        if (TemCertezaApagar()){\n");
 echo("          document.getElementById('cod_itens_form').value=array_itens;\n");
-echo("          document.form_dados.action='acoes_linha.php';\n");
+echo("          document.form_dados.action='".$ctrl_agenda."acoes_linha.php';\n");
 echo("          document.form_dados.method='POST';\n");
 echo("          document.getElementById('acao_form').value='apagarSelecionados';\n");
 echo("          document.form_dados.submit();\n");
@@ -319,7 +319,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 				}
 
 				//$situacao=$marcaib.$situacao."</a>".$marcafb;
-				$titulo="<a id=\"tit_".$linha_item['cod_item']."\" onclick=\"window.open('ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar');\">".$linha_item['titulo']."</a>";
+				$titulo="<a id=\"tit_".$linha_item['cod_item']."\" onclick=\"window.open('".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar');\">".$linha_item['titulo']."</a>";
 			}
 			else
 			{
@@ -331,15 +331,15 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 
 			/* 23 - Em publicacao */
 			$situacao = Linguas::RetornaFraseDaLista($lista_frases, 23);
-			$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
+			$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
 		}
 		else
 		{
 			$situacao=$marcaib.$situacao."</a>".$marcafb;
-			$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
+			$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
 		}
 
-		$icone="<img src=\"../imgs/arqp.gif\" alt=\"\" border=\"0\" /> ";
+		$icone="<img src=\"".$diretorio_imgs."arqp.gif\" alt=\"\" border=\"0\" /> ";
 		echo("                  <tr class=\"altColor".($cod%2)."\">\n");
 		echo("                    <td width=\"2\"><input type=\"checkbox\" name=\"chkItem\" id=\"itm_".$linha_item['cod_item']."\" onclick=\"VerificaCheck();\" value=\"".$linha_item['cod_item']."\" /></td>\n");
 		echo("                    <td align=left>".$icone.$titulo."</td>\n");

@@ -54,7 +54,7 @@ echo("          <ul id=\"nav3nivel\">\n");
   echo("            <map title=\"Menu superior\">\n");
   echo("              <li class=\"visoes\"><a href=\"".$link."equipe.php\">".Linguas::RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
   if(empty($_SESSION['login_usuario_s']))
-    echo("              <li class=\"visoes\"><a href=\"".$view_login."autenticação_cadastro.php\">Login</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"".$view_login."autenticacao_cadastro.php\">Login</a></li>\n");
   else
     echo("              <li class=\"visoes\"><a href=\"".$ctlr_login."logout.php\">Logout</a></li>\n");
   echo("            </map>\n");
