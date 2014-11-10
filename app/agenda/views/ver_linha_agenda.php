@@ -92,7 +92,8 @@ $feedbackObject->addAction("criarAgenda", 96, 0);
 $feedbackObject->addAction("anexar", 51, 98);
 $feedbackObject->addAction("descompactar", 99, 100);
 $feedbackObject->addAction("selecionar_entrada", 105, 0);
-$feedbackObject->addAction("retirar_entrada", 55, 0);
+//$feedbackObject->addAction("retirar_entrada", 55, 0);
+$feedbackObject->addAction("retirar_entrada", 'Arquivo de entrada removido com sucesso', 0); //TODO: frase hardcoded
 
 $dir_name = "agenda";
 $dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
@@ -181,7 +182,7 @@ echo("			var cod_item = ".$cod_item.";\n");
 echo("			var cod_usuario = ".$cod_usuario.";\n");
 echo("			var id = ".$id.";\n");
 
-echo("			$.post(\"".$model_agenda."abreedicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, action:'abrirEdicao'}, \n");
+echo("			$.post(\"".$model_agenda."abre_edicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, action:'abrirEdicao'}, \n");
 echo("				function(data){\n");
 echo("					var code = $.parseJSON(data);\n");
 //echo("					alert(code);\n");
@@ -209,7 +210,7 @@ echo("          }\n");
 
 echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
 
-echo("			$.post(\"".$model_agenda."decodificastring.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
+echo("			$.post(\"".$model_agenda."decodifica_string.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
 echo("				function(data){\n");
 echo("					var code = $.parseJSON(data);\n");
 echo("					$('#tit_".$id."_text').val(code);\n");
@@ -258,7 +259,7 @@ echo("			//se o título não é vazio\n");
 echo("			if ((valor=='ok')&&(document.getElementById(id+'_text').value != \"\")){\n");
 echo("				novoconteudo = document.getElementById(id+'_text').value;\n");
 echo("				//Edita o título do item dado, dinâmicamente\n");
-echo("			$.post(\"".$model_agenda."editartitulo.php\",{cod_curso:cod_curso, cod_item:codigo, novo_nome:novoconteudo, cod_usuario:cod_usuario}, \n");
+echo("			$.post(\"".$model_agenda."editar_titulo.php\",{cod_curso:cod_curso, cod_item:codigo, novo_nome:novoconteudo, cod_usuario:cod_usuario}, \n");
 echo("				function(data){\n");
 //echo("					var code = $.parseJSON(data);\n");
 echo("					$('#tr_".$id."').toggleClass('novoitem');\n");
@@ -279,7 +280,7 @@ echo("					document.getElementById(id).innerHTML=conteudo;\n");
 //echo("			}\n");
 echo("			//Cancela Edição\n");
 echo("			if (!cancelarTodos)\n");
-echo("			$.post(\"".$model_agenda."acabaedicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, acao: 0}, \n");
+echo("			$.post(\"".$model_agenda."acaba_edicao.php\",{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem, acao: 0}, \n");
 echo("				function(data){\n");
 echo("					var code = $.parseJSON(data);\n");
 //echo("					alert(code);\n");

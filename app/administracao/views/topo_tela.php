@@ -117,6 +117,9 @@ Usuarios::MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
     foreach ($estilos_css as $css){
       echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
+      echo("<style>");
+      echo("a { color:#2a6686; text-decoration:none; font-weight:bold; font-size:0.7em; }");
+      echo("</style>");
     }
 
     foreach ($codigos_js as $js){

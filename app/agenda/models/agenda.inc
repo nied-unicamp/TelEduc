@@ -77,19 +77,6 @@ class Agenda {
         return ($retorno);
     }
 
-    /*     * ********************************************************************
-      RetornaArquivosAgendaVer - Retorna lista de arquivos da Agenda
-      Entrada: $dirlink - nome do diret�rio da ferramenta
-      $cod_curso - c�digo do item
-      Saida: Array multidimensional com:
-      $lista[<num>]['Caminho'] - caminho completo.
-      $lista[<num>]['Diretorio'] - Diretorio do arquivo
-      $lista[<num>]['Arquivo'] - Nome do arquivo
-      $lista[<num>]['Status'] - Condi��o especial (true ou false);
-      $lista[<num>]['Tamanho'] - tamanho do arquivo
-      $lista[<num>]['Data'] - data da �ltima modifica��o
-     */
-
     /**
      * Este met�do est�tico faz uma consulta ao banco a tabela  Diret�rio e retorna uma string
      * com um caminho.
@@ -102,16 +89,6 @@ class Agenda {
     static function RetornaArquivosAgendaVer($cod_curso, $dirlink) {
         return (Arquivos::RetornaArrayDiretorio($dirlink));
     }
-
-    /*     * ********************************************************************
-      IniciaCriacao - Inicia a cria��o de um novo item
-      Entrada: $sock - BASE DO CURSO
-      $cod_usuario - usuario atual
-      $cod_curso - codigo do curso
-      $diretorio_temp - nome do diret�rio temporario, usado durante a edi��o
-      $titulo - titulo do item a ser criado
-      Saida: codigo do item criado
-     */
 
     /**
      * Este metodo � inicio da criacao de um item na agenda relacionando-se com a tabela Agenda_itens e  Agenda_itens_historicos
@@ -160,7 +137,7 @@ class Agenda {
     
     Saida: XML da função Ajax
     */
-    function AbreEdicao($cod_curso, $cod_item, $cod_usuario,$origem){
+    static function AbreEdicao($cod_curso, $cod_item, $cod_usuario,$origem){
     	// como vou precisar atualizar campos de data, preciso saber a data em UnixTime
     
     	$data = time();
