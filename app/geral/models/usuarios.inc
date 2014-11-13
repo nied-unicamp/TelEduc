@@ -663,7 +663,14 @@ class Usuarios{
 		}
 		return false;
 	}
-	
+        
+	/**
+         * Atualiza Novas Ferramentas
+         * 
+         * @param mysqli_connect	$sock	instância de conexão do mysql
+         * @param int $cod_ferramenta
+         * @param int $tipo_usuario
+         */
 	static function AtualizaFerramentasNova($sock,$cod_ferramenta,$tipo_usuario)
 	{
 		$query="replace Ferramentas_nova (cod_ferramenta, tipo_compartilhamento, data) values (".$cod_ferramenta." , '".ConversorTexto::VerificaStringQuery($tipo_usuario)."' , ".time().")" ;

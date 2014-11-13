@@ -11,7 +11,7 @@ if (!defined("TMPDB"))
 /**
  * Classe AcessoSQL do modulo geral
  * @author     TelEduc
- * @copyright  20014 TelEduc
+ * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
  */
 class AcessoSQL {
@@ -427,6 +427,15 @@ class AcessoSQL {
 	 ImprimeErroSemTela - Para imprimir erros em que tela.php
 	(menu, header, etc..) n√£o pode ser carregado.
 	*/
+        
+        /**
+         * Para imprimir erros em que tela.php
+         * (menu, header, etc..) n„o pode ser carregado.
+         * 
+         * @param String $tipo_erro
+         * @param String $erro
+         * @param String $prefixo
+         */
 	function ImprimeErroSemTela($tipo_erro, $erro, $prefixo)
 	{
 		$cod = rand(0, 268435454);

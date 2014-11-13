@@ -448,6 +448,14 @@ class Arquivos {
 	$estado - true ativa, false desativa
 	Sem Saida
 	*/
+        
+        /**
+         * Retorna 1 se perms do arquivo = rw-rw-r--
+         * 
+         * @param String $arquivo Nome do arquivo
+         * @param boolean $estado true ativa, false desativa
+         * @return int Retorna 1 se perms do arquivo = rw-rw-r--
+         */
 	static function AlteraStatusArquivo($arquivo,$estado)
 	{
 		clearstatcache();

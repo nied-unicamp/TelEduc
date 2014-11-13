@@ -11,7 +11,7 @@ class Linguas {
     /**
      * Este metodo estático retorna a frase solicitada baseado nos parametros.
      * 
-     * @param mysqli_connect	$sock	instância de conexão do mysql
+     * @param mysqli_connect $sock	instância de conexão do mysql
      * @param int $cod_texto Número de identificação primaria do texto da tabela Lingua_textos
      * @param int $cod_ferramenta Número de identificação primaria da ferramenta da tabela Ferramentas
      * @return string Frase solicitada.
@@ -122,7 +122,13 @@ class Linguas {
 
         return($textos);
     }
-
+    
+    /**
+     * Muda de lingua baseado nos parametros
+     * 
+     * @param mysqli_connect $sock	Instância de conexão do mysql
+     * @param int $cod_lingua  Código da lingua já definido e que está na Session
+     */
     static function MudancaDeLingua($sock, $cod_lingua) {
         //   Global $cod_lingua_s, $lista_frases_s;
 
