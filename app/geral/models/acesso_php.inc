@@ -144,7 +144,7 @@ class AcessoPHP{
 		AcessoSQL::Desconectar($sock);
 	
 		//$caminho = $raiz_www."/pagina_inicial";
-		$caminho = '../view';
+		$caminho = $raiz_www."/app/login/views";
 	
 		/* Se quem esta acessando o ambiente eh um visitante */
 		if ($_SESSION['visitante_s']=="sim")

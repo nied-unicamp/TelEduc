@@ -121,9 +121,6 @@ class Arquivos {
                     }
                     $cont++;
                 }
-                if (count($lista) > 0)
-                	uasort ($lista, array('Arquivos', "CompareRetornaArrayDiretorio"));
-                return ($lista);
             }
             // Lista os subdiret�rios da pasta corrente e
             // adiciona-os na fila
@@ -146,6 +143,9 @@ class Arquivos {
                 }
             }
         }
+	if (count($lista) > 0)
+        	uasort ($lista, array('Arquivos', "CompareRetornaArrayDiretorio"));
+        return ($lista);
     }
 
     /*     * ***********************************************************************
@@ -467,5 +467,183 @@ class Arquivos {
 		return(chmod($arquivo, $perms));
 	}
 
+/* ************************************************************************
+	 CopiaArquivosDiretorio - Copia apenas o conteudo de diretorio de origem para destino
+	Entrada: $origem - diretorio de origem
+	$destino - diretorio de destino
+	Saida: false - se houver algum erro
+	OBS.: se o arquivo a ser copiado ja existir no destino, entao ele e
+	sobrescrito.
+	para copiar o conteudo de /temp/arquivos/* para /final/*
+	use: $origem="/temp/arquivos/"
+	$destino="/final/"
+	*/
+	static function CopiaArquivosDiretorio($origem, $destino)
+	{
+		// Se a origem ou destino forem vazios retorna false
+		if (($origem == "") || ($destino == ""))
+			return false;
+	
+		// Variavel de retorno da funcao
+		$flag = true;
+	
+		// Resolve o caminho da origem
+		$origem = realpath($origem);
+		if ($origem === false)
+			return false;
+	
+		// Lista os arquivo existentes na pasta
+		$origem = rtrim($origem, DIRECTORY_SEPARATOR);
+	
+		clearstatcache();
+		// Listamos o conteudo da pasta
+		if (($c1 = glob($origem.DIRECTORY_SEPARATOR."*")) === false)
+			return (false);
+		// Listamos o conteudo oculto da pasta e, como sao listadas tambem
+		// '.' e '..', filtramos essas pastas relativas
+		if (($c2 = glob($origem.DIRECTORY_SEPARATOR.".*")) === false)
+			return (false);
+		$c2 = array_filter($c2, array('Arquivos', "FiltraDiretorioRelativos"));
+		// Concatenamos o resultado das listagens
+		$conteudo = array_merge($c1, $c2);
+		if (($total = count($conteudo)) > 0)
+		{
+			for ($i = 0; ($i < $total) && ($flag); $i++)
+			{
+			$nome_arquivo = basename($conteudo[$i]);
+	
+			clearstatcache();
+			// Se for diretario, copiamos recursivamente seus conteudos
+			if (filetype($conteudo[$i]) == "dir")
+			$flag = Arquivos::CopiaDiretorio($conteudo[$i], $destino);
+			else
+			{
+			// Sendo arquivo, verificamos se nao houve erros na execucao
+				// anterior de algum comando. Caso o arquivo ja exista no caminho
+				// destino, entao o removemos e em seguida copiamos o arquivo.
+				if ($flag)
+				{
+				$dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
+				if (Arquivos::ExisteArquivo($dest))
+					$flag = Arquivos::RemoveArquivo($dest);
+	
+				// O teste aqui tambem e necessario para ver se 'RemoveArquivo'
+				// nao retornou false.
+				if ($flag)
+				{
+			$stat = Arquivos::RetornaStatusArquivo($conteudo[$i]);
+			if (copy($conteudo[$i], $dest))
+			{
+			if (!Arquivos::AlteraStatusArquivo($dest, $stat))
+				return (false);
+			}
+			else
+				return (false);
+			}
+			}
+			}
+			}
+			}
+			return $flag;
+		}
+		
+		/* ************************************************************************
+		 CopiaDiretorio - Copia todo o conteudo de diretorio de origem para destino
+		Entrada: $origem - diretorio de origem
+		$destino - diretorio de destino
+		Saida: false - se houver algum erro
+		OBS.: se o arquivo a ser copiado ja existir no destino, entao ele e
+		sobrescrito.
+		para copiar o conteudo de /temp/arquivos/ para /final/arquivos/
+		use: $origem="/temp/arquivos/"
+		$destino="/final/"
+		*/
+		static function CopiaDiretorio($origem, $destino)
+		{
+			// Se a origem ou destino forem vazios retorna false
+			if (($origem == "") || ($destino == ""))
+				return false;
+		
+			// Variavel de retorno da funcao
+			$flag = true;
+		
+			// Resolve o caminho da origem
+			$origem = realpath($origem);
+			if ($origem === false)
+				return false;
+		
+			$origem = rtrim($origem, DIRECTORY_SEPARATOR);
+		
+			clearstatcache();
+		
+			// Se o caminho especificado nao existe, entao copiamos
+			// o diretorio com um novo nome (o nome de destino).
+			if (!Arquivos::ExisteArquivo($destino))
+			{
+				if (!Arquivos::CriaDiretorio($destino))
+					return (false);
+			}
+			else
+			{
+				// Se nao existir um diretorio com o nome da pasta
+				// a ser copiada da origem, criamo-na no destino.
+				$nome_dir = basename($origem);
+				$destino = $destino.DIRECTORY_SEPARATOR.$nome_dir;
+				if (!Arquivos::ExisteArquivo($destino))
+				if (!Arquivos::CriaDiretorio($destino))
+					return (false);
+			}
+		
+			clearstatcache();
+			// Listamos o conteudo da pasta
+			if (($c1 = glob($origem.DIRECTORY_SEPARATOR."*")) === false)
+				return (false);
+			// Listamos o conteudo oculto da pasta e, como sao listadas tambem
+			// '.' e '..', filtramos essas pastas relativas
+			if (($c2 = glob($origem.DIRECTORY_SEPARATOR.".*")) === false)
+				return (false);
+			$c2 = array_filter($c2, array('Arquivos', "FiltraDiretorioRelativos"));
+			// Concatenamos o resultado das listagens
+			$conteudo = array_merge($c1, $c2);
+			if (($total = count($conteudo)) > 0)
+			{
+				for ($i = 0; ($i < $total) && ($flag); $i++)
+				{
+				$nome_arquivo = basename($conteudo[$i]);
+				// Se for diretorio, copiamos recursivamente seus conteudos
+				clearstatcache();
+		
+				if (filetype($conteudo[$i]) == "dir")
+					$flag = Arquivos::CopiaDiretorio($conteudo[$i], $destino);
+					else
+					{
+					// Sendo arquivo, verificamos se nao houve erros na execucao
+					// anterior de algum comando. Caso o arquivo ja exista no caminho
+					// destino, entao o removemos e em seguida copiamos o arquivo.
+					if ($flag)
+					{
+					$dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
+						if (Arquivos::ExisteArquivo($dest))
+							$flag = Arquivos::RemoveArquivo($dest);
+		
+						// O teste aqui tambem e necessario para ver se 'RemoveArquivo'
+						// nao retornou false.
+						if ($flag)
+						{
+						$stat = Arquivos::RetornaStatusArquivo($conteudo[$i]);
+						if (copy($conteudo[$i], $dest))
+						{
+						if (!Arquivos::AlteraStatusArquivo($dest, $stat))
+							return (false);
+						}
+						else
+							return (false);
+						}
+						}
+						}
+						}
+						}
+							return $flag;
+						}
 }
 ?>

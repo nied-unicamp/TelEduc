@@ -300,9 +300,10 @@ function Descompactar(){
       getNumber=checks[i].id.split("_");
       arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');
       //if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
-      if (confirm('Você tem certeza de que deseja descompactar este arquivo? \n (o arquivo ZIP será apagado). \n importante: não é possível a descompactação de arquivos contendo pastas com espaços no nome. ')){ //TODO: texto hardcoded
+      if (confirm('Você tem certeza de que deseja descompactar este arquivo?')){ //TODO: texto hardcoded
     	  $.post('../../../app/agenda/models/abre_edicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
-    	    	    function(data){
+    	  function(data){
+    		  var code = $.parseJSON(data);
     	  });
         //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
         window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=descompactar&origem='+origem+'&arq='+arqZip;

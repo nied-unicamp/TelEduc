@@ -9,7 +9,7 @@ $ferramenta_administracao = 'administracao';
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $view_admin = '../../'.$ferramenta_admin.'/views/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
-$ctler_login = '../../'.$ferramenta_login.'/controllers/';
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 $diretorio_imgs = '../../../web-content/imgs/';
 $view_cadastro = '../../'.$ferramenta_cadastro.'/views/';
 
@@ -137,7 +137,7 @@ echo("                    ".Linguas::RetornaFraseDaLista($lista_frases,165)."\n"
 /*
  * === Formulario de Autenticacao (login) ===
 */
-echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctler_login."autenticacao_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
+echo("                        <form id=\"formAutentica\" name=\"formAutentica\" action=\"".$ctrl_login."autenticacao_cadastro.php\" onSubmit=\"return(TestaNome(document.formAutentica));\" method=\"post\" >\n");
 echo("                          <input type=\"hidden\" name=\"acao\" id=\"acao\" value=\"autenticar\" />\n");
 //echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"".$_GET['cod_curso']."\" />\n");
 echo("                          <input type=\"hidden\" name=\"cod_curso\" value=\"\" />\n");

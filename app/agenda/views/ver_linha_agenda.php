@@ -46,7 +46,7 @@ $ferramenta_administracao = 'administracao';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
 $model_agenda = '../../'.$ferramenta_agenda.'/models/';
-$ctler_agenda = '../../'.$ferramenta_agenda.'/controllers/';
+$ctrl_agenda = '../../'.$ferramenta_agenda.'/controllers/';
 $view_agenda = '../../'.$ferramenta_agenda.'/views/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $diretorio_jscss = '../../../web-content/js-css/';
@@ -97,6 +97,7 @@ $feedbackObject->addAction("retirar_entrada", 'Arquivo de entrada removido com s
 
 $dir_name = "agenda";
 $dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
+
 /* Verifica se o usuario eh formador. */
 $usr_formador = Usuarios::EFormador($sock, $cod_curso, $cod_usuario);
 $linha_item = Agenda::RetornaAgenda($sock, $cod_item);
@@ -136,14 +137,14 @@ echo("      function Ativar()\n");
 echo("      {\n");
 echo("        if(TemCertezaAtivar())\n");
 echo("        {\n");
-echo("          window.location='".$ctler_agenda."acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';\n");
+echo("          window.location='".$ctrl_agenda."acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';\n");
 echo("        }\n");
 echo("        return false;\n");
 echo("      }\n");
 
 echo("      function WindowOpenVer(id)\n");
 echo("      {\n");
-echo("         window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
+echo("         window.open(id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');\n");
 echo("      }\n\n");
 
 echo("      function Iniciar()\n");
@@ -545,14 +546,15 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   							$espacos="";
   							$espacos2="";
   							$temp=explode("/",$linha['Diretorio']);
-  							$nivel=count($temp)-1;
+  							$nivel=count($temp)-1;			
   							for ($c=0;$c<=$nivel;$c++){
   								$espacos.="&nbsp;&nbsp;&nbsp;&nbsp;";
   								$espacos2.="  ";
   							}
 
   							$caminho_arquivo = $dir_item_temp['link'].$linha['Diretorio']."/".$linha['Arquivo'];
-
+  							$caminho_arquivo = preg_replace("/\/\//", "/", $caminho_arquivo);
+  							
   							if ($linha['Arquivo'] != "")
   							{
 
@@ -661,7 +663,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				echo("                  </tr>\n");
   				echo("                  <tr>\n");
   				echo("                    <td align=left colspan=4>\n");
-  				echo("                      <form name=\"formFiles\" id=\"formFiles\" action='".$ctler_agenda."acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
+  				echo("                      <form name=\"formFiles\" id=\"formFiles\" action='".$ctrl_agenda."acoes_linha.php' method='post' enctype=\"multipart/form-data\">\n");
   				echo("                        <input type='hidden' name='cod_curso' value='".$cod_curso."' />\n");
   				echo("                        <input type='hidden' name='cod_item' value='".$cod_item."' />\n");
   				echo("                        <input type='hidden' name='acao' value='anexar' />\n");
@@ -708,4 +710,4 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			echo("  </body>\n");
   			echo("</html>\n");
   			AcessoSQL::Desconectar($sock);
-  			?>
+?>

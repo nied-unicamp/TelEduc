@@ -10,7 +10,7 @@ $model_geral = '../../'.$ferramenta_geral.'/models/';
 $model_administracao = '../../'.$ferramenta_administracao.'/models/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $view_login = '../../'.$ferramenta_login.'/views/';
-$ctler_login = '../../'.$ferramenta_login.'/controllers/';
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 $diretorio_imgs  = "../../../web-content/imgs/";
 
 require_once $model_geral.'geral.inc';
@@ -151,7 +151,7 @@ if($cod_usuario != 0)
 		$mensagem.=Linguas::RetornaFraseDaLista($lista_frases,103)." <big><em><strong>".$senha."</strong></em></big></p>\n";
 	}
 	$mensagem.="<p>".Linguas::RetornaFraseDaLista($lista_frases,104)."<br />\n";
-	$mensagem.="<a href=\"http://".$endereco.$ctler_login."index_curso.php?cod_curso=".$cod_curso."\">http://".$endereco.$ctler_login."index_curso.php?cod_curso=".$cod_curso."</a></p>\n\n";
+	$mensagem.="<a href=\"http://".$endereco.$ctrl_login."index_curso.php?cod_curso=".$cod_curso."\">http://".$endereco.$ctrl_login."index_curso.php?cod_curso=".$cod_curso."</a></p>\n\n";
 	$mensagem.="<p style=\"text-align:right;\">".Linguas::RetornaFraseDaLista($lista_frases,105).".</p><br />\n";
 
 

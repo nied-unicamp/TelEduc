@@ -10,7 +10,6 @@ $model_geral = '../../'.$ferramenta_geral.'/models/';
 $model_administracao = '../../'.$ferramenta_administracao.'/models/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $view_login = '../../'.$ferramenta_login.'/views/';
-$ctler_login = '../../'.$ferramenta_login.'/controllers/';
 $diretorio_imgs  = "../../../web-content/imgs/";
 
 require_once $model_geral.'geral.inc';

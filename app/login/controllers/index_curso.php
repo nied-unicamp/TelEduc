@@ -3,7 +3,7 @@ $ferramenta_geral = 'geral';
 $ferramenta_login = 'login';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
-$ctler_login = '../../'.$ferramenta_login.'/controllers/';
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 
 require_once $model_geral.'geral.inc';
 
@@ -49,6 +49,6 @@ Usuarios::MarcaAcesso($sock,$cod_usuario,"");
 AcessoSQL::Desconectar($sock);
 
 
-header('Location:'.$ctler_login.'index_curso2.php?cod_curso='.$cod_curso.'&prosseguir=true') 
+header('Location:'.$ctrl_login.'index_curso2.php?cod_curso='.$cod_curso.'&prosseguir=true') 
 
 ?>

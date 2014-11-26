@@ -427,7 +427,10 @@ class Menu {
          * Ferramenta 19 - Intermap
          * Ferramenta 22 - Avaliacoes
          */
-
+		
+    	$diretorio_view = '/views';
+    	$diretorio_imgs = '../../../web-content/imgs/';
+    	
         /* Verifica se a ferramenta atual é a que esta selecionada */
         if ($cod_ferr == $cod_ferramenta)
             $style .= "Selecionada ";
@@ -445,13 +448,13 @@ class Menu {
         echo("              <div>\n");
 
         if ($cod_ferr == 15)
-            echo("                <a class=\"" . $style . "\" href=\"../" . $diretorio . "/ver_" . $diretorio . ".php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferr . "&amp;exibir=myp\" >");
+            echo("                <a class=\"" . $style . "\" href=\"../../" . $diretorio . $diretorio_view ."/ver_" . $diretorio . ".php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferr . "&amp;exibir=myp\" >");
         else
-            echo("                <a class=\"" . $style . "\" href=\"../" . $diretorio . "/" . $diretorio . ".php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferr . "\">");
+            echo("                <a class=\"" . $style . "\" href=\"../../" . $diretorio . $diretorio_view. "/" . $diretorio . ".php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "&amp;cod_ferramenta=" . $cod_ferr . "\">");
 
         /* Coloca estrela se houver novidade */
         if ($novidades)
-            echo("<img src='../../../web-content/estrelinha.gif' border=\"0\" alt=\"\" />");
+            echo("<img src='".$diretorio_imgs."estrelinha.gif' border=\"0\" alt=\"\" />");
 
         echo($nome_ferramenta . "\n");
         echo("                </a>\n");

@@ -795,6 +795,130 @@ class Agenda {
         $res = AcessoSQL::Enviar($sock, $consulta);
         return($res);
     }
+    
+    /*verificar para q serve cada item desses e arrumar os comentarios.
+     /* *********************************************************************
+    RetornaAgenda - Retorna a agenda dada
+    Entrada: $sock - BASE Interna
+    Saida: array ['cod_item'] - codigo do agenda
+    ['cod_usuario'] - codigo do usuario
+    ['titulo'] - Titulo da agenda
+    ['texto'] - Texto
+    ['situacao'] - situacao A,N,H
+    ['data']
+    ['data_ativo']
+    ['data_inativo']
+    ['status']
+    ['inicio_edicao']
+    */
+    
+    static function RetornaAgendaCurso($sock)
+    {
+    	$query="select * from Agenda_itens";
+    	$res=AcessoSQL::Enviar($sock,$query);
+    	$linha=AcessoSQL::RetornaArrayLinhas($res);
+    	return $linha;
+    }
+    
+    /* *********************************************************************
+     ImportarAgenda - Retorna a agenda dada
+    Entradas: $cod_usuario
+    $cod_curso_destino
+    $cod_itens
+    $cod_curso_origem
+    $diretorio_origem
+    $diretorio_destino
+    $diretorio_temp
+    Saida: booleano - true caso a importacao tenha sido um sucesso
+    false caso tenha ocorrido algum erro
+    */
+    static function ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens, $cod_curso_origem, $diretorio_origem, $diretorio_destino, $diretorio_temp)
+    {
+    	if(trim($diretorio_origem) == "" || trim($diretorio_destino) == "" || trim($diretorio_temp) == "" ||
+    	$cod_curso_origem == "" || $cod_itens == "" || $cod_curso_destino == "" )
+    		return false;
+    
+    	foreach($cod_itens as $cod => $cod_item)
+    	{
+    		$ret = true;
+    		/*pega item a ser importado!*/
+    		$sock = AcessoSQL::Conectar($cod_curso_origem);
+    		$query = "select * from Agenda_itens where cod_item =".ConversorTexto::VerificaNumeroQuery($cod_item);
+    		$id = AcessoSQL::Enviar($sock, $query);
+    		$item_import = AcessoSQL::RetornaLinha($id);
+    		AcessoSQL::Desconectar($sock);
+    
+    		/*insere item na base de dados do curso destino*/
+    		$sock = AcessoSQL::Conectar($cod_curso_destino);
+    		/*cria um item vazio na agenda do curso destino!*/
+    		$cod_item_dest = Agenda::IniciaCriacao($sock, $cod_usuario, $cod_curso_destino, $diretorio_temp, $item_import['titulo'], $item_import['texto']);
+    		AcessoSQL::MudarDB($sock,$cod_curso_origem,$opt);
+    
+    		/*Copia arquivo do diretorio de origem para o temp do curso destino!*/
+    		/* Checa se existem arquivos no diretorio */
+    		/*e necessario futuramente fazer uma verificao melhor dos erros, com a utilizacao de codigos de erro. usando
+    		 o modelo atual e impossivel determinar qual foi o erro no termino da funcao*/
+    		$array_dest=Arquivos::RetornaArrayDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item);
+    		if ($ret && count($array_dest)!=0)
+    		{
+    			$ret = Arquivos::CriaDiretorio($diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");
+    			if($ret)
+    				$ret = Arquivos::CopiaArquivosDiretorio($diretorio_origem."/".$cod_curso_origem."/agenda/".$cod_item."/", $diretorio_destino."/".$cod_curso_destino."/agenda/".$cod_item_dest."/");
+    		}
+    		/*
+    		 if($ret)
+    			{
+    		MudarDB($sock,$cod_curso_destino);
+    		//faz a copia(Importacao) de fato!
+    		$ret = AtualizaAgenda($sock, $cod_curso_destino, $cod_item_dest, $item_import['titulo'], $item_import['texto'],
+    				'N', $diretorio_destino, $diretorio_temp, $cod_usuario);
+    		}
+    		else
+    			return $ret;
+    		*/
+    		AcessoSQL::Desconectar($sock);
+    	}
+    	return $ret;
+    }
+    
+    /**************************************************************************************
+     RetornaNumArquivosVisiveis - Retorna o n\FAmero de arquivos visiveis ao usuario
+    Entrada: $lista_arq - lista ed arquivos
+    Saida: array com lista de arquivos
+    ***************************************************************************************/
+    static function RetornaNumArquivosVisiveis($lista_arq)
+    {
+    	$conta_arq=0;
+    
+    	if (count($lista_arq)>0)
+    	{
+    		foreach($lista_arq as $cod => $linha){
+    			if((!$linha['Status']) &&  ($linha['Arquivo']!="")) {
+    				$conta_arq++;
+    			}
+    		}
+    
+    	}
+    	return($conta_arq);
+    }
+    
+    /************************************************************************************************************
+     haArquivosVisiveisDir - verifica se ha arquivo visivel dentro da pasta
+    Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
+    Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
+    *************************************************************************************************************/
+    static function haArquivosVisiveisDir($dir, $lista_arq_vis){
+    	foreach($lista_arq_vis as $cod => $linha)
+    	{
+    		if(!($linha['Status'])){
+    			if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+    				return true;
+    			}
+    		}
+    	}
+    
+    	return false;
+    }
 
 }
 

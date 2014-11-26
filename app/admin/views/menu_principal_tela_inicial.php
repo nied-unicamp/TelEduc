@@ -15,7 +15,7 @@ $ferramenta_admin = 'admin';
 $ferramenta_cadastro = 'cadastro';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
-$ctlr_login = '../../'.$ferramenta_login.'/controllers/';
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 $view_login = '../../'.$ferramenta_login.'/views/';
 $diretorio_imgs  = "../../../web-content/imgs/";
 $view_admin = '../../'.$ferramenta_admin.'/views/';
@@ -56,7 +56,7 @@ echo("          <ul id=\"nav3nivel\">\n");
   if(empty($_SESSION['login_usuario_s']))
     echo("              <li class=\"visoes\"><a href=\"".$view_login."autenticacao_cadastro.php\">Login</a></li>\n");
   else
-    echo("              <li class=\"visoes\"><a href=\"".$ctlr_login."logout.php\">Logout</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"".$ctrl_login."logout.php\">Logout</a></li>\n");
   echo("            </map>\n");
   echo("          </ul>\n");
 

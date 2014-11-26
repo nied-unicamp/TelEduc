@@ -10,7 +10,7 @@ $model_geral = '../../'.$ferramenta_geral.'/models/';
 $model_administracao = '../../'.$ferramenta_administracao.'/models/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $view_login = '../../'.$ferramenta_login.'/views/';
-$ctler_login = '../../'.$ferramenta_login.'/controllers/';
+$ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 
 require_once $model_geral.'geral.inc';
 require_once $model_geral.'inicial.inc';
@@ -141,7 +141,7 @@ else
 
 		echo("                  <tr>\n");
 		echo("                    <td class=\"alLeft\">\n");
-		echo("                      <a href=\"".$ctler_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
+		echo("                      <a href=\"".$ctrl_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
 		echo("                    </td>\n");
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 
@@ -193,7 +193,7 @@ else
 
 		echo("                  <tr>\n");
 		echo("                    <td class=\"alLeft\">\n");
-		echo("                      <a href=\"".$ctler_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
+		echo("                      <a href=\"".$ctrl_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
 		echo("                    </td>\n");
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 
@@ -246,7 +246,7 @@ else
 
 		echo("                  <tr>\n");
 		echo("                    <td class=\"alLeft\">\n");
-		echo("                      <a href=\"".$ctler_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
+		echo("                      <a href=\"".$ctrl_login."index_curso.php?cod_curso=".$lista_cursos[$num]['cod_curso']."\">".$lista_cursos[$num]['nome_curso']."</a>");
 		echo("                    </td>\n");
 		echo("                    <td align=\"center\" valign=\"top\" class=\"botao2\">\n");
 

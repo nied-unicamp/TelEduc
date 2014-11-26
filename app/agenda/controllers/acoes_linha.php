@@ -23,6 +23,7 @@ $model_agenda = '../../'.$ferramenta_agenda.'/models/';
 $view_agenda = '../../'.$ferramenta_agenda.'/views/';
 
 require_once $model_geral.'geral.inc';
+require_once $model_geral.'importar.inc';
 require_once $model_agenda.'agenda.inc';
 
 $cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
@@ -80,8 +81,6 @@ if ($acao=="criarAgenda")
 
 if ($acao=='anexar'){
 	
-	$cod_item = $_POST['cod_item'];
-
 	$atualizacao = "true";
 
 	// Analisa nome do arquivo
@@ -122,7 +121,6 @@ if ($acao=='anexar'){
 	/* ação = Ativar agenda - origem = ver_editar.php */
 if ($acao=="ativaragenda")
 {
-	$cod_item=$_GET['cod_item'];
 	$atualizacao = "true";
 	Agenda::AtivarAgenda($sock, $cod_item, $cod_usuario);
 	
@@ -132,6 +130,7 @@ if ($acao=="ativaragenda")
 	
 if ($acao=="apagarSelecionados")
 {
+	$origem = $_POST['origem'];
 	$cod_itens = $_POST['cod_itens'];
 	$atualizacao = "true";
 	
@@ -146,12 +145,11 @@ if ($acao=="apagarSelecionados")
 	}
 	
 	AcessoSQL::Desconectar($sock);
-	header("Location:".$view_agenda.$origem.".php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
+	header("Location:".$view_agenda."ver_editar.php?cod_curso=".$cod_curso."&acao=".$acao."&atualizacao=".$atualizacao);
 }
 	
 if ($acao=="apagarItem")
 {
-	$cod_item = $_GET['cod_item'];
 	$atualizacao = "true";
 	Agenda::ApagarItem($sock,$cod_item,$cod_curso,$cod_usuario,$diretorio_arquivos,$diretorio_temp);
 	
@@ -161,7 +159,6 @@ if ($acao=="apagarItem")
 	
 else if ($acao=="descompactar")
 {
-	$cod_item = $_GET['cod_item'];
 	$arq = $_GET['arq'];
 	
     $atualizacao = "true";
@@ -188,5 +185,67 @@ else if ($acao=="descompactar")
     Agenda::AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);
     AcessoSQL::Desconectar($sock);
     header("Location:".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
+}
+else if ($acao == "validarImportacao"){
+	
+	$cod_topico_raiz = $_GET['cod_topico_raiz'];
+	$cod_curso_todos = $_GET['cod_curso_todos'];
+	$cod_ferramenta = $_GET['cod_ferramenta'];
+	
+	$sock = AcessoSQL::MudarDB($sock, "");
+	$cod_cursos = explode(";", $cod_curso_todos);
+	$tipo_curso_origem = $cod_cursos[0]; // B = Base, E = Extraido
+	$cod_curso_origem = $cod_cursos[1];
+	 
+	$_SESSION['cod_topico_destino'] = $cod_topico_raiz;
+	$_SESSION['cod_curso_origem'] = $cod_curso_origem;
+	$_SESSION['flag_curso_extraido'] = ($tipo_curso_origem == 'E');
+	 
+	 
+	if($cod_curso_origem)
+	{
+		$cod_usuario_import = Usuarios::RetornaCodigoUsuarioCurso($sock, $cod_usuario_global, $cod_curso_origem);
+
+		if ( Importar::FerramentaEstaCompartilhada($sock, $cod_curso_origem, $cod_ferramenta) ){
+			$_SESSION['flag_curso_compartilhado'] = TRUE;
+			header("Location:".$view_agenda."importar_agenda.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+		} else if ( $cod_usuario_import != NULL && Usuarios::EFormadorMesmo($sock,$cod_curso_origem,$cod_usuario_import) ){
+			$_SESSION['flag_curso_compartilhado'] = FALSE;
+			header("Location:".$view_agenda."importar_agenda.php?cod_curso=".$cod_curso."&cod_assunto_pai=1&cod_curso_origem=".$cod_curso_origem);
+		} else {
+			header("Location:".$view_agenda."importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=".$acao."&atualizacao=false");
+		}
+	}
+	else
+		header("Location:".$view_agenda."importar_curso.php?cod_curso=".$cod_curso."&cod_topico_raiz=".$cod_topico_raiz."&acao=ErroImportacao&atualizacao=false");
+	 
+}
+else if ($acao == "importarItem"){
+	 
+	$cod_curso_destino = $cod_curso;
+	$cod_topico_destino = $_SESSION['cod_topico_destino'];
+	$cod_curso_origem = $_SESSION['cod_curso_origem'];
+	$flag_curso_extraido = $_SESSION['flag_curso_extraido'];
+	$flag_curso_compartilhado = $_SESSION['flag_curso_compartilhado'];
+	$array_topicos_origem = $cod_assunto;
+	$array_itens_origem = $cod_pergunta;
+	$dirname = "agenda";
+	$nome_tabela = "Agenda";
+	$cod_itens_import = $_POST['cod_itens_import'];
+	 
+	$sock=AcessoSQL::Conectar("");
+	if ($curso_extraido)
+		$diretorio_arquivos_origem = Agenda::RetornaDiretorio($sock, 'Montagem');
+	else
+		$diretorio_arquivos_origem = Agenda::RetornaDiretorio($sock, 'Arquivos');
+
+	// Raiz do diretorio de arquivos do curso PARA O QUAL serao importados
+	// os itens.
+	$diretorio_arquivos_destino = Agenda::RetornaDiretorio($sock, 'Arquivos');
+	$diretorio_temp = Agenda::RetornaDiretorio($sock, 'ArquivosWeb');
+
+	Agenda::ImportarAgenda($cod_usuario, $cod_curso_destino, $cod_itens_import, $cod_curso_origem, $diretorio_arquivos_origem, $diretorio_arquivos_destino, $diretorio_temp);
+
+	header("Location:".$view_agenda."ver_editar.php?cod_curso=".$cod_curso."&cod_ferramenta=".$cod_ferramenta."&cod_assunto_pai=".$cod_topico_destino."&acao=".$acao."&atualizacao=true");
 }
 ?>
