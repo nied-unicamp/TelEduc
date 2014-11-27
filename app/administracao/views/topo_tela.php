@@ -65,7 +65,7 @@ $sock=AcessoSQL::Conectar($cod_curso);
 Usuarios::VerificaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, $cod_ferramenta);
 Usuarios::MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
- echo("<!DOCTYPE HTML zSYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
+ echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
   echo("<html lang=\"pt\">\n");
   echo("  <head>\n");
   echo("    <title>TelEduc - ".$tela_lista_titulos[$cod_ferramenta]."</title>\n");
@@ -117,9 +117,6 @@ Usuarios::MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
     foreach ($estilos_css as $css){
       echo("    <link href=\"".$css."\" rel=\"stylesheet\" type=\"text/css\">\n");
-      echo("<style>");
-      echo("a { color:#2a6686; text-decoration:none; font-weight:bold; font-size:0.7em; }");
-      echo("</style>");
     }
 
     foreach ($codigos_js as $js){

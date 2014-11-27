@@ -12,6 +12,7 @@
 $ferramenta_geral = 'geral';
 $ferramenta_login = 'login';
 $ferramenta_admin = 'admin';
+$ferramenta_administracao = 'administracao';
 $ferramenta_cadastro = 'cadastro';
 
 $model_geral = '../../'.$ferramenta_geral.'/models/';
@@ -21,6 +22,7 @@ $diretorio_imgs  = "../../../web-content/imgs/";
 $view_admin = '../../'.$ferramenta_admin.'/views/';
 $diretorio_imgs  = "../../../web-content/imgs/";
 $view_cadastro = '../../'.$ferramenta_cadastro.'/views/';
+$view_administracao = '../../'.$ferramenta_administracao.'/views/';
 
 require_once $model_geral.'geral.inc';
 //$_SESSION['cod_usuario_global_s'] = -1;
@@ -116,11 +118,11 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
     }
   echo("          </ul><ul id=\"nav\">");
   echo("            <div class=\"navCabecalho\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</div>\n");
-  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=I\">".Linguas::RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
-  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=N\">".Linguas::RetornaFraseDaLista($lista_frases,192)."</a></li>\n");
-  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=A\">".Linguas::RetornaFraseDaLista($lista_frases,171)."</a></li>\n");
-  echo("            <li><a href=\"".$link."cursos_all.php?tipo_curso=F\">".Linguas::RetornaFraseDaLista($lista_frases,173)."</a></li>\n");
-  echo("            <li><a href=\"".$link."criar_curso.php\">".Linguas::RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=I\">".Linguas::RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=N\">".Linguas::RetornaFraseDaLista($lista_frases,192)."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=A\">".Linguas::RetornaFraseDaLista($lista_frases,171)."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=F\">".Linguas::RetornaFraseDaLista($lista_frases,173)."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."criar_curso.php\">".Linguas::RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
   echo("          </ul>\n");
   echo("        </td>\n");
   echo("      </tr>\n");
