@@ -78,8 +78,9 @@ $feedbackObject->addAction("validarImportacao", 0, 'Importar selecionados');
 //$feedbackObject->addAction("ErroImportacao", 0, 112);
 $feedbackObject->addAction("ErroImportacao", 0, 'Erro ao Importar, favor selecionar uma opção!');
 
-echo ("    <script type=\"text/javascript\" src=\"../js-css/dhtmllib.js\"></script>\n");
-echo ("    <script type=\"text/javascript\" language=javascript src=\"../bibliotecas/javacrypt.js\"></script>\n");
+echo ("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."dhtmllib.js\"></script>\n");
+echo ("    <script type=\"text/javascript\" language=javascript src=\"".$diretorio_jscss."javacrypt.js\"></script>\n");
+echo("	   <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
 
 DataJavaScript::GeraJSVerificacaoData();
 DataJavaScript::GeraJSComparacaoDatas();
@@ -98,8 +99,7 @@ if ($tipo_curso == 'E') {
 
 	// Valida as datas (inicial e final) do periodo
 
-	echo ("      function Valida()\n");
-	echo ("      {\n");
+	echo("	function Valida(){\n");
 	echo ("        hoje = '" . Data::UnixTime2Data(time()) . "';\n\n");
 
 	echo ("        if (ComparaData(document.getElementById('data_inicio'), document.getElementById('data_fim')) > 0)\n");
@@ -124,8 +124,30 @@ if ($tipo_curso == 'E') {
 	echo ("        while(select.length>0){\n");
 	echo ("          select.removeChild(select.firstChild);\n");
 	echo ("        }\n");
-	echo ("        xajax_AlterarPeriodoDinamic(xajax.getFormValues('frmAlteraPeriodo'));\n");
-	echo ("      }\n\n");
+	echo("					$.ajax({\n");
+	echo("					type: 'post',\n");
+	echo("					url: '".$model_geral."alterar_periodo.php',\n");
+	echo("					data: $('#frmAlteraPeriodo').serialize(),\n");
+	echo("					success: function(data) {\n");
+	echo("						var flag = $.parseJSON(data);\n");
+	echo("							var y;\n");
+	echo("							$.each(flag.cod_curso_todos, function(key, value){\n");
+	echo("								var frase = document.frmAlteraPeriodo.extraido.value;\n");
+	echo("								y= document.createElement('option');\n");
+	echo("								y.innerHTML=value.nome_curso + (value.status=='E' ? frase:'');\n");
+	echo("								y.value=value.status + ';' + value.cod_curso;\n");
+	echo("								document.getElementById('cod_curso_todos').appendChild(y);");
+	echo("							});\n");
+	echo("							$.each(flag.cod_curso_todos, function(key, value){\n");
+	echo("								var frase = document.frmAlteraPeriodo.extraido.value;\n");
+	echo("								y= document.createElement('option');\n");
+	echo("								y.innerHTML=value.nome_curso + (value.status=='E' ? frase:'');\n");
+	echo("								y.value=value.status + ';' + value.cod_curso;\n");
+	echo("								document.getElementById('cod_curso_compart').appendChild(y);");
+	echo("							});\n");
+	echo("					}\n");
+	echo("					});\n");
+	echo("	}\n");
 } else {
 	echo ("    <script type=\"text/javascript\">\n\n");
 }
@@ -209,9 +231,9 @@ if (!$tela_formador) {
 	echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
 	echo ("          <div id=\"mudarFonte\">\n");
-	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../imgs/btFont1.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../imgs/btFont2.gif\"/></a>\n");
-	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../imgs/btFont3.gif\"/></a>\n");
+	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
+	echo ("            <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"".$diretorio_imgs."btFont2.gif\"/></a>\n");
+	echo ("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"".$diretorio_imgs."btFont3.gif\"/></a>\n");
 	echo ("          </div>\n");
 
 	echo ("        </td>\n");
@@ -327,6 +349,7 @@ if ('E' == $tipo_curso) {
 
 	echo ("                      <td>\n");
 	echo ("                        <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action=\"\" onsubmit=\"Valida(); return false;\">\n");
+	//echo ("                        <form name=\"frmAlteraPeriodo\" id=\"frmAlteraPeriodo\" method=\"post\" action=\"\">\n");
 	// Passa o codigo do curso.
 	echo ("                          <input type=\"hidden\" name=\"cod_curso\"      value='" . $cod_curso . "' />\n");
 	// Passa o codigo da categoria dos cursos listados .
@@ -338,10 +361,10 @@ if ('E' == $tipo_curso) {
 	// 46(biblioteca) - (extraido)
 	echo ("                          <input type=\"hidden\" name=\"extraido\"       value='" . Linguas::RetornaFraseDaLista($lista_frases_biblioteca, 46) . "' />\n");
 	// 41(biblioteca) - De:
-	echo ("                " . Linguas::RetornaFraseDaLista($lista_frases_biblioteca, 41) . " <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size=\"10\" maxlength=\"10\" value='" . $data_inicio . "' class=\"input\" /><img src='../imgs/ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" /><br />");
+	echo ("                " . Linguas::RetornaFraseDaLista($lista_frases_biblioteca, 41) . " <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size=\"10\" maxlength=\"10\" value='" . $data_inicio . "' class=\"input\" /><img src='".$diretorio_imgs."ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" /><br />");
 	// 42(biblioteca) - Ate:
 	echo ("                " . Linguas::RetornaFraseDaLista($lista_frases_biblioteca, 42) . "\n");
-	echo ("                          <input type=\"text\" id=\"data_fim\" name=\"data_fim\" size=\"10\" maxlength=\"10\" value='" . $data_fim . "' class='input' /><img src='../imgs/ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
+	echo ("                          <input type=\"text\" id=\"data_fim\" name=\"data_fim\" size=\"10\" maxlength=\"10\" value='" . $data_fim . "' class='input' /><img src='".$diretorio_imgs."ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
 	echo ("                          <p style=\"text-align:center;\">\n");
 	// 43(biblioteca) - Alterar Periodo
 	echo ("                            <input type=\"submit\" class=\"input\" value=\"" . Linguas::RetornaFraseDaLista($lista_frases_biblioteca, 43) . "\" />\n");

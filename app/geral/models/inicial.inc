@@ -496,6 +496,311 @@ class Inicial{
 	
 		return $objResponse;
 	}
+	
+	/* ****************************************************************************************
+	 RetornaPastasDeCursos - Retorna uma array com as pastas em que os cursos estao divididos
+	(somente as pastas que contem algum curso)
+	Entrada: $sock - sock Base Externa
+	$tipo_curso - tipo do curso
+	'A' - Em andamento
+	'I' - com inscricoes aberta
+	'E' - Encerrados
+	Saida: array com []['cod_pasta']
+	[]['pasta']
+	[]['num_cursos']
+	*/
+	static function RetornaPastasDeCursos($sock,$tipo_curso)
+	{
+		$lista_frases = Linguas::RetornaListaDeFrases($sock, -3);
+	
+		$hoje=time();
+		$ontem=$hoje - 86400;
+	
+		if($tipo_curso=='N')
+			$where="(C.curso_inicio > ".time()." or C.curso_inicio is NULL)";
+		else if ($tipo_curso=='A')
+			$where="C.curso_inicio<=".$hoje." and C.curso_fim>=".$ontem;
+		else if ($tipo_curso=='I')
+			$where="C.inscricao_inicio<=".$hoje." and C.inscricao_fim>=".$ontem;
+		else
+			$where="C.curso_fim<".$ontem;
+	
+		$query="select CP.cod_pasta,CP.pasta,count(*) 'num_cursos' from Cursos_pastas as CP, Cursos as C where CP.cod_pasta=C.cod_pasta and ".$where." group by CP.cod_pasta order by CP.pasta";
+		$res=AcessoSQL::Enviar($sock,$query);
+		$lista=AcessoSQL::RetornaArrayLinhas($res);
+	
+		$query="select count(*) from Cursos C where C.cod_pasta IS NULL and ".$where;
+		$res=AcessoSQL::Enviar($sock,$query);
+		$linha=AcessoSQL::RetornaLinha($res);
+	
+		if ($linha[0]>0)
+		{
+			$cont=count($lista);
+			$lista[$cont]['cod_pasta']="NULL";
+			/* 115 - Cursos gerais */
+			$lista[$cont]['pasta']=Linguas::RetornaFraseDaLista($lista_frases,115);
+			$lista[$cont]['num_cursos']=$linha[0];
+		}
+	
+		return ($lista);
+	}
+	
+	/* **********************************************************************
+	 RetornaListaDeCursos - Retorna a lista de cursos dado o tipo
+	Entrada: $sock - sock da base externa
+	$tipo_curso - tipo do curso
+	'N' - Nao iniciado
+	'A' - Em andamento
+	'I' - com inscricoes aberta
+	'E' - Encerrados
+	$cod_pasta - codigo da pasta a qual pertence os cursos a serem retornados
+	Saida: array []['cod_curso']
+	[]['nome_curso']
+	[]['inscricao_inicio']
+	[]['inscricao_fim']
+	[]['acesso_visitante'] - 'A' se aceita, 'N' se nao
+	*/
+	static function RetornaListaDeCursos($sock,$tipo_curso,$cod_pasta)
+	{
+		$hoje=time();
+		$ontem=$hoje - 86400;
+	
+		if($tipo_curso=='N')
+			$where="(curso_inicio > ".time()." or curso_inicio is NULL)";
+		else if ($tipo_curso=='A')
+			$where="curso_inicio<=".$hoje." and curso_fim>=".$ontem;
+		else if ($tipo_curso=='I')
+			$where="inscricao_inicio<=".$hoje." and inscricao_fim>=".$ontem;
+		else
+			$where="curso_fim<".$ontem;
+	
+		if ($cod_pasta=="NULL" || $cod_pasta=="")
+			$pasta="cod_pasta IS NULL";
+		else
+			$pasta="cod_pasta=".ConversorTexto::VerificaNumeroQuery($cod_pasta);
+	
+		$query="select cod_curso,nome_curso,inscricao_inicio,inscricao_fim,acesso_visitante from Cursos where ".$pasta." and ".$where." order by nome_curso";
+	
+		$res=AcessoSQL::Enviar($sock,$query);
+		$lista=AcessoSQL::RetornaArrayLinhas($res);
+	
+		if (count($lista)>0 && $lista != "")
+		{
+			$c=0;
+			foreach($lista as $cod => $linha)
+				$lista_saida[$c++]=$linha;
+		}
+		else
+			$lista_saida=$lista;
+	
+		return ($lista_saida);
+	}
+	
+	/********************************************************************
+	 Funcao ParticipaDoCurso - Verifica se o usuario participa do curso
+	Entradas:  $cod_curso - codigo do curso
+	Saida:    'true' se o usuario pertence ao curso; 'false', caso contrario.
+	Caso o usuario nao esteja logado, retornamos 'null'.
+	********************************************************************/
+	
+	static function ParticipaDoCurso($cod_curso)
+	{
+		if(!empty($_SESSION['cod_usuario_global_s']))
+		{
+			$sock = AcessoSQL::Conectar("");
+			//caso o usuario esteja logado, ve quais cursos ele possui acesso
+			$meus_cursos = Inicial::RetornaTodosCursosUsuario($sock);
+			AcessoSQL::Desconectar($sock);
+			if($meus_cursos=="") $meus_cursos=array();
+			$tem_acesso_curso = false;
+	
+			//admtele tem acesso a todos os cursos
+			if($_SESSION['cod_usuario_global_s'] == -1)
+				$tem_acesso_curso = true;
+			else
+			{
+				foreach ($meus_cursos as $meu_curso)
+				{
+					if($meu_curso['cod_curso'] == $cod_curso) {
+						$tem_acesso_curso = true;
+						break;
+					}
+				}
+			}
+	
+			return $tem_acesso_curso;
+		}
+		else
+			//caso contrario, retornamos null, indicando a impossibilidade de determinar se o usuario pertence ou nao ao curso
+			return null;
+	}
+	
+	/********************************************************************
+	 Funcao RetornaTodosCursosUsuario - Retorna todos os codigos dos cursos que o usuario tem algum vinculo
+	Entradas: $sock - sock de conexao a base geral
+	Saida:    array contendo os codigos dos cursos que o usuario tem algum vinculo
+	********************************************************************/
+	static function RetornaTodosCursosUsuario($sock)
+	{
+		$query  = "SELECT CUR.cod_curso ";
+		$query .= "FROM Usuario USU ";
+		$query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+		$query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+		$query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";// and ";
+		// Se o usuario tentou se incriver em um curso, mas sua inscricao foi cancelada, ele nao possui vinculo com aquele curso.
+		//$query .= "      USUC.tipo_usuario <> 'r'";
+	
+		$res = AcessoSQL::Enviar($sock, $query);
+	
+		return AcessoSQL::RetornaArrayLinhas($res);
+	}
+	
+	/********************************************************************
+	 Funcao RejeitadoDoCurso - Verifica se o usuario foi rejeitado do curso
+	Entradas:  $cod_curso - codigo do curso
+	Saida:    'true' se o usuario foi rejeitado do curso; 'false', caso contrario.
+	Caso o usuario nao esteja logado, retornamos 'null'.
+	********************************************************************/
+	
+	static function RejeitadoDoCurso($cod_curso)
+	{
+		if(!empty($_SESSION['cod_usuario_global_s']))
+		{
+			$sock = AcessoSQL::Conectar("");
+			//caso o usuario esteja logado, ve quais cursos ele possui acesso
+			$meus_cursos = Inicial::RetornaTodosCursosETipoUsuarioDeUsuario($sock);
+			AcessoSQL::Desconectar($sock);
+			if($meus_cursos=="") $meus_cursos=array();
+			$rejeitado_curso = false;
+	
+			//admtele tem acesso a todos os cursos
+			//if($_SESSION['cod_usuario_global_s'] == -1)
+			//  $tem_acesso_curso = true;
+			//else
+			//{
+			foreach ($meus_cursos as $meu_curso)
+			{
+				if($meu_curso['cod_curso']    == $cod_curso &&
+				$meu_curso['tipo_usuario'] == 'r') {
+					$rejeitado_curso = true;
+					break;
+				}
+	
+			}
+			//}
+	
+			return $rejeitado_curso;
+			}
+			else
+				//caso contrario, retornamos null, indicando a impossibilidade de determinar se o usuario pertence ou nao ao curso
+				return null;
+	}
+	
+	/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	 Funcao RetornaTodosCursosETipoUsuarioDeUsuario - Retorna todos os codigos dos cursos que o usuario tem algum vinculo e o tipo de usuario no curso
+	Entradas: $sock - sock de conexao a base geral
+	Saida:    array contendo os codigos dos cursos que o usuario tem algum vinculo e o tipo de usuario no curso
+	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+	static function RetornaTodosCursosETipoUsuarioDeUsuario($sock)
+	{
+		$query  = "SELECT CUR.cod_curso, USUC.tipo_usuario ";
+		$query .= "FROM Usuario USU ";
+		$query .= "INNER JOIN Usuario_curso USUC on (USUC.cod_usuario_global = USU.cod_usuario) ";
+		$query .= "INNER JOIN Cursos CUR on (CUR.cod_curso = USUC.cod_curso) ";
+		$query .= "WHERE USU.cod_usuario = '".$_SESSION['cod_usuario_global_s']."'";
+	
+		$res = AcessoSQL::Enviar($sock, $query);
+	
+		return AcessoSQL::RetornaArrayLinhas($res);
+	}
+	
+	/* **********************************************************************
+	 Funcao StatusUsuarioNoCurso - Retorna a condicao do usuario no curso
+	Entradas: $cod_curso - codigo do curso
+	Saida: String com a condicao do usuario
+	*************************************************************************/
+	
+	static function StatusUsuarioNoCurso($sock, $cod_curso){
+		$lista_frases = Linguas::RetornaListaDeFrases($sock,-3);
+		$status_usuario = Inicial::RetornaTipoUsuario($sock, $cod_curso);
+		if ($status_usuario == NULL)
+			return Linguas::RetornaFraseDaLista($lista_frases,232);
+	
+		switch ($status_usuario['tipo_usuario']){
+			case "i":
+				/* 224 - Aluno Inscrito */
+				return Linguas::RetornaFraseDaLista($lista_frases,224);
+			case "a":
+				/* 234 - Aluno desligado */
+				return Linguas::RetornaFraseDaLista($lista_frases,234);
+			case "r":
+				/* 225 - Aluno nao aceito */
+				return Linguas::RetornaFraseDaLista($lista_frases,225);
+			case "A":
+				/* 226 - Aluno aceito */
+				return Linguas::RetornaFraseDaLista($lista_frases,226);
+			case "f":
+				/* 228 - Formador desligado */
+				return Linguas::RetornaFraseDaLista($lista_frases,228);
+			case "F":
+				/* 227 - Formador */
+				return Linguas::RetornaFraseDaLista($lista_frases,227);
+			case "z":
+				/* 229 - Colaborador desligado*/
+				return Linguas::RetornaFraseDaLista($lista_frases,229);
+			case "Z":
+				/* 231 - Colaborador */
+				return Linguas::RetornaFraseDaLista($lista_frases,231);
+			case "v":
+				/* 233 - Vistante desligado */
+				return Linguas::RetornaFraseDaLista($lista_frases,233);
+			case "V":
+				/* 230 - Visitante */
+				return Linguas::RetornaFraseDaLista($lista_frases,230);
+		}
+	}
+	
+	/********************************************************************
+	 Funcao RetornaTipoUsuario - Retorna o tipo_usuario da tabela Usuario_curso
+	Entradas: $cod_curso - codigo do curso
+	Saida: Flag de tipo_usuario
+	*********************************************************************/
+	
+	static function RetornaTipoUsuario($sock, $cod_curso){
+	
+		$query  = "SELECT tipo_usuario ";
+		$query .= "FROM Usuario_curso ";
+		$query .= "WHERE cod_usuario_global = '".$_SESSION["cod_usuario_global_s"]."' AND ";
+		$query .= "      cod_curso = '".$cod_curso."'";
+	
+		$res = AcessoSQL::Enviar($sock, $query);
+	
+		return AcessoSQL::RetornaLinha($res);
+	}
+	
+	/* **********************************************************************
+	 RetornaDadosMostraCurso - Retorna os dados do curso dado
+	Entrada: $sock - base externo
+	Saida: array com []['cod_curso']
+	[]['nome_curso']
+	[]['inscricao_inicio']
+	[]['inscricao_fim']
+	[]['curso_inicio']
+	[]['curso_fim']
+	[]['informacoes']
+	[]['publico_alvo']
+	[]['tipo_inscricao']
+	[]['num_alunos']
+	[]['cod_coordenador']
+	[]['acesso_visitante']
+	*/
+	static function RetornaDadosMostraCurso($sock,$cod_curso)
+	{
+		$query="select * from Cursos where cod_curso=".ConversorTexto::VerificaNumeroQuery($cod_curso);
+		$res=AcessoSQL::Enviar($sock,$query);
+		$linha=AcessoSQL::RetornaLinha($res);
+		return ($linha);
+	}
 }
 
 ?>

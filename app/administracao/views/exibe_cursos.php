@@ -36,7 +36,7 @@ else if($_SESSION['cod_usuario_global_s'] == -1)
 {
 	AcessoSQL::Desconectar($sock);
 	header("Location: ".$view_administracao."cursos_all.php?tipo_curso=A"); 
-	Desconectar($sock);
+	AcessoSQL::Desconectar($sock);
 	exit;
 }
 

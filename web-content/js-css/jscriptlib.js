@@ -20,16 +20,31 @@ var cancelarTodos=0;
 var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
+var lista_frases;
 
-var lista_frases = new Array();
+$.ajax({
+	type: 'post',
+	url: '../../../app/agenda/models/retorna_frase_dinamic.php',
+	async: false,
+	success: function(data){
+		var lista = $.parseJSON(data);
+		lista_frases = lista;
+		}
+});
 	
-	lista_frases = $.post('../../../app/agenda/models/retorna_frase_dinamic.php',
+	
+/*$.post('../../../app/agenda/models/retorna_frase_dinamic.php', {cod_curso:cod_curso},
 		function(data){
-			var retorno = $.parseJSON(data);
-			alert(retorno);
-			return retorno;
-		});
-
+			//var lista = $.parseJSON(data);
+			var retorno='{';
+				$.each(data, function(key, value){
+					if (key>1) retorno+=', ';
+					retorno+='msg'+key+':'+value.texto+' ';
+				});
+			retorno+='}';
+		
+		lista_frases = retorno + ';';
+});*/
 
 if (isNav)
 {
@@ -111,7 +126,6 @@ function WindowOpenVerURL(end)
   window.open(end,'PortfolioURL','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
 }
 
-//$(document).ready(function(){
 	function EdicaoTexto(codigo, id, valor){
 	
 	  if (valor=='ok'){
@@ -121,9 +135,8 @@ function WindowOpenVerURL(end)
 	    		    	var code = $.parseJSON(data);
 	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
 	    		    	$('#text_'+cod_item).html(code);
-	    		    	mostraFeedback('Texto alterado com sucesso', 'true'); //TODO: texto harcorded
+	    		    	mostraFeedback(lista_frases.msg22, 'true');
 	      });
-	      //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
 	    }
 	  else{
 	      //Cancela Edicao
@@ -132,7 +145,6 @@ function WindowOpenVerURL(end)
 		    		    function(data){
 		    		    	var code = $.parseJSON(data);
 		      });
-	        //xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
 	  }
 	  document.getElementById(id).innerHTML=conteudo;
 	  editaTexto=0;
@@ -154,9 +166,7 @@ function WindowOpenVerURL(end)
 	    $.post('../../../app/agenda/models/abre_edicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
 	    function(data){
 	    	var code = $.parseJSON(data);
-	    //echo("					alert(code);\n");
 	    });
-	    //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
 	    if(iframe == null)	
 	    	conteudo = span.innerHTML;
 	    else
@@ -178,8 +188,7 @@ function WindowOpenVerURL(end)
 	    if(checks.length > 0)
 	    {	
 		// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
-	    	//alert(lista_frases.msg53);
-	    	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
+	    	alert(lista_frases.msg53);
 	    }	
 	  }
 	}
@@ -190,8 +199,7 @@ function WindowOpenVerURL(end)
 	
 	  if ((editaTexto==0)&&(checks.length==0)){
 	    // 95 - Você tem certeza que deseja apagar o texto desta agenda?
-	    //if (confirm(lista_frases.msg95)){
-		  if (confirm('Deseja realmente apagar o texto desta agenda?')){ //TODO: texto hardcoded
+	    if (confirm(lista_frases.msg95)){
 	      CancelaTodos();
 	      document.getElementById('text_'+id).innerHTML='';
 	
@@ -200,7 +208,7 @@ function WindowOpenVerURL(end)
 	    		    	var code = $.parseJSON(data);
 	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
 	    		    	$('#text_'+cod_item).html(code);
-	    		    	mostraFeedback('Texto apagado com sucesso', 'true'); //TODO: texto harcorded
+	    		    	mostraFeedback(lista_frases.msg93, 'true');
 	      });
 	    }
 	  }
@@ -208,12 +216,10 @@ function WindowOpenVerURL(end)
 	    if(checks.length > 0)
 	    {	
 		// 53 - A agenda nao pode ter texto e arquivos simultaneamente!
-	    	//alert(lista_frases.msg53);
-	    	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
+	    	alert(lista_frases.msg53);
 	    }	
 	  }
 	}
-//});
 
 function ArquivoValido(path)
 {
@@ -242,8 +248,7 @@ function EdicaoArq(i){
     document.formFiles.submit();
   }
   else {
-	//alert(lista_frases.msg109);
-	alert('Nome do anexo com acentos ou caracteres inválidos! Renomeie o arquivo e tente novamente.') //TODO: texto hardcoded
+	alert(lista_frases.msg109);
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
@@ -267,8 +272,7 @@ function AcrescentarBarraFile(apaga){
     conteudo = document.getElementById('text_'+cod_item).innerHTML;
     if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
 	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
-	//alert(lista_frases.msg53);
-	alert('A agenda nao pode ter texto e arquivos simultaneamente'); //TODO: texto hardcoded
+	alert(lista_frases.msg53);
 	return false;
     }
 						
@@ -279,9 +283,7 @@ function AcrescentarBarraFile(apaga){
     $.post('../../../app/agenda/models/abre_edicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
     	    function(data){
     	    	var code = $.parseJSON(data);
-    	    //echo("					alert(code);\n");
-    	    });
-    //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
+    });
 
     cancelarElemento=document.getElementById('cancFile');
 }
@@ -299,13 +301,11 @@ function Descompactar(){
     if(checks[i].checked){
       getNumber=checks[i].id.split("_");
       arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');
-      //if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
-      if (confirm('Você tem certeza de que deseja descompactar este arquivo?')){ //TODO: texto hardcoded
+      if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
     	  $.post('../../../app/agenda/models/abre_edicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem:origem}, 
     	  function(data){
     		  var code = $.parseJSON(data);
     	  });
-        //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
         window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=descompactar&origem='+origem+'&arq='+arqZip;
       }
     } 
@@ -431,11 +431,10 @@ function Apagar(){
     		    function(data){
     		    	$('#arq_'+getNumber[1]).remove();
         });
-      //xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
 	js_conta_arq--;
       }
     }
-    mostraFeedback('Arquivo apagado com sucesso', 'true'); //TODO: frase hardcoded
+    mostraFeedback(lista_frases.msg104, 'true');
   }
 
   if(document.getElementById("nomeArq_"+getNumber[1]).getAttribute('arqEntrada') == 'sim')
@@ -466,11 +465,10 @@ function SelecionarEntrada(){
 
   CheckTodos();
   $.post('../../../app/agenda/models/selecionar_entrada.php',{nomes_arquivos: nomesArqs, cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, origem: origem}, 
-		    function(data){
-	  			var caminho = $.parseJSON(data);
-	  			window.location = caminho;
-  });
-  //xajax_SelecionarEntradaDinamic(nomesArqs, cod_curso, cod_item, cod_usuario, origem);	
+		  function(data){
+	  	  	var caminho = $.parseJSON(data);
+	  		window.location = caminho;
+  });	
 }
 
 function RetirarEntrada(){
@@ -495,7 +493,6 @@ function RetirarEntrada(){
 	  			var caminho = $.parseJSON(data);
 	  			window.location = caminho;
   });
-  //xajax_RetirarEntradaDinamic(nomeArq, cod_curso, cod_item, cod_usuario, origem);
 }
 
 function CheckTodos(){
@@ -531,8 +528,7 @@ function Mover(caminhoDestino){
 function ApagarItem(){
   CancelaTodos();
 
-  //if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
-  if (confirm('Você tem certeza de que deseja apagar esta agenda? \n (não haverá como recuperá-la!)')){ //TODO: texto hardcoded
+  if (confirm(lista_frases.msg29+'\n'+lista_frases.msg30)){
         window.location='../../../app/agenda/controllers/acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=apagarItem&origem='+origem;
   }
 }

@@ -19,13 +19,11 @@ $retorno="{\n";
 
 foreach ($lista_frases as $cod => $linha){
 	if ($cod>1) $retorno.=", ";
-	$retorno.="\"msg".$cod."\":\"".$linha."\" ";
+	$retorno.="\"msg".$cod."\" : \"".$linha."\"";
 }
 
 $retorno.="\n}";
 
-//$objResponse->script($variavel." = ".$retorno.";");
-
-echo json_encode($retorno.";");
+echo $retorno;
 
 ?>

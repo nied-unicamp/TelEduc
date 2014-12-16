@@ -324,7 +324,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 			else
 			{
 				/* 43 - Em Edicao */
-				$situacao="<span class=\"link\" onclick=\"window.open('em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".Linguas::RetornaFraseDaLista($lista_frases,43)."</span>";
+				$situacao="<span class=\"link\" onclick=\"window.open('".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".Linguas::RetornaFraseDaLista($lista_frases,43)."</span>";
 				$titulo=$linha_item['titulo'];
 			}
 		} else if ($linha_item['situacao'] == "A"){

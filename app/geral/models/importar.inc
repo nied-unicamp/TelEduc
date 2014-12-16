@@ -1,5 +1,11 @@
 <?php
 
+if (!defined("PERIODO_ESPERA_DESMONTAGEM"))
+	define("PERIODO_ESPERA_DESMONTAGEM", (3600 * 5));
+
+if (!defined("CH_SEP"))
+	define ("CH_SEP", "~~");
+
 class Importar {
 	
 	/* **************************************************************************
@@ -426,6 +432,49 @@ class Importar {
 			return true;
 		else
 			return false;
+	}
+	
+	static function AlterarPeriodoDinamic($dadosForm){
+		$objResponse = new xajaxResponse();
+	
+		$cod_categoria=$dadosForm['cod_categoria'];
+		$cod_topico_raiz=$dadosForm['cod_topico_raiz'];
+		$tipo_curso=$dadosForm['tipo_curso'];
+		$cod_ferramenta=$dadosForm['cod_ferramenta'];
+		$data_inicio=Data2UnixTime($dadosForm['data_inicio']);
+		$data_fim=Data2UnixTime($dadosForm['data_fim']);
+		$frase = $dadosForm['extraido'];
+	
+		$sock=Conectar("");
+	
+		$todos_cursos = RetornaTodosCursos($sock, $tipo_curso, $cod_categoria, $data_inicio, $data_fim);
+		$objResponse->script("var y;");
+	
+		foreach($todos_cursos as $chave => $valor){
+			$objResponse->script("y= document.createElement('option');");
+			$objResponse->script("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
+			$objResponse->script("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
+			$objResponse->script("document.getElementById('cod_curso_todos').appendChild(y);");
+		}
+	
+	
+		$cursos_compart = RetornaCursosEncerradosCompart($sock, $cod_ferramenta, $cod_categoria, $data_inicio, $data_fim);
+		$objResponse->script("var y;");
+	
+		foreach($cursos_compart as $chave => $valor){
+			$objResponse->script("y= document.createElement('option');");
+			$objResponse->script("y.innerHTML='".$valor['nome_curso']." ".(($valor['status'] == 'E') ? $frase:"")."'");
+			$objResponse->script("y.value='".$valor['status'].";".$valor["cod_curso"]."'");
+			$objResponse->script("document.getElementById('cod_curso_compart').appendChild(y);");
+		}
+	
+		Desconectar($sock);
+	
+		// Retorna a resposta de XML gerada pelo objeto do xajaxResponse
+		return $objResponse;
+	
+	
+	
 	}
 	
 	

@@ -65,7 +65,8 @@ $sock=AcessoSQL::Conectar($cod_curso);
 Usuarios::VerificaAcessoAFerramenta($sock, $cod_curso, $cod_usuario, $cod_ferramenta);
 Usuarios::MarcaAcesso($sock, $cod_usuario, $cod_ferramenta);
 
- echo("<!DOCTYPE HTML SYSTEM \"http://teleduc.nied.unicamp.br/~teleduc/loose-custom.dtd\">\n");
+  echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
+  echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
   echo("<html lang=\"pt\">\n");
   echo("  <head>\n");
   echo("    <title>TelEduc - ".$tela_lista_titulos[$cod_ferramenta]."</title>\n");

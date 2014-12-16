@@ -314,7 +314,7 @@ if ($linha['acao']=="E")
 	}else{
 		/* Esta em edicao... */
 		echo("          <script language=\"javascript\">\n");
-		echo("            window.open('em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&origem=ver_linha','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+		echo("            window.open('".$view_agenda."em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&origem=ver_linha','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
 		echo("            window.location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."';\n");
 		echo("          </script>\n");
 		echo("        </td>\n");
@@ -486,7 +486,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			if ($linha1['Status'] && $linha1['Arquivo']!=""){
   				if(preg_match('/\.php(\.)*/', $linha1['Arquivo'])){  //arquivos php.txt
 
-  					$arquivo_entrada = "agenda_entrada.php?entrada=".ConversorTexto::ConverteUrl2Html($linha1['Arquivo']."&diretorio=".$dir_item_temp['link']);
+  					$arquivo_entrada = "".$view_agenda."agenda_entrada.php?entrada=".ConversorTexto::ConverteUrl2Html($linha1['Arquivo']."&diretorio=".$dir_item_temp['link']);
   				}else{
   					$arquivo_entrada = ConversorTexto::ConverteUrl2Html($dir_item_temp['link'].$linha1['Diretorio']."/".$linha1['Arquivo']);
   				}

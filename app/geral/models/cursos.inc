@@ -144,5 +144,49 @@ class Cursos {
             return true;
         return false;
     }
+    
+    /* *********************************************************************
+     DadosCursoParaEmail - Retorna os dados do Curso para usar para enviar
+    e-mail
+    Entrada: $sock - Base de dados do curso
+    $cod_curso - codigo do curso
+    Saida: array com ['nome_curso'] - nome do curso
+    ['nome_coordenador'] - nome do coordenador
+    ['email'] - email do coordenador
+    ['login'] - login do coordenador
+    */
+    
+    static function DadosCursoParaEmail($sock, $cod_curso)
+    {
+    
+    	// 2Session
+    	$dbnamebase = $_SESSION['dbnamebase'];
+    
+    	$cod_coordenador = Cursos::RetornaCodCoordenador($sock,$cod_curso);
+    	$cod_usuario_global = Usuarios::RetornaCodigoUsuarioGlobal($sock, $cod_coordenador, $cod_curso);
+    
+    	$query="select C.nome_curso 'nome_curso',U.nome 'nome_coordenador',U.email 'email',U.login 'login' from ".$dbnamebase.".Cursos C, ".$dbnamebase.".Usuario U left join ".$dbnamebase.".Usuario_curso UC on UC.cod_usuario_global=U.cod_usuario where UC.cod_curso=".ConversorTexto::VerificaNumeroQuery($cod_curso)." and C.cod_curso=".ConversorTexto::VerificaNumeroQuery($cod_curso)." and U.cod_usuario=".$cod_usuario_global." and C.cod_coordenador=UC.cod_usuario";
+    
+    	$res=AcessoSQL::Enviar($sock,$query);
+    	$linha=AcessoSQL::RetornaLinha($res);
+    
+    	return $linha;
+    }
+    
+    /* *********************************************************************
+     RetornaCodCoordenador - Retorna codigo coordenador do curso
+    Entrada: $sock - Base de dados do curso
+    $cod_curso - codigo do curso
+    Saida:   codigo do coordenador do curso
+    */
+    
+    static function RetornaCodCoordenador($sock, $cod_curso)
+    {
+    	$query="select cod_coordenador from Cursos where cod_curso=".ConversorTexto::VerificaNumeroQuery($cod_curso);
+    	$res=AcessoSQL::Enviar($sock,$query);
+    	$linha=AcessoSQL::RetornaLinha($res);
+    
+    	return $linha['cod_coordenador'];
+    }
 
 }

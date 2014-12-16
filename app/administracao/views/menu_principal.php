@@ -4,6 +4,7 @@ $ferramenta_administracao = 'administracao';
  
 $ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
+$model_administracao = '../../'.$ferramenta_administracao.'/models/';
 $diretorio_imgs = '../../../web-content/imgs/';
  
 
@@ -13,6 +14,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
   // Tempo para um usuario ser considerado offline em segundos
   $time_out=30*60;
 
+  echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
   /* Fun��es javascript */
   echo("    <script language=\"javascript\" type=\"text/javascript\">\n");
   /* *********************************************************
@@ -26,7 +28,12 @@ $diretorio_imgs = '../../../web-content/imgs/';
   echo("      }\n\n");
 
   echo("      function FechandoNavegador() {\n");
-  echo("          xajax_DeslogaUsuarioCursoDinamic('".$cod_curso."', '".$cod_usuario."');\n");
+  echo("			$.post(\"".$model_administracao."desloga_usuario_curso_dinamic.php\",{cod_usuario:".$cod_usuario.", cod_curso: ".$cod_curso."}, \n");
+  echo("				function(data){\n");
+  echo("					var code = $.parseJSON(data);\n");
+  //echo("					alert(code);\n");
+  echo("			});\n");
+  //echo("          xajax_DeslogaUsuarioCursoDinamic('".$cod_curso."', '".$cod_usuario."');\n");
   echo("      }\n\n");
 
   echo("    </script>\n");

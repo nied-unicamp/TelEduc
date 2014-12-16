@@ -214,7 +214,7 @@ class Admin {
      * @param int $cod_usuario codigo do usuario ( caso seja -1, significa que quer-se cadastrar um novo usuario como coordenador )
      * @return int Retorna o codigo do curso
      */
-    function CriarBaseDoCurso($nome_curso, $num_alunos, $cod_pasta, $nome_coordenador, $email, $login, $senha, $cod_usuario) {
+    static function CriarBaseDoCurso($nome_curso, $num_alunos, $cod_pasta, $nome_coordenador, $email, $login, $senha, $cod_usuario) {
         $dbnamecurso = $_SESSION['dbnamecurso'];
         $cod_lingua_s = Sessao::CodLinguaS();
 

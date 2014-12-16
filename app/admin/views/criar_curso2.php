@@ -23,6 +23,7 @@ $cod_pasta = $_POST['cod_pasta'];
 $nome_coordenador = $_POST['nome_coordenador'];
 $email = $_POST['email'];
 $login = $_POST['login'];
+$nova_categ = $_POST['nova_categ'];
 
 AcessoPHP::VerificaAutenticacaoAdministracao();
 

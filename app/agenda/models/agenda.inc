@@ -105,7 +105,9 @@ class Agenda {
     static function IniciaCriacao($sock, $cod_usuario, $cod_curso, $diretorio_temp, $titulo, $texto) {
         if (trim($diretorio_temp) == "" || $cod_curso == "")
             return -1; //tah certo isso?!
-
+	
+        $ferramenta_agenda = 'agenda';
+        $view_agenda = '../../../'.$ferramenta_agenda.'/views/';
 
         $cod_item = AcessoSQL::RetornaProximoCodigo($sock, "Agenda_itens");
 
@@ -161,7 +163,7 @@ class Agenda {
         $linha_historico = Agenda::RetornaUltimaPosicaoHistorico($sock, $cod_item);
 
         if (($linha['status'] == "E") && ($cod_usuario != $linha_historico['cod_usuario'])) {
-            window . open('em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver', 'EmEdicao', 'width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');
+            window . open($view_agenda.'em_edicao.php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_item=".$cod_item."&origem=ver', 'EmEdicao', 'width=300,height=240,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');
 
             //$objResponse->script("document.location='".$origem.".php?".RetornaSessionID()."&cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."cod_ferramenta=1'");
         } else {

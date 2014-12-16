@@ -210,7 +210,7 @@ if (isset($linha_item['cod_item']))
 				if ($linha1['Status'] && $linha1['Arquivo']!="")
 				{
 					if(preg_match('/\.php(\.)*/', $linha1['Arquivo'])){  //arquivos php.txt
-						$arquivo_entrada = "agenda_entrada.php?cod_curso=".$cod_curso."&entrada=".ConverteUrl2Html($linha1['Arquivo']."&diretorio=".$dir_item_temp['link']);
+						$arquivo_entrada = "".$view_agenda."agenda_entrada.php?cod_curso=".$cod_curso."&entrada=".ConverteUrl2Html($linha1['Arquivo']."&diretorio=".$dir_item_temp['link']);
 					}else{
 						$arquivo_entrada = ConversorTexto::ConverteUrl2Html($dir_item_temp['link'].$linha1['Diretorio']."/".$linha1['Arquivo']);
 					}

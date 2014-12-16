@@ -118,7 +118,7 @@ class Linguas {
             $msg .= "<br><a href=\"#\" onclick=\"history.go(-1);\">Voltar</a>";
             die($msg);
         }
-        //$_SESSION['lista_frases_s'][$cod_ferramenta]=$textos;
+        $_SESSION['lista_frases_s'][$cod_ferramenta]=$textos;
 
         return($textos);
     }
