@@ -44,10 +44,10 @@ $linha_item=Agenda::RetornaDadosDoItem($sock, $cod_item);
 /* Página Principal */
 
 // 1 - Agenda
-$cabecalho = ("<br /><br /><h4>".Linguas::RetornaFraseDaLista ($lista_frases, 1));
+$cabecalho = ("<br /><br /><h4>"._("msg1_1"));
 
 /* 34 - Historico */
-$cabecalho.= (" - ".Linguas::RetornaFraseDaLista($lista_frases,34)."</h4>\n");
+$cabecalho.= (" - "._("msg34_1")."</h4>\n");
 echo($cabecalho);
 echo ("<br />\n");
 
@@ -56,7 +56,7 @@ echo("      <tr>\n");
 echo("        <td valign=\"top\" colspan=3>\n");
 echo("          <ul class=\"btAuxTabs\">\n");
 /* 13 - Fechar (ger) */
-echo("            <li><span onclick=\"self.close();\">".Linguas::RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
+echo("            <li><span onclick=\"self.close();\">"._("msg13_-1")."</span></li>\n");
 echo("          </ul>\n");
 echo("        </td>\n");
 echo("      </tr>\n");
@@ -64,7 +64,8 @@ echo("      <tr>\n");
 echo("        <td colspan=3>\n");
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("            <tr>\n");
-echo("              <td  align=right><b>".Linguas::RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
+/* 18 - Título*/
+echo("              <td  align=right><b>"._("msg18_1").":&nbsp;</b></td>\n");
 echo("              <td colspan=2>".$linha_item['titulo']."</td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
@@ -77,11 +78,11 @@ echo("        <td>\n");
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("            <tr>\n");
 /* 35 - Ação */
-echo("              <td><b>".Linguas::RetornaFraseDaLista($lista_frases,35)."</b></td>\n");
+echo("              <td><b>"._("msg35_1")."</b></td>\n");
 /* 7 - Data */
-echo("              <td><b>".Linguas::RetornaFraseDaLista($lista_frases,7)."</b></td>\n");
+echo("              <td><b>"._("msg7_1")."</b></td>\n");
 /* 36 - Usuário */
-echo("              <td><b>".Linguas::RetornaFraseDaLista($lista_frases,36)."</b></td>\n");
+echo("              <td><b>"._("msg36_1")."</b></td>\n");
 echo("            </tr>\n");
 
 $res=Agenda::RetornaResHistoricoDoItem($sock, $cod_item);
@@ -97,19 +98,19 @@ while ($num_linhas>0)
 	switch ($linha['acao']){
 
 		/* 40 - Criacao */
-		case ('C'): $acao=Linguas::RetornaFraseDaLista($lista_frases,40); break;
+		case ('C'): $acao=_("msg40_1"); break;
 		/* 39 - Edicao Cancelada */
-		case ('D'): $acao=Linguas::RetornaFraseDaLista($lista_frases,39); break;
+		case ('D'): $acao=_("msg39_1"); break;
 		/* 43 - Em Edicao */
-		case ('E'): $acao=Linguas::RetornaFraseDaLista($lista_frases,43); break;
+		case ('E'): $acao=_("msg43_1"); break;
 		/* 37 - Edicao Finalizada */
-		case ('F'): $acao=Linguas::RetornaFraseDaLista($lista_frases,37); break;
+		case ('F'): $acao=_("msg37_1"); break;
 		/* 42 - Movida para histórico */
-		case ('H'): $acao=Linguas::RetornaFraseDaLista($lista_frases,42); break;
+		case ('H'): $acao=_("msg42_1"); break;
 		/* 41 - Ativada */
-		case ('A'): $acao=Linguas::RetornaFraseDaLista($lista_frases,41); break;
+		case ('A'): $acao=_("msg41_1"); break;
 		/* 38 - Desconhecida */
-		default: $acao=Linguas::RetornaFraseDaLista($lista_frases,38); break;
+		default: $acao=_("msg38_1"); break;
 	}
 
 	echo("            <tr>\n");

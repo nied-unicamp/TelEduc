@@ -15,11 +15,6 @@ require_once $view_admin.'topo_tela_inicial.php';
 $sock = AcessoSQL::Conectar("");
 $lista_escolaridade=Inicial::RetornaListaEscolaridade($sock);
 
-
-$erro1 = Linguas::RetornaFraseDaLista($lista_frases_configurar,74);
-$texto = Linguas::RetornaFraseDaLista($lista_frases,184);
-$erro2 = Linguas::RetornaFraseDaLista($lista_frases_configurar,75);
-$erro3 = Linguas::RetornaFraseDaLista($lista_frases_configurar,76);
 /*
 ==================
 Funcoes JavaScript
@@ -71,13 +66,13 @@ echo("      pais = document.formulario.pais.value;\n");
 echo("      if (nome_usuario == '')\n");
 echo("      {\n");
 /* 50 - O campo */ /* 32 - Nome */ /* 51 - nï¿½o pode ser vazio */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." ".Linguas::RetornaFraseDaLista($lista_frases_configurar,32)." ".Linguas::RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
+echo("        alert('"._("msg50_-7")." "._("msg32_-7")." "._("msg51_-7").".', false);\n");
 echo("        document.formulario.nome_usuario.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
 echo("      if (!RGValido(rg) || rg == ''){\n");
 /* 50 - O campo *//* 33 - RG parece estar errado */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." ".Linguas::RetornaFraseDaLista($lista_frases_configurar,33).".', false);\n");
+echo("        alert('"._("msg50_-7")." "._("msg33_-7").".', false);\n");
 echo("        document.formulario.rg.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
@@ -88,7 +83,7 @@ echo("      }\n");
 echo("      var DataValida = /^((0[1-9]|[12]\d)\/(0[1-9]|1[0-2])|30\/(0[13-9]|1[0-2])|31\/(0[13578]|1[02]))\/\d{4}$/;\n");
 echo("      if (!DataValida.test(data)){\n");
 /* 71 - Data Invalida */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,71).".', false);\n");
+echo("        alert('"._("msg71_-7").".', false);\n");
 echo("        document.formulario.data.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
@@ -99,7 +94,7 @@ echo("        var Hoje = new Date();\n");
 echo("        var DataNascimento = new Date(data[2], data[1]-1, data[0]);\n");
 echo("        if (DataNascimento > Hoje){\n");
 /* 80 - Data de Nascimento no Futuro */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,80).".', false);\n");
+echo("          alert('"._("msg80_-7").".', false);\n");
 echo("          document.formulario.data.focus();\n");
 echo("          return false;\n");
 echo("        }\n");
@@ -109,36 +104,36 @@ echo("      }\n");
 // valida o e-mail na conformaÃ§Ã£o foo@bar
 echo("      var EmailValido =/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/;\n");
 echo("      if (!EmailValido.test(email)){\n");
-/* 52 - O e-mail parece estar errado */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,52).".', false);\n");
+/* 52 - O e-mail informado parece estar errado */
+echo("        alert('"._("msg52_-7").".', false);\n");
 echo("        document.formulario.email.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
 echo("      if (endereco == '')\n");
 echo("      {\n");
 /* 50 - O campo */ /* 40 - Endereï¿½o */ /* 51 - nï¿½o pode ser vazio */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." \" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,40)."\" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
+echo("        alert('"._("msg50_-7")." \" "._("msg40_-7")."\" "._("msg51_-7").".', false);\n");
 echo("        document.formulario.endereco.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
 echo("      if (cidade == '')\n");
 echo("      {\n");
 /* 50 - O campo */ /* 41 - Cidade */ /* 51 - nï¿½o pode ser vazio */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." \" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,41)."\" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
+echo("        alert('"._("msg50_-7")." \" "._("msg41_-7")."\" "._("msg51_-7").".', false);\n");
 echo("        document.formulario.cidade.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
 echo("      if (estado == '')\n");
 echo("      {\n");
 /* 50 - O campo */ /* 42 - Estado */ /* 51 - nï¿½o pode ser vazio */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." \" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,42)."\" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
+echo("        alert('"._("msg50_-7")." \" "._("msg42_-7")."\" "._("msg51_-7").".', false);\n");
 echo("        document.formulario.estado.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
 echo("      if (pais == '')\n");
 echo("      {\n");
 /* 50 - O campo */ /* 43 - Paï¿½s */ /* 51 - nï¿½o pode ser vazio */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,50)." \" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,43)."\" ".Linguas::RetornaFraseDaLista($lista_frases_configurar,51).".', false);\n");
+echo("        alert('"._("msg50_-7")." \" "._("msg43_-7")."\" "._("msg51_-7").".', false);\n");
 echo("        document.formulario.pais.focus();\n");
 echo("        return false;\n");
 echo("      }\n");
@@ -151,7 +146,7 @@ echo("        js_novo_login=document.formulario.login.value;\n");
 echo("        if ((js_novo_login==''))\n");
 echo("        {\n");
 // 59 - O campo de login nï¿½o podem ser vazio. Por favor digite novamente o login desejado.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar, 59)."', false);\n");
+echo("          alert('"._("msg59_-7")."', false);\n");
 echo("          document.formulario.login.focus();\n");
 echo("          return false;\n");
 echo("        }\n");
@@ -165,21 +160,21 @@ echo("        senha2=document.formulario.senha2.value;\n");
 echo("        if (senha=='')\n");
 echo("        {\n");
 // 4 - A nova senha nï¿½o pode ser vazia. Por favor digite a nova senha. ARRUMAR
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,4)."', false);\n");
+echo("          alert('"._("msg4_-7")."', false);\n");
 echo("          document.formulario.senha.focus();\n");
 echo("          return(false);\n");
 echo("        }\n");
 echo("        if (senha2=='')\n");
 echo("        {\n");
 // 4 - A nova senha nï¿½o pode ser vazia. Por favor digite a nova senha.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,4)."', false);\n");
+echo("          alert('"._("msg4_-7")."', false);\n");
 echo("          document.formulario.senha2.focus();\n");
 echo("          return(false);\n");
 echo("        }\n");
 echo("        if (senha!=senha2) \n");
 echo("        {\n");
 // 5 - As novas senhas digitadas diferem entre si. Por favor redigite-as.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,5)."', false);\n");
+echo("          alert('"._("msg5_-7")."', false);\n");
 echo("          document.formulario.senha.value='';\n");
 echo("          document.formulario.senha2.value='';\n");
 echo("          document.formulario.senha.focus();\n");
@@ -207,21 +202,21 @@ echo("      {\n");
 echo("        if (flag == '1')\n");
 echo("        {\n");
 //74 - Login digitado ja existe. Digite outro e tente novamente.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,74)."');\n");
+echo("          alert('"._("msg74_-7")."');\n");
 echo("          document.formulario.login.value='';\n");
 echo("          document.formulario.login.focus();\n");
 echo("        }\n");
 echo("        else if(flag == '2')\n");
 echo("        {\n");
 //75 - E-mail digitado ja existe. Digite outro e tente novamente.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,75)."');\n");
+echo("          alert('"._("msg75_-7")."');\n");
 echo("          document.formulario.email.value='';\n");
 echo("          document.formulario.email.focus();\n");
 echo("        }\n");
 echo("        else if(flag == '3')\n");
 echo("        {\n");
 //76 - Carecteres digitados nao conferem com os da imagem.Tente novamente.
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_configurar,76)."');\n");
+echo("          alert('"._("msg76_-7")."');\n");
 echo("          var imagem = document.getElementById('imagem');\n");
 //   echo("          var src = imagem.src;\n");
 //   echo("          imagem.src = '';\n");
@@ -233,7 +228,7 @@ echo("        }\n");
 echo("        else\n");
 echo("        {\n");
 // 184 - Cadastro efetuado com sucesso.
-  echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases,184)."');\n");
+  echo("          alert('"._("msg184_-3")."');\n");
 //if($acao == "inscricao")
 	//echo("xajax_CadastrarLogar(xajax.getFormValues('formulario'),'".$cod_curso."','".$tipo_curso."');\n");
 //else
@@ -263,7 +258,7 @@ require_once $view_admin.'menu_principal_tela_inicial.php';
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
 /*185 - Cadastro*/
-echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,185)."</h4>\n");
+echo("          <h4>"._("msg185_-3")."</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -273,7 +268,7 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 echo("          <!-- Tabelao -->\n");
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -285,35 +280,35 @@ echo("                <form name=\"formulario\" id=\"formulario\" action=\"\" me
 echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 /* 186 - Dados pessoais */
-echo("                    <td>".Linguas::RetornaFraseDaLista($lista_frases,186)."</td>\n");
+echo("                    <td>"._("msg186_-3")."</td>\n");
 echo("                  </tr>\n");
 echo("                  <tr>\n");
 echo("                    <td align=\"center\">\n");
-/* 73 - Insira seus dados no formulÃ¡rios abaixo e clique em "Cadastrar" para cadastrar-se no ambiente. */
+/* 73 - Insira seus dados no formuário abaixo e clique em "Cadastrar" para cadastrar-se no ambiente. */
 echo("                      <div align=\"left\"><p style=\"text-indent:15px;\">\n");
-echo("                         ".Linguas::RetornaFraseDaLista($lista_frases_configurar,73)."\n");
+echo("                         "._("msg73_-7")."\n");
 echo("                      </p></div><br />\n");
 echo("                      <table>\n");
 echo("                          <tr>\n");
 /*157 - Login */
-echo("                            <td style=\"text-align:right;border:none;\">".Linguas::RetornaFraseDaLista($lista_frases,157).": (*)</td>\n");
+echo("                            <td style=\"text-align:right;border:none;\">"._("msg157_-3").": (*)</td>\n");
 echo("                            <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"text\" name=\"login\" size=\"16\" maxlength=\"16\" /></td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 /* 166 - Digite sua senha: */
-echo("                            <td style=\"text-align:right;border:none;\">".Linguas::RetornaFraseDaLista($lista_frases,166).": (*)</td>\n");
+echo("                            <td style=\"text-align:right;border:none;\">"._("msg166_-3").": (*)</td>\n");
 echo("                            <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"password\" name=\"senha\" size=\"16\" maxlength=\"16\" /></td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 // 167 -  Redigite sua senha:
-echo("                            <td style=\"text-align:right;border:none;\">".Linguas::RetornaFraseDaLista($lista_frases,167).": (*)</td>\n");
+echo("                            <td style=\"text-align:right;border:none;\">"._("msg167_-3").": (*)</td>\n");
 echo("                            <td style=\"border:none;text-align:left;\"><input class=\"input\" type=\"password\" name=\"senha2\" size=\"16\" maxlength=\"16\" /></td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 /* 32 - Nome */
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,32).": (*)\n");
+echo("                              &nbsp;"._("msg32_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td width=\"90%\" style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"30\" maxlength=\"128\" name=\"nome_usuario\" value=\"\" />\n");
@@ -322,7 +317,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 /* 72 - RG */
 echo("                            <td style=\"border:none;text-align:right;\">\n");
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,72).": (*)\n");
+echo("                              &nbsp;"._("msg72_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"11\" maxlength=\"11\" name=\"rg\" value=\"\" />\n");
@@ -331,7 +326,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 34 - Data de nascimento */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,34).": (*)\n");
+echo("                              &nbsp;"._("msg34_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"10\" maxlength=\"10\" id=\"data\" name=\"data_nascimento\" value=\"\" /><img src=\"".$diretorio_imgs."ico_calendario.gif\" alt=\"calendario\" onclick=\"displayCalendar(document.getElementById ('data'),'dd/mm/yyyy',this);\" />");
@@ -340,19 +335,19 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 35 - Sexo */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,35).":\n");
+echo("                              &nbsp;"._("msg35_-7").":\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 /* 36 - Masculino */
-echo("                              <input type=\"radio\"  name=\"sexo\" value=\"M\" />".Linguas::RetornaFraseDaLista($lista_frases_configurar,36)."\n");
+echo("                              <input type=\"radio\"  name=\"sexo\" value=\"M\" />"._("msg36_-7")."\n");
 /* 37 - Feminino */
-echo("                              <input type=\"radio\"  name=\"sexo\" value=\"F\" />".Linguas::RetornaFraseDaLista($lista_frases_configurar,37)."\n");
+echo("                              <input type=\"radio\"  name=\"sexo\" value=\"F\" />"._("msg37_-7")."\n");
 echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 38 - Email */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,38).": (*)\n");
+echo("                              &nbsp;"._("msg38_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"30\" maxlength=\"48\" name=\"email\" value=\"\" />\n");
@@ -361,7 +356,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 39 - Telefone */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,39).":\n");
+echo("                              &nbsp;"._("msg39_-7").":\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"16\" maxlength=\"25\" name=\"telefone\" value=\"\" />\n");
@@ -370,7 +365,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 40 - Endereï¿½o */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,40).": (*)\n");
+echo("                              &nbsp;"._("msg40_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"30\" maxlength=\"48\" name=\"endereco\" value=\"\" />\n");
@@ -379,7 +374,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 41 - Cidade */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,41).": (*)\n");
+echo("                              &nbsp;"._("msg41_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"20\" maxlength=\"32\" name=\"cidade\" value=\"\" />\n");
@@ -388,19 +383,19 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
 /* 42 - Estado */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,42).": (*)\n");
+echo("                              &nbsp;"._("msg42_-7").": (*)\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"2\" maxlength=\"2\" name=\"estado\" value=\"\" />\n");
-/* 43 - Paï¿½s */
-echo("                              &nbsp;&nbsp;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,43).": (*)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+/* 43 - País */
+echo("                              &nbsp;&nbsp;&nbsp;"._("msg43_-7").": (*)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"12\" maxlength=\"19\" name=\"pais\" value=\"\" />\n");
 echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none; text-align:right;\">\n");
-/* 44 - Profissï¿½o */
-echo("                                 &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,44).":\n");
+/* 44 - Profissão */
+echo("                                 &nbsp;"._("msg44_-7").":\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"20\" maxlength=\"32\" name=\"profissao\" value=\"\" />\n");
@@ -409,7 +404,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td width=\"50%\" style=\"border:none; text-align:right;\">\n");
 /* 45 - Local de trabalho */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,45).":\n");
+echo("                              &nbsp;"._("msg45_-7").":\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <input class=\"input\" type=\"text\" size=\"20\" maxlength=\"32\" name=\"local\" value=\"\" />\n");
@@ -418,7 +413,7 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td width=\"50%\" style=\"border:none; text-align:right;\">\n");
 /* 46 - Escolaridade */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,46).":\n");
+echo("                              &nbsp;"._("msg46_-7").":\n");
 echo("                            </td>\n");
 
 echo("                            <td style=\"border:none;text-align:left;\">\n");
@@ -427,7 +422,7 @@ echo("                              <select class=\"input\" name=\"cod_escolarid
 foreach ($lista_escolaridade as $cod => $linha)
 {
 		$selecionado="";
-	echo("                                <option value='".$linha['cod_escolaridade']."' ".$selecionado.">".Linguas::RetornaFraseDaLista($lista_frases_geral,$linha['cod_texto_escolaridade'])."</option>\n");
+	echo("                                <option value='".$linha['cod_escolaridade']."' ".$selecionado.">"._("msg".$linha['cod_texto_escolaridade']."_-1")."</option>\n"); //TODO: ver tradução desta linha
 }
 echo("                              </select>\n");
 
@@ -435,8 +430,8 @@ echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td valign=\"top\" style=\"border:none; text-align:right;\">\n");
-/* 47 - Informaï¿½ï¿½es adicionais */
-echo("                              &nbsp;".Linguas::RetornaFraseDaLista($lista_frases_configurar,47).":\n");
+/* 47 - Informações adicionais */
+echo("                              &nbsp;"._("msg47_-7").":\n");
 echo("                            </td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
 echo("                              <textarea class=\"input\" rows=\"5\" cols=\"30\" name=\"informacoes\">\n");
@@ -446,23 +441,23 @@ echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none;\">&nbsp;</td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
-/* 66 - (*) Campos Obrigatï¿½rios */
-echo("                              ".Linguas::RetornaFraseDaLista($lista_frases_configurar,66)."\n");
+/* 66 - (*) Campos Obrigatórios */
+echo("                              "._("msg66_-7")."\n");
 echo("                              <br /><br />\n");
 echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
-//77 - Digite os cararacteres presentes na imagem ao lado.
-//78 - Digite os caracteres.
+/*77 - Digite a resposta da expressão dada ao lado..*/
 echo("                            <td align=\"center\" style=\"border:none;text-align:right;\"><img id=\"imagem\" name=\"imagem\" src=\"".$view_geral."imagem.php\" style=\"border: 1px dashed silver;\" /></td>\n");
 echo("                            <td align=\"center\" style=\"border:none;text-align:left;\">\n");
-echo("                              <input class=\"input\" type=\"text\" name=\"resultado\" size=\"8\" /><br /><small>".Linguas::RetornaFraseDaLista($lista_frases_configurar,77)."</small>\n");
+echo("                              <input class=\"input\" type=\"text\" name=\"resultado\" size=\"8\" /><br /><small>"._("msg77_-7")."</small>\n");
 echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                          <tr>\n");
 echo("                            <td style=\"border:none\">&nbsp;</td>\n");
 echo("                            <td style=\"border:none;text-align:left;\">\n");
-echo("                              <br /><br /><input type=\"submit\" class=\"input\" name=\"enviar\" value=\"".Linguas::RetornaFraseDaLista($lista_frases,89)."\" id=\"registar_altd\" />\n");
+/* 89 - Cadastrar */
+echo("                              <br /><br /><input type=\"submit\" class=\"input\" name=\"enviar\" value=\""._("msg89_-3")."\" id=\"registar_altd\" />\n");
 echo("                            </td>\n");
 echo("                          </tr>\n");
 echo("                        </table>\n");

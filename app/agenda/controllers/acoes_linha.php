@@ -40,8 +40,6 @@ $cod_usuario_global=AcessoPHP::VerificaAutenticacao($cod_curso);
 
 $sock=AcessoSQL::Conectar("");
 
-$lista_frases=Linguas::RetornaListaDeFrases($sock,1);
-
 $diretorio_arquivos=Agenda::RetornaDiretorio($sock,'Arquivos');
 $diretorio_temp=Agenda::RetornaDiretorio($sock,'ArquivosWeb');
 AcessoSQL::Desconectar($sock);

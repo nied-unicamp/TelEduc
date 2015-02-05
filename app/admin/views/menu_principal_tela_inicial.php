@@ -4,11 +4,6 @@
  *
  */
 
-
-/**
- *
- */
-
 $ferramenta_geral = 'geral';
 $ferramenta_login = 'login';
 $ferramenta_admin = 'admin';
@@ -54,11 +49,11 @@ echo("        <td valign=\"top\" id=\"topo\"><!--NAVEGACAO NIVEL 3-->\n");
 * */
 echo("          <ul id=\"nav3nivel\">\n");
   echo("            <map title=\"Menu superior\">\n");
-  echo("              <li class=\"visoes\"><a href=\"".$link."equipe.php\">".Linguas::RetornaFraseDaLista($lista_frases,10)."</a></li>\n");
+  echo("              <li class=\"visoes\"><a href=\"".$link."equipe.php\">"._("msg10_-3")."</a></li>\n");
   if(empty($_SESSION['login_usuario_s']))
-    echo("              <li class=\"visoes\"><a href=\"".$view_login."autenticacao_cadastro.php\">Login</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"".$view_login."autenticacao_cadastro.php\">"._("msg157_-3")."</a></li>\n");
   else
-    echo("              <li class=\"visoes\"><a href=\"".$ctrl_login."logout.php\">Logout</a></li>\n");
+    echo("              <li class=\"visoes\"><a href=\"".$ctrl_login."logout.php\">"._("msg161_-3")."</a></li>\n");
   echo("            </map>\n");
   echo("          </ul>\n");
 
@@ -85,9 +80,10 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
 	* cod_texto=18: Area Restrita
 	* */
 	if($_SESSION['cod_usuario_global_s'] == -1)
-		echo("          <a href=\"".$view_admin."index_adm.php\" title=\"".Linguas::RetornaFraseDaLista($lista_frases,17)." (".Linguas::RetornaFraseDaLista($lista_frases,18).")\"><img src=\"".$diretorio_imgs."btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
+		echo("          <a href=\"".$view_admin."index_adm.php\" title=\""._("msg17_-3")." ("._("msg18_-3").")\"><img src=\"".$diretorio_imgs."btAdmin.gif\" border=\"0\" alt=\"Admin\" align=\"right\" style=\"position:relative; top:22px;\" /></a>\n");
   echo("          <h3>TelEduc</h3>\n");
-  echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicitacao</span></div>\n");
+  /* 236 - Ocorreu um erro na sua solicitação*/
+  echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">"._("msg236_-3")."</span></div>\n");
   echo("        </td>\n");
   echo("      </tr>\n");
   echo("      <tr>\n");
@@ -95,34 +91,51 @@ $lingua_pais=Linguas::LinguaLocal($sock,$cod_lin);
   echo("          <ul id=\"nav\">\n");
   //echo("            <li><a class=\"Cabecalho\" href=\"".$link."teleduc.php\">TelEduc</a></li>\n");
 	echo("            <div class=\"navCabecalho\">TelEduc</div>\n");
-	echo("            <li><a href=\"".$link."teleduc.php\">".Linguas::RetornaFraseDaLista($lista_frases,3)."</a></li>\n");
-  echo("            <li><a href=\"".$link."estrutura.php\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</a></li>\n");
+	/*
+	 3 - O que é o TelEduc
+	 4 - Estrutura do Ambiente
+	 */
+	echo("            <li><a href=\"".$link."teleduc.php\">"._("msg3_-3")."</a></li>\n");
+  echo("            <li><a href=\"".$link."estrutura.php\">"._("msg4_-3")."</a></li>\n");
   /*Se nao estiver logado, deixa link pra se cadastrar*/
   if(empty($_SESSION['login_usuario_s']))
 	if($cod_curso != NULL){
 	//179 - Cadastre-se
-	echo("            <li><a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+	echo("            <li><a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">"._("msg179_-3")."</a></li>\n");
     }else{
     //179 - Cadastre-se
-    echo("            <li><a href=\"".$view_cadastro."cadastro.php\">".Linguas::RetornaFraseDaLista($lista_frases,179)."</a></li>\n");
+    echo("            <li><a href=\"".$view_cadastro."cadastro.php\">"._("msg179_-3")."</a></li>\n");
     }
     /*Se estiver logado e nao for o admtele, mostra links para o usuario acessar seus dados e seus cursos*/
     else if($_SESSION['cod_usuario_global_s'] != -1)
     {
     echo("          </ul><ul id=\"nav\">");
     //echo("            <li><a class=\"Cabecalho\" href=\"".$link."exibe_cursos.php\">".Linguas::RetornaFraseDaLista($lista_frases,187)."</a></li>\n");
-    echo("            <div class=\"navCabecalho\">".Linguas::RetornaFraseDaLista($lista_frases,187)."</div>\n");
+    /* 187 - Pessoal*/
+    echo("            <div class=\"navCabecalho\">"._("msg187_-3")."</div>\n");
     if(Usuarios::PreencheuDadosPessoais($sock))
-    echo("            <li><a href=\"".$link."exibe_cursos.php\">".Linguas::RetornaFraseDaLista($lista_frases,132)."</a></li>\n");
-    		echo("            <li><a href=\"".$link."dados.php\">".Linguas::RetornaFraseDaLista($lista_frases_configurar,1)."</a></li>\n");
+    	/*
+    	 * 132 - Meus cursos
+    	 * 1 - Configurar
+    	 */
+    echo("            <li><a href=\"".$link."exibe_cursos.php\">"._("msg132_-3")."</a></li>\n");
+    		echo("            <li><a href=\"".$link."dados.php\">"._("msg1_-7")."</a></li>\n");
     }
   echo("          </ul><ul id=\"nav\">");
-  echo("            <div class=\"navCabecalho\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</div>\n");
-  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=I\">".Linguas::RetornaFraseDaLista($lista_frases,172)."</a></li>\n");
-  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=N\">".Linguas::RetornaFraseDaLista($lista_frases,192)."</a></li>\n");
-  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=A\">".Linguas::RetornaFraseDaLista($lista_frases,171)."</a></li>\n");
-  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=F\">".Linguas::RetornaFraseDaLista($lista_frases,173)."</a></li>\n");
-  echo("            <li><a href=\"".$view_administracao."criar_curso.php\">".Linguas::RetornaFraseDaLista($lista_frases,9)."</a></li>\n");
+  /* 
+   * 5 - Cursos
+   * 172 - Inscrições Abertas
+   * 192 - Não iniciados
+   * 171 - Em Andamento
+   * 173 - Encerrados
+   * 9 - Como criar um curso
+   */
+  echo("            <div class=\"navCabecalho\">"._("msg5_-3")."</div>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=I\">"._("msg172_-3")."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=N\">"._("msg192_-3")."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=A\">"._("msg171_-3")."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."cursos_all.php?tipo_curso=F\">"._("msg173_-3")."</a></li>\n");
+  echo("            <li><a href=\"".$view_administracao."criar_curso.php\">"._("msg9_-3")."</a></li>\n");
   echo("          </ul>\n");
   echo("        </td>\n");
   echo("      </tr>\n");

@@ -101,12 +101,12 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     	}
     
-    	// 46 - Visï¿½o de Formador
-    	$tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,46);
+    	// 46 - Visão de Formador
+    	$tela_nome_ferramenta = _("msg46_-4");
     	echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
-    	// 45 - Visï¿½o de Aluno
-    
-    	$tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,45);
+    	
+    	// 45 - Visão de Aluno
+    	$tela_nome_ferramenta = _("msg45_-4");
     	echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
     	echo("          </ul>\n");
     
@@ -120,8 +120,8 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     Inicial::RetornaListaDeCursosUsuario($sock);
     
-    /* 47 - Configurar */
-    $tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,47);
+    /* 47 - Notificar */
+    $tela_nome_ferramenta=_("msg47_-4");
     
     $tela_cod_ferr=-7;
     $tela_diretorio="configurar";
@@ -131,13 +131,13 @@ $diretorio_imgs = '../../../web-content/imgs/';
     if ($tela_formador)
     {
     	/* Suporte */
-    	$tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,39);
+    	$tela_nome_ferramenta=_("msg39_-4");
     	echo("              <li><a href=\"mailto:".$tela_email_suporte."\">$tela_nome_ferramenta</a></li>\n");
     	echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
     
     	/* Administracao */
     	$tela_cod_ferr=0;
-    	$tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,37);
+    	$tela_nome_ferramenta=_("msg37_-4");
     	$tela_diretorio="administracao";
     
     
@@ -147,7 +147,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     }
     /*Ajuda */
     // 43 - Voltar ao inï¿½cio
-    $tela_nome_ferramenta=Linguas::RetornaFraseDaLista($lista_frases_menu,43);
+    $tela_nome_ferramenta=_("msg43_-3");
     echo("            ".Cursos::PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
     echo("            <li><img src=\"".$diretorio_imgs."icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
     //echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
@@ -185,7 +185,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     	$tela_cod_ferr=$linha['cod_ferramenta'];
     
     	if($tela_cod_ferr != -1) {
-    		$tela_nome_ferramenta = Linguas::RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
+    		//$tela_nome_ferramenta = Linguas::RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
     		$tela_diretorio = $tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
     		if (isset($tela_curso_ferramentas[$tela_cod_ferr])) {
     			$tela_status = $tela_curso_ferramentas[$tela_cod_ferr]['status'];
@@ -215,7 +215,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     			if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))
     			{
-    				Menu::ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_style,$cod_ferramenta,$cod_usuario);
+    				Menu::ExibeLink($cod_curso,$tela_cod_ferr, $tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_style,$cod_ferramenta,$cod_usuario);
     			}
     		}
     	}
@@ -230,7 +230,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     echo("          <ul class=\"usuarioOnlineExterno\">\n");
     echo("            <li class=\"usuarioOnlineHead\">\n");
-    echo("               ".Linguas::RetornaFraseDaLista($lista_frases_menu,60)."\n");
+    echo("               "._("msg60_-4")."\n");
     echo("            </li>\n");
     foreach($lista_usuarios_online as $cod => $linha) {
     	echo("            <li class=\"usuarioOnlineLista\">\n");

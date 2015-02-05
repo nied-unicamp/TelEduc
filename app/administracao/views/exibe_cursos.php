@@ -17,21 +17,21 @@ require_once $model_geral.'inicial.inc';
 require_once $model_administracao.'exibe_cursos.inc';
 
 $sock=AcessoSQL::Conectar("");
-/* Caso o usuÔøΩrio nÔøΩo esteja logado, manda para tela de login. */
+/* Caso o usu·rio n„o esteja logado, manda para tela de login. */
 if (empty ($_SESSION['login_usuario_s']))
 {
 	AcessoSQL::Desconectar($sock);
 	header("Location: ".$view_login."autenticacao_cadastro.php"); 
 	exit;
 }
-/* Caso o usuÔøΩrio n√£o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
+/* Caso o usu·rio n„o tenha preenchido seus dados pessoais, manda para tela de preenchimento. */
 else if(!Usuarios::PreencheuDadosPessoais($sock))
 {
 	AcessoSQL::Desconectar($sock);
 	header("Location: ".$view_administracao."preencher_dados.php?acao=preencherDados&atualizacao=true");
 	exit;
 }
-/* Caso o usu√°rio seja o adm, manda para tela dos cursos em andamento. */
+/* Caso o usu·rio seja o adm, manda para tela dos cursos em andamento. */
 else if($_SESSION['cod_usuario_global_s'] == -1)
 {
 	AcessoSQL::Desconectar($sock);
@@ -43,12 +43,10 @@ else if($_SESSION['cod_usuario_global_s'] == -1)
 require_once $view_admin.'topo_tela_inicial.php';
 
 // instanciar o objeto, passa a lista de frases por parametro
-$feedbackObject =  new FeedbackObject($lista_frases);
+$feedbackObject =  new FeedbackObject();
 //adicionar as acoes possiveis, 1o parametro
-//$feedbackObject->addAction("logar", 197, 0);
-$feedbackObject->addAction("logar", 'Login realizado com sucesso', 0); //TODO: texto hardcoded
-
-$lista_frases_autenticacao = Linguas::RetornaListaDeFrases($sock, 25);
+/* 197 - Usu·rio logado com sucesso*/
+$feedbackObject->addAction("logar", _("msg197_-3"), 0);
 
 echo("    <script type=\"text/javascript\">\n\n");
 
@@ -67,7 +65,7 @@ echo("          Campo_login = Campo_login.replace(/ /, \"\");\n");
 echo("        }\n");
 echo("        if (Campo_login == ''){\n");
 /* 4 - Por favor preencha o campo 'Login'. */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticacao, 4)."');\n");
+echo("          alert('"._("msg4_25")."');\n");
 echo("          document.formAutentica.login.focus();\n");
 echo("          return(false);\n");
 echo("        } else {\n");
@@ -76,7 +74,7 @@ echo("            Campo_senha = Campo_senha.replace(/ /, \"\");\n");
 echo("          }\n");
 echo("          if (Campo_senha == ''){\n");
 /* 5 - Por favor preencha o campo \"Senha\". */
-echo("            alert('".Linguas::RetornaFraseDaLista($lista_frases_autenticacao, 5)."');\n");
+echo("            alert('"._("msg5_25")."');\n");
 echo("          document.formAutentica.senha.focus();\n");
 echo("            return(false);\n");
 echo("          }\n");
@@ -90,7 +88,7 @@ require_once $view_admin.'menu_principal_tela_inicial.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /*162 - Meus Cursos  */
-echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,162)."</h4>\n");
+echo("          <h4>"._("msg162_-3")."</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -100,7 +98,7 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
@@ -108,25 +106,25 @@ echo("              <td colspan=4>\n");
 
 echo("                <table cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
-/*192 - N√£o iniciados (rec√©m-criados no servidor)*/
-echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,192)."</td>");
+/*192 - N„o iniciados (recÈm-criados no servidor)*/
+echo("                    <td colspan=\"2\">"._("msg192_-3")."</td>");
 echo("                  </tr>\n");
 echo("                  <tr class=\"head01\">\n");
-/* 5 - Curso */
-echo("                    <td class=\"alLeft\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
+/* 5 - Cursos */
+echo("                    <td class=\"alLeft\">"._("msg5_-3")."</td>\n");
 /* 163 - Tipo usuario */
-echo("                    <td width=\"15%\">".Linguas::RetornaFraseDaLista($lista_frases,163)."</td>\n");
+echo("                    <td width=\"15%\">"._("msg163_-3")."</td>\n");
 echo("                  </tr>\n");
 
-/*Exibe cursos rec√©m aceitos ou cursos que ainda n√£o come√ßaram*/
+/*Exibe cursos recÈm aceitos ou cursos que ainda n„o comeÁaram*/
 
 list ($lista_cursos, $total_cursos) = ExibeCursos::RetornaCursosNaoIniciados($sock, $_SESSION['cod_usuario_s']);
 
 if (($total_cursos)==0)
 {
 	echo("                  <tr>\n");
-	/* 164 - Voce nao esta cadastrado em nenhum curso */
-	echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,164)."</td>\n");
+	/* 164 - VocÍ n„o est· inscrito em nenhum curso */
+	echo("                    <td colspan=\"2\">"._("msg164_-3")."</td>\n");
 	echo("                  </tr>\n");
 }
 else
@@ -147,9 +145,9 @@ else
 
 		switch ($lista_cursos[$num]['tipo_usuario'])
 		{
-			//58 - Formador (geral) // 178 - Usu√°rio
-			case "F": echo "".Linguas::RetornaFraseDaLista($lista_frases_geral,58).""; break;
-			default: echo "".Linguas::RetornaFraseDaLista($lista_frases,178)."";
+			//58 - Formador (geral) // 178 - Usu·rio
+			case "F": echo ""._("msg58_-1").""; break;
+			default: echo ""._("msg178_-3")."";
 		}
 
 		echo("                    </td>\n");
@@ -161,13 +159,14 @@ else
 }
 
 echo("                  <tr class=\"head\">\n");
-echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,171)."</td>");
+/* 171 - Em Andamento*/
+echo("                    <td colspan=\"2\">"._("msg171_-3")."</td>");
 echo("                  </tr>\n");
 echo("                  <tr class=\"head01\">\n");
 /* 5 - Curso */
-echo("                    <td class=\"alLeft\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
+echo("                    <td class=\"alLeft\">"._("msg5_-3")."</td>\n");
 /* 163 - Tipo usuario */
-echo("                    <td width=\"15%\">".Linguas::RetornaFraseDaLista($lista_frases,163)."</td>\n");
+echo("                    <td width=\"15%\">"._("msg163_-3")."</td>\n");
 echo("                  </tr>\n");
 
 /*Exibe cursos em andamento*/
@@ -178,7 +177,7 @@ if (($total_cursos)==0)
 {
 	echo("                  <tr>\n");
 	/* 164 - Voce nao esta cadastrado em nenhum curso */
-	echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,164)."</td>\n");
+	echo("                    <td colspan=\"2\">"._("msg164_-3")."</td>\n");
 	echo("                  </tr>\n");
 }
 else
@@ -199,9 +198,9 @@ else
 
 		switch ($lista_cursos[$num]['tipo_usuario'])
 		{
-			//58 - Formador (geral) // 178 - Usu√°rio
-			case "F": echo "".Linguas::RetornaFraseDaLista($lista_frases_geral,58).""; break;
-			default: echo "".Linguas::RetornaFraseDaLista($lista_frases,178)."";
+			//58 - Formador (geral) // 178 - Usu·rio
+			case "F": echo ""._("msg58_-1").""; break;
+			default: echo ""._("msg178_-3")."";
 		}
 
 		echo("                    </td>\n");
@@ -213,13 +212,14 @@ else
 }
 
 echo("                  <tr class=\"head\">\n");
-echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,173)."</td>");
+/* 173 - Encerrados*/
+echo("                    <td colspan=\"2\">"._("msg173_-3")."</td>");
 echo("                  </tr>\n");
 echo("                  <tr class=\"head01\">\n");
 /* 5 - Curso */
-echo("                    <td class=\"alLeft\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
-/* 163 */
-echo("                    <td width=\"15%\">".Linguas::RetornaFraseDaLista($lista_frases,163)."</td>\n");
+echo("                    <td class=\"alLeft\">"._("msg5_-3")."</td>\n");
+/* 163 - Tipo usu·rio*/
+echo("                    <td width=\"15%\">"._("msg163_-3")."</td>\n");
 echo("                  </tr>\n");
 
 /*Exibe cursos jah oferecidos*/
@@ -231,7 +231,7 @@ if (($total_cursos)==0)
 {
 	echo("                  <tr>\n");
 	/* 164 - Voce nao esta cadastrado em nenhum curso */
-	echo("                    <td colspan=\"2\">".Linguas::RetornaFraseDaLista($lista_frases,164)."</td>\n");
+	echo("                    <td colspan=\"2\">"._("msg164_-3")."</td>\n");
 	echo("                  </tr>\n");
 }
 else
@@ -252,9 +252,9 @@ else
 
 		switch ($lista_cursos[$num]['tipo_usuario'])
 		{
-			//58 - Formador (geral) // 178 - Usu√°rio
-			case "F": echo "".Linguas::RetornaFraseDaLista($lista_frases_geral,58).""; break;
-			default: echo "".Linguas::RetornaFraseDaLista($lista_frases,178)."";
+			//58 - Formador (geral) // 178 - Usu·rio
+			case "F": echo ""._("msg58_-1").""; break;
+			default: echo ""._("msg178_-3")."";
 		}
 
 		echo("                    </td>\n");

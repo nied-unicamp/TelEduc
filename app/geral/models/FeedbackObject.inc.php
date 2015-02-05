@@ -17,21 +17,14 @@ class FeedbackObject {
      * @var array 
      */
     var $actions; 
-    
-    /**
-     *
-     * @var array 
-     */
-    var $listOfSentences;
-    
+   
     /**
      * Construtor da Classe 
      * 
      * @param array $theListOfSentences 
      */
-    function FeedbackObject($theListOfSentences) {
+    function FeedbackObject() {
         $this->actions = array();
-        $this->listOfSentences = $theListOfSentences;
     }
     
    /**
@@ -61,21 +54,12 @@ class FeedbackObject {
             return false;
 
         if (!strcmp($theCase, 'true')) {
-            if (is_integer($this->action[$theAction][1])) {
-                echo("        mostraFeedback('" . htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][1])) . "', 'true');\n");
-            } else {
-                echo("        mostraFeedback('" . htmlentities($this->action[$theAction][1]) . "', 'true');\n");
-            }
+                echo("        mostraFeedback('" . $this->action[$theAction][1] . "', 'true');\n");
         } else if (!strcmp($theCase, 'false')) {
-            if (is_integer($this->action[$theAction][0])) {
-                echo("        mostraFeedback('" . htmlentities(Linguas::RetornaFraseDaLista($this->listOfSentences, $this->action[$theAction][0])) . "', 'false');\n");
-            } else {
-                echo("        mostraFeedback('" . htmlentities($this->action[$theAction][0]) . "', 'false');\n");
-            }
+               	echo("        mostraFeedback('" . $this->action[$theAction][0] . "', 'false');\n");
         }
         return true;
     }
-
 }
 
 ?>

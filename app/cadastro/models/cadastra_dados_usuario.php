@@ -60,9 +60,6 @@ if(Inicial::LoginRepetido($sock,$login)){
 	$raiz_www = $raiz_www_linha[0];
 	$host=Inicial::RetornaConfiguracao($sock,"host");
 
-	$lista_frases_email = Linguas::RetornaListaDeFrases($sock,-2);
-	$lista_frases_correio = Linguas::RetornaListaDeFrases($sock,11);
-
 	$parametros_curso = "";
 	if (isset($_GET["cod_curso"]) && !empty($_GET["cod_curso"])) {
 		$parametros_curso .= "&c=".$_GET["cod_curso"];
@@ -71,8 +68,13 @@ if(Inicial::LoginRepetido($sock,$login)){
 	}
 
 	//87 - ConfirmaÃ§Ã£o de cadastro TelEduc
-	$assunto = Linguas::RetornaFraseDaLista($lista_frases_email, 87);
-	$mensagem = "<p>".Linguas::RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".Linguas::RetornaFraseDaLista($lista_frases_email, 3)."</p>";
+	$assunto = _("msg87_-2");
+	/* 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail clicando no link abaixo.
+	 * 89 - Caso contrário, favor desconsiderar esta mensagem.
+	 * 78 - Atenciosamente
+	 * 3 - Ambiente de Administração do TelEduc
+	 * */
+	$mensagem = "<p>"._("msg88_-2")."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>"._("msg89_-2")."</p><p>"._("msg78_-2").",</p><p> "._("msg3_-2")."</p>";
 	/*
 	 // 74 - Bem-Vindo ao TelEduc!
 	$assunto = RetornaFraseDaLista($lista_frases_email, 74);
@@ -88,7 +90,7 @@ if(Inicial::LoginRepetido($sock,$login)){
 	*/
 
 	// 115 - NAO_RESPONDA
-	$remetente = Linguas::RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
+	$remetente = _("msg115_11")."@".$host;
 	$mensagem_html = Email::MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
 	Email::MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
 

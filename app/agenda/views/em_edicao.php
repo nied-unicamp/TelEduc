@@ -29,9 +29,9 @@ if (!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 	echo("  </head>");
 	echo("  <body link=\"#0000ff\" vlink=\"#0000ff\" bgcolor=\"white\">\n");
 	/* 1 - Agenda */
-	$cabecalho = "  <br /><br /><h5>".Linguas::RetornaFraseDaLista($lista_frases, 1);
+	$cabecalho = "  <br /><br /><h5>"._("msg1_1");
 	/* 25 - area restrita ao formador. */
-	$cabecalho .= " - ".Linguas::RetornaFraseDaLista($lista_frases, 25)."</h5>";
+	$cabecalho .= " - "._("msg25_1")."</h5>";
 	echo($cabecalho);
 	echo("    <br />\n");
 	echo("  </body>\n");
@@ -53,9 +53,9 @@ else
 	/* Página Principal */
 
 	/* 1 - Agenda */
-	$cabecalho = ("<br /><br /><h4>".Linguas::RetornaFraseDaLista ($lista_frases, 1));
+	$cabecalho = ("<br /><br /><h4>"._("msg1_1"));
 	/*43 - Em edicao */
-	$cabecalho.= (" - ".Linguas::RetornaFraseDaLista($lista_frases,43)."</h4>\n");
+	$cabecalho.= (" - "._("msg43_1")."</h4>\n");
 	echo($cabecalho);
 
 	echo ("<br />\n");
@@ -67,9 +67,9 @@ else
 	echo("        <td valign=\"top\" colspan=3>\n");
 	echo("          <ul class=\"btAuxTabs\">\n");
 	/* 13 - Fechar (ger) */
-	echo("            <li><span onclick=\"self.close();\">".Linguas::RetornaFraseDaLista($lista_frases_geral,13)."</span></li>\n");
+	echo("            <li><span onclick=\"self.close();\">"._("msg13_-1")."</span></li>\n");
 	/* 52 - Atualizar (ger) */
-	echo("            <li><a href=\"".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_item=".$cod_item."&amp;origem=".$origem."\">".Linguas::RetornaFraseDaLista($lista_frases_geral,52)."</a></li>\n");
+	echo("            <li><a href=\"".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_item=".$cod_item."&amp;origem=".$origem."\">"._("msg52_-1")."</a></li>\n");
 	echo("          </ul>\n");
 	echo("        </td>\n");
 	echo("      </tr>\n");
@@ -77,7 +77,8 @@ else
 	echo("        <td colspan=3>\n");
 	echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 	echo("            <tr>\n");
-	echo("              <td  align=right><b>".Linguas::RetornaFraseDaLista($lista_frases,18).":&nbsp;</b></td>\n");
+	/* 18 - Título*/
+	echo("              <td  align=right><b>"._("msg18_1").":&nbsp;</b></td>\n");
 	echo("              <td colspan=2>".$linha_item['titulo']."</td>\n");
 	echo("            </tr>\n");
 	echo("          </table>\n");
@@ -90,11 +91,11 @@ else
 	echo("          <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 	echo("            <tr>\n");
 	/* 53 - Situacao (ger)*/
-	echo("              <td align=center><b>".Linguas::RetornaFraseDaLista($lista_frases_geral,53)."</b></td>\n");
+	echo("              <td align=center><b>"._("msg53_-1")."</b></td>\n");
 	/* 56  - Desde (ger) */
-	echo("              <td align=center><b>".Linguas::RetornaFraseDaLista($lista_frases_geral,56)."</b></td>\n");
+	echo("              <td align=center><b>"._("msg56_-1")."</b></td>\n");
 	/* 57 - Por (ger)*/
-	echo("              <td align=center><b>".Linguas::RetornaFraseDaLista($lista_frases_geral,57)."</b></td>\n");
+	echo("              <td align=center><b>"._("msg57_-1")."</b></td>\n");
 	echo("            </tr>\n");
 	echo("            <tr>\n");
 
@@ -108,10 +109,10 @@ else
 
 	if ($linha['acao']=="E")
 		/* 54 - Em Edicao (ger) */
-		echo("              <td align=center>".Linguas::RetornaFraseDaLista($lista_frases_geral,54)."</td>\n");
+		echo("              <td align=center>"._("msg54_-1")."</td>\n");
 	else
 		/* 55 - Edicao concluida (ger) */
-		echo("              <td align=center>".Linguas::RetornaFraseDaLista($lista_frases_geral,55)."</td>\n");
+		echo("              <td align=center>"._("msg55_-1")."</td>\n");
 
 	echo("              <td align=center>".$data."</td>\n");
 	echo("              <td align=center>".$nome_usuario."</td>\n");

@@ -26,7 +26,13 @@ if(!$SalvarEmArquivo){
 	echo("        </td>\n");
 }
 
-echo("        <td valign=\"bottom\" class=\"rodape\">2010  - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</td>\n");
+/*
+ * 514 (geral) - 2010  - TelEduc - Todos os direitos reservados.
+ * 515 (geral) - All rights reserved
+ * 516 (geral) - NIED - UNICAMP
+ * */
+
+echo("        <td valign=\"bottom\" class=\"rodape\">"._("msg514_-1")." "._("msg515_-1")." - "._("msg516_-1")."</td>\n");
 echo("      </tr>\n");
 echo("    </table>\n");
 ?>

@@ -13,26 +13,6 @@ else
  */
 class DataJavaScript {
     /*     * ********************************************************************
-      RetornaFrase - Retorna frase da lista de frases da biblioteca
-      OBS.: ROTINA DE USO INTERNO DE DATA_JAVASCRIPT.INC
-      entrada: numero da frase dentro da lista de frases da biblioteca
-      saida:   Frase correspondente ao numero
-     */
-
-    /**
-     * Retorna frase da lista de frases da biblioteca
-     * 
-     * @param mysqli_connect    $sock   instância de conexão do mysql
-     * @param int $num_frase numero da frase dentro da lista de frases da biblioteca
-     * @return string Frase correspondente ao numero 
-     */
-    static function RetornaFraseData($sock, $num_frase) {
-        $lista_frases = Linguas::RetornaListaDeFrases($sock, -2);
-
-        return Linguas::RetornaFraseDaLista($lista_frases, $num_frase);
-    }
-
-    /*     * ********************************************************************
       GeraJSVerificacaoData - Echo que gera funï¿½es JavaScript de verificacao de campos de data
       entrada: nenhuma
       saida:   nenhuma
@@ -175,7 +155,7 @@ class DataJavaScript {
         echo("  {\n");
         // 17 - Vocï¿½deixou um campo de data vazio.
         // 18 - Por favor preencha-o com uma data.
-        echo("    alert('" . DataJavaScript::RetornaFraseData($sock, 17) . " " . DataJavaScript::RetornaFraseData($sock, 18) . "');\n");
+        echo("    alert('" . _("msg17_-2") . " " . _("msg18_-2") . "');\n");
         echo("    return(false);\n");
         echo("  }\n");
         echo("  else \n");
@@ -186,7 +166,7 @@ class DataJavaScript {
         echo("    {\n");
         // 19 - Data invï¿½ida:
         // 20 - Por favor retorne e corrija.
-        echo("      alert('" . DataJavaScript::RetornaFraseData($sock, 19) . " '+data+'. " . DataJavaScript::RetornaFraseData($sock, 20) . "');\n");
+        echo("      alert('" . _("msg19_-2") . " '+data+'. " . _("msg20_-2") . "');\n");
         echo("      return false;\n");
         echo("    }\n");
         echo("    if (TemCaracteresEstranhos(data)) \n");
@@ -194,7 +174,7 @@ class DataJavaScript {
         // 21 - Vocï¿½digitou caracteres estranhos nesta data.
         // 22 - Use apenas dï¿½itos de 0 a 9 e a barra ( / ) para separar dia, mï¿½ e ano (exemplo: 31/01/2000).
         // 20 - Por favor retorne e corrija.
-        echo("      alert('" . DataJavaScript::RetornaFraseData($sock, 21) . "\\n" . DataJavaScript::RetornaFraseData($sock, 22) . "\\n" . DataJavaScript::RetornaFraseData($sock, 20) . "');\n");
+        echo("      alert('" . _("msg21_-2") . "\\n" . _("msg22_-2") . "\\n" . _("msg20_-2") . "');\n");
         echo("      return(false);\n");
         echo("    }\n");
         echo("    else \n");
@@ -214,7 +194,7 @@ class DataJavaScript {
         echo("      {\n");
         // 19 - Data invï¿½ida:
         // 20 - Por favor retorne e corrija.
-        echo("        alert('" . DataJavaScript::RetornaFraseData($sock, 19) . "'+data+'. " . DataJavaScript::RetornaFraseData($sock, 20) . "');\n");
+        echo("        alert('" . _("msg19_-2") . "'+data+'. " . _("msg20_-2") . "');\n");
         echo("        return(false);\n");
         echo("      } \n");
         echo("      else \n");
@@ -223,7 +203,7 @@ class DataJavaScript {
         echo("        {\n");
         // 19 - Data invï¿½ida:
         // 20 - Por favor retorne e corrija.
-        echo("          alert('" . DataJavaScript::RetornaFraseData($sock, 19) . " '+data+'. " . DataJavaScript::RetornaFraseData($sock, 20) . "');\n");
+        echo("          alert('" . _("msg19_-2") . " '+data+'. " . _("msg20_-2") . "');\n");
         echo("          return(false);\n");
         echo("        }\n");
         echo("      }\n");

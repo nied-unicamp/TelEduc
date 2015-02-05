@@ -6,7 +6,7 @@ require_once 'usuarios.inc';
 /**
  * Classe Email do modulo geral
  * @author     TelEduc
- * @copyright  20014 TelEduc
+ * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
  */
 class Email {
@@ -24,8 +24,6 @@ class Email {
      */
     static function MontaMsg($host, $raiz_www, $cod_curso, $mensagem, $assunto, $cod_usuario_remetente = '', $destinatarios = '') {
         $socket = AcessoSQL::Conectar("");
-        $lista_frases = Linguas::RetornaListaDeFrases($socket, 11);
-
 
         if ($cod_curso != '') {
             $sock = AcessoSQL::Conectar("");
@@ -56,21 +54,21 @@ class Email {
 
         if ($cod_curso != '') {
             /* 116 - Nome do curso */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . Linguas::RetornaFraseDaLista($lista_frases, 116) . ":</strong> " . $nome_curso . "<br />\n";
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg116_11") . ":</strong> " . $nome_curso . "<br />\n";
         }
 
         /* 24 - Data */
-        $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . Linguas::RetornaFraseDaLista($lista_frases, 24) . ":</strong> ";
+        $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg24_11") . ":</strong> ";
         $html_email.=Data::UnixTime2DataHora(time()) . "<br />\n";
 
         if ($cod_usuario_remetente != '') {
             /* 23 - Remetente */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . Linguas::RetornaFraseDaLista($lista_frases, 23) . ":</strong> ";
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg23_11") . ":</strong> ";
             $html_email.=$nome_remetente . "<br />\n";
         }
         if ($destinatarios != '') {
             /* 27 - Destinatários */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . Linguas::RetornaFraseDaLista($lista_frases, 27) . ":</strong> ";
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg27_11") . ":</strong> ";
             $html_email.=htmlentities($destinatarios) . "<br />\n";
         }
         $html_email.="\t\t\t\t\t\t\t\t\t<strong>Assunto:</strong> " . htmlentities($assunto) . "\n";

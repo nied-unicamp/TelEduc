@@ -16,7 +16,7 @@ class Linguas {
      * @param int $cod_ferramenta Número de identificação primaria da ferramenta da tabela Ferramentas
      * @return string Frase solicitada.
      */
-    static function RetornaFrase($sock, $cod_texto, $cod_ferramenta) {
+    /*static function RetornaFrase($sock, $cod_texto, $cod_ferramenta) {
         //   Global $cod_lingua_s,$lista_frases_s;
         // 2Session
         $dbnamebase = $_SESSION['dbnamebase'];
@@ -50,7 +50,7 @@ class Linguas {
 
         return(ConversorTexto::ConverteAspas2Html($texto));
     }
-    
+    */
     /**
      * Este metódo baseado no array de textos, e no cod_texto do testo que se quer obter
      * retorna uma string. Caso não haja texto relacionado a cod_texto no array textos, ele retorna Falta Texto 
@@ -59,7 +59,7 @@ class Linguas {
      * @param int $cod_texto Número de identificação primaria do texto da tabela Lingua_textos
      * @return string Retorna texto do array enviado já em condições de uso em um HTML ou Falta texto.
      */
-    static function RetornaFraseDaLista($textos, $cod_texto) {
+    /* static function RetornaFraseDaLista($textos, $cod_texto) {
         if (ConversorTexto::ConverteAspas2Html($textos[$cod_texto]) != "")
             return(ConversorTexto::ConverteAspas2Html($textos[$cod_texto]));
         else {
@@ -74,7 +74,7 @@ class Linguas {
                     return("Falta o texto");
             }
         }
-    }
+    } */
     
     /**
      * Retorna uma lista de frases em para uma feramenta.
@@ -83,7 +83,7 @@ class Linguas {
      * @param int $cod_ferramenta Número de identificação primaria da ferramenta da tabela Ferramentas
      * @return array Retorna um array unidemensional com informações 
      */
-    static function RetornaListaDeFrases($sock, $cod_ferramenta) {
+    /* static function RetornaListaDeFrases($sock, $cod_ferramenta) {
         //   Global $cod_lingua_s,$lista_frases_s;
         // 2Session
         $dbnamebase = $_SESSION['dbnamebase'];
@@ -94,7 +94,7 @@ class Linguas {
         //if (Linguas::ListaDeFrasesS($sock, $cod_ferramenta!="") && count(Linguas::ListaDeFrasesS($sock, $cod_ferramenta))>0)
         //return (Linguas::ListaDeFrasesS($sock, $cod_ferramenta));
 
-        /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt) */
+        /* Evitar erro caso a variavel $cod_lingua esteja vazia. Valor default = 1 (pt)
         if (is_null($cod_lingua))
             $cod_lingua = 1;
         $query = "SELECT cod_texto, texto FROM " . $dbnamebase . ".Lingua_textos WHERE ";
@@ -121,7 +121,7 @@ class Linguas {
         $_SESSION['lista_frases_s'][$cod_ferramenta]=$textos;
 
         return($textos);
-    }
+    } */
     
     /**
      * Muda de lingua baseado nos parametros
@@ -129,7 +129,7 @@ class Linguas {
      * @param mysqli_connect $sock	Instância de conexão do mysql
      * @param int $cod_lingua  Código da lingua já definido e que está na Session
      */
-    static function MudancaDeLingua($sock, $cod_lingua) {
+    /* static function MudancaDeLingua($sock, $cod_lingua) {
         //   Global $cod_lingua_s, $lista_frases_s;
 
         if ($_SESSION['cod_lingua_s'] != $cod_lingua) {
@@ -138,7 +138,7 @@ class Linguas {
                 MemorizaListaDeFrases($sock, $cod_fer);
             }
         }
-    }
+    } */
 
     /*     * ***********************************************************************
       ListaLinguas - Retorna a lista de linguas cadastradas
@@ -183,7 +183,60 @@ class Linguas {
         $texto = $linha['texto'];
         return($texto);
     }
+    
+    /* ************************************************************************
+     MudancaDeLingua - Atualiza todas as frases em memoria para a nova lingua selecionada
+    Entrada: $sock - Base Externa
+    $cod_lingua - codigo da lingua a ser atualizada
+    Saida: nenhuma
+    */
+    static function MudancaDeLingua($sock, $cod_lingua)
+    {
+    	if ($_SESSION['cod_lingua_s'] != $cod_lingua)
+    	{
+    		$_SESSION['cod_lingua_s'] = $cod_lingua;
+    		
+    		if($cod_lingua == 1){
+    			$locale = "pt_BR";
+    		}
+    		else if($cod_lingua == 3){
+    			$locale = "en_US";
+    		}
+    		else if($cod_lingua == 4){
+    			$locale = "pt_PT";
+    		}
+    	}
+    
+    }
 
+    /* ************************************************************************
+     AbreviaturaLingua - Dado o codigo da lingua, retorna a abreviatura da lingua, conforme abaixo (ISO693):
+    1 = "pt"
+    2 = "es"
+    3 = "en"
+    4 = "pt"
+    Por padrao, o codigo da lingua eh "pt".
+    Entrada: $cod_lingua - codigo da lingua a ser consultada
+    Saida: string
+    */
+    static function AbreviaturaLingua($cod_lingua){
+    	$abreviatura = "pt";
+    	switch ($cod_lingua){
+    		case '1':
+    			$abreviatura = "pt";
+    			break;
+    		case '2':
+    			$abreviatura = "es";
+    			break;
+    		case '3':
+    			$abreviatura = "en";
+    			break;
+    		case '4':
+    			$abreviatura = "pt";
+    			break;
+    	}
+    	return $abreviatura;
+    }
 }
 
 ?>

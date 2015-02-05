@@ -22,15 +22,16 @@ require_once $view_admin.'topo_tela_inicial.php';
 AcessoPHP::VerificaAutenticacaoAdministracao();
 
 // instanciar o objeto, passa a lista de frases por parametro
-//$feedbackObject =  new FeedbackObject($lista_frases);
+$feedbackObject =  new FeedbackObject($lista_frases);
 //adicionar as acoes possiveis, 1o parametro
-//$feedbackObject->addAction("logar", 198, 0);
+/* 198 - Administrador logado com sucesso */
+$feedbackObject->addAction("logar", _("msg198_-3"), 0);
 
 /* Inicio do JavaScript */
 echo("    <script language=\"javascript\"  type=\"text/javascript\">\n");
 
 echo("      function Iniciar() {\n");
-//$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("        startList();\n");
 echo("      }\n");
 
@@ -39,12 +40,10 @@ echo("    </script>\n");
 
 require_once $diretorio_views.'menu_principal_tela_inicial.php';
 
-$lista_frases=Linguas::RetornaListaDeFrases($sock,-5);
-
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
 /* 1 - Administração */
-echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,1)."</h4>\n");
+echo("          <h4>"._("msg1_-5")."</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -54,7 +53,7 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 echo("<!-- Tabelao -->\n");
 echo("<table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -93,10 +92,10 @@ if (count($lista)>0)
 		}
 
 		/* 135 - Patch atualizado com sucesso! */
-		echo("<b>".Linguas::RetornaFraseDaLista($lista_frases,135)."</b><br><br>");
+		echo("<b>"._("msg135_-5")."</b><br><br>");
 
 		// 18 - OK
-		echo("<form><input type=\"button\" value='".Linguas::RetornaFraseDaLista($lista_frases_geral,18)."' onclick='document.location=\"index.php?\";'></form>");
+		echo("<form><input type=\"button\" value='"._("msg18_-1")."' onclick='document.location=\"index.php?\";'></form>");
 
 
 		echo("</body>\n");
@@ -117,16 +116,16 @@ echo("<tr><td>\n");
 echo("<ul>\n");
 
 /* 3 - Cria��o de Curso */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,3),"\"".$view_admin."criar_curso.php\"","");
+Admin::PreparaBoldLink(_("msg3_-5"),"\"".$view_admin."criar_curso.php\"","");
 
 /* 4 - Extra��o de Curso */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,4),"\"../extracao/extrair_curso.php\"","");
+Admin::PreparaBoldLink(_("msg4_-5"),"\"../extracao/extrair_curso.php\"","");
 
 /* 141 - Inser��o de Cursos Extra�dos */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,141),"\"inserir_curso.php\"","");
+Admin::PreparaBoldLink(_("msg141_-5"),"\"inserir_curso.php\"","");
 
 /* 245 - Reutiliza��o de Cursos Encerrados */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,245),"\"resetar_curso.php\"","");
+Admin::PreparaBoldLink(_("msg245_-5"),"\"resetar_curso.php\"","");
 
 echo("</ul>\n");
 echo("</td>\n");
@@ -135,10 +134,10 @@ echo("<td>\n");
 echo("<ul>\n");
 
 /* 125 - Editar Categorias */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,125),"\"editar_categoria.php\"","");
+Admin::PreparaBoldLink(_("msg125_-5"),"\"editar_categoria.php\"","");
 
 /* 131 - Selecionar Categoria dos Cursos */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,131),"\"selecionar_categoria.php\"","");
+Admin::PreparaBoldLink(_("msg131_-5"),"\"selecionar_categoria.php\"","");
 
 echo("</ul>\n");
 echo("</td></tr>\n");
@@ -149,19 +148,19 @@ echo("<tr><td>\n");
 echo("<ul>\n");
 
 /* 293 - Reenvio de dados aos coordenadores*/
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,293),"\"../infocurso/reenvio.php\"","");
+Admin::PreparaBoldLink(_("msg293_-5"),"\"../infocurso/reenvio.php\"","");
 
 /* 8 - Trocar login */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,8),"\"trocar_login.php\"","");
+Admin::PreparaBoldLink(_("msg8_-5"),"\"trocar_login.php\"","");
 
 /* 9 - Enviar e-mail para usu�rios */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,9),"\"enviar_email.php\"","");
+Admin::PreparaBoldLink(_("msg9_-5"),"\"enviar_email.php\"","");
 
 /* 5 - Consulta a Base de Dados */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,5),"\"consultar_base.php\"","");
+Admin::PreparaBoldLink(_("msg5_-5"),"\"consultar_base.php\"","");
 
 /* 13 - Contato - NIED - Unicamp */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,13),"\"mailto:equipe.teleduc@gmail.com\"","");
+Admin::PreparaBoldLink(_("msg13_-5"),"\"mailto:equipe.teleduc@gmail.com\"","");
 
 echo("</ul>\n");
 echo("</td>\n");
@@ -170,23 +169,23 @@ echo("<td>\n");
 echo("<ul>\n");
 
 /* 153 - Estat�sticas do Ambiente */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,153),"\"../estatistica/num_cursos.php\"","");
+Admin::PreparaBoldLink(_("msg153_-5"),"\"../estatistica/num_cursos.php\"","");
 
 /* 183 - Configurar dados do ambiente */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,183), "\"selecionar_lingua.php\"", "");
+Admin::PreparaBoldLink(_("msg183_-5"), "\"selecionar_lingua.php\"", "");
 
 /* 11 - Cadastro de L�nguas */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,11),"\"cadastro_linguas.php\"","");
+Admin::PreparaBoldLink(_("msg11_-5"),"\"cadastro_linguas.php\"","");
 
 /* 171 - Cadastro de texto da Ajuda */
-Admin::PreparaBoldLink(Linguas::RetornaFraseDaLista($lista_frases,171),"\"../ajuda/index.php\"","");
+Admin::PreparaBoldLink(_("msg171_-5"),"\"../ajuda/index.php\"","");
 
 echo("</ul>\n");
 echo("</td></tr></table>\n");
 
 /* 12 - Voltar a p�gina inicial */
 echo("<div align=\"right\">\n");
-echo("  <input class=\"input\" value=\"".Linguas::RetornaFraseDaLista($lista_frases,12)."\" onClick=\"document.location='../pagina_inicial/index.php?'\" type=\"button\"/>\n");
+echo("  <input class=\"input\" value=\""._("msg12_-5")."\" onClick=\"document.location='../pagina_inicial/index.php?'\" type=\"button\"/>\n");
 echo("</div>\n");
 
 

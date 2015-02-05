@@ -57,15 +57,47 @@
   $diretorio_imgs = '../../../web-content/imgs/';
   
   require_once $model_geral.'geral.inc';
+  require_once $model_geral.'menu.inc';
  	
 
   $sock = AcessoSQL::Conectar("");
   $abv_lingua = "pt-br"; //TODO - arrumar
-  $lista_frases=Linguas::RetornaListaDeFrases($sock,-3);
-  $lista_frases_geral=Linguas::RetornaListaDeFrases($sock,-1);
-  $lista_frases_configurar = Linguas::RetornaListaDeFrases($sock,-7);
   
+  $tela_raiz_www = Menu::RetornaDiretorio($sock);
   
+  $tela_host = Menu::RetornaConfiguracao($sock,"host");
+  
+  if (isset($_GET['locale'])){
+	  $locale =  $_GET['locale'];
+  }
+  if(isset($_GET['cod_lin'])){
+	  if(($_GET['cod_lin']) == 1){
+		  $locale = "pt_BR";
+	  }
+	  else if(($_GET['cod_lin']) == 3){
+		  $locale = "en_US";
+	  }
+	  else if(($_GET['cod_lin']) == 4){
+		  $locale = "pt_PT";
+	  }
+  }
+  else{
+  	$lingua = $_SESSION['cod_lingua_s'];
+  	
+  	if($lingua == 1){
+  		$locale = "pt_BR";
+  	}
+  	else if($lingua == 3){
+  		$locale = "en_US";
+  	}
+  	else if($lingua == 4){
+  		$locale = "pt_PT";
+  	}
+  }
+  putenv("LC_ALL=$locale");
+  setlocale(LC_ALL, $locale);
+  bindtextdomain("TelEduc", "../../../gettext/i18n");
+  textdomain("TelEduc");
   
   echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
   echo("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");

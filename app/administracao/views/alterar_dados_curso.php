@@ -94,31 +94,31 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("        if (ComparaData(i_ini, i_fim) > 0) \n");
 	echo("        {\n");
 	echo("           /* 8 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final desse perï¿½do. */\n");
-	echo("           alert('".Linguas::RetornaFraseDaLista($lista_frases,8)."');\n");
+	echo("           alert('"._("msg8_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(c_ini, c_fim) > 0) \n");
 	echo("        {\n");
 	echo("           /* 9 - A data inicial do curso deve ser anterior ï¿½sua data final. */\n");
-	echo("           alert('".Linguas::RetornaFraseDaLista($lista_frases,9)."');\n");
+	echo("           alert('"._("msg9_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_fim) > 0) \n");
 	echo("        {\n");
 	echo("        /* 10 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
-	echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases,10)."');\n");
+	echo("          alert('"._("msg10_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_fim, c_fim) > 0) \n");
 	echo("        {\n");
 	echo("          /* 11 - A data final do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
-	echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases,11)."');\n");
+	echo("          alert('"._("msg11_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_ini) > 0) \n");
 	echo("        {\n");
 	echo("          /* 12 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data inicial do curso. */\n");
-	echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases,12)."');\n");
+	echo("          alert('"._("msg12_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        return(true);\n");
@@ -138,7 +138,7 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("        if (c1=='' || c2=='' || c4=='' || c5=='' || c6=='' || c7=='' || c8=='' || c9=='') \n");
 	echo("        {\n");
 	/* 13 - Por favor preencha todos os campos antes de pressionar Alterar. */
-	echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases,13)."');\n");
+	echo("          alert('"._("msg13_0")."');\n");
 	echo("          return(false);\n");
 	echo("        } \n");
 	echo("        else\n");
@@ -158,18 +158,18 @@ echo("    </script>\n");
 
 require_once $view_administracao.'menu_principal.php';
 
-/* Funï¿½es javascript */
+/* Funções javascript */
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
 if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 {
 	/* 1 - Administracao  28 - Area restrita ao formador. */
-	echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,1)." - ".Linguas::RetornaFraseDaLista($lista_frases,28)."</h4>\n");
+	echo("          <h4>"._("msg1_0")." - "._("msg28_0")."</h4>\n");
 
 	/*Voltar*/
 	/* 509 - Voltar */
-	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 	echo("          <div id=\"mudarFonte\">\n");
 	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
@@ -178,7 +178,7 @@ if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 	echo("          </div>\n");
 
 	/* 23 - Voltar (gen) */
-	echo("          <form><input class=\"input\" type=\"button\" value=\"".Linguas::RetornaFraseDaLista($lista_frases_geral,23)."\" onclick=\"history.go(-1);\" /></form>\n");
+	echo("          <form><input class=\"input\" type=\"button\" value=\""._("msg23_-1")."\" onclick=\"history.go(-1);\" /></form>\n");
 
 	echo("        </td>\n");
 	echo("      </tr>\n");
@@ -198,19 +198,19 @@ echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
 echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
 echo("      <input type=\"hidden\" name=\"action\" value='alterarDadosCurso'>\n");
 
-// Pï¿½gina Principal
-/* 1 - Administraï¿½ï¿½o */
-$cabecalho = "          <h4>".Linguas::RetornaFraseDaLista ($lista_frases, 1)."\n";
+// Página Principal
+/* 1 - Administração */
+$cabecalho = "          <h4>"._("msg1_0")."\n";
 if ($ecoordenador)
 {
 	/* 2 - Visualizar / Alterar Dados do Curso */
-	$cabecalho .= " - ".Linguas::RetornaFraseDaLista($lista_frases, 2)."</h4>";
+	$cabecalho .= " - "._("msg2_0")."</h4>";
 	echo($cabecalho);
 }
 else
 {
 	/* 49 - Visualizar dados do curso */
-	$cabecalho .= " - ".Linguas::RetornaFraseDaLista($lista_frases, 49)."</h4>";
+	$cabecalho .= " - "._("msg49_0")."</h4>";
 	echo($cabecalho);
 }
 
@@ -223,7 +223,7 @@ echo("      </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 $linha = Administracao::RetornaDadosCursoAdm($sock,$cod_curso);
 
@@ -246,7 +246,7 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /* 23 - Voltar (geral)*/
-echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">".Linguas::RetornaFraseDaLista($lista_frases_geral,23)."</a></li>\n");
+echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">"._("msg23_-1")."</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -256,8 +256,8 @@ echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInte
 if ($ecoordenador)
 {
 	echo("                  <tr class=\"head alLeft\">\n");
-	/* 14 - Abaixo seguem dados referentes ao curso. Para alterï¿½los, modifique os campos desejados e pressione o botï¿½ Alterar. */
-	echo("                    <td colspan=4>".Linguas::RetornaFraseDaLista($lista_frases,14)."</td>\n");
+	/* 14 - Abaixo seguem dados referentes ao curso. Para alterá-los, modifique os campos desejados e pressione o botão Alterar. */
+	echo("                    <td colspan=4>"._("msg14_0")."</td>\n");
 	echo("                  </tr>\n");
 }
 echo("                  <tr>\n");
@@ -266,7 +266,7 @@ echo("                      <table>\n");
 echo("                        <tr>\n");
 
 /* 15- Nome */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,15).":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg15_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <input class=\"input\" type=\"text\" name=\"nome_curso\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['nome_curso'])."'>");
@@ -276,8 +276,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 16 - Informaï¿½es */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,16).":</b></td>\n");
+/* 16 - Informações */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg16_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <textarea class=\"input\" name=\"informacoes\" cols=\"50\" rows=\"6\">".ConversorTexto::ConverteAspas2Html($linha['informacoes'])."</textarea>\n");
@@ -287,8 +287,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 17 - Inï¿½io do curso */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,17).":</b></td>\n");
+/* 17 - Início do curso */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg17_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -308,7 +308,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 18 - Fim do curso */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,18).":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg18_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -327,8 +327,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 19 - Inï¿½io das incriï¿½es */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,19).":</b></td>\n");
+/* 19 - Início das incrições */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg19_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -347,8 +347,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 20 - Fim das inscriï¿½es */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,20).":</b></td>\n");
+/* 20 - Fim das inscrições */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg20_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -367,8 +367,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 21 - Pblico alvo */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,21).":</b></td>\n");
+/* 21 - Público alvo */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg21_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                          <input class=\"input\" type=\"text\" name=\"publico_alvo\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['publico_alvo'])."'>\n");
@@ -378,8 +378,8 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 22 - Tipo de inscriï¿½o */
-echo("                          <td style=\"border:none; text-align:right;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,22).":</b></td>\n");
+/* 22 - Tipo de inscrição */
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg22_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <input class=\"input\" type=\"text\" name=\"tipo_inscricao\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['tipo_inscricao'])."'>\n");
@@ -390,8 +390,8 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 echo("                          <td style=\"border:none; text-align:right;\"><b>");
-// 148 - Lï¿½gua do curso:
-echo("                      ".Linguas::RetornaFraseDaLista($lista_frases,148)." \n");
+// 148 - Língua do curso:
+echo("                      "._("msg148_0")." \n");
 echo("                            </b></td>\n");
 
 echo("                          <td style=\"border:none\">\n");
@@ -420,14 +420,14 @@ if ($ecoordenador)
 {
 	/* 23 - Obs: */
 	/* 24 - As datas devem estar no formato DD/MM/AAAA. */
-	echo("              <b>".Linguas::RetornaFraseDaLista($lista_frases,23)."</b> ".Linguas::RetornaFraseDaLista($lista_frases,24)."\n");
+	echo("              <b>"._("msg23_0")."</b> "._("msg24_0")."\n");
 	echo("              <br><br>\n");
 	/* 23 - Obs: */
-	/* 229 - Caso a data de inicio do curso seja maior que a data de fim das inscriï¿½es, o curso somente poderï¿½ser acessado diretamente pelo link recebido no e-mail do coordenador. Ou seja, ele nï¿½ serï¿½listado em nenhuma das seï¿½es 'Cursos em andamento', 'Cursos com inscriï¿½es abertas' ou 'Cursos jï¿½oferecidos'. */
-	echo("              <b>".Linguas::RetornaFraseDaLista($lista_frases,23)."</b> ".Linguas::RetornaFraseDaLista($lista_frases,229)."\n");
+	/* 229 - Caso a data de inicio do curso seja maior que a data de fim das inscrições, o curso somente poderá ser acessado diretamente pelo link recebido no e-mail do coordenador. Ou seja, ele não será listado em nenhuma das seções 'Cursos em andamento', 'Cursos com inscrições abertas' ou 'Cursos já oferecidos'. */
+	echo("              <b>"._("msg23_0")."</b> "._("msg229_0")."\n");
 	echo("              <br><br>\n");
 	/* 24 - Alterar (geral) */
-	echo("                <div align=\"right\"><input type=\"submit\" class=\"input\" value='".Linguas::RetornaFraseDaLista($lista_frases_geral,24)."'></div>\n");
+	echo("                <div align=\"right\"><input type=\"submit\" class=\"input\" value='"._("msg24_-1")."'></div>\n");
 }
 
 echo("              </td>\n");

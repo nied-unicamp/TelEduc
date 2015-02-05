@@ -132,23 +132,23 @@ class Usuarios{
 		if ((!$adm) && (($status_curso=="N" && $status!="F") || in_array($status, $array_status)))
 		{
 			/* 13 - Acesso negado */
-			$mensagemHead = Linguas::RetornaFrase($sock,13,-2);
+			$mensagemHead = _("msg13_-2");
 	
 			$mensagem="";
 	
 	
 			if ($status_curso=="N" && $status!="F")
 				// 30 - O curso ainda n� foi iniciado.
-				$mensagem.=Linguas::RetornaFrase($sock,30,-2);
+				$mensagem.= _("msg30_-2");
 			else if ($status == 'i')
 				// 14 - Sua inscri�o ainda n� foi avaliada. Um e-mail lhe ser�enviado quando a avalia�o de sua inscri�o for feita.
-				$mensagem.=Linguas::RetornaFrase($sock,14,-2);
+				$mensagem.= _("msg14_-2");
 			else if ($status == 'r' || $status == 'a' || $status == 'f' || $status == 'z' || $status == 'v')
 				// 15 - Sua inscri�o n� foi aceita. Voc�n� tem acesso a esse curso.
-				$mensagem.=Linguas::RetornaFrase($sock,15,-2);
+				$mensagem.= _("msg15_-2");
 			else if ($status=="I")
 				// 16 - Usu�io inexistente ou inv�ido.
-				$mensagem.=Linguas::RetornaFrase($sock,16,-2);
+				$mensagem.= _("msg16_-2");
 	
 			echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 			echo("<html lang=\"pt\">\n");
@@ -368,7 +368,7 @@ class Usuarios{
 		if (!Usuarios::TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta))
 		{
 			// 59 - Ferramenta desabilitada
-			die("<b>".Linguas::RetornaFrase($sock,59,-1)."</b>");
+			die("<b>". _("msg59_-1")."</b>");
 		}
 	}
 	
@@ -677,6 +677,15 @@ class Usuarios{
 		//if ($tipo_usuario=="F")
 		//  $query.=" and tipo_compartilhamento='F'";
 		AcessoSQL::Enviar($sock,$query);
+	}
+	
+	static function RetornaCodLinguaUsuario($sock,$cod_usuario)
+	{
+		$query="select cod_lingua from Usuario where cod_usuario='".ConversorTexto::VerificaStringQuery($cod_usuario)."'";
+		$res=AcessoSQL::Enviar($sock, $query);
+	
+		$linha=AcessoSQL::RetornaLinha($res);
+		return ($linha[0]);
 	}
 }
 

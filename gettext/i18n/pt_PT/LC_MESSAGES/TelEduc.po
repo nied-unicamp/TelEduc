@@ -1,0 +1,1731 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TelEduc5\n"
+"POT-Creation-Date: 2015-02-05 16:08-0300\n"
+"PO-Revision-Date: 2015-02-05 16:09-0300\n"
+"Last-Translator: \n"
+"Language-Team:  <camila.kna@hotmail.com>\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SearchPath-0: /home/teleduc/public_html/TelEduc/app\n"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:28
+msgid "msg520_-5"
+msgstr "Sugestões"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:66
+msgid "msg533_-5"
+msgstr ""
+"Email e/ou login fornecidos já existem! Digita valores diferentes (nota que "
+"os logins existentes aparecem na lista de sugestões!"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:103
+msgid "msg166_-5"
+msgstr ""
+"Os seguintes campos não podem ser deixados em branco:\\n Nome e número de "
+"formandos(as) da oficina \\n Nome, e-mail e nome de utilizador do(a) "
+"coordenador(a)."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:112
+msgid "msg512_-5"
+msgstr ""
+"Os seguintes campos não podem ser deixados em branco: Nome e número de "
+"formandos da oficina; login do coordenador."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:121
+msgid "msg167_-5"
+msgstr "O campo número de formandos(as) deve ser um inteiro positivo."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:140
+msgid "msg168_-5"
+msgstr "E-mail inválido."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:187
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:45
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:118
+msgid "msg3_-5"
+msgstr "Criação de Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:197
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:55
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:55
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:122
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:50
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:172
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:226
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:101
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:59
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:271
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:126
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:230
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:265
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:142
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:156
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:364
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:226
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:258
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:137
+msgid "msg509_-1"
+msgstr "voltar"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:206
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:63
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:181
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:249
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:240
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:265
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:188
+#: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:106
+#: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:161
+msgid "msg23_-1"
+msgstr "Voltar"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:209
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:342
+msgid "msg98_-5"
+msgstr "Criar Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:212
+msgid "msg244_-5"
+msgstr "Avaliar requisições para abertura de oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:223
+msgid "msg91_-5"
+msgstr "Dados da Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:231
+msgid "msg92_-5"
+msgstr "Nome da Oficina:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:238
+msgid "msg93_-5"
+msgstr "Número de Formandos(as):"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:247
+msgid "msg94_-5"
+msgstr "Categoria:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:251
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:295
+msgid "msg115_-3"
+msgstr "Oficinas gerais"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:264
+msgid "msg123_-5"
+msgstr ""
+" Se você deseja criar uma nova categoria, preencha o nome da nova categoria "
+"abaixo. A categoria escolhida acima será desconsiderada."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:270
+msgid "msg124_-5"
+msgstr "Nova categoria:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:279
+msgid "msg95_-5"
+msgstr "Dados do(a) Coordenador(a) da Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:287
+msgid "msg508_-5"
+msgstr "Escolher usuário já cadastrado?"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:292
+msgid "msg509_-5"
+msgstr "sim"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:293
+msgid "msg510_-5"
+msgstr "não"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:300
+msgid "msg96_-5"
+msgstr "Nome do(a) coordenador(a):"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:307
+msgid "msg33_-5"
+msgstr "E-mail:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:314
+msgid "msg97_-5"
+msgstr "Nome de utilizador:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:331
+msgid "msg511_-5"
+msgstr ""
+"*Caso queiras escolher um usuário já cadastrado como coordernador da "
+"oficina, digita as letras iniciais (case sensitive) de seu login e então "
+"escolhe o login correspondente na lista de sugestões que aparecerá abaixo do "
+"campo Login."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:52
+msgid "msg10_-3"
+msgstr "Contactos"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:54
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:153
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:294
+msgid "msg157_-3"
+msgstr "Login"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:56
+msgid "msg161_-3"
+msgstr "Logout"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:83
+msgid "msg17_-3"
+msgstr "Administração"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:83
+msgid "msg18_-3"
+msgstr "Área reservada"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:86
+msgid "msg236_-3"
+msgstr "Ocorreu um erro na tua solicitação"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:98
+msgid "msg3_-3"
+msgstr "O que é o TelEduc"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:99
+msgid "msg4_-3"
+msgstr "Estrutura do ambiente"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:104
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:107
+msgid "msg179_-3"
+msgstr "Cadastre-se"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:115
+msgid "msg187_-3"
+msgstr "Pessoal"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:121
+msgid "msg132_-3"
+msgstr "Minhas oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:122
+msgid "msg1_-7"
+msgstr "Configurar"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:133
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:114
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:167
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:220
+msgid "msg5_-3"
+msgstr "Oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:134
+msgid "msg172_-3"
+msgstr "Inscrições Abertas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:135
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:110
+msgid "msg192_-3"
+msgstr "Não iniciados"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:136
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:163
+msgid "msg171_-3"
+msgstr "Em Andamento"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:137
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:216
+msgid "msg173_-3"
+msgstr "Encerrados"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:138
+msgid "msg9_-3"
+msgstr "Como criar uma oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:135
+msgid "msg99_-5"
+msgstr "Informações para aceder à oficina no TelEduc"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:145
+msgid "msg100_-5"
+msgstr "O seu pedido para realização da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:145
+msgid "msg101_-5"
+msgstr "foi aceite."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:149
+msgid "msg102_-5"
+msgstr "Para aceder à oficina, o seu nome de utilizador é:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:150
+msgid "msg103_-5"
+msgstr "e a sua palavra-passe é:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:152
+msgid "msg104_-5"
+msgstr "O acesso deve ser feito a partir do endereço:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:154
+msgid "msg105_-5"
+msgstr "Atenciosamente, a Administração do Ambiente TelEduc"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:161
+msgid "msg106_-5"
+msgstr "Oficina criada correctamente."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:163
+msgid "msg107_-5"
+msgstr ""
+"Foi enviado um e-mail com as instruções de acesso à oficina ao(à) "
+"coordenador(a) registado(a)."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:168
+msgid "msg534_-5"
+msgstr ""
+"Login inexistente! Volta e digita o teu login novamente ou escolha a opção "
+"de \"\"cadastrar o coordenador no ambiente."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:27
+msgid "msg198_-3"
+msgstr "Administrador logado com sucesso"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:45
+msgid "msg1_-5"
+msgstr "Administração"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:94
+msgid "msg135_-5"
+msgstr "Patch actualizado com sucesso!"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:97
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:407
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:291
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:129
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:236
+msgid "msg18_-1"
+msgstr "Ok"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:121
+msgid "msg4_-5"
+msgstr "Extracção de Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:124
+msgid "msg141_-5"
+msgstr "Inserção de oficinas eliminadas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:127
+msgid "msg245_-5"
+msgstr "Reutilização de Oficinas Encerradas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:136
+msgid "msg125_-5"
+msgstr "Editar Categorias"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:139
+msgid "msg131_-5"
+msgstr "Seleccionar Categoria das Oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:150
+msgid "msg293_-5"
+msgstr "Reenvio de dados aos(às) coordenadores(as)"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:153
+msgid "msg8_-5"
+msgstr "Alterar Nome de Utilizador"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:156
+msgid "msg9_-5"
+msgstr "Enviar e-mail para os utilizadores"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:159
+msgid "msg5_-5"
+msgstr "Consulta a Base de Dados"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:162
+msgid "msg13_-5"
+msgstr "Contacto - NIED - Unicamp"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:171
+msgid "msg153_-5"
+msgstr "Estatísticas do Ambiente"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:174
+msgid "msg183_-5"
+msgstr "Configurar dados do ambiente'"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:177
+msgid "msg11_-5"
+msgstr "Registo de Idiomas"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:180
+msgid "msg171_-5"
+msgstr "Registo de texto da Ajuda"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:187
+msgid "msg12_-5"
+msgstr "Regressar à página inicial"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+msgid "msg513_-1"
+msgstr "Versão"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+msgid "msg512_-1"
+msgstr "Servidor:"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
+msgid "msg514_-1"
+msgstr "2010  - TelEduc - Todos os direitos reservados."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
+msgid "msg515_-1"
+msgstr "All rights reserved"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
+msgid "msg516_-1"
+msgstr "NIED - UNICAMP"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:46
+msgid "msg214_-3"
+msgstr "Um novo email para confirmação do Usuário enviado com sucesso!"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:46
+msgid "msg180_-3"
+msgstr "Erro de autenticação. Digita o teu login e tua senha novamente"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:47
+msgid "msg213_-3"
+msgstr ""
+"Teu cadastro ainda não foi confirmado, verifica seu email ou faz novo pedido "
+"de confirmação abaixo."
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:48
+msgid "msg210_-3"
+msgstr ""
+"Teu cadastro foi efetuado com sucesso. Em instantes receberás um email com "
+"um link para confirmação do cadastro e, em seguida, poderás acessar o "
+"ambiente."
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:50
+msgid "msg216_-3"
+msgstr "Digita teu login"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:70
+msgid "msg181_-3"
+msgstr "Por favor, preenche o campo \"Login\"."
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:78
+msgid "msg182_-3"
+msgstr "Por favor, preenche o campo \"Senha\"."
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:109
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:111
+msgid "msg183_-3"
+msgstr "Autenticação"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:109
+msgid "msg159_-3"
+msgstr "Inscrição"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:124
+msgid "msg219_-3"
+msgstr ""
+"Para se inscrever em uma oficina é preciso estar cadastrado no ambiente. Se "
+"já tens cadastro basta se logar, senão"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:124
+msgid "msg220_-3"
+msgstr "cadastres-te!"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:132
+msgid "msg165_-3"
+msgstr "Digite seus dados nos campos abaixo para entrar no ambiente."
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:164
+msgid "msg158_-3"
+msgstr "Senha"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:176
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:146
+msgid "msg55_-3"
+msgstr "Entrar"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:203
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:207
+msgid "msg90_-2"
+msgstr "Se não tiveres cadastro,"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:203
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:207
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:211
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:215
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:219
+msgid "msg101_-2"
+msgstr "cliqua aqui!"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:211
+msgid "msg67_-2"
+msgstr "Se te esqueceste do teu nome de utilizador segue a hiperligação:"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:215
+msgid "msg24_-2"
+msgstr "No caso de se ter esquecido da sua palavra-passe siga a hiperligação:"
+
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:219
+msgid "msg92_-2"
+msgstr "Se não recebestes email de confirmação de cadastro,"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:57
+msgid "msg68_-3"
+msgstr "Voltar para a lista de oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:61
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:129
+msgid "msg56_-3"
+msgstr "Visitar"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:75
+msgid "msg60_-3"
+msgstr "Destinatários:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
+msgid "msg61_-3"
+msgstr "Período da oficina:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
+msgid "msg69_-3"
+msgstr "de"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
+msgid "msg70_-3"
+msgstr "a"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
+msgid "msg196_-3"
+msgstr "Período de inscrição na oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:94
+msgid "msg156_-3"
+msgstr "Coordenador(a) da oficina:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:99
+msgid "msg62_-3"
+msgstr "E-mail para contacto:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:104
+msgid "msg63_-3"
+msgstr "Tipo de inscrição:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:126
+msgid "msg67_-3"
+msgstr "Inscreva-se!"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:129
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:142
+msgid "msg235_-3"
+msgstr "Inscrever-te novamente"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:97
+msgid "msg8_0"
+msgstr ""
+"A data inicial do período de inscrição deve ser anterior à data final desse "
+"período."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:103
+msgid "msg9_0"
+msgstr "A data inicial da oficina deve ser anterior à sua data final."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:109
+msgid "msg10_0"
+msgstr ""
+"A data inicial do período de inscrição deve ser anterior à data final da "
+"oficina."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:115
+msgid "msg11_0"
+msgstr ""
+"A data final do período de inscrição deve ser anterior à data final da "
+"oficina."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:121
+msgid "msg12_0"
+msgstr ""
+"A data inicial do período de inscrição deve ser anterior à data inicial da "
+"oficina."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:141
+msgid "msg13_0"
+msgstr "Por favor preencha todos os campos antes de carregar em Alterar."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:168
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:203
+msgid "msg1_0"
+msgstr "Administração"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:168
+msgid "msg28_0"
+msgstr "Área restrita a formadores(as)."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:207
+msgid "msg2_0"
+msgstr "Visualizar/Alterar Dados da Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:213
+msgid "msg49_0"
+msgstr "Visualizar Dados da Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:260
+msgid "msg14_0"
+msgstr ""
+"Abaixo estão os dados relativos à oficina. Para alterá-los, modifique os "
+"campos desejados e carregue no botão Alterar."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:269
+msgid "msg15_0"
+msgstr "Nome"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:280
+msgid "msg16_0"
+msgstr "Informações"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:291
+msgid "msg17_0"
+msgstr "Início da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:311
+msgid "msg18_0"
+msgstr "Fim da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:331
+msgid "msg19_0"
+msgstr "Início das incrições"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:351
+msgid "msg20_0"
+msgstr "Fim das inscrições"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:371
+msgid "msg21_0"
+msgstr "Destinatários"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:382
+msgid "msg22_0"
+msgstr "Tipo de inscrição"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:394
+msgid "msg148_0"
+msgstr "Idioma do curso:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:423
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:427
+msgid "msg23_0"
+msgstr "Obs: "
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:423
+msgid "msg24_0"
+msgstr "As datas devem estar no formato DD/MM/AAAA."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:427
+msgid "msg229_0"
+msgstr ""
+"Caso a data de início da oficina seja maior que a data final das inscrições, "
+"a oficina só poderá ser acedida directamente pela hiperligação recebida no e-"
+"mail do(a) coordenador(a). Ou seja, ele não será listado em nenhuma das "
+"secções ?Oficinas a decorrer?, ?Oficinas com inscrições abertas? ou ?"
+"Oficinas já oferecidas?."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:430
+msgid "msg24_-1"
+msgstr "Alterar"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:49
+msgid "msg197_-3"
+msgstr "Usuário logado com sucesso"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:68
+msgid "msg4_25"
+msgstr "Por favor preenche o campo Login"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:77
+msgid "msg5_25"
+msgstr "Por favor preenche o campo Senha"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:91
+msgid "msg162_-3"
+msgstr "Minhas Oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:116
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:169
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:222
+msgid "msg163_-3"
+msgstr "Tipo usuário"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:127
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:180
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:234
+msgid "msg164_-3"
+msgstr "Não estás inscrito em nenhuma oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:149
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:202
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:256
+msgid "msg58_-1"
+msgstr "Formador(a)"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:150
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:203
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:257
+msgid "msg178_-3"
+msgstr "Usuário"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:37
+msgid "msg194_-3"
+msgstr "Oficinas não iniciadas"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:40
+msgid "msg6_-3"
+msgstr "Oficinas a decorrer"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:43
+msgid "msg7_-3"
+msgstr "Oficinas com inscrições abertas"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:46
+msgid "msg8_-3"
+msgstr "Oficinas já oferecidas"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:93
+msgid "msg169_-5"
+msgstr "Categoria"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:99
+msgid "msg265_-5"
+msgstr "Nome da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:140
+msgid "msg223_-3"
+msgstr "Inscrição não aceita"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:154
+msgid "msg54_-3"
+msgstr "Inscrições"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:159
+msgid "msg53_-3"
+msgstr "Informações"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:172
+msgid "msg195_-3"
+msgstr "Oficina não iniciada"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:174
+msgid "msg174_-3"
+msgstr "oficina em andamento"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:176
+msgid "msg175_-3"
+msgstr "oficina com inscrição aberta"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:178
+msgid "msg176_-3"
+msgstr "oficina encerrado"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:181
+msgid "msg57_-3"
+msgstr "Não há nenhum"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:198
+msgid "msg116_-3"
+msgstr "Seleccione uma categoria:"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:105
+msgid "msg46_-4"
+msgstr "Visão de Formador(a)"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:109
+msgid "msg45_-4"
+msgstr "Visão de Formando(a)"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:124
+msgid "msg47_-4"
+msgstr "Configurar"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:134
+msgid "msg39_-4"
+msgstr "Apoio Técnico"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:140
+msgid "msg37_-4"
+msgstr "Administração"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:150
+msgid "msg43_-3"
+msgstr "E-mail"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:233
+msgid "msg60_-4"
+msgstr "Usuários Online:"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:75
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:115
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
+msgid "msg50_-7"
+msgstr "O campo"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:311
+msgid "msg32_-7"
+msgstr "Nome"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:115
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
+msgid "msg51_-7"
+msgstr "não pode estar vazio"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:75
+msgid "msg33_-7"
+msgstr "BI"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:86
+msgid "msg71_-7"
+msgstr "Data inválida"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:97
+msgid "msg80_-7"
+msgstr "Data de Nascimento no Futuro"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:108
+msgid "msg52_-7"
+msgstr "O e-mail inserido parece estar incorrecto"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:115
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:368
+msgid "msg40_-7"
+msgstr "Morada"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:377
+msgid "msg41_-7"
+msgstr "Cidade"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:386
+msgid "msg42_-7"
+msgstr "Estado"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:391
+msgid "msg43_-7"
+msgstr "País"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:149
+msgid "msg59_-7"
+msgstr ""
+"O campo de nome de utilizador não pode estar vazio. Por favor escreva "
+"novamente o nome de utilizador desejado."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:163
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:170
+msgid "msg4_-7"
+msgstr ""
+"A nova palavra-passe não pode estar vazia. Por favor escreva a nova palavra-"
+"passe."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:177
+msgid "msg5_-7"
+msgstr ""
+"As novas palavras-passe escritas diferem entre si. Por favor escreva-as "
+"novamente."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:205
+msgid "msg74_-7"
+msgstr "Login digitado já existe. Digita outro e tente novamente."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:212
+msgid "msg75_-7"
+msgstr "E-mail digitado já existe. Digita outro e tente novamente."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:219
+msgid "msg76_-7"
+msgstr "Caracteres digitados não conferem com os da imagem. Tenta novamente."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:231
+msgid "msg184_-3"
+msgstr "Cadastro efetuado com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:261
+msgid "msg185_-3"
+msgstr "Cadastro"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:283
+msgid "msg186_-3"
+msgstr "Dados pessoais"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:289
+msgid "msg73_-7"
+msgstr ""
+"Insira seus dados no formulário abaixo e clique em \"Cadastrar\" para "
+"cadastrar-se no ambiente."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:299
+msgid "msg166_-3"
+msgstr "Digita tua senha"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:304
+msgid "msg167_-3"
+msgstr "Redigita tua senha"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:320
+msgid "msg72_-7"
+msgstr "RG"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:329
+msgid "msg34_-7"
+msgstr "Data de nascimento"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:338
+msgid "msg35_-7"
+msgstr "Sexo"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:342
+msgid "msg36_-7"
+msgstr "Masculino"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:344
+msgid "msg37_-7"
+msgstr "Feminino"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:350
+msgid "msg38_-7"
+msgstr "Email"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:359
+msgid "msg39_-7"
+msgstr "Telefone"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:398
+msgid "msg44_-7"
+msgstr "Profissão"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:407
+msgid "msg45_-7"
+msgstr "Local de trabalho"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:416
+msgid "msg46_-7"
+msgstr "Habilitações académicas"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:425
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:470
+msgid "msg"
+msgstr ""
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:434
+msgid "msg47_-7"
+msgstr "Informações adicionais"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:445
+msgid "msg66_-7"
+msgstr "(*) Campos Obrigatórios"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:453
+msgid "msg77_-7"
+msgstr "Digita a resposta da expressão dada ao lado."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:460
+msgid "msg89_-3"
+msgstr "Registar"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:71
+msgid "msg87_-2"
+msgstr "Confirmação de cadastro TelEduc"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
+msgid "msg88_-2"
+msgstr ""
+"Se cadastras-te no ambiente TelEduc, favor confirmar teu e-mail clicando no "
+"link abaixo."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
+msgid "msg89_-2"
+msgstr "Caso contrário, favor desconsiderar esta mensagem."
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
+msgid "msg78_-2"
+msgstr "Atenciosamente"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
+msgid "msg3_-2"
+msgstr "Ambiente de Administração do TelEduc"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:93
+msgid "msg115_11"
+msgstr "NAO_RESPONDA"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:47
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:113
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:148
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:32
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:56
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:224
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:254
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:291
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:128
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:145
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:145
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:347
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:351
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:220
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:244
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:123
+msgid "msg1_1"
+msgstr "Agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:50
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:392
+msgid "msg34_1"
+msgstr "Histórico"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:59
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:70
+msgid "msg13_-1"
+msgstr "Fechar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:68
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:81
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:399
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:184
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:283
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:410
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:198
+msgid "msg18_1"
+msgstr "Título"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:81
+msgid "msg35_1"
+msgstr "Acção"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:83
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:150
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:292
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:178
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:200
+msgid "msg7_1"
+msgstr "Data"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:85
+msgid "msg36_1"
+msgstr "Utilizador"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:101
+msgid "msg40_1"
+msgstr "Criação"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:103
+msgid "msg39_1"
+msgstr "Edição Cancelada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:105
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:174
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:58
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:337
+msgid "msg43_1"
+msgstr "Em Edição"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:107
+msgid "msg37_1"
+msgstr "Edição Terminada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:109
+msgid "msg42_1"
+msgstr "Movida para o histórico"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:111
+msgid "msg41_1"
+msgstr "Activada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:113
+msgid "msg38_1"
+msgstr "Desconhecida"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:33
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:34
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:36
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:37
+msgid "msg101_1"
+msgstr "Agenda(s) apagada(s) com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:39
+msgid "msg29_1"
+msgstr "Tem a certeza que deseja apagar esta agenda?"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:40
+msgid "msg30_1"
+msgstr "(não haverá como recuperá-la!)"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:114
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:172
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:347
+msgid "msg2_1"
+msgstr "Agendas Anteriores"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:134
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:277
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:380
+msgid "msg8_1"
+msgstr "Voltar para a Agenda Actual"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:196
+msgid "msg90_1"
+msgstr "Não há agendas anteriores."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:205
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:377
+msgid "msg68_-1"
+msgstr "Excluir selecionados"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:34
+msgid "msg25_1"
+msgstr "Área restrita ao(à) Formador(a)."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:72
+msgid "msg52_-1"
+msgstr "Actualizar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:94
+msgid "msg53_-1"
+msgstr "Situação"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:96
+msgid "msg56_-1"
+msgstr "Desde"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:98
+msgid "msg57_-1"
+msgstr "Por"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:112
+msgid "msg54_-1"
+msgstr "Em Edição"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:115
+msgid "msg55_-1"
+msgstr "Edição concluída"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:38
+msgid "msg102_1"
+msgstr "Agenda publicada com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:39
+msgid "msg108_1"
+msgstr "Agenda importada com sucesso!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:66
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:123
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:282
+msgid "msg15_1"
+msgstr "O título não pode estar vazio."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:73
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:130
+msgid "msg16_1"
+msgstr "O título não pode conter \\\\."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
+msgid "msg57_1"
+msgstr "Tem a certeza que deseja activar esta agenda?"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
+msgid "msg58_1"
+msgstr "(Uma vez activada, não haverá como desactivá-la)"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:226
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:222
+msgid "msg73_1"
+msgstr "Ação exclusiva a formadores."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:254
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:169
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:377
+msgid "msg3_1"
+msgstr "Editar Agendas"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:273
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:167
+msgid "msg6_1"
+msgstr "Nova Agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:275
+msgid "msg61_1"
+msgstr "A Importar agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:294
+msgid "msg110_1"
+msgstr "Situação"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:307
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:395
+msgid "msg24_1"
+msgstr "Activar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:327
+msgid "msg60_-1"
+msgstr "Houve um erro ao tentar remover ficheiros temporários."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:343
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:145
+msgid "msg23_1"
+msgstr "Activada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:366
+msgid "msg9_1"
+msgstr "Não foi criada nenhuma agenda!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:410
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:166
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:294
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:132
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:248
+msgid "msg2_-1"
+msgstr "Cancelar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:130
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:246
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:125
+msgid "msg66_1"
+msgstr "A Importar agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:176
+msgid "msg78_1"
+msgstr "Agendas da Oficina:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:218
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:258
+msgid "msg4_1"
+msgstr "Ainda não foi adicionada nenhuma agenda!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:229
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:72
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:177
+msgid "msg88_1"
+msgstr "A Importar para:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:32
+msgid "msg97_1"
+msgstr "Houve um erro na criação da agenda."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:241
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:521
+msgid "msg94_1"
+msgstr "Texto"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:98
+msgid "msg96_1"
+msgstr "Agenda criada com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
+msgid "msg51_1"
+msgstr "Ficheiro anexado com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
+msgid "msg98_1"
+msgstr "Ocorreu um erro ao tentar anexar o arquivo."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
+msgid "msg99_1"
+msgstr "Arquivo descompactado com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
+msgid "msg100_1"
+msgstr "Houve um erro ao descompactar o arquivo."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:101
+msgid "msg105_1"
+msgstr "Arquivo de entrada selecionado com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:102
+msgid "msg55_1"
+msgstr "Seleccione o ficheiro que será a entrada da agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:275
+msgid "msg103_1"
+msgstr "Agenda renomeada com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:351
+msgid "msg111_1"
+msgstr "Editar Agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:374
+msgid "msg33_1"
+msgstr "Voltar para as Agendas Anteriores"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:399
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:666
+msgid "msg1_-1"
+msgstr "Apagar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:418
+msgid "msg70_-1"
+msgstr "Opções"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:425
+msgid "msg9_-1"
+msgstr "Editar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:439
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:454
+msgid "msg106_1"
+msgstr "Renomear título"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:441
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:456
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:236
+msgid "msg91_1"
+msgstr "Editar texto"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:443
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:458
+msgid "msg92_1"
+msgstr "Limpar texto"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:534
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:252
+msgid "msg57_-2"
+msgstr "Ficheiros:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:600
+msgid "msg107_1"
+msgstr "Última modificação em"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:605
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:323
+msgid "msg59_1"
+msgstr "Entrada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:668
+msgid "msg38_-1"
+msgstr "Descompactar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:670
+msgid "msg60_1"
+msgstr "Selecionar Entrada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:684
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:696
+msgid "msg26_-1"
+msgstr "Anexar Ficheiro"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
+msgid "msg48_1"
+msgstr ""
+"Pressione o botão Browse (ou Procurar) para seleccionar o ficheiro a ser "
+"anexado e carregue Ok para continuar."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
+msgid "msg49_1"
+msgstr "(ficheiros .ZIP podem ser enviados e descompactados posteriormente)"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
+msgid "msg20_1"
+msgstr "Este ficheiro será a entrada da agenda!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:716
+msgid "msg44_1"
+msgstr "Obs.: A agenda deverá conter somente texto ou apenas ficheiros."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:74
+msgid "msg112_1"
+msgstr "Erro ao Importar, favor selecionar uma opção!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:103
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:110
+msgid "msg31_-2"
+msgstr "Período Inválido!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:267
+msgid "msg35_-2"
+msgstr "Oficinas a decorrer"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:269
+msgid "msg36_-2"
+msgstr "Oficinas com inscrições abertas"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:271
+msgid "msg37_-2"
+msgstr "Oficinas latentes"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:273
+msgid "msg38_-2"
+msgstr "Oficinas encerradas"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:285
+msgid "msg40_-2"
+msgstr "Período:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:288
+msgid "msg44_-2"
+msgstr "Categorias"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:293
+msgid "msg62_1"
+msgstr "Oficinas a decorrer com agenda partilhada:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:299
+msgid "msg63_1"
+msgstr "Oficinas com inscrições abertas com agenda partilhada:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:304
+msgid "msg64_1"
+msgstr "Oficinas latentes com agenda partilhada:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:309
+msgid "msg65_1"
+msgstr "Oficinas encerradas com agenda partilhada"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:319
+msgid "msg47_-2"
+msgstr "Todos as Oficinas"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:357
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:425
+msgid "msg46_-2"
+msgstr "(extraído)"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:359
+msgid "msg41_-2"
+msgstr "De:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:361
+msgid "msg42_-2"
+msgstr "Até:"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:365
+msgid "msg43_-2"
+msgstr "Alterar Período"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:400
+msgid "msg45_-2"
+msgstr "Oficinas Gerais"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:432
+msgid "msg75_-1"
+msgstr "Importar"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:30
+msgid "msg22_1"
+msgstr "Agenda editada com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:31
+msgid "msg53_1"
+msgstr "A agenda não pode ter texto e ficheiros simultaneamente!"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:32
+msgid "msg95_1"
+msgstr "Tens a certeza que desejas apagar o texto desta agenda?"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:33
+msgid "msg93_1"
+msgstr "Texto excluído com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:34
+msgid "msg109_1"
+msgstr ""
+"Nome do anexo com acentos ou caracteres inválidos! Renomeia o arquivo e "
+"tenta novamente."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:35
+msgid "msg12_1"
+msgstr "Tem a certeza que deseja descompactar este ficheiro?"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:36
+msgid "msg13_1"
+msgstr "(o ficheiro ZIP será apagado)"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:37
+msgid "msg14_1"
+msgstr ""
+"Importante: não é possível a descompactação de ficheiros que contêm pastas "
+"com espaços no nome."
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:38
+msgid "msg104_1"
+msgstr "Arquivo(s) excluído(s) com sucesso."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:56
+msgid "msg72_-4"
+msgstr "Meus Cursos"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:115
+msgid "msg39_-1"
+msgstr "Ensino básico ? 1º ciclo (4º ano)"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:116
+msgid "msg40_-1"
+msgstr "Ensino básico ? 2º ciclo (6º ano)"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:117
+msgid "msg41_-1"
+msgstr "Ensino básico ? 3º ciclo (9º ano)"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:118
+msgid "msg42_-1"
+msgstr "Ensino secundário"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:119
+msgid "msg43_-1"
+msgstr "Ensino superior ? bacharelato"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:120
+msgid "msg44_-1"
+msgstr "Ensino superior ? licenciatura"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:121
+msgid "msg45_-1"
+msgstr "Ensino superior ? mestrado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:481
+msgid "msg232_-3"
+msgstr "Não participas da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:486
+msgid "msg224_-3"
+msgstr "Formando Inscrito"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:489
+msgid "msg234_-3"
+msgstr "Formando desligado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:492
+msgid "msg225_-3"
+msgstr "Formando não aceito"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:495
+msgid "msg226_-3"
+msgstr "Formando aceito"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:498
+msgid "msg228_-3"
+msgstr "Formador desligado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:501
+msgid "msg227_-3"
+msgstr "Formador"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:504
+msgid "msg229_-3"
+msgstr "Colaborador desligado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:507
+msgid "msg231_-3"
+msgstr "Colaborador"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:510
+msgid "msg233_-3"
+msgstr "Vistante desligado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:513
+msgid "msg230_-3"
+msgstr "Visitante"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:158
+msgid "msg17_-2"
+msgstr "Deixou um campo de data vazio."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:158
+msgid "msg18_-2"
+msgstr "Por favor preencha-o com uma data."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:169
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:197
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:206
+msgid "msg19_-2"
+msgstr "Data inválida:"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:169
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:197
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:206
+msgid "msg20_-2"
+msgstr "Por favor volte atrás e corrija."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
+msgid "msg21_-2"
+msgstr "Escreveu caracteres estranhos nesta data."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
+msgid "msg22_-2"
+msgstr ""
+"Utilize apenas dígitos de 0 a 9 e a barra ( / ) para separar dia, mês e ano "
+"(exemplo: 31/01/2000)."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:57
+msgid "msg116_11"
+msgstr "Nome da oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:61
+msgid "msg24_11"
+msgstr "Data"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:66
+msgid "msg23_11"
+msgstr "Remetente"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:71
+msgid "msg27_11"
+msgstr "Destinatários"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:135
+msgid "msg13_-2"
+msgstr "Acesso negado"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:142
+msgid "msg30_-2"
+msgstr "A oficina ainda não foi iniciada."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:145
+msgid "msg14_-2"
+msgstr ""
+"A sua inscrição ainda não foi avaliada. Receberá um e-mail quando a "
+"avaliação da sua inscrição for feita."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:148
+msgid "msg15_-2"
+msgstr "A sua inscrição não foi aceite. Não tem acesso a esta oficina."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:151
+msgid "msg16_-2"
+msgstr "Utilizador inexistente ou inválido."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:371
+msgid "msg59_-1"
+msgstr "Ferramenta desactivada"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:106
+msgid "msg4_-2"
+msgstr ""
+"Autorização necessária para entrar no Ambiente de Administração do TelEduc."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:161
+msgid "msg12_-2"
+msgstr "Esta oficina não permite a entrada de visitantes."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/cursos.inc:97
+#: /home/teleduc/public_html/TelEduc/app/geral/models/cursos.inc:119
+msgid "msg73_-4"
+msgstr "Ajuda"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:478
+msgid "msg5_-4"
+msgstr "Agenda"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:479
+msgid "msg7_-4"
+msgstr "Actividades"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:480
+msgid "msg9_-4"
+msgstr "Material de Apoio"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:481
+msgid "msg11_-4"
+msgstr "Leituras"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:482
+msgid "msg13_-4"
+msgstr "Perguntas Frequentes"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:483
+msgid "msg15_-4"
+msgstr "STOP"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:484
+msgid "msg17_-4"
+msgstr "Mural"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:485
+msgid "msg19_-4"
+msgstr "Fóruns de Discussão"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:486
+msgid "msg21_-4"
+msgstr "Café"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:487
+msgid "msg23_-4"
+msgstr "Correio"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:488
+msgid "msg25_-4"
+msgstr "Grupos"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:489
+msgid "msg27_-4"
+msgstr "Perfil"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:490
+msgid "msg29_-4"
+msgstr "Diário de Bordo"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:491
+msgid "msg31_-4"
+msgstr "Portfólio"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:492
+msgid "msg3_-4"
+msgstr "Dinâmica da Oficina"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:493
+msgid "msg1_-4"
+msgstr "Estrutura do Ambiente"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:494
+msgid "msg33_-4"
+msgstr "Acessos"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:495
+msgid "msg35_-4"
+msgstr "Intermap"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:496
+msgid "msg52_-4"
+msgstr "Avaliações"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:497
+msgid "msg48_-4"
+msgstr "Exercícios"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:498
+msgid "msg54_-4"
+msgstr "Enquetes"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:499
+msgid "msg56_-4"
+msgstr "Autenticação"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:500
+msgid "msg58_-4"
+msgstr "Busca"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data.inc:167
+msgid "msg7_-2"
+msgstr "Mês inválido,Jan,Fev,Mar,Abr,Mai,Jun,Jul,Ago,Set,Out,Nov,Dez"

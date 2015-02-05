@@ -25,17 +25,36 @@ $sock = AcessoSQL::Conectar("");
 
 $lingua_curso = Menu::RetornaLinguaCurso($sock,$cod_curso);
 
-// Se diferente, entï¿½o lï¿½ngua do curso ï¿½ diferente da lï¿½ngua do usuï¿½rio, atualiza a lista de frases
+// Se diferente, então língua do curso é diferente da língua do usuário, atualiza a lista de frases
 if($lingua_curso != $_SESSION['cod_lingua_s']) {
-	Linguas::MudancaDeLingua($sock, $lingua_curso);
+	$lingua = $lingua_curso;
+	
+	if($lingua == 1){
+		$locale = "pt_BR";
+	}
+	else if($lingua == 3){
+		$locale = "en_US";
+	}
+	else if($lingua == 4){
+		$locale = "pt_PT";
+	}
+}
+else{
+	$lingua = $_SESSION['cod_lingua_s'];
+	
+	if($lingua == 1){
+		$locale = "pt_BR";
+	}
+	else if($lingua == 3){
+		$locale = "en_US";
+	}
+	else if($lingua == 4){
+		$locale = "pt_PT";
+	}
 }
 
 if (!isset($cod_ferramenta))
 	$cod_ferramenta = 1; /* Agenda */
-
-$lista_frases_menu  = Linguas::RetornaListaDeFrases($sock, -4);
-$lista_frases       = Linguas::RetornaListaDeFrases($sock, $cod_ferramenta);
-$lista_frases_geral = Linguas::RetornaListaDeFrases($sock, -1);
 
 $tela_ordem_ferramentas = Menu::RetornaOrdemFerramentas($sock);
 $tela_lista_ferramentas = Menu::RetornaListaFerramentas($sock);
@@ -57,6 +76,11 @@ $tela_colaborador   = Usuarios::EColaborador($sock, $cod_curso, $cod_usuario);
 $tela_visitante     = Usuarios::EVisitante($sock, $cod_curso, $cod_usuario);
 
 $SalvarEmArquivo = (!isset($SalvarEmArquivo) || $SalvarEmArquivo != 1) ? 0 : 1;
+
+putenv("LC_ALL=$locale");
+setlocale(LC_ALL, $locale);
+bindtextdomain("TelEduc", "../../../gettext/i18n");
+textdomain("TelEduc");
 
 AcessoSQL::Desconectar($sock);
 

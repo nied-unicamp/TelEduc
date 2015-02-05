@@ -17,8 +17,6 @@ require_once $model_admin.'admin.inc';
 
 require_once $view_admin.'topo_tela_inicial.php';
 
-$lista_frases_adm = Linguas::RetornaListaDeFrases($sock,-5);
-
 echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
 /* Inicio do JavaScript */
 echo("  <script type=\"text/javascript\">\n\n");
@@ -26,7 +24,8 @@ echo("  <script type=\"text/javascript\">\n\n");
 echo("		$(document).ready(function(){\n");
 echo("			$('#login').keyup(function(){\n");
 echo("        		var pal = $(this).val;\n");
-echo("    			var frase = '".Linguas::RetornaFraseDaLista($lista_frases, 520)."';\n\n");
+/* 520 - Sugestões*/
+echo("    			var frase = '"._("msg520_-5")."';\n\n");
 echo("				$.post(\"".$model_admin."sugerir_login.php\",{pal: pal}, \n");
 echo("					function(data){\n");
 echo("						var hint = $.parseJSON(data);\n");
@@ -63,7 +62,8 @@ echo("    var flagOnDivSugs=0;");
 
 echo("    function EmailLoginRepetido()\n");
 echo("    {\n");
-echo("      alert('Email e/ou login fornecidos ja existem! Digite valores diferentes (note que os logins existentes aparecem na lista de sugestoes !).');\n");
+/* 533 - Email e/ou login fornecidos já existem! Digite valores diferentes (note que os logins existentes aparecem na lista de sugestões!*/
+echo("		alert("._("msg533_-5").");");
 echo("      document.frmCriar.email.value = '';\n");
 echo("      document.frmCriar.login.value = '';\n");
 echo("      document.frmCriar.email.focus();\n");
@@ -100,7 +100,7 @@ echo("      {");
 echo("        if(nome_curso == '' || num == '' || nome_coordenador == '' || email == '' || login == '')\n");
 echo("        {\n");
 /* 166 - Os seguintes campos nao podem ser deixados em branco:\n Nome e numero de alunos do curso;\n Nome, email e login do coordenador */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_adm,166)."');\n");
+echo("          alert('"._("msg166_-5")."');\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("      }\n");
@@ -109,7 +109,7 @@ echo("      {");
 echo("        if(nome_curso == '' || num == '' || login == '')\n");
 echo("        {\n");
 /* 512 - Os seguintes campos nao podem ser deixados em branco: Nome e numero de alunos do curso; login do coordenador */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_adm,512)."');\n");
+echo("          alert('"._("msg512_-5")."');\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("      }\n");
@@ -118,7 +118,7 @@ echo("      var intValue = parseInt(num);\n");
 echo("      if ((isNaN(intValue)) || (intValue < 0))\n");
 echo("      {\n");
 /* 167 - O campo numero de alunos deve ser um inteiro positivo. */
-echo("        alert('".Linguas::RetornaFraseDaLista($lista_frases_adm,167)."');\n");
+echo("        alert('"._("msg167_-5")."');\n");
 echo("        return false;\n");
 echo("      }\n");
 
@@ -137,7 +137,7 @@ echo("        var p_u_ponto = email.lastIndexOf('.');\n");
 echo("        if ((email.indexOf(' ') >= 0) || (email.charAt(email.length-1)=='@') || (email.indexOf('.@') >= 0) || (email.indexOf('@.') >= 0) || (p_u_ponto==(email.length-1)) || (p_u_ponto < 0) || (p_u_ponto < p_arroba) || (cnt == 0) || (cnt > 1)) \n");
 echo("        {\n");
 /* 168 - E-mail invalido. */
-echo("          alert('".Linguas::RetornaFraseDaLista($lista_frases_adm, 168)."');\n");
+echo("          alert('"._("msg168_-5")."');\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("      }\n");
@@ -180,14 +180,11 @@ require_once $view_admin.'menu_principal_tela_inicial.php';
 
 $sock=AcessoSQL::Conectar("");
 
-$lista_frases=Linguas::RetornaListaDeFrases($sock,-5);
-$lista_frases_pag_inicial=Linguas::RetornaListaDeFrases($sock,-3);
-
 AcessoPHP::VerificaAutenticacaoAdministracao();
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* 3 - Criacao de Curso */
-echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,3)."</h4>\n");
+echo("          <h4>"._("msg3_-5")."</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -197,7 +194,7 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 echo("          <!-- Tabelao -->\n");
 echo("          <form name=\"frmCriar\" action=\"criar_curso2.php\" method=\"post\" onsubmit=\"return(false);\">\n");
@@ -206,13 +203,13 @@ echo("            <tr>\n");
 echo("              <td>\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /* 23 - Voltar (Ger) */
-echo("                  <li><span title=\"".Linguas::RetornaFraseDaLista($lista_frases_geral,23)."\" onClick=\"document.location='index.php'\">".Linguas::RetornaFraseDaLista($lista_frases_geral,23)."</span></li>\n");
+echo("                  <li><span title=\""._("msg23_-1")."\" onClick=\"document.location='index.php'\">"._("msg23_-1")."</span></li>\n");
 
 /* 98 - Criar Curso */
-echo("                  <li><span title=\"".Linguas::RetornaFraseDaLista($lista_frases,98)."\" onClick=\"document.location='criar_curso.php'\">".Linguas::RetornaFraseDaLista($lista_frases,98)."</span></li>\n");
+echo("                  <li><span title=\""._("msg98_-5")."\" onClick=\"document.location='criar_curso.php'\">"._("msg98_-5")."</span></li>\n");
 
 /* 244 - Avaliar requisicoes para abertura de cursos */
-echo("                  <li><span title=\"".Linguas::RetornaFraseDaLista($lista_frases,244)."\" onClick=\"document.location='../avaliarcurso/avaliar_curso.php'\">".Linguas::RetornaFraseDaLista($lista_frases,244)."</span></li>\n");
+echo("                  <li><span title=\""._("msg244_-5")."\" onClick=\"document.location='../avaliarcurso/avaliar_curso.php'\">"._("msg244_-5")."</span></li>\n");
 
 echo("                </ul>\n");
 
@@ -223,7 +220,7 @@ echo("              <td valign=\"top\">\n");
 echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 /* 91 - Dados do Curso */
 echo("                  <tr class=\"head\">\n");
-echo("                    <td align=\"center\"><b>".Linguas::RetornaFraseDaLista($lista_frases,91)."</b></td>\n");
+echo("                    <td align=\"center\"><b>"._("msg91_-5")."</b></td>\n");
 echo("                  </tr>\n");
 echo("                  <tr>");
 echo("                    <td align=\"center\">\n");
@@ -231,14 +228,14 @@ echo("                      <table>");
 
 /* 92 - Nome do Curso: */
 echo("                        <tr>\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 92)."</b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg92_-5")."</b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input class=\"input\" type=\"text\" name=\"nome_curso\" size=\"33\" style=\"maxlenght: 100\" /></td>\n");
 echo("                        </tr>\n");
 
 /* 93 - Numero de Alunos: */
 echo("                        <tr>\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 93)." </b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg93_-5")." </b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input class=\"input\" type=\"text\" name=\"num_alunos\" size=\"6\" style=\"maxlenght: 10\" /></td>\n");
 echo("                        </tr>\n");
@@ -247,10 +244,11 @@ $categ=Admin::RetornaCategorias();
 
 /* 94 - Categoria: */
 echo("                        <tr>\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 94)." </b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg94_-5")." </b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("                            <select name=\"cod_pasta\" class=\"input\">\n");
-echo("                              <option value=\"NULL\">".Linguas::RetornaFraseDaLista($lista_frases_pag_inicial,115)."</option>");
+/* 115 - Cursos Gerais*/
+echo("                              <option value=\"NULL\">".(_("msg115_-3"))."</option>");
 if($categ != "")
 {
 	foreach ($categ as $cod_pasta => $pasta)
@@ -263,13 +261,13 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 echo("                          <td colspan=\"2\" style=\"text-align:center;border:none;\">");
 /* 123 - Se voce deseja criar uma nova categoria, preencha o nome da nova categoria abaixo. A categoria escolhida acima sera desconsiderada. */
-echo("                            *".Linguas::RetornaFraseDaLista($lista_frases,123)."\n");
+echo("                            *"._("msg123_-5")."\n");
 echo("                          </td>\n");
 echo("                        </tr>\n");
 
 /* 124 - Nova categoria: */
 echo("                        <tr>\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 124)." </b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg124_-5")." </b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input class=\"input\" type=\"text\" name=\"nova_categ\" size=\"33\" style=\"maxlenght: 100\" /></td>\n");
 echo("                        </tr>\n");
@@ -277,7 +275,8 @@ echo("                      </table>");
 echo("                    </td>");
 echo("                  </tr>");
 echo("                  <tr class=\"head\">\n");
-echo("                    <td align=\"center\"><b>".Linguas::RetornaFraseDaLista($lista_frases,95)."</b></td>\n");
+/* 95 - Dados do Coordenador do Curso*/
+echo("                    <td align=\"center\"><b>"._("msg95_-5")."</b></td>\n");
 echo("                  </tr>\n");
 echo("                  <tr>");
 echo("                    <td align=\"center\" style=\"border:none;\">\n");
@@ -285,34 +284,34 @@ echo("                      <table>");
 
 /* 508 - Escolher usuario ja cadastrado? */
 echo("                        <tr style=\"display:;\">\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases,508)."*</b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg508_-5")."*</b></td>\n");
 // 509 - sim
 // 510 - nao
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("                            <select name=\"optUsu\" id=\"optUsu\" class=\"input\" onchange=\"VerificaEscolha();\">\n");
-echo("                              <option value=\"sim\">".Linguas::RetornaFraseDaLista($lista_frases,509)."</option>");
-echo("                              <option value=\"nao\">".Linguas::RetornaFraseDaLista($lista_frases,510)."</option>");
+echo("                              <option value=\"sim\">"._("msg509_-5")."</option>");
+echo("                              <option value=\"nao\">"._("msg510_-5")."</option>");
 echo("                            </select>\n");
 echo("                         </td>\n");
 echo("                        </tr>\n");
 
 /* 96 - Nome do Coordenador: */
 echo("                        <tr id=\"tr_nome_coord\" style=\"display:none;\">\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 96)."</b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg96_-5")."</b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input class=\"input\" type=\"text\" name=\"nome_coordenador\" size=\"33\" style=\"maxlenght: 100\" /></td>\n");
 echo("                        </tr>\n");
 
-/* 33 - e-mail: */
+/* 33 - E-mail: */
 echo("                        <tr id=\"tr_email_coord\" style=\"display:none;\">\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 33)." </b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg33_-5")." </b></td>\n");
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input class=\"input\" type=\"text\" name=\"email\" id=\"emai\" size=\"33\" style=\"maxlenght: 100\" /></td>\n");
 echo("                        </tr>\n");
 
-/* 97 - Login ou Email: */
+/* 97 - Login: */
 echo("                        <tr>\n");
-echo("                          <td style=\"text-align:right;border:none;\"><b>".Linguas::RetornaFraseDaLista($lista_frases, 97)." </b></td>\n");
+echo("                          <td style=\"text-align:right;border:none;\"><b>"._("msg97_-5")." </b></td>\n");
 /* 520 - Sugestões */
 echo("                          <td style=\"text-align:left;border:none;\">\n");
 echo("<input autocomplete=\"off\" class=\"input\" type=\"text\" name=\"login\" id=\"login\" size=\"13\" style=\"maxlenght: 20\" onblur=\"TesteBlur();\"  /></td>\n");
@@ -329,7 +328,7 @@ echo("                    </td>\n");
 echo("                  </tr>\n");
 echo("                  <tr>\n");
 // 511 - *Caso queira escolher um usuário já cadastrado como coordernador do curso, digite as letras iniciais (case sensitive) de seu login e então escolha o login correspondente na lista de sugestões que aparecerá abaixo do campo Login.
-echo("                    <td style=\"text-align:left;border:none;\">".Linguas::RetornaFraseDaLista($lista_frases, 511)."</td>\n");
+echo("                    <td style=\"text-align:left;border:none;\">"._("msg511_-5")."</td>\n");
 echo("                  </tr>\n");
 echo("                  <tr>\n");
 echo("                    <td id=\"td_hint\" style=\"text-align:left;border:none;\">&nbsp;</td>\n");
@@ -340,7 +339,7 @@ echo("            </tr>\n");
 echo("            <tr>\n");
 echo("              <td align=\"right\">\n");
 /* 98 - Criar Curso */
-echo("                <input class=\"input\" id=\"criar\" value=\"".Linguas::RetornaFraseDaLista($lista_frases,98)."\" type=\"submit\"/>\n");
+echo("                <input class=\"input\" id=\"criar\" value=\""._("msg98_-5")."\" type=\"submit\"/>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");

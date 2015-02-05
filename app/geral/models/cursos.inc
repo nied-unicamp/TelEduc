@@ -93,7 +93,8 @@ class Cursos {
                 $ajuda_nao_encontrada = false;
                 $ajuda_link = $bibliotecas . "../ajuda/ajuda.php?cod_curso=" . $cod_curso . "&amp;cod_ferramenta=" . $cod_ferramenta . "&amp;cod_pagina=" . $cod_pagina . "&amp;tipo_usuario=" . ($eformador ? 'F' : 'A' );
                 $html_link = "<li><img src=\"../../../web-content/imgs/icAjuda.gif\" border=\"0\" alt=\"Ajuda\" />&nbsp;</li>";
-                $html_link.="<li><a href=\"" . $ajuda_link . "\" onclick=\"window.open('" . $ajuda_link . "','AjudaDisplay','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');return false;\" target=\"blank\">Ajuda</a></li>";
+                // 73 - Ajuda
+                $html_link.="<li><a href=\"" . $ajuda_link . "\" onclick=\"window.open('" . $ajuda_link . "','AjudaDisplay','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');return false;\" target=\"blank\">"._("msg73_-4")."</a></li>";
                 $html_link.="<li>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</li>";
             }
             $sock = AcessoSQL::MudarDB($sock, $cod_curso);
@@ -113,9 +114,9 @@ class Cursos {
 
             if (file_exists($bibliotecas . "../ajuda/" . $arquivo)) {
                 $ajuda_link = $bibliotecas . "../ajuda/" . $arquivo;
-                // ?? - Ajuda
                 $html_link = "<li><img src=\"../imgs/icAjuda.gif\" border=\"0\" alt=\"Ajuda\" />&nbsp;</li>";
-                $html_link.="<li><a href=\"" . $ajuda_link . "\" onClick=\"window.open('" . $ajuda_link . "','AjudaDisplay','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');return false;\" target=\"blank\">Ajuda</a></li>";
+                // 73 - Ajuda
+                $html_link.="<li><a href=\"" . $ajuda_link . "\" onClick=\"window.open('" . $ajuda_link . "','AjudaDisplay','width=600,height=400,top=100,left=100,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');return false;\" target=\"blank\">"._("msg73_-4")."</a></li>";
                 $html_link.="<li>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</li>";
             }
         }

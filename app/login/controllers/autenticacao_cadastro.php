@@ -13,10 +13,7 @@ $view_administracao = '../../'.$ferramenta_administacao.'/views/';
 require_once $model_geral.'geral.inc';
 require_once $view_admin.'topo_tela_inicial.php';
 
-$cod_ferramenta	=	8;
 $sock = AcessoSQL::Conectar("");
-		
-$lista_frases	=	Linguas::RetornaListaDeFrases($sock,9);
 		
 //$raiz_www = AcessoSQL::RetornaRaizWWW($sock);
 //$caminho 	= $raiz_www."/pagina_inicial";
@@ -35,6 +32,8 @@ else if(isset($_POST['cod_curso']) && ($_POST['cod_curso'] != ""))
 		
 $login = $_POST['login'];
 $senha = $_POST['senha'];
+
+$cod_lingua = ((isset($_GET['cod_lin'])) ? $_GET['cod_lin'] : $_POST['cod_lin']);
 		
 $cod_usuario = AcessoPHP::VerificaLoginSenha($login, $senha);
 if ($cod_usuario == 0)
@@ -57,7 +56,7 @@ $_SESSION['cod_usuario_s'] 	 	= (!empty($cod_curso)) ? Usuarios::RetornaCodigoUs
 //$_SESSION['login_usuario_s']	= (BoolEhEmail($login) == 1) ? RetornaLoginUsuario($sock) : $login;
 $_SESSION['login_usuario_s']	= $login;
 		
-//$_SESSION['cod_lingua_s'] 		= $cod_lingua;
+$_SESSION['cod_lingua_s'] 		= $cod_lingua;
 		
 $_SESSION['visitante_s'] 			= $cod_visitante_s;
 $_SESSION['visao_formador_s'] = 1;

@@ -9,7 +9,7 @@ $view_admin = '../../'.$ferramenta_admin.'/views/';
 /**
  * Classe AcessoPHP do modulo geral
  * @author     TelEduc
- * @copyright  20014 TelEduc
+ * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
  */
 class AcessoPHP{
@@ -103,7 +103,7 @@ class AcessoPHP{
 			echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 			/* 4 - Autoriza�o necess�ia para entrar no Ambiente de Administra�o do TelEduc. */
 			/* 23 - Voltar */
-			echo(Linguas::RetornaFrase($sock,4,-2)." <a href=\"#\" onclick=\"history.back(); return false;\">".Linguas::RetornaFrase($sock,23,-1)."</a>\n");
+			echo (_("msg4_-2")." <a href=\"#\" onclick=\"history.back(); return false;\">"._("msg23_-1")."</a>\n");
 			echo("</td>\n");
 			echo("</tr>\n");
 			require_once $view_admin.'rodape_tela_inicial.php';
@@ -158,7 +158,7 @@ class AcessoPHP{
 			{
 				/* 12 - Este curso n� permite a entrada de visitantes. */
 				/* 23 - Voltar. */
-				echo Linguas::RetornaFrase($sock,12,-2).' <a href=# onclick=history.go(-1);>'.Linguas::RetornaFrase($sock,23,-1).'</a>';
+				echo _("msg12_-2").' <a href=# onclick=history.go(-1);>'._("msg23_-1").'</a>';
 				AcessoSQL::Desconectar($sock);
 				exit;
 			}

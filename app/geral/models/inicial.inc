@@ -53,7 +53,7 @@ class Inicial{
 	  $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 	  $ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 	  
-	  echo("              <li><a href=\"".$view_administracao."exibe_cursos.php\">Meus Cursos<!--[if IE 7]><!--></a><!--<![endif]-->\n");
+	  echo("              <li><a href=\"".$view_administracao."exibe_cursos.php\">"._("msg72_-4")."<!--[if IE 7]><!--></a><!--<![endif]-->\n");
 	  echo("                <!--[if lte IE 6]><table><tr><td><![endif]-->\n");
 	  echo("                <ul>\n");
 	
@@ -111,259 +111,15 @@ class Inicial{
 		return($lista);
 	}
 	
-	/********************************************************************
-	 Fun�ao CadastraDadosUsuarioDinamic - Cadastra usuario, dinamicamente
-	Entradas:  $dadosForm - dados do formulario de cadastro
-	Saida:    reposta XML
-	********************************************************************/
-	/**
-	 * Cadastra usuario, dinamicamente
-	 *
-	 * Met�do precisa ser reformulado.
-	 *
-	 * @param Array $dadosForm dados do formulario de cadastro um array (Nao utilizada efetivamente no metodo)
-	 * @param string $erro1 Texto com um erro ocorrido 1 (Pode ser passada vazia)
-	 * @param string $erro2 Texto com um erro ocorrido 1 (Pode ser passada vazia)
-	 * @param string $erro3 Texto com um erro ocorrido 1 (Pode ser passada vazia)
-	 * @param string $texto Ser� exibida como Echo no metodo, mais utilizado por funcoes ajax
-	 * @return xml Reposta XML
-	 */
-	static function CadastraDadosUsuarioDinamic($dadosForm,$erro1,$erro2,$erro3,$texto)
-	{
-	
-		//$objResponse = new xajaxResponse();
-	
-		$dadosForm = $_POST['data'];
-		$login            = $dadosForm['login'];
-		$senha            = crypt($dadosForm['senha'],"AA");
-		$nome_usuario     = $dadosForm['nome_usuario'];
-		$endereco         = $dadosForm['endereco'];
-		$cidade           = $dadosForm['cidade'];
-		$estado           = $dadosForm['estado'];
-		$pais             = $dadosForm['pais'];
-		$email            = $dadosForm['email'];
-		$rg               = $dadosForm['rg'];
-		$telefone         = $dadosForm['telefone'];
-		$sexo             = $dadosForm['sexo'];
-		$local            = $dadosForm['local'];
-		$profissao        = $dadosForm['profissao'];
-		$informacoes      = $dadosForm['informacoes'];
-		$cod_escolaridade = $dadosForm['cod_escolaridade'];
-		$data_nascimento  = $dadosForm['data_nascimento'];
-	
-		$data=Data::Data2UnixTime($data_nascimento);
-	
-		$sock=AcessoSQL::Conectar("");
-	
-		$hash = false;
-		$resultado = $dadosForm['resultado'];
-		if($resultado  != $_SESSION['answer']){
-			$hash = true;
-		}
-	
-		$flag = 0;
-		if(Inicial::LoginRepetido($sock,$login)){
-			$flag=1;
-			$objResponse->call("mostraFeedback", $erro1, 'false');
-		}else if(Inicial::EmailRepetido($sock,$email)){
-			$flag=2;
-			$objResponse->call("mostraFeedback", $erro2, 'false');
-		}else if($hash){
-			$flag=3;
-			$objResponse->call("mostraFeedback", $erro3, 'false');
-		}else
-		{
-			$cod_usuario=AcessoSQL::RetornaProximoCodigo($sock,"Usuario");
-	
-			//Gera uma sequencia aletoria de 20 caracteres
-			$sequencia = Inicial::GeraChave(20);
-	
-			$query="insert into Usuario (cod_usuario,login,senha,nome,rg,email,telefone,endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,cod_escolaridade,informacoes,data_inscricao,cod_lingua,confirmacao) values (".ConversorTexto::VerificaNumeroQuery($cod_usuario).",'".ConversorTexto::VerificaStringQuery($login)."','".ConversorTexto::VerificaStringQuery($senha)."','".ConversorTexto::VerificaStringQuery($nome_usuario)."','".ConversorTexto::VerificaStringQuery($rg)."','".ConversorTexto::VerificaStringQuery($email)."','".ConversorTexto::VerificaStringQuery($telefone)."','".ConversorTexto::VerificaStringQuery($endereco)."','".ConversorTexto::VerificaStringQuery($cidade)."','".ConversorTexto::VerificaStringQuery($estado)."','".ConversorTexto::VerificaStringQuery($pais)."','".ConversorTexto::VerificaStringQuery($data)."','".ConversorTexto::VerificaStringQuery($sexo)."','".ConversorTexto::VerificaStringQuery($local)."','".ConversorTexto::VerificaStringQuery($profissao)."','".ConversorTexto::VerificaStringQuery($cod_escolaridade)."','".ConversorTexto::VerificaStringQuery($informacoes)."','".time()."',1,'".ConversorTexto::VerificaStringQuery($sequencia)."')";
-	
-			$res=AcessoSQL::Enviar($sock,$query);
-	
-			/* Notificacao do Usuario via Email ************************************/
-			$sock = AcessoSQL::Conectar('');
-			$query="select diretorio from Diretorio where item='raiz_www'";
-			$res=AcessoSQL::Enviar($sock,$query);
-			$raiz_www_linha=AcessoSQL::RetornaLinha($res);
-			$raiz_www = $raiz_www_linha[0];
-			$host=Inicial::RetornaConfiguracao($sock,"host");
-	
-			$lista_frases_email = Linguas::RetornaListaDeFrases($sock,-2);
-			$lista_frases_correio = Linguas::RetornaListaDeFrases($sock,11);
-	
-			$parametros_curso = "";
-			if (isset($_GET["cod_curso"]) && !empty($_GET["cod_curso"])) {
-				$parametros_curso .= "&c=".$_GET["cod_curso"];
-				if (isset($_GET["tipo_curso"]) && !empty($_GET["tipo_curso"]))
-					$parametros_curso .= "&t=".$_GET["tipo_curso"];
-			}
-	
-			//87 - Confirmação de cadastro TelEduc
-			$assunto = Linguas::RetornaFraseDaLista($lista_frases_email, 87);
-			$mensagem = "<p>".Linguas::RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".Linguas::RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-			/*
-			 // 74 - Bem-Vindo ao TelEduc!
-			$assunto = RetornaFraseDaLista($lista_frases_email, 74);
-	
-			// 75 - Para acessar o ambiente, a sua Identificação é:
-			// 76 - e a sua senha é:
-			// 77 - O acesso deve ser feito a partir do endereco:
-			// 78 - Atenciosamente
-			// 3 - Ambiente de Administração do TelEduc
-	
-			$mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 75)." <big><em><strong>".$login."</strong></em></big> ".RetornaFraseDaLista($lista_frases_email, 76)."<big><em><strong> ".$dadosForm['senha']."</strong></em></big></p><p>".RetornaFraseDaLista($lista_frases_email, 77)." http://$host$raiz_www/</p><br /><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-	
-			*/
-	
-			// 115 - NAO_RESPONDA
-			$remetente = Linguas::RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
-			$mensagem_html = Email::MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
-			Email::MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
-	
-			// Fim da Notificacao
-			//$objResponse->call("mostraFeedback", $texto, 'true');
-			echo $texto;
-		}
-		
-	
-		AcessoSQL::Desconectar($sock);
-	
-	
-		$objResponse->script("trataEnvio('".$flag."');");
-	
-		return $objResponse;
+	static function ListaEscolaridades(){
+		echo _("msg39_-1");
+		echo _("msg40_-1");
+		echo _("msg41_-1");
+		echo _("msg42_-1");
+		echo _("msg43_-1");
+		echo _("msg44_-1");
+		echo _("msg45_-1");
 	}
-	
-	/********************************************************************
-	 Fun�ao CadastraDadosUsuario - Cadastra usuario, dinamicamente
-	Entradas:  $dadosForm - dados do formulario de cadastro
-	Saida:    reposta XML
-	********************************************************************/
-	/**
-	 * Cadastra usuario, dinamicamente
-	 *
-	 * @param string $erro1 Texto com um erro ocorrido 1 (Nao utlizado ono metodo)
-	 * @param string $erro2 Texto com um erro ocorrido 1 (Pode ser passada vazia)
-	 * @param string $erro3 Texto com um erro ocorrido 1 (Pode ser passada vazia)
-	 * @param string $texto Ser� exibida como Echo no metodo, mais utilizado por funcoes ajax
-	 * @return xml Reposta XML
-	
-	 */
-	static function CadastraDadosUsuario($erro1,$erro2,$erro3,$texto)
-	{
-		/* $dadosForm = $_POST['dados'];
-		$login            = $dadosForm['login'];
-		$senha            = crypt($dadosForm['senha'],"AA");
-		$nome_usuario     = $dadosForm['nome_usuario'];
-		$endereco         = $dadosForm['endereco'];
-		$cidade           = $dadosForm['cidade'];
-		$estado           = $dadosForm['estado'];
-		$pais             = $dadosForm['pais'];
-		$email            = $dadosForm['email'];
-		$rg               = $dadosForm['rg'];
-		$telefone         = $dadosForm['telefone'];
-		$sexo             = $dadosForm['sexo'];
-		$local            = $dadosForm['local'];
-		$profissao        = $dadosForm['profissao'];
-		$informacoes      = $dadosForm['informacoes'];
-		$cod_escolaridade = $dadosForm['cod_escolaridade'];
-		$data_nascimento  = $dadosForm['data_nascimento']; */
-		
-		$login            = $_POST['login'];
-		$senha            = crypt($_POST['senha'],"AA");
-		$nome_usuario     = $_POST['nome_usuario'];
-		$endereco         = $_POST['endereco'];
-		$cidade           = $_POST['cidade'];
-		$estado           = $_POST['estado'];
-		$pais             = $_POST['pais'];
-		$email            = $_POST['email'];
-		$rg               = $_POST['rg'];
-		$telefone         = $_POST['telefone'];
-		$sexo             = $_POST['sexo'];
-		$local            = $_POST['local'];
-		$profissao        = $_POST['profissao'];
-		$informacoes      = $_POST['informacoes'];
-		$cod_escolaridade = $_POST['cod_escolaridade'];
-		$data_nascimento  = $_POST['data_nascimento'];
-
-		$data=Data::Data2UnixTime($data_nascimento);/*Data2MySql($data_nascimento);*/
-		$sock=AcessoSQL::Conectar("");
-	
-		$hash = false;
-		$resultado = $_POST['resultado'];
-		if($resultado  != $_SESSION['answer']){
-			$hash = true;
-		}
-	
-		$flag = 0;
-		if(Inicial::LoginRepetido($sock,$login)){
-			$flag=1;
-		}else if(Inicial::EmailRepetido($sock,$email)){
-			$flag=2;
-		}else if($hash){
-			$flag=3;
-		}else
-		{
-			$cod_usuario=AcessoSQL::RetornaProximoCodigo($sock,"Usuario");
-	
-			//Gera uma sequencia aletoria de 20 caracteres
-			$sequencia = Inicial::GeraChave(20);
-	
-			$query="insert into Usuario (cod_usuario, login,senha,nome,rg,email,telefone,endereco,cidade,estado,pais,data_nasc,sexo,local_trab,profissao,cod_escolaridade,informacoes,data_inscricao,cod_lingua,confirmacao) values (".ConversorTexto::VerificaNumeroQuery($cod_usuario).", '".ConversorTexto::VerificaStringQuery($login)."','".ConversorTexto::VerificaStringQuery($senha)."','".ConversorTexto::VerificaStringQuery($nome_usuario)."','".ConversorTexto::VerificaStringQuery($rg)."','".ConversorTexto::VerificaStringQuery($email)."','".ConversorTexto::VerificaStringQuery($telefone)."','".ConversorTexto::VerificaStringQuery($endereco)."','".ConversorTexto::VerificaStringQuery($cidade)."','".ConversorTexto::VerificaStringQuery($estado)."','".ConversorTexto::VerificaStringQuery($pais)."','".ConversorTexto::VerificaStringQuery($data)."','".ConversorTexto::VerificaStringQuery($sexo)."','".ConversorTexto::VerificaStringQuery($local)."','".ConversorTexto::VerificaStringQuery($profissao)."','".ConversorTexto::VerificaStringQuery($cod_escolaridade)."','".ConversorTexto::VerificaStringQuery($informacoes)."','".time()."',1,'".ConversorTexto::VerificaStringQuery($sequencia)."')";
-	
-			$res=AcessoSQL::Enviar($sock,$query);
-		
-			/* Notificacao do Usuario via Email ************************************/
-			$sock = AcessoSQL::Conectar('');
-			$query="select diretorio from Diretorio where item='raiz_www'";
-			$res=AcessoSQL::Enviar($sock,$query);
-			$raiz_www_linha=AcessoSQL::RetornaLinha($res);
-			$raiz_www = $raiz_www_linha[0];
-			$host=Inicial::RetornaConfiguracao($sock,"host"); 
-			$lista_frases_email = Linguas::RetornaListaDeFrases($sock,-2);
-			$lista_frases_correio = Linguas::RetornaListaDeFrases($sock,11);
-			
-			$parametros_curso = "";
-			if (isset($_GET["cod_curso"]) && !empty($_GET["cod_curso"])) {
-				$parametros_curso .= "&c=".$_GET["cod_curso"];
-				if (isset($_GET["tipo_curso"]) && !empty($_GET["tipo_curso"]))
-					$parametros_curso .= "&t=".$_GET["tipo_curso"];
-			}
-	
-			//87 - Confirmação de cadastro TelEduc
-			$assunto = Linguas::RetornaFraseDaLista($lista_frases_email, 87);
-			$mensagem = "<p>".Linguas::RetornaFraseDaLista($lista_frases_email, 88)."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 89)."</p><p>".Linguas::RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".Linguas::RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-			/*
-			 // 74 - Bem-Vindo ao TelEduc!
-			$assunto = RetornaFraseDaLista($lista_frases_email, 74);
-	
-			// 75 - Para acessar o ambiente, a sua Identificação é:
-			// 76 - e a sua senha é:
-			// 77 - O acesso deve ser feito a partir do endereco:
-			// 78 - Atenciosamente
-			// 3 - Ambiente de Administração do TelEduc
-	
-			$mensagem = "<p>".RetornaFraseDaLista($lista_frases_email, 75)." <big><em><strong>".$login."</strong></em></big> ".RetornaFraseDaLista($lista_frases_email, 76)."<big><em><strong> ".$dadosForm['senha']."</strong></em></big></p><p>".RetornaFraseDaLista($lista_frases_email, 77)." http://$host$raiz_www/</p><br /><p>".RetornaFraseDaLista($lista_frases_email, 78).",</p><p> ".RetornaFraseDaLista($lista_frases_email, 3)."</p>";
-	
-			*/
-	
-			// 115 - NAO_RESPONDA
-			$remetente = Linguas::RetornaFraseDaLista($lista_frases_correio, 115)."@".$host;
-			$mensagem_html = Email::MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
-			Email::MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
-			// Fim da Notificacao
-			//echo $texto;
-		}
-		
-		die("<Sucesso>");
-		
-		AcessoSQL::Desconectar($sock);
-	
-	
-	}
-	
 	
 	/* *****************************************************************************
 	 LoginRepetido - Verifica se o login escolhido pelo usuario ja existe
@@ -511,8 +267,6 @@ class Inicial{
 	*/
 	static function RetornaPastasDeCursos($sock,$tipo_curso)
 	{
-		$lista_frases = Linguas::RetornaListaDeFrases($sock, -3);
-	
 		$hoje=time();
 		$ontem=$hoje - 86400;
 	
@@ -538,7 +292,7 @@ class Inicial{
 			$cont=count($lista);
 			$lista[$cont]['cod_pasta']="NULL";
 			/* 115 - Cursos gerais */
-			$lista[$cont]['pasta']=Linguas::RetornaFraseDaLista($lista_frases,115);
+			$lista[$cont]['pasta']= _("msg115_-3");
 			$lista[$cont]['num_cursos']=$linha[0];
 		}
 	
@@ -721,42 +475,42 @@ class Inicial{
 	*************************************************************************/
 	
 	static function StatusUsuarioNoCurso($sock, $cod_curso){
-		$lista_frases = Linguas::RetornaListaDeFrases($sock,-3);
 		$status_usuario = Inicial::RetornaTipoUsuario($sock, $cod_curso);
 		if ($status_usuario == NULL)
-			return Linguas::RetornaFraseDaLista($lista_frases,232);
+			/* 232 - N�o participa do curso*/
+			return _("msg232_-3");
 	
 		switch ($status_usuario['tipo_usuario']){
 			case "i":
 				/* 224 - Aluno Inscrito */
-				return Linguas::RetornaFraseDaLista($lista_frases,224);
+				return _("msg224_-3");
 			case "a":
 				/* 234 - Aluno desligado */
-				return Linguas::RetornaFraseDaLista($lista_frases,234);
+				return _("msg234_-3");
 			case "r":
 				/* 225 - Aluno nao aceito */
-				return Linguas::RetornaFraseDaLista($lista_frases,225);
+				return _("msg225_-3");
 			case "A":
 				/* 226 - Aluno aceito */
-				return Linguas::RetornaFraseDaLista($lista_frases,226);
+				return _("msg226_-3");
 			case "f":
 				/* 228 - Formador desligado */
-				return Linguas::RetornaFraseDaLista($lista_frases,228);
+				return _("msg228_-3");
 			case "F":
 				/* 227 - Formador */
-				return Linguas::RetornaFraseDaLista($lista_frases,227);
+				return _("msg227_-3");
 			case "z":
 				/* 229 - Colaborador desligado*/
-				return Linguas::RetornaFraseDaLista($lista_frases,229);
+				return _("msg229_-3");
 			case "Z":
 				/* 231 - Colaborador */
-				return Linguas::RetornaFraseDaLista($lista_frases,231);
+				return _("msg231_-3");
 			case "v":
 				/* 233 - Vistante desligado */
-				return Linguas::RetornaFraseDaLista($lista_frases,233);
+				return _("msg233_-3");
 			case "V":
 				/* 230 - Visitante */
-				return Linguas::RetornaFraseDaLista($lista_frases,230);
+				return _("msg230_-3");
 		}
 	}
 	

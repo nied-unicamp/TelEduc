@@ -84,9 +84,14 @@ echo("        </td>\n");
 $sock=AcessoSQL::Conectar("");
 $versao = Admin::RetornaConfiguracao($sock,'versao');
 $host = Admin::RetornaConfiguracao($sock,'host');
-// 512 (geral) - Servidor
-// 513 (geral) - Versao
-echo("        <td valign=\"bottom\" class=\"rodape\" lang=\"pt\"> ".Linguas::RetornaFraseDaLista($lista_frases_geral, 513).": ".$versao." ".Linguas::RetornaFraseDaLista($lista_frases_geral, 512)." ".$host."<br> 2010  - TelEduc - Todos os direitos reservados. <em lang=\"en\">All rights reserved</em> - NIED - UNICAMP</td>\n");
+/* 
+512 (geral) - Servidor
+513 (geral) - Versao
+514 (geral) - 2010  - TelEduc - Todos os direitos reservados.
+515 (geral) - All rights reserved
+516 (geral) - NIED - UNICAMP
+ */
+echo("        <td valign=\"bottom\" class=\"rodape\" lang=\"pt\"> "._("msg513_-1").": ".$versao." "._("msg512_-1")." ".$host."<br> "._("msg514_-1")." <em lang=\"en\">"._("msg515_-1")."</em> - "._("msg516_-1")."</td>\n");
 echo("      </tr>\n");
 echo("    </table>\n");
 

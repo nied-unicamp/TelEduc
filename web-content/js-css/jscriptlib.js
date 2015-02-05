@@ -22,7 +22,7 @@ var cod_avaliacao="";
 var valor_radios = new Array();
 var lista_frases;
 
-$.ajax({
+/*$.ajax({
 	type: 'post',
 	url: '../../../app/agenda/models/retorna_frase_dinamic.php',
 	async: false,
@@ -30,21 +30,17 @@ $.ajax({
 		var lista = $.parseJSON(data);
 		lista_frases = lista;
 		}
-});
-	
-	
-/*$.post('../../../app/agenda/models/retorna_frase_dinamic.php', {cod_curso:cod_curso},
-		function(data){
-			//var lista = $.parseJSON(data);
-			var retorno='{';
-				$.each(data, function(key, value){
-					if (key>1) retorno+=', ';
-					retorno+='msg'+key+':'+value.texto+' ';
-				});
-			retorno+='}';
-		
-		lista_frases = retorno + ';';
 });*/
+
+$.ajax({
+    url: '../../../app/agenda/models/retorna_frase_dinamic.php',
+    type: "POST",
+    dataType: 'json',
+    success: function(data) {
+		lista_frases = data;
+    }
+  });
+
 
 if (isNav)
 {
@@ -135,6 +131,7 @@ function WindowOpenVerURL(end)
 	    		    	var code = $.parseJSON(data);
 	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
 	    		    	$('#text_'+cod_item).html(code);
+	    		    	/* 22 - Agenda editada com sucesso.*/
 	    		    	mostraFeedback(lista_frases.msg22, 'true');
 	      });
 	    }

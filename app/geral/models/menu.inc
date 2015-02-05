@@ -9,7 +9,7 @@ require_once 'acesso_sql.inc';
 /**
  * Classe Menu do modulo geral
  * @author     TelEduc
- * @copyright  20014 TelEduc
+ * @copyright  2014 TelEduc
  * @license    http://teleduc.org.br/
  */
 class Menu {
@@ -75,7 +75,16 @@ class Menu {
         }
         return ($lista1);
     }
-
+	
+    static function RetornaNomeFerramentaCod($cod_ferramenta){
+    	$sock = AcessoSQL::Conectar("");    	
+    	$query = "select cod_texto_nome from Ferramentas where cod_ferramenta = " . $cod_ferramenta;
+    	$res = AcessoSQL::Enviar($sock, $query);
+    	
+    	$nome = AcessoSQL::RetornaLinha($res);
+    	
+    	return $nome[0];
+    }
     /*     * ********************************************************************
       RetornaListaTitulos - Retorna a lista de titulos
       Entrada: $sock - BASE EXTERNA
@@ -415,7 +424,7 @@ class Menu {
      * @param int $cod_ferramenta Número de identificação primaria da ferramenta da tabela Ferramentas
      * @param int $cod_usuario Número de identificação primaria do usuário da tabela Usuários
      */
-    static function ExibeLink($cod_curso, $cod_ferr, $nome_ferramenta, $diretorio, $data, $ultimo_acesso, $style, $cod_ferramenta, $cod_usuario) {
+    static function ExibeLink($cod_curso, $cod_ferr, $diretorio, $data, $ultimo_acesso, $style, $cod_ferramenta, $cod_usuario) {
 
         /* As ferramentas do TelEduc foram agrupadas de acordo com
          * sua funcionalidade. As ferramentas que estao na divisa precisam
@@ -455,11 +464,40 @@ class Menu {
         /* Coloca estrela se houver novidade */
         if ($novidades)
             echo("<img src='".$diretorio_imgs."estrelinha.gif' border=\"0\" alt=\"\" />");
+        
+        $nome_ferramenta = Menu::RetornaNomeFerramentaCod($cod_ferr);
 
-        echo($nome_ferramenta . "\n");
+        echo _("msg".$nome_ferramenta."_-4");
+        
         echo("                </a>\n");
         echo("              </div>\n");
         echo("            </li>\n");
+    }
+    
+    static function ListaFerramentasMenuTrad(){
+    	echo _("msg5_-4");
+    	echo _("msg7_-4");
+    	echo _("msg9_-4");
+    	echo _("msg11_-4");
+    	echo _("msg13_-4");
+    	echo _("msg15_-4");
+    	echo _("msg17_-4");
+    	echo _("msg19_-4");
+    	echo _("msg21_-4");
+    	echo _("msg23_-4");
+    	echo _("msg25_-4");
+    	echo _("msg27_-4");
+    	echo _("msg29_-4");
+    	echo _("msg31_-4");
+    	echo _("msg3_-4");
+    	echo _("msg1_-4");
+    	echo _("msg33_-4");
+    	echo _("msg35_-4");
+    	echo _("msg52_-4");
+    	echo _("msg48_-4");
+    	echo _("msg54_-4");
+    	echo _("msg56_-4");
+    	echo _("msg58_-4");
     }
 
 }

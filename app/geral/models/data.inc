@@ -164,7 +164,7 @@ class Data {
      */
     static function NomeMesAbreviado($nummes) {
         /* 7 - Mes invalido,Jan,Fev,Mar,Abr,Mai,Jun,Jul,Ago,Set,Out,Nov,Dez */
-        return Data::TratamentoArrayDataGenerico($nummes, 7);
+        return Data::TratamentoArrayDataGenerico($nummes, _("msg7_-2"));
     }
 
     /*     * ***********************************************************************
@@ -188,12 +188,8 @@ class Data {
      * @return String Elemento requerido, ou elemento 0 se fora do limite
      */
     static function TratamentoArrayDataGenerico($num, $numarray) {
-        /* A lista estara em memoria, entao $sock nao eh necessario */
-        $sock = AcessoSQL::Conectar("");
-
-        $lista_frases = Linguas::RetornaListaDeFrases($sock, -2);
-
-        $Array = Linguas::RetornaFraseDaLista($lista_frases, $numarray);
+        $Array = $numarray;
+        
         $elems = explode(",", $Array);
         if ($num >= 0 && $num < count($elems))
             return $elems[$num + 0];

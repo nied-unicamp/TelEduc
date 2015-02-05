@@ -28,10 +28,15 @@ require_once $view_administracao.'topo_tela.php';
 // instanciar o objeto, passa a lista de frases por parametro
 $feedbackObject =  new FeedbackObject($lista_frases);
 // adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
-$feedbackObject->addAction("apagarItem", 101, 0);
-$feedbackObject->addAction("apagarSelecionados", 101, 0);
-$feedbackObject->addAction("ativaragenda", 102, 0);
-$feedbackObject->addAction("importarItem", 108, 0);
+
+/* 101 - Agenda(s) apagada(s) com sucesso.
+ * 102 - Agenda publicada com sucesso.
+ * 108 - Agenda importada com sucesso!
+ * */
+$feedbackObject->addAction("apagarItem", _("msg101_1"), 0);
+$feedbackObject->addAction("apagarSelecionados", _("msg101_1"), 0);
+$feedbackObject->addAction("ativaragenda", _("msg102_1"), 0);
+$feedbackObject->addAction("importarItem", _("msg108_1"), 0);
 
 // tipo de usuário
 $e_formador    = Usuarios::EFormador($sock,$cod_curso,$cod_usuario);
@@ -58,14 +63,14 @@ echo("        texto=textbox.value;\n");
 echo("        if (texto==''){\n");
 echo("          // se nome for vazio, nao pode\n");
 /* 15 - O titulo nao pode ser vazio. */
-echo("          alert(\"".Linguas::RetornaFraseDaLista($lista_frases,15)."\");\n");
+echo("          alert(\""._("msg15_1")."\");\n");
 echo("          textbox.focus();\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("        // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0\n");
 echo("        else if ((texto.indexOf(\"\\\\\")>=0 || texto.indexOf(\"\\\"\")>=0 || texto.indexOf(\"'\")>=0 || texto.indexOf(\">\")>=0 || texto.indexOf(\"<\")>=0)&&(!aspas)) {\n");
 /* 16 - O titulo nao pode conter \\. */
-echo("           alert(\"".ConversorTexto::ConverteAspas2BarraAspas(ConversorTexto::ConverteHtml2Aspas(Linguas::RetornaFraseDaLista($lista_frases,16)))."\");\n");
+echo("           alert(\"".ConversorTexto::ConverteAspas2BarraAspas(ConversorTexto::ConverteHtml2Aspas(_("msg16_1")))."\");\n");
 echo("          textbox.value='';\n");
 echo("          textbox.focus();\n");
 echo("          return false;\n");
@@ -180,14 +185,14 @@ echo("      function TemCertezaApagar()\n");
 echo("      {\n");
 /* 29 - Voce tem certeza de que deseja apagar esta agenda? */
 /* 30 - (nao havera como recupera-la) */
-echo("              return(confirm(\"".Linguas::RetornaFraseDaLista($lista_frases,29)."\\n".Linguas::RetornaFraseDaLista($lista_frases,30)."\"));\n");
+echo("              return(confirm(\""._("msg29_1")."\\n"._("msg30_1")."\"));\n");
 echo("      }\n");
 
 echo("      function TemCertezaAtivar()\n");
 echo("      {\n");
 /* 57 - Tem certeza que deseja publicar esta agenda? */
 /* 58 - (Uma vez publicada ela substituira a Agenda Atual) */
-echo("        return(confirm(\"".Linguas::RetornaFraseDaLista($lista_frases,57)."\\n".Linguas::RetornaFraseDaLista($lista_frases,58)."\"));\n");
+echo("        return(confirm(\""._("msg57_1")."\\n"._("msg58_1")."\"));\n");
 echo("      }\n");
 
 echo("      function NovaAgenda()\n");
@@ -216,13 +221,13 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
 if (!$tela_formador){
 	/* 1 - Agenda */
-	echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases, 1));
+	echo("          <h4>"._("msg1_1"));
 	/* 73- Acao exclusiva a formadores. */
-	echo("    - ".Linguas::RetornaFraseDaLista($lista_frases, 73)."</h4>\n");
+	echo("    - "._("msg73_1")."</h4>\n");
 
 	/*Voltar*/
 	/* 509 - Voltar */
-	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 	echo("          <div id=\"mudarFonte\">\n");
 	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
@@ -232,7 +237,7 @@ if (!$tela_formador){
 
 	/* 23 - Voltar (gen) */
 	echo("          <form name=\"frmErro\" action=\"\" method=\"post\">\n");
-	echo("            <input class=\"input\" type=\"button\" name=\"cmdVoltar\" value='".Linguas::RetornaFraseDaLista($lista_frases_geral,23)."' onclick=\"Voltar();\" />\n");
+	echo("            <input class=\"input\" type=\"button\" name=\"cmdVoltar\" value='"._("msg23_-1")."' onclick=\"Voltar();\" />\n");
 	echo("          </form>\n");
 	echo("        </td>\n");
 	echo("      </tr>\n");
@@ -244,8 +249,9 @@ if (!$tela_formador){
 }
 
 
-/* 1 - Agenda */
-echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases, 1)." - ".Linguas::RetornaFraseDaLista($lista_frases, 3)."</h4>");
+/* 1 - Agenda 
+ * 3 - Agendas Futuras*/
+echo("          <h4>"._("msg1_1")." - "._("msg3_1")."</h4>");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -256,7 +262,7 @@ echo("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
 
 /* Tabela Externa */
 echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -264,11 +270,11 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /*6 - Nova Agenda*/
-echo("                      <li><span OnClick='NovaAgenda();'>".Linguas::RetornaFraseDaLista($lista_frases, 6)."</span></li>\n");
+echo("                      <li><span OnClick='NovaAgenda();'>"._("msg6_1")."</span></li>\n");
 /*61 - Importar Agenda*/
-echo("                      <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".Linguas::RetornaFraseDaLista($lista_frases, 61)."</a></li>\n");
+echo("                      <li><a href=\"importar_curso.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">"._("msg61_1")."</a></li>\n");
 /*8 - Voltar para Agenda Atual*/
-echo("                      <li><a href=\"agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">".Linguas::RetornaFraseDaLista($lista_frases, 8)."</a></li>\n");
+echo("                      <li><a href=\"agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">"._("msg8_1")."</a></li>\n");
 
 echo("                </ul>\n");
 echo("        	</td>\n");
@@ -279,10 +285,13 @@ echo("              <td>\n");
 echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
-echo("                    <td class=\"alLeft\">".Linguas::RetornaFraseDaLista($lista_frases,1)."</td>\n");
-echo("                    <td width=\"15%\">".Linguas::RetornaFraseDaLista($lista_frases,7)."</td>\n");
+/* 1 - Agenda
+ * 7 - Data
+ * */
+echo("                    <td class=\"alLeft\">"._("msg1_1")."</td>\n");
+echo("                    <td width=\"15%\">"._("msg7_1")."</td>\n");
 /*110 - Situacao*/
-echo("                    <td width=\"15%\">".Linguas::RetornaFraseDaLista($lista_frases,110)."</td>\n");
+echo("                    <td width=\"15%\">"._("msg110_1")."</td>\n");
 echo("                  </tr>\n");
 
 /*Conteudo*/
@@ -294,7 +303,8 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 	foreach ($lista_agendas as $cod => $linha_item)
 	{
 		$data=Data::UnixTime2Data($linha_item['data']);
-		$situacao="<a href=\"".$ctrl_agenda."acoes_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>".Linguas::RetornaFraseDaLista($lista_frases,24);
+		/* 24 - Publicar*/
+		$situacao="<a href=\"".$ctrl_agenda."acoes_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>"._("msg24_1");
 		if ($data_acesso<$linha_item['data'])
 		{
 			$marcaib="<b>";
@@ -314,7 +324,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 				if(!Agenda::CancelaEdicao($sock, $linha_item['cod_item'], $cod_usuario, $cod_curso, $diretorio_arquivos, $diretorio_temp))
 				{
 					//60(geral) -  Houve um erro ao tentar remover arquivos temporarios.
-					echo("Erro: ".Linguas::RetornaFraseDaLista($lista_frases_geral, 60));
+					echo("Erro: "._("msg60_-1"));
 					continue;
 				}
 
@@ -324,13 +334,13 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 			else
 			{
 				/* 43 - Em Edicao */
-				$situacao="<span class=\"link\" onclick=\"window.open('".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">".Linguas::RetornaFraseDaLista($lista_frases,43)."</span>";
+				$situacao="<span class=\"link\" onclick=\"window.open('".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=400,height=250,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">"._("msg43_1")."</span>";
 				$titulo=$linha_item['titulo'];
 			}
 		} else if ($linha_item['situacao'] == "A"){
 
-			/* 23 - Em publicacao */
-			$situacao = Linguas::RetornaFraseDaLista($lista_frases, 23);
+			/* 23 - Agenda Atual */
+			$situacao = _("msg23_1");
 			$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"".$view_agenda."ver_linha_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar\">".$linha_item['titulo']."</a>";
 		}
 		else
@@ -353,7 +363,7 @@ else
 {
 	/* 9 - Nenhuma agenda foi criada! */
 	echo("              <tr>\n");
-	echo("                <td colspan=\"5\">".Linguas::RetornaFraseDaLista($lista_frases,9)."</td>\n");
+	echo("                <td colspan=\"5\">"._("msg9_1")."</td>\n");
 	echo("              </tr>\n");
 }
 
@@ -364,7 +374,7 @@ echo("                </table>\n");
 if ($e_formador || $e_coordenador)
 {
 	echo("                <ul>\n");
-	echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">".Linguas::RetornaFraseDaLista($lista_frases_geral,68)."</span></li>\n");
+	echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">"._("msg68_-1")."</span></li>\n");
 	echo("                </ul>\n");
 }
 
@@ -386,7 +396,7 @@ echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"".$ctrl_a
 //echo("        ".RetornaSessionIDInput());
 echo("          <div class=\"ulPopup\">\n");
 /* 18 - Titulo: */
-echo("            ".Linguas::RetornaFraseDaLista($lista_frases,18)."<br />\n");
+echo("            "._("msg18_1")."<br />\n");
 echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=\"150\" /><br />\n");
 echo("            <input type=\"hidden\" name=\"cod_curso\"   value=\"".$cod_curso."\" />\n");
 echo("            <input type=\"hidden\" name=\"acao\"        value=\"criarAgenda\" />\n");
@@ -394,10 +404,10 @@ echo("            <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usu
 echo("            <input type=\"hidden\" name=\"origem\"      value=\"ver_editar\" />\n");
 /* 18 - Ok (gen) */
 
-echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"".Linguas::RetornaFraseDaLista($lista_frases_geral,18)."\" />\n");
+echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\""._("msg18_-1")."\" />\n");
 
 /* 2 - Cancelar (gen) */
-echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_nova_agenda);\" value=\"".Linguas::RetornaFraseDaLista($lista_frases_geral,2)."\" />\n");
+echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_nova_agenda);\" value=\""._("msg2_-1")."\" />\n");
 echo("         </div>\n");
 echo("        </form>\n");
 echo("      </div>\n");

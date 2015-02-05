@@ -39,7 +39,24 @@
 /*==========================================================
   ARQUIVO : bib_layer.php
   ========================================================== */
-
+	
+	$lingua = $_SESSION['cod_lingua_s'];
+	
+	if($lingua == 1){
+		$locale = "pt_BR";
+	}
+	else if($lingua == 3){
+		$locale = "en_US";
+	}
+	else if($lingua == 4){
+		$locale = "pt_PT";
+	}
+	
+	putenv("LC_ALL=$locale");
+	setlocale(LC_ALL, $locale);
+	bindtextdomain("TelEduc", "../../../gettext/i18n");
+	textdomain("TelEduc");
+	
     /* Fun�es JavaScript */
     //echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");
     echo("<script language=JavaScript>\n");
@@ -123,7 +140,7 @@
     echo("  nome=form.novo_nome.value;\n");
     echo("  if (nome==js_nome_topico) {\n");
     /* 3 - Nenhuma alteracao foi efetuada. */
-    echo("    alert(\"".RetornaFraseDaLista($lista_frases,3)."\");\n");
+    echo("    alert(\""._("msg3_3")."\");\n");
     echo("    hideLayer(cod_ren);\n");
     echo("    return(false);\n");
     echo("  } else {\n");
@@ -136,13 +153,13 @@
 
     echo("    if (nome==\"\") {\n");
     /* 4 - O titulo do item a ser renomeado nao pode ser vazio. */
-    echo("      alert(\"".RetornaFraseDaLista($lista_frases,4)."\");\n");
+    echo("      alert(\""._("msg4_3")."\");\n");
     echo("      return(false);\n");
     echo("    } else {\n");
     echo("// se nome tiver aspas, <, >, nao pode\n");
     echo("      if (nome.indexOf(\"\\\\\")>=0 || nome.indexOf(\"\\\"\")>=0 || nome.indexOf(\"'\")>=0 || nome.indexOf(\">\")>=0 || nome.indexOf(\"<\")>=0) {\n");
     /* 5 - O titulo do item a ser renomeado nao pode conter \\\", \\\', < ou >. */
-    echo("        alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(RetornaFraseDaLista($lista_frases,5)))."\");\n");
+    echo("        alert(\"".ConverteAspas2BarraAspas(ConverteHtml2Aspas(_("msg5_3")))."\");\n");
     echo("        return(false);\n");
     echo("      } else {\n");
     echo("        return(true);\n");
