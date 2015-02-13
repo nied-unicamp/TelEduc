@@ -704,7 +704,7 @@
       }
     }
     foreach($lista_unificada as $cod => $linha){
-      //se � t�pico...
+      //se � t�pico...z
       if(isset($linha['posicao_topico'])){
 
         $data=UnixTime2Data($linha['data']);
@@ -731,7 +731,9 @@
         }else{
 
           echo("                      </td>\n");
-          if($linha['tipo_compartilhamento']=="T"){
+          
+          $compartilhados = RetornaItensDoTopico($sock, $tabela, $linha['cod_topico'], 'T');
+          if($compartilhados){
             echo("                      <td class=\"alLeft\"><img src=\"../imgs/pasta.gif\" border=0 alt=\"\"/>&nbsp;&nbsp;<a href=\"material.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=".$cod_ferramenta."&amp;cod_topico_raiz=".$linha['cod_topico']."\">".$linha['topico']."</span></td>\n");
             echo("                      <td width=\"10%\" align=\"center\">".$data."</td>\n"); //dani
           }
