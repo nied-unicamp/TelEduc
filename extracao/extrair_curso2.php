@@ -174,7 +174,7 @@
 
      if (is_array($t))
      {
-       if (!(shell_exec($caminho_tar." -zcvf ".$caminho."/".NOME_ARQUIVOS." *")))
+       if (!(shell_exec($caminho_tar."tar -zcvf ".$caminho."/".NOME_ARQUIVOS." *")))
        {
           /* 303 - Erro interno ao compactar arquivos */
           die(RetornaFraseDaLista($lista_frases,303));
