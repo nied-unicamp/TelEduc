@@ -12,24 +12,14 @@ function &verificaRequisitos($etapa) {
 		case 1:
 			if (!function_exists('mysql_connect')) {
 				$flag |= 1;
-			}
-			$versao = explode('.',phpversion());
-			if ($versao[0] == 5 && $versao[1] > 3) {
-				$flag |= 2;
-			}
-			if (!(bool) ini_get('register_globals')) {
-				$flag |= 4;
-			}
-			if (!(bool) ini_get('magic_quotes_gpc')) {
-				$flag |= 8;
-			}
 
+			}
 			break;
 
 		case 2:
 			clearstatcache();
-
-			if (!is_writable('../cursos/aplic/bibliotecas/')) {
+			
+			if (!is_writable('../app/geral/models')) {
 				$flag |= 1;
 			}
 
@@ -67,7 +57,7 @@ function &verificaRequisitos($etapa) {
 			$conteudo .= '$_SESSION[\'dbtmpport\']=\''.$_SESSION['dbport']."';\n";
 			$conteudo .= "?>\n";
 
-			$arquivo = fopen('../cursos/aplic/bibliotecas/teleduc.inc', "w");
+			$arquivo = fopen('../app/geral/models/teleduc.inc', "w");
 			fwrite($arquivo, $conteudo);
 			fclose($arquivo);
 
@@ -89,8 +79,8 @@ function &verificaRequisitos($etapa) {
 			fwrite($arquivo, '... testando pasta de arquivos. EOF\n');
 			fclose($arquivo);
 
-			if (!is_link('../cursos/diretorio/123.txt')) {
-				if (!symlink($_SESSION['arquivos'].'/teste.txt', '../cursos/diretorio/123.txt')) {
+			if (!is_link('../diretorio/123.txt')) {
+				if (!symlink($_SESSION['arquivos'].'/teste.txt', '../diretorio/123.txt')) {
 					$flag |= 2;
 					break;
 				}
@@ -105,7 +95,7 @@ function &verificaRequisitos($etapa) {
 			// Se conseguimos criar um link simbólico
 			// de teste, então o apagamos.
 			unlink($_SESSION['arquivos'].'/teste.txt');
-			unlink('../cursos/diretorio/123.txt');
+			unlink('../diretorio/123.txt');
 
 			$sock = mysql_quick_connect();
 	
@@ -214,7 +204,7 @@ function exibeErro($etapa,$erro) {
 			break;
 		case 2:
 			if ($erro & 1) {
-				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>cursos/aplic/bibliotecas/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>../app/geral/models/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			}
 			if ($erro & 2) {
 				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
@@ -262,7 +252,7 @@ function exibeErro($etapa,$erro) {
 				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
 			
 				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
-				$content .= "<pre>".$_SESSION['www']."/cursos/diretorio/</pre>";
+				$content .= "<pre>".$_SESSION['www']."/diretorio/</pre>";
 				$content .= "<br />";
 				$content .= "<p>O upload de arquivos &eacute; feito para uma pasta n&atilde;o acess&iacute;­vel pela web com o objetivo de proteger os arquivos de acessos n&atilde;o autorizados.</p>";
 				$content .= "<br />";

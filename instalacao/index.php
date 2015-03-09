@@ -123,15 +123,15 @@ else if ($etapa == 1) {
 	$content .= "<br />";
 
 	$content .= "<p>As informa&ccedil;&otilde;es para acesso aos bancos de dados ser&atilde;o gravadas a seguir em:</p>";
-	$content .= "<pre>teleduc4/cursos/aplic/bibliotecas/teleduc.inc</pre>";
+	$content .= "<pre>TelEduc/app/geral/models/teleduc.inc</pre>";
 	$content .= "<br />";
 
 	$content .= "<div class='formulario'>";
 		$content .= "<form id='formInstall' name='formInstall' method='POST' action='index.php' onSubmit='return valida_form(document.formInstall, 1);'>";
 			$content .= "<label class='form' for='dbname'>Banco Geral:</label>";
-			$content .= "<input class='form' size='25' type='text' name='dbname' value='".(isset($_SESSION['dbname']) ? $_SESSION['dbname'] : 'TelEduc4')."'/><br />";
+			$content .= "<input class='form' size='25' type='text' name='dbname' value='".(isset($_SESSION['dbname']) ? $_SESSION['dbname'] : 'TelEduc5')."'/><br />";
 			$content .= "<label class='form' for='dbnamecurso'>Prefixo do Banco do Curso:</label>";
-			$content .= "<input class='form' size='25' type='text' name='dbnamecurso' value='".(isset($_SESSION['dbnamecurso']) ? $_SESSION['dbnamecurso'] : 'TelEduc4Curso_')."'/><br />";
+			$content .= "<input class='form' size='25' type='text' name='dbnamecurso' value='".(isset($_SESSION['dbnamecurso']) ? $_SESSION['dbnamecurso'] : 'TelEduc5Curso_')."'/><br />";
 			$content .= "<label class='form' for='dbuser'>Usu&aacute;rio do MySQL:</label>";
 			$content .= "<input class='form' size='25' type='text' name='dbuser' value='".(isset($_SESSION['dbuser']) ? $_SESSION['dbuser'] : 'usuario')."'/><br />";
 			$content .= "<label class='form' for='dbpwd'>Senha do MySQL:</label>";
@@ -168,7 +168,7 @@ else if ($etapa == 2) {
 			$content .= "<label class='form' for='www'>Caminho do TelEduc</label>";
 			$content .= "<input class='form' type='text' size='25' name='www' value='".str_replace("instalacao/index.php", "", $_SERVER['PHP_SELF'])."'/><br />";
 			$content .= "<label class='form' for='arquivos'>Arquivos de Usu&aacute;rio</label>";
-			$content .= "<input class='form' type='text' size='25' name='arquivos' value='".str_replace("public_html/teleduc4/instalacao", "arquivos", getcwd())."'/><br />";
+			$content .= "<input class='form' type='text' size='25' name='arquivos' value='".str_replace("public_html/TelEduc/instalacao", "arquivos", getcwd())."'/><br />";
 			$content .= "<label class='form' for='sendmail'>Caminho do Sendmail</label>";
 			$content .= "<input class='form' type='text' size='25' name='sendmail' value='/usr/sbin/sendmail'/><br />";
 			$content .= "<input type='hidden' name='etapa' value='3'/><br />";
@@ -218,7 +218,7 @@ else if ($etapa == 4) {
 	$content .= "</pre>";
 	$content .= "<br />";
 	
-	$content .= "<input type='submit' value='Entrar' onClick=\"document.location='../'\" class='form'/><br />";
+	$content .= "<input type='submit' value='Entrar' onClick=\"document.location='../index.php'\" class='form'/><br />";
 }
 
 include 'template_instalacao.php';
