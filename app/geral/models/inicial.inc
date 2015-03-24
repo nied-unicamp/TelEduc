@@ -53,7 +53,8 @@ class Inicial{
 	  $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 	  $ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 	  
-	  echo("              <li><a href=\"".$view_administracao."exibe_cursos.php\">"._("msg72_-4")."<!--[if IE 7]><!--></a><!--<![endif]-->\n");
+	  /* 132 - Meus cursos */
+	  echo("              <li><a href=\"".$view_administracao."exibe_cursos.php\">"._("MY_COURSES_-3")."<!--[if IE 7]><!--></a><!--<![endif]-->\n");
 	  echo("                <!--[if lte IE 6]><table><tr><td><![endif]-->\n");
 	  echo("                <ul>\n");
 	
@@ -109,16 +110,6 @@ class Inicial{
 		$res=AcessoSQL::Enviar($sock,$query);
 		$lista=AcessoSQL::RetornaArrayLinhas($res);
 		return($lista);
-	}
-	
-	static function ListaEscolaridades(){
-		echo _("msg39_-1");
-		echo _("msg40_-1");
-		echo _("msg41_-1");
-		echo _("msg42_-1");
-		echo _("msg43_-1");
-		echo _("msg44_-1");
-		echo _("msg45_-1");
 	}
 	
 	/* *****************************************************************************
@@ -292,7 +283,7 @@ class Inicial{
 			$cont=count($lista);
 			$lista[$cont]['cod_pasta']="NULL";
 			/* 115 - Cursos gerais */
-			$lista[$cont]['pasta']= _("msg115_-3");
+			$lista[$cont]['pasta']= _("GENERAL_COURSE_-3");
 			$lista[$cont]['num_cursos']=$linha[0];
 		}
 	
@@ -478,39 +469,39 @@ class Inicial{
 		$status_usuario = Inicial::RetornaTipoUsuario($sock, $cod_curso);
 		if ($status_usuario == NULL)
 			/* 232 - Não participa do curso*/
-			return _("msg232_-3");
+			return _("NOT_PART_OF_COURSE_-3");
 	
 		switch ($status_usuario['tipo_usuario']){
 			case "i":
 				/* 224 - Aluno Inscrito */
-				return _("msg224_-3");
+				return _("ENROLLED_STUDENT_-3");
 			case "a":
 				/* 234 - Aluno desligado */
-				return _("msg234_-3");
+				return _("UNENROLLED_STUDENT_-3");
 			case "r":
 				/* 225 - Aluno nao aceito */
-				return _("msg225_-3");
+				return _("UNACCEPTED_STUDENT_-3");
 			case "A":
 				/* 226 - Aluno aceito */
-				return _("msg226_-3");
+				return _("ACCEPTED_STUDENT_-3");
 			case "f":
 				/* 228 - Formador desligado */
-				return _("msg228_-3");
+				return _("UNENROLLED_INSTRUCTOR_-3");
 			case "F":
-				/* 227 - Formador */
-				return _("msg227_-3");
+				/* 58 - Formador */
+				return _("INSTRUCTOR_-1");
 			case "z":
 				/* 229 - Colaborador desligado*/
-				return _("msg229_-3");
+				return _("UNENROLLED_COLLABORATOR_-3");
 			case "Z":
 				/* 231 - Colaborador */
-				return _("msg231_-3");
+				return _("COLLABORATOR_-3");
 			case "v":
 				/* 233 - Vistante desligado */
-				return _("msg233_-3");
+				return _("UNENROLLED_VISITOR_-3");
 			case "V":
 				/* 230 - Visitante */
-				return _("msg230_-3");
+				return _("VISITOR_-3");
 		}
 	}
 	

@@ -102,11 +102,11 @@ $diretorio_imgs = '../../../web-content/imgs/';
     	}
     
     	// 46 - Visão de Formador
-    	$tela_nome_ferramenta = _("msg46_-4");
+    	$tela_nome_ferramenta = _("INSTRUCTOR_VIEW_-4");
     	echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
     	
     	// 45 - Visão de Aluno
-    	$tela_nome_ferramenta = _("msg45_-4");
+    	$tela_nome_ferramenta = _("STUDENT_VIEW_-4");
     	echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
     	echo("          </ul>\n");
     
@@ -121,7 +121,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     Inicial::RetornaListaDeCursosUsuario($sock);
     
     /* 47 - Notificar */
-    $tela_nome_ferramenta=_("msg47_-4");
+    $tela_nome_ferramenta=_("NOTIFY_-4");
     
     $tela_cod_ferr=-7;
     $tela_diretorio="configurar";
@@ -130,14 +130,14 @@ $diretorio_imgs = '../../../web-content/imgs/';
     echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
     if ($tela_formador)
     {
-    	/* Suporte */
-    	$tela_nome_ferramenta=_("msg39_-4");
+    	/* 39 - Suporte */
+    	$tela_nome_ferramenta=_("SUPPORT_-4");
     	echo("              <li><a href=\"mailto:".$tela_email_suporte."\">$tela_nome_ferramenta</a></li>\n");
     	echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>\n");
     
-    	/* Administracao */
+    	/*  - Administracao */
     	$tela_cod_ferr=0;
-    	$tela_nome_ferramenta=_("msg37_-4");
+    	$tela_nome_ferramenta=_("ADMINISTRATION_-5");
     	$tela_diretorio="administracao";
     
     
@@ -146,8 +146,8 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     }
     /*Ajuda */
-    // 43 - Voltar ao inï¿½cio
-    $tela_nome_ferramenta=_("msg43_-3");
+    // 43 - Voltar ao início
+    $tela_nome_ferramenta=_("EXIT_-4");
     echo("            ".Cursos::PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
     echo("            <li><img src=\"".$diretorio_imgs."icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
     //echo("            <li><a href=\"../../../pagina_inicial/exibe_cursos.php\">".$tela_nome_ferramenta."</a></li>\n");
@@ -230,7 +230,8 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     echo("          <ul class=\"usuarioOnlineExterno\">\n");
     echo("            <li class=\"usuarioOnlineHead\">\n");
-    echo("               "._("msg60_-4")."\n");
+    /* 60 - Usuários online: */
+    echo("               "._("ONLINE_USERS_-4")."\n");
     echo("            </li>\n");
     foreach($lista_usuarios_online as $cod => $linha) {
     	echo("            <li class=\"usuarioOnlineLista\">\n");

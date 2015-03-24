@@ -1,9 +1,13 @@
 <?php
 
-$view_login = "app/login/views/";
+$ferramenta_login = 'login';
 
-require_once $view_login.'autenticacao_cadastro.php';
+$view_login = 'app/'.$ferramenta_login.'/views/';
+
+echo("<html>\n");
+echo("<script language=\"javascript\">\n");
+echo("  document.location='".$view_login."autenticacao_cadastro.php';\n");
+echo("</script>\n");
+echo("</html>\n");
 
 ?>
-
-

@@ -17,7 +17,6 @@ var conteudo="";
 var input=0;
 var cancelarElemento=null;
 var cancelarTodos=0;
-var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
 var lista_frases;
@@ -33,14 +32,13 @@ var lista_frases;
 });*/
 
 $.ajax({
-    url: '../../../app/agenda/models/retorna_frase_dinamic.php',
-    type: "POST",
-    dataType: 'json',
-    success: function(data) {
-		lista_frases = data;
-    }
-  });
-
+	url: '../../../app/geral/models/retorna_frase_dinamic.php',
+	type: "POST",
+	dataType: 'json',
+	success: function(data) {
+			lista_frases = data;
+	}
+});
 
 if (isNav)
 {
@@ -122,31 +120,30 @@ function WindowOpenVerURL(end)
   window.open(end,'PortfolioURL','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
 }
 
-	function EdicaoTexto(codigo, id, valor){
-	
-	  if (valor=='ok'){
-	      eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
-	      $.post('../../../app/agenda/models/editar_texto.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, novo_texto:conteudo}, 
-	    		    function(data){
-	    		    	var code = $.parseJSON(data);
-	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
-	    		    	$('#text_'+cod_item).html(code);
-	    		    	/* 22 - Agenda editada com sucesso.*/
-	    		    	mostraFeedback(lista_frases.msg22, 'true');
+function EdicaoTexto(codigo, id, valor){
+	if (valor=='ok'){
+		eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
+	    $.post('../../../app/agenda/models/editar_texto.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, novo_texto:conteudo}, 
+	    		function(data){
+	    			var code = $.parseJSON(data);
+	    		    $('#tr_'+cod_item).toggleClass('novoitem');
+	    		    $('#text_'+cod_item).html(code);
+	    		    /* 22 - Agenda editada com sucesso.*/
+	    		    mostraFeedback(lista_frases.msg22, 'true');
 	      });
-	    }
-	  else{
+	 }
+	 else{
 	      //Cancela Edicao
 	      if (!cancelarTodos)
 	    	  $.post('../../../app/agenda/models/acaba_edicao.php',{cod_curso: cod_curso, cod_item: cod_item, cod_usuario:cod_usuario, acao: 0}, 
-		    		    function(data){
-		    		    	var code = $.parseJSON(data);
+	    			  function(data){
+		    		  	var code = $.parseJSON(data);
 		      });
 	  }
-	  document.getElementById(id).innerHTML=conteudo;
-	  editaTexto=0;
-	  cancelarElemento=null;
-	}
+document.getElementById(id).innerHTML=conteudo;
+editaTexto=0;
+cancelarElemento=null;
+}
 	
 	var controle=0;
 	

@@ -52,10 +52,10 @@
 		$locale = "pt_PT";
 	}
 	
-	putenv("LC_ALL=$locale");
+/* 	putenv("LC_ALL=$locale");
 	setlocale(LC_ALL, $locale);
 	bindtextdomain("TelEduc", "../../../gettext/i18n");
-	textdomain("TelEduc");
+	textdomain("TelEduc"); */
 	
     /* Fun�es JavaScript */
     //echo("<script language=JavaScript src=../bibliotecas/dhtmllib.js></script>\n");

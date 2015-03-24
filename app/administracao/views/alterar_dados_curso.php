@@ -93,32 +93,32 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("\n");
 	echo("        if (ComparaData(i_ini, i_fim) > 0) \n");
 	echo("        {\n");
-	echo("           /* 8 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final desse perï¿½do. */\n");
-	echo("           alert('"._("msg8_0")."');\n");
+	echo("           /* 8 - A data inicial do período de inscrição deve ser anterior à data final desse período. */\n");
+	echo("           alert('"._("ENR_DATE_BEFORE_FINAL_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(c_ini, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("           /* 9 - A data inicial do curso deve ser anterior ï¿½sua data final. */\n");
-	echo("           alert('"._("msg9_0")."');\n");
+	echo("           /* 9 - A data inicial do curso deve ser anterior à sua data final. */\n");
+	echo("           alert('"._("COURSE_DATE_BEFORE_FINAL_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("        /* 10 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
-	echo("          alert('"._("msg10_0")."');\n");
+	echo("        /* 10 - A data inicial do período de inscrição deve ser anterior à data final do curso. */\n");
+	echo("          alert('"._("ENR_DATE_BEFORE_COURSE_FINAL_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_fim, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("          /* 11 - A data final do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
-	echo("          alert('"._("msg11_0")."');\n");
+	echo("          /* 11 - A data final do período de inscrição deve ser anterior à data final do curso. */\n");
+	echo("          alert('"._("ENR_FINAL_DATE_BEFORE_COURSE_FINAL_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_ini) > 0) \n");
 	echo("        {\n");
-	echo("          /* 12 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data inicial do curso. */\n");
-	echo("          alert('"._("msg12_0")."');\n");
+	echo("          /* 12 - A data inicial do período de inscrição deve ser anterior à data inicial do curso. */\n");
+	echo("          alert('"._("ENR_DATE_BEFORE_COURSE_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        return(true);\n");
@@ -138,7 +138,7 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("        if (c1=='' || c2=='' || c4=='' || c5=='' || c6=='' || c7=='' || c8=='' || c9=='') \n");
 	echo("        {\n");
 	/* 13 - Por favor preencha todos os campos antes de pressionar Alterar. */
-	echo("          alert('"._("msg13_0")."');\n");
+	echo("          alert('"._("FILL_ALL_FIELDS_0")."');\n");
 	echo("          return(false);\n");
 	echo("        } \n");
 	echo("        else\n");
@@ -165,11 +165,11 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 {
 	/* 1 - Administracao  28 - Area restrita ao formador. */
-	echo("          <h4>"._("msg1_0")." - "._("msg28_0")."</h4>\n");
+	echo("          <h4>"._("ADMINISTRATION_-5")." - "._("RESTRICTED_AREA_INSTRUCTOR_0")."</h4>\n");
 
 	/*Voltar*/
 	/* 509 - Voltar */
-	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+	echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 	echo("          <div id=\"mudarFonte\">\n");
 	echo("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
@@ -178,7 +178,7 @@ if(!Usuarios::EFormador($sock,$cod_curso,$cod_usuario))
 	echo("          </div>\n");
 
 	/* 23 - Voltar (gen) */
-	echo("          <form><input class=\"input\" type=\"button\" value=\""._("msg23_-1")."\" onclick=\"history.go(-1);\" /></form>\n");
+	echo("          <form><input class=\"input\" type=\"button\" value=\""._("BACK_-1")."\" onclick=\"history.go(-1);\" /></form>\n");
 
 	echo("        </td>\n");
 	echo("      </tr>\n");
@@ -200,17 +200,17 @@ echo("      <input type=\"hidden\" name=\"action\" value='alterarDadosCurso'>\n"
 
 // Página Principal
 /* 1 - Administração */
-$cabecalho = "          <h4>"._("msg1_0")."\n";
+$cabecalho = "          <h4>"._("ADMINISTRATION_-5")."\n";
 if ($ecoordenador)
 {
 	/* 2 - Visualizar / Alterar Dados do Curso */
-	$cabecalho .= " - "._("msg2_0")."</h4>";
+	$cabecalho .= " - "._("VIEW_CHANGE_COURSE_DATA_0")."</h4>";
 	echo($cabecalho);
 }
 else
 {
 	/* 49 - Visualizar dados do curso */
-	$cabecalho .= " - "._("msg49_0")."</h4>";
+	$cabecalho .= " - "._("VIEW_COURSE_DATA_0")."</h4>";
 	echo($cabecalho);
 }
 
@@ -223,7 +223,7 @@ echo("      </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 $linha = Administracao::RetornaDadosCursoAdm($sock,$cod_curso);
 
@@ -246,7 +246,7 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /* 23 - Voltar (geral)*/
-echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">"._("msg23_-1")."</a></li>\n");
+echo("                  <li><a href=\"administracao.php?cod_curso=".$cod_curso."&amp;cod_ferramenta=".$cod_ferramenta."&amp;confirma=0\">"._("BACK_-1")."</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -257,7 +257,7 @@ if ($ecoordenador)
 {
 	echo("                  <tr class=\"head alLeft\">\n");
 	/* 14 - Abaixo seguem dados referentes ao curso. Para alterá-los, modifique os campos desejados e pressione o botão Alterar. */
-	echo("                    <td colspan=4>"._("msg14_0")."</td>\n");
+	echo("                    <td colspan=4>"._("COURSE_DATA_FILL_CHANGE_0")."</td>\n");
 	echo("                  </tr>\n");
 }
 echo("                  <tr>\n");
@@ -266,7 +266,7 @@ echo("                      <table>\n");
 echo("                        <tr>\n");
 
 /* 15- Nome */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg15_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("NAME_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <input class=\"input\" type=\"text\" name=\"nome_curso\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['nome_curso'])."'>");
@@ -277,7 +277,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 16 - Informações */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg16_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("INFORMATIONS_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <textarea class=\"input\" name=\"informacoes\" cols=\"50\" rows=\"6\">".ConversorTexto::ConverteAspas2Html($linha['informacoes'])."</textarea>\n");
@@ -288,7 +288,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 17 - Início do curso */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg17_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("COURSE_BEGIN_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -308,7 +308,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 18 - Fim do curso */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg18_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("COURSE_END_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -328,7 +328,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 19 - Início das incrições */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg19_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("ENROLLMENT_BEGIN_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -348,7 +348,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 20 - Fim das inscrições */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg20_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("ENROLLMENT_END_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 {
@@ -368,7 +368,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 21 - Público alvo */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg21_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("TARGET_AUDIENCE_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                          <input class=\"input\" type=\"text\" name=\"publico_alvo\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['publico_alvo'])."'>\n");
@@ -379,7 +379,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 /* 22 - Tipo de inscrição */
-echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg22_0").":</b></td>\n");
+echo("                          <td style=\"border:none; text-align:right;\"><b>"._("ENROLLMENT_TYPE_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
 	echo("                            <input class=\"input\" type=\"text\" name=\"tipo_inscricao\" size=\"50\" style=\"width:416px;\" value='".ConversorTexto::ConverteAspas2Html($linha['tipo_inscricao'])."'>\n");
@@ -391,7 +391,7 @@ echo("                        <tr>\n");
 
 echo("                          <td style=\"border:none; text-align:right;\"><b>");
 // 148 - Língua do curso:
-echo("                      "._("msg148_0")." \n");
+echo("                      "._("COURSE_LANGUAGE_0")." \n");
 echo("                            </b></td>\n");
 
 echo("                          <td style=\"border:none\">\n");
@@ -420,14 +420,14 @@ if ($ecoordenador)
 {
 	/* 23 - Obs: */
 	/* 24 - As datas devem estar no formato DD/MM/AAAA. */
-	echo("              <b>"._("msg23_0")."</b> "._("msg24_0")."\n");
+	echo("              <b>"._("NOTE_0")."</b> "._("DATE_FORMATE_0")."\n");
 	echo("              <br><br>\n");
 	/* 23 - Obs: */
 	/* 229 - Caso a data de inicio do curso seja maior que a data de fim das inscrições, o curso somente poderá ser acessado diretamente pelo link recebido no e-mail do coordenador. Ou seja, ele não será listado em nenhuma das seções 'Cursos em andamento', 'Cursos com inscrições abertas' ou 'Cursos já oferecidos'. */
-	echo("              <b>"._("msg23_0")."</b> "._("msg229_0")."\n");
+	echo("              <b>"._("NOTE_0")."</b> "._("BEGIN_DATE_GREATER_ENR_END_DATE_0")."\n");
 	echo("              <br><br>\n");
 	/* 24 - Alterar (geral) */
-	echo("                <div align=\"right\"><input type=\"submit\" class=\"input\" value='"._("msg24_-1")."'></div>\n");
+	echo("                <div align=\"right\"><input type=\"submit\" class=\"input\" value='"._("CHANGE_-1")."'></div>\n");
 }
 
 echo("              </td>\n");

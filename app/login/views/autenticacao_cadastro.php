@@ -43,11 +43,19 @@ require_once $view_admin.'topo_tela_inicial.php';
 $feedbackObject =  new FeedbackObject($lista_frases);
 // adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase
 // para ser impressa se for "true", o terceiro caso "false"
-$feedbackObject->addAction("erroAutenticacao", _("msg214_-3"), _("msg180_-3"));
-$feedbackObject->addAction("erroConfirmacao", 0, _("msg213_-3"));
-$feedbackObject->addAction("emailConfirmacao", _("msg210_-3"), 0);
 
-$fraseLoginPadrao = _("msg216_-3");
+/* 214 - Um novo email para confirmação do Usuário enviado com sucesso!
+ * 180 - Erro de autenticação.Digite o seu login e sua senha novamente
+ * 213 - Seu cadastro ainda não foi confirmado, verifique seu email ou faça novo pedido de confirmação abaixo.
+ * 210 - Seu cadastro foi efetuado com sucesso. Em instantes você receberá um email com um link para confirmação do cadastro e, em seguida, poderá acessar o ambiente.
+ * */
+$feedbackObject->addAction("erroAutenticacao", _("CONFIRMATION_EMAIL_SENT_-3"), _("AUTHENTICATION_FAILURE_-3"));
+$feedbackObject->addAction("erroConfirmacao", 0, _("ACCOUNT_NOT_CONFIRMED_-3"));
+$feedbackObject->addAction("emailConfirmacao", _("ACCOUNT_SUCCESS_-3"), 0);
+
+
+/* 216 - Digite seu login*/
+$fraseLoginPadrao = _("TYPE_YOUR_LOGIN_-3");
 if(!isset($login)){
 	$login = $fraseLoginPadrao;
 }
@@ -67,7 +75,8 @@ echo("          while (Campo_login.search(\" \") != -1){\n");
 echo("          Campo_login = Campo_login.replace(/ /, \"\");\n");
 echo("        }\n");
 echo("        if (Campo_login == ''){\n");
-echo("          alert('".html_entity_decode(_("msg181_-3"))."');\n");
+/* 181 - Por favor, preencha o campo "Login".*/
+echo("          alert('".html_entity_decode(_("FILL_LOGIN_FIELD_-3"))."');\n");
 echo("          document.formAutentica.login.focus();\n");
 echo("          return(false);\n");
 echo("        } else {\n");
@@ -75,7 +84,8 @@ echo("          while (Campo_senha.search(\" \") != -1){\n");
 echo("            Campo_senha = Campo_senha.replace(/ /, \"\");\n");
 echo("          }\n");
 echo("          if (Campo_senha == ''){\n");
-echo("            alert('".html_entity_decode(_("msg182_-3"))."');\n");
+/* 182 - Por favor, preencha o campo "Senha".*/
+echo("            alert('".html_entity_decode(_("FILL_PASSWORD_FIELD_-3"))."');\n");
 echo("          document.formAutentica.senha.focus();\n");
 echo("            return(false);\n");
 echo("          }\n");
@@ -103,12 +113,14 @@ echo("    </script>\n\n");
 
 require_once $view_admin.'menu_principal_tela_inicial.php';
 
-// 183 -  Autenticacao
+/* 183 -  Autenticaçao
+ * 159 -  Inscrição
+ */
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 if($destino == "inscricao"){
-	echo("          <h4>"._("msg183_-3")." - "._("msg159_-3")."</h4>\n");
+	echo("          <h4>"._("AUTHENTICATION_-3")." - "._("ENROLLMENT_-3")."</h4>\n");
 }else{
-	echo("          <h4>"._("msg183_-3")."</h4>\n");
+	echo("          <h4>"._("AUTHENTICATION_-3")."</h4>\n");
 }
 
 // 3 A's - Muda o Tamanho da fonte
@@ -119,9 +131,12 @@ echo("           <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 if($destino == "inscricao" && $origem==NULL){
-	echo("		  <span class=\"destaque\"><p id=\"feedback\">"._("msg219_-3")." "._("msg220_-3")."</p></span>");
+	/*
+	 * 219 - Para se inscrever em um curso é preciso estar cadastrado no ambiente. Se você já tem cadastro basta se logar, senão
+	 * 220 - cadastre-se!*/
+	echo("		  <span class=\"destaque\"><p id=\"feedback\">"._("NEED_TO_BE_REGISTERED_-3")." "._("REGISTER_YOU_-3")."</p></span>");
 }
 echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
@@ -129,7 +144,8 @@ echo("              <td colspan=\"4\">\n");
 echo("                <table cellspacing=\"0\" id=\"divide_meio\" class=\"tabInterna\">\n");
 echo("                  <tr id=\"caixaAutenticacao\">   \n");
 echo("                    <td class=\"divide_meio\" align=\"center\">\n");
-echo("                    "._("msg165_-3")."\n");
+/* 165 - Digite seus dados nos campos abaixo para entrar no ambiente.*/
+echo("                    "._("TYPE_YOUR_LOGIN_DATA_-3")."\n");
 
 
 /*
@@ -150,7 +166,7 @@ echo("                          <table>\n");
 echo("                            <tr>\n");
 echo("                              <td style=\"border:none; text-align:right;\">\n");
 /* Frase cod_texto=157 e cod_ferramenta=-3: Login */
-echo("                                <b>"._("msg157_-3")."</b>\n");
+echo("                                <b>"._("LOGIN_-3").":</b>\n");
 echo("                              </td>\n");
 echo("                              <td style=\"border:none\">\n");
 echo("                                <input class=\"valorExemplo\" type=\"text\" id=\"login\" name=\"login\" size=\"25\" maxlength=\"100\" value='".$login."' onfocus=Login_onfocus(document.formAutentica.login); onblur=Login_onblur(document.formAutentica.login);>\n");
@@ -161,19 +177,19 @@ echo("                            </tr>\n");
 */
 echo("                            <tr>\n");
 echo("                              <td style=\"border:none; text-align:right;\">\n");
-echo("                                <b>"._("msg158_-3")."</b>\n");
+echo("                                <b>"._("PASSWORD_-3").":</b>\n");
 echo("                              </td>\n");
 echo("                              <td style=\"border:none\">\n");
 echo("                                    <input type=\"password\" id=\"senha\" name=\"senha\" size=\"25\" maxlength=\"100\" style=\"border: 2px solid #9bc;\" />\n");
 echo("                              </td>\n");
 echo("                            </tr>\n");
 /* Botao Entrar do formulario de login
- * Frase cod_texto=18 e cod_ferramenta=-3: ?
 */
 echo("                            <tr>\n");
 echo("                              <td style=\"border:none; text-align:right;\">&nbsp;</td>\n");
 echo("                              <td style=\"border:none\">\n");
-echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao Entrar Login\" onfocus value=\""._("msg55_-3")."\" />\n");
+/* 55 - Entrar */
+echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao Entrar Login\" onfocus value=\""._("ENTER_-3")."\" />\n");
 //echo("                              <br /><input type=\"submit\" class=\"input\" id=\"Botao OK Login\" onfocus value=\"Login\" />\n");
 echo("                              </td>\n");
 echo("                            </tr>\n");
@@ -200,23 +216,23 @@ echo("                    <td class=\"divide_meio\">\n");
 if($cod_curso != NULL){
 	// 90 - Se nao tiver cadastro,
 	// 101 - clique aqui!
-	echo("                    "._("msg90_-2")." <a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">"._("msg101_-2")."</a><br />");
+	echo("                    "._("DONT_HAVE_REGISTRATION_-2")." <a href=\"".$view_cadastro."cadastro.php?cod_curso=".$cod_curso."&tipo_curso=".$tipo_curso."\">"._("CLICK_HERE_-2")."</a><br />");
 }else{
 	// 90 - Se nao tiver cadastro,
 	// 101 - clique aqui!
-	echo("                    "._("msg90_-2")." <a href='".$view_cadastro."cadastro.php'>"._("msg101_-2")."</a><br />");
+	echo("                    "._("DONT_HAVE_REGISTRATION_-2")." <a href='".$view_cadastro."cadastro.php'>"._("CLICK_HERE_-2")."</a><br />");
 }
 // 67 - Se esqueceu seu login,
 // 101 - clique aqui!
-echo ("                    <br/>"._("msg67_-2")." <a href='esqueci_login.php'>"._("msg101_-2")."</a><br/>");
+echo ("                    <br/>"._("FORGOT_LOGIN_-2")." <a href='esqueci_login.php'>"._("CLICK_HERE_-2")."</a><br/>");
 
 // 24 - Se esqueceu sua senha,
 // 101 - clique aqui!
-echo ("                    "._("msg24_-2")." <a href='esqueci_senha.php'>"._("msg101_-2")."</a><br/>");
+echo ("                    "._("FORGOT_PASSWORD_-2")." <a href='esqueci_senha.php'>"._("CLICK_HERE_-2")."</a><br/>");
 
 // 92 - Se nao recebeu seu email de confirmacao,
 // 101 - clique aqui!
-echo ("                    "._("msg92_-2")." <a href='reenviar_autenticacao.php'>"._("msg101_-2")."</a><br/>");
+echo ("                    "._("DIDNT_RECEIVE_EMAIL_CONFIRMATION_-2")." <a href='reenviar_autenticacao.php'>"._("CLICK_HERE_-2")."</a><br/>");
 
 echo("                    </td>\n");
 

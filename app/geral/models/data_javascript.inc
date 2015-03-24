@@ -153,9 +153,9 @@ class DataJavaScript {
         echo("  var data = campo_data.value;\n");
         echo("  if (data=='') \n");
         echo("  {\n");
-        // 17 - Vocï¿½deixou um campo de data vazio.
+        // 17 - Você deixou um campo de data vazio.
         // 18 - Por favor preencha-o com uma data.
-        echo("    alert('" . _("msg17_-2") . " " . _("msg18_-2") . "');\n");
+        echo("    alert('" . _("DATE_FIELD_EMPTY_-2") . " " . _("FILL_DATE_FIELD_-2") . "');\n");
         echo("    return(false);\n");
         echo("  }\n");
         echo("  else \n");
@@ -164,17 +164,17 @@ class DataJavaScript {
         echo("      data=data_g;\n");
         echo("    else\n");
         echo("    {\n");
-        // 19 - Data invï¿½ida:
+        // 19 - Data inválida:
         // 20 - Por favor retorne e corrija.
-        echo("      alert('" . _("msg19_-2") . " '+data+'. " . _("msg20_-2") . "');\n");
+        echo("      alert('" . _("INVALID_DATE_-7") . ": '+data+'. " . _("GO_BACK_CORRECT_-2") . "');\n");
         echo("      return false;\n");
         echo("    }\n");
         echo("    if (TemCaracteresEstranhos(data)) \n");
         echo("    {\n");
-        // 21 - Vocï¿½digitou caracteres estranhos nesta data.
-        // 22 - Use apenas dï¿½itos de 0 a 9 e a barra ( / ) para separar dia, mï¿½ e ano (exemplo: 31/01/2000).
+        // 21 - Você digitou caracteres estranhos nesta data.
+        // 22 - Use apenas dígitos de 0 a 9 e a barra ( / ) para separar dia, mês e ano (exemplo: 31/01/2000).
         // 20 - Por favor retorne e corrija.
-        echo("      alert('" . _("msg21_-2") . "\\n" . _("msg22_-2") . "\\n" . _("msg20_-2") . "');\n");
+        echo("      alert('" . _("STRAGE_DATE_CHARACTERS_-2") . "\\n" . _("USE_NUMBERS_SLASH_-2") . "\\n" . _("GO_BACK_CORRECT_-2") . "');\n");
         echo("      return(false);\n");
         echo("    }\n");
         echo("    else \n");
@@ -192,18 +192,18 @@ class DataJavaScript {
         echo("        ndias[1]=28;\n");
         echo("      if (ano<1900 || ano>2100 || mes<1 || mes>12) \n");
         echo("      {\n");
-        // 19 - Data invï¿½ida:
+        // 19 - Data inválida:
         // 20 - Por favor retorne e corrija.
-        echo("        alert('" . _("msg19_-2") . "'+data+'. " . _("msg20_-2") . "');\n");
+        echo("        alert('" . _("INVALID_DATE_-7") . ": '+data+'. " . _("GO_BACK_CORRECT_-2") . "');\n");
         echo("        return(false);\n");
         echo("      } \n");
         echo("      else \n");
         echo("      {\n");
         echo("        if (dia<1 || dia>ndias[mes-1]) \n");
         echo("        {\n");
-        // 19 - Data invï¿½ida:
+        // 19 - Data inválida:
         // 20 - Por favor retorne e corrija.
-        echo("          alert('" . _("msg19_-2") . " '+data+'. " . _("msg20_-2") . "');\n");
+        echo("          alert('" . _("INVALID_DATE_-7") . " '+data+'. " . _("GO_BACK_CORRECT_-2") . "');\n");
         echo("          return(false);\n");
         echo("        }\n");
         echo("      }\n");

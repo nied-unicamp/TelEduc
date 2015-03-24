@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TelEduc5\n"
-"POT-Creation-Date: 2015-02-05 16:07-0300\n"
-"PO-Revision-Date: 2015-02-05 16:08-0300\n"
+"POT-Creation-Date: 2015-03-20 16:22-0300\n"
+"PO-Revision-Date: 2015-03-20 16:22-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <camila.kna@hotmail.com>\n"
 "Language: en_US\n"
@@ -15,146 +15,660 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Poedit-SearchPath-0: /home/teleduc/public_html/TelEduc/app\n"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:28
-msgid "msg520_-5"
-msgstr "Suggestions"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:47
+msgid "ITEM_DELETED_SUCCESS_-1"
+msgstr "Item deleted successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:66
-msgid "msg533_-5"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:48
+msgid "ITEMS_DELETED_SUCCESS_-1"
+msgstr "Item(s) deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:49
+msgid "ITEMS_MOVED_SUCCESS_-1"
+msgstr "Item(s) moved successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:50
+msgid "FOLDER_CREATED_SUCCESS_-1"
+msgstr "Folder created successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:211
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:36
+msgid "ITEM_MOVED_SUCCESS_-1"
+msgstr "Item moved successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:215
+msgid "INTERNAL_ERROR_MOVE_AGAIN_-1"
+msgstr "Internal error! Refresh page and try to move items again."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:281
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:134
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:271
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1102
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:14
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:37
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:98
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:407
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:291
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:129
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:236
+msgid "OK_-1"
+msgstr "Ok"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:293
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:137
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:283
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1104
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:16
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:39
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:410
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:166
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:294
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:132
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:248
+msgid "CANCEL_-1"
+msgstr "Cancel"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:320
+msgid "ITEM_RENAMED_SUCCESS_-1"
+msgstr "Item renamed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:326
+msgid "FOLDER_RENAMED_SUCCESS_-1"
+msgstr "Folder renamed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:335
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:347
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:367
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:66
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:123
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:281
+msgid "TITLE_CANNOT_BE_EMPTY_-1"
+msgstr "The title cannot be empty."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:354
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:373
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:73
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:130
+msgid "TITLE_CANNOT_CONTAIN_-1"
+msgstr "The title cannot contain \\."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:389
+msgid "ERROR_CREATE_FOLDER_-1"
 msgstr ""
-"Email and/or login already exists! Type different values (note that the "
-"existing logins appear in the list of suggestions)"
+"Cannot create the folder, because already exists a folder with the same name"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:103
-msgid "msg166_-5"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:502
+msgid "SURE_TO_DELETE_ITEM_-1"
+msgstr "Are you sure you want to delete this item?"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:502
+msgid "ITEM_MOVE_TO_TRASH_-1"
+msgstr "(The items will be moved to the trash)"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:518
+msgid "CANT_MOVE_FOLDER_ITSELF_SUBFOLDER_15"
+msgstr "You cannot move a folder to itself or to one of its subfolders."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:525
+msgid "CANT_MOVE_FOLDER_NAME_15"
 msgstr ""
-"The following fields cannot be empty:\\n Course Name and Number of students "
-"\\n Coordinator&#39;s name, e-mail and login ."
+"Cannot move the folder, because already exists a folder with the same name"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:112
-msgid "msg512_-5"
-msgstr ""
-"The following fields can not be left blank: Name and number of students in "
-"the program, coordinator&#39;s login."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:588
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:603
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:483
+msgid "GROUP_PORTFOLIO_15"
+msgstr "Group Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:121
-msgid "msg167_-5"
-msgstr "The field number of students must be an positive integer."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:594
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:609
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:487
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:491
+msgid "INDIVIDUAL_PORTFOLIO_15"
+msgstr "Individual Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:140
-msgid "msg168_-5"
-msgstr "Invalid e-mail."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:615
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:188
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:297
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:495
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:57
+msgid "PORTFOLIO_15"
+msgstr "Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:187
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:45
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:118
-msgid "msg3_-5"
-msgstr "Create a Course"
-
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:625
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:198
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:505
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:197
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:206
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:55
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:55
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:122
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:63
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:56
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:134
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:60
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:50
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:172
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:181
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:226
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:249
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:101
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:59
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:271
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:126
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:230
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:240
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:265
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:142
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:156
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:364
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:363
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:226
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:258
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:137
-msgid "msg509_-1"
-msgstr "back"
-
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:206
-#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:63
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:181
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:249
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:240
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:265
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:137
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:188
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:64
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:87
 #: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:106
 #: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:161
-msgid "msg23_-1"
+msgid "BACK_-1"
 msgstr "Back"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:650
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:526
+msgid "DELETED_GROUP_15"
+msgstr "Deleted Group"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:664
+msgid "REJECTED_STUDENT_0"
+msgstr "Rejected student"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:680
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:68
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:265
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:566
+msgid "MY_PORTFOLIOS_15"
+msgstr "My Portfolios"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:682
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:88
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:267
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:568
+msgid "INDIVIDUAL_PORTFOLIOS_15"
+msgstr "Individual Portfolios"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:686
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:78
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:237
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:270
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:571
+msgid "GROUP_PORTFOLIOS_15"
+msgstr "Group Portfolios"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:688
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:98
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:272
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:573
+msgid "ENDED_PORTFOLIOS_15"
+msgstr "Ended Portfolios"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:699
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:72
+msgid "UPDATE_-1"
+msgstr "Update"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:714
+msgid "INCLUDE_NEW_ITEM_-1"
+msgstr "Include new item"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:716
+msgid "NEW_FOLDER_-1"
+msgstr "New folder"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:720
+msgid "RENAME_FOLDER_-1"
+msgstr "Rename folder"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:724
+msgid "TRASH_-1"
+msgstr "Trash"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:740
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:844
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:301
+msgid "ITEMS_-1"
+msgstr "Itens"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:750
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:598
+msgid "COMMENTS_-1"
+msgstr "Comments"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:753
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:299
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:83
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:150
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:292
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:178
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:200
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:61
+msgid "DATE_-1"
+msgstr "Date"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:756
+msgid "ACCESS_MODE_-1"
+msgstr "Access mode"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:767
+msgid "NO_ITEM_IN_THIS_PORTFOLIO_15"
+msgstr "There are no items in this portfolio"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:842
+msgid "ITEM_-1"
+msgstr "Item"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:878
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:651
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:213
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:216
+msgid "UNRESTRICTED_ACCESS_MODE_-1"
+msgstr "Unrestricted access code"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:882
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:656
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:183
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:208
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:211
+msgid "INSTRUCTOR_ACCESS_MODE_-1"
+msgstr "Instructor access mode"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:886
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:661
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:224
+msgid "GROUP_ACCESS_MODE_-1"
+msgstr "Group access mode"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:890
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:666
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:221
+msgid "NOT_ACCESSIBLE_-1"
+msgstr "Not accessible"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:922
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:105
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:174
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:58
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:112
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:337
+msgid "IN_EDITION_-1"
+msgstr "In edition"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1044
+msgid "STUDENT_COMMENT_-1"
+msgstr "Student comment"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1045
+msgid "INSTRUCTOR_COMMENT_-1"
+msgstr "Instructor comment"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1048
+msgid "COMMENTS_SENT_BY_ME_-1"
+msgstr "Comments sent by me"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1061
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:205
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:377
+msgid "DELETE_SELECTED_-1"
+msgstr "Delete selected"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1062
+msgid "MOVE_SELECTED_-1"
+msgstr "Move selected"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:206
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:246
+msgid "MY_PORTFOLIO_15"
+msgstr "My Portfolio"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:209
+msgid "OTHER_PARTICIPANTS_PORTFOLIOS_15"
+msgstr "Portfolios of other participants"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:216
+msgid "PARTICIPANTS_PORTFOLIOS_15"
+msgstr "Portfolios of course participants"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:221
+msgid "REJECTED_STUDENTS_POTFOLIOS_15"
+msgstr "Portfolios of Rejected Students"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:229
+msgid "MY_GROUPS_PORTFOLIOS_15"
+msgstr "Portfolios of my groups"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:232
+msgid "OTHER_GROUPS_PORTFOLIOS_15"
+msgstr "Portfolios of other groups"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:247
+msgid "GROUP_PORTFOLIOS_PARTICIPATING_15"
+msgstr "Group Portfolio that I'm participating"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:248
+msgid "ENDED_GROUPS_PORTFOLIOS_PATICIPATED_15"
+msgstr "Ended groups's portfolio that I participated"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:253
+msgid "ENDED_GROUPS_PORTFOLIOS_15"
+msgstr "Portfolios of Ended Groups"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:303
+msgid "UNCOMMENTED_ITEMS_-1"
+msgstr "Uncommented items"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:310
+msgid "NO_PORTFOLIOS_15"
+msgstr "There are no Portfolios"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:35
+msgid "ITEM_CREATED_SUCCESS_-1"
+msgstr "Item created successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:37
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
+msgid "FILE_EXTRACTED_SUCCESS_-1"
+msgstr "File extracted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:37
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
+msgid "ERROR_EXTRACTING_FILE_-1"
+msgstr "An error occurred while extracting file."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:38
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
+msgid "FILE_ATTACHED_SUCCESS_-1"
+msgstr "File attached successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:38
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
+#, php-format
+msgid "ERROR_ATTACHING_FILE_-1"
+msgstr "Warning: the attached file doesn't exist or has more than 2Mb."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:39
+msgid "FILES_MOVED_SUCCESS_-1"
+msgstr "Files moves succesfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:592
+msgid "VIEW_OTHER_ITEMS_-1"
+msgstr "View Other Items"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:595
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:50
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:391
+msgid "RECORD_OF_CHANGES_-1"
+msgstr "Record of changes"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:601
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:647
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1009
+msgid "MOVE_-1"
+msgstr "Move"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:603
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1008
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1070
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:398
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:665
+msgid "DELETE_-1"
+msgstr "Delete"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:614
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1093
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:68
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:81
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:399
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:184
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:283
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:409
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:198
+msgid "TITLE_-1"
+msgstr "Title"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:618
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:173
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:417
+msgid "OPTIONS_0"
+msgstr "Options"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:622
+msgid "SHARE_-1"
+msgstr "Share"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:639
+msgid "RENAME_-1"
+msgstr "Rename"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:642
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:440
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:455
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:236
+msgid "EDIT_TEXT_-1"
+msgstr "Edit text"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:644
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:442
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:457
+msgid "DELETE_TEXT_-1"
+msgstr "Delete Text"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:830
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:241
+msgid "TEXT_-1"
+msgstr "Text"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:846
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:533
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:252
+msgid "FILES_-2"
+msgstr "Files"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:852
+msgid "EMPTY_DIRECTORY_-1"
+msgstr "Empty Directory"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:943
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:599
+msgid "LAST_MODIFICATION_IN_-1"
+msgstr "Last modification in"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:948
+msgid "HIDDEN_-1"
+msgstr "hidden"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1010
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:667
+msgid "EXTRACT_-1"
+msgstr "Extract"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1011
+msgid "HIDE_-1"
+msgstr "Hide"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1026
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1036
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:683
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:695
+msgid "ATTACH_FILE_-1"
+msgstr "Attach File"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1027
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:686
+msgid "PRESS_BUTTON_SELECT_ATTACH_FILE_-1"
+msgstr ""
+"Click the Browse button below to select the file to be attached then press "
+"OK to continue."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1027
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:686
+msgid "ZIP_FILES_CAN_BE_EXTRACTED_-1"
+msgstr "(.ZIP files can be sent and extracted later)"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1050
+msgid "INTERNET_ADDRESSES_-1"
+msgstr "Internet addresses"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1085
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1088
+msgid "INCLUDE_ADDRESS_-1"
+msgstr "Include address"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1090
+msgid "TYPE_ADDRESS_TITLE_-1"
+msgstr "Type in the title and the Internet address to be included."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1098
+msgid "INTERNET_ADDRESS_-1"
+msgstr "Internet address"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:11
+msgid "TYPE_FOLDER_NAME_-1"
+msgstr "Type in the name of the folder to be created:"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:29
+msgid "TYPE_ITEM_NAME_-1"
+msgstr "Type in the item's title to be created here:"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:62
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:82
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:119
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:157
+msgid "SELECT_DESTINATION_FOLDER_-1"
+msgstr "Select the destination folder:"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:122
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:1656
+msgid "ROOT_FOLDER_-1"
+msgstr "Root folder"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:206
+msgid "ACCESS_MODE_CHANGED_SUCCESS_-1"
+msgstr "Access mode changed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:28
+msgid "SUGGESTIONS_-5"
+msgstr "Suggestions"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:66
+msgid "REPEATED_LOGIN_EMAIL_-5"
+msgstr ""
+"Email and/or login already exists! Type different values (note that the "
+"\"\"existing logins appear in the list of suggestions)"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:103
+msgid "BLANK_FIELDS_COURSE_COORD_-5"
+msgstr ""
+"The following fields cannot be empty:\n"
+" Course Name and Number of students \n"
+" Coordinator's name, e-mail and login ."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:112
+msgid "BLANK_FIELDS_COURSE_LOGIN_-5"
+msgstr ""
+"The following fields can not be left blank: Name and number of students in "
+"the program, coordinator's login."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:121
+msgid "AMOUNT_POSITIVE_-5"
+msgstr "The field number of students must be an positive integer."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:140
+msgid "INVALID_EMAIL_-5"
+msgstr "Invalid e-mail."
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:187
+#: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:45
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:119
+msgid "CREATION_COURSE_-5"
+msgstr "Create a course"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:209
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:342
-msgid "msg98_-5"
-msgstr "Create a Course"
+msgid "CREATE_COURSE_-5"
+msgstr "Create a course"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:212
-msgid "msg244_-5"
+msgid "EVALUATE_REQUISITIONS_-5"
 msgstr "Evaluate course creation requests"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:223
-msgid "msg91_-5"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:74
+msgid "COURSE_DATA_-5"
 msgstr "Course Data"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:231
-msgid "msg92_-5"
-msgstr "Course Name"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:99
+#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:57
+msgid "COURSE_NAME_-5"
+msgstr "Course name"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:238
-msgid "msg93_-5"
+msgid "NUMBER_OF_STUDENTS_-5"
 msgstr "Number of students"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:247
-msgid "msg94_-5"
-msgstr "Category:"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:93
+msgid "CATEGORY_-5"
+msgstr "Category"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:251
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:295
-msgid "msg115_-3"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:400
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:286
+msgid "GENERAL_COURSE_-3"
 msgstr "Others"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:264
-msgid "msg123_-5"
+msgid "CREATE_NEW_CATEGORY_-5"
 msgstr ""
 "If you wish to create a new category, fill in the name of the new category "
 "below. The category selected above will be ignored."
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:270
-msgid "msg124_-5"
-msgstr "New category:"
+msgid "NEW_CATEGORY_-5"
+msgstr "New category"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:279
-msgid "msg95_-5"
+msgid "COORD_DATA_-5"
 msgstr "Course Coordinator Data"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:287
-msgid "msg508_-5"
+msgid "CHOOSE_REGISTERED_USER_-5"
 msgstr "Choose a registered user?"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:292
-msgid "msg509_-5"
-msgstr "yes"
+msgid "YES_-1"
+msgstr "Yes"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:293
-msgid "msg510_-5"
-msgstr "no"
+msgid "NO_-1"
+msgstr "No"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:300
-msgid "msg96_-5"
+msgid "COORD_NAME_-5"
 msgstr "Coordinator"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:307
-msgid "msg33_-5"
-msgstr "E-mail:"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:350
+msgid "EMAIL_-3"
+msgstr "Email"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:314
-msgid "msg97_-5"
-msgstr "Login:"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:54
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:169
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:294
+msgid "LOGIN_-3"
+msgstr "Login"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:331
-msgid "msg511_-5"
+msgid "INSTRUCTIONS_CHOOSE_REGISTERED_USER_-5"
 msgstr ""
 "*If you want to choose a registered user to be the coordinator of the "
 "course, type the initial letters (case sensitive) of his/her login and then "
@@ -162,614 +676,757 @@ msgstr ""
 "below the Login field."
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:52
-msgid "msg10_-3"
+msgid "TEAM_-3"
 msgstr "Team"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:54
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:153
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:294
-msgid "msg157_-3"
-msgstr "Login"
-
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:56
-msgid "msg161_-3"
-msgstr "Log out"
+msgid "LOGOUT_-3"
+msgstr "Logout"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:83
-msgid "msg17_-3"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:46
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:55
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:168
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:203
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:140
+msgid "ADMINISTRATION_-5"
 msgstr "Administration"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:83
-msgid "msg18_-3"
-msgstr "Restricted Area"
+msgid "RESTRICTED_AREA_-3"
+msgstr "Restricted area"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:86
-msgid "msg236_-3"
+msgid "ERROR_IN_SOLICITATION_-3"
 msgstr "An error occurred in your solicitation"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:98
-msgid "msg3_-3"
+msgid "WHATS_TELEDUC_-3"
 msgstr "What is TelEduc?"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:99
-msgid "msg4_-3"
-msgstr "Environment Structure"
+msgid "ENVIRONMENT_STRUCTURE_-3"
+msgstr "Environment structure"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:104
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:107
-msgid "msg179_-3"
+msgid "SIGN_UP_-3"
 msgstr "Sign up"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:115
-msgid "msg187_-3"
+msgid "PERSONAL_-3"
 msgstr "Personal"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:121
-msgid "msg132_-3"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:91
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:57
+msgid "MY_COURSES_-3"
 msgstr "My courses"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:122
-msgid "msg1_-7"
+msgid "CONFIGURE_-7"
 msgstr "Configure"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:133
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:114
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:167
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:220
-msgid "msg5_-3"
+msgid "COURSES_-3"
 msgstr "Courses"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:134
-msgid "msg172_-3"
-msgstr "Open enrollment"
+msgid "OPEN_ENROLLMENTS_-3"
+msgstr "Open enrollments"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:135
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:110
-msgid "msg192_-3"
+msgid "NOT_BEGUN_-3"
 msgstr "Not begun"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:136
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:163
-msgid "msg171_-3"
+msgid "CURRENT_-3"
 msgstr "Current"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:137
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:216
-msgid "msg173_-3"
+msgid "CLOSED_-3"
 msgstr "Closed"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/menu_principal_tela_inicial.php:138
-msgid "msg9_-3"
+msgid "HOW_CREATE_COURSE_-3"
 msgstr "How to create a course"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:135
-msgid "msg99_-5"
+msgid "INFO_COURSE_ACCESS_-5"
 msgstr "TelEduc course access information"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:145
-msgid "msg100_-5"
+msgid "YOUR_REQUEST_CREATE_COURSE_-5"
 msgstr "Your request to create the course"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:145
-msgid "msg101_-5"
+msgid "WAS_ACCEPTED_-5"
 msgstr "was accepted."
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:149
-msgid "msg102_-5"
+msgid "YOUR_ID_COURSE_ACCESS_-5"
 msgstr "To access the course, your Identification is:"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:150
-msgid "msg103_-5"
+msgid "YOUR_PASSWORD_IS_-5"
 msgstr "and your password is:"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:152
-msgid "msg104_-5"
+msgid "ADDRESS_COURSE_ACCESS_-5"
 msgstr "You may access the course through this address:"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:154
-msgid "msg105_-5"
+msgid "SINCERELY_ADM_TELEDUC_-5"
 msgstr "Sincerely, TelEduc Environment Administration"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:161
-msgid "msg106_-5"
+msgid "SUCCESS_CREATE_COURSE_-5"
 msgstr "Course created successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:163
-msgid "msg107_-5"
+msgid "EMAIL_ACCESS_COURSE_COORD_-5"
 msgstr ""
 "An email with the course access instructions was sent to the registered "
 "coordinator"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:168
-msgid "msg534_-5"
+msgid "INEXISTENT_LOGIN_COORD_-5"
 msgstr ""
 "Login doesn't exist! Go back and type the login again or choose the option "
-"of registering the coordinator in the environment."
+"\"\"of registering the coordinator in the environment."
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:27
-msgid "msg198_-3"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:28
+msgid "ADM_LOGIN_SUCCESS_-3"
 msgstr "Administrator logged in successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:45
-msgid "msg1_-5"
-msgstr "Administration"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:95
+msgid "PATCH_UPDATE_SUCCESS_-5"
+msgstr "Patch updated successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:94
-msgid "msg135_-5"
-msgstr "Patch successfully updated!"
-
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:97
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:407
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:291
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:129
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:236
-msgid "msg18_-1"
-msgstr "OK"
-
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:121
-msgid "msg4_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:122
+msgid "REMOTION_COURSE_-5"
 msgstr "Remove a Course"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:124
-msgid "msg141_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:125
+msgid "INSERTION_REMOVED_COURSE_-5"
 msgstr "Import Removed Courses"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:127
-msgid "msg245_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:128
+msgid "REUTILIZATION_COURSE_-5"
 msgstr "Course Reutilization"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:136
-msgid "msg125_-5"
-msgstr "Edit Categories"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:137
+msgid "EDIT_CATEGORIES_-5"
+msgstr "Edit categories"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:139
-msgid "msg131_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:140
+msgid "SELECT_COURSE_CATEGORY_-5"
 msgstr "Select a Course Category"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:150
-msgid "msg293_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:149
+msgid "RESEND_-5"
+msgstr "Resend"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:149
+msgid "CONFIGURATE_-5"
+msgstr "Configurate"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:155
+msgid "RESEND_COORD_DATA_-5"
 msgstr "Resend data to coordinators"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:153
-msgid "msg8_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:158
+msgid "CHANGE_LOGIN_-5"
 msgstr "Change Login"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:156
-msgid "msg9_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:161
+msgid "SEND_EMAIL_USERS_-5"
 msgstr "Send e-mail to users"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:159
-msgid "msg5_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:164
+msgid "CONSULT_DATABASE_-5"
 msgstr "Consult Data Base"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:162
-msgid "msg13_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:167
+msgid "CONTACT_NIED_UNICAMP_-5"
 msgstr "Contact - NIED - UNICAMP"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:171
-msgid "msg153_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:176
+msgid "ENVIRONMENT_STATISTICS_-5"
 msgstr "Environment Statistics"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:174
-msgid "msg183_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:179
+msgid "CONFIGURE_ENVIRONMENT_DATA_-5"
 msgstr "Configure environment data"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:177
-msgid "msg11_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:182
+msgid "LANGUAGE_REGISTER_-5"
 msgstr "Language Register"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:180
-msgid "msg171_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:185
+msgid "HELP_TEXT_REGISTER_-5"
 msgstr "Help Text Register"
 
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:187
-msgid "msg12_-5"
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:192
+msgid "BACK_HOME_PAGE_-5"
 msgstr "Back to Homepage"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
-msgid "msg513_-1"
-msgstr "Version"
-
-#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
-msgid "msg512_-1"
+msgid "SERVER_0"
 msgstr "Server"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
-msgid "msg514_-1"
-msgstr "2010  - TelEduc - All rights reserved."
+msgid "VERSION_0"
+msgstr "Version:"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
-msgid "msg515_-1"
+msgid "2010_TELEDUC_RIGHTS_RESERVED_0"
+msgstr "2010 - TelEduc - All rights reserved"
+
+#: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
+msgid "ALL_RIGHTS_RESERVED_0"
 msgstr "All rights reserved"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/tela2.php:35
-msgid "msg516_-1"
+msgid "NIED_UNICAMP_0"
 msgstr "NIED - UNICAMP"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:46
-msgid "msg214_-3"
-msgstr "A new email to User confirmation has been sent."
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:52
+msgid "CONFIRMATION_EMAIL_SENT_-3"
+msgstr "A new email to user confirmation has been sent."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:46
-msgid "msg180_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:52
+msgid "AUTHENTICATION_FAILURE_-3"
 msgstr "Authentication error. Enter your login and password again"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:47
-msgid "msg213_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:53
+msgid "ACCOUNT_NOT_CONFIRMED_-3"
 msgstr ""
 "Your account registration has not yet been confirmed, check your email or "
 "make new request for confirmation below."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:48
-msgid "msg210_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:54
+msgid "ACCOUNT_SUCCESS_-3"
 msgstr ""
 "Your account registration was successful. In moments you will receive an "
 "email confirmation with a link to confirm you account registration and then "
 "you can access the environment."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:50
-msgid "msg216_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:58
+msgid "TYPE_YOUR_LOGIN_-3"
 msgstr "Type your login"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:70
-msgid "msg181_-3"
-msgstr "Please fill in the &#34;Login&#34; field."
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:79
+msgid "FILL_LOGIN_FIELD_-3"
+msgstr "Please fill in the \"Login\" field."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:78
-msgid "msg182_-3"
-msgstr "Please fill in the &#34;Password&#34; field."
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:88
+msgid "FILL_PASSWORD_FIELD_-3"
+msgstr "Please fill in the \"Password\" field."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:109
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:111
-msgid "msg183_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:121
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:123
+msgid "AUTHENTICATION_-3"
 msgstr "Authentication"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:109
-msgid "msg159_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:121
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:116
+msgid "ENROLLMENT_-3"
 msgstr "Enrollment"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:124
-msgid "msg219_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:139
+msgid "NEED_TO_BE_REGISTERED_-3"
 msgstr ""
-"o enroll in a course you need a registered account in the envieroment. If "
+"To enroll in a course you need a registered account in the envieroment. If "
 "you already have an account just log in, if not"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:124
-msgid "msg220_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:139
+msgid "REGISTER_YOU_-3"
 msgstr "register here."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:132
-msgid "msg165_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:148
+msgid "TYPE_YOUR_LOGIN_DATA_-3"
 msgstr ""
 "Enter your login and password in the fields below to enter the environment."
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:164
-msgid "msg158_-3"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:180
+msgid "PASSWORD_-3"
 msgstr "Password"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:176
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:192
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:146
-msgid "msg55_-3"
+msgid "ENTER_-3"
 msgstr "Enter"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:203
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:207
-msgid "msg90_-2"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:219
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:223
+msgid "DONT_HAVE_REGISTRATION_-2"
 msgstr "If you have not registered,"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:203
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:207
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:211
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:215
 #: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:219
-msgid "msg101_-2"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:223
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:227
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:231
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:235
+msgid "CLICK_HERE_-2"
 msgstr "click here!"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:211
-msgid "msg67_-2"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:227
+msgid "FORGOT_LOGIN_-2"
 msgstr "If you forgot your login,"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:215
-msgid "msg24_-2"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:231
+msgid "FORGOT_PASSWORD_-2"
 msgstr "If you forgot your password,"
 
-#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:219
-msgid "msg92_-2"
-msgstr "If you did not receive e-mail confirmation of registration,"
+#: /home/teleduc/public_html/TelEduc/app/login/views/autenticacao_cadastro.php:235
+msgid "DIDNT_RECEIVE_EMAIL_CONFIRMATION_-2"
+msgstr "If you not received e-mail confirmation of registration,"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:30
+msgid "SENT_PASSWORD_EMAIL_0"
+msgstr "Password(s) sent by e-mail."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:30
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:32
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:34
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:36
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:38
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:40
+msgid "ERROR_IN_OPERATION_0"
+msgstr "Error performing this operation"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:32
+msgid "TOOL_CHOSEN_SUCCESS_0"
+msgstr "Course's tool chosen successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:34
+msgid "TOOL_SHARED_SUCCESS_0"
+msgstr "Tools shared successfully."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:36
+msgid "TOOL_HIGHLIGHTED_SUCCESS_0"
+msgstr "Tools highlighted successfully."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:38
+msgid "DATA_UPDATE_SUCCESS_0"
+msgstr "Course Schedule changed."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:40
+msgid "SCHEDULE_UPDATE_SUCCESS_0"
+msgstr "Schedule updated successfully."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:76
+msgid "TOOLS_0"
+msgstr "Tools"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:85
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:207
+msgid "VIEW_CHANGE_COURSE_DATA_0"
+msgstr "View / Change Course Data"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:90
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:213
+msgid "VIEW_COURSE_DATA_0"
+msgstr "View Course Data"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:100
+msgid "VIEW_CHANGE_COURSE_SCHEDULE_0"
+msgstr "View / Change Course Schedule"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:105
+msgid "CHOOSE_COURSE_TOOLS_0"
+msgstr "Select Course Tools"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:108
+msgid "SHARE_COURSE_TOOLS_0"
+msgstr "Share Course Tools"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:111
+msgid "HIGHLIGHT_TOOLS_0"
+msgstr "Highlight Tools"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:118
+msgid "MANAGEMENT_0"
+msgstr "Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:127
+msgid "ENROLL_INSTRUCTORS_0"
+msgstr "Enroll Instructors"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:133
+msgid "ENROLL_STUDENTS_0"
+msgstr "Enroll Students"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:136
+msgid "ENROLL_COLLABORATORS_0"
+msgstr "Enroll Collaborators"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:140
+msgid "ENROLL_VISITORS_0"
+msgstr "Enroll Visitors"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:147
+msgid "ENROLLMENT_MANAGEMENT_0"
+msgstr "Enrollment Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:151
+msgid "STUDENT_MANAGEMENT_0"
+msgstr "Student Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:156
+msgid "INSTRUCTOR_MANAGEMENT_0"
+msgstr "Instructor Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:161
+msgid "COLLABORATOR_MANAGEMENT_0"
+msgstr "Collaborator Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:166
+msgid "VISITOR_MANAGEMENT_0"
+msgstr "Visitor Management"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:175
+msgid "EXTRACTION_0"
+msgstr "Extraction"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:183
+msgid "CHANGE_COORD_NOMENCLATURE_0"
+msgstr "Change nomenclature for the coordinator"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:189
+msgid "SEND_PASSWORD_0"
+msgstr "Send Password"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:204
+msgid "SCHEDULE_COURSE_EXTRACTION_0"
+msgstr "Schedule Course Extraction"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:208
+msgid "LIST_REMOVE_COURSE_EXTRACTION_0"
+msgstr "List / Remove Course Extraction"
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:212
+msgid "SECTION_ALLOWED_COORD_0"
+msgstr "Section allowed to the coordinators only."
+
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:216
+msgid "SECTION_NONEXISTENT_0"
+msgstr "Section currently nonexistent."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:57
-msgid "msg68_-3"
+msgid "BACK_COURSE_LIST_-3"
 msgstr "Go back to the list of courses"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:61
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:129
-msgid "msg56_-3"
+msgid "VISIT_-3"
 msgstr "Visit"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:75
-msgid "msg60_-3"
-msgstr "Target Audience:"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:371
+msgid "TARGET_AUDIENCE_0"
+msgstr "Target audience"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
-msgid "msg61_-3"
+msgid "COURSE_DATE_-3"
 msgstr "Course date:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
-msgid "msg69_-3"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:359
+msgid "FROM_-1"
 msgstr "from"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:82
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
-msgid "msg70_-3"
+msgid "TO_-1"
 msgstr "to"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:89
-msgid "msg196_-3"
+msgid "COURSE_ENROLLMENT_DATE_-3"
 msgstr "Enrollment period in the course"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:94
-msgid "msg156_-3"
+msgid "COURSE_COORD_-3"
 msgstr "Course coordinator:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:99
-msgid "msg62_-3"
+msgid "CONTACT_EMAIL_-3"
 msgstr "E-mail contact:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:104
-msgid "msg63_-3"
-msgstr "Type of enrollment:"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:382
+msgid "ENROLLMENT_TYPE_0"
+msgstr "Type of enrollment"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:126
-msgid "msg67_-3"
-msgstr "Enroll!"
+msgid "ENROLL_-3"
+msgstr "Enroll"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/mostra_curso.php:129
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:142
-msgid "msg235_-3"
+msgid "ENROLL_AGAIN_-3"
 msgstr "Enroll again"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:97
-msgid "msg8_0"
+msgid "ENR_DATE_BEFORE_FINAL_0"
 msgstr "The starting date for registration should be before its ending date."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:103
-msgid "msg9_0"
+msgid "COURSE_DATE_BEFORE_FINAL_0"
 msgstr "The starting date for the course should be before its ending date."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:109
-msgid "msg10_0"
+msgid "ENR_DATE_BEFORE_COURSE_FINAL_0"
 msgstr ""
 "The starting date for registration should be before the ending date of the "
 "course."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:115
-msgid "msg11_0"
+msgid "ENR_FINAL_DATE_BEFORE_COURSE_FINAL_0"
 msgstr ""
 "The ending date for registration should be before the ending date of the "
 "course."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:121
-msgid "msg12_0"
+msgid "ENR_DATE_BEFORE_COURSE_0"
 msgstr ""
 "The starting date for registration should be before the starting date of the "
 "course."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:141
-msgid "msg13_0"
+msgid "FILL_ALL_FIELDS_0"
 msgstr "Please fill in all the fields before clicking the Change button."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:168
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:203
-msgid "msg1_0"
-msgstr "Administration"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:168
-msgid "msg28_0"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:34
+msgid "RESTRICTED_AREA_INSTRUCTOR_0"
 msgstr "Restricted Area. For instructors only."
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:207
-msgid "msg2_0"
-msgstr "View / Change Course Data"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:213
-msgid "msg49_0"
-msgstr "View Course Data"
-
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:260
-msgid "msg14_0"
+msgid "COURSE_DATA_FILL_CHANGE_0"
 msgstr ""
 "Course information is shown below. To make any changes, modify the desired "
 "fields and click the Change button."
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:269
-msgid "msg15_0"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:311
+msgid "NAME_0"
 msgstr "Name"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:280
-msgid "msg16_0"
-msgstr "Information"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:159
+msgid "INFORMATIONS_0"
+msgstr "Informations"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:291
-msgid "msg17_0"
-msgstr "Course begins"
+msgid "COURSE_BEGIN_0"
+msgstr "Course begin"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:311
-msgid "msg18_0"
-msgstr "Course ends"
+msgid "COURSE_END_0"
+msgstr "Course end"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:331
-msgid "msg19_0"
-msgstr "Registration begins"
+msgid "ENROLLMENT_BEGIN_0"
+msgstr "Enrollment begin"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:351
-msgid "msg20_0"
-msgstr "Registration ends"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:371
-msgid "msg21_0"
-msgstr "Target audience"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:382
-msgid "msg22_0"
-msgstr "Type of enrollment"
+msgid "ENROLLMENT_END_0"
+msgstr "Enrollment end"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:394
-msgid "msg148_0"
+msgid "COURSE_LANGUAGE_0"
 msgstr "Course language:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:423
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:427
-msgid "msg23_0"
+msgid "NOTE_0"
 msgstr "Note:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:423
-msgid "msg24_0"
+msgid "DATE_FORMATE_0"
 msgstr "The dates should be in the format MM/DD/YYYY"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:427
-msgid "msg229_0"
+msgid "BEGIN_DATE_GREATER_ENR_END_DATE_0"
 msgstr ""
 "If the start date of the course is greater than the end date of "
 "registration, the course can only be accessed directly through the link "
-"received in the coordinator&#39;s email . That is, it will not be listed in "
-"any of the sections &#39;Courses in progress&#39;, &#39;Open enrollment "
-"courses&#39; or &#39;Courses already offered.&#39; "
+"received in the coordinator's email . That is, it will not be listed in any "
+"of the sections 'Courses in progress', 'Open enrollment courses' or 'Courses "
+"already offered.' "
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/alterar_dados_curso.php:430
-msgid "msg24_-1"
+msgid "CHANGE_-1"
 msgstr "Change"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:49
-msgid "msg197_-3"
+msgid "USER_LOGGED_SUCCESFULLY_-3"
 msgstr "User logged in successfully"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:68
-msgid "msg4_25"
-msgstr "Please fill in the Login field"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:77
-msgid "msg5_25"
-msgstr "Please fill in the Password field"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:91
-msgid "msg162_-3"
-msgstr "My courses"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:116
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:169
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:222
-msgid "msg163_-3"
+msgid "USER_TYPE_-3"
 msgstr "User type"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:127
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:180
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:234
-msgid "msg164_-3"
+msgid "NOT_ENROLLED_IN_ANY_COURSE_-3"
 msgstr "You are not enrolled in any course"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:149
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:202
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:256
-msgid "msg58_-1"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:492
+msgid "INSTRUCTOR_-1"
 msgstr "Instructor"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:150
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:203
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:257
-msgid "msg178_-3"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:85
+msgid "USER_-3"
 msgstr "User"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:37
-msgid "msg194_-3"
+msgid "NOT_BEGUN_COURSES_-3"
 msgstr "Courses not begun"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:40
-msgid "msg6_-3"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:267
+msgid "CURRENT_COURSES_-3"
 msgstr "Current courses"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:43
-msgid "msg7_-3"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:269
+msgid "OPEN_ENROLLMENT_COURSES_-3"
 msgstr "Open enrollment courses"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:46
-msgid "msg8_-3"
-msgstr "Previous courses"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:93
-msgid "msg169_-5"
-msgstr "Category"
-
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:99
-msgid "msg265_-5"
-msgstr "Course name"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:273
+msgid "CLOSED_COURSES_-3"
+msgstr "Closed courses"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:140
-msgid "msg223_-3"
+msgid "NOT_ACCEPTED_ENROLLMENT_-3"
 msgstr "Enrollment not accepted"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:154
-msgid "msg54_-3"
+msgid "ENROLLMENTS_-3"
 msgstr "Enrollments"
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:159
-msgid "msg53_-3"
-msgstr "Information"
-
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:172
-msgid "msg195_-3"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:178
+msgid "NOT_BEGUN_COURSE_-3"
 msgstr "course not begun"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:174
-msgid "msg174_-3"
+msgid "CURRENT_COURSE_-3"
 msgstr "current course"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:176
-msgid "msg175_-3"
+msgid "OPEN_ENROLLMENT_COURSE_-3"
 msgstr "open enrollment course"
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:178
-msgid "msg176_-3"
-msgstr "closed courses"
-
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:181
-msgid "msg57_-3"
+msgid "THERE_ARE_NO_-3"
 msgstr "There are no"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:198
-msgid "msg116_-3"
+msgid "SELECT_CATEGORY_-3"
 msgstr "Select a category:"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:105
-msgid "msg46_-4"
+msgid "INSTRUCTOR_VIEW_-4"
 msgstr "Instructor View"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:109
-msgid "msg45_-4"
+msgid "STUDENT_VIEW_-4"
 msgstr "Student View"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:124
-msgid "msg47_-4"
-msgstr "Configure"
+msgid "NOTIFY_-4"
+msgstr "Notify"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:134
-msgid "msg39_-4"
+msgid "SUPPORT_-4"
 msgstr "Support"
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:140
-msgid "msg37_-4"
-msgstr "Administration"
-
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:150
-msgid "msg43_-3"
+msgid "EXIT_-4"
 msgstr "Exit"
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:233
-msgid "msg60_-4"
-msgstr "Online Users:"
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/menu_principal.php:234
+msgid "ONLINE_USERS_-4"
+msgstr "Online users:"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:24
+msgid "AGENDA_EDITED_SUCCESS_1"
+msgstr "Agenda edited successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:25
+msgid "AGENDA_CANT_CONTAIN_TEXT_FILE_1"
+msgstr "The Agenda should contain only text or only files!"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:26
+msgid "SURE_DELETE_AGENDA_TEXT_1"
+msgstr "Are you sure you want to delete this Agenda's text?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:27
+msgid "TEXT_EXCLUDED_SUCCESS_-1"
+msgstr "Text deleted successfully."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:28
+msgid "INVALID_CHARACTERS_ATTACH_FILE_-1"
+msgstr "Attachment name with invalid characters. Please rename and try again."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:29
+msgid "SURE_TO_EXTRACT_FILE_-1"
+msgstr "Are you sure you want to extract this file?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:30
+msgid "ZIP_FILE_DELETED_-1"
+msgstr "(the ZIP file will be deleted)"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:31
+msgid "ZIP_CANT_EXTRACT_SPACE_FOLDER_NAME_-1"
+msgstr ""
+"important: it is not possible to extract files containing folders that have "
+"spaces in the name"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:32
+msgid "FILES_DELETED_SUCCESS_-1"
+msgstr "Files deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:33
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
+msgid "SURE_TO_DELETE_AGENDA_1"
+msgstr "Are you sure you want to delete this Agenda?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:34
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
+msgid "PERMANENTLY_DELETED_1"
+msgstr "(it will be permanently deleted)"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:37
+msgid "SURE_TO_DELETE_FILE_FOLDER_-1"
+msgstr "Are you sure you want erase the file(s) and/or the folder(s) selected?"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:75
@@ -777,194 +1434,210 @@ msgstr "Online Users:"
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
-msgid "msg50_-7"
+msgid "THE_FIELD_-7"
 msgstr "The field"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:311
-msgid "msg32_-7"
-msgstr "Name"
-
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:115
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
-msgid "msg51_-7"
+msgid "CANT_BE_EMPTY_-7"
 msgstr "cannot be empty"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:75
-msgid "msg33_-7"
+msgid "RG_MAY_BE_WRONG_-7"
 msgstr "Identification"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:86
-msgid "msg71_-7"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:169
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:197
+#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:206
+msgid "INVALID_DATE_-7"
 msgstr "Invalid Date"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:97
-msgid "msg80_-7"
+msgid "BIRTH_DATE_IN_FUTURE_-7"
 msgstr "Birth date is in future"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:108
-msgid "msg52_-7"
+msgid "EMAIL_MAY_BE_WRONG_-7"
 msgstr "The e-mail submitted appears to be wrong"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:115
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:368
-msgid "msg40_-7"
+msgid "ADDRESS_-7"
 msgstr "Address"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:122
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:377
-msgid "msg41_-7"
+msgid "CITY_-7"
 msgstr "City"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:129
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:386
-msgid "msg42_-7"
+msgid "STATE_-7"
 msgstr "State"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:136
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:391
-msgid "msg43_-7"
+msgid "COUNTRY_-7"
 msgstr "Country"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:149
-msgid "msg59_-7"
+msgid "LOGIN_FIELD_CANT_BE_EMPTY_-7"
 msgstr "The login field cannot be empty. Please type again your new login."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:163
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:170
-msgid "msg4_-7"
+msgid "NEW_PASSWORD_CANT_BE_EMPTY_-7"
 msgstr "The new password cannot be empty. Please type in the new password."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:177
-msgid "msg5_-7"
+msgid "NEW_PASSWORDS_DIFFERENT_-7"
 msgstr "The new passwords do not match. Please type them in again."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:205
-msgid "msg74_-7"
+msgid "TYPED_LOGIN_EXISTS_-7"
 msgstr "Login already exists. Enter another and try again."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:212
-msgid "msg75_-7"
+msgid "TYPED_EMAIL_EXISTS_-7"
 msgstr "E-mail already exists. Enter another and try again."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:219
-msgid "msg76_-7"
+msgid "CHARACTERS_DONT_MATCH_IMAGE_-7"
 msgstr "Characters typed do not match with the picture. Try again."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:231
-msgid "msg184_-3"
+msgid "ACCOUNT_REGISTERED_SUCCESS_-3"
 msgstr "Account registration completed successfully."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:261
-msgid "msg185_-3"
+msgid "REGISTRATION_-3"
 msgstr "Registration"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:283
-msgid "msg186_-3"
+msgid "PERSONAL_DATA_-3"
 msgstr "Personal data"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:289
-msgid "msg73_-7"
+msgid "INSERT_DATA_FORM_TO_REGISTER_-7"
 msgstr ""
-"Fill your information in the form below and click &#34;Register&#34; to "
-"register."
+"Fill your information in the form below and click \"Register\" to register."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:299
-msgid "msg166_-3"
+msgid "TYPE_YOUR_PASSWORD_-3"
 msgstr "Type your password"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:304
-msgid "msg167_-3"
+msgid "RETYPE_YOUR_PASSWORD_-3"
 msgstr "Retype your password"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:320
-msgid "msg72_-7"
-msgstr "ID"
+msgid "RG_-7"
+msgstr "RG"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:329
-msgid "msg34_-7"
-msgstr "Date of birth"
+msgid "BIRTH_DATE_-7"
+msgstr "Birth date"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:338
-msgid "msg35_-7"
+msgid "GENDER_-7"
 msgstr "Gender"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:342
-msgid "msg36_-7"
+msgid "MALE_-7"
 msgstr "Male"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:344
-msgid "msg37_-7"
+msgid "FEMALE_-7"
 msgstr "Female"
 
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:350
-msgid "msg38_-7"
-msgstr "E-mail"
-
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:359
-msgid "msg39_-7"
+msgid "TELEPHONE_-7"
 msgstr "Telephone"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:398
-msgid "msg44_-7"
+msgid "OCCUPATION_-7"
 msgstr "Occupation"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:407
-msgid "msg45_-7"
+msgid "WORKPLACE_-7"
 msgstr "Workplace"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:416
-msgid "msg46_-7"
+msgid "EDUCATION_-7"
 msgstr "Education"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:425
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:470
-msgid "msg"
-msgstr ""
+msgid "INCOMPLETE_ELEMENTARY_SCHOOL_-1"
+msgstr "Incomplete elementary school"
 
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:434
-msgid "msg47_-7"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:426
+msgid "ELEMENTARY_SCHOOL_-1"
+msgstr "Elementary school"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:427
+msgid "INCOMPLETE_HIGH_SCHOOL_-1"
+msgstr "Incomplete high school"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:428
+msgid "HIGH_SCHOOL_-1"
+msgstr "High school"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:429
+msgid "INCOMPLETE_UNDERGRADUATE_-1"
+msgstr "Incomplete undergraduate"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:430
+msgid "UNDERGRADUATE_-1"
+msgstr "Undergraduate"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:431
+msgid "GRADUATE_-1"
+msgstr "Graduate"
+
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:443
+msgid "ADDITIONAL_INFO_-7"
 msgstr "Additional information"
 
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:445
-msgid "msg66_-7"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:454
+msgid "REQUIRED_FIELDS_-7"
 msgstr "(*) Required Fields"
 
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:453
-msgid "msg77_-7"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:462
+msgid "TYPE_EXPRESSION_ANSWER_-7"
 msgstr "Enter the answer given to the expression."
 
-#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:460
-msgid "msg89_-3"
+#: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:469
+msgid "REGISTER_-3"
 msgstr "Register"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:71
-msgid "msg87_-2"
+msgid "ACCOUNT_CONFIRMATION_-2"
 msgstr "TelEduc confirmation of registration"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
-msgid "msg88_-2"
+msgid "IF_REGISTERED_CONFIRM_EMAIL_-2"
 msgstr ""
 "If you registered in TelEduc, please confirm your e-mail by clicking the "
 "link below."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
-msgid "msg89_-2"
+msgid "OTHERWISE_DESCONSIDER_MESSAGE_-2"
 msgstr "Otherwise, please disregard this message."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
-msgid "msg78_-2"
+msgid "SINCERELY_-2"
 msgstr "Sincerely"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:77
-msgid "msg3_-2"
+msgid "ADM_TELEDUC_ENVIRONMENT_-2"
 msgstr "TelEduc Administration Environment"
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/models/cadastra_dados_usuario.php:93
-msgid "msg115_11"
+msgid "DO_NOT_REPLY_11"
 msgstr "DO_NOT_REPLY"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:47
@@ -978,745 +1651,2198 @@ msgstr "DO_NOT_REPLY"
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:128
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:145
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:145
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:347
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:351
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:346
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:350
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:220
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:244
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:123
-msgid "msg1_1"
+msgid "AGENDA_1"
 msgstr "Agenda"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:50
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:392
-msgid "msg34_1"
-msgstr "Record of changes"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:59
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:70
-msgid "msg13_-1"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:81
+msgid "CLOSE_-1"
 msgstr "Close"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:68
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:81
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:399
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:184
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:283
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:410
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:198
-msgid "msg18_1"
-msgstr "Title"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:81
-msgid "msg35_1"
+msgid "ACTION_-1"
 msgstr "Action"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:83
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:150
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:292
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:178
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:200
-msgid "msg7_1"
-msgstr "Date"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:85
-msgid "msg36_1"
-msgstr "User"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:101
-msgid "msg40_1"
-msgstr "Created"
+msgid "CREATION_-1"
+msgstr "Creation"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:103
-msgid "msg39_1"
-msgstr "Editing Canceled"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:105
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:174
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:58
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:337
-msgid "msg43_1"
-msgstr "Editing"
+msgid "EDITION_CANCELED_-1"
+msgstr "Edition canceled"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:107
-msgid "msg37_1"
-msgstr "Editing Completed"
+msgid "EDITION_ENDED_-1"
+msgstr "Edition ended"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:109
-msgid "msg42_1"
-msgstr "Moved to Past Agendas"
+msgid "MOVED_TO_RECORD_OF_CHANGES_-1"
+msgstr "Moved to record of changes"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:111
-msgid "msg41_1"
+msgid "ACTIVATED_-1"
 msgstr "Activated"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:113
-msgid "msg38_1"
+msgid "UNKNOWN_-1"
 msgstr "Unknown"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:33
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:34
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:36
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:37
-msgid "msg101_1"
-msgstr "Agenda(s) deleted successfully."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:39
-msgid "msg29_1"
-msgstr "Are you sure you want to delete this Agenda?"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:40
-msgid "msg30_1"
-msgstr "(it will be permanently deleted)"
+msgid "AGENDA_DELETED_SUCCESS_1"
+msgstr "Agenda deleted successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:114
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:172
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:347
-msgid "msg2_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:346
+msgid "PAST_AGENDAS_1"
 msgstr "Past Agendas"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:134
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:277
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:380
-msgid "msg8_1"
-msgstr "Back to Active Agenda"
+msgid "VIEW_ACTIVE_AGENDA_1"
+msgstr "View Active Agenda"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:196
-msgid "msg90_1"
+msgid "NO_PAST_AGENDAS_1"
 msgstr "There is no past agenda."
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:205
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:377
-msgid "msg68_-1"
-msgstr "Delete selected"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:34
-msgid "msg25_1"
-msgstr "Restricted Area. For instructors only."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:72
-msgid "msg52_-1"
-msgstr "Update"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:94
-msgid "msg53_-1"
-msgstr "Current State"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:294
+msgid "SITUATION_-1"
+msgstr "Situation"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:96
-msgid "msg56_-1"
+msgid "SINCE_-1"
 msgstr "Since"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:98
-msgid "msg57_-1"
+msgid "BY_-1"
 msgstr "By"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:112
-msgid "msg54_-1"
-msgstr "Editing"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:115
-msgid "msg55_-1"
-msgstr "Editing concluded"
+msgid "EDITION_CONCLUDED_-1"
+msgstr "Edition concluded"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:38
-msgid "msg102_1"
-msgstr "Agenda activated successfully."
+msgid "AGENDA_ACTIVATED_SUCCESS_1"
+msgstr "Agenda activated successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:39
-msgid "msg108_1"
-msgstr "Agenda imported successfully!"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:66
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:123
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:282
-msgid "msg15_1"
-msgstr "The title cannot be empty."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:73
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:130
-msgid "msg16_1"
-msgstr "The title cannot contain \\\\."
+msgid "AGENDA_IMPORTED_SUCCESS_1"
+msgstr "Agenda imported successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
-msgid "msg57_1"
+msgid "SURE_TO_ACTIVATE_AGENDA_1"
 msgstr "Are you sure you want to activate this Agenda?"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
-msgid "msg58_1"
+msgid "REPLACE_ACTUAL_AGENDA_1"
 msgstr "(there are no way to deactivated it later)"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:226
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:222
-msgid "msg73_1"
+msgid "ACTION_FOR_INSTRUCTORS_-1"
 msgstr "Action for instructors only."
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:254
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:169
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:377
-msgid "msg3_1"
-msgstr "Edit Agendas"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:376
+msgid "FUTURE_AGENDAS_1"
+msgstr "Future Agendas"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:273
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:167
-msgid "msg6_1"
+msgid "NEW_AGENDA_1"
 msgstr "New Agenda"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:275
-msgid "msg61_1"
+msgid "IMPORT_AGENDA_1"
 msgstr "Import Agenda"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:294
-msgid "msg110_1"
-msgstr "Status"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:277
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:379
+msgid "BACK_TO_ACTUAL_AGENDA_1"
+msgstr "Back to Active Agenda"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:307
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:395
-msgid "msg24_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:394
+msgid "ACTIVATE_1"
 msgstr "Activate"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:327
-msgid "msg60_-1"
+msgid "ERROR_REMOVE_TEMP_FILES_-1"
 msgstr "An error occurred while removing temporary files."
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:343
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:145
-msgid "msg23_1"
-msgstr "Activated"
+msgid "ACTUAL_AGENDA_1"
+msgstr "Activated Agenda"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:366
-msgid "msg9_1"
+msgid "NONE_AGENDA_CREATED_1"
 msgstr "No Agenda created!"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:410
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:166
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:294
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:132
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:248
-msgid "msg2_-1"
-msgstr "Cancel"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:130
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:246
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:125
-msgid "msg66_1"
-msgstr "Importing agenda"
+msgid "IMPORTING_AGENDA_1"
+msgstr "Importing Agenda"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:176
-msgid "msg78_1"
+msgid "COURSE_AGENDAS_1"
 msgstr "Agendas from the Course:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:218
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:258
-msgid "msg4_1"
+msgid "NONE_AGENDA_ADDED_1"
 msgstr "No agenda added yet!"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:229
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:72
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:177
-msgid "msg88_1"
-msgstr "Importing to:"
+msgid "IMPORT_SELECTED_-1"
+msgstr "Import selected"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:32
-msgid "msg97_1"
+msgid "ERROR_CREATE_AGENDA_1"
 msgstr "An error occurred while creating agenda."
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:241
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:521
-msgid "msg94_1"
-msgstr "Text"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:98
-msgid "msg96_1"
-msgstr "Agenda created successfully."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
-msgid "msg51_1"
-msgstr "File attached successfully."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
-msgid "msg98_1"
-msgstr "An error occurred while attaching the file."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
-msgid "msg99_1"
-msgstr "File extracted successfully."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
-msgid "msg100_1"
-msgstr "An error occurred while extracting the file."
+msgid "AGENDA_CREATED_SUCCESS_1"
+msgstr "Agenda created successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:101
-msgid "msg105_1"
-msgstr "Main page file selected successfully."
+msgid "MAIN_PAGE_SELECTED_SUCCESS_1"
+msgstr "Main page selected successfully"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:102
-msgid "msg55_1"
+msgid "SELECT_MAIN_PAGE_FILE_1"
 msgstr "Select the file that will be the Agenda main page"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:275
-msgid "msg103_1"
-msgstr "Agenda renamed successfully."
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
+msgid "NO_WAY_TO_DEACTIVATE_1"
+msgstr "(there are no way to deactivated it later)"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:351
-msgid "msg111_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:274
+msgid "AGENDA_RENAMED_SUCCESS_1"
+msgstr "Agenda renamed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:350
+msgid "EDIT_AGENDA_1"
 msgstr "Edit Agenda"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:374
-msgid "msg33_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:373
+msgid "BACK_TO_PAST_AGENDAS_1"
 msgstr "Back to Past Agendas"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:399
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:666
-msgid "msg1_-1"
-msgstr "Delete"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:418
-msgid "msg70_-1"
-msgstr "Options"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:425
-msgid "msg9_-1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:424
+msgid "EDIT_-1"
 msgstr "Edit"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:439
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:454
-msgid "msg106_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:438
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:453
+msgid "RENAME_TITLE_-1"
 msgstr "Rename title"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:441
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:456
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:236
-msgid "msg91_1"
-msgstr "Edit text"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:520
+msgid "CONTENT_-1"
+msgstr "Content"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:443
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:458
-msgid "msg92_1"
-msgstr "Delete text"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:534
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:252
-msgid "msg57_-2"
-msgstr "Files:"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:600
-msgid "msg107_1"
-msgstr "Last modified on"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:605
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:604
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:711
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:323
-msgid "msg59_1"
-msgstr "main page"
+msgid "MAIN_PAGE_1"
+msgstr "Main page"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:668
-msgid "msg38_-1"
-msgstr "Extract"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:670
-msgid "msg60_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:669
+msgid "SELECT_MAIN_PAGE_1"
 msgstr "Select main page"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:684
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:696
-msgid "msg26_-1"
-msgstr "Attach file"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
-msgid "msg48_1"
-msgstr ""
-"Click the Browse button below to select the file to be attached  then press "
-"OK to continue."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
-msgid "msg49_1"
-msgstr "(.ZIP files can be sent and extracted later)"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
-msgid "msg20_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:711
+msgid "FILE_AGENDA_MAIN_PAGE_1"
 msgstr "This file will be the Agenda main page!"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:716
-msgid "msg44_1"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:715
+msgid "CONTAIN_ONLY_TEXT_OR_ONLY_FILE_1"
 msgstr "Ps.: The Agenda should contain only text or only files."
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:74
-msgid "msg112_1"
-msgstr "An error occurred while importing agenda. Please select an option!"
+msgid "ERROR_TO_IMPORT_-1"
+msgstr "Error to import"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:103
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:110
-msgid "msg31_-2"
+msgid "INVALID_PERIOD_-2"
 msgstr "Invalid Time Period!"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:267
-msgid "msg35_-2"
-msgstr "Courses in Progress"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:269
-msgid "msg36_-2"
-msgstr "Courses Open for Registration"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:271
-msgid "msg37_-2"
-msgstr "Courses Pending"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:273
-msgid "msg38_-2"
-msgstr "Courses Concluded"
+msgid "PENDING_COURSES_-2"
+msgstr "Courses Pending "
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:285
-msgid "msg40_-2"
+msgid "PERIOD_-2"
 msgstr "Period:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:288
-msgid "msg44_-2"
+msgid "CATEGORIES_-2"
 msgstr "Categories"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:293
-msgid "msg62_1"
+msgid "CURRENT_COURSES_SHARED_AGENDA_1"
 msgstr "Courses in progress with agendas accessible:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:299
-msgid "msg63_1"
+msgid "OPEN_REG_COURSES_SHARED_AGENDA_1"
 msgstr "Courses open for registration with agendas accessible:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:304
-msgid "msg64_1"
+msgid "PENDING_COURSES_SHARED_AGENDA_1"
 msgstr "Courses pending with agendas accessible:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:309
-msgid "msg65_1"
+msgid "CLOSED_COURSES_SHARED_AGENDA_1"
 msgstr "Courses concluded with agendas accessible:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:319
-msgid "msg47_-2"
+msgid "ALL_COURSES_-2"
 msgstr "All Courses"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:357
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:425
-msgid "msg46_-2"
+msgid "EXTRACTED_-2"
 msgstr "(extracted)"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:359
-msgid "msg41_-2"
-msgstr "From:"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:361
-msgid "msg42_-2"
+msgid "UNTIL_-2"
 msgstr "Until:"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:365
-msgid "msg43_-2"
-msgstr "Change Period"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:400
-msgid "msg45_-2"
-msgstr "Other"
+msgid "CHANGE_PERIOD_-2"
+msgstr "Change period"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:432
-msgid "msg75_-1"
+msgid "IMPORT_-1"
 msgstr "Import"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:30
-msgid "msg22_1"
-msgstr "Agenda edited successfully."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:57
+msgid "RESTRICTED_AREA_STUDENTS_INSTRUCTORS_-1"
+msgstr "Restricted area for students and instructors"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:31
-msgid "msg53_1"
-msgstr "The Agenda should contain only text or only files!"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:269
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:322
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:348
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:355
+msgid "PORTFOLIO_OF_15"
+msgstr "Portfolio of"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:32
-msgid "msg95_1"
-msgstr "Are you sure you want to delete this Agenda&#39;s text?"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:290
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:417
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:425
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:437
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:516
+msgid "PORTFOLIO_OF_GROUP_15"
+msgstr "Portfolio of group"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:33
-msgid "msg93_1"
-msgstr "Text deleted successfully."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:1206
+msgid "ROOT_-1"
+msgstr "Root"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:34
-msgid "msg109_1"
-msgstr "Attachment name with invalid characters. Please rename and try again."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:35
-msgid "msg12_1"
-msgstr "Are you sure you want to extract this file?"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:36
-msgid "msg13_1"
-msgstr "(the ZIP file will be deleted)"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:37
-msgid "msg14_1"
-msgstr ""
-"important: it is not possible to extract files containing folders that have "
-"spaces in the name'"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/models/retorna_frase_dinamic.php:38
-msgid "msg104_1"
-msgstr "File(s) deleted successfully."
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:56
-msgid "msg72_-4"
-msgstr "My Courses"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:115
-msgid "msg39_-1"
-msgstr "Incomplete  Elementary school"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:116
-msgid "msg40_-1"
-msgstr "Elementary school"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:117
-msgid "msg41_-1"
-msgstr "Incomplete High school"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:118
-msgid "msg42_-1"
-msgstr "High school"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:119
-msgid "msg43_-1"
-msgstr "Incomplete Undergraduate"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:120
-msgid "msg44_-1"
-msgstr "Undergraduate"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:121
-msgid "msg45_-1"
-msgstr "Graduate"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:481
-msgid "msg232_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:472
+msgid "NOT_PART_OF_COURSE_-3"
 msgstr "Not part of the course"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:486
-msgid "msg224_-3"
-msgstr "Student enrolled"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:477
+msgid "ENROLLED_STUDENT_-3"
+msgstr "Enrolled student"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:489
-msgid "msg234_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:480
+msgid "UNENROLLED_STUDENT_-3"
 msgstr "Unenrolled student"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:492
-msgid "msg225_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:483
+msgid "UNACCEPTED_STUDENT_-3"
 msgstr "Unaccepted student"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:495
-msgid "msg226_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:486
+msgid "ACCEPTED_STUDENT_-3"
 msgstr "Accepted student"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:498
-msgid "msg228_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:489
+msgid "UNENROLLED_INSTRUCTOR_-3"
 msgstr "Unenrolled instructor"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:501
-msgid "msg227_-3"
-msgstr "Instructor"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:504
-msgid "msg229_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:495
+msgid "UNENROLLED_COLLABORATOR_-3"
 msgstr "Unenrolled collaborator"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:507
-msgid "msg231_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:498
+msgid "COLLABORATOR_-3"
 msgstr "Collaborator"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:510
-msgid "msg233_-3"
-msgstr "Unenrolled Visitor"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:501
+msgid "UNENROLLED_VISITOR_-3"
+msgstr "Unenrolled"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:513
-msgid "msg230_-3"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/inicial.inc:504
+msgid "VISITOR_-3"
 msgstr "Visitor"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:158
-msgid "msg17_-2"
+msgid "DATE_FIELD_EMPTY_-2"
 msgstr "You left one of the date fields in blank."
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:158
-msgid "msg18_-2"
+msgid "FILL_DATE_FIELD_-2"
 msgstr "Please fill all fields."
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:169
-#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:197
-#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:206
-msgid "msg19_-2"
-msgstr "Invalid date:"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:169
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:197
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:206
-msgid "msg20_-2"
+msgid "GO_BACK_CORRECT_-2"
 msgstr "Please go back and correct."
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
-msgid "msg21_-2"
+msgid "STRAGE_DATE_CHARACTERS_-2"
 msgstr "You entered unfamiliar characters in this date"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data_javascript.inc:177
-msgid "msg22_-2"
+msgid "USE_NUMBERS_SLASH_-2"
 msgstr ""
 "Use only the digits 0 to 9 and the slash (/) to separate month, day and year "
 "(ex. 01/31/2002)"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:57
-msgid "msg116_11"
-msgstr "Course name"
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:61
-msgid "msg24_11"
-msgstr "Date"
-
 #: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:66
-msgid "msg23_11"
+msgid "SENDER_11"
 msgstr "Sender"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/email.inc:71
-msgid "msg27_11"
+msgid "RECIPIENTS_11"
 msgstr "Recipients"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:135
-msgid "msg13_-2"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:132
+msgid "ACCESS_DENIED_-2"
 msgstr "Access denied"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:142
-msgid "msg30_-2"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:139
+msgid "COURSE_NOT_BEGUN_-2"
 msgstr "The course has not yet begun."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:145
-msgid "msg14_-2"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:142
+msgid "ENROLLMENT_NOT_EVALUATED_-2"
 msgstr ""
-"Your registration has not yet been evaluated. An e-mail will be sent to you "
-"as soon as your registration request has been evaluated."
+"Your enrollment has not yet been evaluated. An e-mail will be sent to you as "
+"soon as your registration request has been evaluated."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:145
+msgid "ENROLLMENT_NOT_ACCEPTED_-2"
+msgstr ""
+"Your enrollment was not accepted. You do not have access to this course."
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:148
-msgid "msg15_-2"
-msgstr ""
-"Your registration was not accepted. You do not have access to this course."
-
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:151
-msgid "msg16_-2"
+msgid "NONEXISTENT_INVALID_USER_-2"
 msgstr "User nonexistent or invalid."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:371
-msgid "msg59_-1"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:368
+msgid "DISABLED_TOOL_-1"
 msgstr "Tool disabled"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:106
-msgid "msg4_-2"
+msgid "AUTHORIZATION_NECESSARY_ENTER_-2"
 msgstr ""
 "Authorization is required to enter the TelEduc Administration Environment"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/acesso_php.inc:161
-msgid "msg12_-2"
+msgid "COURSE_DOESNT_ALLOW_VISITOR_-2"
 msgstr "Visitors are not allowed in this course."
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/cursos.inc:97
 #: /home/teleduc/public_html/TelEduc/app/geral/models/cursos.inc:119
-msgid "msg73_-4"
+msgid "HELP_-4"
 msgstr "Help"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:478
-msgid "msg5_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:89
+msgid "AGENDA_-4"
 msgstr "Agenda"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:479
-msgid "msg7_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:90
+msgid "ACTIVITIES_-4"
 msgstr "Activities"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:480
-msgid "msg9_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:91
+msgid "SUPPORT_MATERIAL_-4"
 msgstr "Support Material"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:481
-msgid "msg11_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:92
+msgid "READINGS_-4"
 msgstr "Readings"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:482
-msgid "msg13_-4"
-msgstr "Frequently Asked Questions"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:93
+msgid "FAQ_-4"
+msgstr "FAQ"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:483
-msgid "msg15_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:94
+msgid "REQUIRED_STOP_-4"
 msgstr "Required Stop"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:484
-msgid "msg17_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:95
+msgid "BULLETIN_BOARD_-4"
 msgstr "Bulletin Board"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:485
-msgid "msg19_-4"
-msgstr "Discussion Forums"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:96
+msgid "DISCUSSION_FORUNS_-4"
+msgstr "Discussion Foruns"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:486
-msgid "msg21_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:97
+msgid "CHAT_-4"
 msgstr "Chat"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:487
-msgid "msg23_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:98
+msgid "MAIL_-4"
 msgstr "Mail"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:488
-msgid "msg25_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:99
+msgid "GROUPS_-4"
 msgstr "Groups"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:489
-msgid "msg27_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:100
+msgid "PROFILE_-4"
 msgstr "Profile"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:490
-msgid "msg29_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:101
+msgid "DIARY_-4"
 msgstr "Diary"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:491
-msgid "msg31_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:102
+msgid "PORTFOLIO_-4"
 msgstr "Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:492
-msgid "msg3_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:103
+msgid "COURSE_DYNAMIC_-4"
 msgstr "Course Dynamic"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:493
-msgid "msg1_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:104
+msgid "ENVIRONMENT_STRUCTURE_-4"
 msgstr "Environment Structure"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:494
-msgid "msg33_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:105
+msgid "ACCESS_-4"
 msgstr "Access"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:495
-msgid "msg35_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:106
+msgid "INTERMAP_-4"
 msgstr "Intermap"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:496
-msgid "msg52_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:107
+msgid "EVALUATIONS_-4"
 msgstr "Evaluations"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:497
-msgid "msg48_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:108
+msgid "EXERCISES_-4"
 msgstr "Exercises"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:498
-msgid "msg54_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:109
+msgid "POLLS_-4"
 msgstr "Polls"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:499
-msgid "msg56_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:110
+msgid "AUTHENTICATION_-4"
 msgstr "Authentication"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:500
-msgid "msg58_-4"
+#: /home/teleduc/public_html/TelEduc/app/geral/models/menu.inc:111
+msgid "SEARCH_-4"
 msgstr "Search"
 
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data.inc:167
-msgid "msg7_-2"
+msgid "INVALID_MONTH_-2"
 msgstr "Month invalid,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sept,Oct,Nov,Dec"
+
+#~ msgid "PUBLISH_1"
+#~ msgstr "Publish"
+
+#~ msgid "SURE_TO_PUBLISH_AGENDA_1"
+#~ msgstr "Are you sure you want to activate this Agenda?"
+
+#~ msgid "AGENDA_PUBLISHED_SUCCESS_1"
+#~ msgstr "Agenda published successfully"
+
+#~ msgid "msg22_1"
+#~ msgstr "Agenda edited successfully."
+
+#~ msgid "msg53_1"
+#~ msgstr "The Agenda should contain only text or only files!"
+
+#~ msgid "msg95_1"
+#~ msgstr "Are you sure you want to delete this Agenda&#39;s text?"
+
+#~ msgid "msg93_1"
+#~ msgstr "Text deleted successfully."
+
+#~ msgid "msg109_1"
+#~ msgstr ""
+#~ "Attachment name with invalid characters. Please rename and try again."
+
+#~ msgid "msg12_1"
+#~ msgstr "Are you sure you want to extract this file?"
+
+#~ msgid "msg13_1"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#~ msgid "msg14_1"
+#~ msgstr ""
+#~ "important: it is not possible to extract files containing folders that "
+#~ "have spaces in the name'"
+
+#~ msgid "msg104_1"
+#~ msgstr "File(s) deleted successfully."
+
+#~ msgid "msg29_1"
+#~ msgstr "Are you sure you want to delete this Agenda?"
+
+#~ msgid "msg30_1"
+#~ msgstr "(it will be permanently deleted)"
+
+#, fuzzy
+#~ msgid "msg210_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg194_15"
+#~ msgstr "Text"
+
+#, fuzzy
+#~ msgid "msg202_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg206_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg191_15"
+#~ msgstr "Edit text"
+
+#, fuzzy
+#~ msgid "msg211_15"
+#~ msgstr "Edit Agenda"
+
+#~ msgid "msg18_-1"
+#~ msgstr "OK"
+
+#~ msgid "msg2_-1"
+#~ msgstr "Cancel"
+
+#, fuzzy
+#~ msgid "msg196_15"
+#~ msgstr "The title cannot contain \\\\."
+
+#, fuzzy
+#~ msgid "msg207_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg36_15"
+#~ msgstr "User"
+
+#, fuzzy
+#~ msgid "msg76_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg77_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg73_-1"
+#~ msgstr "Action for instructors only."
+
+#, fuzzy
+#~ msgid "msg18_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg179_15"
+#~ msgstr "Last modified on"
+
+#, fuzzy
+#~ msgid "msg28_15"
+#~ msgstr "Past Agendas"
+
+#, fuzzy
+#~ msgid "msg71_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg3_15"
+#~ msgstr "Edit Agendas"
+
+#, fuzzy
+#~ msgid "msg2_15"
+#~ msgstr "Past Agendas"
+
+#, fuzzy
+#~ msgid "msg1_15"
+#~ msgstr "Agenda"
+
+#~ msgid "msg509_-1"
+#~ msgstr "back"
+
+#, fuzzy
+#~ msgid "msg84_15"
+#~ msgstr "Back to Active Agenda"
+
+#, fuzzy
+#~ msgid "msg85_15"
+#~ msgstr "Back to Active Agenda"
+
+#, fuzzy
+#~ msgid "msg174_15"
+#~ msgstr ""
+#~ "important: it is not possible to extract files containing folders that "
+#~ "have spaces in the name'"
+
+#, fuzzy
+#~ msgid "msg74_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg75_15"
+#~ msgstr "Import"
+
+#, fuzzy
+#~ msgid "msg177_15"
+#~ msgstr "Last modified on"
+
+#, fuzzy
+#~ msgid "msg69_15"
+#~ msgstr "New Agenda"
+
+#, fuzzy
+#~ msgid "msg4_15"
+#~ msgstr "No agenda added yet!"
+
+#, fuzzy
+#~ msgid "msg5_15"
+#~ msgstr "Consult Data Base"
+
+#, fuzzy
+#~ msgid "msg183_15"
+#~ msgstr "Configure environment data"
+
+#, fuzzy
+#~ msgid "msg7_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg82_15"
+#~ msgstr "Back to Active Agenda"
+
+#, fuzzy
+#~ msgid "msg112_15"
+#~ msgstr "An error occurred while importing agenda. Please select an option!"
+
+#, fuzzy
+#~ msgid "msg9_15"
+#~ msgstr "No Agenda created!"
+
+#, fuzzy
+#~ msgid "msg119_15"
+#~ msgstr "Language Register"
+
+#, fuzzy
+#~ msgid "msg11_15"
+#~ msgstr "Language Register"
+
+#, fuzzy
+#~ msgid "msg125_15"
+#~ msgstr "Edit Categories"
+
+#, fuzzy
+#~ msgid "msg12_15"
+#~ msgstr "Are you sure you want to extract this file?"
+
+#, fuzzy
+#~ msgid "msg13_15"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#, fuzzy
+#~ msgid "msg14_15"
+#~ msgstr ""
+#~ "important: it is not possible to extract files containing folders that "
+#~ "have spaces in the name'"
+
+#, fuzzy
+#~ msgid "msg15_15"
+#~ msgstr "The title cannot be empty."
+
+#~ msgid "msg54_-1"
+#~ msgstr "Editing"
+
+#, fuzzy
+#~ msgid "msg113_15"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#, fuzzy
+#~ msgid "msg114_15"
+#~ msgstr ""
+#~ "important: it is not possible to extract files containing folders that "
+#~ "have spaces in the name'"
+
+#, fuzzy
+#~ msgid "msg115_15"
+#~ msgstr "DO_NOT_REPLY"
+
+#~ msgid "msg68_-1"
+#~ msgstr "Delete selected"
+
+#, fuzzy
+#~ msgid "msg69_-1"
+#~ msgstr "Edit"
+
+#, fuzzy
+#~ msgid "msg130_15"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#, fuzzy
+#~ msgid "msg131_15"
+#~ msgstr "Select a Course Category"
+
+#, fuzzy
+#~ msgid "msg135_15"
+#~ msgstr "Patch successfully updated!"
+
+#, fuzzy
+#~ msgid "msg121_15"
+#~ msgstr "Are you sure you want to extract this file?"
+
+#, fuzzy
+#~ msgid "msg133_15"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#, fuzzy
+#~ msgid "msg134_15"
+#~ msgstr "(the ZIP file will be deleted)"
+
+#, fuzzy
+#~ msgid "msg185_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg186_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg122_15"
+#~ msgstr "Are you sure you want to extract this file?"
+
+#, fuzzy
+#~ msgid "msg83_15"
+#~ msgstr "Back to Active Agenda"
+
+#, fuzzy
+#~ msgid "msg80_15"
+#~ msgstr "Back to Active Agenda"
+
+#, fuzzy
+#~ msgid "msg190_15"
+#~ msgstr "There is no past agenda."
+
+#, fuzzy
+#~ msgid "msg192_15"
+#~ msgstr "Delete text"
+
+#, fuzzy
+#~ msgid "msg193_15"
+#~ msgstr "Text deleted successfully."
+
+#, fuzzy
+#~ msgid "msg62_15"
+#~ msgstr "Courses in progress with agendas accessible:"
+
+#, fuzzy
+#~ msgid "msg189_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg201_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg70_15"
+#~ msgstr "Options"
+
+#, fuzzy
+#~ msgid "msg72_15"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "msg25_-1"
+#~ msgstr "Restricted Area. For instructors only."
+
+#~ msgid "msg1_-1"
+#~ msgstr "Delete"
+
+#, fuzzy
+#~ msgid "msg41_15"
+#~ msgstr "Activated"
+
+#~ msgid "msg70_-1"
+#~ msgstr "Options"
+
+#, fuzzy
+#~ msgid "msg209_15"
+#~ msgstr "This file will be the Agenda main page!"
+
+#, fuzzy
+#~ msgid "msg184_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg187_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg42_15"
+#~ msgstr "Moved to Past Agendas"
+
+#, fuzzy
+#~ msgid "msg218_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg215_15"
+#~ msgstr "Restricted Area. For instructors only."
+
+#, fuzzy
+#~ msgid "msg118_15"
+#~ msgstr "Title"
+
+#~ msgid "msg38_-1"
+#~ msgstr "Extract"
+
+#, fuzzy
+#~ msgid "msg511_-1"
+#~ msgstr ""
+#~ "*If you want to choose a registered user to be the coordinator of the "
+#~ "course, type the initial letters (case sensitive) of his/her login and "
+#~ "then choose the corresponding login on the list of suggestions that will "
+#~ "appear below the Login field."
+
+#~ msgid "msg26_-1"
+#~ msgstr "Attach file"
+
+#, fuzzy
+#~ msgid "msg59_15"
+#~ msgstr "main page"
+
+#, fuzzy
+#~ msgid "msg60_15"
+#~ msgstr "Select main page"
+
+#, fuzzy
+#~ msgid "msg44_15"
+#~ msgstr "Ps.: The Agenda should contain only text or only files."
+
+#, fuzzy
+#~ msgid "msg45_15"
+#~ msgstr "Graduate"
+
+#, fuzzy
+#~ msgid "msg65_15"
+#~ msgstr "Courses concluded with agendas accessible:"
+
+#, fuzzy
+#~ msgid "msg66_15"
+#~ msgstr "Importing agenda"
+
+#, fuzzy
+#~ msgid "msg24_15"
+#~ msgstr "Activate"
+
+#, fuzzy
+#~ msgid "msg180_15"
+#~ msgstr "Title"
+
+#, fuzzy
+#~ msgid "msg17_15"
+#~ msgstr "Last modified on"
+
+#, fuzzy
+#~ msgid "msg37_-1"
+#~ msgstr "Editing Completed"
+
+#, fuzzy
+#~ msgid "msg195_15"
+#~ msgstr "The title cannot be empty."
+
+#~ msgid "msg520_-5"
+#~ msgstr "Suggestions"
+
+#~ msgid "msg533_-5"
+#~ msgstr ""
+#~ "Email and/or login already exists! Type different values (note that the "
+#~ "existing logins appear in the list of suggestions)"
+
+#~ msgid "msg166_-5"
+#~ msgstr ""
+#~ "The following fields cannot be empty:\\n Course Name and Number of "
+#~ "students \\n Coordinator&#39;s name, e-mail and login ."
+
+#~ msgid "msg512_-5"
+#~ msgstr ""
+#~ "The following fields can not be left blank: Name and number of students "
+#~ "in the program, coordinator&#39;s login."
+
+#~ msgid "msg167_-5"
+#~ msgstr "The field number of students must be an positive integer."
+
+#~ msgid "msg168_-5"
+#~ msgstr "Invalid e-mail."
+
+#~ msgid "msg3_-5"
+#~ msgstr "Create a Course"
+
+#~ msgid "msg23_-1"
+#~ msgstr "Back"
+
+#~ msgid "msg98_-5"
+#~ msgstr "Create a Course"
+
+#~ msgid "msg244_-5"
+#~ msgstr "Evaluate course creation requests"
+
+#~ msgid "msg91_-5"
+#~ msgstr "Course Data"
+
+#~ msgid "msg92_-5"
+#~ msgstr "Course Name"
+
+#~ msgid "msg93_-5"
+#~ msgstr "Number of students"
+
+#~ msgid "msg94_-5"
+#~ msgstr "Category:"
+
+#~ msgid "msg115_-3"
+#~ msgstr "Others"
+
+#~ msgid "msg123_-5"
+#~ msgstr ""
+#~ "If you wish to create a new category, fill in the name of the new "
+#~ "category below. The category selected above will be ignored."
+
+#~ msgid "msg124_-5"
+#~ msgstr "New category:"
+
+#~ msgid "msg95_-5"
+#~ msgstr "Course Coordinator Data"
+
+#~ msgid "msg508_-5"
+#~ msgstr "Choose a registered user?"
+
+#~ msgid "msg509_-5"
+#~ msgstr "yes"
+
+#~ msgid "msg510_-5"
+#~ msgstr "no"
+
+#~ msgid "msg96_-5"
+#~ msgstr "Coordinator"
+
+#~ msgid "msg33_-5"
+#~ msgstr "E-mail:"
+
+#~ msgid "msg97_-5"
+#~ msgstr "Login:"
+
+#~ msgid "msg511_-5"
+#~ msgstr ""
+#~ "*If you want to choose a registered user to be the coordinator of the "
+#~ "course, type the initial letters (case sensitive) of his/her login and "
+#~ "then choose the corresponding login on the list of suggestions that will "
+#~ "appear below the Login field."
+
+#~ msgid "msg10_-3"
+#~ msgstr "Team"
+
+#~ msgid "msg157_-3"
+#~ msgstr "Login"
+
+#~ msgid "msg161_-3"
+#~ msgstr "Log out"
+
+#~ msgid "msg17_-3"
+#~ msgstr "Administration"
+
+#~ msgid "msg18_-3"
+#~ msgstr "Restricted Area"
+
+#~ msgid "msg236_-3"
+#~ msgstr "An error occurred in your solicitation"
+
+#~ msgid "msg3_-3"
+#~ msgstr "What is TelEduc?"
+
+#~ msgid "msg4_-3"
+#~ msgstr "Environment Structure"
+
+#~ msgid "msg179_-3"
+#~ msgstr "Sign up"
+
+#~ msgid "msg187_-3"
+#~ msgstr "Personal"
+
+#~ msgid "msg132_-3"
+#~ msgstr "My courses"
+
+#~ msgid "msg1_-7"
+#~ msgstr "Configure"
+
+#~ msgid "msg5_-3"
+#~ msgstr "Courses"
+
+#~ msgid "msg172_-3"
+#~ msgstr "Open enrollment"
+
+#~ msgid "msg192_-3"
+#~ msgstr "Not begun"
+
+#~ msgid "msg171_-3"
+#~ msgstr "Current"
+
+#~ msgid "msg173_-3"
+#~ msgstr "Closed"
+
+#~ msgid "msg9_-3"
+#~ msgstr "How to create a course"
+
+#~ msgid "msg99_-5"
+#~ msgstr "TelEduc course access information"
+
+#~ msgid "msg100_-5"
+#~ msgstr "Your request to create the course"
+
+#~ msgid "msg101_-5"
+#~ msgstr "was accepted."
+
+#~ msgid "msg102_-5"
+#~ msgstr "To access the course, your Identification is:"
+
+#~ msgid "msg103_-5"
+#~ msgstr "and your password is:"
+
+#~ msgid "msg104_-5"
+#~ msgstr "You may access the course through this address:"
+
+#~ msgid "msg105_-5"
+#~ msgstr "Sincerely, TelEduc Environment Administration"
+
+#~ msgid "msg106_-5"
+#~ msgstr "Course created successfully"
+
+#~ msgid "msg107_-5"
+#~ msgstr ""
+#~ "An email with the course access instructions was sent to the registered "
+#~ "coordinator"
+
+#~ msgid "msg534_-5"
+#~ msgstr ""
+#~ "Login doesn't exist! Go back and type the login again or choose the "
+#~ "option of registering the coordinator in the environment."
+
+#~ msgid "msg198_-3"
+#~ msgstr "Administrator logged in successfully"
+
+#~ msgid "msg1_-5"
+#~ msgstr "Administration"
+
+#~ msgid "msg135_-5"
+#~ msgstr "Patch successfully updated!"
+
+#~ msgid "msg4_-5"
+#~ msgstr "Remove a Course"
+
+#~ msgid "msg141_-5"
+#~ msgstr "Import Removed Courses"
+
+#~ msgid "msg245_-5"
+#~ msgstr "Course Reutilization"
+
+#~ msgid "msg125_-5"
+#~ msgstr "Edit Categories"
+
+#~ msgid "msg131_-5"
+#~ msgstr "Select a Course Category"
+
+#, fuzzy
+#~ msgid "msg535_-5"
+#~ msgstr ""
+#~ "Email and/or login already exists! Type different values (note that the "
+#~ "existing logins appear in the list of suggestions)"
+
+#, fuzzy
+#~ msgid "msg536_-5"
+#~ msgstr ""
+#~ "Email and/or login already exists! Type different values (note that the "
+#~ "existing logins appear in the list of suggestions)"
+
+#~ msgid "msg293_-5"
+#~ msgstr "Resend data to coordinators"
+
+#~ msgid "msg8_-5"
+#~ msgstr "Change Login"
+
+#~ msgid "msg9_-5"
+#~ msgstr "Send e-mail to users"
+
+#~ msgid "msg5_-5"
+#~ msgstr "Consult Data Base"
+
+#~ msgid "msg13_-5"
+#~ msgstr "Contact - NIED - UNICAMP"
+
+#~ msgid "msg153_-5"
+#~ msgstr "Environment Statistics"
+
+#~ msgid "msg183_-5"
+#~ msgstr "Configure environment data"
+
+#~ msgid "msg11_-5"
+#~ msgstr "Language Register"
+
+#~ msgid "msg171_-5"
+#~ msgstr "Help Text Register"
+
+#~ msgid "msg12_-5"
+#~ msgstr "Back to Homepage"
+
+#~ msgid "msg513_-1"
+#~ msgstr "Version"
+
+#~ msgid "msg512_-1"
+#~ msgstr "Server"
+
+#~ msgid "msg514_-1"
+#~ msgstr "2010  - TelEduc - All rights reserved."
+
+#~ msgid "msg515_-1"
+#~ msgstr "All rights reserved"
+
+#~ msgid "msg516_-1"
+#~ msgstr "NIED - UNICAMP"
+
+#~ msgid "msg214_-3"
+#~ msgstr "A new email to User confirmation has been sent."
+
+#~ msgid "msg180_-3"
+#~ msgstr "Authentication error. Enter your login and password again"
+
+#~ msgid "msg213_-3"
+#~ msgstr ""
+#~ "Your account registration has not yet been confirmed, check your email or "
+#~ "make new request for confirmation below."
+
+#~ msgid "msg210_-3"
+#~ msgstr ""
+#~ "Your account registration was successful. In moments you will receive an "
+#~ "email confirmation with a link to confirm you account registration and "
+#~ "then you can access the environment."
+
+#~ msgid "msg216_-3"
+#~ msgstr "Type your login"
+
+#~ msgid "msg181_-3"
+#~ msgstr "Please fill in the &#34;Login&#34; field."
+
+#~ msgid "msg182_-3"
+#~ msgstr "Please fill in the &#34;Password&#34; field."
+
+#~ msgid "msg183_-3"
+#~ msgstr "Authentication"
+
+#~ msgid "msg159_-3"
+#~ msgstr "Enrollment"
+
+#~ msgid "msg219_-3"
+#~ msgstr ""
+#~ "o enroll in a course you need a registered account in the envieroment. If "
+#~ "you already have an account just log in, if not"
+
+#~ msgid "msg220_-3"
+#~ msgstr "register here."
+
+#~ msgid "msg165_-3"
+#~ msgstr ""
+#~ "Enter your login and password in the fields below to enter the "
+#~ "environment."
+
+#~ msgid "msg158_-3"
+#~ msgstr "Password"
+
+#~ msgid "msg55_-3"
+#~ msgstr "Enter"
+
+#~ msgid "msg90_-2"
+#~ msgstr "If you have not registered,"
+
+#~ msgid "msg101_-2"
+#~ msgstr "click here!"
+
+#~ msgid "msg67_-2"
+#~ msgstr "If you forgot your login,"
+
+#~ msgid "msg24_-2"
+#~ msgstr "If you forgot your password,"
+
+#~ msgid "msg92_-2"
+#~ msgstr "If you did not receive e-mail confirmation of registration,"
+
+#, fuzzy
+#~ msgid "msg137_0"
+#~ msgstr "Please fill in all the fields before clicking the Change button."
+
+#, fuzzy
+#~ msgid "msg255_0"
+#~ msgstr "View / Change Course Data"
+
+#, fuzzy
+#~ msgid "msg273_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg274_0"
+#~ msgstr "The dates should be in the format MM/DD/YYYY"
+
+#, fuzzy
+#~ msgid "msg277_0"
+#~ msgstr "View / Change Course Data"
+
+#, fuzzy
+#~ msgid "msg27_0"
+#~ msgstr "View / Change Course Data"
+
+#, fuzzy
+#~ msgid "msg276_0"
+#~ msgstr "View / Change Course Data"
+
+#~ msgid "msg1_0"
+#~ msgstr "Administration"
+
+#, fuzzy
+#~ msgid "msg231_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg232_0"
+#~ msgstr "Note:"
+
+#~ msgid "msg2_0"
+#~ msgstr "View / Change Course Data"
+
+#~ msgid "msg49_0"
+#~ msgstr "View Course Data"
+
+#, fuzzy
+#~ msgid "msg31_0"
+#~ msgstr "Invalid Time Period!"
+
+#, fuzzy
+#~ msgid "msg40_0"
+#~ msgstr "Created"
+
+#, fuzzy
+#~ msgid "msg202_0"
+#~ msgstr "Registration ends"
+
+#, fuzzy
+#~ msgid "msg141_0"
+#~ msgstr ""
+#~ "Course information is shown below. To make any changes, modify the "
+#~ "desired fields and click the Change button."
+
+#, fuzzy
+#~ msgid "msg233_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg234_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg50_0"
+#~ msgstr "The field"
+
+#, fuzzy
+#~ msgid "msg51_0"
+#~ msgstr "File attached successfully."
+
+#, fuzzy
+#~ msgid "msg164_0"
+#~ msgstr "Information"
+
+#, fuzzy
+#~ msgid "msg182_0"
+#~ msgstr "Course ends"
+
+#, fuzzy
+#~ msgid "msg74_0"
+#~ msgstr "Login already exists. Enter another and try again."
+
+#, fuzzy
+#~ msgid "msg102_0"
+#~ msgstr ""
+#~ "The starting date for registration should be before the ending date of "
+#~ "the course."
+
+#, fuzzy
+#~ msgid "msg103_0"
+#~ msgstr ""
+#~ "The starting date for registration should be before the ending date of "
+#~ "the course."
+
+#, fuzzy
+#~ msgid "msg165_0"
+#~ msgstr "Information"
+
+#, fuzzy
+#~ msgid "msg179_0"
+#~ msgstr "Course begins"
+
+#, fuzzy
+#~ msgid "msg235_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg236_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg149_0"
+#~ msgstr ""
+#~ "Course information is shown below. To make any changes, modify the "
+#~ "desired fields and click the Change button."
+
+#, fuzzy
+#~ msgid "msg133_0"
+#~ msgstr "Please fill in all the fields before clicking the Change button."
+
+#, fuzzy
+#~ msgid "msg212_0"
+#~ msgstr "Target audience"
+
+#, fuzzy
+#~ msgid "msg213_0"
+#~ msgstr "Target audience"
+
+#, fuzzy
+#~ msgid "msg237_0"
+#~ msgstr "Note:"
+
+#, fuzzy
+#~ msgid "msg238_0"
+#~ msgstr "Note:"
+
+#~ msgid "msg68_-3"
+#~ msgstr "Go back to the list of courses"
+
+#~ msgid "msg56_-3"
+#~ msgstr "Visit"
+
+#~ msgid "msg60_-3"
+#~ msgstr "Target Audience:"
+
+#~ msgid "msg61_-3"
+#~ msgstr "Course date:"
+
+#~ msgid "msg69_-3"
+#~ msgstr "from"
+
+#~ msgid "msg70_-3"
+#~ msgstr "to"
+
+#~ msgid "msg196_-3"
+#~ msgstr "Enrollment period in the course"
+
+#~ msgid "msg156_-3"
+#~ msgstr "Course coordinator:"
+
+#~ msgid "msg62_-3"
+#~ msgstr "E-mail contact:"
+
+#~ msgid "msg63_-3"
+#~ msgstr "Type of enrollment:"
+
+#~ msgid "msg67_-3"
+#~ msgstr "Enroll!"
+
+#~ msgid "msg235_-3"
+#~ msgstr "Enroll again"
+
+#~ msgid "msg8_0"
+#~ msgstr ""
+#~ "The starting date for registration should be before its ending date."
+
+#~ msgid "msg9_0"
+#~ msgstr "The starting date for the course should be before its ending date."
+
+#~ msgid "msg10_0"
+#~ msgstr ""
+#~ "The starting date for registration should be before the ending date of "
+#~ "the course."
+
+#~ msgid "msg11_0"
+#~ msgstr ""
+#~ "The ending date for registration should be before the ending date of the "
+#~ "course."
+
+#~ msgid "msg12_0"
+#~ msgstr ""
+#~ "The starting date for registration should be before the starting date of "
+#~ "the course."
+
+#~ msgid "msg13_0"
+#~ msgstr "Please fill in all the fields before clicking the Change button."
+
+#~ msgid "msg28_0"
+#~ msgstr "Restricted Area. For instructors only."
+
+#~ msgid "msg14_0"
+#~ msgstr ""
+#~ "Course information is shown below. To make any changes, modify the "
+#~ "desired fields and click the Change button."
+
+#~ msgid "msg15_0"
+#~ msgstr "Name"
+
+#~ msgid "msg16_0"
+#~ msgstr "Information"
+
+#~ msgid "msg17_0"
+#~ msgstr "Course begins"
+
+#~ msgid "msg18_0"
+#~ msgstr "Course ends"
+
+#~ msgid "msg19_0"
+#~ msgstr "Registration begins"
+
+#~ msgid "msg20_0"
+#~ msgstr "Registration ends"
+
+#~ msgid "msg21_0"
+#~ msgstr "Target audience"
+
+#~ msgid "msg22_0"
+#~ msgstr "Type of enrollment"
+
+#~ msgid "msg148_0"
+#~ msgstr "Course language:"
+
+#~ msgid "msg23_0"
+#~ msgstr "Note:"
+
+#~ msgid "msg24_0"
+#~ msgstr "The dates should be in the format MM/DD/YYYY"
+
+#~ msgid "msg229_0"
+#~ msgstr ""
+#~ "If the start date of the course is greater than the end date of "
+#~ "registration, the course can only be accessed directly through the link "
+#~ "received in the coordinator&#39;s email . That is, it will not be listed "
+#~ "in any of the sections &#39;Courses in progress&#39;, &#39;Open "
+#~ "enrollment courses&#39; or &#39;Courses already offered.&#39; "
+
+#~ msgid "msg24_-1"
+#~ msgstr "Change"
+
+#~ msgid "msg197_-3"
+#~ msgstr "User logged in successfully"
+
+#~ msgid "msg162_-3"
+#~ msgstr "My courses"
+
+#~ msgid "msg163_-3"
+#~ msgstr "User type"
+
+#~ msgid "msg164_-3"
+#~ msgstr "You are not enrolled in any course"
+
+#~ msgid "msg58_-1"
+#~ msgstr "Instructor"
+
+#~ msgid "msg178_-3"
+#~ msgstr "User"
+
+#~ msgid "msg194_-3"
+#~ msgstr "Courses not begun"
+
+#~ msgid "msg6_-3"
+#~ msgstr "Current courses"
+
+#~ msgid "msg7_-3"
+#~ msgstr "Open enrollment courses"
+
+#~ msgid "msg8_-3"
+#~ msgstr "Previous courses"
+
+#~ msgid "msg169_-5"
+#~ msgstr "Category"
+
+#~ msgid "msg265_-5"
+#~ msgstr "Course name"
+
+#~ msgid "msg223_-3"
+#~ msgstr "Enrollment not accepted"
+
+#~ msgid "msg54_-3"
+#~ msgstr "Enrollments"
+
+#~ msgid "msg53_-3"
+#~ msgstr "Information"
+
+#~ msgid "msg195_-3"
+#~ msgstr "course not begun"
+
+#~ msgid "msg174_-3"
+#~ msgstr "current course"
+
+#~ msgid "msg175_-3"
+#~ msgstr "open enrollment course"
+
+#~ msgid "msg176_-3"
+#~ msgstr "closed courses"
+
+#~ msgid "msg57_-3"
+#~ msgstr "There are no"
+
+#~ msgid "msg116_-3"
+#~ msgstr "Select a category:"
+
+#~ msgid "msg46_-4"
+#~ msgstr "Instructor View"
+
+#~ msgid "msg45_-4"
+#~ msgstr "Student View"
+
+#~ msgid "msg47_-4"
+#~ msgstr "Configure"
+
+#~ msgid "msg39_-4"
+#~ msgstr "Support"
+
+#~ msgid "msg37_-4"
+#~ msgstr "Administration"
+
+#~ msgid "msg43_-3"
+#~ msgstr "Exit"
+
+#~ msgid "msg60_-4"
+#~ msgstr "Online Users:"
+
+#~ msgid "msg50_-7"
+#~ msgstr "The field"
+
+#~ msgid "msg32_-7"
+#~ msgstr "Name"
+
+#~ msgid "msg51_-7"
+#~ msgstr "cannot be empty"
+
+#~ msgid "msg33_-7"
+#~ msgstr "Identification"
+
+#~ msgid "msg71_-7"
+#~ msgstr "Invalid Date"
+
+#~ msgid "msg80_-7"
+#~ msgstr "Birth date is in future"
+
+#~ msgid "msg52_-7"
+#~ msgstr "The e-mail submitted appears to be wrong"
+
+#~ msgid "msg40_-7"
+#~ msgstr "Address"
+
+#~ msgid "msg41_-7"
+#~ msgstr "City"
+
+#~ msgid "msg42_-7"
+#~ msgstr "State"
+
+#~ msgid "msg43_-7"
+#~ msgstr "Country"
+
+#~ msgid "msg59_-7"
+#~ msgstr "The login field cannot be empty. Please type again your new login."
+
+#~ msgid "msg4_-7"
+#~ msgstr "The new password cannot be empty. Please type in the new password."
+
+#~ msgid "msg5_-7"
+#~ msgstr "The new passwords do not match. Please type them in again."
+
+#~ msgid "msg74_-7"
+#~ msgstr "Login already exists. Enter another and try again."
+
+#~ msgid "msg75_-7"
+#~ msgstr "E-mail already exists. Enter another and try again."
+
+#~ msgid "msg76_-7"
+#~ msgstr "Characters typed do not match with the picture. Try again."
+
+#~ msgid "msg184_-3"
+#~ msgstr "Account registration completed successfully."
+
+#~ msgid "msg185_-3"
+#~ msgstr "Registration"
+
+#~ msgid "msg186_-3"
+#~ msgstr "Personal data"
+
+#~ msgid "msg73_-7"
+#~ msgstr ""
+#~ "Fill your information in the form below and click &#34;Register&#34; to "
+#~ "register."
+
+#~ msgid "msg166_-3"
+#~ msgstr "Type your password"
+
+#~ msgid "msg167_-3"
+#~ msgstr "Retype your password"
+
+#~ msgid "msg72_-7"
+#~ msgstr "ID"
+
+#~ msgid "msg34_-7"
+#~ msgstr "Date of birth"
+
+#~ msgid "msg35_-7"
+#~ msgstr "Gender"
+
+#~ msgid "msg36_-7"
+#~ msgstr "Male"
+
+#~ msgid "msg37_-7"
+#~ msgstr "Female"
+
+#~ msgid "msg38_-7"
+#~ msgstr "E-mail"
+
+#~ msgid "msg39_-7"
+#~ msgstr "Telephone"
+
+#~ msgid "msg44_-7"
+#~ msgstr "Occupation"
+
+#~ msgid "msg45_-7"
+#~ msgstr "Workplace"
+
+#~ msgid "msg46_-7"
+#~ msgstr "Education"
+
+#~ msgid "msg47_-7"
+#~ msgstr "Additional information"
+
+#~ msgid "msg66_-7"
+#~ msgstr "(*) Required Fields"
+
+#~ msgid "msg77_-7"
+#~ msgstr "Enter the answer given to the expression."
+
+#~ msgid "msg89_-3"
+#~ msgstr "Register"
+
+#~ msgid "msg87_-2"
+#~ msgstr "TelEduc confirmation of registration"
+
+#~ msgid "msg88_-2"
+#~ msgstr ""
+#~ "If you registered in TelEduc, please confirm your e-mail by clicking the "
+#~ "link below."
+
+#~ msgid "msg89_-2"
+#~ msgstr "Otherwise, please disregard this message."
+
+#~ msgid "msg78_-2"
+#~ msgstr "Sincerely"
+
+#~ msgid "msg3_-2"
+#~ msgstr "TelEduc Administration Environment"
+
+#~ msgid "msg115_11"
+#~ msgstr "DO_NOT_REPLY"
+
+#~ msgid "msg1_1"
+#~ msgstr "Agenda"
+
+#~ msgid "msg34_1"
+#~ msgstr "Record of changes"
+
+#~ msgid "msg13_-1"
+#~ msgstr "Close"
+
+#~ msgid "msg18_1"
+#~ msgstr "Title"
+
+#~ msgid "msg35_1"
+#~ msgstr "Action"
+
+#~ msgid "msg7_1"
+#~ msgstr "Date"
+
+#~ msgid "msg36_1"
+#~ msgstr "User"
+
+#~ msgid "msg40_1"
+#~ msgstr "Created"
+
+#~ msgid "msg39_1"
+#~ msgstr "Editing Canceled"
+
+#~ msgid "msg43_1"
+#~ msgstr "Editing"
+
+#~ msgid "msg37_1"
+#~ msgstr "Editing Completed"
+
+#~ msgid "msg42_1"
+#~ msgstr "Moved to Past Agendas"
+
+#~ msgid "msg41_1"
+#~ msgstr "Activated"
+
+#~ msgid "msg38_1"
+#~ msgstr "Unknown"
+
+#~ msgid "msg101_1"
+#~ msgstr "Agenda(s) deleted successfully."
+
+#~ msgid "msg2_1"
+#~ msgstr "Past Agendas"
+
+#~ msgid "msg8_1"
+#~ msgstr "Back to Active Agenda"
+
+#~ msgid "msg90_1"
+#~ msgstr "There is no past agenda."
+
+#~ msgid "msg25_1"
+#~ msgstr "Restricted Area. For instructors only."
+
+#~ msgid "msg52_-1"
+#~ msgstr "Update"
+
+#~ msgid "msg53_-1"
+#~ msgstr "Current State"
+
+#~ msgid "msg56_-1"
+#~ msgstr "Since"
+
+#~ msgid "msg57_-1"
+#~ msgstr "By"
+
+#~ msgid "msg55_-1"
+#~ msgstr "Editing concluded"
+
+#~ msgid "msg102_1"
+#~ msgstr "Agenda activated successfully."
+
+#~ msgid "msg108_1"
+#~ msgstr "Agenda imported successfully!"
+
+#~ msgid "msg15_1"
+#~ msgstr "The title cannot be empty."
+
+#~ msgid "msg16_1"
+#~ msgstr "The title cannot contain \\\\."
+
+#~ msgid "msg57_1"
+#~ msgstr "Are you sure you want to activate this Agenda?"
+
+#~ msgid "msg58_1"
+#~ msgstr "(there are no way to deactivated it later)"
+
+#~ msgid "msg73_1"
+#~ msgstr "Action for instructors only."
+
+#~ msgid "msg3_1"
+#~ msgstr "Edit Agendas"
+
+#~ msgid "msg6_1"
+#~ msgstr "New Agenda"
+
+#~ msgid "msg61_1"
+#~ msgstr "Import Agenda"
+
+#~ msgid "msg110_1"
+#~ msgstr "Status"
+
+#~ msgid "msg24_1"
+#~ msgstr "Activate"
+
+#~ msgid "msg60_-1"
+#~ msgstr "An error occurred while removing temporary files."
+
+#~ msgid "msg23_1"
+#~ msgstr "Activated"
+
+#~ msgid "msg9_1"
+#~ msgstr "No Agenda created!"
+
+#~ msgid "msg66_1"
+#~ msgstr "Importing agenda"
+
+#~ msgid "msg78_1"
+#~ msgstr "Agendas from the Course:"
+
+#~ msgid "msg4_1"
+#~ msgstr "No agenda added yet!"
+
+#~ msgid "msg88_1"
+#~ msgstr "Importing to:"
+
+#~ msgid "msg97_1"
+#~ msgstr "An error occurred while creating agenda."
+
+#~ msgid "msg94_1"
+#~ msgstr "Text"
+
+#~ msgid "msg96_1"
+#~ msgstr "Agenda created successfully."
+
+#~ msgid "msg51_1"
+#~ msgstr "File attached successfully."
+
+#~ msgid "msg98_1"
+#~ msgstr "An error occurred while attaching the file."
+
+#~ msgid "msg99_1"
+#~ msgstr "File extracted successfully."
+
+#~ msgid "msg100_1"
+#~ msgstr "An error occurred while extracting the file."
+
+#~ msgid "msg105_1"
+#~ msgstr "Main page file selected successfully."
+
+#~ msgid "msg55_1"
+#~ msgstr "Select the file that will be the Agenda main page"
+
+#~ msgid "msg103_1"
+#~ msgstr "Agenda renamed successfully."
+
+#~ msgid "msg111_1"
+#~ msgstr "Edit Agenda"
+
+#~ msgid "msg33_1"
+#~ msgstr "Back to Past Agendas"
+
+#~ msgid "msg9_-1"
+#~ msgstr "Edit"
+
+#~ msgid "msg106_1"
+#~ msgstr "Rename title"
+
+#~ msgid "msg91_1"
+#~ msgstr "Edit text"
+
+#~ msgid "msg92_1"
+#~ msgstr "Delete text"
+
+#~ msgid "msg57_-2"
+#~ msgstr "Files:"
+
+#~ msgid "msg107_1"
+#~ msgstr "Last modified on"
+
+#~ msgid "msg59_1"
+#~ msgstr "main page"
+
+#~ msgid "msg60_1"
+#~ msgstr "Select main page"
+
+#~ msgid "msg48_1"
+#~ msgstr ""
+#~ "Click the Browse button below to select the file to be attached  then "
+#~ "press OK to continue."
+
+#~ msgid "msg49_1"
+#~ msgstr "(.ZIP files can be sent and extracted later)"
+
+#~ msgid "msg20_1"
+#~ msgstr "This file will be the Agenda main page!"
+
+#~ msgid "msg44_1"
+#~ msgstr "Ps.: The Agenda should contain only text or only files."
+
+#~ msgid "msg112_1"
+#~ msgstr "An error occurred while importing agenda. Please select an option!"
+
+#~ msgid "msg31_-2"
+#~ msgstr "Invalid Time Period!"
+
+#~ msgid "msg35_-2"
+#~ msgstr "Courses in Progress"
+
+#~ msgid "msg36_-2"
+#~ msgstr "Courses Open for Registration"
+
+#~ msgid "msg37_-2"
+#~ msgstr "Courses Pending"
+
+#~ msgid "msg38_-2"
+#~ msgstr "Courses Concluded"
+
+#~ msgid "msg40_-2"
+#~ msgstr "Period:"
+
+#~ msgid "msg44_-2"
+#~ msgstr "Categories"
+
+#~ msgid "msg62_1"
+#~ msgstr "Courses in progress with agendas accessible:"
+
+#~ msgid "msg63_1"
+#~ msgstr "Courses open for registration with agendas accessible:"
+
+#~ msgid "msg64_1"
+#~ msgstr "Courses pending with agendas accessible:"
+
+#~ msgid "msg65_1"
+#~ msgstr "Courses concluded with agendas accessible:"
+
+#~ msgid "msg47_-2"
+#~ msgstr "All Courses"
+
+#~ msgid "msg46_-2"
+#~ msgstr "(extracted)"
+
+#~ msgid "msg41_-2"
+#~ msgstr "From:"
+
+#~ msgid "msg42_-2"
+#~ msgstr "Until:"
+
+#~ msgid "msg43_-2"
+#~ msgstr "Change Period"
+
+#~ msgid "msg45_-2"
+#~ msgstr "Other"
+
+#~ msgid "msg75_-1"
+#~ msgstr "Import"
+
+#, fuzzy
+#~ msgid "msg504_-1"
+#~ msgstr "Editing"
+
+#, fuzzy
+#~ msgid "msg124_15"
+#~ msgstr "New category:"
+
+#~ msgid "msg72_-4"
+#~ msgstr "My Courses"
+
+#~ msgid "msg39_-1"
+#~ msgstr "Incomplete  Elementary school"
+
+#~ msgid "msg40_-1"
+#~ msgstr "Elementary school"
+
+#~ msgid "msg41_-1"
+#~ msgstr "Incomplete High school"
+
+#~ msgid "msg42_-1"
+#~ msgstr "High school"
+
+#~ msgid "msg43_-1"
+#~ msgstr "Incomplete Undergraduate"
+
+#~ msgid "msg44_-1"
+#~ msgstr "Undergraduate"
+
+#~ msgid "msg45_-1"
+#~ msgstr "Graduate"
+
+#~ msgid "msg232_-3"
+#~ msgstr "Not part of the course"
+
+#~ msgid "msg224_-3"
+#~ msgstr "Student enrolled"
+
+#~ msgid "msg234_-3"
+#~ msgstr "Unenrolled student"
+
+#~ msgid "msg225_-3"
+#~ msgstr "Unaccepted student"
+
+#~ msgid "msg226_-3"
+#~ msgstr "Accepted student"
+
+#~ msgid "msg228_-3"
+#~ msgstr "Unenrolled instructor"
+
+#~ msgid "msg227_-3"
+#~ msgstr "Instructor"
+
+#~ msgid "msg229_-3"
+#~ msgstr "Unenrolled collaborator"
+
+#~ msgid "msg231_-3"
+#~ msgstr "Collaborator"
+
+#~ msgid "msg233_-3"
+#~ msgstr "Unenrolled Visitor"
+
+#~ msgid "msg230_-3"
+#~ msgstr "Visitor"
+
+#~ msgid "msg17_-2"
+#~ msgstr "You left one of the date fields in blank."
+
+#~ msgid "msg18_-2"
+#~ msgstr "Please fill all fields."
+
+#~ msgid "msg19_-2"
+#~ msgstr "Invalid date:"
+
+#~ msgid "msg20_-2"
+#~ msgstr "Please go back and correct."
+
+#~ msgid "msg21_-2"
+#~ msgstr "You entered unfamiliar characters in this date"
+
+#~ msgid "msg22_-2"
+#~ msgstr ""
+#~ "Use only the digits 0 to 9 and the slash (/) to separate month, day and "
+#~ "year (ex. 01/31/2002)"
+
+#~ msgid "msg116_11"
+#~ msgstr "Course name"
+
+#~ msgid "msg24_11"
+#~ msgstr "Date"
+
+#~ msgid "msg23_11"
+#~ msgstr "Sender"
+
+#~ msgid "msg27_11"
+#~ msgstr "Recipients"
+
+#~ msgid "msg13_-2"
+#~ msgstr "Access denied"
+
+#~ msgid "msg30_-2"
+#~ msgstr "The course has not yet begun."
+
+#~ msgid "msg14_-2"
+#~ msgstr ""
+#~ "Your registration has not yet been evaluated. An e-mail will be sent to "
+#~ "you as soon as your registration request has been evaluated."
+
+#~ msgid "msg15_-2"
+#~ msgstr ""
+#~ "Your registration was not accepted. You do not have access to this course."
+
+#~ msgid "msg16_-2"
+#~ msgstr "User nonexistent or invalid."
+
+#~ msgid "msg59_-1"
+#~ msgstr "Tool disabled"
+
+#~ msgid "msg4_-2"
+#~ msgstr ""
+#~ "Authorization is required to enter the TelEduc Administration Environment"
+
+#~ msgid "msg12_-2"
+#~ msgstr "Visitors are not allowed in this course."
+
+#~ msgid "msg73_-4"
+#~ msgstr "Help"
+
+#~ msgid "msg5_-4"
+#~ msgstr "Agenda"
+
+#~ msgid "msg7_-4"
+#~ msgstr "Activities"
+
+#~ msgid "msg9_-4"
+#~ msgstr "Support Material"
+
+#~ msgid "msg11_-4"
+#~ msgstr "Readings"
+
+#~ msgid "msg13_-4"
+#~ msgstr "Frequently Asked Questions"
+
+#~ msgid "msg15_-4"
+#~ msgstr "Required Stop"
+
+#~ msgid "msg17_-4"
+#~ msgstr "Bulletin Board"
+
+#~ msgid "msg19_-4"
+#~ msgstr "Discussion Forums"
+
+#~ msgid "msg21_-4"
+#~ msgstr "Chat"
+
+#~ msgid "msg23_-4"
+#~ msgstr "Mail"
+
+#~ msgid "msg25_-4"
+#~ msgstr "Groups"
+
+#~ msgid "msg27_-4"
+#~ msgstr "Profile"
+
+#~ msgid "msg29_-4"
+#~ msgstr "Diary"
+
+#~ msgid "msg31_-4"
+#~ msgstr "Portfolio"
+
+#~ msgid "msg3_-4"
+#~ msgstr "Course Dynamic"
+
+#~ msgid "msg1_-4"
+#~ msgstr "Environment Structure"
+
+#~ msgid "msg33_-4"
+#~ msgstr "Access"
+
+#~ msgid "msg35_-4"
+#~ msgstr "Intermap"
+
+#~ msgid "msg52_-4"
+#~ msgstr "Evaluations"
+
+#~ msgid "msg48_-4"
+#~ msgstr "Exercises"
+
+#~ msgid "msg54_-4"
+#~ msgstr "Polls"
+
+#~ msgid "msg56_-4"
+#~ msgstr "Authentication"
+
+#~ msgid "msg58_-4"
+#~ msgstr "Search"
+
+#~ msgid "msg7_-2"
+#~ msgstr "Month invalid,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sept,Oct,Nov,Dec"
+
+#~ msgid "msg4_25"
+#~ msgstr "Please fill in the Login field"
+
+#~ msgid "msg5_25"
+#~ msgstr "Please fill in the Password field"

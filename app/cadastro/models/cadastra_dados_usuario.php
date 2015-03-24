@@ -67,14 +67,14 @@ if(Inicial::LoginRepetido($sock,$login)){
 			$parametros_curso .= "&t=".$_GET["tipo_curso"];
 	}
 
-	//87 - ConfirmaÃ§Ã£o de cadastro TelEduc
-	$assunto = _("msg87_-2");
+	//87 - Confirmação de cadastro TelEduc
+	$assunto = _("ACCOUNT_CONFIRMATION_-2");
 	/* 88 - Se você se cadastrou no ambiente TelEduc, favor confirmar seu e-mail clicando no link abaixo.
 	 * 89 - Caso contrário, favor desconsiderar esta mensagem.
 	 * 78 - Atenciosamente
 	 * 3 - Ambiente de Administração do TelEduc
 	 * */
-	$mensagem = "<p>"._("msg88_-2")."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>"._("msg89_-2")."</p><p>"._("msg78_-2").",</p><p> "._("msg3_-2")."</p>";
+	$mensagem = "<p>"._("IF_REGISTERED_CONFIRM_EMAIL_-2")."</p><p><a href='http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."'>http://".$host.$raiz_www."/pagina_inicial/confirmacao.php?u=".$cod_usuario."&s=".$sequencia.$parametros_curso."</a></p><p>"._("OTHERWISE_DESCONSIDER_MESSAGE_-2")."</p><p>"._("SINCERELY_-2").",</p><p> "._("ADM_TELEDUC_ENVIRONMENT_-2")."</p>";
 	/*
 	 // 74 - Bem-Vindo ao TelEduc!
 	$assunto = RetornaFraseDaLista($lista_frases_email, 74);
@@ -90,7 +90,7 @@ if(Inicial::LoginRepetido($sock,$login)){
 	*/
 
 	// 115 - NAO_RESPONDA
-	$remetente = _("msg115_11")."@".$host;
+	$remetente = _("DO_NOT_REPLY_11")."@".$host;
 	$mensagem_html = Email::MontaMsg($host, $raiz_www, '', $mensagem, $assunto, '', $nome_usuario);
 	Email::MandaMsg($remetente,$email,$assunto,$mensagem_html, '');
 

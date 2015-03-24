@@ -88,18 +88,18 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 //adicionar as acoes possiveis, 1o parametro eh a acao, o segundo eh o numero da frase para ser impressa se for "true", o terceiro caso "false"
 
 /* 96 - Agenda criada com sucesso.
- * 51 - Arquivo anexado com sucesso.
- * 98 - Ocorreu um erro ao tentar anexar o arquivo.
- * 99 - Arquivo descompactado com sucesso.
- * 100 - Houve um erro ao descompactar o arquivo.
+ * Arquivo anexado com sucesso.
+ * Ocorreu um erro ao tentar anexar o arquivo.
+ * Arquivo descompactado com sucesso.
+ * Houve um erro ao descompactar o arquivo.
  * 105 - Arquivo de entrada selecionado com sucesso.
  * 55 - Selecione o arquivo que será a entrada da agenda
  * */
-$feedbackObject->addAction("criarAgenda", _("msg96_1"), 0);
-$feedbackObject->addAction("anexar", _("msg51_1"), _("msg98_1"));
-$feedbackObject->addAction("descompactar", _("msg99_1"), _("msg100_1"));
-$feedbackObject->addAction("selecionar_entrada", _("msg105_1"), 0);
-$feedbackObject->addAction("retirar_entrada", _("msg55_1"), 0);
+$feedbackObject->addAction("criarAgenda", _("AGENDA_CREATED_SUCCESS_1"), 0);
+$feedbackObject->addAction("anexar", _("FILE_ATTACHED_SUCCESS_-1"), _("ERROR_ATTACHING_FILE_-1"));
+$feedbackObject->addAction("descompactar", _("FILE_EXTRACTED_SUCCESS_-1"), _("ERROR_EXTRACTING_FILE_-1"));
+$feedbackObject->addAction("selecionar_entrada", _("MAIN_PAGE_SELECTED_SUCCESS_1"), 0);
+$feedbackObject->addAction("retirar_entrada", _("SELECT_MAIN_PAGE_FILE_1"), 0);
 
 $dir_name = "agenda";
 $dir_item_temp=Agenda::CriaLinkVisualizar($sock,$dir_name, $cod_curso, $cod_usuario, $cod_item, $diretorio_arquivos, $diretorio_temp);
@@ -126,16 +126,16 @@ echo("      var origem='".$origem."';\n");
 echo("      var num_apagados = '0';\n");
 /* (ger) 18 - Ok */
 // Texto do botao Ok do ckEditor
-echo("    var textoOk = '"._("msg18_-1")."';\n\n");
+echo("    var textoOk = '"._("OK_-1")."';\n\n");
 /* (ger) 2 - Cancelar */
 // Texto do botao Cancelar do ckEditor
-echo("    var textoCancelar = '"._("msg2_-1")."';\n\n");
+echo("    var textoCancelar = '"._("CANCEL_-1")."';\n\n");
 
 echo("      function TemCertezaAtivar()\n");
 echo("      {\n");
 /* 57 - Tem certeza que deseja ativar esta agenda? */
 /* 58 - (Uma vez ativada, nao havera como desativa-la) */
-echo("        return(confirm(\""._("msg57_1")."\\n"._("msg58_1")."\"));\n");
+echo("        return(confirm(\""._("SURE_TO_ACTIVATE_AGENDA_1")."\\n"._("NO_WAY_TO_DEACTIVATE_1")."\"));\n");
 echo("      }\n");
 
 
@@ -217,7 +217,7 @@ echo("          }\n");
 
 echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
 
-echo("			$.post(\"".$model_agenda."decodifica_string.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
+echo("			$.post(\"".$model_geral."decodifica_string.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
 echo("				function(data){\n");
 echo("					var code = $.parseJSON(data);\n");
 echo("					$('#tit_".$id."_text').val(code);\n");
@@ -233,7 +233,7 @@ echo("          createSpan = document.createElement('span');\n");
 echo("          createSpan.className='link';\n");
 echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };\n");
 echo("          createSpan.setAttribute('id', 'OkEdita');\n");
-echo("          createSpan.innerHTML='"._("msg18_-1")."';\n");
+echo("          createSpan.innerHTML='"._("OK_-1")."';\n");
 echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
 
 echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
@@ -245,7 +245,7 @@ echo("          createSpan = document.createElement('span');\n");
 echo("          createSpan.className='link';\n");
 echo("          createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };\n");
 echo("          createSpan.setAttribute('id', 'CancelaEdita');\n");
-echo("          createSpan.innerHTML='"._("msg2_-1")."';\n");
+echo("          createSpan.innerHTML='"._("CANCEL_-1")."';\n");
 echo("          document.getElementById('tit_'+id).appendChild(createSpan);\n\n");
 
 echo("          //cria o elemento 'espaco' e adiciona na pagina\n");
@@ -268,18 +268,17 @@ echo("				novoconteudo = document.getElementById(id+'_text').value;\n");
 echo("				//Edita o título do item dado, dinâmicamente\n");
 echo("			$.post(\"".$model_agenda."editar_titulo.php\",{cod_curso:cod_curso, cod_item:codigo, novo_nome:novoconteudo, cod_usuario:cod_usuario}, \n");
 echo("				function(data){\n");
-//echo("					var code = $.parseJSON(data);\n");
 echo("					$('#tr_".$id."').toggleClass('novoitem');\n");
 echo("					$('#tit_".$id."').html(novoconteudo);\n");
 /* 103 - Agenda renomeada com sucesso.*/
-echo("					mostraFeedback('"._("msg103_1")."', 'true');\n");
+echo("					mostraFeedback('"._("AGENDA_RENAMED_SUCCESS_1")."', 'true');\n");
 echo("			});\n");
 echo("			//else - se o título for vazio.\n");
 echo("			}else{\n");
 echo("				/* 15 - O titulo nao pode ser vazio. */\n");
 echo("				if ((valor=='ok')&&(document.getElementById(id+'_text').value == \"\"))\n");
-/* 15 - O título não pode ser vazio.*/
-echo("					alert('"._("msg15_1")."');\n");
+/* 92 - O título não pode ser vazio.*/
+echo("					alert('"._("TITLE_CANNOT_BE_EMPTY_-1")."');\n");
 echo("					document.getElementById(id).innerHTML=conteudo;\n");
 //echo("			if(navigator.appName.match(\"Opera\")){\n");
 //echo("				document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);\n");
@@ -304,7 +303,7 @@ echo("	});");
 
 echo("    </script>\n\n");
 
-echo("    <script type=\"text/javascript\" src=\"../../../web-content/js-css/jscriptlib.js\"> </script>\n");
+echo("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."jscriptlib_agenda.js\"> </script>\n");
 
 require_once $view_administracao.'menu_principal.php';
 
@@ -344,11 +343,11 @@ if($origem == "ver_anteriores")
   {
     /* 1 - Agenda */
     /*2 - Agendas Anteriores*/
-$cabecalho = "          <h4>"._("msg1_1")." - "._("msg2_1")."</h4>";
+$cabecalho = "          <h4>"._("AGENDA_1")." - "._("PAST_AGENDAS_1")."</h4>";
 } else {
     /* 1 - Agenda */
     /* 111 - Editar Agenda*/
-     $cabecalho = "          <h4>"._("msg1_1")." - "._("msg111_1")."</h4>";
+     $cabecalho = "          <h4>"._("AGENDA_1")." - "._("EDIT_AGENDA_1")."</h4>";
 }
 echo($cabecalho);
 
@@ -361,7 +360,7 @@ echo("          <div id=\"mudarFonte\">\n");
 
   /*Voltar*/
    /* 509 - Voltar */
-echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
   /* Tabela Externa */
   echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -371,13 +370,13 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
 
   if($origem == "ver_anteriores")
   /*33 - Voltar para Agenda Anteriores*/
-  $frase = _("msg33_1");
+  $frase = _("BACK_TO_PAST_AGENDAS_1");
   else if($origem == "ver_editar")
   	/*3 - Agendas Futuras*/
-  			$frase = _("msg3_1");
+  			$frase = _("FUTURE_AGENDAS_1");
   			else
   				/*8 - Voltar para Agenda Atual*/
-  				$frase = _("msg8_1");
+  				$frase = _("BACK_TO_ACTUAL_AGENDA_1");
 
 
   				if($origem == "ver_editar")
@@ -389,14 +388,14 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
 
   echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
   /*34 - Historico */
-  			echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">"._("msg34_1")."</span></li>\n");
+  			echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">"._("RECORD_OF_CHANGES_-1")."</span></li>\n");
   			if($origem == "ver_editar"){
   			/*24 - Publicar */
-  			echo("                  <li><span onClick=\"Ativar();\">"._("msg24_1")."</span></li>\n");
+  			echo("                  <li><span onClick=\"Ativar();\">"._("ACTIVATE_1")."</span></li>\n");
   }
   /* 1(ger) - Apagar */
   if($usr_formador){
-  			echo("                  <li><span onClick=\"ApagarItem();\">"._("msg1_-1")."</span></li>\n");
+  			echo("                  <li><span onClick=\"ApagarItem();\">"._("DELETE_-1")."</span></li>\n");
   }
   echo("                </ul>\n");
   echo("              </td>\n");
@@ -407,7 +406,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
   echo("                  <tr class=\"head\">\n");
   /*18 - Titulo */
-  			echo("                    <td class=\"alLeft\" align=\"left\">"._("msg18_1")."</td>\n");
+  			echo("                    <td class=\"alLeft\" align=\"left\">"._("TITLE_-1")."</td>\n");
 
   					/*Conteudo da Agenda*/
   			
@@ -415,14 +414,14 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			if(($usr_formador) && ($linha_item['situacao'] != "H"))
   			{
   				/*70 (gn) - Opcoes */
-  				echo("                  <td align=center width=\"15%\">"._("msg70_-1")."</td>\n");
+  				echo("                  <td align=center width=\"15%\">"._("OPTIONS_0")."</td>\n");
   			}
   			echo("                  </tr>\n");
 
   			$titulo=$linha_item['titulo'];
 
   			/* (ger) 9 - Editar */
-  			$editar=_("msg9_-1");
+  			$editar=_("EDIT_-1");
 
   			if ($linha_item['status']=="E")
   			{
@@ -435,12 +434,12 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   					if($usr_formador)
   					{
         $titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
-        // 106 - Renomear Ti\ADtulo
-        $renomear="<span id=\"renomear_".$linha_item['cod_item']."\">"._("msg106_1")."</span>";
+        // 106 - Renomear Título
+        $renomear="<span id=\"renomear_".$linha_item['cod_item']."\">"._("RENAME_TITLE_-1")."</span>";
         /* 91 - Editar texto */
-        $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">"._("msg91_1")."</span>";
+        $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">"._("EDIT_TEXT_-1")."</span>";
         /* 92 - Limpar texto */
-        $limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">"._("msg92_1")."</span>";
+        $limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">"._("DELETE_TEXT_-1")."</span>";
   					}
   				}
   			}
@@ -451,11 +450,11 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				{
   					$titulo="<span id=\"tit_".$linha_item['cod_item']."\">".$linha_item['titulo']."</span>";
   					// 106 - Renomear Ti\ADtulo
-  					$renomear="<span id=\"renomear_".$linha_item['cod_item']."\">"._("msg106_1")."</span>";
+  					$renomear="<span id=\"renomear_".$linha_item['cod_item']."\">"._("RENAME_TITLE_-1")."</span>";
   					/* 91 - Editar texto */
-  					$editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">"._("msg91_1")."</span>";
+  					$editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">"._("EDIT_TEXT_-1")."</span>";
   					/* 92 - Limpar texto */
-  					$limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">"._("msg92_1")."</span>";
+  					$limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">"._("DELETE_TEXT_-1")."</span>";
   				}
   			}
 
@@ -518,7 +517,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
 
   			echo("                  <tr class=\"head\">\n");
   			/* 94 - Conteudo  */
-  			echo("                    <td colspan=\"4\">"._("msg94_1")."</td>\n");
+  			echo("                    <td colspan=\"4\">"._("CONTENT_-1")."</td>\n");
   			echo("                  </tr>\n");
   			echo("                  <tr>\n");
   			echo("                    <td class=\"itens\" colspan=\"4\">\n");
@@ -531,7 +530,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   			if ($usr_formador){
   				echo("                  <tr class=\"head\">\n");
   				/* 57(biblioteca) - Arquivos */
-  				echo("                    <td colspan=\"4\">"._("msg57_-2")."</td>\n");
+  				echo("                    <td colspan=\"4\">"._("FILES_-2")."</td>\n");
   				echo("                  </tr>\n");
 
 
@@ -597,12 +596,12 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   								}
 								
   								/* 107 - Última modificação em */
-  								echo("                          ".$espacos2.$espacos.$imagem.$tag_abre.$linha['Arquivo'].$tag_fecha." - (".round(($linha['Tamanho']/1024),2)."Kb) - "._("msg107_1")." ".Data::UnixTime2Hora($linha["Data"])." ".Data::UnixTime2DataMesAbreviado($linha["Data"])."");
+  								echo("                          ".$espacos2.$espacos.$imagem.$tag_abre.$linha['Arquivo'].$tag_fecha." - (".round(($linha['Tamanho']/1024),2)."Kb) - "._("LAST_MODIFICATION_IN_-1")." ".Data::UnixTime2Hora($linha["Data"])." ".Data::UnixTime2DataMesAbreviado($linha["Data"])."");
 
   								echo("<span id=\"local_entrada_".$conta_arq."\">");
   								if ($linha['Status'])
   									// 59 - entrada
-  									echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>"._("msg59_1")."</span></span>");
+  									echo("<span id=\"arq_entrada_".$conta_arq."\">- <span style='color:red;'>"._("MAIN_PAGE_1")."</span></span>");
   								echo("</span>\n");
   								echo("                          ".$espacos2."<br>\n");
   								echo("                        ".$espacos2."</span>\n");
@@ -663,11 +662,11 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				echo("                      <ul>\n");
   				echo("                        <li class=\"checkMenu\"><span><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></span></li>\n");
   				/*1 - Apagar (ger) */
-  				echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">"._("msg1_-1")."</span></li>\n");
+  				echo("                        <li class=\"menuUp\" id=\"mArq_apagar\"><span id=\"sArq_apagar\">"._("DELETE_-1")."</span></li>\n");
   				/*38 - Descompactar (ger)*/
-  				echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">"._("msg38_-1")."</span></li>\n");
+  				echo("                        <li class=\"menuUp\" id=\"mArq_descomp\"><span id=\"sArq_descomp\">"._("EXTRACT_-1")."</span></li>\n");
   				/*60 - Selecionar Entrada */
-  				echo("                        <li class=\"menuUp\" id=\"mArq_entrada\"><span id=\"sArq_entrada\">"._("msg60_1")."</span></li>\n");
+  				echo("                        <li class=\"menuUp\" id=\"mArq_entrada\"><span id=\"sArq_entrada\">"._("SELECT_MAIN_PAGE_1")."</span></li>\n");
   				echo("                      </ul>\n");
   				echo("                    </td>\n");
   				echo("                  </tr>\n");
@@ -681,10 +680,10 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				echo("                        <div id=\"divArquivoEdit\" class=\"divHidden\">\n");
   				echo("                          <img alt=\"\" src=\"".$diretorio_imgs."paperclip.gif\" border=0 />\n");
   				/* 26 - Anexar Arquivo */
-  				echo("                          <span class=\"destaque\">"._("msg26_-1")."</span>\n");
+  				echo("                          <span class=\"destaque\">"._("ATTACH_FILE_-1")."</span>\n");
   				/* 48 - Pressione o botão abaixo para selecionar o arquivo a ser anexado  em seguida, pressione OK para prosseguir.
   				 * 49 - (arquivos .ZIP podem ser enviados e descompactados posteriormente)*/
-  				echo("                          <span> - "._("msg48_1")._("msg49_1")."</span>\n");
+  				echo("                          <span> - "._("PRESS_BUTTON_SELECT_ATTACH_FILE_-1")._("ZIP_FILES_CAN_BE_EXTRACTED_-1")."</span>\n");
   				echo("                          <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
   				echo("                          <input type=\"file\" id=\"input_files\" name=\"input_files\" onchange=\"EdicaoArq(1);\" style=\"border:2px solid #9bc\" />\n");
   				echo("                          &nbsp;&nbsp;\n");
@@ -693,7 +692,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				//echo("                          <span onClick=\"EdicaoArq(0);\" id=\"cancFile\" class=\"link\">".Linguas::RetornaFraseDaLista ($lista_frases_geral, 2)."</span>\n");
   				echo("                        </div>\n");
   				/* 26 - Anexar arquivo (ger) */
-  				echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"".$diretorio_imgs."paperclip.gif\" border=0 /> <span class=\"link\" id =\"insertFile\" onClick=\"AcrescentarBarraFile(1);\">"._("msg26_-1")."</span></div>\n");
+  				echo("                        <div id=\"divArquivo\"><img alt=\"\" src=\"".$diretorio_imgs."paperclip.gif\" border=0 /> <span class=\"link\" id =\"insertFile\" onClick=\"AcrescentarBarraFile(1);\">"._("ATTACH_FILE_-1")."</span></div>\n");
   				echo("                      </form>\n");
   				echo("                    </td>\n");
   				echo("                  </tr>\n");
@@ -709,11 +708,11 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
   				echo("            <tr>\n");
   				/* 59 - entrada. */
   				/* 20 - Este arquivo sera a entrada da agenda*/
-  				echo("              <td align=\"left\">(<font color=red>"._("msg59_1")."</font>) - "._("msg20_1")."</td>\n");
+  				echo("              <td align=\"left\">(<font color=red>"._("MAIN_PAGE_1")."</font>) - "._("FILE_AGENDA_MAIN_PAGE_1")."</td>\n");
   				echo("            </tr>\n");
   				echo("            <tr>\n");
   				/* 44 - Obs.: A agenda devera conter somente texto ou somente arquivos. */
-  				echo("              <td align=\"left\">"._("msg44_1")."\n");
+  				echo("              <td align=\"left\">"._("CONTAIN_ONLY_TEXT_OR_ONLY_FILE_1")."\n");
   			}
   			/*Fim tabela externa*/
   			echo("              </td>\n");

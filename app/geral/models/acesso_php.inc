@@ -101,9 +101,9 @@ class AcessoPHP{
 			/* Fim do JavaScript */
 			require_once $view_admin.'menu_principal_tela_inicial.php';
 			echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-			/* 4 - Autorizaï¿½o necessï¿½ia para entrar no Ambiente de Administraï¿½o do TelEduc. */
+			/* 4 - Autorização necessária para entrar no Ambiente de Administração do TelEduc. */
 			/* 23 - Voltar */
-			echo (_("msg4_-2")." <a href=\"#\" onclick=\"history.back(); return false;\">"._("msg23_-1")."</a>\n");
+			echo (_("AUTHORIZATION_NECESSARY_ENTER_-2")." <a href=\"#\" onclick=\"history.back(); return false;\">"._("BACK_-1")."</a>\n");
 			echo("</td>\n");
 			echo("</tr>\n");
 			require_once $view_admin.'rodape_tela_inicial.php';
@@ -156,9 +156,9 @@ class AcessoPHP{
 			$linha=AcessoSQL::RetornaLinha($res);
 			if ($linha[0]!="A")
 			{
-				/* 12 - Este curso nï¿½ permite a entrada de visitantes. */
+				/* 12 - Este curso não permite a entrada de visitantes. */
 				/* 23 - Voltar. */
-				echo _("msg12_-2").' <a href=# onclick=history.go(-1);>'._("msg23_-1").'</a>';
+				echo _("COURSE_DOESNT_ALLOW_VISITOR_-2").' <a href=# onclick=history.go(-1);>'._("BACK_-1").'</a>';
 				AcessoSQL::Desconectar($sock);
 				exit;
 			}

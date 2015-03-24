@@ -68,10 +68,10 @@ require_once $view_administracao.'topo_tela.php';
 $feedbackObject =  new FeedbackObject($lista_frases);
 
 //adicionar as acoes possiveis, 1o parametro é
-/* 88 - Importar selecionados*/
-$feedbackObject->addAction("validarImportacao", 0, _("msg88_1"));
-/* 112 - Erro ao Importar, favor selecionar uma opção!*/
-$feedbackObject->addAction("ErroImportacao", 0, _("msg112_1"));
+/* Importar selecionados*/
+$feedbackObject->addAction("validarImportacao", 0, _("IMPORT_SELECTED_-1"));
+/* Erro ao Importar, favor selecionar uma opção!*/
+$feedbackObject->addAction("ErroImportacao", 0, _("ERROR_TO_IMPORT_-1"));
 
 echo ("    <script type=\"text/javascript\" src=\"".$diretorio_jscss."dhtmllib.js\"></script>\n");
 echo ("    <script type=\"text/javascript\" language=javascript src=\"".$diretorio_jscss."javacrypt.js\"></script>\n");
@@ -100,14 +100,14 @@ if ($tipo_curso == 'E') {
 	echo ("        if (ComparaData(document.getElementById('data_inicio'), document.getElementById('data_fim')) > 0)\n");
 	echo ("        {\n");
 	//31(biblioteca) - Período Inválido!
-	echo ("          alert('" . _("msg31_-2") . "!');\n");
+	echo ("          alert('" . _("INVALID_PERIOD_-2") . "!');\n");
 	echo ("          document.frmAlteraPeriodo.data_inicio.value = document.frmAlteraPeriodo.data_fim.value;\n");
 	echo ("          return false;\n");
 	echo ("        }\n");
 	echo ("        else if (AnoMesDia(document.getElementById('data_fim').value) > AnoMesDia(hoje))\n");
 	echo ("        {\n");
 	// 31(biblioteca) - Período Inválido!
-	echo ("          alert('" . _("msg31_-2") . "!');\n");
+	echo ("          alert('" . _("INVALID_PERIOD_-2") . "!');\n");
 	echo ("          document.getElementById('data_fim').value = hoje;\n");
 	echo ("          return false;\n");
 	echo ("        }\n");
@@ -217,13 +217,13 @@ echo ("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* Impede o acesso a algumas secoes aos usuários que não são formadores. */
 if (!$tela_formador) {
 	/* 1 - Agenda*/
-	echo ("          <h4>" . _("msg1_1"));
+	echo ("          <h4>" . _("AGENDA_1"));
 	/* 73 - Acao exclusiva a formadores. */
-	echo ("    - " . _("msg73_1") . "</h4>");
+	echo ("    - " . _("ACTION_FOR_INSTRUCTORS_-1") . "</h4>");
 
 	/*Voltar*/
 	/* 509 - Voltar */
-	echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+	echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 	echo ("          <div id=\"mudarFonte\">\n");
 	echo ("            <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"".$diretorio_imgs."btFont1.gif\"/></a>\n");
@@ -241,9 +241,9 @@ if (!$tela_formador) {
 }
 
 // 1 - Agenda
-$cabecalho = ("         <h4>" . _("msg1_1"));
+$cabecalho = ("         <h4>" . _("AGENDA_1"));
 /*66 - Importando Agenda */
-$cabecalho .= (" - " . _("msg66_1") . "</h4>\n");
+$cabecalho .= (" - " . _("IMPORTING_AGENDA_1") . "</h4>\n");
 echo ($cabecalho);
 
 // 3 A's - Muda o Tamanho da fonte
@@ -255,22 +255,22 @@ echo ("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 echo ("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo ("            <tr>\n");
 echo ("              <td valign=\"top\" colspan=3>\n");
 echo ("                <ul class=\"btAuxTabs\">\n");
 /* 23(ger) - Voltar */
-echo ("                  <li><a href=\"ver_editar.php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "\">" . _("msg23_-1") . "</a></li>\n");
-/* 35(biblioteca) - Cursos Em Andamento */
-echo ("                  <li><span onclick=\"ListarCursos('A');\">" . _("msg35_-2") . "</span></li>\n");
-/* 36(biblioteca) - Cursos Com Inscrições Abertas  */
-echo ("                  <li><span onclick=\"ListarCursos('I');\">" . _("msg36_-2") . "</span></li>\n");
+echo ("                  <li><a href=\"ver_editar.php?cod_curso=" . $cod_curso . "&amp;cod_usuario=" . $cod_usuario . "\">" . _("BACK_-1") . "</a></li>\n");
+/* 6 - Cursos Em Andamento */
+echo ("                  <li><span onclick=\"ListarCursos('A');\">" . _("CURRENT_COURSES_-3") . "</span></li>\n");
+/* 7 - Cursos Com Inscrições Abertas  */
+echo ("                  <li><span onclick=\"ListarCursos('I');\">" . _("OPEN_ENROLLMENT_COURSES_-3") . "</span></li>\n");
 /* 37(biblioteca) - Cursos Latentes */
-echo ("                  <li><span onclick=\"ListarCursos('L');\">" . _("msg37_-2") . "</span></li>\n");
-/* 38(biblioteca) - Cursos Encerrados */
-echo ("                  <li><span onclick=\"ListarCursos('E');\">" . _("msg38_-2") . "</span></li>\n");
+echo ("                  <li><span onclick=\"ListarCursos('L');\">" . _("PENDING_COURSES_-2") . "</span></li>\n");
+/* 8 - Cursos Encerrados */
+echo ("                  <li><span onclick=\"ListarCursos('E');\">" . _("CLOSED_COURSES_-3") . "</span></li>\n");
 echo ("                </ul>\n");
 echo ("              </td>\n");
 echo ("            </tr>\n");
@@ -282,31 +282,31 @@ echo ("                  <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabI
 echo ("                    <tr class=\"head\">\n");
 if ('E' == $tipo_curso) {
 	// 40(biblioteca) - Período:
-	echo ("                      <td width=\"15%\">" . _("msg40_-2") . "</td>\n");
+	echo ("                      <td width=\"15%\">" . _("PERIOD_-2") . "</td>\n");
 }
 // 44(biblioteca) - Categorias
-echo ("                      <td align=center width=\"15%\"><b>" . _("msg44_-2") . "</b></td>\n");
+echo ("                      <td align=center width=\"15%\"><b>" . _("CATEGORIES_-2") . "</b></td>\n");
 
 switch ($tipo_curso) {
 	// 62 - Cursos em andamento com agenda compartilhada
 	case 'A' :
-		$texto_categoria = _("msg62_1");
+		$texto_categoria = _("CURRENT_COURSES_SHARED_AGENDA_1");
 		$periodo_inicio = time();
 		$periodo_fim = $periodo_inicio;
 		break;
 		// 63 - Cursos com inscricoes abertas com agenda compartilhada
 	case 'I' :
-		$texto_categoria = _("msg63_1");
+		$texto_categoria = _("OPEN_REG_COURSES_SHARED_AGENDA_1");
 		$periodo_inicio = $periodo_fim = "";
 		break;
 		// 64 - Cursos em latentes com agenda compartilhada
 	case 'L' :
-		$texto_categoria = _("msg64_1");
+		$texto_categoria = _("PENDING_COURSES_SHARED_AGENDA_1");
 		$periodo_inicio = $periodo_fim = "";
 		break;
 		// 65 - Cursos encerrados com agenda compartilhada
 	case 'E' :
-		$texto_categoria = _("msg65_1");
+		$texto_categoria = _("CLOSED_COURSES_SHARED_AGENDA_1");
 		// Converte datas do periodo para "UnixTime"
 		$periodo_inicio = Data::Data2UnixTime($data_inicio);
 		$periodo_fim = Data::Data2UnixTime($data_fim);
@@ -316,7 +316,7 @@ switch ($tipo_curso) {
 // Texto da categoria - ver acima
 echo ("                      <td align=center width=\"30%\"><b>" . $texto_categoria . "</b></td>\n");
 // 47(biblioteca) - Todos Cursos
-echo ("                      <td align=center><b>" . _("msg47_-2") . "</b></td>\n");
+echo ("                      <td align=center><b>" . _("ALL_COURSES_-2") . "</b></td>\n");
 
 $sock = AcessoSQL::MudarDB($sock, "");
 
@@ -354,15 +354,15 @@ if ('E' == $tipo_curso) {
 	// Passa o codigo da ferramenta.
 	echo ("                          <input type=\"hidden\" name=\"cod_ferramenta\" value='" . $cod_ferramenta . "' />\n");
 	// 46(biblioteca) - (extraido)
-	echo ("                          <input type=\"hidden\" name=\"extraido\"       value='" . _("msg46_-2") . "' />\n");
+	echo ("                          <input type=\"hidden\" name=\"extraido\"       value='" . _("EXTRACTED_-2") . "' />\n");
 	// 41(biblioteca) - De:
-	echo ("                " . _("msg41_-2") . " <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size=\"10\" maxlength=\"10\" value='" . $data_inicio . "' class=\"input\" /><img src='".$diretorio_imgs."ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" /><br />");
+	echo ("                " . _("FROM_-1") . " <input type=\"text\" id=\"data_inicio\" name=\"data_inicio\" size=\"10\" maxlength=\"10\" value='" . $data_inicio . "' class=\"input\" /><img src='".$diretorio_imgs."ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_inicio'),'dd/mm/yyyy',this);\" /><br />");
 	// 42(biblioteca) - Ate:
-	echo ("                " . _("msg42_-2") . "\n");
+	echo ("                " . _("UNTIL_-2") . "\n");
 	echo ("                          <input type=\"text\" id=\"data_fim\" name=\"data_fim\" size=\"10\" maxlength=\"10\" value='" . $data_fim . "' class='input' /><img src='".$diretorio_imgs."ico_calendario.gif' alt='' onclick=\"displayCalendar(document.getElementById ('data_fim'),'dd/mm/yyyy',this);\" />\n");
 	echo ("                          <p style=\"text-align:center;\">\n");
 	// 43(biblioteca) - Alterar Periodo
-	echo ("                            <input type=\"submit\" class=\"input\" value=\"" . _("msg43_-2") . "\" />\n");
+	echo ("                            <input type=\"submit\" class=\"input\" value=\"" . _("CHANGE_PERIOD_-2") . "\" />\n");
 	echo ("                          </p>\n");
 	echo ("                        </form>");
 	echo ("                      </td>\n");
@@ -397,7 +397,7 @@ if (count($categorias) > 0) {
 }
 
 // 45(biblioteca) - Cursos Gerais
-echo ("                          <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected" : "") . ">" . _("msg45_-2") . "</option> \n");
+echo ("                          <option value='NULL'" . (("NULL" == $cod_categoria) ? " selected" : "") . ">" . _("GENERAL_COURSE_-3") . "</option> \n");
 echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td align=\"center\">\n");
@@ -407,7 +407,7 @@ echo ("                        <select class=\"input\" name=\"cod_curso_todos\" 
 if (count($cursos_compart) > 0) {
 	foreach ($cursos_compart as $idx => $dados) {
 		// 46(biblioteca) - (extraído)
-		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . _(("msg46_-2"))) : "") . "</option>\n");
+		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . _(("EXTRACTED_-2"))) : "") . "</option>\n");
 	}
 }
 echo ("                        </select>\n");
@@ -422,14 +422,14 @@ echo ("                        <select class=\"input\" name=\"cod_curso_todos\" 
 if (count($todos_cursos) > 0) {
 	foreach ($todos_cursos as $idx => $dados) {
 		// 46(biblioteca) - (extraido)
-		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . _("msg46_-2")) : "") . "</option>\n");
+		echo ("                          <option value='" . $dados['status'] . ";" . $dados["cod_curso"] . "'>" . $dados["nome_curso"] . (($dados['status'] == 'E') ? (" " . _("EXTRACTED_-2")) : "") . "</option>\n");
 	}
 }
 echo ("                        </select>\n");
 echo ("                      </td>\n");
 echo ("                      <td>\n");
 /* 75(ger) - Importar */
-echo ("                        <input class=\"input\" type=\"submit\"  value=\"" . _("msg75_-1") . "\" />\n");
+echo ("                        <input class=\"input\" type=\"submit\"  value=\"" . _("IMPORT_-1") . "\" />\n");
 echo ("                      </td>\n");
 echo ("                    </tr>\n");
 echo ("                </table>\n");

@@ -42,7 +42,7 @@ require_once $view_admin.'menu_principal_tela_inicial.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* 3 - Criacao de Curso */
-echo("          <h4>"._("msg3_-5")."</h4>\n");
+echo("          <h4>"._("CREATION_COURSE_-5")."</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("          <div id=\"mudarFonte\">\n");
@@ -52,15 +52,15 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 echo("          <!-- Tabelao -->\n");
 echo("          <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaExterna\" class=\"tabExterna\">\n");
 echo("            <tr>\n");
 echo("              <td>\n");
 echo("                <ul class=\"btAuxTabs\">\n");
-/* 23 - Voltar (Ger) */
-echo("                  <li><span title=\""._("msg23_-1")."\" onClick=\"document.location='criar_curso.php'\">"._("msg23_-1")."</span></li>\n");
+/* 509 - Voltar */
+echo("                  <li><span title=\""._("BACK_-1")."\" onClick=\"document.location='criar_curso.php'\">"._("BACK_-1")."</span></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -132,7 +132,7 @@ if($cod_usuario != 0)
 	$endereco=$host.$raiz_www;
 
 	/* 99 - Informacoes para acesso ao curso no TelEduc */
-	$assunto = _("msg99_-5");
+	$assunto = _("INFO_COURSE_ACCESS_-5");
 
 	/* 100 - Seu pedido para realizacao do curso*/
 	/* 101 - foi aceito.*/
@@ -142,30 +142,30 @@ if($cod_usuario != 0)
 	/* 105 - Atenciosamente, Administracao do Ambiente TelEduc*/
 
 	$mensagem ="<p>".$nome_aluno.",</p>\n";
-	$mensagem.="<p>"._("msg100_-5")." ".$nome_curso." "._("msg101_-5")."</p>\n";
+	$mensagem.="<p>"._("YOUR_REQUEST_CREATE_COURSE_-5")." ".$nome_curso." "._("WAS_ACCEPTED_-5")."</p>\n";
 	if($cod_usuario == -1)
 	{
 		//um novo usuario foi cadastrado, entaum devemos enviar-lhe seus dados para acessar o teleduc
-		$mensagem.="<p>"._("msg102_-5")." <big><em><strong>".$login."</strong></em></big> ";
-		$mensagem.=_("msg103_-5")." <big><em><strong>".$senha."</strong></em></big></p>\n";
+		$mensagem.="<p>"._("YOUR_ID_COURSE_ACCESS_-5")." <big><em><strong>".$login."</strong></em></big> ";
+		$mensagem.=_("YOUR_PASSWORD_IS_-5")." <big><em><strong>".$senha."</strong></em></big></p>\n";
 	}
-	$mensagem.="<p>"._("msg104_-5")."<br />\n";
+	$mensagem.="<p>"._("ADDRESS_COURSE_ACCESS_-5")."<br />\n";
 	$mensagem.="<a href=\"http://".$endereco.$ctrl_login."index_curso.php?cod_curso=".$cod_curso."\">http://".$endereco.$ctrl_login."index_curso.php?cod_curso=".$cod_curso."</a></p>\n\n";
-	$mensagem.="<p style=\"text-align:right;\">"._("msg105_-5").".</p><br />\n";
+	$mensagem.="<p style=\"text-align:right;\">"._("SINCERELY_ADM_TELEDUC_-5").".</p><br />\n";
 
 
 	$mensagem_envio = Email::MontaMsg($host, $raiz_www, $cod_curso, $mensagem, $assunto);
 	Email::MandaMsg($remetente,$destino,$assunto,$mensagem_envio);
 
 	/* 106 - Curso criado corretamente. */
-	echo("                      "._("msg106_-5")."<br />\n");
+	echo("                      "._("SUCCESS_CREATE_COURSE_-5")."<br />\n");
 	/* 107 - Um email com as instrucoes de acesso ao curso foi enviado ao coordenador cadastrado. */
-	echo("                      "._("msg107_-5")."\n");
+	echo("                      "._("EMAIL_ACCESS_COURSE_COORD_-5")."\n");
 }
 else
 {
 	/* 534 - Login inexistente! Volte e digite o login novamente ou escolha a opcao de cadastrar o coordenador no ambiente. */
-	echo _("msg534_-5");
+	echo _("INEXISTENT_LOGIN_COORD_-5");
 }
 
 echo("                    </td>\n");

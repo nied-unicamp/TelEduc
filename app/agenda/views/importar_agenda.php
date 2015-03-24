@@ -125,9 +125,9 @@ $sock = AcessoSQL::MudarDB($sock, $cod_curso_origem);
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 // Pagina Principal
 // 1 - Agenda
-$cabecalho = ("          <h4>" . _("msg1_1"));
+$cabecalho = ("          <h4>" . _("AGENDA_1"));
 /*66 - Importando Agenda */
-$cabecalho .= (" - " . _("msg66_1") . "</h4>\n");
+$cabecalho .= (" - " . _("IMPORTING_AGENDA_1") . "</h4>\n");
 echo ($cabecalho);
 
 // 3 A's - Muda o Tamanho da fonte
@@ -139,10 +139,10 @@ echo ("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 /* 1 - Agenda */
-$cabecalho = "  <b class=\"titulo\">"._("msg1_1")."</b>";
+$cabecalho = "  <b class=\"titulo\">"._("AGENDA_1")."</b>";
 
 echo ("          <form method=\"post\" name=\"frmImportar\">\n");
 echo ("          <input type=\"hidden\" name=\"cod_curso\" value=\"" . $cod_curso . "\">\n");
@@ -163,7 +163,7 @@ echo ("          <tr>\n");
 echo ("            <td valign=\"top\">\n");
 echo ("              <ul class=\"btAuxTabs\">\n");
 /* 2 - Cancelar (geral) */
-echo ("                  <li><span onClick=history.go(-1);>" . _("msg2_-1") . "</span></li>\n");
+echo ("                  <li><span onClick=history.go(-1);>" . _("CANCEL_-1") . "</span></li>\n");
 echo ("              </ul>\n");
 echo ("            </td>\n");
 echo ("          </tr>\n");
@@ -173,9 +173,9 @@ echo ("              <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInter
 echo ("                <tr class=\"head\">\n");
 echo ("                  <td align=\"center\"><b><input type=\"checkbox\" name=\"select_all\" id=\"select_all\" onclick=\"CheckAll();\"></td>\n");
 // 78 - Agendas do Curso:
-echo ("                  <td align=\"left\"><b>" . _("msg78_1") . "&nbsp;" . $nome_curso_import . "</b></td>\n");
+echo ("                  <td align=\"left\"><b>" . _("COURSE_AGENDAS_1") . "&nbsp;" . $nome_curso_import . "</b></td>\n");
 /* 7 - Data */
-echo ("                  <td align=\"center\"><b>" . _("msg7_1") . "</b></td>\n");
+echo ("                  <td align=\"center\"><b>" . _("DATE_-1") . "</b></td>\n");
 echo ("                </tr>\n");
 
 /*verificar status... confirmar.. e verificar c eh necessario cancelar a edicao!*/
@@ -215,7 +215,7 @@ if ((count($lista_itens) > 0) && ($lista_itens != "")) {
 } else {
 	echo ("                <tr " . $marcatr . ">\n");
 	/* 4 - Nenhuma agenda adicionada ainda! */
-	echo ("                  <td colspan=\"4\">" . _("msg4_1") . "</td>\n");
+	echo ("                  <td colspan=\"4\">" . _("NONE_AGENDA_ADDED_1") . "</td>\n");
 	echo ("                </tr>\n");
 }
 echo ("                </table>\n");
@@ -225,8 +225,8 @@ if (count($lista_itens) > 0) {
 	echo ("            <tr>\n");
 	echo ("              <td valign=\"top\">\n");
 	echo ("                <ul>\n");
-	/* 88 - Importar Selecionados */
-	echo ("                  <li id=\"Importar_Selec\" class=\"menuUp\"><span id=\"importar\">" . _("msg88_1") . "</span></li>\n");
+	/* Importar Selecionados */
+	echo ("                  <li id=\"Importar_Selec\" class=\"menuUp\"><span id=\"importar\">" . _("IMPORT_SELECTED_-1") . "</span></li>\n");
 	echo ("                </ul>\n");
 	echo ("              </td>\n");
 	echo ("            </tr>\n");

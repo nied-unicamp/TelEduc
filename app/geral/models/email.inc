@@ -54,21 +54,21 @@ class Email {
 
         if ($cod_curso != '') {
             /* 116 - Nome do curso */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg116_11") . ":</strong> " . $nome_curso . "<br />\n";
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("COURSE_NAME_-5") . "</strong> " . $nome_curso . "<br />\n";
         }
 
         /* 24 - Data */
-        $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg24_11") . ":</strong> ";
+        $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("DATE_-1") . ":</strong> ";
         $html_email.=Data::UnixTime2DataHora(time()) . "<br />\n";
 
         if ($cod_usuario_remetente != '') {
             /* 23 - Remetente */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg23_11") . ":</strong> ";
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("SENDER_11") . ":</strong> ";
             $html_email.=$nome_remetente . "<br />\n";
         }
         if ($destinatarios != '') {
-            /* 27 - Destinat√°rios */
-            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("msg27_11") . ":</strong> ";
+            /* 27 - Destinat·rios */
+            $html_email.="\t\t\t\t\t\t\t\t\t<strong>" . _("RECIPIENTS_11") . ":</strong> ";
             $html_email.=htmlentities($destinatarios) . "<br />\n";
         }
         $html_email.="\t\t\t\t\t\t\t\t\t<strong>Assunto:</strong> " . htmlentities($assunto) . "\n";

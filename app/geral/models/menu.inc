@@ -77,13 +77,39 @@ class Menu {
     }
 	
     static function RetornaNomeFerramentaCod($cod_ferramenta){
-    	$sock = AcessoSQL::Conectar("");    	
+    	/* $sock = AcessoSQL::Conectar("");    	
     	$query = "select cod_texto_nome from Ferramentas where cod_ferramenta = " . $cod_ferramenta;
     	$res = AcessoSQL::Enviar($sock, $query);
     	
     	$nome = AcessoSQL::RetornaLinha($res);
     	
-    	return $nome[0];
+    	return $nome[0]; */
+    	
+    	switch($cod_ferramenta){
+    		case 1: echo _("AGENDA_-4"); break;
+    		case 3: echo _("ACTIVITIES_-4"); break;
+    		case 4: echo _("SUPPORT_MATERIAL_-4"); break;
+    		case 5: echo _("READINGS_-4"); break;
+    		case 6: echo _("FAQ_-4"); break;
+    		case 7: echo _("REQUIRED_STOP_-4"); break;
+    		case 8: echo _("BULLETIN_BOARD_-4"); break;
+    		case 9: echo _("DISCUSSION_FORUNS_-4"); break;
+    		case 10: echo _("CHAT_-4"); break;
+    		case 11: echo _("MAIL_-4"); break;
+    		case 12: echo _("GROUPS_-4"); break;
+    		case 13: echo _("PROFILE_-4"); break;
+    		case 14: echo _("DIARY_-4"); break;
+    		case 15: echo _("PORTFOLIO_-4"); break;
+    		case 16: echo _("COURSE_DYNAMIC_-4"); break;
+    		case 17: echo _("ENVIRONMENT_STRUCTURE_-4"); break;
+    		case 18: echo _("ACCESS_-4"); break;
+    		case 19: echo _("INTERMAP_-4"); break;
+    		case 22: echo _("EVALUATIONS_-4"); break;
+    		case 23: echo _("EXERCISES_-4"); break;
+    		case 24: echo _("POLLS_-4"); break;
+    		case 25: echo _("AUTHENTICATION_-4"); break;
+    		case 30: echo _("SEARCH_-4"); break;
+    	}
     }
     /*     * ********************************************************************
       RetornaListaTitulos - Retorna a lista de titulos
@@ -466,38 +492,11 @@ class Menu {
             echo("<img src='".$diretorio_imgs."estrelinha.gif' border=\"0\" alt=\"\" />");
         
         $nome_ferramenta = Menu::RetornaNomeFerramentaCod($cod_ferr);
-
-        echo _("msg".$nome_ferramenta."_-4");
+        
+        echo $nome_ferramenta;
         
         echo("                </a>\n");
         echo("              </div>\n");
         echo("            </li>\n");
     }
-    
-    static function ListaFerramentasMenuTrad(){
-    	echo _("msg5_-4");
-    	echo _("msg7_-4");
-    	echo _("msg9_-4");
-    	echo _("msg11_-4");
-    	echo _("msg13_-4");
-    	echo _("msg15_-4");
-    	echo _("msg17_-4");
-    	echo _("msg19_-4");
-    	echo _("msg21_-4");
-    	echo _("msg23_-4");
-    	echo _("msg25_-4");
-    	echo _("msg27_-4");
-    	echo _("msg29_-4");
-    	echo _("msg31_-4");
-    	echo _("msg3_-4");
-    	echo _("msg1_-4");
-    	echo _("msg33_-4");
-    	echo _("msg35_-4");
-    	echo _("msg52_-4");
-    	echo _("msg48_-4");
-    	echo _("msg54_-4");
-    	echo _("msg56_-4");
-    	echo _("msg58_-4");
-    }
-
 }

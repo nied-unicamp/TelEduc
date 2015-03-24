@@ -34,16 +34,16 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* Verificar qual o nome a ser exibido...*/
 if ($tipo_curso=="N")
 	/* 194 - Cursos nao iniciados */
-	echo("          <h4>"._("msg194_-3")."</h4>\n");
+	echo("          <h4>"._("NOT_BEGUN_COURSES_-3")."</h4>\n");
 else if ($tipo_curso=="A")
 	/* 6 - Cursos em Andamento */
-	echo("          <h4>"._("msg6_-3")."</h4>\n");
+	echo("          <h4>"._("CURRENT_COURSES_-3")."</h4>\n");
 else if ($tipo_curso=="I")
-	/* 7 - Cursos com inscricees abertas */
-	echo("          <h4>"._("msg7_-3")."</h4>\n");
+	/* 7 - Cursos com inscricoes abertas */
+	echo("          <h4>"._("OPEN_ENROLLMENT_COURSES_-3")."</h4>\n");
 else
 	/* 8 - Cursos encerrados */
-	echo("          <h4>"._("msg8_-3")."</h4>\n");
+	echo("          <h4>"._("CLOSED_COURSES_-3")."</h4>\n");
 /*else	/* else if($tipo_curso=="T") */
 /* 199 - Todos os cursos */
 /*echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,199)."</h4>\n");*/
@@ -56,7 +56,7 @@ echo("            <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" heigh
 echo("          </div>\n");
 
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 $lista_pastas=Inicial::RetornaPastasDeCursos($sock,$tipo_curso);
 
@@ -90,13 +90,13 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 
 		//169 - Categoria (adm)
 		echo("                  <tr class=\"head\">\n");
-		echo("                    <td colspan=\"3\"><b>"._("msg169_-5").": ".$nome_pasta."</b></td>\n");
+		echo("                    <td colspan=\"3\"><b>"._("CATEGORY_-5")." ".$nome_pasta."</b></td>\n");
 		echo("                  </tr>\n");
 	}
 
 	echo("                  <tr class=\"".$class."\">\n");
-	//265 - Nome do Curso (adm)
-	echo("                    <td align=\"left\" width=80%>"._("msg265_-5")."</td>\n");
+	//_( - Nome do Curso (adm)
+	echo("                    <td align=\"left\" width=80%>"._("COURSE_NAME_-5")."</td>\n");
 	//						    if(empty($_SESSION['login_usuario_s']))      /*caso o usuario nao esteja logado*/
 	echo("                    	<td colspan=2 width=\"10%\">&nbsp;</td>\n");
 	//							else
@@ -126,7 +126,7 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 				if ($linha['acesso_visitante']=="A")
 				{
 					/* 56 - Visitar */
-					echo("                    <td><input class=\"input\" value=\""._("msg56_-3")."\" onClick=\"document.location='".$ctrl_login."index_curso.php?cod_curso=".$linha['cod_curso']."&amp;visitante=sim';\" type=\"button\" /></td>\n");
+					echo("                    <td><input class=\"input\" value=\""._("VISIT_-3")."\" onClick=\"document.location='".$ctrl_login."index_curso.php?cod_curso=".$linha['cod_curso']."&amp;visitante=sim';\" type=\"button\" /></td>\n");
 				}
 
 				if(!empty($_SESSION['cod_usuario_global_s'])){
@@ -135,15 +135,15 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 
 				if($tem_acesso_curso) {
 					if($rejeitado_curso) {
-						/* 223 - Inscri‹o n‹o aceita */
+						/* 223 - Inscriçao não aceita */
 						echo("                    <td>\n");
-						echo("                      "._("msg223_-3")."\n");
+						echo("                      "._("NOT_ACCEPTED_ENROLLMENT_-3")."\n");
 						/* 235 - Inscrever-se novamente */
-						echo("                      <input class=\"input\" value=\""._("msg235_-3")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" />\n");
+						echo("                      <input class=\"input\" value=\""._("ENROLL_AGAIN_-3")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" />\n");
 						echo("                    </td>\n");
 					}else{
 						/* 55 - Entrar */
-						echo("                    <td><input class=\"input\" value=\""._("msg55_-3")."\" onClick=\"document.location='".$ctrl_login."index_curso.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
+						echo("                    <td><input class=\"input\" value=\""._("ENTER_-3")."\" onClick=\"document.location='".$ctrl_login."index_curso.php?cod_curso=".$linha['cod_curso']."';\" type=\"button\" /></td>\n");
 					}
 				}
 				else
@@ -151,12 +151,12 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 					if($tipo_curso == "I")
 					{
 						/* 54 - Inscricoes */
-						echo("                    <td><input class=\"input\" value=\""._("msg54_-3")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+						echo("                    <td><input class=\"input\" value=\""._("ENROLLMENTS_-3")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
 					}
 					else
 					{
-						/* 53 - Informacoes */
-						echo("                    <td><input class=\"input\" value=\""._("msg53_-3")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
+						/* 16 - Informacoes */
+						echo("                    <td><input class=\"input\" value=\""._("INFORMATIONS_0")."\" onClick=\"document.location='mostra_curso.php?cod_curso=".$linha['cod_curso']."&amp;tipo_curso=".$tipo_curso."&amp;extremos=".$extremos."';\" type=\"button\" /></td>\n");
 					}
 				}
 
@@ -167,18 +167,18 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 			/* 195 - curso nao iniciado */
 			/* 174 - curso em andamento */
 			/* 175 - curso com inscricao aberta */
-			/* 176 - Curso encerrado */
+			/* 176 - curso encerrado */
 			if ($tipo_curso=="N")
-				$tela2=_("msg195_-3");
+				$tela2=_("NOT_BEGUN_COURSE_-3");
 			else if ($tipo_curso=="A")
-				$tela2=_("msg174_-3");
+				$tela2=_("CURRENT_COURSE_-3");
 			else if ($tipo_curso=="I")
-				$tela2=_("msg175_-3");
+				$tela2=_("OPEN_ENROLLMENT_COURSE_-3");
 			else
-				$tela2=_("msg176_-3");
+				$tela2=_("NOT_BEGUN_COURSE_-3");
 			/* 57 - Nao ha nenhum */
 			echo("                  <tr>\n");
-			echo("                    <td colspan=3>"._("msg57_-3")." ".$tela2.".</td>\n");
+			echo("                    <td colspan=3>"._("THERE_ARE_NO_-3")." ".$tela2.".</td>\n");
 			echo("                  </tr>\n");
 		}
 
@@ -195,7 +195,7 @@ if (count($lista_pastas)<2 || isset($cod_pasta))
 		echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 		echo("                  <tr class=\"head\">\n");
 		/* 116 - Selecione uma categoria: */
-		echo("                    <td colspan=\"3\">"._("msg116_-3")."</td>\n");
+		echo("                    <td colspan=\"3\">"._("SELECT_CATEGORY_-3")."</td>\n");
 		echo("                  </tr>\n");
 
 		$link="".$view_administracao."cursos_all.php?tipo_curso=".$tipo_curso;

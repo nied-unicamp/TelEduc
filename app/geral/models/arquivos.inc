@@ -609,41 +609,59 @@ class Arquivos {
 			{
 				for ($i = 0; ($i < $total) && ($flag); $i++)
 				{
-				$nome_arquivo = basename($conteudo[$i]);
-				// Se for diretorio, copiamos recursivamente seus conteudos
-				clearstatcache();
-		
-				if (filetype($conteudo[$i]) == "dir")
-					$flag = Arquivos::CopiaDiretorio($conteudo[$i], $destino);
-					else
-					{
-					// Sendo arquivo, verificamos se nao houve erros na execucao
-					// anterior de algum comando. Caso o arquivo ja exista no caminho
-					// destino, entao o removemos e em seguida copiamos o arquivo.
-					if ($flag)
-					{
-					$dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
-						if (Arquivos::ExisteArquivo($dest))
-							$flag = Arquivos::RemoveArquivo($dest);
-		
-						// O teste aqui tambem e necessario para ver se 'RemoveArquivo'
-						// nao retornou false.
-						if ($flag)
-						{
-						$stat = Arquivos::RetornaStatusArquivo($conteudo[$i]);
-						if (copy($conteudo[$i], $dest))
-						{
-						if (!Arquivos::AlteraStatusArquivo($dest, $stat))
-							return (false);
-						}
+					$nome_arquivo = basename($conteudo[$i]);
+					// Se for diretorio, copiamos recursivamente seus conteudos
+					clearstatcache();
+			
+					if (filetype($conteudo[$i]) == "dir")
+						$flag = Arquivos::CopiaDiretorio($conteudo[$i], $destino);
 						else
-							return (false);
+						{
+						// Sendo arquivo, verificamos se nao houve erros na execucao
+						// anterior de algum comando. Caso o arquivo ja exista no caminho
+						// destino, entao o removemos e em seguida copiamos o arquivo.
+							if ($flag)
+							{
+							$dest = $destino.DIRECTORY_SEPARATOR.$nome_arquivo;
+								if (Arquivos::ExisteArquivo($dest))
+									$flag = Arquivos::RemoveArquivo($dest);
+				
+								// O teste aqui tambem e necessario para ver se 'RemoveArquivo'
+								// nao retornou false.
+								if ($flag)
+								{
+									$stat = Arquivos::RetornaStatusArquivo($conteudo[$i]);
+									if (copy($conteudo[$i], $dest))
+									{
+										if (!Arquivos::AlteraStatusArquivo($dest, $stat))
+											return (false);
+									}
+										else
+											eturn (false);
+								}
+							}
 						}
-						}
-						}
-						}
-						}
-							return $flag;
-						}
+					}
+				}
+				return $flag;
+	}
+	
+	/************************************************************************************************************
+	 haArquivosVisiveisDir - verifica se ha arquivo visivel dentro da pasta
+	Entrada: $lista_arq_vis - vetor retornado da funcao RetornaArquivosVisiveis
+	Saida: Retorna true se existe algum arquivo nao oculto dentro da pasta ou das subpastas, false caso               contrario
+	*************************************************************************************************************/
+	static function haArquivosVisiveisDir($dir, $lista_arq_vis){
+		foreach($lista_arq_vis as $cod => $linha)
+		{
+			if(!($linha['Status'])){
+				if (($linha['Arquivo']!="") && (strncmp($linha['Diretorio'], $dir, strlen($dir)) == 0)){
+					return true;
+				}
+			}
+		}
+	
+		return false;
+	}
 }
 ?>

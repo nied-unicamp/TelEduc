@@ -86,12 +86,12 @@ $versao = Admin::RetornaConfiguracao($sock,'versao');
 $host = Admin::RetornaConfiguracao($sock,'host');
 /* 
 512 (geral) - Servidor
-513 (geral) - Versao
+513 (geral) - Versao:
 514 (geral) - 2010  - TelEduc - Todos os direitos reservados.
 515 (geral) - All rights reserved
 516 (geral) - NIED - UNICAMP
  */
-echo("        <td valign=\"bottom\" class=\"rodape\" lang=\"pt\"> "._("msg513_-1").": ".$versao." "._("msg512_-1")." ".$host."<br> "._("msg514_-1")." <em lang=\"en\">"._("msg515_-1")."</em> - "._("msg516_-1")."</td>\n");
+echo("        <td valign=\"bottom\" class=\"rodape\" lang=\"pt\"> "._("SERVER_0").": ".$host." "._("VERSION_0")." ".$versao."<br> "._("2010_TELEDUC_RIGHTS_RESERVED_0")." <em lang=\"en\">"._("ALL_RIGHTS_RESERVED_0")."</em> - "._("NIED_UNICAMP_0")."</td>\n");
 echo("      </tr>\n");
 echo("    </table>\n");
 

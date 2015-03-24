@@ -74,5 +74,82 @@ class Administracao{
 		$res=AcessoSQL::Enviar($sock,$query);
 		return $res;
 	}
+	
+	/* *********************************************************************
+	 HouveAlteracoes - Verifica se houve alteracoes nas bases de dados
+	utilizada pela administracao.
+	Entrada: $sock - BASE DO CURSO ou BASE EXTERNA
+	$cod_curso= codigo do curso,
+	Saida:   array ['cod_curso'] = codigo do curso
+	['nome_curso'] = nome do curso
+	['inscricao_inicio'] = timestamp do dia de inicio da inscricao
+	['inscricao_fim'] = timestamp do dia de fim da inscricao
+	['curso_inicio'] = timestamp do dia de inicio do curso
+	['curso_fim'] = timestamp do dia de fim do curso
+	['informacoes'] = informacoes sobre o curso
+	['publico_alvo'] = Publico esperado
+	['tipo_inscricao'] = tipo de inscricao
+	['acesso_visitante'] = 'A' - Permite acesso de visitante
+	'N' - Nao permite
+	*/
+	static function HouveAlteracoes($sock,$cod_curso,$cod_usuario)
+	{
+		// 2Session
+		$dbnamebase = $_SESSION['dbnamebase'];
+		/* Cria um array com 4 elementos com valores iniciais iguais a zero. */
+		/* O valor de cada elemento sera utilizado para adicionar a tag bold */
+		/* nas ferramentas onde houve modificacoes.                          */
+	
+		$alt = array(0,  /* Modificacoes no cronograma do curso.         */
+				0,  /* Modificacoes na escolha de ferramentas.      */
+				0,  /* Modificacoes no destaque de ferramentas.     */
+				0); /* Nova requisicao de inscricao.            */
+	
+		/* Obtem o horario do penltimo acesso do usuario e compara-o com */
+		/* as datas das tabelas.                                          */
+		$penultac = Usuarios::PenultimoAcesso($sock, $cod_usuario, "");
+	
+		/* Verifica se houve modificacao no cronograma do curso.          */
+		$query = "select _timestamp 'data' from Cursos";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$tupla = AcessoSQL::RetornaLinha($res);
+		if ($tupla['data'] > $penultac)
+			$alt[0] = 1;
+	
+		/* Verifica se houve modificacao na escolha das ferramentas.      */
+		unset($tupla);
+		$query = "select max(_timestamp) 'data' from Curso_ferramentas";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$tupla = AcessoSQL::RetornaLinha($res);
+		if ($tupla['data'] > $penultac)
+			$alt[1] = 1;
+	
+		/* Verifica se houve modificacao no destaque das ferramentas.     */
+		unset($tupla);
+		$query = "select max(data) 'data' from Ferramentas_destaque";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$tupla = AcessoSQL::RetornaLinha($res);
+		if ($tupla['data'] > $penultac)
+			$alt[2] = 1;
+	
+		/* Verifica se ha uma nova requisicao de inscricao.               */
+		unset($tupla);
+		$query = "select max(data_inscricao) 'data' from ".$dbnamebase.".Usuario_curso where binary tipo_usuario = 'a' and cod_curso='".$cod_curso."'";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$tupla = AcessoSQL::RetornaLinha($res);
+		if ($tupla['data'] > $penultac)
+			$alt[3] = 1;
+	
+		return($alt);
+	}
+	
+	static function RetornaExtrator($sock) {
+		$query = "select valor from Config where item='extrator'";
+		$res = AcessoSQL::Enviar($sock, $query);
+		$linha = AcessoSQL::RetornaLinha($res);
+		$extrator = $linha['valor'];
+		
+		return $extrator;
+	}
 }
 ?>

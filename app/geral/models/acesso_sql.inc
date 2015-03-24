@@ -524,5 +524,55 @@ class AcessoSQL {
 		exit();
 	
 	}
+	
+	/* *********************************************************************
+	 PegaSemaforo- Pega semaforo para ferramenta
+	Entrada: $sock - sock da base em uso
+	$ferramenta - nome da Ferramenta
+	Saida: Quando consegue o semaforo, retorna true; false caso contrário.
+	*/
+	static function PegaSemaforo($sock,$ferramenta)
+	{
+		$cont=0;
+		$tempo_comparacao = time() - 60;
+	
+		$query = "select * from Semaforo_".$ferramenta." where data < ".$tempo_comparacao."";
+		$res = mysqli_query($sock, $query);
+		if($res)
+			$rows = mysql_num_rows($res);
+		else
+			$rows=0;
+	
+		//se existe um semaforo e ele foi criado ha mais de 1 minuto, entao o liberamos
+		if($res && $rows != 0)
+			AcessoSQL::LiberaSemaforo($sock,$ferramenta);
+	
+		$query="CREATE TABLE Semaforo_".$ferramenta." (cod int,data int)";
+		while (!mysqli_query($sock, $query))
+		{
+			if ($cont>10)
+				return false;
+	
+			$cont++;
+			sleep(1);
+		}
+	
+		$query="insert into Semaforo_".$ferramenta." (cod,data) values (0,".time().")";
+		mysqli_query($sock, $query);
+	
+		return true;
+	}
+	
+	/* *********************************************************************
+	 LiberaSemaforo- Pega semaforo para ferramenta
+	Entrada: $sock - sock da base em uso
+	$ferramenta - nome da Ferramenta
+	Saida: Nenhuma.
+	*/
+	static function LiberaSemaforo($sock,$ferramenta)
+	{
+		$query="DROP TABLE Semaforo_".$ferramenta;
+		mysqli_query($sock, $query);
+	}
 }
 ?>

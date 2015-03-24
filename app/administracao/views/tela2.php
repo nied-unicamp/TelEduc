@@ -32,7 +32,7 @@ if(!$SalvarEmArquivo){
  * 516 (geral) - NIED - UNICAMP
  * */
 
-echo("        <td valign=\"bottom\" class=\"rodape\">"._("msg514_-1")." "._("msg515_-1")." - "._("msg516_-1")."</td>\n");
+echo("        <td valign=\"bottom\" class=\"rodape\">"._("2010_TELEDUC_RIGHTS_RESERVED_0")." "._("ALL_RIGHTS_RESERVED_0")." - "._("NIED_UNICAMP_0")."</td>\n");
 echo("      </tr>\n");
 echo("    </table>\n");
 ?>

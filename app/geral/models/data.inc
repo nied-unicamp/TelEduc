@@ -164,7 +164,7 @@ class Data {
      */
     static function NomeMesAbreviado($nummes) {
         /* 7 - Mes invalido,Jan,Fev,Mar,Abr,Mai,Jun,Jul,Ago,Set,Out,Nov,Dez */
-        return Data::TratamentoArrayDataGenerico($nummes, _("msg7_-2"));
+        return Data::TratamentoArrayDataGenerico($nummes, _("INVALID_MONTH_-2"));
     }
 
     /*     * ***********************************************************************

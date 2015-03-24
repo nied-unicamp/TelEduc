@@ -120,9 +120,9 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
 // Pagina Principal
 // 1 - Agenda
-$cabecalho = ("          <h4>"._("msg1_1"));
+$cabecalho = ("          <h4>"._("AGENDA_1"));
 /*66 - Importando Agenda */
-$cabecalho.= (" - "._("msg66_1")."</h4>\n");
+$cabecalho.= (" - "._("IMPORTING_AGENDA_1")."</h4>\n");
 echo($cabecalho);
 
 // 3 A's - Muda o Tamanho da fonte
@@ -134,7 +134,7 @@ echo("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 $sock = AcessoSQL::Conectar($cod_curso_import);
 
@@ -174,7 +174,7 @@ $dir_item_temp = Agenda::CriaLinkVisualizar($sock, $dir, $cod_curso_import, $cod
 if (isset($caminho_original))
 {
 	// 88 - Importar selecionados
-	echo("          "._("msg88_1"));
+	echo("          "._("IMPORT_SELECTED_-1"));
 	echo($caminho_original);
 	echo("          <br />\n");
 }
@@ -185,7 +185,7 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /*23 - (Geral) Voltar*/
-echo("                  <li><span onClick=history.go(-1);>"._("msg23_-1")."</span></li>\n");
+echo("                  <li><span onClick=history.go(-1);>"._("BACK_-1")."</span></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -195,9 +195,9 @@ echo("              <td>\n");
 echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 /*18 - Titulo */
-echo("                    <td class=\"alLeft\" align=\"left\" width=\"82%\">"._("msg18_1")."</td>\n");
+echo("                    <td class=\"alLeft\" align=\"left\" width=\"82%\">"._("TITLE_-1")."</td>\n");
 /*7 - Data */
-echo("                    <td  align=\"center\">"._("msg7_1")."</td>\n");
+echo("                    <td  align=\"center\">"._("DATE_-1")."</td>\n");
 echo("                  </tr>\n");
 
 /* Conteudo */
@@ -232,8 +232,8 @@ else
 if(($linha_item['texto']!="")||($arquivo_entrada!=""))
 {
 	echo("                  <tr class=\"head\">\n");
-	/* 91 - Editar texto  */
-	echo("                    <td colspan=\"4\" align=\"left\">"._("msg91_1")."</td>\n");
+	/* Editar texto  */
+	echo("                    <td colspan=\"4\" align=\"left\">"._("EDIT_TEXT_-1")."</td>\n");
 	echo("                  </tr>\n");
 	echo("                  <tr>\n");
 	echo("                    <td class=\"itens\" colspan=\"4\">\n");
@@ -248,8 +248,8 @@ $lista_arq = Agenda::RetornaArquivosAgendaVer($cod_curso_import, $dir_item_temp[
 
 if(count($lista_arq)>0){
 	echo("                  <tr class=\"head\">\n");
-	/* 57(biblioteca) - Arquivos: */
-	echo("                    <td colspan=\"4\">"._("msg57_-2")."</td>\n");
+	/* 57(biblioteca) - Arquivos */
+	echo("                    <td colspan=\"4\">"._("FILES_-2").":</td>\n");
 	echo("                  </tr>\n");
 
 	$conta_arq=0;
@@ -320,7 +320,7 @@ if(count($lista_arq)>0){
 					echo("<span id=\"local_oculto_".$conta_arq."\">");
 					if ($linha['Status'])
 						// 59 - entrada
-						echo("<span id=\"arq_oculto_".$conta_arq."\">- <span style='color:red;'>"._("msg59_1")."</span></span>");
+						echo("<span id=\"arq_oculto_".$conta_arq."\">- <span style='color:red;'>"._("MAIN_PAGE_1")."</span></span>");
 					echo("</span>\n");
 					echo("                          ".$espacos2."<br />\n");
 					echo("                        ".$espacos2."</span>\n");

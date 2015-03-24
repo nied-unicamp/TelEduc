@@ -30,8 +30,8 @@ $feedbackObject =  new FeedbackObject($lista_frases);
 //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
 
 /* 101 - Agenda(s) apagada(s) com sucesso. */
-$feedbackObject->addAction("apagarSelecionados", _("msg101_1"), 0);
-$feedbackObject->addAction("apagarItem", _("msg101_1"), 0);
+$feedbackObject->addAction("apagarSelecionados", _("AGENDA_DELETED_SUCCESS_1"), 0);
+$feedbackObject->addAction("apagarItem", _("AGENDA_DELETED_SUCCESS_1"), 0);
 
 
 $data_acesso=Usuarios::PenultimoAcesso($sock,$cod_usuario,"");
@@ -93,7 +93,7 @@ echo("      function TemCertezaApagar()\n");
 echo("      {\n");
 /* 29 - Voce tem certeza de que deseja apagar esta agenda? */
 /* 30 - (nao havera como recupera-la) */
-echo("              return(confirm(\""._("msg29_1")."\\n"._("msg30_1")."\"));\n");
+echo("              return(confirm(\""._("SURE_TO_DELETE_AGENDA_1")."\\n"._("PERMANENTLY_DELETED_1")."\"));\n");
 echo("      }\n");
 
 echo("      function Iniciar()\n");
@@ -110,8 +110,8 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* 1 - Agenda 
  * 2 - Agendas Anteriores
  * */
-echo("          <h4>"._("msg1_1"));
-echo(" - "._("msg2_1"));
+echo("          <h4>"._("AGENDA_1"));
+echo(" - "._("PAST_AGENDAS_1"));
 echo("</h4>\n");
 
 // 3 A's - Muda o Tamanho da fonte
@@ -123,7 +123,7 @@ echo("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 /* Tabela Externa */
 echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -131,7 +131,7 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 /*8 - Ver Agenda Atual*/
-echo("                      <li><a href=\"agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=1'\">"._("msg8_1")."</a></li>\n");
+echo("                      <li><a href=\"agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_ferramenta=1'\">"._("VIEW_ACTIVE_AGENDA_1")."</a></li>\n");
 echo("                </ul>\n");
 echo("              </td>\n");
 echo("            </tr>\n");
@@ -145,9 +145,9 @@ if ($eformador){
 	echo("                    <td width=\"2\"><input type=\"checkbox\" id=\"checkMenu\" onClick=\"CheckTodos();\" /></td>\n");
 }
 /*1 - Agenda */
-echo("                    <td class=\"alLeft\">"._("msg1_1")."</td>\n");
+echo("                    <td class=\"alLeft\">"._("AGENDA_1")."</td>\n");
 /*7 - Data */
-echo("                    <td align=\"center\" width=\"15%\">"._("msg7_1")."</td>\n");
+echo("                    <td align=\"center\" width=\"15%\">"._("DATE_-1")."</td>\n");
 echo("                  </tr>\n");
 /* Conteudo */
  
@@ -171,7 +171,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 		if ($linha_item['status']=="E")
 		{
 			/* 43 - Em Edição */
-			$data="<span class=\"link\" onclick=\"window.open('".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=600,height=280,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">"._("msg43_1")."</span>";
+			$data="<span class=\"link\" onclick=\"window.open('".$view_agenda."em_edicao.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=ver_editar','EmEdicao','width=600,height=280,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes');\">"._("IN_EDITION_-1")."</span>";
 			$titulo=$linha_item['titulo'];
 		}
 		else
@@ -193,7 +193,7 @@ else
 {
 	/* 90 - Nao ha agendas anteriores. */
 	echo("                  <tr>\n");
-	echo("                    <td colspan=\"5\">"._("msg90_1")."</td>\n");
+	echo("                    <td colspan=\"5\">"._("NO_PAST_AGENDAS_1")."</td>\n");
 	echo("                  </tr>\n");
 }
 /*Fim tabela interna*/
@@ -202,7 +202,7 @@ echo("                </table>\n");
 /* 68 - Excluir Selecionados (ger)*/
 if ($eformador){
 	echo("                <ul>\n");
-	echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">"._("msg68_-1")."</span></li>\n");
+	echo("                  <li id=\"mExcluir_Selec\" class=\"menuUp\"><span id=\"excluirSelec\">"._("DELETE_SELECTED_-1")."</span></li>\n");
 	echo("                </ul>\n");
 }
 

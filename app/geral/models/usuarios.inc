@@ -1,8 +1,5 @@
 <?php
 
-/**
- * 
- */
 require_once "geral.inc";
 /**
  * Classe Usuarios do modulo geral
@@ -132,23 +129,23 @@ class Usuarios{
 		if ((!$adm) && (($status_curso=="N" && $status!="F") || in_array($status, $array_status)))
 		{
 			/* 13 - Acesso negado */
-			$mensagemHead = _("msg13_-2");
+			$mensagemHead = _("ACCESS_DENIED_-2");
 	
 			$mensagem="";
 	
 	
 			if ($status_curso=="N" && $status!="F")
-				// 30 - O curso ainda nï¿½ foi iniciado.
-				$mensagem.= _("msg30_-2");
+				// 30 - O curso ainda não foi iniciado.
+				$mensagem.= _("COURSE_NOT_BEGUN_-2");
 			else if ($status == 'i')
-				// 14 - Sua inscriï¿½o ainda nï¿½ foi avaliada. Um e-mail lhe serï¿½enviado quando a avaliaï¿½o de sua inscriï¿½o for feita.
-				$mensagem.= _("msg14_-2");
+				// 14 - Sua inscrição ainda não foi avaliada. Um e-mail lhe será enviado quando a avaliação de sua inscrição for feita.
+				$mensagem.= _("ENROLLMENT_NOT_EVALUATED_-2");
 			else if ($status == 'r' || $status == 'a' || $status == 'f' || $status == 'z' || $status == 'v')
-				// 15 - Sua inscriï¿½o nï¿½ foi aceita. Vocï¿½nï¿½ tem acesso a esse curso.
-				$mensagem.= _("msg15_-2");
+				// 15 - Sua inscrição não foi aceita. Você não tem acesso a esse curso.
+				$mensagem.= _("ENROLLMENT_NOT_ACCEPTED_-2");
 			else if ($status=="I")
-				// 16 - Usuï¿½io inexistente ou invï¿½ido.
-				$mensagem.= _("msg16_-2");
+				// 16 - Usuário inexistente ou inválido.
+				$mensagem.= _("NONEXISTENT_INVALID_USER_-2");
 	
 			echo("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 			echo("<html lang=\"pt\">\n");
@@ -368,7 +365,7 @@ class Usuarios{
 		if (!Usuarios::TestaAcessoAFerramenta($sock,$cod_curso,$cod_usuario,$cod_ferramenta))
 		{
 			// 59 - Ferramenta desabilitada
-			die("<b>". _("msg59_-1")."</b>");
+			die("<b>". _("DISABLED_TOOL_-1")."</b>");
 		}
 	}
 	
@@ -687,6 +684,42 @@ class Usuarios{
 		$linha=AcessoSQL::RetornaLinha($res);
 		return ($linha[0]);
 	}
+	
+	/* *********************************************************************
+	 EFormadorComVisaoDeAluno - Retorna true se usuario for formador com visao de aluno
+	Entradas: $sock - Socket da base de dados (retorno do Conectar)
+	$cod_curso - Codigo do curso
+	$cod_usuario - Codigo do usuario a buscar a informacao
+	Saida: true se eformador e este esta com visao de aluno, false caso contrario
+	OBS.: O coordenador aparece tambem como formador
+	*/
+	static function EFormadorComVisaoDeAluno($sock,$cod_curso,$cod_usuario)
+	{
+		$estado=Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
+	
+		if ($estado=="F")
+		{
+			if ($_SESSION['visao_aluno_s'])
+				return true;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	static function AtualizaFerramentasNovaGrupo($sock,$cod_ferramenta,$cod_grupo)
+	{
+		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('G', ".ConversorTexto::VerificaNumeroQuery($cod_grupo)." , '".ConversorTexto::VerificaStringQuery($cod_ferramenta)."' , ".time().")" ;
+		AcessoSQL::Enviar($sock,$query);
+	}
+	
+	static function AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario)
+	{
+		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('U', ".ConversorTexto::VerificaNumeroQuery($cod_usuario)." , '".ConversorTexto::VerificaStringQuery($cod_ferramenta)."' , ".time().")" ;
+		AcessoSQL::Enviar($sock,$query);
+	}
+	
+	
 }
 
 

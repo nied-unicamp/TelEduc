@@ -29,7 +29,7 @@ require_once $view_administracao.'topo_tela.php';
 $feedbackObject =  new FeedbackObject($lista_frases);
 //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
 /* 97 - Houve um erro na criação da agenda.*/
-$feedbackObject->addAction("criarAgenda", 0, _("msg97_1"));
+$feedbackObject->addAction("criarAgenda", 0, _("ERROR_CREATE_AGENDA_1"));
 
 AcessoSQL::Desconectar($sock);
 $sock = AcessoSQL::Conectar($cod_curso);
@@ -119,15 +119,15 @@ echo("      function VerificaNovoTitulo(textbox, aspas) {\n");
 echo("        var texto=textbox.value;\n");
 echo("        if (texto==''){\n");
 echo("          // se nome for vazio, nao pode\n");
-/* 15 - O titulo nao pode ser vazio. */
-echo("          alert(\""._("msg15_1")."\");\n");
+/* 92 - O titulo nao pode ser vazio. */
+echo("          alert(\""._("TITLE_CANNOT_BE_EMPTY_-1")."\");\n");
 echo("          textbox.focus();\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("        // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0\n");
 echo("        else if ((texto.indexOf(\"\\\\\")>=0 || texto.indexOf(\"\\\"\")>=0 || texto.indexOf(\"'\")>=0 || texto.indexOf(\">\")>=0 || texto.indexOf(\"<\")>=0)&&(!aspas)) {\n");
-/* 16 - O tï¿½tulo nï¿½o pode conter \\. */
-echo("           alert(\"".ConversorTexto::ConverteAspas2BarraAspas(ConversorTexto::ConverteHtml2Aspas(_("msg16_1")))."\");\n");
+/* 16 - O título não pode conter \\. */
+echo("           alert(\"".ConversorTexto::ConverteAspas2BarraAspas(ConversorTexto::ConverteHtml2Aspas(_("TITLE_CANNOT_CONTAIN_-1")))."\");\n");
 echo("          textbox.value='';\n");
 echo("          textbox.focus();\n");
 echo("          return false;\n");
@@ -142,7 +142,7 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* 1 - Agenda
  * 23 - Agenda Atual
  * */
-echo("          <h4>"._("msg1_1")." - "._("msg23_1")."</h4>");
+echo("          <h4>"._("AGENDA_1")." - "._("ACTUAL_AGENDA_1")."</h4>");
 
 // 3 A's - Muda o Tamanho da fonte
 echo("<div id=\"mudarFonte\">\n");
@@ -153,7 +153,7 @@ echo("          </div>\n");
 
 /*Voltar*/
 /* 509 - Voltar */
-echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("msg509_-1")."&nbsp;</span></li></ul>\n");
+echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;"._("BACK_-1")."&nbsp;</span></li></ul>\n");
 
 /* Tabela Externa */
 echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\" class=\"tabExterna\">\n");
@@ -164,12 +164,12 @@ echo("                <ul class=\"btAuxTabs\">\n");
 if($usr_formador)
 {
 	/* 6 - Nova Agenda*/
-	echo("                  <li><span OnClick='NovaAgenda();'>"._("msg6_1")."</span></li>");
+	echo("                  <li><span OnClick='NovaAgenda();'>"._("NEW_AGENDA_1")."</span></li>");
 	/* 3 - Agendas Futuras*/
-	echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">"._("msg3_1")."</a></li>\n");
+	echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">"._("FUTURE_AGENDAS_1")."</a></li>\n");
 }
 /* 2- Agenda Anteriores*/
-echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">"._("msg2_1")."</a></li>\n");
+echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">"._("PAST_AGENDAS_1")."</a></li>\n");
 
 
 echo("                </ul>\n");
@@ -181,7 +181,7 @@ echo("              <td>\n");
 echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInterna\">\n");
 echo("                  <tr class=\"head\">\n");
 /*18 - Titulo */
-echo("                    <td class=\"alLeft\">"._("msg18_1")."</td>\n");
+echo("                    <td class=\"alLeft\">"._("TITLE_-1")."</td>\n");
 echo("                  </tr>\n");
 
 /* Conteudo */
@@ -238,7 +238,7 @@ if (isset($linha_item['cod_item']))
 	{
 		echo("                  <tr class=\"head\">\n");
 		/* 94 - Texto */
-		echo("                    <td class=\"alLeft\">"._("msg94_1")."</td>\n");
+		echo("                    <td class=\"alLeft\">"._("TEXT_-1")."</td>\n");
 		echo("                  </tr>\n");
 		echo("                  <tr>\n");
 		echo("                    <td align=left>\n");
@@ -255,7 +255,7 @@ else
 {
 	/* 4 - Nenhuma agenda adicionada ainda! */
 	echo("                  <tr>\n");
-	echo("                    <td colspan=\"5\">"._("msg4_1")."</td>\n");
+	echo("                    <td colspan=\"5\">"._("NONE_AGENDA_ADDED_1")."</td>\n");
 	echo("                  </tr>\n");
 }
 
@@ -280,7 +280,7 @@ echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"../contro
 //echo("        ".RetornaSessionIDInput());
 echo("          <div class=\"ulPopup\">\n");
 /* 18 - Titulo: */
-echo("            "._("msg18_1")."<br />\n");
+echo("            "._("TITLE_-1").":<br />\n");
 echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\"nome\" value=\"\" maxlength=\"150\" /><br />\n");
 echo("            <input type=\"hidden\" name=\"cod_curso\"   value=\"".$cod_curso."\" />\n");
 echo("            <input type=\"hidden\" name=\"acao\"        value=\"criarAgenda\" />\n");
@@ -288,10 +288,10 @@ echo("            <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usu
 echo("            <input type=\"hidden\" name=\"origem\"      value=\"ver_editar\" />\n");
 /* 18 - Ok (gen) */
 
-echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\""._("msg18_-1")."\" />\n");
+echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\""._("OK_-1")."\" />\n");
 
 /* 2 - Cancelar (gen) */
-echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_nova_agenda);\" value=\""._("msg2_-1")."\" />\n");
+echo("            &nbsp; &nbsp; <input type=\"button\" class=\"input\"  onClick=\"EscondeLayer(lay_nova_agenda);\" value=\""._("CANCEL_-1")."\" />\n");
 echo("         </div>\n");
 echo("        </form>\n");
 echo("      </div>\n");
