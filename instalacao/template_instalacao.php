@@ -124,7 +124,7 @@
 				<a href="http://www.unicamp.br"><img src="../web-content/imgs/logoUnicamp.gif" alt="UNICAMP" border="0" /></a>
 			</div>
 			<div id="signature">
-				<p>2013 - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</p>
+				<p>2015 - TelEduc - Todos os direitos reservados. All rights reserved - NIED - UNICAMP</p>
 			</div>
 		</div>
 	</div>

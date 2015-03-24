@@ -43,7 +43,7 @@
 include_once 'instalacao.inc';
 
 /* Versao do TelEduc */
-define("VERSAO", "4.3.2", true);
+define("VERSAO", "5.0", true);
 
 /* Limpeza de variaveis usadas para controlar as mensagens exibidas
  * na console e no "miolo" da pagina. */
@@ -111,9 +111,7 @@ if ($etapa == 0) {
 	$content .= "</div>";
 }
 else if ($etapa == 1) {
-	$console  = "<p class='feedbackp'>O m&oacute;dulo php-mysql est&aacute; instalado na vers&atilde;o correta. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
-	$console .= "<p class='feedbackp'>A diretiva register_globals est&aacute; habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
-	$console .= "<p class='feedbackp'>A diretiva magic_quotes_gpc est&aacute; habilitada. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class='feedbackp'>O m&oacute;dulo php-mysql est&aacute; instalado na vers&atilde;o correta. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
 
 	$content_header = "Banco de Dados e Arquivo de Configura&ccedil;&atilde;o <span class='etapa'>Etapa <font color='#FF0000'>1</font> de 4</span>";
 
@@ -146,10 +144,10 @@ else if ($etapa == 1) {
 	$content .= "</div>";
 }
 else if ($etapa == 2) {
-	$console  = "<p class='feedbackp'>O banco de dados foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
-	$console .= "<p class='feedbackp'>O banco de dados foi inicializado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
-	$console .= "<p class='feedbackp'>As bases de dados foram importadas com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
-	$console .= "<p class='feedbackp'>O arquivo de configura&ccedil;&otilde;o foi criado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class='feedbackp'>O banco de dados foi criado com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class='feedbackp'>O banco de dados foi inicializado com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class='feedbackp'>As bases de dados foram importadas com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
+	$console .= "<p class='feedbackp'>O arquivo de configura&ccedil;&otilde;o foi criado com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
 	
 	$content_header = "Servidor e Diret&oacute;rios <span class='etapa'>Etapa <font color='#FF0000'>2</font> de 4</span>";
 
@@ -177,7 +175,7 @@ else if ($etapa == 2) {
 	$content .= "</div>";
 }
 else if ($etapa == 3) {
-	$console  = "<p class='feedbackp'>O diret&oacute;rio de arquivos foi configurado com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class='feedbackp'>O diret&oacute;rio de arquivos foi configurado com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
 
 	$content_header = "Administrador do Ambiente <span class='etapa'>Etapa <font color='#FF0000'>3</font> de 4</span>";
 
@@ -200,7 +198,7 @@ else if ($etapa == 3) {
 	$content .= "</div>"; 
 }
 else if ($etapa == 4) {
-	$console  = "<p class='feedbackp'>Os dados do administrador do ambiente foram salvos com sucesso. <img src='../cursos/aplic/imgs/certo.png' alt='com sucesso'></p>";
+	$console  = "<p class='feedbackp'>Os dados do administrador do ambiente foram salvos com sucesso. <img src='../web-content/imgs/certo.png' alt='com sucesso'></p>";
 	
 	$content_header = "Fim da Instala&ccedil;&atilde;o <span class='etapa'>Etapa <font color='#FF0000'>4</font> de 4</span>";
 	

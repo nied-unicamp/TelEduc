@@ -162,63 +162,31 @@ function exibeErro($etapa,$erro) {
 	switch ($etapa) {
 		case 1:
 			if ($erro & 1) {
-				$console .= "<p class=\"feedbackp\">O m&oacute;dulo php-mysql n&atilde;o foi encontrado. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class=\"feedbackp\">O m&oacute;dulo php-mysql n&atilde;o foi encontrado. <img src='../web-content/imgs/errado.png'></p>";
 
 				$content .= "<p>O m&oacute;dulo php-mysql n&atilde;o foi encontrado.</p>";
 				$content .= "<br />";
 				$content .= "<p>A instala&ccedil;&atilde;o desse m&oacute;dulo deve ser feita de acordo com a distribui&ccedil;&atilde;o utilizada.</p>";
 				$content .= "<br />";
 			}
-			if ($erro & 2) {
-				$console .= "<p class=\"feedbackp\">A vers&atilde;o do PHP est&aacute; acima da requerida. <img src='../cursos/aplic/imgs/errado.png'></p>";
-
-				$content .= "<p>O TelEduc necessita da vers&atilde;o <b>5.3.x</b> ou inferior para funcionar corretamente.</p>";
-				$content .= "<br />";
-				$content .= "<p>Fa&ccedil;a o downgrade do seu PHP se desejar continuar com a instala&ccedil;&atilde;o.</p>";
-				$content .= "<br />";
-			}
-			if ($erro & 4) {
-				$console .= "<p class='feedbackp'>A diretiva register_globals est&aacute; desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
-
-				$content .= "<p>A diretiva <b>register_globals</b> deveria estar ligada.</p>";
-				$content .= "<br />";
-				$content .= "<pre>register_globals = On</pre>";
-				$content .= "<br />";
-				$content .= "<p>Para isso, edite o arquivo de configura&ccedil;&atilde;o do seu PHP.</p>";
-				$content .= "<br />";
-				$content .= "<p>Se voc&ecirc; est&aacute; instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir altera&ccedil;&atilde;o da diretiva register_globals.</p>";
-				$content .= "<br/>";
-			}
-			if ($erro & 8) {
-				$console .= "<p class='feedbackp'>A diretiva magic_quotes_gpc est&aacute; desativada. <img src='../cursos/aplic/imgs/errado.png'></p>";
-
-				$content .= "<p>A diretiva <b>magic_quotes_gpc</b> deveria estar ligada.</p>";
-				$content .= "<br />";
-				$content .= "<pre>magic_quotes_gpc = On</pre>";
-				$content .= "<br />";
-				$content .= "<p>Para isso, edite o arquivo de configura&ccedil;&atilde;o do seu PHP.</p>";
-				$content .= "<br />";
-				$content .= "<p>Se voc&ecirc; est&aacute; instalando o TelEduc em uma hospedagem compartilhada, entre em contato com a sua hospedagem para pedir altera&ccedil;&atilde;o da diretiva magic_quotes_gpc.</p>";
-				$content .= "<br />";
-			}
 			break;
 		case 2:
 			if ($erro & 1) {
-				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>../app/geral/models/</b>. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>Erro de permiss&atilde;o em <b>../app/geral/models/</b>. <img src='../web-content/imgs/errado.png'></p>";
 			}
 			if ($erro & 2) {
-				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel realizar a conex&atilde;o com o MySQL. <img src='../web-content/imgs/errado.png'></p>";
 			}
 			if ($erro & 4) {
-				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel criar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel criar o banco de dados principal. <img src='../web-content/imgs/errado.png'></p>";
 			}
 			if ($erro & 8) {
-				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel selecionar o banco de dados principal. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;vel selecionar o banco de dados principal. <img src='../web-content/imgs/errado.png'></p>";
 			}
 
 			if ($erro & 1) {
 				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
-				$content .= "<pre>".str_replace("instalacao", "cursos/aplic/bibliotecas/", getcwd())."</pre>";
+				$content .= "<pre>".str_replace("instalacao", "app/geral/models/", getcwd())."</pre>";
 				$content .= "<br />";
 				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o &eacute; necess&aacute;rio configurar o diret&oacute;rio com permiss&atilde;o <b>775 (drwxrwxr-x)</b> para um dos usu&aacute;rios acima citados.</p>";
 				$content .= "<br />";
@@ -237,7 +205,7 @@ function exibeErro($etapa,$erro) {
 			break;
 		case 3:
 			if ($erro & 1) {
-				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel criar o diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel criar o diret&oacute;rio de arquivos. <img src='../web-content/imgs/errado.png'></p>";
 				
 				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para criar o seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".$_SESSION['arquivos']."/</pre>";
@@ -249,7 +217,7 @@ function exibeErro($etapa,$erro) {
 				$content .= "<br />";
 			}
 			if ($erro & 2) {
-				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel fazer links para a diret&oacute;rio de arquivos. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>N&atilde;o foi poss&iacute;­vel fazer links para a diret&oacute;rio de arquivos. <img src='../web-content/imgs/errado.png'></p>";
 			
 				$content .= "<p>O usu&aacute;rio do apache, dependendo da distribui&ccedil;&atilde;o <b>apache</b> ou <b>www-data</b>, n&atilde;o possui as permiss&otilde;es para escrever e ler no seguinte diret&oacute;rio:</p>";
 				$content .= "<pre>".$_SESSION['www']."/diretorio/</pre>";
@@ -263,7 +231,7 @@ function exibeErro($etapa,$erro) {
 				$content .= "<br />";
 			}
 			if ($erro & 4) {
-				$console .= "<p class='feedbackp'>O nome do servidor &eacute; inv&aacute;lido. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>O nome do servidor &eacute; inv&aacute;lido. <img src='../web-content/imgs/errado.png'></p>";
 
 				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o, digite um nome de host v&aacute;lido.</p>";
 				$content .= "<br />";
@@ -272,7 +240,7 @@ function exibeErro($etapa,$erro) {
 			break;
 		case 4:
 			if ($erro & 1) {
-				$console .= "<p class='feedbackp'>O endere&ccedil;o de email &eacute; inv&aacute;lido. <img src='../cursos/aplic/imgs/errado.png'></p>";
+				$console .= "<p class='feedbackp'>O endere&ccedil;o de email &eacute; inv&aacute;lido. <img src='../web-content/imgs/errado.png'></p>";
 
 				$content .= "<p>Para prosseguir com a instala&ccedil;&atilde;o, digite um email v&aacute;lido.</p>";
 				$content .= "<br />";
