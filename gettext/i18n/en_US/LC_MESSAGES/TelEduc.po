@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TelEduc5\n"
-"POT-Creation-Date: 2015-03-20 16:22-0300\n"
-"PO-Revision-Date: 2015-03-20 16:22-0300\n"
+"POT-Creation-Date: 2015-03-25 13:33-0300\n"
+"PO-Revision-Date: 2015-03-25 13:33-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <camila.kna@hotmail.com>\n"
 "Language: en_US\n"
@@ -110,7 +110,7 @@ msgid "CANT_MOVE_FOLDER_ITSELF_SUBFOLDER_15"
 msgstr "You cannot move a folder to itself or to one of its subfolders."
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:525
-msgid "CANT_MOVE_FOLDER_NAME_15"
+msgid "CANT_MOVE_FOLDER_NAME_-1"
 msgstr ""
 "Cannot move the folder, because already exists a folder with the same name"
 

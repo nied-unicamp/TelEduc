@@ -17,7 +17,7 @@ $cod_usuario=$_POST['cod_usuario'];
 $novo_texto=ConversorTexto::ConverteAspas2BarraAspas($novo_texto);
 $sock=AcessoSQL::Conectar($cod_curso);
 
-$consulta="update Agenda_itens set texto='".ConversorTexto::VerificaStringQuery(trim(Agenda::VerificaTexto($novo_texto)))."' where cod_item=".$cod_item;
+$consulta="update Agenda_itens set texto='".ConversorTexto::VerificaStringQuery($sock, trim(Agenda::VerificaTexto($novo_texto)))."' where cod_item=".$cod_item;
 $res=AcessoSQL::Enviar($sock, $consulta);
 
 Agenda::AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);

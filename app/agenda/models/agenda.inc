@@ -18,7 +18,7 @@ class Agenda {
      * @access public
      * */
     static function RetornaDiretorio($sock, $item) {
-        $query = "select diretorio from Diretorio where item='" . ConversorTexto::VerificaStringQuery($item) . "'";
+        $query = "select diretorio from Diretorio where item='" . ConversorTexto::VerificaStringQuery($sock, $item) . "'";
         $res = AcessoSQL::Enviar($sock, $query);
         $linha = AcessoSQL::RetornaLinha($res);
         return ($linha[0]);
@@ -111,7 +111,7 @@ class Agenda {
 
         $cod_item = AcessoSQL::RetornaProximoCodigo($sock, "Agenda_itens");
 
-        $consulta = "insert into Agenda_itens (cod_item, cod_usuario, titulo, texto, situacao, data, status, inicio_edicao) values (" . $cod_item . ", " . $cod_usuario . ", '" . ConversorTexto::VerificaStringQuery(htmlentities($titulo)) . "','" . ConversorTexto::VerificaStringQuery(htmlentities($texto)) . "', 'N', " . time() . ", 'L', " . time() . ")";
+        $consulta = "insert into Agenda_itens (cod_item, cod_usuario, titulo, texto, situacao, data, status, inicio_edicao) values (" . $cod_item . ", " . $cod_usuario . ", '" . ConversorTexto::VerificaStringQuery($sock, htmlentities($titulo)) . "','" . ConversorTexto::VerificaStringQuery($sock, htmlentities($texto)) . "', 'N', " . time() . ", 'L', " . time() . ")";
 
         $res = AcessoSQL::Enviar($sock, $consulta);
         $consulta = "insert into Agenda_itens_historicos values (" . $cod_item . ", " . $cod_usuario . ", " . time() . ", 'C')";

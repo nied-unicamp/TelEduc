@@ -25,9 +25,9 @@ $consulta="update Agenda_itens set status='L', data=".$data." where cod_item=".$
 $res=AcessoSQL::Enviar($sock, $consulta);
 
 if($acao){
-	$consulta="insert into Agenda_itens_historicos values ('".ConversorTexto::VerificaStringQuery($cod_item)."', '".ConversorTexto::VerificaStringQuery($cod_usuario)."', '".ConversorTexto::VerificaStringQuery($data)."', 'F')";
+	$consulta="insert into Agenda_itens_historicos values ('".ConversorTexto::VerificaStringQuery($sock, $cod_item)."', '".ConversorTexto::VerificaStringQuery($sock, $cod_usuario)."', '".ConversorTexto::VerificaStringQuery($sock, $data)."', 'F')";
 }else{
-	$consulta="insert into Agenda_itens_historicos values ('".$cod_item."', '".ConversorTexto::VerificaStringQuery($cod_usuario)."', '".ConversorTexto::VerificaStringQuery($data)."', 'D')";
+	$consulta="insert into Agenda_itens_historicos values ('".$cod_item."', '".ConversorTexto::VerificaStringQuery($sock, $cod_usuario)."', '".ConversorTexto::VerificaStringQuery($sock, $data)."', 'D')";
 }
 
 $res=AcessoSQL::Enviar($sock, $consulta);

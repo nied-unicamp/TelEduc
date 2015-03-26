@@ -128,7 +128,7 @@ class Inicial{
 	 */
 	static function LoginRepetido($sock, $novo_login)
 	{
-		$query="select login from Usuario where login='".ConversorTexto::VerificaStringQuery($novo_login)."'";
+		$query="select login from Usuario where login='".ConversorTexto::VerificaStringQuery($sock, $novo_login)."'";
 		$res=AcessoSQL::Enviar($sock, $query);
 	
 		if (AcessoSQL::RetornaNumLinhas($res) > 0)
@@ -153,7 +153,7 @@ class Inicial{
 	 */
 	static function EmailRepetido($sock, $email)
 	{
-		$query="select email from Usuario where email='".ConversorTexto::VerificaStringQuery($email)."'";
+		$query="select email from Usuario where email='".ConversorTexto::VerificaStringQuery($sock, $email)."'";
 		$res=AcessoSQL::Enviar($sock, $query);
 	
 		if (AcessoSQL::RetornaNumLinhas($res) > 0)
@@ -197,7 +197,7 @@ class Inicial{
 	 */
 	static function RetornaConfiguracao($sock,$item)
 	{
-		$query="select valor from Config where item='".ConversorTexto::VerificaStringQuery($item)."'";
+		$query="select valor from Config where item='".ConversorTexto::VerificaStringQuery($sock, $item)."'";
 		$res=AcessoSQL::Enviar($sock,$query);
 		$linha=AcessoSQL::RetornaLinha($res);
 		return ($linha['valor']);
@@ -220,7 +220,7 @@ class Inicial{
 		$sock=AcessoSQL::Conectar("");
 	
 		//Seleciona senha e código global do usuario
-		$query="select senha, cod_usuario from Usuario where login='".ConversorTexto::VerificaStringQuery($login)."'";
+		$query="select senha, cod_usuario from Usuario where login='".ConversorTexto::VerificaStringQuery($sock, $login)."'";
 	
 	
 		$res=AcessoSQL::Enviar($sock,$query);

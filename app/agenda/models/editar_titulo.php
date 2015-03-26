@@ -19,7 +19,7 @@ $cod_usuario=$_POST['cod_usuario'];
 $data = time();
 
 $sock=AcessoSQL::Conectar($cod_curso);
-$consulta="update Agenda_itens set titulo='".ConversorTexto::VerificaStringQuery(htmlentities($novo_nome))."' where cod_item=".$cod_item;
+$consulta="update Agenda_itens set titulo='".ConversorTexto::VerificaStringQuery($sock, htmlentities($novo_nome))."' where cod_item=".$cod_item;
 $res=AcessoSQL::Enviar($sock, $consulta);
 
 Agenda::AcabaEdicao($sock, $cod_curso, $cod_item, $cod_usuario, 1);

@@ -22,7 +22,7 @@ class Usuarios{
 		// 2Session
 		$dbnamebase = $_SESSION['dbnamebase'];
 	
-		$query = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso WHERE cod_usuario_global = '".ConversorTexto::VerificaStringQuery($cod_usuario_global)."' AND cod_curso = '".ConversorTexto::VerificaStringQuery($cod_curso)."'";
+		$query = "SELECT cod_usuario FROM ".$dbnamebase.".Usuario_curso WHERE cod_usuario_global = '".ConversorTexto::VerificaStringQuery($sock, $cod_usuario_global)."' AND cod_curso = '".ConversorTexto::VerificaStringQuery($sock, $cod_curso)."'";
 		$res=AcessoSQL::Enviar($sock,$query);
 		$linha=AcessoSQL::RetornaLinha($res);
 		$cod_usuario=$linha[0];
@@ -74,7 +74,7 @@ class Usuarios{
 		$query  = "select U.cod_lingua ";
 		$query .= "from ".$dbnamebase.".Usuario_curso UC ";
 		$query .= "inner join ".$dbnamebase.".Usuario U ON (U.cod_usuario = UC.cod_usuario_global) ";
-		$query .= "where UC.cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario)." AND UC.cod_curso=".ConversorTexto::VerificaStringQuery($cod_curso);
+		$query .= "where UC.cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario)." AND UC.cod_curso=".ConversorTexto::VerificaStringQuery($sock, $cod_curso);
 	
 		$res    = AcessoSQL::Enviar($sock,$query);
 	
@@ -326,7 +326,7 @@ class Usuarios{
 	
 		// 2Session
 		$dbnamebase = $_SESSION['dbnamebase'];
-		$query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario)." and cod_curso=".ConversorTexto::VerificaStringQuery($cod_curso);
+		$query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario)." and cod_curso=".ConversorTexto::VerificaStringQuery($sock, $cod_curso);
 		$res   = AcessoSQL::Enviar ($sock, $query);
 		$linha = AcessoSQL::RetornaLinha ($res);
 		return ($linha ['tipo_usuario'] == 'Z');
@@ -625,7 +625,7 @@ class Usuarios{
 		// 2Session
 		$dbnamebase = $_SESSION['dbnamebase'];
 	
-		$query = "SELECT cod_usuario_global FROM ".$dbnamebase.".Usuario_curso WHERE cod_usuario = '".ConversorTexto::VerificaStringQuery($cod_usuario)."' AND cod_curso = '".ConversorTexto::VerificaStringQuery($cod_curso)."'";
+		$query = "SELECT cod_usuario_global FROM ".$dbnamebase.".Usuario_curso WHERE cod_usuario = '".ConversorTexto::VerificaStringQuery($sock, $cod_usuario)."' AND cod_curso = '".ConversorTexto::VerificaStringQuery($sock, $cod_curso)."'";
 		$res=AcessoSQL::Enviar($sock,$query);
 		$linha=AcessoSQL::RetornaLinha($res);
 		$cod_usuario_global=$linha[0];
@@ -670,7 +670,7 @@ class Usuarios{
          */
 	static function AtualizaFerramentasNova($sock,$cod_ferramenta,$tipo_usuario)
 	{
-		$query="replace Ferramentas_nova (cod_ferramenta, tipo_compartilhamento, data) values (".$cod_ferramenta." , '".ConversorTexto::VerificaStringQuery($tipo_usuario)."' , ".time().")" ;
+		$query="replace Ferramentas_nova (cod_ferramenta, tipo_compartilhamento, data) values (".$cod_ferramenta." , '".ConversorTexto::VerificaStringQuery($sock, $tipo_usuario)."' , ".time().")" ;
 		//if ($tipo_usuario=="F")
 		//  $query.=" and tipo_compartilhamento='F'";
 		AcessoSQL::Enviar($sock,$query);
@@ -678,7 +678,7 @@ class Usuarios{
 	
 	static function RetornaCodLinguaUsuario($sock,$cod_usuario)
 	{
-		$query="select cod_lingua from Usuario where cod_usuario='".ConversorTexto::VerificaStringQuery($cod_usuario)."'";
+		$query="select cod_lingua from Usuario where cod_usuario='".ConversorTexto::VerificaStringQuery($sock, $cod_usuario)."'";
 		$res=AcessoSQL::Enviar($sock, $query);
 	
 		$linha=AcessoSQL::RetornaLinha($res);
@@ -709,13 +709,13 @@ class Usuarios{
 	
 	static function AtualizaFerramentasNovaGrupo($sock,$cod_ferramenta,$cod_grupo)
 	{
-		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('G', ".ConversorTexto::VerificaNumeroQuery($cod_grupo)." , '".ConversorTexto::VerificaStringQuery($cod_ferramenta)."' , ".time().")" ;
+		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('G', ".ConversorTexto::VerificaNumeroQuery($cod_grupo)." , '".ConversorTexto::VerificaStringQuery($sock, $cod_ferramenta)."' , ".time().")" ;
 		AcessoSQL::Enviar($sock,$query);
 	}
 	
 	static function AtualizaFerramentasNovaUsuario($sock,$cod_ferramenta,$cod_usuario)
 	{
-		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('U', ".ConversorTexto::VerificaNumeroQuery($cod_usuario)." , '".ConversorTexto::VerificaStringQuery($cod_ferramenta)."' , ".time().")" ;
+		$query="replace into Ferramentas_nova_usuarios (tipo, cod, cod_ferramenta, data) values ('U', ".ConversorTexto::VerificaNumeroQuery($cod_usuario)." , '".ConversorTexto::VerificaStringQuery($sock, $cod_ferramenta)."' , ".time().")" ;
 		AcessoSQL::Enviar($sock,$query);
 	}
 	

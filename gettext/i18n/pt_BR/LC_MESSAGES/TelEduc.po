@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TelEduc5\n"
-"POT-Creation-Date: 2015-03-19 15:04-0300\n"
-"PO-Revision-Date: 2015-03-23 16:51-0300\n"
+"POT-Creation-Date: 2015-03-25 13:33-0300\n"
+"PO-Revision-Date: 2015-03-25 13:33-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -111,7 +111,7 @@ msgstr ""
 "Você não pode mover uma pasta para ela mesma ou para uma subpasta dela."
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:525
-msgid "CANT_MOVE_FOLDER_NAME_15"
+msgid "CANT_MOVE_FOLDER_NAME_-1"
 msgstr ""
 "Não foi possível mover a pasta, pois já existe uma pasta com mesmo nome no "
 "diretório destino."
@@ -234,8 +234,9 @@ msgid "TRASH_-1"
 msgstr "Lixeira"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:740
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:844
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:301
-msgid "ITENS_-1"
+msgid "ITEMS_-1"
 msgstr "Itens"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:750
@@ -265,10 +266,6 @@ msgstr "Não há nenhum item neste portfólio"
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:842
 msgid "ITEM_-1"
 msgstr "Item"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:844
-msgid "ITEMS_-1"
-msgstr "Itens"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:878
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:651
@@ -366,7 +363,7 @@ msgid "ENDED_GROUPS_PORTFOLIOS_15"
 msgstr "Portfólios de grupos encerrados"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:303
-msgid "UNCOMMENTED_ITENS_-1"
+msgid "UNCOMMENTED_ITEMS_-1"
 msgstr "Itens não comentados"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:310
@@ -403,7 +400,7 @@ msgid "FILES_MOVED_SUCCESS_-1"
 msgstr "Arquivo(s) movido(s) com sucesso."
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:592
-msgid "VIEW_OTHER_ITENS_-1"
+msgid "VIEW_OTHER_ITEMS_-1"
 msgstr "Ver Outros Itens"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:595
@@ -846,7 +843,7 @@ msgid "RESEND_COORD_DATA_-5"
 msgstr "Reenvio de dados aos coordenadores"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:158
-msgid "RESEND_LOGIN_-5"
+msgid "CHANGE_LOGIN_-5"
 msgstr "Trocar login"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:161
@@ -878,7 +875,7 @@ msgid "HELP_TEXT_REGISTER_-5"
 msgstr "Cadastro de texto da Ajuda"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:192
-msgid "BACK_MAIN_PAGE_-5"
+msgid "BACK_HOME_PAGE_-5"
 msgstr "Voltar a página inicial"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/rodape_tela_inicial.php:94
@@ -1323,7 +1320,7 @@ msgstr "Cursos com inscrições abertas"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:46
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_curso.php:273
-msgid "CLOSES_COURSES_-3"
+msgid "CLOSED_COURSES_-3"
 msgstr "Cursos encerrados"
 
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:140
@@ -1379,59 +1376,59 @@ msgstr "Voltar ao início"
 msgid "ONLINE_USERS_-4"
 msgstr "Usuários online:"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:23
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:24
 msgid "AGENDA_EDITED_SUCCESS_1"
 msgstr "Agenda editada com sucesso."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:24
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:25
 msgid "AGENDA_CANT_CONTAIN_TEXT_FILE_1"
 msgstr "A agenda não pode ter texto e arquivos simultaneamente!"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:25
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:26
 msgid "SURE_DELETE_AGENDA_TEXT_1"
 msgstr "Você tem certeza que deseja apagar o texto desta agenda?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:26
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:27
 msgid "TEXT_EXCLUDED_SUCCESS_-1"
 msgstr "Texto excluído com sucesso."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:27
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:28
 msgid "INVALID_CHARACTERS_ATTACH_FILE_-1"
 msgstr ""
 "Nome do anexo com acentos ou caracteres inválidos! Renomeie o arquivo e "
 "tente novamente."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:28
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:29
 msgid "SURE_TO_EXTRACT_FILE_-1"
 msgstr "Você tem certeza de que deseja descompactar este arquivo?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:29
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:30
 msgid "ZIP_FILE_DELETED_-1"
 msgstr "(o arquivo ZIP será apagado)"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:30
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:31
 msgid "ZIP_CANT_EXTRACT_SPACE_FOLDER_NAME_-1"
 msgstr ""
 "importante: não é possível a descompactação de arquivos contendo pastas com "
 "espaços no nome."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:31
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:32
 msgid "FILES_DELETED_SUCCESS_-1"
 msgstr "Arquivo(s) excluído(s) com sucesso."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:32
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:33
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
 msgid "SURE_TO_DELETE_AGENDA_1"
 msgstr "Você tem certeza de que deseja apagar esta agenda?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:33
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:34
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
 msgid "PERMANENTLY_DELETED_1"
 msgstr "(não haverá como recupera-la)"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:36
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:37
 msgid "SURE_TO_DELETE_FILE_FOLDER_-1"
 msgstr ""
 "Deseja realmente apagar o(s) arquivo(s) e/ou a(s) pasta(s) selecionado(s)?"
@@ -1707,6 +1704,7 @@ msgstr "Desconhecida"
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:33
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:34
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:36
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:37
 msgid "AGENDA_DELETED_SUCCESS_1"
 msgstr "Agenda(s) apagada(s) com sucesso. "
 
@@ -1717,7 +1715,7 @@ msgid "PAST_AGENDAS_1"
 msgstr "Agenda Anteriores"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:134
-msgid "SEE_ACTUAL_AGENDA_1"
+msgid "VIEW_ACTIVE_AGENDA_1"
 msgstr "Ver Agenda Atual"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:196
@@ -1741,18 +1739,18 @@ msgstr "Por"
 msgid "EDITION_CONCLUDED_-1"
 msgstr "Edição concluída"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:37
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:38
-msgid "AGENDA_PUBLISHED_SUCCESS_1"
-msgstr "Agenda publicada com sucesso."
+msgid "AGENDA_ACTIVATED_SUCCESS_1"
+msgstr "Agenda ativada com sucesso."
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:39
 msgid "AGENDA_IMPORTED_SUCCESS_1"
 msgstr "Agenda importada com sucesso!"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
-msgid "SURE_TO_PUBLISH_AGENDA_1"
-msgstr "Tem certeza que deseja publicar esta agenda?"
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
+msgid "SURE_TO_ACTIVATE_AGENDA_1"
+msgstr "Tem certeza que deseja ativar esta agenda?"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:195
 msgid "REPLACE_ACTUAL_AGENDA_1"
@@ -1785,8 +1783,8 @@ msgstr "Voltar para Agenda Atual"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:307
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:394
-msgid "PUBLISH_1"
-msgstr "Publicar"
+msgid "ACTIVATE_1"
+msgstr "Ativar"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:327
 msgid "ERROR_REMOVE_TEMP_FILES_-1"
@@ -1837,10 +1835,6 @@ msgstr "Arquivo de entrada selecionado com sucesso."
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:102
 msgid "SELECT_MAIN_PAGE_FILE_1"
 msgstr "Selecione o arquivo que será a entrada da agenda"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
-msgid "SURE_TO_ACTIVATE_AGENDA_1"
-msgstr "Tem certeza que deseja ativar esta agenda?"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:138
 msgid "NO_WAY_TO_DEACTIVATE_1"
@@ -2178,6 +2172,21 @@ msgstr "Busca"
 #: /home/teleduc/public_html/TelEduc/app/geral/models/data.inc:167
 msgid "INVALID_MONTH_-2"
 msgstr "Mês inválido,Jan,Fev,Mar,Abr,Mai,Jun,Jul,Ago,Set,Out,Nov,Dez"
+
+#~ msgid "ITENS_-1"
+#~ msgstr "Itens"
+
+#~ msgid "SEE_ACTUAL_AGENDA_1"
+#~ msgstr "Ver Agenda Atual"
+
+#~ msgid "AGENDA_PUBLISHED_SUCCESS_1"
+#~ msgstr "Agenda publicada com sucesso."
+
+#~ msgid "SURE_TO_PUBLISH_AGENDA_1"
+#~ msgstr "Tem certeza que deseja publicar esta agenda?"
+
+#~ msgid "PUBLISH_1"
+#~ msgstr "Publicar"
 
 #~ msgid "REGISTERED_STUDENT_-3"
 #~ msgstr "Aluno Inscrito"

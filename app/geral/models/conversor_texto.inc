@@ -442,12 +442,12 @@ class ConversorTexto {
      * @param string $string string que será usada em uma query
      * @return string retorna a string tratada contra SQL Injection
      */
-    static function VerificaStringQuery($string) {
+    static function VerificaStringQuery($sock, $string) {
         if (get_magic_quotes_gpc()) {
             $string = stripslashes($string);
         }
 
-        $string = mysql_real_escape_string($string);
+        $string = mysqli_real_escape_string($sock, $string);
 
         return $string;
     }

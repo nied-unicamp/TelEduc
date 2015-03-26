@@ -31,7 +31,7 @@ class AcessoPHP{
 			$query = "select valor from Config where item = 'admtele'";
 		}
 		else {
-			$query = "select senha, cod_usuario, confirmacao from Usuario where login='".ConversorTexto::VerificaStringQuery($login)."' and senha='".ConversorTexto::VerificaStringQuery($senha_crypt)."'";
+			$query = "select senha, cod_usuario, confirmacao from Usuario where login='".ConversorTexto::VerificaStringQuery($sock, $login)."' and senha='".ConversorTexto::VerificaStringQuery($sock, $senha_crypt)."'";
 			//$query = "select senha, cod_usuario, confirmacao from Usuario where login='".VerificaStringQuery($login)."'";
 		}
 	
