@@ -63,7 +63,7 @@ echo("    var flagOnDivSugs=0;");
 echo("    function EmailLoginRepetido()\n");
 echo("    {\n");
 /* 533 - Email e/ou login fornecidos já existem! Digite valores diferentes (note que os logins existentes aparecem na lista de sugestões!*/
-echo("		alert("._("msg533_-5").");");
+echo("		alert('"._("msg533_-5")."');");
 echo("      document.frmCriar.email.value = '';\n");
 echo("      document.frmCriar.login.value = '';\n");
 echo("      document.frmCriar.email.focus();\n");
@@ -100,7 +100,7 @@ echo("      {");
 echo("        if(nome_curso == '' || num == '' || nome_coordenador == '' || email == '' || login == '')\n");
 echo("        {\n");
 /* 166 - Os seguintes campos nao podem ser deixados em branco:\n Nome e numero de alunos do curso;\n Nome, email e login do coordenador */
-echo("          alert('"._("msg166_-5")."');\n");
+//echo("          alert('"._("msg166_-5")."');\n");
 echo("          return false;\n");
 echo("        }\n");
 echo("      }\n");

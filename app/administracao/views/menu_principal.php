@@ -6,7 +6,7 @@ $ctrl_login = '../../'.$ferramenta_login.'/controllers/';
 $view_administracao = '../../'.$ferramenta_administracao.'/views/';
 $model_administracao = '../../'.$ferramenta_administracao.'/models/';
 $diretorio_imgs = '../../../web-content/imgs/';
- 
+
 
  $sock=AcessoSQL::Conectar($cod_curso);
  
@@ -15,7 +15,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
   $time_out=30*60;
 
   echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
-  /* Fun��es javascript */
+  /* Funï¿½ï¿½es javascript */
   echo("    <script language=\"javascript\" type=\"text/javascript\">\n");
   /* *********************************************************
   Funcao MostraPerfil
@@ -24,9 +24,8 @@ $diretorio_imgs = '../../../web-content/imgs/';
 
   echo("      function MostrarPerfil() \n");
   echo("      {\n");
-  echo("          window.open(\"../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario."\",'NOME','width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
+  echo("          window.open(\"../../perfil/exibir_perfis.php?cod_curso=".$cod_curso."&cod_aluno[]=".$cod_usuario."\",'NOME','width=600,height=400,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes');\n");
   echo("      }\n\n");
-
   echo("      function FechandoNavegador() {\n");
   echo("			$.post(\"".$model_administracao."desloga_usuario_curso_dinamic.php\",{cod_usuario:".$cod_usuario.", cod_curso: ".$cod_curso."}, \n");
   echo("				function(data){\n");
@@ -40,7 +39,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
 
   echo("  </head>\n");
 
-  /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo ser�o ocultados */
+  /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo seráo ocultados */
   if($SalvarEmArquivo){
 
     echo("  <body>\n");
@@ -101,11 +100,11 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     	}
     
-    	// 46 - Vis�o de Formador
+    	// 46 - Visão de Formador
     	$tela_nome_ferramenta = _("msg46_-4");
     	echo("            ".$tela_hrefFormador.$tela_nome_ferramenta.$tela_fechaHrefFormador."</li>\n");
     	
-    	// 45 - Vis�o de Aluno
+    	// 45 - Visão de Aluno
     	$tela_nome_ferramenta = _("msg45_-4");
     	echo("            ".$tela_hrefAluno.$tela_nome_ferramenta.$tela_fechaHrefAluno."</li>\n");
     	echo("          </ul>\n");
@@ -146,7 +145,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     }
     /*Ajuda */
-    // 43 - Voltar ao in�cio
+    // 43 - Voltar ao inï¿½cio
     $tela_nome_ferramenta=_("msg43_-3");
     echo("            ".Cursos::PreparaAjuda($sock, $cod_curso,$cod_ferramenta_ajuda,$cod_pagina_ajuda, $cod_usuario)."\n");
     echo("            <li><img src=\"".$diretorio_imgs."icSair.gif\" border=\"0\" alt=\"Sair\" />&nbsp;</li>\n");
@@ -168,7 +167,7 @@ $diretorio_imgs = '../../../web-content/imgs/';
     
     // Ferramenta 11 - Correio
     // Ferramenta 12 - Grupos
-    // Ferramenta 14 - Di�rio de bordo
+    // Ferramenta 14 - Diï¿½rio de bordo
     // Ferramenta 15 - Portfolio
     // Ferramenta 18 - Acessos
     // Ferramenta 19 - Intermap

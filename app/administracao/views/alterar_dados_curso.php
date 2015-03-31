@@ -15,6 +15,8 @@ $cod_ferramenta = 0;
 $cod_ferramenta_ajuda = $cod_ferramenta;
 $cod_pagina_ajuda = 2;
 
+$cod_curso= $_GET['cod_curso'];
+
 require_once $view_administracao.'topo_tela.php';
 
 DataJavaScript::GeraJSComparacaoDatas();
