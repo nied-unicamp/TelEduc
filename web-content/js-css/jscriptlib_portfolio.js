@@ -22,6 +22,7 @@ var valor_radios = new Array();
 $.ajax({
 	type: 'post',
 	url: '../../../app/geral/models/retorna_frase_dinamic.php',
+	data: 'cod_curso='+cod_curso,
 	async: false,
 	success: function(data){
 		var lista = $.parseJSON(data);

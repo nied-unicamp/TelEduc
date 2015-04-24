@@ -24,6 +24,7 @@ var lista_frases;
 $.ajax({
 	type: 'post',
 	url: '../../../app/geral/models/retorna_frase_dinamic.php',
+	data: 'cod_curso='+cod_curso,
 	async: false,
 	success: function(data){
 		var lista = $.parseJSON(data);
@@ -387,7 +388,7 @@ function VerificaChkBox(alpha){
 
 function Apagar(){
   checks = document.getElementsByName('chkArq');
-  if (confirm('Deseja realmente apagar o(s) arquivo(s) e/ou a(s) pasta(s) selecionado(s)?')){
+  if (confirm(lista_frases.msg210)){
     for (i=0; i<checks.length; i++){
       if(checks[i].checked){
         getNumber=checks[i].id.split("_");
