@@ -143,7 +143,7 @@ class Arquivos {
                 }
             }
         }
-	if (count($lista) > 0)
+        if (count($lista) > 0)
         	uasort ($lista, array('Arquivos', "CompareRetornaArrayDiretorio"));
         return ($lista);
     }

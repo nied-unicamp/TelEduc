@@ -492,6 +492,17 @@ class ConversorTexto {
         }
         return (float) $str;
     }
+    
+    /* *********************************************************************
+     IndentarComentario - Indenta o texto com os espaços passados por parâmetro
+    Entrada: $texto - texto a ser alterado
+    $spaces - espaços a serem acrescentados
+    
+    Saida: texto alterado
+    */
+    static function IndentarComentario($texto, $spaces){
+    	return (implode($spaces."<br>",explode("<br>",$texto)));
+    }
 
 }
 

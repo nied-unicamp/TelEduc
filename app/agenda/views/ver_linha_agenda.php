@@ -217,7 +217,7 @@ echo("          }\n");
 
 echo("          document.getElementById('tit_'+id).appendChild(createInput);\n");
 
-echo("			$.post(\"".$model_geral."decodifica_string.php\",{conteudo:conteudo, action: 'decodificaString'}, \n");
+echo("			$.post(\"".$model_geral."decodifica_string.php\",{conteudo:conteudo}, \n");
 echo("				function(data){\n");
 echo("					var code = $.parseJSON(data);\n");
 echo("					$('#tit_".$id."_text').val(code);\n");
@@ -562,6 +562,7 @@ echo("          <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back
 
   							$caminho_arquivo = $dir_item_temp['link'].$linha['Diretorio']."/".$linha['Arquivo'];
   							$caminho_arquivo = preg_replace("/\/\//", "/", $caminho_arquivo);
+  							
   							
   							if ($linha['Arquivo'] != "")
   							{

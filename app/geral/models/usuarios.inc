@@ -272,10 +272,7 @@ class Usuarios{
 	 * @param int $cod_curso  Número de identificação primaria do curso da tabela Cursos
 	 * @return boolean True se é formador e este não está com visão de aluno, false caso contrário
 	 */
-	static function EFormador($sock,$cod_curso,$cod_usuario)
-	{
-		$sock =  AcessoSQL::Conectar($cod_curso);
-	
+	static function EFormador($sock,$cod_curso,$cod_usuario){
 		$estado=Usuarios::RetornaStatusUsuario($sock,$cod_curso,$cod_usuario);
 		//se for administrador
 	
@@ -326,7 +323,7 @@ class Usuarios{
 	
 		// 2Session
 		$dbnamebase = $_SESSION['dbnamebase'];
-		$query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".ConversorTexto::VerificaNumeroQuery($cod_usuario)." and cod_curso=".ConversorTexto::VerificaStringQuery($sock, $cod_curso);
+		$query = "select tipo_usuario from ".$dbnamebase.".Usuario_curso where cod_usuario=".$cod_usuario." and cod_curso=".ConversorTexto::VerificaStringQuery($sock, $cod_curso);
 		$res   = AcessoSQL::Enviar ($sock, $query);
 		$linha = AcessoSQL::RetornaLinha ($res);
 		return ($linha ['tipo_usuario'] == 'Z');

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TelEduc5\n"
-"POT-Creation-Date: 2015-03-25 13:33-0300\n"
-"PO-Revision-Date: 2015-03-25 13:33-0300\n"
+"POT-Creation-Date: 2015-04-23 15:35-0300\n"
+"PO-Revision-Date: 2015-04-23 15:46-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <camila.kna@hotmail.com>\n"
 "Language: en_US\n"
@@ -15,129 +15,83 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Poedit-SearchPath-0: /home/teleduc/public_html/TelEduc/app\n"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:47
-msgid "ITEM_DELETED_SUCCESS_-1"
-msgstr "Item deleted successfully"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:41
+msgid "COMMENT_INSERT_SUCCESS"
+msgstr "Comment inserted successfully."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:48
-msgid "ITEMS_DELETED_SUCCESS_-1"
-msgstr "Item(s) deleted successfully"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:41
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:51
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
+#, php-format
+msgid "ERROR_ATTACHING_FILE_-1"
+msgstr "Warning: the attached file doesn't exist or has more than 2Mb."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:49
-msgid "ITEMS_MOVED_SUCCESS_-1"
-msgstr "Item(s) moved successfully"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:92
+msgid "REMOVE_-1"
+msgstr "Remove"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:50
-msgid "FOLDER_CREATED_SUCCESS_-1"
-msgstr "Folder created successfully"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:102
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:343
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1038
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1048
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:684
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:696
+msgid "ATTACH_FILE_-1"
+msgstr "Attach File"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:211
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:36
-msgid "ITEM_MOVED_SUCCESS_-1"
-msgstr "Item moved successfully"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:146
+msgid "EMPTY_COMMENT_15"
+msgstr "Your comment is empty. To not send it, press the Cancel button."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:215
-msgid "INTERNAL_ERROR_MOVE_AGAIN_-1"
-msgstr "Internal error! Refresh page and try to move items again."
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:210
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:288
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:704
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:84
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:243
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:276
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:187
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:256
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:581
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:111
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:177
+msgid "GROUP_PORTFOLIOS_15"
+msgstr "Group Portfolios"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:281
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:134
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:271
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1102
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:14
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:37
-#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:98
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:407
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:291
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:129
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:236
-msgid "OK_-1"
-msgstr "Ok"
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:216
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:285
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:700
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:94
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:273
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:193
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:253
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:578
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:117
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:174
+msgid "INDIVIDUAL_PORTFOLIOS_15"
+msgstr "Individual Portfolios"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:293
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:137
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:283
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1104
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:16
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:39
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:410
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:166
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:294
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:132
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:248
-msgid "CANCEL_-1"
-msgstr "Cancel"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:320
-msgid "ITEM_RENAMED_SUCCESS_-1"
-msgstr "Item renamed successfully"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:326
-msgid "FOLDER_RENAMED_SUCCESS_-1"
-msgstr "Folder renamed successfully"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:335
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:347
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:367
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:66
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:123
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:281
-msgid "TITLE_CANNOT_BE_EMPTY_-1"
-msgstr "The title cannot be empty."
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:354
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:373
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:73
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:130
-msgid "TITLE_CANNOT_CONTAIN_-1"
-msgstr "The title cannot contain \\."
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:389
-msgid "ERROR_CREATE_FOLDER_-1"
-msgstr ""
-"Cannot create the folder, because already exists a folder with the same name"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:502
-msgid "SURE_TO_DELETE_ITEM_-1"
-msgstr "Are you sure you want to delete this item?"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:502
-msgid "ITEM_MOVE_TO_TRASH_-1"
-msgstr "(The items will be moved to the trash)"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:518
-msgid "CANT_MOVE_FOLDER_ITSELF_SUBFOLDER_15"
-msgstr "You cannot move a folder to itself or to one of its subfolders."
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:525
-msgid "CANT_MOVE_FOLDER_NAME_-1"
-msgstr ""
-"Cannot move the folder, because already exists a folder with the same name"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:588
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:603
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:483
-msgid "GROUP_PORTFOLIO_15"
-msgstr "Group Portfolio"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:594
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:609
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:487
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:491
-msgid "INDIVIDUAL_PORTFOLIO_15"
-msgstr "Individual Portfolio"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:615
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:188
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:297
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:495
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:220
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:44
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:62
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:633
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:194
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:303
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:197
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:505
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:49
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:121
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:50
 #: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:57
 msgid "PORTFOLIO_15"
 msgstr "Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:625
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:198
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:505
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:230
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:305
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:643
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:204
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:208
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:515
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:131
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:197
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:206
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso2.php:55
@@ -172,78 +126,284 @@ msgstr "Portfolio"
 msgid "BACK_-1"
 msgstr "Back"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:650
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:526
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:255
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:668
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:536
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:144
 msgid "DELETED_GROUP_15"
 msgstr "Deleted Group"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:664
-msgid "REJECTED_STUDENT_0"
-msgstr "Rejected student"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:680
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:68
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:265
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:566
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:283
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:698
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:74
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:271
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:251
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:576
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:172
 msgid "MY_PORTFOLIOS_15"
 msgstr "My Portfolios"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:682
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:88
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:267
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:568
-msgid "INDIVIDUAL_PORTFOLIOS_15"
-msgstr "Individual Portfolios"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:686
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:78
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:237
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:270
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:571
-msgid "GROUP_PORTFOLIOS_15"
-msgstr "Group Portfolios"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:688
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:98
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:272
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:573
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:290
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:706
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:104
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:278
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:258
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:583
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:179
 msgid "ENDED_PORTFOLIOS_15"
 msgstr "Ended Portfolios"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:699
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:307
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:602
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:198
+msgid "VIEW_OTHER_ITEMS_-1"
+msgstr "View Other Items"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:310
+msgid "TO_COMMENT_-1"
+msgstr "Comment"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:312
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:341
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:372
+msgid "COMMENT_-1"
+msgstr "Comment"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:349
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:356
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:299
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:135
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:281
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1114
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:14
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:37
+#: /home/teleduc/public_html/TelEduc/app/admin/views/index_adm.php:98
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:407
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:291
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:129
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:236
+msgid "OK_-1"
+msgstr "Ok"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:350
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:357
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:311
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:138
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:293
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1116
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:16
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:39
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:410
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_agenda.php:166
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:294
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:132
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:248
+msgid "CANCEL_-1"
+msgstr "Cancel"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:374
+msgid "SENDER_-1"
+msgstr "Sender"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:415
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:856
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:533
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:252
+msgid "FILES_-2"
+msgstr "Files"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/comentarios.php:444
+msgid "COMMENT_DONE_IN_-1"
+msgstr "Comment done in"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:65
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:121
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:948
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:125
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:105
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:174
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:58
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:112
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:337
+msgid "IN_EDITION_-1"
+msgstr "In edition"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:86
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:717
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:269
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:72
 msgid "UPDATE_-1"
 msgstr "Update"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:714
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:103
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:87
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:59
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:70
+#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:81
+msgid "CLOSE_-1"
+msgstr "Close"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:112
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:868
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:95
+msgid "ITEM_-1"
+msgstr "Item"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:117
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:94
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:294
+msgid "SITUATION_-1"
+msgstr "Situation"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:124
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:115
+msgid "EDITION_CONCLUDED_-1"
+msgstr "Edition concluded"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:129
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:96
+msgid "SINCE_-1"
+msgstr "Since"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/em_edicao.php:137
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:98
+msgid "BY_-1"
+msgstr "By"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:49
+msgid "ITEM_DELETED_SUCCESS_-1"
+msgstr "Item deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:50
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:37
+msgid "ITEMS_DELETED_SUCCESS_-1"
+msgstr "Item(s) deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:51
+msgid "ITEMS_MOVED_SUCCESS_-1"
+msgstr "Item(s) moved successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:52
+msgid "FOLDER_CREATED_SUCCESS_-1"
+msgstr "Folder created successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:229
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:49
+msgid "ITEM_MOVED_SUCCESS_-1"
+msgstr "Item moved successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:233
+msgid "INTERNAL_ERROR_MOVE_AGAIN_-1"
+msgstr "Internal error! Refresh page and try to move items again."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:338
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:74
+msgid "ITEM_RENAMED_SUCCESS_-1"
+msgstr "Item renamed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:344
+msgid "FOLDER_RENAMED_SUCCESS_-1"
+msgstr "Folder renamed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:353
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:365
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:385
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:75
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:66
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:123
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:281
+msgid "TITLE_CANNOT_BE_EMPTY_-1"
+msgstr "The title cannot be empty."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:372
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:391
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:73
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:130
+msgid "TITLE_CANNOT_CONTAIN_-1"
+msgstr "The title cannot contain \\."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:407
+msgid "ERROR_CREATE_FOLDER_-1"
+msgstr ""
+"Cannot create the folder, because already exists a folder with the same name"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:520
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:152
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:68
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:86
+msgid "SURE_TO_DELETE_ITEM_-1"
+msgstr "Are you sure you want to delete this item?"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:520
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:87
+msgid "ITEM_MOVE_TO_TRASH_-1"
+msgstr "(The items will be moved to the trash)"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:536
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:71
+msgid "CANT_MOVE_FOLDER_ITSELF_SUBFOLDER_15"
+msgstr "You cannot move a folder to itself or to one of its subfolders."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:543
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:72
+msgid "CANT_MOVE_FOLDER_NAME_-1"
+msgstr ""
+"Cannot move the folder, because already exists a folder with the same name"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:606
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:621
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:493
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:54
+msgid "GROUP_PORTFOLIO_15"
+msgstr "Group Portfolio"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:612
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:627
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:497
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:501
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:54
+msgid "INDIVIDUAL_PORTFOLIO_15"
+msgstr "Individual Portfolio"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:682
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:235
+msgid "REJECTED_STUDENT_0"
+msgstr "Rejected student"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:732
 msgid "INCLUDE_NEW_ITEM_-1"
 msgstr "Include new item"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:716
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:734
 msgid "NEW_FOLDER_-1"
 msgstr "New folder"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:720
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:738
 msgid "RENAME_FOLDER_-1"
 msgstr "Rename folder"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:724
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:742
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:213
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:162
 msgid "TRASH_-1"
 msgstr "Trash"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:740
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:844
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:301
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:758
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:870
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:307
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:282
 msgid "ITEMS_-1"
 msgstr "Itens"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:750
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:598
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:768
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:608
 msgid "COMMENTS_-1"
 msgstr "Comments"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:753
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:299
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:771
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:305
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:284
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:108
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:83
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:150
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:292
@@ -253,176 +413,186 @@ msgstr "Comments"
 msgid "DATE_-1"
 msgstr "Date"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:756
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:774
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:233
 msgid "ACCESS_MODE_-1"
 msgstr "Access mode"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:767
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:785
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:295
 msgid "NO_ITEM_IN_THIS_PORTFOLIO_15"
 msgstr "There are no items in this portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:842
-msgid "ITEM_-1"
-msgstr "Item"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:878
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:651
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:213
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:216
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:904
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:661
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:265
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:219
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:222
 msgid "UNRESTRICTED_ACCESS_MODE_-1"
 msgstr "Unrestricted access code"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:882
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:656
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:183
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:208
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:211
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:908
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:666
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:269
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:214
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:217
 msgid "INSTRUCTOR_ACCESS_MODE_-1"
 msgstr "Instructor access mode"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:886
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:661
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:224
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:912
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:671
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:273
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:230
 msgid "GROUP_ACCESS_MODE_-1"
 msgstr "Group access mode"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:890
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:666
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:221
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:916
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:676
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:277
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:227
 msgid "NOT_ACCESSIBLE_-1"
 msgstr "Not accessible"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:922
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:105
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:174
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:58
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:112
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:337
-msgid "IN_EDITION_-1"
-msgstr "In edition"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1044
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1070
 msgid "STUDENT_COMMENT_-1"
 msgstr "Student comment"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1045
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1071
 msgid "INSTRUCTOR_COMMENT_-1"
 msgstr "Instructor comment"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1048
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1074
 msgid "COMMENTS_SENT_BY_ME_-1"
 msgstr "Comments sent by me"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1061
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1087
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:340
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:205
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:377
 msgid "DELETE_SELECTED_-1"
 msgstr "Delete selected"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1062
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio.php:1088
 msgid "MOVE_SELECTED_-1"
 msgstr "Move selected"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:206
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:246
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:212
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:252
 msgid "MY_PORTFOLIO_15"
 msgstr "My Portfolio"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:209
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:215
 msgid "OTHER_PARTICIPANTS_PORTFOLIOS_15"
 msgstr "Portfolios of other participants"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:216
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:222
 msgid "PARTICIPANTS_PORTFOLIOS_15"
 msgstr "Portfolios of course participants"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:221
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:227
 msgid "REJECTED_STUDENTS_POTFOLIOS_15"
 msgstr "Portfolios of Rejected Students"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:229
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:235
 msgid "MY_GROUPS_PORTFOLIOS_15"
 msgstr "Portfolios of my groups"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:232
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:238
 msgid "OTHER_GROUPS_PORTFOLIOS_15"
 msgstr "Portfolios of other groups"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:247
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:253
 msgid "GROUP_PORTFOLIOS_PARTICIPATING_15"
 msgstr "Group Portfolio that I'm participating"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:248
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:254
 msgid "ENDED_GROUPS_PORTFOLIOS_PATICIPATED_15"
 msgstr "Ended groups's portfolio that I participated"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:253
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:259
 msgid "ENDED_GROUPS_PORTFOLIOS_15"
 msgstr "Portfolios of Ended Groups"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:303
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:309
 msgid "UNCOMMENTED_ITEMS_-1"
 msgstr "Uncommented items"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:310
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_portfolio.php:316
 msgid "NO_PORTFOLIOS_15"
 msgstr "There are no Portfolios"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:35
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:38
+msgid "ITEMS_RETRIEVED_SUCESS_-1"
+msgstr "Items retrieved successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:152
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:68
+msgid "ITEM_DELETED_PERMANENTLY_-1"
+msgstr "(the item will be definitively deleted)"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:163
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:79
+msgid "SURE_TO_RETRIEVE_ITEM_-1"
+msgstr "Are you sure you want to retrieve this item?"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:163
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:79
+msgid "ITEM_MOVED_ROOT_FOLDER_-1"
+msgstr ""
+"(the item will be moved to the Root file and will have restricted access)"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/portfolio_lixeira.php:341
+msgid "RETRIEVE_SELECTED_-1"
+msgstr "Retrieve selected"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:48
 msgid "ITEM_CREATED_SUCCESS_-1"
 msgstr "Item created successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:37
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:50
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
 msgid "FILE_EXTRACTED_SUCCESS_-1"
 msgstr "File extracted successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:37
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:50
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:100
 msgid "ERROR_EXTRACTING_FILE_-1"
 msgstr "An error occurred while extracting file."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:38
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:51
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
 msgid "FILE_ATTACHED_SUCCESS_-1"
 msgstr "File attached successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:38
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:99
-#, php-format
-msgid "ERROR_ATTACHING_FILE_-1"
-msgstr "Warning: the attached file doesn't exist or has more than 2Mb."
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:39
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:52
 msgid "FILES_MOVED_SUCCESS_-1"
 msgstr "Files moves succesfully"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:592
-msgid "VIEW_OTHER_ITEMS_-1"
-msgstr "View Other Items"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:595
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:605
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:57
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:50
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:391
 msgid "RECORD_OF_CHANGES_-1"
 msgstr "Record of changes"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:601
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:647
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1009
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:611
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:657
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1021
 msgid "MOVE_-1"
 msgstr "Move"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:603
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1008
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1070
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:613
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1020
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1082
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:463
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:398
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:665
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:666
 msgid "DELETE_-1"
 msgstr "Delete"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:614
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1093
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:624
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1105
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:226
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:68
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:81
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:399
@@ -433,101 +603,114 @@ msgstr "Delete"
 msgid "TITLE_-1"
 msgstr "Title"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:618
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:628
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:229
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/administracao.php:173
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:417
 msgid "OPTIONS_0"
 msgstr "Options"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:622
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:632
 msgid "SHARE_-1"
 msgstr "Share"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:639
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:649
 msgid "RENAME_-1"
 msgstr "Rename"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:642
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:652
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:440
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:455
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:236
 msgid "EDIT_TEXT_-1"
 msgstr "Edit text"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:644
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:654
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:442
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:457
 msgid "DELETE_TEXT_-1"
 msgstr "Delete Text"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:830
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:840
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:290
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/agenda.php:241
 msgid "TEXT_-1"
 msgstr "Text"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:846
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:533
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:252
-msgid "FILES_-2"
-msgstr "Files"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:852
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:862
 msgid "EMPTY_DIRECTORY_-1"
 msgstr "Empty Directory"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:943
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:599
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:955
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:600
 msgid "LAST_MODIFICATION_IN_-1"
 msgstr "Last modification in"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:948
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:960
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:380
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:85
 msgid "HIDDEN_-1"
 msgstr "hidden"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1010
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:667
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1022
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:668
 msgid "EXTRACT_-1"
 msgstr "Extract"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1011
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1023
 msgid "HIDE_-1"
-msgstr "Hide"
+msgstr "Hide / Show"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1026
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1036
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:683
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:695
-msgid "ATTACH_FILE_-1"
-msgstr "Attach File"
-
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1027
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:686
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1039
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
 msgid "PRESS_BUTTON_SELECT_ATTACH_FILE_-1"
 msgstr ""
 "Click the Browse button below to select the file to be attached then press "
 "OK to continue."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1027
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:686
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1039
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:687
 msgid "ZIP_FILES_CAN_BE_EXTRACTED_-1"
 msgstr "(.ZIP files can be sent and extracted later)"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1050
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1062
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:438
 msgid "INTERNET_ADDRESSES_-1"
 msgstr "Internet addresses"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1085
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1088
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1097
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1100
 msgid "INCLUDE_ADDRESS_-1"
 msgstr "Include address"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1090
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1102
 msgid "TYPE_ADDRESS_TITLE_-1"
 msgstr "Type in the title and the Internet address to be included."
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1098
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver.php:1110
 msgid "INTERNET_ADDRESS_-1"
 msgstr "Internet address"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:51
+msgid "RESTRICTED_AREA_PORTFOLIO_OWNERS_15"
+msgstr "Restricted area. For the creator(s) of the portfolio only."
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:247
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:424
+msgid "EDIT_-1"
+msgstr "Edit"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:257
+msgid "RETRIEVE_-1"
+msgstr "Retrieve"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:259
+msgid "EXCLUDE_-1"
+msgstr "Exclude"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/ver_lixeira.php:305
+msgid "FILES_-1"
+msgstr "Files"
 
 #: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:11
 msgid "TYPE_FOLDER_NAME_-1"
@@ -549,9 +732,58 @@ msgstr "Select the destination folder:"
 msgid "ROOT_FOLDER_-1"
 msgstr "Root folder"
 
-#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:206
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/layer.php:212
 msgid "ACCESS_MODE_CHANGED_SUCCESS_-1"
 msgstr "Access mode changed successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:106
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:81
+msgid "ACTION_-1"
+msgstr "Action"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:110
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:150
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:203
+#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:257
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:85
+msgid "USER_-3"
+msgstr "User"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:121
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:101
+msgid "CREATION_-1"
+msgstr "Creation"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:123
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:103
+msgid "EDITION_CANCELED_-1"
+msgstr "Edition canceled"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:127
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:107
+msgid "EDITION_ENDED_-1"
+msgstr "Edition ended"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:129
+msgid "MOVED_-1"
+msgstr "Moved"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:131
+msgid "EXCLUSION_-1"
+msgstr "Exclusion"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:133
+msgid "RETRIEVERING_-1"
+msgstr "Retrievering"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:135
+msgid "DELETED_PERMANENTLY_-1"
+msgstr "Definitively deleted"
+
+#: /home/teleduc/public_html/TelEduc/app/portfolio/views/historico.php:137
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:113
+msgid "UNKNOWN_-1"
+msgstr "Unknown"
 
 #: /home/teleduc/public_html/TelEduc/app/admin/views/criar_curso.php:28
 msgid "SUGGESTIONS_-5"
@@ -1295,13 +1527,6 @@ msgstr "You are not enrolled in any course"
 msgid "INSTRUCTOR_-1"
 msgstr "Instructor"
 
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:150
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:203
-#: /home/teleduc/public_html/TelEduc/app/administracao/views/exibe_cursos.php:257
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:85
-msgid "USER_-3"
-msgstr "User"
-
 #: /home/teleduc/public_html/TelEduc/app/administracao/views/cursos_all.php:37
 msgid "NOT_BEGUN_COURSES_-3"
 msgstr "Courses not begun"
@@ -1374,59 +1599,104 @@ msgstr "Exit"
 msgid "ONLINE_USERS_-4"
 msgstr "Online users:"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:24
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:55
 msgid "AGENDA_EDITED_SUCCESS_1"
 msgstr "Agenda edited successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:25
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:56
 msgid "AGENDA_CANT_CONTAIN_TEXT_FILE_1"
 msgstr "The Agenda should contain only text or only files!"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:26
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:57
 msgid "SURE_DELETE_AGENDA_TEXT_1"
 msgstr "Are you sure you want to delete this Agenda's text?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:27
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:58
 msgid "TEXT_EXCLUDED_SUCCESS_-1"
 msgstr "Text deleted successfully."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:28
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:59
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:80
 msgid "INVALID_CHARACTERS_ATTACH_FILE_-1"
 msgstr "Attachment name with invalid characters. Please rename and try again."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:29
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:60
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:82
 msgid "SURE_TO_EXTRACT_FILE_-1"
 msgstr "Are you sure you want to extract this file?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:30
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:61
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:83
 msgid "ZIP_FILE_DELETED_-1"
 msgstr "(the ZIP file will be deleted)"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:31
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:62
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:84
 msgid "ZIP_CANT_EXTRACT_SPACE_FOLDER_NAME_-1"
 msgstr ""
 "important: it is not possible to extract files containing folders that have "
 "spaces in the name"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:32
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:63
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:67
 msgid "FILES_DELETED_SUCCESS_-1"
 msgstr "Files deleted successfully"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:33
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:64
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
 msgid "SURE_TO_DELETE_AGENDA_1"
 msgstr "Are you sure you want to delete this Agenda?"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:34
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:65
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:96
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:188
 msgid "PERMANENTLY_DELETED_1"
 msgstr "(it will be permanently deleted)"
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:37
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:66
 msgid "SURE_TO_DELETE_FILE_FOLDER_-1"
 msgstr "Are you sure you want erase the file(s) and/or the folder(s) selected?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:68
+msgid "FILES_HIDDEN_SUCCESS_-1"
+msgstr "Files hidden successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:69
+msgid "FILES_UNHIDDEN_SUCCESS_-1"
+msgstr "Files unhidden successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:70
+msgid "ERROR_UPDATING_MATERIAL_-1"
+msgstr "An error occurred while updating the material."
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:73
+msgid "ITEM_EDITED_SUCCESS"
+msgstr "Item edited successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:76
+msgid "TEXT_DELETED_SUCCESS_-1"
+msgstr "Text deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:77
+msgid "SURE_TO_DELETE_ADDRESS_-1"
+msgstr "Are you sure you want to delete this internet address?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:78
+msgid "ADDRESS_DELETED_SUCCESS_-1"
+msgstr "Internet address deleted successfully"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:79
+msgid "SURE_TO_DELETE_TEXT_CONTENT_-1"
+msgstr "Are you sure you want to erase the text's content?"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:81
+msgid "FILL_IN_ADDRESS_-1"
+msgstr "At least the address must be filled!"
+
+#: /home/teleduc/public_html/TelEduc/app/geral/models/retorna_frase_dinamic.php:88
+msgid "ADDRESS_INCLUDED_SUCCESS_-1"
+msgstr "Internet Addresses included successfully."
 
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:69
 #: /home/teleduc/public_html/TelEduc/app/cadastro/views/cadastro.php:75
@@ -1659,28 +1929,6 @@ msgstr "DO_NOT_REPLY"
 msgid "AGENDA_1"
 msgstr "Agenda"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:59
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:70
-#: /home/teleduc/public_html/TelEduc/app/portfolio/models/portfolio.inc:81
-msgid "CLOSE_-1"
-msgstr "Close"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:81
-msgid "ACTION_-1"
-msgstr "Action"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:101
-msgid "CREATION_-1"
-msgstr "Creation"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:103
-msgid "EDITION_CANCELED_-1"
-msgstr "Edition canceled"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:107
-msgid "EDITION_ENDED_-1"
-msgstr "Edition ended"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:109
 msgid "MOVED_TO_RECORD_OF_CHANGES_-1"
 msgstr "Moved to record of changes"
@@ -1688,10 +1936,6 @@ msgstr "Moved to record of changes"
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:111
 msgid "ACTIVATED_-1"
 msgstr "Activated"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/historico_agenda.php:113
-msgid "UNKNOWN_-1"
-msgstr "Unknown"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:33
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:34
@@ -1713,23 +1957,6 @@ msgstr "View Active Agenda"
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_anteriores.php:196
 msgid "NO_PAST_AGENDAS_1"
 msgstr "There is no past agenda."
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:94
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:294
-msgid "SITUATION_-1"
-msgstr "Situation"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:96
-msgid "SINCE_-1"
-msgstr "Since"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:98
-msgid "BY_-1"
-msgstr "By"
-
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/em_edicao.php:115
-msgid "EDITION_CONCLUDED_-1"
-msgstr "Edition concluded"
 
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_editar.php:38
 msgid "AGENDA_ACTIVATED_SUCCESS_1"
@@ -1844,10 +2071,6 @@ msgstr "Edit Agenda"
 msgid "BACK_TO_PAST_AGENDAS_1"
 msgstr "Back to Past Agendas"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:424
-msgid "EDIT_-1"
-msgstr "Edit"
-
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:438
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:453
 msgid "RENAME_TITLE_-1"
@@ -1857,21 +2080,21 @@ msgstr "Rename title"
 msgid "CONTENT_-1"
 msgstr "Content"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:604
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:711
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:605
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
 #: /home/teleduc/public_html/TelEduc/app/agenda/views/importar_ver.php:323
 msgid "MAIN_PAGE_1"
 msgstr "Main page"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:669
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:670
 msgid "SELECT_MAIN_PAGE_1"
 msgstr "Select main page"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:711
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:712
 msgid "FILE_AGENDA_MAIN_PAGE_1"
 msgstr "This file will be the Agenda main page!"
 
-#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:715
+#: /home/teleduc/public_html/TelEduc/app/agenda/views/ver_linha_agenda.php:716
 msgid "CONTAIN_ONLY_TEXT_OR_ONLY_FILE_1"
 msgstr "Ps.: The Agenda should contain only text or only files."
 
@@ -2052,7 +2275,7 @@ msgstr ""
 msgid "NONEXISTENT_INVALID_USER_-2"
 msgstr "User nonexistent or invalid."
 
-#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:368
+#: /home/teleduc/public_html/TelEduc/app/geral/models/usuarios.inc:365
 msgid "DISABLED_TOOL_-1"
 msgstr "Tool disabled"
 
