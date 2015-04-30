@@ -48,26 +48,26 @@ Programa Principal
   $bibliotecas="../bibliotecas/";
   include($bibliotecas."geral.inc");
   include("perfil.inc");
-//   require_once("../../xajax_0.5/xajax_core/xajax.inc.php");
+  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
 
 
-// //   Global $cod_lingua_s;
-//   $cod_lingua = $_SESSION['cod_lingua_s'];
+//   Global $cod_lingua_s;
+  $cod_lingua = $_SESSION['cod_lingua_s'];
 
-//   // Estancia o objeto XAJAX
-//   $objAjax = new xajax();
-//   $objAjax->configure("characterEncoding", 'ISO-8859-1');
-//   $objAjax->setFlag("decodeUTF8Input",true);
-//   $objAjax->configure('javascript URI', "../xajax_0.5");
-//   $objAjax->configure('errorHandler', true);
-//   // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
-//   $objAjax->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
-//   $objAjax->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
-//   // Manda o xajax executar os pedidos acima.
-//   $objAjax->processRequest();
+  // Estancia o objeto XAJAX
+  $objAjax = new xajax();
+  $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  $objAjax->setFlag("decodeUTF8Input",true);
+  $objAjax->configure('javascript URI', "../xajax_0.5");
+  $objAjax->configure('errorHandler', true);
+  // Registre os nomes das fun?es em PHP que voc?quer chamar atrav? do xajax
+  $objAjax->register(XAJAX_FUNCTION,"RetornaDadosPerfilDinamic");
+  $objAjax->register(XAJAX_FUNCTION,"EditarPerfilDinamic");
+  // Manda o xajax executar os pedidos acima.
+  $objAjax->processRequest();
 
   $cod_ferramenta=13;
-  include("../../administracao/views/topo_tela.php");
+  include("../topo_tela.php");
 
   // instanciar o objeto, passa a lista de frases por parametro
   $feedbackObject =  new FeedbackObject($lista_frases);
@@ -76,18 +76,18 @@ Programa Principal
   $feedbackObject->addAction("apagarFoto", 128, 129);
 
 
-  $sock= AcessoSQL::Conectar("");
+  $sock=Conectar("");
 
 
   $curso_info = RetornaDadosCurso($sock, $cod_curso);
 
-  $cod_usuario = Usuarios::RetornaCodigoUsuarioCurso($sock, $_SESSION["cod_usuario_global_s"], $cod_curso);
+  $cod_usuario = RetornaCodigoUsuarioCurso($sock, $_SESSION["cod_usuario_global_s"], $cod_curso);
 
 
   $curso_info = RetornaDadosCurso($sock, $cod_curso);
 
-  $diretorio_arquivo= Perfil::RetornaDiretorio($sock,"Arquivos");
-  $diretorio_temp= Perfil::RetornaDiretorio($sock,"ArquivosWeb");
+  $diretorio_arquivo=RetornaDiretorio($sock,"Arquivos");
+  $diretorio_temp=RetornaDiretorio($sock,"ArquivosWeb");
 
   Desconectar($sock);
   $sock=Conectar($cod_curso);

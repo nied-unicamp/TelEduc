@@ -42,9 +42,12 @@
 
 /* CÃ³digo principal */
 
-  $bibliotecas="../../bibliotecas/";
-  include($bibliotecas."geral.inc");
-  include("perfil.inc");
+  // $bibliotecas="../../bibliotecas/";
+  // include($bibliotecas."geral.inc");
+  include("../models/perfil.inc");
+  include("../../geral/models/geral.inc");
+  
+  $diretorio_imgs = '../../../web-content/imgs/';
 
   $cod_ferramenta=13;
   
@@ -53,38 +56,42 @@
   $cod_pagina_ajuda=1;
   
   $tipo_usuario="A";
+  $cod_curso = $_GET['cod_curso'];
+  $sock= AcessoSQL::Conectar($cod_curso);
+  $lista_frases= Linguas::RetornaListaDeFrases($sock, $cod_ferramenta);
 
-  require_once("../xajax_0.5/xajax_core/xajax.inc.php");
+  // require_once("../../xajax_0.5/xajax_core/xajax.inc.php");
+  // require_once("../../xajax_0.5/xajax_js/xajax_core.js");
 
-  // Estancia o objeto XAJAX
-  $objAjax = new xajax();
-  $objAjax->configure("characterEncoding", 'ISO-8859-1');
-  $objAjax->setFlag("decodeUTF8Input",true);
-  $objAjax->configure('javascript URI', "../xajax_0.5");
-  $objAjax->configure('errorHandler', true);
-  // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xaja
-  //$objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
-  $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
-  //$objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
-  // Registra funções para uso de menu_principal.php
-  $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
-  // Manda o xajax executar os pedidos acima.
-  $objAjax->processRequest();
+  // // Estancia o objeto XAJAX
+  // $objAjax = new xajax();
+  // $objAjax->configure("characterEncoding", 'ISO-8859-1');
+  // $objAjax->setFlag("decodeUTF8Input",true);
+  // $objAjax->configure('javascript URI', "../xajax_0.5");
+  // $objAjax->configure('errorHandler', true);
+  // // Registre os nomes das funï¿½ï¿½es em PHP que vocï¿½ quer chamar atravï¿½s do xaja
+  // //$objAjax->register(XAJAX_FUNCTION,"IniciaPaginacaoDinamic");
+  // $objAjax->register(XAJAX_FUNCTION,"MudaDinamic");
+  // //$objAjax->register(XAJAX_FUNCTION,"PaginacaoDinamic");
+  // // Registra funções para uso de menu_principal.php
+  // $objAjax->register(XAJAX_FUNCTION,"DeslogaUsuarioCursoDinamic");
+  // // Manda o xajax executar os pedidos acima.
+  // $objAjax->processRequest();
 
-  include("../topo_tela.php");
-  
+  include("../../administracao/views/topo_tela.php");
+
+
   // instanciar o objeto, passa a lista de frases por parametro
-  $feedbackObject =  new FeedbackObject($lista_frases);
+  $feedbackObject =  new FeedbackObject();
   //adicionar as acoes possiveis, 1o parametro Ã© a aÃ§Ã£o, o segundo Ã© o nÃºmero da frase para ser impressa se for "true", o terceiro caso "false"
   $feedbackObject->addAction("enviouOrientacao", 50, 51);
 
   /* variavel de ordenacao da lista de alunos. Ex: ordenar por nome */
   if (!isset($ordem))
-  {
     $ordem="nome";
-  }
   
-  $lista = ListaUsuario($sock,"A",$cod_curso);
+  
+  $lista = Perfil::ListaUsuario($sock,"A",$cod_curso);
   
   /* Número de usuários exibidos por página.             */
   if (!isset($user_por_pag)) $user_por_pag = 10;
@@ -108,20 +115,23 @@
   $pagAtual =  1;
   else $pagAtual = min($pagAtual, $totalPag);
   
-
+  //echo("    <script type=\"text/javascript\" src=\"./js/perfil.js\"></script>\n");
   /* FunÃ§Ãµes javascript */
   echo("    <script type=\"text/javascript\">\n");
   /* <Variaveis globais> */
+
   echo(" 	  var imprimir_perfil = 0;\n");
   echo("	  var qtdPag=1;\n");
   echo("	  var intervalo=1;\n");
   echo("	  var atual=1;\n");
-  echo("	  var aux='T';\n");
+  echo("    var aux='T';\n");
   echo("      var pagAtual = ".$pagAtual.";\n");
   echo("      var total_user = ".$total_user.";\n");
   echo("      var totalPag = ".$totalPag.";\n");
   echo("      var user_por_pag = ".$user_por_pag.";\n");
   /* </ Variaveis globais> */
+  //echo("      testa();\n");
+
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
@@ -441,15 +451,15 @@
 
   echo("    </script>\n");
 
-  $objAjax->printJavascript();
+   //$objAjax->printJavascript();
 
-  include("../menu_principal.php");
+  include("../../administracao/views/menu_principal.php");
 
   echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   /* 1 - Perfil */
-  echo("          <h4>".RetornaFraseDaLista($lista_frases,1)."</h4>\n");
+  echo("          <h4>".Linguas::RetornaFraseDaLista($lista_frases,1)."</h4>\n");
   /* 509 - Voltar */
-  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
+  echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:history.back(-1);\">&nbsp;&lt;&nbsp;".Linguas::RetornaFraseDaLista($lista_frases_geral,509)."&nbsp;</span></li></ul>\n");
 
   echo("          <div id=\"mudarFonte\">\n");
   echo("            <a href=\"#\" onclick=\"mudafonte(2)\"><img src=\"../imgs/btFont1.gif\" alt=\"Letra tamanho 3\" width=\"17\" height=\"15\" border=\"0\" align=\"right\" /></a>\n");
@@ -465,15 +475,15 @@
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
   
-  if (EFormador($sock,$cod_curso,$cod_usuario)&&(!$_SESSION['visao_aluno_s']))
+  if (Usuarios::EFormador($sock,$cod_curso,$cod_usuario)&&(!$_SESSION['visao_aluno_s']))
   {
     echo("                  <li><a href=\"editar_orientacao.php?cod_curso=".$cod_curso."\">");
     /* 2-Editar orientaÃ§Ã£o para preenchimento do Perfil */
-    echo(RetornaFraseDaLista($lista_frases,2)."</a></li>");
+    echo(Linguas::RetornaFraseDaLista($lista_frases,2)."</a></li>");
   }
   echo("                  <li><a href=\"#\" onclick=\"return(OpenWindowLink(".$cod_usuario."));\">");
   /* 132 - Meu Perfil*/
-  echo(RetornaFraseDaLista($lista_frases,132)."</a></li>");
+  echo(Linguas::RetornaFraseDaLista($lista_frases,132)."</a></li>");
   
   echo("                </ul>\n");
   echo("              </td>\n");
@@ -485,9 +495,9 @@
   echo("                  <input type=\"hidden\" name=\"imprimir\" id=\"imprimir\" value=\"\" />\n");
   echo("                  <table cellpadding=\"0\" cellspacing=\"0\" id=\"tabelaInterna\" class=\"tabInterna\">\n");
 
-  $ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
+  $ultimo_acesso = Usuarios::PenultimoAcesso($sock,$cod_usuario,"");
 
-  $icone = "<img src=\"../imgs/icPerfil.gif\" border=\"0\" alt=\"".RetornaFraseDaLista($lista_frases, 1)."\" />";
+  $icone = "<img src=\"../imgs/icPerfil.gif\" border=\"0\" alt=\"".Linguas::RetornaFraseDaLista($lista_frases, 1)."\" />";
 
   /*
   ================
@@ -498,7 +508,7 @@
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
   /* 3-Alunos */
-  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,3)."</div>\n");
+  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases,3)."</div>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
   
@@ -507,16 +517,16 @@
     echo("                    <tr class=\"head\">\n");
     echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_aluno_all\" value=\"1\" onclick=\"CheckAll(1);Seek_Checked();\"  /></td>\n");
     /* 4-Nome */
-    echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                      <td align=\"left\" width=\"68%\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
-    echo("                      <td width=\"30%\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
+    echo("                      <td width=\"30%\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
     echo("                    </tr>\n");
 
     $num_usuario=0;
     foreach ($lista as $i => $dados)
     # for ($c=0;$c<count($lista);$c++)
     {
-      $linha = Retornaperfil($sock,$dados['cod_usuario']);
+      $linha = Perfil::RetornaPerfil($sock,$dados['cod_usuario']);
 
       $bopen_tag = "";
       $bclose_tag = "";
@@ -541,11 +551,11 @@
       echo("                      </td>\n");
 
       if (!empty($linha)){
-        echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($linha['data']).$bclose_tag."\n");
+        echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.Data::UnixTime2DataHora($linha['data']).$bclose_tag."\n");
       }
       else{
         /* 6-nÃ£o disponÃ­vel */
-        echo("                      <td id=\"data_".$dados['cod_usuario']."\"> (".RetornaFraseDaLista($lista_frases,6).")</td>\n");
+        echo("                      <td id=\"data_".$dados['cod_usuario']."\"> (".Linguas::RetornaFraseDaLista($lista_frases,6).")</td>\n");
       }
       echo("                    </tr>\n");
       $num_usuario++;
@@ -556,9 +566,9 @@
     echo("                        <ul>\n");
     echo("                          <li id=\"MostrarSelAlunos\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelAlunosB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelAlunosB\">".Linguas::RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelAlunosB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelAlunosB\">".Linguas::RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");    
     echo("                        </ul>\n");
@@ -582,7 +592,7 @@
     /* 133 - Nenhum
        18  - Aluno
        134 - encontrado */
-    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,18)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("	<td align=\"left\" colspan=\"3\">".Linguas::RetornaFraseDaLista($lista_frases,133)." ".Linguas::RetornaFraseDaLista($lista_frases,18)." ".Linguas::RetornaFraseDaLista($lista_frases,134)."</td>\n");
     echo("</tr>\n");
   }
 
@@ -593,12 +603,12 @@
   Tabela dos Colaboradores
   ========================
   */
-  $lista_colaboradores = ListaUsuario($sock,"Z",$cod_curso);
+  $lista_colaboradores = Perfil::ListaUsuario($sock,"Z",$cod_curso);
 
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
   /* 124 - Colaboradores */
-  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,124)."</div>\n");
+  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases,124)."</div>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
   if (count($lista_colaboradores) > 0)
@@ -606,9 +616,9 @@
     echo("                    <tr class=\"head\">\n");
     echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_colaborador_all\" value=\"1\" onclick=\"CheckAll(3);Seek_Checked();\" /></td>\n");
     /* 4-Nome */
-    echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                      <td align=\"left\" width=\"68%\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
-    echo("                      <td width=\"30%\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
+    echo("                      <td width=\"30%\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
     echo("                    </tr>\n");
 
     $num_user_pag=0;
@@ -617,7 +627,7 @@
     {
       if ($dados['cod_usuario'] >= 0)
       {
-        $tupla = RetornaPerfil($sock, $dados['cod_usuario']);
+        $tupla = Perfil::RetornaPerfil($sock, $dados['cod_usuario']);
 
         $bopen_tag = "";
         $bclose_tag = "";
@@ -653,12 +663,12 @@
 
         if (!empty($tupla))
         {
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.Data::UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
         else
         {
           /* 6-nÃ£o disponÃ­vel */
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">(".RetornaFraseDaLista($lista_frases, 6).")</td>\n");
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">(".Linguas::RetornaFraseDaLista($lista_frases, 6).")</td>\n");
         }
         echo("                    </tr>\n");
       }
@@ -669,9 +679,9 @@
     echo("                        <ul >\n");
     echo("                          <li id=\"MostrarSelColaboradores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelColaboradoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelColaboradoresB\">".Linguas::RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelColaboradoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelColaboradoresB\">".Linguas::RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");
@@ -683,7 +693,7 @@
     /* 133 - Nenhum
        135 - Colaborador
        134 - encontrado	*/
-    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,135)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("	<td align=\"left\" colspan=\"3\">".Linguas::RetornaFraseDaLista($lista_frases,133)." ".Linguas::RetornaFraseDaLista($lista_frases,135)." ".Linguas::RetornaFraseDaLista($lista_frases,134)."</td>\n");
     echo("</tr>\n");
   }
 
@@ -693,12 +703,12 @@
   ====================
   */
 
-  $lista_visitantes = ListaUsuario($sock, 'V',$cod_curso);
+  $lista_visitantes = Perfil::ListaUsuario($sock, 'V',$cod_curso);
 
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
   /* 131 - Visitantes */
-  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,131)."</div>\n");
+  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases,131)."</div>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
   if (count($lista_visitantes) > 0)
@@ -706,9 +716,9 @@
     echo("                    <tr class=\"head\">\n");
     echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_visitante_all\" value=\"1\" onclick=\"CheckAll(4);Seek_Checked();\"  /></td>\n");
     /* 4-Nome */
-    echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                      <td align=\"left\" width=\"68%\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
-    echo("                      <td width=\"30%\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
+    echo("                      <td width=\"30%\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
     echo("                    </tr>\n");
 
     $num_usuario=0;
@@ -716,7 +726,7 @@
     {
       if ($dados['cod_usuario'] >= 0)
       {
-        $tupla = RetornaPerfil($sock, $dados['cod_usuario']);
+        $tupla = Perfil::RetornaPerfil($sock, $dados['cod_usuario']);
 
         $bopen_tag = "";
         $bclose_tag = "";
@@ -743,12 +753,12 @@
 
         if (!empty($tupla))
         {
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.Data::UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
         else
         {
           /* 6-nÃ£o disponÃ­vel */
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">(".RetornaFraseDaLista($lista_frases, 6).")</td>\n");
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">(".Linguas::RetornaFraseDaLista($lista_frases, 6).")</td>\n");
         }
         echo("                    </tr>\n");
       }
@@ -759,9 +769,9 @@
     echo("                        <ul >\n");
     echo("                          <li id=\"MostrarSelVisitantes\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelVisitantesB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelVisitantesB\">".Linguas::RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelVisitantesB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelVisitantesB\">".Linguas::RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");
@@ -773,7 +783,7 @@
     /* 133 - Nenhum
        136 - Visitante
        134 - encontrado	*/
-    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,136)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("	<td align=\"left\" colspan=\"3\">".Linguas::RetornaFraseDaLista($lista_frases,133)." ".Linguas::RetornaFraseDaLista($lista_frases,136)." ".Linguas::RetornaFraseDaLista($lista_frases,134)."</td>\n");
     echo("</tr>\n");
   }
 
@@ -783,7 +793,7 @@
   ====================
   */
 
-  $dados_coord = ListaCoordenador($sock, $cod_curso);
+  $dados_coord = Perfil::ListaCoordenador($sock, $cod_curso);
 
   if(count($dados_coord)>0)
   {
@@ -796,7 +806,7 @@
     $coord_como_form   = false;
   }
 
-  $lista = ListaUsuario($sock, "F", $cod_curso);
+  $lista = Perfil::ListaUsuario($sock, "F", $cod_curso);
 
   $total = count($lista);
 
@@ -811,7 +821,7 @@
   echo("                    <tr class=\"head01\">\n");
   echo("                      <td colspan=\"3\">\n");
   /* 7 - Formadores */
-  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,7)."</div>\n");
+  echo("                        <div style=\"font-weight:bold;\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases,7)."</div>\n");
   echo("                      </td>\n");
   echo("                    </tr>\n");
   if ($total > 0)
@@ -819,9 +829,9 @@
     echo("                    <tr class=\"head\">\n");
     echo("                      <td width=\"2%\"><input class=\"input\" type=\"checkbox\" name=\"cod_formador_all\" value=\"1\" onclick=\"CheckAll(2);Seek_Checked();\"  /></td>\n");
     /* 4-Nome */
-    echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                      <td align=\"left\" width=\"68%\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
-    echo("                      <td width=\"30%\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
+    echo("                      <td width=\"30%\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
     echo("                    </tr>\n");
 
     $num_usuario=0;
@@ -832,7 +842,7 @@
       // se o coordenador quiser ser chamado de formador, nÃ£o devemos exibi-lo
       if (($dados['cod_usuario'] >= 0) && (($dados_coord['status'] == 'F') || ($dados['cod_usuario'] != $cod_coordenador)))
       {
-        $tupla = RetornaPerfil($sock, $dados['cod_usuario']);
+        $tupla = Perfil::RetornaPerfil($sock, $dados['cod_usuario']);
 
         $bopen_tag = "";
         $bclose_tag = "";
@@ -859,12 +869,12 @@
 
         if (!empty($tupla))
         {
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".$bopen_tag.Data::UnixTime2DataHora($tupla['data']).$bopen_tag."\n");
         }
         else
         {
           /* 6-nÃ£o disponivel */
-          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".RetornaFraseDaLista($lista_frases, 6));
+          echo("                      <td id=\"data_".$dados['cod_usuario']."\">".Linguas::RetornaFraseDaLista($lista_frases, 6));
          echo("		</td>");
         }
         echo("                        </tr>\n");
@@ -876,9 +886,9 @@
     echo("                        <ul >\n");
     echo("                          <li id=\"MostrarSelFormadores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelFormadoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelFormadoresB\">".Linguas::RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelFormadoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelFormadoresB\">".Linguas::RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");
@@ -890,7 +900,7 @@
     /* 133 - Nenhum
        137 - Formador
        134 - encontrado	*/
-    echo("	<td align=\"left\" colspan=\"3\">".RetornaFraseDaLista($lista_frases,133)." ".RetornaFraseDaLista($lista_frases,137)." ".RetornaFraseDaLista($lista_frases,134)."</td>\n");
+    echo("	<td align=\"left\" colspan=\"3\">".Linguas::RetornaFraseDaLista($lista_frases,133)." ".Linguas::RetornaFraseDaLista($lista_frases,137)." ".Linguas::RetornaFraseDaLista($lista_frases,134)."</td>\n");
     echo("</tr>\n");
   }
 
@@ -901,20 +911,20 @@
   */
   if ((isset($dados_coord)) && ($dados_coord['status'] == 'C'))
   {
-    # $linha=ListaCoordenador($sock,$cod_curso);
-    $linha_perfil = RetornaPerfil($sock, $dados_coord['cod_usuario']);
+    # $linha=Perfil::ListaCoordenador($sock,$cod_curso);
+    $linha_perfil = Perfil::RetornaPerfil($sock, $dados_coord['cod_usuario']);
     echo("                    <tr class=\"head01\">\n");
     echo("                      <td colspan=\"3\">\n");
     /* 28 - Coordenador */
-    echo("                        <div style=\"font-weight:bold;\" align=\"left\">".RetornaFraseDaLista($lista_frases,28)."</div>\n");
+    echo("                        <div style=\"font-weight:bold;\" align=\"left\">".Linguas::RetornaFraseDaLista($lista_frases,28)."</div>\n");
     echo("                      </td>\n");
     echo("                    </tr>\n");
     echo("                    <tr class=\"head\">\n");
     echo("                      <td width=\"2%\">&nbsp;</td>\n");
     /* 4-Nome */
-    echo("                      <td align=\"left\" width=\"68%\">".RetornaFraseDaLista($lista_frases,4)."</td>\n");
+    echo("                      <td align=\"left\" width=\"68%\">".Linguas::RetornaFraseDaLista($lista_frases,4)."</td>\n");
     /* 5-Data */
-    echo("                      <td width=\"30%\">".RetornaFraseDaLista($lista_frases,5)."</td>\n");
+    echo("                      <td width=\"30%\">".Linguas::RetornaFraseDaLista($lista_frases,5)."</td>\n");
     echo("                    </tr>\n");
 
     $bopen_tag = "";
@@ -941,15 +951,15 @@
     echo("                        ".$icone." <a ".$classe." href=\"#\" onclick=\"return(OpenWindowLink(".$dados_coord['cod_usuario']."));\" class=\"text\">".$dados_coord['nome']."</a>\n");
     echo("                      </td>\n");
 
-    # $linha = RetornaPerfil($sock, $linha['cod_usuario']);
+    # $linha = Perfil::RetornaPerfil($sock, $linha['cod_usuario']);
     if (!empty($linha_perfil))
     {
-      echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">".$bopen_tag.UnixTime2DataHora($linha_perfil['data']).$bclose_tag."\n");
+      echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">".$bopen_tag.Data::UnixTime2DataHora($linha_perfil['data']).$bclose_tag."\n");
     }
     else
     {
       /* 6-nÃ£o disponÃ­vel */
-      echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">(".RetornaFraseDaLista($lista_frases, 6).")</td>\n");
+      echo("                      <td id=\"data_".$dados_coord['cod_usuario']."\">(".Linguas::RetornaFraseDaLista($lista_frases, 6).")</td>\n");
     }
     echo("                    </tr>\n");
     echo("                    <tr>\n");
@@ -957,9 +967,9 @@
     echo("                        <ul >\n");
     echo("                          <li id=\"MostrarSelCoordenadores\" class=\"menuUp\">\n");
     /* 8 - Mostrar Selecionados */
-    echo("                            <span id=\"MostrarSelCoordenadoresB\">".RetornaFraseDaLista($lista_frases,8)."</span>\n");
+    echo("                            <span id=\"MostrarSelCoordenadoresB\">".Linguas::RetornaFraseDaLista($lista_frases,8)."</span>\n");
     /* 138 - Imprimir Selecionados */
-    echo("                            <span id=\"ImprimirSelCoordenadoresB\">".RetornaFraseDaLista($lista_frases,138)."</span>\n");
+    echo("                            <span id=\"ImprimirSelCoordenadoresB\">".Linguas::RetornaFraseDaLista($lista_frases,138)."</span>\n");
     echo("                          <br /><br />\n");
     echo("                          </li>\n");
     echo("                        </ul>\n");
@@ -982,6 +992,6 @@
   echo("  </body>\n");
   echo("</html>\n");
 
-  Desconectar($sock);
+  AcessoSQL::Desconectar($sock);
 
 ?>

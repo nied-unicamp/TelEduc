@@ -9,7 +9,7 @@ $ctrl_administracao = '../../'.$ferramenta_administracao.'/controllers/';
 $diretorio_imgs = '../../../web-content/imgs/';
 
 require_once $model_geral.'geral.inc';
-require_once $model_administracao.'administracao.inc';
+ require_once $model_administracao.'administracao.inc';
 
 $cod_ferramenta = 0;
 $cod_ferramenta_ajuda = $cod_ferramenta;
@@ -22,7 +22,7 @@ require_once $view_administracao.'topo_tela.php';
 DataJavaScript::GeraJSComparacaoDatas();
 DataJavaScript::GeraJSVerificacaoData();
 
-/* Fun�es javascrip */
+/* Funï¿½es javascrip */
 
 if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 {
@@ -71,8 +71,8 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("        hideLayer(cod_layer);\n");
 	echo("      }\n\n");
 
-	/* Esconde todos os layers. Se o usuario for o propriet�rio do di�rio   */
-	/* visualizado ent�o esconde o layer para renomear o item.              */
+	/* Esconde todos os layers. Se o usuario for o proprietï¿½rio do diï¿½rio   */
+	/* visualizado entï¿½o esconde o layer para renomear o item.              */
 	echo("      function EscondeLayers()\n");
 	echo("      {\n");
 	echo("        hideLayer(lay_calendario);\n");
@@ -95,31 +95,31 @@ if ($ecoordenador = Usuarios::ECoordenador($sock,$cod_curso,$cod_usuario))
 	echo("\n");
 	echo("        if (ComparaData(i_ini, i_fim) > 0) \n");
 	echo("        {\n");
-	echo("           /* 8 - A data inicial do per�do de inscri�o deve ser anterior �data final desse per�do. */\n");
+	echo("           /* 8 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final desse perï¿½do. */\n");
 	echo("           alert('"._("msg8_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(c_ini, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("           /* 9 - A data inicial do curso deve ser anterior �sua data final. */\n");
+	echo("           /* 9 - A data inicial do curso deve ser anterior ï¿½sua data final. */\n");
 	echo("           alert('"._("msg9_0")."');\n");
 	echo("           return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("        /* 10 - A data inicial do per�do de inscri�o deve ser anterior �data final do curso. */\n");
+	echo("        /* 10 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
 	echo("          alert('"._("msg10_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_fim, c_fim) > 0) \n");
 	echo("        {\n");
-	echo("          /* 11 - A data final do per�do de inscri�o deve ser anterior �data final do curso. */\n");
+	echo("          /* 11 - A data final do perï¿½do de inscriï¿½o deve ser anterior ï¿½data final do curso. */\n");
 	echo("          alert('"._("msg11_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
 	echo("        if (ComparaData(i_ini, c_ini) > 0) \n");
 	echo("        {\n");
-	echo("          /* 12 - A data inicial do per�do de inscri�o deve ser anterior �data inicial do curso. */\n");
+	echo("          /* 12 - A data inicial do perï¿½do de inscriï¿½o deve ser anterior ï¿½data inicial do curso. */\n");
 	echo("          alert('"._("msg12_0")."');\n");
 	echo("          return(false);\n");
 	echo("        }\n");
@@ -160,7 +160,7 @@ echo("    </script>\n");
 
 require_once $view_administracao.'menu_principal.php';
 
-/* Fun��es javascript */
+/* Funções javascript */
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 
@@ -200,8 +200,8 @@ echo("      <input type=\"hidden\" name=\"cod_curso\" value=".$cod_curso.">\n");
 echo("      <input type=\"hidden\" name=\"cod_ferramenta\" value=".$cod_ferramenta.">\n");
 echo("      <input type=\"hidden\" name=\"action\" value='alterarDadosCurso'>\n");
 
-// P�gina Principal
-/* 1 - Administra��o */
+// Página Principal
+/* 1 - Administração */
 $cabecalho = "          <h4>"._("msg1_0")."\n";
 if ($ecoordenador)
 {
@@ -229,9 +229,9 @@ echo("                  <ul class=\"btsNav\"><li><span onclick=\"javascript:hist
 
 $linha = Administracao::RetornaDadosCursoAdm($sock,$cod_curso);
 
-$dia = date(d);
-$mes = date(m);
-$ano = date(Y);
+$dia = date("d");
+$mes = date("m");
+$ano = date("Y");
 if ($linha['curso_inicio']== NULL)
 	$linha['curso_inicio']= Data::Data2Unixtime($dia."/".$mes."/".$ano);
 if ($linha['curso_fim']== NULL)
@@ -258,7 +258,7 @@ echo("                <table cellpadding=\"0\" cellspacing=\"0\" class=\"tabInte
 if ($ecoordenador)
 {
 	echo("                  <tr class=\"head alLeft\">\n");
-	/* 14 - Abaixo seguem dados referentes ao curso. Para alter�-los, modifique os campos desejados e pressione o bot�o Alterar. */
+	/* 14 - Abaixo seguem dados referentes ao curso. Para alterá-los, modifique os campos desejados e pressione o botão Alterar. */
 	echo("                    <td colspan=4>"._("msg14_0")."</td>\n");
 	echo("                  </tr>\n");
 }
@@ -278,7 +278,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 16 - Informa��es */
+/* 16 - Informações */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg16_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -289,7 +289,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 17 - In�cio do curso */
+/* 17 - Início do curso */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg17_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -329,7 +329,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 19 - In�cio das incri��es */
+/* 19 - Início das incrições */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg19_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -349,7 +349,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 20 - Fim das inscri��es */
+/* 20 - Fim das inscrições */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg20_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -369,7 +369,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 21 - P�blico alvo */
+/* 21 - Público alvo */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg21_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -380,7 +380,7 @@ echo("                          </td>\n");
 echo("                        </tr>\n");
 echo("                        <tr>\n");
 
-/* 22 - Tipo de inscri��o */
+/* 22 - Tipo de inscrição */
 echo("                          <td style=\"border:none; text-align:right;\"><b>"._("msg22_0").":</b></td>\n");
 echo("                          <td style=\"border:none\">\n");
 if ($ecoordenador)
@@ -392,7 +392,7 @@ echo("                        </tr>\n");
 echo("                        <tr>\n");
 
 echo("                          <td style=\"border:none; text-align:right;\"><b>");
-// 148 - L�ngua do curso:
+// 148 - Língua do curso:
 echo("                      "._("msg148_0")." \n");
 echo("                            </b></td>\n");
 
@@ -425,7 +425,7 @@ if ($ecoordenador)
 	echo("              <b>"._("msg23_0")."</b> "._("msg24_0")."\n");
 	echo("              <br><br>\n");
 	/* 23 - Obs: */
-	/* 229 - Caso a data de inicio do curso seja maior que a data de fim das inscri��es, o curso somente poder� ser acessado diretamente pelo link recebido no e-mail do coordenador. Ou seja, ele n�o ser� listado em nenhuma das se��es 'Cursos em andamento', 'Cursos com inscri��es abertas' ou 'Cursos j� oferecidos'. */
+	/* 229 - Caso a data de inicio do curso seja maior que a data de fim das inscrições, o curso somente poderá ser acessado diretamente pelo link recebido no e-mail do coordenador. Ou seja, ele não será listado em nenhuma das seções 'Cursos em andamento', 'Cursos com inscrições abertas' ou 'Cursos já oferecidos'. */
 	echo("              <b>"._("msg23_0")."</b> "._("msg229_0")."\n");
 	echo("              <br><br>\n");
 	/* 24 - Alterar (geral) */

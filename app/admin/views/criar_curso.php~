@@ -63,7 +63,7 @@ echo("    var flagOnDivSugs=0;");
 echo("    function EmailLoginRepetido()\n");
 echo("    {\n");
 /* 533 - Email e/ou login fornecidos já existem! Digite valores diferentes (note que os logins existentes aparecem na lista de sugestões!*/
-echo("		alert('"._("msg533_-5")."');");
+echo("		alert("._("msg533_-5").");");
 echo("      document.frmCriar.email.value = '';\n");
 echo("      document.frmCriar.login.value = '';\n");
 echo("      document.frmCriar.email.focus();\n");
