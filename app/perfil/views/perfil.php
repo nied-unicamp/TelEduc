@@ -130,15 +130,15 @@
   echo("      var totalPag = ".$totalPag.";\n");
   echo("      var user_por_pag = ".$user_por_pag.";\n");
   /* </ Variaveis globais> */
-  //echo("      testa();\n");
 
   echo("      function Iniciar()\n");
   echo("      {\n");
   $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
   echo("        startList();\n");
-  echo("      ExibeUserPagina(".$pagAtual.");\n");
+  echo("      ExibeUserPagina(pagina, pagAtual, total_user,totalPag, user_por_pag);\n");
   echo("      }\n\n");
-  
+ 
+  /*
   echo("      function ExibeUserPagina(pagina){\n");
   echo("        var i = 0;\n");
   echo("		var num = 1;\n");
@@ -216,8 +216,8 @@
   echo("        document.getElementById('paginacao_4').onclick=function(){ ExibeUserPagina(vetor[4]); };\n");
   echo("        document.getElementById('paginacao_5').onclick=function(){ ExibeUserPagina(vetor[5]); };\n\n");
 
-  echo("        /* Se a pÃ¡gina atual NÃ£o for a Ãºltima pÃ¡gina entÃ£o cria um   \n");
-  echo("           link para a prÃ³xima pÃ¡gina */\n");
+  echo("        // Se a pÃ¡gina atual NÃ£o for a Ãºltima pÃ¡gina entÃ£o cria um   \n");
+  echo("          // link para a prÃ³xima pÃ¡gina \n");
   echo("        if (pagAtual != totalPag){\n");
   echo("          document.getElementById('paginacao_fwd').onclick = function(){ ExibeUserPagina(pagAtual+1); };\n");
   echo("          document.getElementById('paginacao_fwd').className = \"link\";\n");
@@ -233,7 +233,9 @@
   echo("        document.getElementById('paginacao_fwd').innerHTML = \"&gt;\";\n");
   echo("        document.getElementById('paginacao_last').innerHTML = \"&gt;&gt;\";\n");
   echo("      }\n\n");
-  
+  */
+
+
   /* *****************************************************************
   Funcao OpenWindow
   Abre nova janela com os perfis, se acessados atraves de checkboxes
