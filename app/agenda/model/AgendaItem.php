@@ -122,14 +122,14 @@ class Agenda_Item {
 
 
     /** 
-     * setAll allows to set all persistent variables in one method call.
+     * setAllId allows to set all persistent variables in one method call.
      * This is useful, when all data is available and it is needed to 
      * set the initial state of this object. Note that this method will
      * directly modify instance variales, without going trough the 
      * individual set-methods.
      */
 
-    function setAll($cod_itemIn,
+    function setAllId($cod_itemIn,
           $Curso_cod_cursoIn,
           $Usuario_cod_usuarioIn,
           $tituloIn,
@@ -149,6 +149,34 @@ class Agenda_Item {
           $this->data_publicacao = $data_publicacaoIn;
           $this->status = $statusIn;
           $this->inicio_edicao = $inicio_edicaoIn;
+    }
+    
+    /**
+     * setAll allows to set all persistent variables in one method call.
+     * This is useful, when all data is available and it is needed to
+     * set the initial state of this object. Note that this method will
+     * directly modify instance variales, without going trough the
+     * individual set-methods.
+     */
+    
+    function setAll($Curso_cod_cursoIn,
+    		$Usuario_cod_usuarioIn,
+    		$tituloIn,
+    		$textoIn,
+    		$situacaoIn,
+    		$data_criacaoIn,
+    		$data_publicacaoIn,
+    		$statusIn,
+    		$inicio_edicaoIn) {
+    	$this->Curso_cod_curso = $Curso_cod_cursoIn;
+    	$this->Usuario_cod_usuario = $Usuario_cod_usuarioIn;
+    	$this->titulo = $tituloIn;
+    	$this->texto = $textoIn;
+    	$this->situacao = $situacaoIn;
+    	$this->data_criacao = $data_criacaoIn;
+    	$this->data_publicacao = $data_publicacaoIn;
+    	$this->status = $statusIn;
+    	$this->inicio_edicao = $inicio_edicaoIn;
     }
 
 

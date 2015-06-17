@@ -367,34 +367,6 @@ class CursoDao {
           return $searchResults;
     }
 
-
-    /** 
-     * getDaogenVersion will return information about
-     * generator which created these sources.
-     */
-    function getDaogenVersion() {
-        return "DaoGen version 2.4.1";
-    }
-
-
-    /**
-     * databaseUpdate-method. This method is a helper method for internal use. It will execute
-     * all database handling that will change the information in tables. SELECT queries will
-     * not be executed here however. The return value indicates how many rows were affected.
-     * This method will also make sure that if cache is used, it will reset when data changes.
-     *
-     * @param conn         This method requires working database connection.
-     * @param stmt         This parameter contains the SQL statement to be excuted.
-     */
-    function databaseUpdate(&$conn, &$sql) {
-
-          $result = $conn->execute($sql);
-
-          return $result;
-    }
-
-
-
     /**
      * databaseQuery-method. This method is a helper method for internal use. It will execute
      * all database queries that will return only one row. The resultset will be converted
