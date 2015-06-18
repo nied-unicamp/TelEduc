@@ -1,5 +1,5 @@
 <?php
-$_SESSION['dbnamebase']='TelEduc5';
+$_SESSION['dbnamebase']='TelEduc5New';
 $_SESSION['dbuser']='root';
 $_SESSION['dbpassword']='942112500b';
 $_SESSION['dbhost']='localhost';

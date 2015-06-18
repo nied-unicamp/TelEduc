@@ -7,3 +7,5 @@ $agendaController = new AgendaController();
 $resultado = $agendaController->testaConexao();
 
 echo $resultado;
+
+?>

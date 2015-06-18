@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Agenda_Item Data Access Object (DAO).
@@ -29,11 +30,11 @@ class Agenda_ItemDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_item) {
+    function getObject($conn, $cod_item) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_item($cod_item);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -50,7 +51,7 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_item()) {
                //print "Can not select without Primary-Key!";
@@ -59,7 +60,7 @@ class Agenda_ItemDao {
 
           $sql = "SELECT * FROM Agenda_Item WHERE (cod_item = ".$valueObject->getCod_item().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -75,14 +76,21 @@ class Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll() {
+	  
+          $sql = "SELECT * FROM Agenda_item ORDER BY cod_item ASC ";
+          
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaAgendas = $conexao->RetornaArrayLinhas($res);
+          
+          $conexao->Desconectar();
 
-
-          $sql = "SELECT * FROM Agenda_Item ORDER BY cod_item ASC ";
-
-          $searchResults = $this->listQuery(&$conn, $sql);
-
-          return $searchResults;
+          return $listaAgendas;
     }
 
 
@@ -100,13 +108,12 @@ class Agenda_ItemDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($valueObject) {
 
-          $sql = "INSERT INTO Agenda_Item ( cod_item, Curso_cod_curso, Usuario_cod_usuario, ";
+          $sql = "INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario, ";
           $sql = $sql."titulo, texto, situacao, ";
           $sql = $sql."data_criacao, data_publicacao, status, ";
-          $sql = $sql."inicio_edicao) VALUES (".$valueObject->getCod_item().", ";
-          $sql = $sql."".$valueObject->getCurso_cod_curso().", ";
+          $sql = $sql."inicio_edicao) VALUES (".$valueObject->getCurso_cod_curso().", ";
           $sql = $sql."".$valueObject->getUsuario_cod_usuario().", ";
           $sql = $sql."'".$valueObject->getTitulo()."', ";
           $sql = $sql."'".$valueObject->getTexto()."', ";
@@ -115,10 +122,18 @@ class Agenda_ItemDao {
           $sql = $sql."'".$valueObject->getData_publicacao()."', ";
           $sql = $sql."'".$valueObject->getStatus()."', ";
           $sql = $sql."".$valueObject->getInicio_edicao().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
-
-
-          return true;
+          
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'inseriu';
+          }
+          else{
+          	echo 'nao inseriu';
+          }
+          $conexao->Desconectar();
     }
 
 
@@ -133,7 +148,7 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Agenda_Item SET Curso_cod_curso = ".$valueObject->getCurso_cod_curso().", ";
           $sql = $sql."Usuario_cod_usuario = ".$valueObject->getUsuario_cod_usuario().", ";
@@ -145,7 +160,7 @@ class Agenda_ItemDao {
           $sql = $sql."status = '".$valueObject->getStatus()."', ";
           $sql = $sql."inicio_edicao = ".$valueObject->getInicio_edicao()."";
           $sql = $sql." WHERE (cod_item = ".$valueObject->getCod_item().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -168,22 +183,21 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($id) {
 
-
-          if (!$valueObject->getCod_item()) {
-               //print "Can not delete without Primary-Key!";
-               return false;
+          $sql = "DELETE FROM Agenda_item WHERE (cod_item = ".$id.") ";
+          
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'deletou';
           }
-
-          $sql = "DELETE FROM Agenda_Item WHERE (cod_item = ".$valueObject->getCod_item().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
-
-          if ($result != 1) {
-               //print "PrimaryKey Error when updating DB!";
-               return false;
+          else{
+          	echo 'nao deletou';
           }
-          return true;
+          $conexao->Desconectar();
     }
 
 
@@ -198,10 +212,10 @@ class Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Agenda_Item";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -215,7 +229,7 @@ class Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Agenda_Item";
           $allRows = 0;
@@ -242,7 +256,7 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Agenda_Item WHERE 1=1 ";
@@ -305,7 +319,7 @@ class Agenda_ItemDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -319,7 +333,7 @@ class Agenda_ItemDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -337,7 +351,7 @@ class Agenda_ItemDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -369,7 +383,7 @@ class Agenda_ItemDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
