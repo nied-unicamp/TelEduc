@@ -51,14 +51,9 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load($conn, $valueObject) {
+    function load($id) {
 
-          if (!$valueObject->getCod_item()) {
-               //print "Can not select without Primary-Key!";
-               return false;
-          }
-
-          $sql = "SELECT * FROM Agenda_Item WHERE (cod_item = ".$valueObject->getCod_item().") "; 
+          $sql = "SELECT * FROM Agenda_Item WHERE (cod_item = ".$id.") "; 
 
           if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
@@ -148,9 +143,9 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save($conn, $valueObject) {
+    function save($valueObject) {
 
-          $sql = "UPDATE Agenda_Item SET Curso_cod_curso = ".$valueObject->getCurso_cod_curso().", ";
+          $sql = "UPDATE Agenda_item SET Curso_cod_curso = ".$valueObject->getCurso_cod_curso().", ";
           $sql = $sql."Usuario_cod_usuario = ".$valueObject->getUsuario_cod_usuario().", ";
           $sql = $sql."titulo = '".$valueObject->getTitulo()."', ";
           $sql = $sql."texto = '".$valueObject->getTexto()."', ";
@@ -160,14 +155,19 @@ class Agenda_ItemDao {
           $sql = $sql."status = '".$valueObject->getStatus()."', ";
           $sql = $sql."inicio_edicao = ".$valueObject->getInicio_edicao()."";
           $sql = $sql." WHERE (cod_item = ".$valueObject->getCod_item().") ";
-          $result = $this->databaseUpdate($conn, $sql);
-
-          if ($result != 1) {
-               //print "PrimaryKey Error when updating DB!";
-               return false;
+         
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'atualizou';
           }
-
-          return true;
+          else{
+          	echo 'nao atualizou';
+          }
+          
+          $conexao->Desconectar();
     }
 
 

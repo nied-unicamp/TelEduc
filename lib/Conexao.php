@@ -56,7 +56,7 @@ class Conexao {
                 echo "<pre class=\"error\">";
                 echo "SQL ERROR: " . mysqli_error($this->db);
                 echo "</pre>";
-                $this->desconecta();
+                $this->Desconectar();
                 return false;
             }
         }

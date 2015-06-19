@@ -1,15 +1,12 @@
-
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Usuario Data Access Object (DAO).
   * This class contains all database handling that is needed to 
   * permanently store and retrieve Usuario object instances. 
   */
-
- 
-
 
 
 class UsuarioDao {
@@ -34,11 +31,11 @@ class UsuarioDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_usuario) {
+    function getObject( $conn, $cod_usuario) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_usuario($cod_usuario);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -55,7 +52,7 @@ class UsuarioDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_usuario()) {
                //print "Can not select without Primary-Key!";
@@ -64,7 +61,7 @@ class UsuarioDao {
 
           $sql = "SELECT * FROM Usuario WHERE (cod_usuario = ".$valueObject->getCod_usuario().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -80,14 +77,22 @@ class UsuarioDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll() {
 
 
           $sql = "SELECT * FROM Usuario ORDER BY cod_usuario ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaUsuarios = $conexao->RetornaArrayLinhas($res);
+          
+          $conexao->Desconectar();
 
-          return $searchResults;
+          return $listaUsuarios;
     }
 
 
@@ -105,16 +110,15 @@ class UsuarioDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($valueObject) {
 
-          $sql = "INSERT INTO Usuario ( cod_usuario, login, senha, ";
+          $sql = "INSERT INTO Usuario ( login, senha, ";
           $sql = $sql."nome_usuario, rg, email, ";
           $sql = $sql."telefone, endereco, cidade, ";
           $sql = $sql."estado, pais, data_nasc, ";
           $sql = $sql."sexo, local_trabalho, profissao, ";
           $sql = $sql."escolaridade, informacoes, data_inscricao, ";
-          $sql = $sql."cod_lingua, confirmacao) VALUES (".$valueObject->getCod_usuario().", ";
-          $sql = $sql."'".$valueObject->getLogin()."', ";
+          $sql = $sql."cod_lingua, confirmacao) VALUES ("."'".$valueObject->getLogin()."', ";
           $sql = $sql."'".$valueObject->getSenha()."', ";
           $sql = $sql."'".$valueObject->getNome_usuario()."', ";
           $sql = $sql."'".$valueObject->getRg()."', ";
@@ -133,10 +137,18 @@ class UsuarioDao {
           $sql = $sql."".$valueObject->getData_inscricao().", ";
           $sql = $sql."".$valueObject->getCod_lingua().", ";
           $sql = $sql."'".$valueObject->getConfirmacao()."') ";
-          $result = $this->databaseUpdate(&$conn, $sql);
-
-
-          return true;
+          
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'inseriu';
+          }
+          else{
+          	echo 'nao inseriu';
+          }
+          $conexao->Desconectar();
     }
 
 
@@ -151,7 +163,7 @@ class UsuarioDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Usuario SET login = '".$valueObject->getLogin()."', ";
           $sql = $sql."senha = '".$valueObject->getSenha()."', ";
@@ -173,7 +185,7 @@ class UsuarioDao {
           $sql = $sql."cod_lingua = ".$valueObject->getCod_lingua().", ";
           $sql = $sql."confirmacao = '".$valueObject->getConfirmacao()."'";
           $sql = $sql." WHERE (cod_usuario = ".$valueObject->getCod_usuario().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -196,7 +208,7 @@ class UsuarioDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($conn, $valueObject) {
 
 
           if (!$valueObject->getCod_usuario()) {
@@ -205,7 +217,7 @@ class UsuarioDao {
           }
 
           $sql = "DELETE FROM Usuario WHERE (cod_usuario = ".$valueObject->getCod_usuario().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -226,10 +238,10 @@ class UsuarioDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Usuario";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -243,7 +255,7 @@ class UsuarioDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Usuario";
           $allRows = 0;
@@ -270,7 +282,7 @@ class UsuarioDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Usuario WHERE 1=1 ";
@@ -383,7 +395,7 @@ class UsuarioDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -407,7 +419,7 @@ class UsuarioDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -425,7 +437,7 @@ class UsuarioDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -467,7 +479,7 @@ class UsuarioDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
@@ -482,7 +494,6 @@ class UsuarioDao {
                $temp->setRg($row[4]); 
                $temp->setEmail($row[5]); 
                $temp->setTelefone($row[6]); 
-               $temp->setEndereco($row[7]); 
                $temp->setCidade($row[8]); 
                $temp->setEstado($row[9]); 
                $temp->setPais($row[10]); 

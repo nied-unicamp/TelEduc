@@ -47,4 +47,22 @@ class AgendaController{
 		
 		return $dao->delete(7);	
 	}
+	
+	function atualizaAgenda(){
+		
+		$data = new Data();
+		
+		$data_criacao = $data->Data2UnixTime('18/06/2015');
+		$data_publicacao = $data->Data2UnixTime('19/06/2015');
+		$inicio_edicao = $data->Data2UnixTime('20/06/2015');
+		
+		$agenda_item = new Agenda_Item();
+		
+		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteração pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		
+		$dao = new Agenda_ItemDao();
+		
+		$dao->save($agenda_item);
+		
+	}
 }

@@ -251,6 +251,46 @@ class Usuario {
           $this->cod_lingua = $cod_linguaIn;
           $this->confirmacao = $confirmacaoIn;
     }
+    
+    function setAllId($loginIn,
+    		$senhaIn,
+    		$nome_usuarioIn,
+    		$rgIn,
+    		$emailIn,
+    		$telefoneIn,
+    		$enderecoIn,
+    		$cidadeIn,
+    		$estadoIn,
+    		$paisIn,
+    		$data_nascIn,
+    		$sexoIn,
+    		$local_trabalhoIn,
+    		$profissaoIn,
+    		$escolaridadeIn,
+    		$informacoesIn,
+    		$data_inscricaoIn,
+    		$cod_linguaIn,
+    		$confirmacaoIn) {
+    	$this->login = $loginIn;
+    	$this->senha = $senhaIn;
+    	$this->nome_usuario = $nome_usuarioIn;
+    	$this->rg = $rgIn;
+    	$this->email = $emailIn;
+    	$this->telefone = $telefoneIn;
+    	$this->endereco = $enderecoIn;
+    	$this->cidade = $cidadeIn;
+    	$this->estado = $estadoIn;
+    	$this->pais = $paisIn;
+    	$this->data_nasc = $data_nascIn;
+    	$this->sexo = $sexoIn;
+    	$this->local_trabalho = $local_trabalhoIn;
+    	$this->profissao = $profissaoIn;
+    	$this->escolaridade = $escolaridadeIn;
+    	$this->informacoes = $informacoesIn;
+    	$this->data_inscricao = $data_inscricaoIn;
+    	$this->cod_lingua = $cod_linguaIn;
+    	$this->confirmacao = $confirmacaoIn;
+    }
 
 
     /** 
