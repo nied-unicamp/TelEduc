@@ -1,0 +1,87 @@
+/* -------------------------------------------
+	CSS . TABELAS
+---------------------------------------------- */
+.tabExterna { position:relative; width:100%; padding:6px; _padding:6px; background:#dcdcdc; /*color:#696969;*/ color:#333333; clear:both;}
+.tabInterna { position:relative; width:100%; background:#FFFFFF; margin:-2px 0 2px 0; font-size:1.0em; text-align:center;}
+
+#divide_meio {
+	margin-top: 2px;
+}
+
+#divide_meio td {
+	width:50%;
+}
+
+tr.head td {
+  /*font-size:11px; Para funcionar a mudafonte()*/
+	background-color: #C5C5C5;
+	color: #000000;
+	font-weight: bold;
+}
+
+tr.head td a, td .head a:visited {
+	color: #333333;
+	text-decoration: underline;
+}
+tr.head01 td {
+	font-weight:bold;
+	/*font-size:11px; Para funcionar a mudafonte()*/
+	background-color: #EAE9E9;
+	color: #818181;
+}
+
+tr.head02 td {
+	font-weight:bold;
+	font-size:1.0em;
+	background-color: #F5F5F5;
+	color: #818181;
+}
+
+div.Aviso{
+	background-color:#FFBFBF;
+	position:relative;
+	width:260px;
+	padding:6px;
+	color:#696969;
+	clear:both;
+	margin:auto;
+}
+
+.tabInterna td { border-right:1px solid #dcdcdc; border-bottom:1px solid #dcdcdc; padding:6px 8px; }
+
+tr.novoitem td span, tr.novoitem td a{ text-decoration:underline; font-weight:bold; }
+tr.altColor0{ background-color:#F6F6F6; }
+tr.altColor1{ background-color:#FFFFFF; }
+tr.altColor2{ background-color:#FAFAFA; }
+tr td span.avaliado{ text-decoration:none; font-weight:bold; color:#FF0000;}
+tr td span.cAluno{ text-decoration:none; font-weight:bold; color:#FF8400; }
+tr td span.cForm{ text-decoration:none; font-weight:bold; color:#10BDBD; }
+tr td span.cMim{ text-decoration:none; font-weight:bold; color:#7B8C31; }
+tr td span.cNovo{ text-decoration:none; font-weight:bold; color:#C6A542; font-size:1.24em; }
+
+td.icPasta { background:url(../imgs/icPasta.gif) no-repeat 6px 8px; padding-left:26px; text-align:left; }
+td.icPasta2 { background:url(../imgs/icPasta2.gif) no-repeat 6px 8px; padding-left:26px; text-align:left; }
+td.icPasta3 { background:url(../imgs/icPasta3.gif) no-repeat 6px 8px; padding-left:26px; text-align:left; }
+td.itens { text-align:left; }
+
+.alLeft { text-align:left; }
+.alRight { text-align: right;}
+
+.rodapeTab a { color:#5e5e5e; text-decoration:none; }
+.rodapeTab a:visited { color:#8d8d8d; text-decoration:none; }
+.rodapeTab a:hover { color:#5e5e5e; text-decoration:underline; }
+
+#legenda {
+	height:25px;
+	font-size:0.9em; text-align:right;
+	padding-top:10px;
+	margin-bottom:6px;
+	background:#f7f7f7;
+	clear:both;
+}
+
+#legenda li { display:inline; margin-right:14px; }
+
+#status_cel { width: 8%; }
+
+/* #td_feedback { height:5px; } */

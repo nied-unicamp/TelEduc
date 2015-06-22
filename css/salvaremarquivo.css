@@ -1,0 +1,12 @@
+/* Esse arquivo soh sera incluso quando o usuario estiver
+ * salvando a pagina como arquivo, assim, vamos definir aqui
+ * alguns overrides para esconder botoes e partes desnecessarias
+ */
+
+.btAuxTabs03, .btAuxTabs, #mudarFonte{
+	display: none !important;
+}
+
+h3 {
+	margin:26px 0px 10px 0px !important;
+}

@@ -1,0 +1,392 @@
+/* -------------------------------------------
+	CSS . NAVEGACAO
+---------------------------------------------- */
+#nav { margin-top:20px; margin-right:16px; }
+
+/*#navCabecalho { margin-top:20px; margin-right:16px; }*/
+
+#nav li {
+	height:20px; 
+	width:175px;
+	color:#777777; 
+	font-weight:bold;
+	padding-top:2px;
+	padding-left: 2px;
+	border-bottom:1px dotted #8f8f8f;
+	background:url(../imgs/bulletSeta.gif) no-repeat right;
+}
+
+.navCabecalho {
+	margin-top:20px; 
+	height:20px; 
+	width:162px;
+	color:#4F7A95; 
+	font-weight:bold;
+	padding-top:2px;
+	padding-left: 15px;
+	border-bottom:1px dotted #8f8f8f;
+	font-size: 1.2em;
+}
+
+#nav a.Cabecalho {
+	font-size: 1.2em;
+	color: #4F7A95;
+}
+
+#nav li.Divisa {
+	border-bottom:1px solid #333333;
+}
+
+#nav li.Selecionada {
+	background: #E3DDC7;
+	color: #000000;
+}
+
+#nav a.Selecionada, #nav a.Selecionada:hover {
+	color: #000000;
+}
+
+#nav a.Novidade {
+	padding-left: 0px;
+}
+
+#nav a.Destacada {
+	color: #CF1920;
+}
+
+#nav a { 
+	/*color:#777777; */
+	color:#444444;
+	text-decoration:none; 
+	padding-left: 13px;
+}
+#nav a:hover { color:#4a74a9; }
+
+#nav3nivel { float:left; margin-top:18px; margin-bottom:28px; _margin-bottom:0px;}
+td>#nav3nivel {margin-bottom:-25px;}
+#nav3nivel li {
+	display:inline;
+	color:#818181; font-size:0.8em;
+}
+#nav3nivel a, #btsNivel3 a { color:#818181; text-decoration:underline; }
+#nav3nivel a:hover, #btsNivel3 a:hover, #nav4nivel a:hover { color:#000000; text-decoration:underline; }
+#nav3nivel a.actived, #btsNivel3 a.actived, #nav4nivel a.actived { color:#000000; text-decoration:none; }
+
+#nav4nivel { margin-top:6px; margin-bottom:20px; padding-left:8px; }
+#nav4nivel a { color:#3f6aa0; text-decoration:underline; } 
+#nav4nivel li { display:inline; color:#818181; font-size:1.0em; }
+
+#btsNivel3 {
+	position:relative; top:10px;
+	float:right;
+	min-width: 100px;
+	width: auto;
+	color:#818181; font-size:0.8em;
+}
+#nav3nivel li.visoes, li.visoesHover, li.visoes2, li.visoes2Hover {
+	float:left;
+}
+#nav3nivel li.visoes a, #nav3nivel li.visoesHover a{
+	padding: 1px 5px;
+	background-color: #FCFCFC;
+	border: 1px solid #D6D6D6;
+ 	margin: 0 5px 52px 0;
+	display: block;
+	text-decoration: none;
+	font-weight: normal;
+        font-size:1.1em;
+}
+#nav3nivel li.visoes2, #nav3nivel li.visoes2Hover{
+	padding: 1px 5px;
+	color: #FFFFFF;
+	background-color: #B5B5B5;
+	border: 1px solid #D6D6D6;
+ 	margin: 0 5px 52px 0;
+	display: block;
+	text-decoration: none;
+	font-weight: normal;
+	cursor: default;
+        font-size:0.9em;
+}
+#nav3nivel li.visoes a:hover, #nav3nivel li.visoesHover a:hover{
+	text-decoration: none;
+	color: #FFFFFF;
+	background-color: #B5B5B5;
+}
+
+#nav3nivel li.visoes a:active , #nav3nivel li.visoesHover a:active{
+	text-decoration: none;
+	color: #FFFFFF;
+	background-color: #B5B5B5;
+}
+.btsNav, .btsNavHover, .btsNav a, .btsNav a:hover { font-weight:normal; text-decoration:none; background-color:#EFEFEF; color:#000000; font-family:"monospace"; font-size:9px; float:right; margin:4px 0 6px 6px; cursor:pointer; }
+.btsNavBottom, .btsNavBottomHover,  .btsNavBottom a, .btsNavBottom a:hover, .btsNav span, .btsNav span:hover { font-weight:normal; text-decoration:none; background-color:#EFEFEF; color:#000000; font-family:"monospace"; font-size:9px; float:right; cursor:pointer; }
+
+.btAuxTabs li, .btAuxTabs02 li, .btAuxTabs03 li {
+	display:inline;
+}
+
+.btAuxTabs li span, .btAuxTabs li a, .btAuxTabs li a:visited{
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #2a6686;
+	padding:0 5px;
+	color:#FFFFFF;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #4388AE;
+}
+.btAuxTabs li span:hover, .btAuxTabs li span.Hover, .btAuxTabs li a:hover, .btAuxTabs li.Hover span.Hover{
+        cursor:pointer;
+	border:1px solid #2e7194;
+	text-decoration:none;
+	background-color: #4A9DCA;
+}
+
+.btAuxTabs02 li span{
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #7F8C93;
+	padding:0 5px;
+	color:#FBFBFB;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #8F9FA8;
+}
+.btAuxTabs02 li span:hover, .btAuxTabs02 li span.Hover {
+	border:1px solid #2e7194;
+	text-decoration:none;
+	background-color: #4A96C0;
+        cursor:pointer;
+}
+
+.btAuxTabs03 li span, .btAuxTabs03 li a, .btAuxTabs03 li a:visited{
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #7F8C93;
+	padding:0 5px;
+	color:#FBFBFB;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #4C9CC7;
+}
+.btAuxTabs03 li span:hover, .btAuxTabs03 li span.Hover, .btAuxTabs03 li a:hover {
+	border:1px solid #2e7194;
+	text-decoration:none;
+	background-color: #4A96C0;
+        cursor:pointer;
+}
+
+.botao2 span {
+	height:auto;
+	padding:1px 5px;
+	/*color:#696969;*/
+	color:#333333;
+	font-size:1.0em;
+	font-weight:bold;
+	display: block;
+	border-bottom: 1px solid #c0c0c0;
+	
+}
+.botao2 span:hover, .botao2 span.Hover {
+        cursor:pointer;
+	text-decoration:none;
+	background-color: #f1f1f1;
+}
+
+.menuUp, .menuUpHover {
+	display:inline;
+}
+
+.menuUp span, .menuUpHover span{
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #7F8C93;
+	padding:0 5px;
+	color:#FBFBFB;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #8F9FA8;
+}
+
+.menuUp span:hover, .menuUpHover span.Hover{
+        cursor:default;
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #7F8C93;
+	padding:0 5px;
+	color:#FBFBFB;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #8F9FA8;
+}
+
+.menuUp02, .menuUp02Hover {
+	display:inline;
+}
+
+.menuUp02 span, .menuUp02Hover span {
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #2a6686;
+	padding:0 5px;
+	color:#FFFFFF;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #4388AE;
+}
+
+.menuUp02 span:hover, .menuUp02Hover span.Hover{
+        cursor:pointer;
+	display:block;
+	float:left;
+	height:16px;
+	border:1px solid #2a6686;
+	padding:0 5px;
+	color:#FFFFFF;
+	font-size:1.0em;
+	font-weight:normal;
+	margin:5px 6px 5px 0;
+	background-color: #4388AE;
+}
+
+.checkMenu, .checkMenuHover {
+	display:inline;
+}
+
+.checkMenu span, .checkMenuHover span.Hover{
+	display:block;
+	float:left;
+	height:16px;
+	margin:5px 10px 5px 0;
+}
+
+#btsNivel3 li .email, a .email{
+	font-decoration: none;
+}
+
+/* -------------------------------------------
+	BOT�S - FORMUL�IOS
+---------------------------------------------- */
+.btform li {
+	display:inline;
+}
+
+.btform li a, .btform li a:visited {
+	display:block;
+	float:right;
+	height:16px;
+	border:1px solid #2a6686;
+	padding:0 5px;
+	color:#FFFFFF;
+	font-size:1.0em;
+	font-weight:normal;
+	background-color: #3EA1D8;
+	margin: 5px 15px 5px 5px;
+}
+.btform li a:hover {
+	border:1px solid #2e7194;
+	text-decoration:none;
+	background-color: #4A96C0;
+}
+
+
+/* -----------------------------------------------
+        MENU DROP DOWN
+-------------------------------------------------*/
+
+.menu_dd { position:relative; z-index:100; margin-top:10px;}
+
+/* hack to correct IE5.5 faulty box model */
+/* * html .menu_dd {width:746px; w\idth:745px;} */
+/* remove all the bullets, borders and padding from the default list styling */
+.menu_dd ul {padding:0;margin:0;list-style-type:none; }
+
+.menu_dd ul ul {width:149px;}
+
+.menu_dd ul li {font-size:9px;}
+
+/* float the list to make it horizontal and a relative positon so that you can control the dropdown menu positon */
+.menu_dd li {float:left;position:relative;}
+
+
+/* hide the sub levels and give them a positon absolute so that they take up no room */
+.menu_dd ul ul {visibility:hidden;position:absolute;height:0;left:0; _margin-top:15px; width:220px; border-top:1px solid #000;}
+/* hack for IE5.5 */
+* html .menu_dd ul ul {width:220px;w\idth:200px;}
+
+
+/* style the table so that it takes no ppart in the layout - required for IE to work */
+.menu_dd table {position:absolute; top:0; left:0; border-collapse:collapse;;}
+
+/* style the second level links */
+
+.menu_dd ul ul li {background:#FFFFFF; color:#000; line-height:1em; padding:10px 10px 5px; width:200px;border-width:0 1px 1px 1px; border-left:1px solid #000; border-right:1px solid #000; border-bottom:1px solid #000;}
+.menu_dd ul ul a {margin-top:5px; font-size:1.2em;}
+
+/* yet another hack for IE5.5 */
+* html .menu_dd ul ul li {width:220px;w\idth:200px;}
+
+
+/* style the top level hover */
+.menu_dd ul ul li:hover, .menu_dd ul ul li.Hover {background:#EAE9E9; color:#fff;}
+
+/* make the second level visible when hover on first level list OR link */
+
+.menu_dd ul li:hover ul, .menu_dd ul li.Hover ul,
+.menu_dd ul a:hover ul{visibility:visible; }
+/* keep the third level hidden when you hover on first level list OR link */
+.menu_dd ul :hover ul ul{visibility:hidden;}
+/* make the third level visible when you hover over second level list OR link */
+
+.menu_dd ul :hover ul :hover ul{ visibility:visible;}
+
+
+/* -----------------------------------------------
+        Destaque da paginacao
+-------------------------------------------------*/
+
+.paginaAtual a{
+	color:#696969;
+}
+
+.paginaAtual a:hover{
+	color:#696969;
+	text-decoration:none;
+}
+
+ul.usuarioOnlineExterno {
+	background-color: #DCDCDC;
+	font-weight: bold;
+	padding-top: 2px;
+	width: 180px;
+	padding-bottom: 2px;
+}
+
+li.usuarioOnlineHead {
+	padding-left: 6px;
+	margin-left:2px;
+	margin-right:2px;
+}
+
+li.usuarioOnlineLista {
+	background-color: #FFFFFF;
+	padding-top: 2px;
+	padding-left: 6px;
+	margin-left:2px;
+	margin-right:2px;
+	list-style-image: url('forte.png');
+	list-style-position:inside;
+}

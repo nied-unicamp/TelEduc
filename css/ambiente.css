@@ -1,0 +1,428 @@
+/* -------------------------------------------
+	CSS . AMBIENTE TELEDUC
+---------------------------------------------- */
+body,h1,h2,h3,h4,h5,h6,p,form,ul,li,table {
+    /*behavior:url("../htc/csshover.htc");*/
+    margin:0;
+    padding:0;
+    border:none;
+    list-style:none;
+}
+
+body {
+    background:url(../imgs/fdoBody.gif) repeat-x;
+    font:11px Arial, Verdana, Trebuchet MS; color:#4a4a4a;
+    line-height:16px;
+    margin:0 12px;
+}
+
+html,body { height:100%; font-size:11px;}
+
+p { margin:8px 0; }
+p.p1 { margin:16px 0; }
+
+a { color:#2a6686; text-decoration:none; font-weight:bold; font-size:1.0em; }
+.enquete { color:#2a6686; text-decoration:none; font-weight:normal; font-size:1.0em; }
+a:visited { color:#4181a3; text-decoration:none; }
+a:hover { color:#1c4c66; text-decoration:underline; }
+
+/*classe para span*/
+span.asterisco{
+	font:16px Arial, Verdana, Trebuchet MS; color:#FF0000;
+	}
+span.paginacao{
+	cursor:pointer;
+	}
+
+/* -------------------------------------------
+	TITULOS
+---------------------------------------------- */
+h1 { 
+	z-index:1;
+	position:absolute; top:0px;
+	width:113px; height:46px; padding-top:24px; margin-left:8px;
+}
+h3 {
+	font-size:1.1em; font-weight:bold; color:#FFFFFF;
+	height:23px;
+	background:#3f6aa0;font-weight:bold; color:#FFFFFF;font-size:1.18em;
+	padding-top:5px; 
+        padding-left:8px;
+	margin:66px 0 0 0; 
+        _margin-top:32px;
+	clear:both;
+}
+h4 { 
+	height:24px;
+	background:#e3ddc7;
+	font-size:1.24em; font-weight:bold; color:#000000;
+	clear:both;
+	padding-top:8px; padding-left:8px;
+}
+h5 { font-size:1.18em; font-weight:bold; color:#000000; padding-left:8px; margin-bottom:8px; }
+
+.tit1 { font-size:0.9em; color:#558922; font-weight:bold; }
+.tit2 { font-size:1.2em; color:#000000; font-weight:bold; }
+
+
+
+/* -------------------------------------------
+	LISTAS
+---------------------------------------------- */
+.bulList li {
+	background:url(../imgs/bullet.gif) no-repeat 0 6px;
+	padding-left:10px;
+	margin-bottom:3px;
+}
+.listaLinks li {
+	background:url(../imgs/bulletLink.gif) no-repeat 0 6px;
+	padding:2px 0 10px 16px;
+}
+ol li {
+	list-style-type:decimal;
+	margin-bottom:20px;
+	background:url(../imgs/dotLine.gif) repeat-x bottom;
+	padding-bottom:8px;
+}
+
+ul.listaDest li, ul.listaDest li ul li{
+PADDING-RIGHT: 2px;
+PADDING-LEFT: 20px;
+PADDING-BOTTOM: 2px;
+WIDTH: 200px;
+PADDING-TOP: 2px;
+/* border: 1px solid; */
+            }
+
+ul.PosicaoBandeiras{
+position:absolute;
+right:17px;
+}
+
+/* -------------------------------------------
+	ESTRUTURA
+---------------------------------------------- */
+#container { width:100%; position:relative; }
+#topo { position:relative; height:90px; }
+
+.rodape,
+#rodape { font-size:0.88em; color:#7b7b7b; text-align:center; }
+#texto { padding:0 8px; margin-top:36px; }
+
+#conteudo { padding-bottom:40px; padding-top:4px; }
+
+/* -------------------------------------------
+	FORMS
+---------------------------------------------- */
+select { font-size:1.0em; }
+
+.input{
+border: 2px solid rgb(153, 187, 204);
+font-size: 1.25em;
+}
+
+/* -------------------------------------------
+	ESTILOS GERAIS
+---------------------------------------------- */
+.hr {
+	height:1px;
+	background:url(../imgs/dotLine.gif) repeat-x;
+	clear:both; display:block;
+	margin:10px 0;
+}
+.boxFlat {
+	padding:12px;
+	background:#f3f0e6;
+	font-size:1.0em;
+}
+.aviso {
+	font-size:1.0em;
+	color:#FF0000;
+}	
+
+.novo {
+	text-decoration:underline;
+	font-weight:bold;
+	font-size:1.05em;
+}
+
+.antigo {
+	text-decoration:none;
+	font-weight:normal;
+	font-size:1.0em;
+}
+
+span.link { display:inline; cursor:pointer; color:#2a6686;}
+span.link:hover, span.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
+span.linkTexto { display:inline; cursor:pointer; color:#2a6686; }
+span.linkTexto:hover, span.linkTextoHover{ color:#1c4c66; text-decoration:underline; background-color:#F0FAFF; cursor:pointer; }
+span.destaque, span.destaqueHover{ font-weight:bold; }
+span.avaliada {color:red;font-weight:bold;}
+
+input.link { cursor:pointer; color:#2a6686; width:70px;}
+input.link:hover, input.linkHover{ color:#1c4c66; text-decoration:underline; cursor:pointer; }
+
+input.valorExemplo {border:2px solid #99BBCC; color:Gray; font-style:italic;}
+input.estiloPadrao {color:''; font-style:''; border: 2px solid rgb(153, 187, 204);}
+
+#mudarFonte { position:absolute; top:133px; *top:160px; _top:133px; right:18px; _right:6px; }
+
+#mudarFonte a { color:#3f6aa0; font-weight:bold; text-decoration:underline; }
+
+.marca { margin-top:42px; position:relative; left:-12px; }
+
+.ajuste1, .ajuste1Hover { position:relative; top:3px; }
+
+#pasta { height:24px; background:#95a6be; padding-left:8px; padding-top:4px; }
+
+.arqOculto{ color:#FF0000; }
+
+.bordaBox{
+  border: 2px solid rgb(153, 187, 204); 
+/*   margin-left:10px; */
+  width:300px;
+  height:100px;
+  overflow:auto;
+  background-color:#FFF;
+
+}
+
+#paginacao_back, #paginacao_last, #paginacao_fwd{ margin-left:5px; }
+#paginacao_back { margin-right:5px; }
+
+/* -------------------------------------------
+    LAYERS
+---------------------------------------------- */
+
+.popup {
+    font:0.9em Arial, Verdana, Trebuchet MS; color:#4a4a4a;
+    margin:4px;
+    position: absolute;
+    visibility: hidden;
+}
+
+.popup{
+  display:table-cell;
+}
+
+.int_popup{
+    margin:4px;
+    position:relative;
+    padding:1px;
+    background:#c4c4c4;
+}
+
+.aPopup, .aPopup:visited { color:#ab4125; font-size:0.9em; text-decoration:underline; }
+.aPopup:hover { color:#8d351d; }
+
+.ulPopup {
+    background:#F5F5F5;
+    margin-top:1px;
+    margin-right:1px;
+    margin-left:1px;
+    margin-bottom:2px;
+    padding-left:2px;
+    padding-right:2px;
+   width:185px;
+}
+
+.ulPopup li {
+    display:table;
+    padding:0;
+    padding-top:3px;
+    padding-bottom:3px;
+}
+
+.ulPopup li:hover, .ulPopup li.Hover{
+    cursor:pointer;
+    background-color:#DCF1FF;
+}
+
+.ulPopup li span.check, .ulPopup li span.checkHover{
+    float:left;
+    display:table-cell;
+    width:15px;
+}
+
+.posX {
+    text-align:right;
+    margin-top:0px;
+    margin-bottom:2px;
+    margin-right:4px;
+}
+
+.divHidden{
+/*     position: absolute; */
+/*     overflow:hidden; */
+    visibility: hidden;
+    display:none;
+/*     width:0px; */
+    
+}
+
+.divShow{
+  padding-left:20px;
+}
+
+#feedback.feedback_hidden{
+  visibility:hidden;
+}
+
+#feedback{
+  text-align:center;
+  margin-top:7px;
+  *margin-top:0px;
+  _margin-top:7px;
+  margin-bottom:2px;
+  padding:0;
+}
+
+#feedback span{
+  margin-top:1px;
+  padding:5px 10px 5px 10px;
+  border:1pt solid #F0F0F0;
+  font-weight:bold;
+}
+
+#feedback span.feedback_error{
+  background-color:#FF9393;
+}
+
+.divRichText{
+  line-height:auto;
+  font-size-adjust:auto;
+  width:100%;
+}
+
+.divRichText h1{
+  font-size:2.2em;
+  font-weight:bold;
+  width:100%;
+  position:static;
+  margin:0;
+  padding:0;
+  height:100%
+  /*height:1.0em;*/
+}
+
+
+.divRichText h2{
+  font-size:2.0em;
+  font-weight:bold;
+  height:100%
+/*  background-color:#ff0;*/
+  /*height:0.9em;*/
+}
+
+.divRichText h3{
+  font-size:1.8em;
+  font-weight:bold;
+  color:#696969;
+  background-color:#FFF;
+  padding:0;
+  margin:0;
+  height:100%
+  /*height:0.9em;*/
+}
+
+.divRichText h4{
+  font-size:1.6em;
+  font-weight:bold;
+  color:#696969;
+  background-color:#FFF;
+  padding:0;
+  height:100%
+  /*height:0.9em;*/
+}
+
+.divRichText h5{
+  font-size:1.4em;
+  font-weight:bold;
+  color:#696969;
+/*  background-color:none;*/
+  padding:0;
+  margin:0;
+  height:100%
+  /*height:0.9em;*/
+}
+
+.divRichText font{
+  line-height:normal;
+}
+
+div.divRichText font{
+  line-height:normal;
+}
+
+.divRichText span{
+  line-height:normal;
+}
+
+dl.portlet  {
+margin : 1px 0 1em 0;
+border-bottom : 1px solid #dad4d4;
+}
+
+.portletHeader {
+background-color: #EAE9E9;
+color: #818181;
+font-weight: bold;
+border : 1px solid #dad4d4;
+padding : 0 1em;
+text-transform : none;
+line-height : 1.6em;
+}
+
+.portletItem {
+margin : 0;
+padding : 1em;
+border-left : 1px solid #dad4d4;
+border-right : 1px solid #dad4d4;
+}
+
+dd.portletFooter {
+background-color : transparent;
+margin : 0;
+padding : 0.25em 1em;
+border : 1px solid #dad4d4;
+border-style : dotted solid none solid;
+text-align : left;
+}
+
+/* -------------------------------------------
+    ALTERANTIVAS DE EXERCÍCIOS
+---------------------------------------------- */
+
+tbody#tBody_alternativas input{
+margin-right:10px;
+}
+
+tbody#tBody_alternativas div.containerCheck {
+float: left;
+}
+
+tbody#tBody_alternativas div.containerTextArea {
+margin-left: 30px;
+width: auto;
+padding: 2px;
+}
+
+tbody#tBody_alternativas div.containerTextArea textarea{
+width: 100%;
+padding: 0;
+resize:vertical;
+}
+
+tbody#tBody_alternativas div.divAlt {
+display: inline-block;
+word-wrap: break-word;
+}
+
+tbody#tBody_alternativas .edicao div.divAlt {
+margin-left: 30px;
+clear: both;
+}
+
+tbody#tBody_alternativas .edicao input{
+vertical-align: top;
+}
