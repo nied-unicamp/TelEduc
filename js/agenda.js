@@ -629,3 +629,32 @@ function DesmarcaRadios(){
   }
   cod_avaliacao='';
 }
+
+function NovaAgenda()
+{
+	MostraLayer(lay_nova_agenda, 0);
+	document.form_nova_agenda.novo_titulo.value = '';
+	document.getElementById('nome').focus();
+}
+
+function Iniciar()
+{
+  lay_nova_agenda = getLayer('layer_nova_agenda');
+  startList();
+}
+
+function EscondeLayers()
+{
+  hideLayer(lay_nova_agenda);
+}
+
+function MostraLayer(cod_layer, ajuste)
+{
+  EscondeLayers();
+  moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());
+  showLayer(cod_layer);
+}
+function EscondeLayer(cod_layer)
+{
+  hideLayer(cod_layer);
+}

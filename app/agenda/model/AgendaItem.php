@@ -12,16 +12,16 @@ class Agenda_Item {
      * Persistent Instance variables. This data is directly 
      * mapped to the columns of database table.
      */
-    var $cod_item;
-    var $Curso_cod_curso;
-    var $Usuario_cod_usuario;
-    var $titulo;
-    var $texto;
-    var $situacao;
-    var $data_criacao;
-    var $data_publicacao;
-    var $status;
-    var $inicio_edicao;
+    private $cod_item;
+    private $Curso_cod_curso;
+    private $Usuario_cod_usuario;
+    private $titulo;
+    private $texto;
+    private $situacao;
+    private $data_criacao;
+    private $data_publicacao;
+    private $status;
+    private $inicio_edicao;
 
 
 
@@ -32,7 +32,7 @@ class Agenda_Item {
      * argument, which is the primary key of the corresponding table.
      */
 
-    function Agenda_Item () {
+    public function Agenda_Item () {
 
     }
 
@@ -49,73 +49,73 @@ class Agenda_Item {
      * so these might require some manual additions.
      */
 
-    function getCod_item() {
+    public function getCod_item() {
           return $this->cod_item;
     }
-    function setCod_item($cod_itemIn) {
+    public function setCod_item($cod_itemIn) {
           $this->cod_item = $cod_itemIn;
     }
 
-    function getCurso_cod_curso() {
+    public function getCurso_cod_curso() {
           return $this->Curso_cod_curso;
     }
-    function setCurso_cod_curso($Curso_cod_cursoIn) {
+    public function setCurso_cod_curso($Curso_cod_cursoIn) {
           $this->Curso_cod_curso = $Curso_cod_cursoIn;
     }
 
-    function getUsuario_cod_usuario() {
+    public function getUsuario_cod_usuario() {
           return $this->Usuario_cod_usuario;
     }
-    function setUsuario_cod_usuario($Usuario_cod_usuarioIn) {
+    public function setUsuario_cod_usuario($Usuario_cod_usuarioIn) {
           $this->Usuario_cod_usuario = $Usuario_cod_usuarioIn;
     }
 
-    function getTitulo() {
+    public function getTitulo() {
           return $this->titulo;
     }
-    function setTitulo($tituloIn) {
+    public function setTitulo($tituloIn) {
           $this->titulo = $tituloIn;
     }
 
-    function getTexto() {
+    public function getTexto() {
           return $this->texto;
     }
-    function setTexto($textoIn) {
+    public function setTexto($textoIn) {
           $this->texto = $textoIn;
     }
 
-    function getSituacao() {
+    public function getSituacao() {
           return $this->situacao;
     }
-    function setSituacao($situacaoIn) {
+    public function setSituacao($situacaoIn) {
           $this->situacao = $situacaoIn;
     }
 
-    function getData_criacao() {
+    public function getData_criacao() {
           return $this->data_criacao;
     }
-    function setData_criacao($data_criacaoIn) {
+    public function setData_criacao($data_criacaoIn) {
           $this->data_criacao = $data_criacaoIn;
     }
 
-    function getData_publicacao() {
+    public function getData_publicacao() {
           return $this->data_publicacao;
     }
-    function setData_publicacao($data_publicacaoIn) {
+    public function setData_publicacao($data_publicacaoIn) {
           $this->data_publicacao = $data_publicacaoIn;
     }
 
-    function getStatus() {
+    public function getStatus() {
           return $this->status;
     }
-    function setStatus($statusIn) {
+    public function setStatus($statusIn) {
           $this->status = $statusIn;
     }
 
-    function getInicio_edicao() {
+    public function getInicio_edicao() {
           return $this->inicio_edicao;
     }
-    function setInicio_edicao($inicio_edicaoIn) {
+    public function setInicio_edicao($inicio_edicaoIn) {
           $this->inicio_edicao = $inicio_edicaoIn;
     }
 
@@ -159,7 +159,7 @@ class Agenda_Item {
      * individual set-methods.
      */
     
-    function setAll($Curso_cod_cursoIn,
+    public function setAll($Curso_cod_cursoIn,
     		$Usuario_cod_usuarioIn,
     		$tituloIn,
     		$textoIn,
@@ -187,7 +187,7 @@ class Agenda_Item {
      * are the same instance. However it does mean that in that moment, they 
      * are mapped to the same row in database.
      */
-    function hasEqualMapping($valueObject) {
+    public function hasEqualMapping($valueObject) {
 
           if ($valueObject->getCod_item() != $this->cod_item) {
                     return(false);
@@ -230,7 +230,7 @@ class Agenda_Item {
      * valueObject. This is useful during application development, and 
      * possibly when application is writing object states in textlog.
      */
-    function toString() {
+    public function toString() {
         $out = $this->getDaogenVersion();
         $out = $out."\nclass Agenda_Item, mapping to table Agenda_Item\n";
         $out = $out."Persistent attributes: \n"; 
@@ -254,7 +254,7 @@ class Agenda_Item {
      * is defined in java.lang.Object. Here, the retuned cloned object
      * will also have all its attributes cloned.
      */
-    function clonar() {
+    public function clonar() {
         $cloned = new Agenda_Item();
 
         $cloned->setCod_item($this->cod_item); 

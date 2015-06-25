@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Ferramenta Data Access Object (DAO).
@@ -29,11 +30,11 @@ class FerramentaDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_ferramenta) {
+    function getObject($conn, $cod_ferramenta) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_ferramenta($cod_ferramenta);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -50,7 +51,7 @@ class FerramentaDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_ferramenta()) {
                //print "Can not select without Primary-Key!";
@@ -59,7 +60,7 @@ class FerramentaDao {
 
           $sql = "SELECT * FROM Ferramenta WHERE (cod_ferramenta = ".$valueObject->getCod_ferramenta().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -75,14 +76,22 @@ class FerramentaDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll() {
 
 
           $sql = "SELECT * FROM Ferramenta ORDER BY cod_ferramenta ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaFerramentas = $conexao->RetornaArrayLinhas($res);
+          
+          $conexao->Desconectar();
 
-          return $searchResults;
+          return $listaFerramentas;
     }
 
 
@@ -100,14 +109,14 @@ class FerramentaDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($conn, $valueObject) {
 
           $sql = "INSERT INTO Ferramenta ( cod_ferramenta, nome, descricao, ";
           $sql = $sql."diretorio) VALUES (".$valueObject->getCod_ferramenta().", ";
           $sql = $sql."'".$valueObject->getNome()."', ";
           $sql = $sql."'".$valueObject->getDescricao()."', ";
           $sql = $sql."'".$valueObject->getDiretorio()."') ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
 
           return true;
@@ -125,13 +134,13 @@ class FerramentaDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Ferramenta SET nome = '".$valueObject->getNome()."', ";
           $sql = $sql."descricao = '".$valueObject->getDescricao()."', ";
           $sql = $sql."diretorio = '".$valueObject->getDiretorio()."'";
           $sql = $sql." WHERE (cod_ferramenta = ".$valueObject->getCod_ferramenta().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -154,7 +163,7 @@ class FerramentaDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($conn, $valueObject) {
 
 
           if (!$valueObject->getCod_ferramenta()) {
@@ -163,7 +172,7 @@ class FerramentaDao {
           }
 
           $sql = "DELETE FROM Ferramenta WHERE (cod_ferramenta = ".$valueObject->getCod_ferramenta().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -184,10 +193,10 @@ class FerramentaDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Ferramenta";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -201,7 +210,7 @@ class FerramentaDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Ferramenta";
           $allRows = 0;
@@ -228,7 +237,7 @@ class FerramentaDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Ferramenta WHERE 1=1 ";
@@ -261,7 +270,7 @@ class FerramentaDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -275,7 +284,7 @@ class FerramentaDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -293,7 +302,7 @@ class FerramentaDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -319,7 +328,7 @@ class FerramentaDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
