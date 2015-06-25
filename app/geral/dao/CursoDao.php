@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Curso Data Access Object (DAO).
@@ -29,11 +30,11 @@ class CursoDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_curso) {
+    function getObject($conn, $cod_curso) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_curso($cod_curso);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -50,7 +51,7 @@ class CursoDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_curso()) {
                //print "Can not select without Primary-Key!";
@@ -59,7 +60,7 @@ class CursoDao {
 
           $sql = "SELECT * FROM Curso WHERE (cod_curso = ".$valueObject->getCod_curso().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -75,16 +76,23 @@ class CursoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll($conn) {
 
 
           $sql = "SELECT * FROM Curso ORDER BY cod_curso ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
-
-          return $searchResults;
-    }
-
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaCursos = $conexao->RetornaArrayLinhas($res);
+          
+          $conexao->Desconectar();
+          
+          return $listaCursos;
+          }
 
 
     /**
@@ -100,14 +108,13 @@ class CursoDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create ($valueObject) {
 
-          $sql = "INSERT INTO Curso ( cod_curso, nome_curso, inscricao_inicio, ";
+          $sql = "INSERT INTO Curso ( nome_curso, inscricao_inicio, ";
           $sql = $sql."inscricao_fim, curso_inicio, curso_fim, ";
           $sql = $sql."informacoes, publico_alvo, permite_inscricao_publica, ";
           $sql = $sql."numero_alunos, cod_coordenador, permite_acesso_visitante, ";
-          $sql = $sql."_timestamp, cod_lingua) VALUES (".$valueObject->getCod_curso().", ";
-          $sql = $sql."'".$valueObject->getNome_curso()."', ";
+          $sql = $sql."_timestamp, cod_lingua) VALUES ("."'".$valueObject->getNome_curso()."',";
           $sql = $sql."".$valueObject->getInscricao_inicio().", ";
           $sql = $sql."".$valueObject->getInscricao_fim().", ";
           $sql = $sql."".$valueObject->getCurso_inicio().", ";
@@ -120,13 +127,21 @@ class CursoDao {
           $sql = $sql."'".$valueObject->getPermite_acesso_visitante()."', ";
           $sql = $sql."".$valueObject->get_timestamp().", ";
           $sql = $sql."".$valueObject->getCod_lingua().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          
 
-
-          return true;
-    }
-
-
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'inseriu';
+          }
+          else{
+          	echo 'nao inseriu';
+          }
+          $conexao->Desconectar();
+          }
+          
     /**
      * save-method. This method will save the current state of valueObject to database.
      * Save can not be used to create new instances in database, so upper layer must
@@ -138,7 +153,7 @@ class CursoDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Curso SET nome_curso = '".$valueObject->getNome_curso()."', ";
           $sql = $sql."inscricao_inicio = ".$valueObject->getInscricao_inicio().", ";
@@ -154,7 +169,7 @@ class CursoDao {
           $sql = $sql."_timestamp = ".$valueObject->get_timestamp().", ";
           $sql = $sql."cod_lingua = ".$valueObject->getCod_lingua()."";
           $sql = $sql." WHERE (cod_curso = ".$valueObject->getCod_curso().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -177,23 +192,26 @@ class CursoDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($id) {
 
 
-          if (!$valueObject->getCod_curso()) {
-               //print "Can not delete without Primary-Key!";
-               return false;
+         
+          $sql = "DELETE FROM Curso WHERE (cod_curso = ".$id.") ";
+          
+
+          $conexao = new Conexao();
+          $conexao->Conectar();
+          $rs = $conexao->executeUpdate($sql);
+          
+          if ($rs){
+          	echo 'deletou';
           }
-
-          $sql = "DELETE FROM Curso WHERE (cod_curso = ".$valueObject->getCod_curso().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
-
-          if ($result != 1) {
-               //print "PrimaryKey Error when updating DB!";
-               return false;
+          else{
+          	echo 'nao deletou';
           }
-          return true;
-    }
+          $conexao->Desconectar();
+          }
+          
 
 
     /**
@@ -207,10 +225,10 @@ class CursoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Curso";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -224,7 +242,7 @@ class CursoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Curso";
           $allRows = 0;
@@ -251,7 +269,7 @@ class CursoDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Curso WHERE 1=1 ";
@@ -317,24 +335,24 @@ class CursoDao {
           }
 
           if ($valueObject->get_timestamp() != 0) {
-              if ($first) { $first = false; }
+          if ($first) { $first = false; }
               $sql = $sql."AND _timestamp = ".$valueObject->get_timestamp()." ";
-          }
+          } 
 
-          if ($valueObject->getCod_lingua() != 0) {
+         if ($valueObject->getCod_lingua() != 0) {
               if ($first) { $first = false; }
               $sql = $sql."AND cod_lingua = ".$valueObject->getCod_lingua()." ";
-          }
+          } 
 
 
           $sql = $sql."ORDER BY cod_curso ASC ";
 
-          // Prevent accidential full table results.
+          //Prevent accidential full table results.
           // Use loadAll if all rows must be returned.
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -348,14 +366,14 @@ class CursoDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
-
-          $result = $conn->execute($sql);
-
-          return $result;
+		function databaseUpdate($conn, $sql) {
+    
+    	$result = $conn->execute($sql);
+    
+    	return $result;
     }
-
-
+  
+  
 
     /**
      * databaseQuery-method. This method is a helper method for internal use. It will execute
@@ -366,7 +384,7 @@ class CursoDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -402,7 +420,7 @@ class CursoDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);

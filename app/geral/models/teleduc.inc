@@ -1,0 +1,13 @@
+<?php
+$_SESSION['dbnamebase']='TelEduc5teste';
+$_SESSION['dbnamecurso']='TelEduc5Curso_';
+$_SESSION['dbuser']='root';
+$_SESSION['dbpassword']='Sxp01zN';
+$_SESSION['dbhost']='localhost';
+$_SESSION['dbport']='3306';
+$_SESSION['dbtmpnamecurso']='TelEduc5testetmp';
+$_SESSION['dbtmpuser']='root';
+$_SESSION['dbtmppassword']='Sxp01zN';
+$_SESSION['dbtmphost']='localhost';
+$_SESSION['dbtmpport']='3306';
+?>

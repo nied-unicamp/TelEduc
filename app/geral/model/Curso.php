@@ -13,20 +13,20 @@ class Curso {
      * Persistent Instance variables. This data is directly 
      * mapped to the columns of database table.
      */
-    var $cod_curso;
-    var $nome_curso;
-    var $inscricao_inicio;
-    var $inscricao_fim;
-    var $curso_inicio;
-    var $curso_fim;
-    var $informacoes;
-    var $publico_alvo;
-    var $permite_inscricao_publica;
-    var $numero_alunos;
-    var $cod_coordenador;
-    var $permite_acesso_visitante;
-    var $_timestamp;
-    var $cod_lingua;
+    private $cod_curso;
+    private $nome_curso;
+    private $inscricao_inicio;
+    private $inscricao_fim;
+    private $curso_inicio;
+    private $curso_fim;
+    private $informacoes;
+    private $publico_alvo;
+    private $permite_inscricao_publica;
+    private $numero_alunos;
+    private $cod_coordenador;
+    private $permite_acesso_visitante;
+    //var $_timestamp;
+    private $cod_lingua;
 
 
 
@@ -37,7 +37,7 @@ class Curso {
      * argument, which is the primary key of the corresponding table.
      */
 
-    function Curso () {
+  public  function Curso () {
 
     }
 
@@ -54,101 +54,101 @@ class Curso {
      * so these might require some manual additions.
      */
 
-    function getCod_curso() {
+    public function getCod_curso() {
           return $this->cod_curso;
     }
-    function setCod_curso($cod_cursoIn) {
+    public function setCod_curso($cod_cursoIn) {
           $this->cod_curso = $cod_cursoIn;
     }
 
-    function getNome_curso() {
+    public function getNome_curso() {
           return $this->nome_curso;
     }
-    function setNome_curso($nome_cursoIn) {
+    public function setNome_curso($nome_cursoIn) {
           $this->nome_curso = $nome_cursoIn;
     }
 
-    function getInscricao_inicio() {
+    public function getInscricao_inicio() {
           return $this->inscricao_inicio;
     }
-    function setInscricao_inicio($inscricao_inicioIn) {
+    public function setInscricao_inicio($inscricao_inicioIn) {
           $this->inscricao_inicio = $inscricao_inicioIn;
     }
 
-    function getInscricao_fim() {
+    public function getInscricao_fim() {
           return $this->inscricao_fim;
     }
-    function setInscricao_fim($inscricao_fimIn) {
+    public function setInscricao_fim($inscricao_fimIn) {
           $this->inscricao_fim = $inscricao_fimIn;
     }
 
-    function getCurso_inicio() {
+    public function getCurso_inicio() {
           return $this->curso_inicio;
     }
-    function setCurso_inicio($curso_inicioIn) {
+    public function setCurso_inicio($curso_inicioIn) {
           $this->curso_inicio = $curso_inicioIn;
     }
 
-    function getCurso_fim() {
+    public function getCurso_fim() {
           return $this->curso_fim;
     }
-    function setCurso_fim($curso_fimIn) {
+    public function setCurso_fim($curso_fimIn) {
           $this->curso_fim = $curso_fimIn;
     }
 
-    function getInformacoes() {
+    public function getInformacoes() {
           return $this->informacoes;
     }
-    function setInformacoes($informacoesIn) {
+    public function setInformacoes($informacoesIn) {
           $this->informacoes = $informacoesIn;
     }
 
-    function getPublico_alvo() {
+    public function getPublico_alvo() {
           return $this->publico_alvo;
     }
-    function setPublico_alvo($publico_alvoIn) {
+    public function setPublico_alvo($publico_alvoIn) {
           $this->publico_alvo = $publico_alvoIn;
     }
 
-    function getPermite_inscricao_publica() {
+    public function getPermite_inscricao_publica() {
           return $this->permite_inscricao_publica;
     }
-    function setPermite_inscricao_publica($permite_inscricao_publicaIn) {
+    public function setPermite_inscricao_publica($permite_inscricao_publicaIn) {
           $this->permite_inscricao_publica = $permite_inscricao_publicaIn;
     }
 
-    function getNumero_alunos() {
+    public function getNumero_alunos() {
           return $this->numero_alunos;
     }
-    function setNumero_alunos($numero_alunosIn) {
+    public function setNumero_alunos($numero_alunosIn) {
           $this->numero_alunos = $numero_alunosIn;
     }
 
-    function getCod_coordenador() {
+    public function getCod_coordenador() {
           return $this->cod_coordenador;
     }
-    function setCod_coordenador($cod_coordenadorIn) {
+    public function setCod_coordenador($cod_coordenadorIn) {
           $this->cod_coordenador = $cod_coordenadorIn;
     }
 
-    function getPermite_acesso_visitante() {
+    public function getPermite_acesso_visitante() {
           return $this->permite_acesso_visitante;
     }
-    function setPermite_acesso_visitante($permite_acesso_visitanteIn) {
+    public function setPermite_acesso_visitante($permite_acesso_visitanteIn) {
           $this->permite_acesso_visitante = $permite_acesso_visitanteIn;
     }
 
     function get_timestamp() {
           return $this->_timestamp;
-    }
-    function set_timestamp($_timestampIn) {
+   }
+     function set_timestamp($_timestampIn) {
           $this->_timestamp = $_timestampIn;
     }
-
-    function getCod_lingua() {
+ 
+    public function getCod_lingua() {
           return $this->cod_lingua;
     }
-    function setCod_lingua($cod_linguaIn) {
+    public function setCod_lingua($cod_linguaIn) {
           $this->cod_lingua = $cod_linguaIn;
     }
 
@@ -161,9 +161,8 @@ class Curso {
      * directly modify instance variales, without going trough the 
      * individual set-methods.
      */
-
-    function setAll($cod_cursoIn,
-          $nome_cursoIn,
+//tudo que identity nao coloca aqui
+   public function setAll($nome_cursoIn,
           $inscricao_inicioIn,
           $inscricao_fimIn,
           $curso_inicioIn,
@@ -176,7 +175,6 @@ class Curso {
           $permite_acesso_visitanteIn,
           $_timestampIn,
           $cod_linguaIn) {
-          $this->cod_curso = $cod_cursoIn;
           $this->nome_curso = $nome_cursoIn;
           $this->inscricao_inicio = $inscricao_inicioIn;
           $this->inscricao_fim = $inscricao_fimIn;
@@ -200,7 +198,7 @@ class Curso {
      * are the same instance. However it does mean that in that moment, they 
      * are mapped to the same row in database.
      */
-    function hasEqualMapping($valueObject) {
+   public function hasEqualMapping($valueObject) {
 
           if ($valueObject->getCod_curso() != $this->cod_curso) {
                     return(false);
@@ -255,7 +253,7 @@ class Curso {
      * valueObject. This is useful during application development, and 
      * possibly when application is writing object states in textlog.
      */
-    function toString() {
+   public function toString() {
         $out = $this->getDaogenVersion();
         $out = $out."\nclass Curso, mapping to table Curso\n";
         $out = $out."Persistent attributes: \n"; 
@@ -283,7 +281,7 @@ class Curso {
      * is defined in java.lang.Object. Here, the retuned cloned object
      * will also have all its attributes cloned.
      */
-	function clonar(){
+	public function clonar(){
         $cloned = new Curso();
 
         $cloned->setCod_curso($this->cod_curso); 
