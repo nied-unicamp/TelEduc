@@ -87,6 +87,23 @@ class Agenda_ItemDao {
 
           return $listaAgendas;
     }
+    
+    function loadAllSituacao($situacao) {
+    	 
+    	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=1";
+    
+    	$conexao = new Conexao();
+    
+    	$conexao->Conectar();
+    
+    	$res = $conexao->Enviar($sql);
+    
+    	$listaAgendas = $conexao->RetornaArrayLinhas($res);
+    
+    	$conexao->Desconectar();
+    
+    	return $listaAgendas;
+    }
 
 
 
