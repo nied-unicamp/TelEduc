@@ -658,3 +658,127 @@ function EscondeLayer(cod_layer)
 {
   hideLayer(cod_layer);
 }
+
+function TemCertezaAtivar()
+{
+/* 57 - Tem certeza que deseja ativar esta agenda? */
+/* 58 - (Uma vez ativada, n�o haver� como desativ�-la) */
+  return(confirm(\"".RetornaFraseDaLista($lista_frases,57)."\\n".RetornaFraseDaLista($lista_frases,58)."\"));
+}
+
+function Ativar()
+{
+	 if(TemCertezaAtivar())
+{
+    window.location='acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';
+}
+  return false;
+}
+
+function WindowOpenVer(id)
+{
+   window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
+}\n
+
+function EditaTituloEnter(campo, evento, id)
+{
+	 var tecla;
+    CheckTAB=true;\n
+    if(navigator.userAgent.indexOf(\"MSIE\")== -1)
+  {
+        tecla = evento.which;
+  }
+   else
+   {
+        tecla = evento.keyCode;
+   }
+   if ( tecla == 13 )
+    {
+       EdicaoTitulo(id, 'tit_'+id, 'ok');
+   }
+   return true;
+}
+
+function EditaTituloEnter(campo, evento, id)
+{
+var tecla;
+CheckTAB=true;
+ if(navigator.userAgent.indexOf(\"MSIE\")== -1)
+ {
+	  tecla = evento.which;
+ }
+   else
+   {
+        tecla = evento.keyCode;
+   }\n
+    		if ( tecla == 13 )
+    		{
+        EdicaoTitulo(id, 'tit_'+id, 'ok');
+    		}
+return true;
+}
+
+function AlteraTitulo(id){
+  var id_aux = id;
+  if (editaTitulo==0){
+    CancelaTodos();
+
+    xajax_AbreEdicao(".$cod_curso.", ".$cod_item.", ".$cod_usuario.", origem);
+
+    conteudo = document.getElementById('tit_'+id).innerHTML;
+    document.getElementById('tr_'+id).className='';
+    document.getElementById('tit_'+id).className='';
+
+    createInput = document.createElement('input');
+    document.getElementById('tit_'+id).innerHTML='';
+//    document.getElementById('renomear_'+id).onclick=function(){ };\n
+//    document.getElementById('renomear_'+id).setAttribute('onclick', '');
+
+    createInput.setAttribute('type', 'text');
+    createInput.setAttribute('style', 'border: 2px solid #9bc');
+    createInput.setAttribute('id', 'tit_'+id+'_text');\n
+    if (createInput.addEventListener){ //not IE
+      createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
+    } else if (createInput.attachEvent){ //IE
+      createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
+    }
+
+    document.getElementById('tit_'+id).appendChild(createInput);
+    xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    espaco = document.createElement('span');
+    espaco.innerHTML='&nbsp;&nbsp;';
+    document.getElementById('tit_'+id).appendChild(espaco);
+
+    createSpan = document.createElement('span');
+    createSpan.className='link';
+    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
+    createSpan.setAttribute('id', 'OkEdita');
+    createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,18)."';
+    document.getElementById('tit_'+id).appendChild(createSpan);\n
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    espaco = document.createElement('span');
+    espaco.innerHTML='&nbsp;&nbsp;';
+    document.getElementById('tit_'+id).appendChild(espaco);\n
+
+    createSpan = document.createElement('span');
+    createSpan.className='link';
+    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
+    createSpan.setAttribute('id', 'CancelaEdita');
+    createSpan.innerHTML='".RetornaFraseDaLista($lista_frases_geral,2)."';
+    document.getElementById('tit_'+id).appendChild(createSpan);\n
+
+    //cria o elemento 'espaco' e adiciona na pagina
+    espaco = document.createElement('span');
+    espaco.innerHTML='&nbsp;&nbsp;';
+    document.getElementById('tit_'+id).appendChild(espaco);\n
+
+    startList();
+    cancelarElemento=document.getElementById('CancelaEdita');
+    document.getElementById('tit_'+id+'_text').select();
+    editaTitulo++;
+  }
+}
+
