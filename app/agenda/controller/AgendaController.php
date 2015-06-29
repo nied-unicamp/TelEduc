@@ -41,11 +41,11 @@ class AgendaController{
 		 
 	}
 	
-	function listaAgendasSituacao($situacao){
+	function listaAgendasSituacao($cod_curso, $situacao){
 	
 		$dao = new Agenda_ItemDao();
 	
-		return $dao->loadAllSituacao($situacao);
+		return $dao->loadAllSituacao($cod_curso, $situacao);
 	}
 	
 	function apagaAgenda(){

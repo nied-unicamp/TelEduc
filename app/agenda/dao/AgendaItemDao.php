@@ -88,9 +88,9 @@ class Agenda_ItemDao {
           return $listaAgendas;
     }
     
-    function loadAllSituacao($situacao) {
+    function loadAllSituacao($cod_curso, $situacao) {
     	 
-    	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=1";
+    	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=".$cod_curso;
     
     	$conexao = new Conexao();
     
@@ -102,7 +102,7 @@ class Agenda_ItemDao {
     
     	$conexao->Desconectar();
     
-    	return $listaAgendas;
+    	return $listaAgendas[0];
     }
 
 

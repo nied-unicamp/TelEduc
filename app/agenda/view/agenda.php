@@ -2,23 +2,36 @@
 
 $dir_static = '../../../static_includes/';
 $ctrl_agenda = '../controller/';
-$ctrl_ferramenta = '../../../administracao/controller/';
 $dir_img = '../../../img/';
 
 include $ctrl_agenda.'AgendaController.php';
-include $ctrl_ferramenta.'FerramentaController.php';
 
 //Adciona o topo tela que contém referencias aos css
 include $dir_static.'topo_tela.php';
 
-echo("    <script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
-echo("    <script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
-echo("    <script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
+
+echo("	<script type=\"text/javascript\">");
+echo("		if (isNav)\n");
+echo("		{\n");
+echo("			document.captureEvents(Event.MOUSEMOVE);\n");
+echo("      }\n");
+echo("      document.onmousemove = TrataMouse;\n\n");
+
+echo("      function Iniciar()\n");
+echo("      {\n");
+echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
+//$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+echo("        startList();\n");
+echo("      }\n\n");
+echo("	</script>");
 
 include $dir_static.'menu_principal.php';
 
 $usr_formador = true;
-
+$cod_curso = $_GET['cod_curso'];
 $controlerAgenda = new AgendaController();
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -46,8 +59,8 @@ if($usr_formador)
 {
 	/* 6 - Nova Agenda*/
 	echo("                  <li><span OnClick='NovaAgenda();'>Nova Agenda</span></li>");
-	/* 3 - Editar Agenda*/
-	echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">Editar Agenda</a></li>\n");
+	/* 3 - Agendas Futuras*/
+	echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">Agendas Futuras</a></li>\n");
 }
 /* 2- Agenda Anteriores*/
 echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">Agendas Anteriores</a></li>\n");
@@ -66,19 +79,19 @@ echo("                    <td class=\"alLeft\">Titulo</td>\n");
 echo("                  </tr>\n");
 /* Conteudo */
 
-$linha_item=$controlerAgenda->listaAgendasSituacao('A');
+$linha_item=$controlerAgenda->listaAgendasSituacao($cod_curso, 'A');
 
-if (isset($linha_item[0]['cod_item']))
+if (isset($linha_item['cod_item']))
 {
 	if($usr_formador)
-		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item[0]['titulo']."</a>";
+		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
 	else
-		$titulo=$linha_item[0]['titulo'];
+		$titulo=$linha_item['titulo'];
 
 	$icone="<img src=\"".$dir_img."arqp.gif\" alt=\"\" border=\"0\" /> ";
 
-	if($linha_item[0]['texto']!="")
-		$conteudo = $linha_item[0]['texto'];
+	if($linha_item['texto']!="")
+		$conteudo = $linha_item['texto'];
 	else
 	{
 		$arquivo_entrada="";
@@ -154,7 +167,7 @@ echo("          </table>\n");
 
 /* Novo Item */
 echo("    <div id=\"layer_nova_agenda\" class=\"popup\">\n");
-echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
+echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../../../img/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
 echo("      <div class=\"int_popup\">\n");
 echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"acoes_linha.php\" onSubmit=\"return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));\">\n");
 //echo("        ".RetornaSessionIDInput());
