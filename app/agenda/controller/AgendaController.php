@@ -5,9 +5,12 @@ require_once '../../../lib/data.php';
 require_once '../model/AgendaItem.php';
 require_once '../dao/AgendaItemDao.php';
 
+
+
+
 class AgendaController{
 	
-	function testaConexao(){
+	function Conecta(){
 		
 		$conexao = new Conexao();
 		
@@ -15,22 +18,40 @@ class AgendaController{
 		
 		echo ' status='.$conexao->status;
 	}
-	
-	function criaAgenda(){
+
+
+
+
+	/*Cria uma nova agenda a qual Ã© armazenada no banco sÃ³ com o tÃ­tulo 
+	retorna um tipo AgendaItem;
+
+	*
+
+	*/
+	function criaAgenda($titulo, $codcurso, $codusuario){
 		
-		$data = new Data();
 		
-		$data_criacao = $data->Data2UnixTime('18/06/2015');
-		$data_publicacao = $data->Data2UnixTime('19/06/2015');
-		$inicio_edicao = $data->Data2UnixTime('20/06/2015');
+		$conn = new Conexao();
+
 		
 		$agenda_item = new Agenda_Item();
-		
-		$agenda_item->setAll(1, 1, 'Teste2', 'Testando insert pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
-		
+		 
 		$dao = new Agenda_ItemDao();
 		
-		return $dao->create($agenda_item);
+		$id= $dao->proxId($conn);
+
+		echo "PROX:".$id."\n";
+
+		$agenda_item->setBegin($id, $codcurso, $codusuario, $titulo);
+		
+		// echo ($agenda_item->toString());
+
+		$rs = $dao->create($conn, $agenda_item);
+		
+		if($conn){
+			$conn->Desconectar();
+		}
+		return $rs;
 	}
 
 	function listaAgendas(){
@@ -58,7 +79,7 @@ class AgendaController{
 		
 		$agenda_item = new Agenda_Item();
 		
-		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteração pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteraÃ§Ã£o pelo cÃ³digo','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
 		
@@ -66,3 +87,4 @@ class AgendaController{
 		
 	}
 }
+?>
