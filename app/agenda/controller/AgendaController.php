@@ -5,6 +5,8 @@ require_once '../../../lib/data.php';
 require_once '../model/AgendaItem.php';
 require_once '../dao/AgendaItemDao.php';
 
+
+
 class AgendaController{
 	
 	function testaConexao(){
@@ -26,7 +28,7 @@ class AgendaController{
 		
 		$agenda_item = new Agenda_Item();
 		
-		$agenda_item->setAll(1, 1, 'Teste2', 'Testando insert pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAll(1, 1, 'Teste2', 'Testando insert pelo cï¿½digo','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
 		
@@ -65,11 +67,17 @@ class AgendaController{
 		
 		$agenda_item = new Agenda_Item();
 		
-		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteração pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteraï¿½ï¿½o pelo cï¿½digo','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
 		
 		$dao->save($agenda_item);
 		
 	}
+	function ListaAgenda($cod_item) {
+		$dao= new Agenda_ItemDao();
+		return $dao-> load($cod_item);
+		
+
+}
 }

@@ -53,13 +53,21 @@ class Agenda_ItemDao {
      */
     function load($id) {
 
-          $sql = "SELECT * FROM Agenda_Item WHERE (cod_item = ".$id.") "; 
+          $sql = "SELECT * FROM Agenda_item WHERE (cod_item = ".$id.") "; 
 
-          if ($this->singleQuery($conn, $sql, $valueObject))
-               return true;
-          else
-               return false;
-    }
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaAgenda = $conexao->RetornaLinha($res);
+          
+          $conexao->Desconectar();
+          
+          return $listaAgenda;
+          }
+          
 
 
     /**
@@ -148,6 +156,8 @@ class Agenda_ItemDao {
           $conexao->Desconectar();
     }
 
+    
+   
 
     /**
      * save-method. This method will save the current state of valueObject to database.
@@ -424,5 +434,7 @@ class Agenda_ItemDao {
           return $searchResults;
     }
 }
+
+
 
 ?>

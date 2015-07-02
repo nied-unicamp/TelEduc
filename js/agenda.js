@@ -20,12 +20,17 @@ var lista_frases;
 var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
+var id = cod_item;
+var id_aux=0;
+//var titulo=0;
+//var cod_item=0;
 //xajax_RetornaFraseDinamic('lista_frases');
 //xajax_RetornaFraseGeralDinamic('lista_frases_geral');
 
 if (isNav)
 {
   document.captureEvents(Event.MOUSEMOVE);
+ // document.addEventListener()
 }
 document.onmousemove = TrataMouse;
 
@@ -128,6 +133,13 @@ function EdicaoTexto(codigo, id, valor){
 
 var controle=0;
 
+
+/*function AlteraTexto(id){;  
+var conteudo = document.getElementById('text_'+id).innerHTML;
+writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
+     }
+*/
+
 function EdicaoTitulo(codigo, id, valor){
 	//se o título não é vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
@@ -157,7 +169,7 @@ function EdicaoTitulo(codigo, id, valor){
   	cancelarElemento=null;
 }
 
-function AlteraTexto(id){
+/*function AlteraTitulo(id){
   var iframe = document.getElementById('iframe_ArqEntrada');	
   var span = document.getElementById('text_'+id);	
 
@@ -191,7 +203,7 @@ function AlteraTexto(id){
     	alert(lista_frases.msg53);
     }	
   }
-}
+}*/
 
 function LimpaTexto(id){
 
@@ -573,87 +585,137 @@ function Ativar()
    window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
 }*/
 
-function EditaTituloEnter(campo, evento, id)
-{
+function EditaTituloEnter(campo, evento, id)    {
 	var tecla;
-    var CheckTAB=true;
-    if(navigator.userAgent.indexOf('MSIE')== -1){
-        tecla = evento.which;
-  }
-   else
-   {
-        tecla = evento.keyCode;
+CheckTAB=true;
+if(navigator.userAgent.indexOf('MSIE')== -1)
+ {
+ tecla = evento.which;
+ }
+     else
+        {
+ tecla = evento.keyCode;
    }
-   if ( tecla == 13 )
-    {
-       EdicaoTitulo(id, 'tit_'+id, 'ok');
-   }
-   return true;
+if ( tecla == 13 )
+ {
+ EdicaoTitulo(id, 'tit_'+id, 'ok');
+}
+return true;
 }
 
-function AlteraTitulo(id){
-  var id_aux = id;
-  if (editaTitulo==0){
-    CancelaTodos();
 
-    //xajax_AbreEdicao(".$cod_curso.", ".$cod_item.", ".$cod_usuario.", origem);
 
-    conteudo = document.getElementById('tit_'+id).innerHTML;
-    document.getElementById('tr_'+id).className='';
-    document.getElementById('tit_'+id).className='';
+//function edicao_titulo(id){\n
+$(document).ready(function(){
+$('#renomear_'+id).click(function(){
+if (editaTitulo==0){
+CancelaTodos();
 
-    createInput = document.createElement('input');
-    document.getElementById('tit_'+id).innerHTML='';
-//    document.getElementById('renomear_'+id).onclick=function(){ };
-//    document.getElementById('renomear_'+id).setAttribute('onclick', '');
+//var id_aux = id;
+//var id = ".cod_item.";
+//var id = ".cod_item.";
+//var cod_curso = ".cod_curso.";
 
-    createInput.setAttribute('type', 'text');
-    createInput.setAttribute('style', 'border: 2px solid #9bc');
-    createInput.setAttribute('id', 'tit_'+id+'_text');
-    if (createInput.addEventListener){ //not IE
-      createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
-    } else if (createInput.attachEvent){ //IE
-      createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
-    }
 
-    document.getElementById('tit_'+id).appendChild(createInput);
-    //xajax_DecodificaString('tit_'+id+'_text', conteudo, 'value');
 
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;';
-    document.getElementById('tit_'+id).appendChild(espaco);
+texto = document.getElementById('tit_'+id).innerHTML;
+document.getElementById('tr_'+id).className='';
+document.getElementById('tit_'+id).className='';
 
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
-    createSpan.setAttribute('id', 'OkEdita');
-    createSpan.innerHTML='Ok';
-    document.getElementById('tit_'+id).appendChild(createSpan);
+createInput = document.createElement('input');
+document.getElementById('tit_'+id).innerHTML='';
 
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;';
-    document.getElementById('tit_'+id).appendChild(espaco);
 
-    createSpan = document.createElement('span');
-    createSpan.className='link';
-    createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
-    createSpan.setAttribute('id', 'CancelaEdita');
-    createSpan.innerHTML='Cancelar';
-    document.getElementById('tit_'+id).appendChild(createSpan);
-
-    //cria o elemento 'espaco' e adiciona na pagina
-    espaco = document.createElement('span');
-    espaco.innerHTML='&nbsp;&nbsp;';
-    document.getElementById('tit_'+id).appendChild(espaco);
-
-    startList();
-    cancelarElemento=document.getElementById('CancelaEdita');
-    document.getElementById('tit_'+id+'_text').select();
-    editaTitulo++;
-  }
+createInput.setAttribute('type', 'text');
+createInput.setAttribute('style', 'border: 2px solid #9bc');
+createInput.setAttribute('id', 'tit_'+id+'_text');
+if (createInput.addEventListener){ //not IE
+createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
+} else if (createInput.attachEvent){ //IE
+createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
 }
+
+document.getElementById('tit_'+id).appendChild(createInput);
+
+/*$.post(\"".$model_geral."decodifica_string.php\",{texto:texto, action: 'decodificaString'},
+function(data){
+	var code = $.parseJSON(data);
+	$('#tit_".$id."_text').val(code);
+});
+*/
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+createSpan = document.createElement('span');
+createSpan.className='link';
+createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
+createSpan.setAttribute('id', 'OkEdita');
+//createSpan.innerHTML='"._("OK_-1")."';
+createSpan.innerHTML='OK';
+document.getElementById('tit_'+id).appendChild(createSpan);
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+createSpan = document.createElement('span');
+createSpan.className='link';
+createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
+createSpan.setAttribute('id', 'CancelaEdita');
+createSpan.innerHTML='Cancelar';
+document.getElementById('tit_'+id).appendChild(createSpan);
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+startList();
+cancelarElemento=document.getElementById('CancelaEdita');
+document.getElementById('tit_'+id+'_text').select();
+editaTitulo++;
+}
+
+});
+
+function EdicaoTitulo(codigo, id, valor){
+//se o t�tulo n�o � vazio\n
+if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+titulo = document.getElementById(id+'_text').value;
+//Edita o t�tulo do item dado, din�micamente\n
+
+$.post('../../../app/agenda/dao/DaoAlteraTitulo.php',{titulo: titulo,cod_item: cod_item, cod_curso:cod_curso},
+function(data){
+	$('#tr_'+id).toggleClass('novoitem');
+			$('#tit_'+id).html(titulo);
+/* 103 - Agenda renomeada com sucesso.*/
+				//mostraFeedback('Palavra renomeada com sucesso', 'true');
+	});
+
+}else{
+
+if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
+	alert ('O titulo nao pode ficar vazio');
+	//alert('"._("TITLE_CANNOT_BE_EMPTY_-1")."');
+	document.getElementById(id).innerHTML=conteudo;
+if(navigator.appName.match('Opera')){
+	document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);
+}else{
+	document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };
+}
+
+}
+	editaTitulo=0;
+	cancelarElemento=null;
+}
+
+
+});
+
 
 function MostraLayer(cod_layer, ajuste)
 {
