@@ -2,9 +2,9 @@
 
 $dir_static = '../../../static_includes/';
 $ctrl_agenda = '../controller/';
-$dir_img = '../../../img/';
+$ctrl_geral = '../../../app/geral/controller/';
 
-include $ctrl_agenda.'AgendaController.php';
+require $ctrl_agenda.'AgendaController.php';
 
 //Adciona o topo tela que contém referencias aos css
 include $dir_static.'topo_tela.php';
@@ -32,18 +32,16 @@ include $dir_static.'menu_principal.php';
 
 $usr_formador = true;
 $cod_curso = $_GET['cod_curso'];
+
 $controlerAgenda = new AgendaController();
+$controlerPermissao = new PermissaoController();
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
 /* 1 - Agenda Atual*/
 echo("          <h4>Agenda - Agenda Atual</h4>");
 
 // 3 A's - Muda o Tamanho da fonte
-echo("<div id=\"mudarFonte\">\n");
-echo("      <a onclick=\"mudafonte(2)\" href=\"#\"><img width=\"17\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 3\" src=\"../../../img/btFont1.gif\"/></a>\n");
-echo("      <a onclick=\"mudafonte(1)\" href=\"#\"><img width=\"15\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 2\" src=\"../../../img/btFont2.gif\"/></a>\n");
-echo("      <a onclick=\"mudafonte(0)\" href=\"#\"><img width=\"14\" height=\"15\" border=\"0\" align=\"right\" alt=\"Letra tamanho 1\" src=\"../../../img/btFont3.gif\"/></a>\n");
-echo("          </div>\n");
+include $dir_static.'3as.php';
 
 /*Voltar*/
 /* 509 - Voltar */
@@ -55,16 +53,19 @@ echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 
-if($usr_formador)
-{
+
+if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Criar Agenda')){
 	/* 6 - Nova Agenda*/
 	echo("                  <li><span OnClick='NovaAgenda();'>Nova Agenda</span></li>");
+}
+if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Futuras')){
 	/* 3 - Agendas Futuras*/
 	echo("                  <li><a href=\"ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."\">Agendas Futuras</a></li>\n");
 }
-/* 2- Agenda Anteriores*/
-echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">Agendas Anteriores</a></li>\n");
-
+if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Anteriores')){
+	/* 2- Agenda Anteriores*/
+	echo("                  <li><a href=\"ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_usuario=".$cod_usuario."\">Agendas Anteriores</a></li>\n");
+}
 
 echo("                </ul>\n");
 echo("              </td>\n");
@@ -83,7 +84,7 @@ $linha_item=$controlerAgenda->listaAgendasSituacao($cod_curso, 'A');
 
 if (isset($linha_item['cod_item']))
 {
-	if($usr_formador)
+	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Editar'))
 		$titulo="<a id=\"tit_".$linha_item['cod_item']."\" href=\"ver_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;origem=agenda\">".$linha_item['titulo']."</a>";
 	else
 		$titulo=$linha_item['titulo'];
@@ -160,7 +161,7 @@ include $dir_static.'topo_tela.php';
 echo("              </td>\n");
 echo("            </tr>\n");
 echo("          </table>\n");
-//include("../tela2.php");
+include $dir_static.'tela2.php';
 
 /* Cria a funcao JavaScript que testa o nome da nova agenda e o layer  */
 /* nova_agenda, se estiver visualizando as agendas disponieis.         */

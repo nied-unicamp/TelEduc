@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Papel Data Access Object (DAO).
@@ -30,11 +31,11 @@ class PapelDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_papel) {
+    function getObject($conn, $cod_papel) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_papel($cod_papel);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -51,7 +52,7 @@ class PapelDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_papel()) {
                //print "Can not select without Primary-Key!";
@@ -60,7 +61,7 @@ class PapelDao {
 
           $sql = "SELECT * FROM Papel WHERE (cod_papel = ".$valueObject->getCod_papel().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -76,12 +77,12 @@ class PapelDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll($conn) {
 
 
           $sql = "SELECT * FROM Papel ORDER BY cod_papel ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -101,11 +102,11 @@ class PapelDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($conn, $valueObject) {
 
           $sql = "INSERT INTO Papel ( cod_papel, nome_papel) VALUES (".$valueObject->getCod_papel().", ";
           $sql = $sql."'".$valueObject->getNome_papel()."') ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
 
           return true;
@@ -123,11 +124,11 @@ class PapelDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Papel SET nome_papel = '".$valueObject->getNome_papel()."'";
           $sql = $sql." WHERE (cod_papel = ".$valueObject->getCod_papel().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -150,7 +151,7 @@ class PapelDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($conn, $valueObject) {
 
 
           if (!$valueObject->getCod_papel()) {
@@ -159,7 +160,7 @@ class PapelDao {
           }
 
           $sql = "DELETE FROM Papel WHERE (cod_papel = ".$valueObject->getCod_papel().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -180,10 +181,10 @@ class PapelDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Papel";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -197,7 +198,7 @@ class PapelDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Papel";
           $allRows = 0;
@@ -224,7 +225,7 @@ class PapelDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Papel WHERE 1=1 ";
@@ -247,7 +248,7 @@ class PapelDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -271,7 +272,7 @@ class PapelDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -289,7 +290,7 @@ class PapelDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -313,7 +314,7 @@ class PapelDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
@@ -327,6 +328,26 @@ class PapelDao {
           }
 
           return $searchResults;
+    }
+    
+    function retornaPapelUsuarioCurso($cod_curso, $cod_usuario){
+    	
+    	$sql = 'select P.nome_papel 
+    			from Participa Pa, Papel P 
+    			where Pa.Usuario_cod_usuario='.$cod_usuario.'
+    			and Pa.Papel_cod_papel=P.cod_papel and Pa.Curso_cod_curso='.$cod_curso;
+
+    	$conexao = new Conexao();
+    	
+    	$conexao->Conectar();
+    	
+    	$res = $conexao->Enviar($sql);
+    	
+    	$papel = $conexao->RetornaLinha($res);
+    	
+    	$conexao->Desconectar();
+    	
+    	return $papel;	
     }
 }
 

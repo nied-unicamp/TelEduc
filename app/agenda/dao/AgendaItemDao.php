@@ -91,18 +91,23 @@ class Agenda_ItemDao {
     function loadAllSituacao($cod_curso, $situacao) {
     	 
     	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=".$cod_curso;
-    
+    	
     	$conexao = new Conexao();
     
     	$conexao->Conectar();
     
     	$res = $conexao->Enviar($sql);
-    
-    	$listaAgendas = $conexao->RetornaArrayLinhas($res);
+    	
+    	if ($situacao == 'A'){
+    		$listaAgendas = $conexao->RetornaLinha($res);
+    	}
+    	else if (($situacao == 'N') || ($situacao == 'F')){
+    		$listaAgendas = $conexao->RetornaArrayLinhas($res);
+    	}
     
     	$conexao->Desconectar();
     
-    	return $listaAgendas[0];
+    	return $listaAgendas;
     }
 
 

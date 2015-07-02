@@ -43,7 +43,7 @@ class Conexao {
                 echo "SQL ERROR: " . mysqli_error($this->db);
                 echo "SQL : " . $query;
                 echo "</pre>";
-                $this->desconecta();
+                $this->Desconectar();
             }
         }
     }

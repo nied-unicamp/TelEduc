@@ -52,19 +52,21 @@ class UsuarioDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load($conn, $valueObject) {
+    function load($id) {
 
-          if (!$valueObject->getCod_usuario()) {
-               //print "Can not select without Primary-Key!";
-               return false;
-          }
+          $sql = "SELECT * FROM Usuario WHERE (cod_usuario = ".$id.") "; 
 
-          $sql = "SELECT * FROM Usuario WHERE (cod_usuario = ".$valueObject->getCod_usuario().") "; 
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $usuario = $conexao->RetornaLinha($res);
+          
+          $conexao->Desconectar();
 
-          if ($this->singleQuery($conn, $sql, $valueObject))
-               return true;
-          else
-               return false;
+          return $usuario;
     }
 
 

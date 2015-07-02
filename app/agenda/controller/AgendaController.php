@@ -20,13 +20,13 @@ class AgendaController{
 		
 		$data = new Data();
 		
-		$data_criacao = $data->Data2UnixTime('18/06/2015');
-		$data_publicacao = $data->Data2UnixTime('19/06/2015');
-		$inicio_edicao = $data->Data2UnixTime('20/06/2015');
+		$data_criacao = $data->Data2UnixTime('09/07/2015');
+		$data_publicacao = null;
+		$inicio_edicao = $data->Data2UnixTime('09/07/2015');
 		
 		$agenda_item = new Agenda_Item();
 		
-		$agenda_item->setAll(1, 1, 'Teste2', 'Testando insert pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAll(1, 1, 'Agenda do curso', 'Agenda referente ao mes de junho do curso','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
 		
