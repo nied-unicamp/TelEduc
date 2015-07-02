@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../../lib/Conexao.php';
 
  /**
   * Permissao Data Access Object (DAO).
@@ -29,13 +30,13 @@ class PermissaoDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_papel, $cod_ferramenta, $cod_tipo_permissao) {
+    function getObject($conn, $cod_papel, $cod_ferramenta, $cod_tipo_permissao) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_papel($cod_papel);
           $valueObject->setCod_ferramenta($cod_ferramenta);
           $valueObject->setCod_tipo_permissao($cod_tipo_permissao);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -52,7 +53,7 @@ class PermissaoDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_papel()) {
                //print "Can not select without Primary-Key!";
@@ -73,7 +74,7 @@ class PermissaoDao {
           $sql = $sql."Ferramenta_cod_ferramenta = ".$valueObject->getCod_ferramenta()." AND ";
           $sql = $sql."Tipo_permissao_cod_tipo = ".$valueObject->getCod_tipo_permissao().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -89,12 +90,12 @@ class PermissaoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll($conn) {
 
 
           $sql = "SELECT * FROM Permissao ORDER BY Tipo_permissao_cod_tipo ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -114,12 +115,12 @@ class PermissaoDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($conn, $valueObject) {
 
           $sql = "INSERT INTO Permissao ( Papel_cod_papel, Ferramenta_cod_ferramenta, Tipo_permissao_cod_tipo) VALUES (".$valueObject->getCod_papel().", ";
           $sql = $sql."".$valueObject->getCod_ferramenta().", ";
           $sql = $sql."".$valueObject->getCod_tipo_permissao().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
 
           return true;
@@ -137,13 +138,13 @@ class PermissaoDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Permissao SET ";
           $sql = $sql." WHERE (Papel_cod_papel = ".$valueObject->getCod_papel()." AND ";
           $sql = $sql."Ferramenta_cod_ferramenta = ".$valueObject->getCod_ferramenta()." AND ";
           $sql = $sql."Tipo_permissao_cod_tipo = ".$valueObject->getCod_tipo_permissao().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -166,7 +167,7 @@ class PermissaoDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($conn, $valueObject) {
 
 
           if (!$valueObject->getCod_papel()) {
@@ -187,7 +188,7 @@ class PermissaoDao {
           $sql = "DELETE FROM Permissao WHERE (Papel_cod_papel = ".$valueObject->getCod_papel()." AND ";
           $sql = $sql."Ferramenta_cod_ferramenta = ".$valueObject->getCod_ferramenta()." AND ";
           $sql = $sql."Tipo_permissao_cod_tipo = ".$valueObject->getCod_tipo_permissao().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -208,10 +209,10 @@ class PermissaoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Permissao";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -225,7 +226,7 @@ class PermissaoDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Permissao";
           $allRows = 0;
@@ -252,7 +253,7 @@ class PermissaoDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Permissao WHERE 1=1 ";
@@ -280,7 +281,7 @@ class PermissaoDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -294,7 +295,7 @@ class PermissaoDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -312,7 +313,7 @@ class PermissaoDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -337,7 +338,7 @@ class PermissaoDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
@@ -352,6 +353,51 @@ class PermissaoDao {
           }
 
           return $searchResults;
+    }
+    
+    function retornaPermissaoUsuario($cod_usuario, $cod_ferramenta){
+    	
+    	$sql = 'select T.nome 
+    			from Tipo_permissao T, Permissao P 
+    			where P.Papel_cod_papel = (select Papel_cod_papel from Participa where Usuario_cod_usuario='.$cod_usuario.') 
+    			and P.Ferramenta_cod_ferramenta ='.$cod_ferramenta.' 
+    			and P.Tipo_Permissao_cod_tipo = T.cod_tipo';
+
+    	$conexao = new Conexao();
+    	 
+    	$conexao->Conectar();
+    	 
+    	$res = $conexao->Enviar($sql);
+    	 
+    	$listaPermissao = $conexao->RetornaArrayLinhas($res);
+    	 
+    	$conexao->Desconectar();
+    	 
+    	return $listaPermissao;
+    }
+    
+    function verificaPermissao($cod_usuario, $cod_ferramenta, $permissao){
+    	$sql = 'select * from Permissao 
+    			where Tipo_permissao_cod_tipo= (select cod_tipo from Tipo_permissao where nome='."'$permissao'".') 
+    					and Papel_cod_papel = (select Papel_cod_papel from Participa where Usuario_cod_usuario='.$cod_usuario.')
+    					and Ferramenta_cod_ferramenta='.$cod_ferramenta;
+    	
+    	$conexao = new Conexao();
+    	
+    	$conexao->Conectar();
+    	
+    	$res = $conexao->Enviar($sql);
+    	
+    	$listaPermissao = $conexao->RetornaArrayLinhas($res);
+    	
+    	$conexao->Desconectar();
+    	
+    	if ($listaPermissao != null){
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 }
 

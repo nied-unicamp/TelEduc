@@ -2,8 +2,8 @@
 
 require_once '../../../lib/Conexao.php';
 require_once '../../../lib/data.php';
-require_once '../model/Curso.php';
-require_once '../dao/CursoDao.php';
+require_once '../../geral/model/Curso.php';
+require_once '../../geral/dao/CursoDao.php';
 
 class CursoController{
 	
@@ -45,6 +45,12 @@ class CursoController{
 		$dao = new CursoDao();
 		
 		return $dao->delete(1);	
+	}
+	
+	function retornaCurso($cod_curso){
+		$dao = new CursoDao();
+		
+		return $dao->load($cod_curso);
 	}
 	
 }

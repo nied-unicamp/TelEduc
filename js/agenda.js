@@ -793,7 +793,40 @@ function TemCertezaApagar()
 {
 /* 29 - Voce tem certeza de que deseja apagar esta agenda? */
 /* 30 - (nao havera como recupera-la) */
-        return(confirm("Voce tem certeza de que deseja apagar esta agebda?\\n(nao havera como recupera-la"));
+        return(confirm("Voce tem certeza de que deseja apagar esta agenda?"+'\n'+"(nao havera como recupera-la)"));
+}
+
+function VerificaNovoTitulo(textbox, aspas) {
+  texto=textbox.value;
+  if (texto==''){
+    // se nome for vazio, nao pode
+/* 15 - O titulo nao pode ser vazio. */
+    alert('O titulo nao pode ser vazio.');
+    textbox.focus();
+    return false;
+  }
+  // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0
+  else if ((texto.indexOf('\\\\')>=0 || texto.indexOf('\\\"')>=0 || texto.indexOf('')>=0 || texto.indexOf('>')>=0 || texto.indexOf('<')>=0)&&(!aspas)) {
+/* 16 - O titulo nao pode conter \\. */
+     alert('O titulo nao pode conter \\.');
+    textbox.value='';
+    textbox.focus();
+    return false;
+  }
+  return true;
+}
+
+function TemCertezaAtivar()
+{
+/* 57 - Tem certeza que deseja publicar esta agenda? */
+/* 58 - (Uma vez publicada ela substituira a Agenda Atual) */
+  return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
+}
+
+
+function Voltar()
+{
+  window.location='agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."';;
 }
 
 

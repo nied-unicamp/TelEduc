@@ -1,19 +1,22 @@
 <?php
 $dir_img = '../../../img/';
 
-$ctrl_ferramenta = '../../../app/administracao/controller/';
+$ctrl_administracao = '../../../app/administracao/controller/';
+$ctrl_geral = '../../../app/geral/controller/';
 
-require $ctrl_ferramenta.'FerramentaController.php';
+require $ctrl_administracao.'FerramentaController.php';
+require $ctrl_geral.'UsuarioController.php';
+require $ctrl_geral.'CursoController.php';
 
 $SalvarEmArquivo = null;
 $tela_formadormesmo = true;
 $tela_formador = true;
 $tela_colaborador = false;
 $tela_visitante = false;
-$cod_curso = 1;
-$cod_usuario = 2;
 $cod_ferr = 1;
-$cod_ferramenta = 1;
+
+$controlerC = new CursoController();
+$controlerU = new UsuarioController();
   //$sock=Conectar($cod_curso);
 
   // Tempo para um usuario ser considerado offline em segundos
@@ -39,6 +42,7 @@ $cod_ferramenta = 1;
 
   echo("  </head>\n"); */
 
+  $curso = $controlerC->retornaCurso($cod_curso);
   /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo serao ocultados */
   if($SalvarEmArquivo){
 
@@ -46,7 +50,7 @@ $cod_ferramenta = 1;
     echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
     echo("      <tr><td>\n");
    // echo("          <h3>".NomeCurso($sock,$cod_curso)."</h3>\n");
-    echo("          <h3>Nome do curso</h3>\n"); //TODO: método para trazer o nome do curso 
+    echo("          <h3>".$curso['nome_curso']."</h3>\n");
     echo("      </td></tr>\n");
 
   } else {
@@ -69,12 +73,14 @@ $cod_ferramenta = 1;
 
     $tela_ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
     AtualizaVisita($sock, $cod_usuario); */
+    
+    $usuario = $controlerU->retornaUsuario($cod_usuario);
 
     /* if (!empty ($_SESSION['cod_usuario_global_s'])) {
       $email_usuario = RetornaEmailUsuario1($_SESSION['cod_usuario_global_s']);
     } */
     //$tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$email_usuario."</a></li>\n";
-    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">user@example.com</a></li>\n"; //TODO: método para trazer email do usuario
+    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$usuario['email']."</a></li>\n"; //TODO: método para trazer email do usuario
 
     if ($tela_formadormesmo)
     {
@@ -167,7 +173,7 @@ $cod_ferramenta = 1;
     echo("          </div>\n");
 
     //echo("          <h3>".NomeCurso($sock,$cod_curso)."</h3>\n");
-    echo("          <h3>Nome do Curso</h3>\n"); //TODO: método para trazer o nome do curso
+    echo("          <h3>".$curso['nome_curso']."</h3>\n");
     echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicita&ccedil&atilde;o</span></div>\n");
     echo("        </td>\n");
     echo("      </tr>\n");

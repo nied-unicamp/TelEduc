@@ -2,8 +2,8 @@
 
 require_once '../../../lib/Conexao.php';
 require_once '../../../lib/data.php';
-require_once '../model/Usuario.php';
-require_once '../dao/UsuarioDao.php';
+require_once '../../geral/model/Usuario.php';
+require_once '../../geral/dao/UsuarioDao.php';
 
 class UsuarioController{
 	
@@ -28,5 +28,11 @@ class UsuarioController{
 		
 		return $dao->loadAll();
 		
+	}
+	
+	function retornaUsuario($cod_usuario){
+		$dao = new UsuarioDao();
+		
+		return $dao->load($cod_usuario);
 	}
 }

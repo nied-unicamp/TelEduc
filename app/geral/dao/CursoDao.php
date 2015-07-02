@@ -51,19 +51,21 @@ class CursoDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load($conn, $valueObject) {
+    function load($id) {
+    	
+		$sql = "SELECT * FROM Curso WHERE (cod_curso = ".$id.") "; 
 
-          if (!$valueObject->getCod_curso()) {
-               //print "Can not select without Primary-Key!";
-               return false;
-          }
+        $conexao = new Conexao();
+          
+        $conexao->Conectar();
+          
+        $res = $conexao->Enviar($sql);
+          
+        $curso = $conexao->RetornaLinha($res);
+          
+        $conexao->Desconectar();
 
-          $sql = "SELECT * FROM Curso WHERE (cod_curso = ".$valueObject->getCod_curso().") "; 
-
-          if ($this->singleQuery($conn, $sql, $valueObject))
-               return true;
-          else
-               return false;
+        return $curso;
     }
 
 
