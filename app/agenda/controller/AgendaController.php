@@ -1,7 +1,7 @@
 <?php
 
 require_once '../../../lib/Conexao.php';
-require_once '../../../lib/data.php';
+require_once '../../../lib/Data.php';
 require_once '../model/AgendaItem.php';
 require_once '../dao/AgendaItemDao.php';
 
@@ -72,12 +72,16 @@ class AgendaController{
 		$dao = new Agenda_ItemDao();
 		
 		$dao->save($agenda_item);
-		
 	}
+	
 	function ListaAgenda($cod_item) {
 		$dao= new Agenda_ItemDao();
 		return $dao-> load($cod_item);
+	}
+	
+	function ativaAgenda($cod_item,$cod_usuario, $cod_curso){
 		
-
-}
+		$dao = new Agenda_ItemDao();
+		return $dao->ativarAgenda($cod_item, $cod_usuario, $cod_curso);
+	}
 }

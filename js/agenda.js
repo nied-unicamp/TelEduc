@@ -568,14 +568,14 @@ function TemCertezaAtivar()
 {
 /* 57 - Tem certeza que deseja ativar esta agenda? */
 /* 58 - (Uma vez ativada, nao havera como desativa-la) */
-  return(confirm("Tem certeza que deseja ativar esta agenda?\\nUma vez ativada, nao havera como desativa-la"));
+  return(confirm("Tem certeza que deseja ativar esta agenda?"+ "\n" + "Uma vez ativada, nao havera como desativa-la"));
 }
 
 function Ativar()
 {
 	 if(TemCertezaAtivar())
 {
-    window.location='acoes_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_ferramenta=1&cod_item=".$cod_item."&acao=ativaragenda';
+    window.location='../../app/agenda/controller/acoes.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+$cod_item+'&acao=ativaragenda';
 }
   return false;
 }
@@ -816,12 +816,12 @@ function VerificaNovoTitulo(textbox, aspas) {
   return true;
 }
 
-function TemCertezaAtivar()
+/*function TemCertezaAtivar()
 {
-/* 57 - Tem certeza que deseja publicar esta agenda? */
-/* 58 - (Uma vez publicada ela substituira a Agenda Atual) */
+ 57 - Tem certeza que deseja publicar esta agenda? 
+ 58 - (Uma vez publicada ela substituira a Agenda Atual) 
   return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
-}
+}*/
 
 
 function Voltar()

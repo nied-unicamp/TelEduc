@@ -138,7 +138,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 	{
 		$dataC = new Data();
 		$data = $dataC->UnixTime2Data($linha_item['data_criacao']);
-		$situacao="<a href=\"acoes_linha.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>Publicar";
+		$situacao="<a href=\"../controller/acoes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>Publicar";
 		/* if ($data_acesso<$linha_item['data'])
 		{
 			$marcaib="<b>";
