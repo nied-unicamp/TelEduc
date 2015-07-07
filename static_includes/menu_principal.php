@@ -1,9 +1,22 @@
 <?php
-$dir_img = '../img';
+$dir_img = '../../../img/';
+
+$ctrl_administracao = '../../../app/administracao/controller/';
+$ctrl_geral = '../../../app/geral/controller/';
+
+require $ctrl_administracao.'FerramentaController.php';
+require $ctrl_geral.'UsuarioController.php';
+require $ctrl_geral.'CursoController.php';
 
 $SalvarEmArquivo = null;
 $tela_formadormesmo = true;
 $tela_formador = true;
+$tela_colaborador = false;
+$tela_visitante = false;
+$cod_ferr = 1;
+
+$controlerC = new CursoController();
+$controlerU = new UsuarioController();
   //$sock=Conectar($cod_curso);
 
   // Tempo para um usuario ser considerado offline em segundos
@@ -29,6 +42,7 @@ $tela_formador = true;
 
   echo("  </head>\n"); */
 
+  $curso = $controlerC->retornaCurso($cod_curso);
   /* Quando estamos salvando em arquivo, o logo, menu, js e links do topo serao ocultados */
   if($SalvarEmArquivo){
 
@@ -36,7 +50,7 @@ $tela_formador = true;
     echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
     echo("      <tr><td>\n");
    // echo("          <h3>".NomeCurso($sock,$cod_curso)."</h3>\n");
-    echo("          <h3>Nome do curso</h3>\n"); //TODO: método para trazer o nome do curso 
+    echo("          <h3>".$curso['nome_curso']."</h3>\n");
     echo("      </td></tr>\n");
 
   } else {
@@ -45,7 +59,7 @@ $tela_formador = true;
 
     echo("    <a name=\"topo\"></a>\n");
     //echo("    <h1><a href=\"http://".$tela_host.$tela_raiz_www."\"><img src=\"../imgs/logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o &agrave; Dist&acirc;ncia\" /></a></h1>\n");
-    echo("    <h1><a href=\"http://www.teleduc.org.br><img src=\"".$dir_img."logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o &agrave; Dist&acirc;ncia\" /></a></h1>\n");
+    echo("    <h1><a href='http://www.teleduc.org.br'><img src=\"".$dir_img."logo.gif\" border=\"0\" alt=\"TelEduc . Educa&ccedil;&atilde;o &agrave; Dist&acirc;ncia\" /></a></h1>\n");
 
     echo("    <table cellpadding=\"0\" cellspacing=\"0\" id=\"container\">\n");
     echo("      <tr>\n");
@@ -59,12 +73,14 @@ $tela_formador = true;
 
     $tela_ultimo_acesso = PenultimoAcesso($sock,$cod_usuario,"");
     AtualizaVisita($sock, $cod_usuario); */
+    
+    $usuario = $controlerU->retornaUsuario($cod_usuario);
 
     /* if (!empty ($_SESSION['cod_usuario_global_s'])) {
       $email_usuario = RetornaEmailUsuario1($_SESSION['cod_usuario_global_s']);
     } */
     //$tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$email_usuario."</a></li>\n";
-    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">user@example.com</a></li>\n"; //TODO: método para trazer email do usuario
+    $tela_email = "<li><a href=\"#\" onclick=\"javascript:MostrarPerfil();\" style=\"text-decoration:none;\" class=\"email\">".$usuario['email']."</a></li>\n"; //TODO: método para trazer email do usuario
 
     if ($tela_formadormesmo)
     {
@@ -74,7 +90,7 @@ $tela_formador = true;
       {
 
         //$tela_hrefAluno="<li class=\"visoes\"><a href=\"../index2.php?cod_curso=".$cod_curso."&amp;ativar_visao_aluno=sim\" >";
-      	$tela_hrefAluno="<li class=\"visoes\">";
+      	$tela_hrefAluno="<li class=\"visoes\"><a href=\"#\">";
         
       	$tela_hrefFormador="<li class=\"visoes2\">";
 
@@ -88,7 +104,7 @@ $tela_formador = true;
         $tela_hrefAluno="<li class=\"visoes2\">";
 
         //$tela_hrefFormador="<li class=\"visoes\"><a href=\"../index2.php?cod_curso=".$cod_curso."&amp;desativar_visao_aluno=sim\" >";
-        $tela_hrefFormador="<li class=\"visoes\">";
+        $tela_hrefFormador="<li class=\"visoes\"><a href=\"#\">";
 
         $tela_fechaHrefAluno = "";
 
@@ -115,8 +131,8 @@ $tela_formador = true;
     echo("              <li>&nbsp;&nbsp;|&nbsp;&nbsp</li>");
     //RetornaListaDeCursosUsuario($sock);
 
-    /* 47 - Configurar */
-    $tela_nome_ferramenta="Configurar";
+    /* 47 - Notificar */
+    $tela_nome_ferramenta="Notificar";
 
     $tela_cod_ferr=-7;
     $tela_diretorio="configurar";
@@ -157,7 +173,7 @@ $tela_formador = true;
     echo("          </div>\n");
 
     //echo("          <h3>".NomeCurso($sock,$cod_curso)."</h3>\n");
-    echo("          <h3>Nome do Curso</h3>\n"); //TODO: método para trazer o nome do cursi
+    echo("          <h3>".$curso['nome_curso']."</h3>\n");
     echo("          <div id=\"feedback\" class=\"feedback_hidden\"><span id=\"span_feedback\">ocorreu um erro na sua solicita&ccedil&atilde;o</span></div>\n");
     echo("        </td>\n");
     echo("      </tr>\n");
@@ -177,21 +193,21 @@ $tela_formador = true;
     // Ferramenta 23 - Execicios
 
     // Lista das ferramentas a esconder de visitantes
-    $tela_array_visitante   = array (11, 12, 14, 15, 18, 19, 22, 23);
+    $tela_array_visitante   = array (1, 11, 12, 14, 15, 18, 19, 22, 23);
     // Lista das ferramentas a esconder de colaboradores
     $tela_array_colaborador = array ();
-   /*  
-    $controler = new FerramentaController();
+   
+    $controlerF = new FerramentaController();
     
-    $tela_ordem_ferramentas = $controler->listaFerramentas();
-
-    foreach($tela_ordem_ferramentas as $cod => $linha)
+    $lista_ferramentas = $controlerF->listaFerramentas();
+  
+    foreach($lista_ferramentas as $cod => $linha)
     {
       $tela_cod_ferr=$linha['cod_ferramenta'];
 
       if($tela_cod_ferr != -1) {
-        $tela_nome_ferramenta = RetornaFraseDaLista($lista_frases_menu,$tela_lista_ferramentas[$tela_cod_ferr]['cod_texto_nome']);
-        $tela_diretorio = $tela_lista_ferramentas[$tela_cod_ferr]['diretorio'];
+        $tela_nome_ferramenta = $linha['nome'];
+        $tela_diretorio = $tela_cod_ferr['diretorio'];
         if (isset($tela_curso_ferramentas[$tela_cod_ferr])) {
           $tela_status = $tela_curso_ferramentas[$tela_cod_ferr]['status'];
         }
@@ -220,8 +236,8 @@ $tela_formador = true;
 
           if ($tela_cod_ferr!= -1 and $tela_status!="D" and ($tela_status!="F" or $tela_formador))
           {
+          	$controlerF->exibeLink($cod_curso, $tela_cod_ferr, $tela_nome_ferramenta, $tela_diretorio, $tela_data, $tela_ultimo_acesso, $tela_style, $cod_ferramenta, $cod_usuario);
             //ExibeLink($cod_curso,$tela_cod_ferr,$tela_nome_ferramenta,$tela_diretorio,$tela_data,$tela_ultimo_acesso,$tela_style,$cod_ferramenta,$cod_usuario);
-          	echo("                <a class=\"divisa\" >");
           }
         }
       }
@@ -243,7 +259,7 @@ $tela_formador = true;
       echo("               ".NomeUsuario($sock, $linha["cod_usuario"], $cod_curso)."\n");
       echo("            </li>\n");
     }
-    echo("            </ul>\n"); */ 
-    echo("        </td>\n");
+    echo("            </ul>\n"); 
+    echo("        </td>\n"); */
   }
   ?>

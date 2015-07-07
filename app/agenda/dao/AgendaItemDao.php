@@ -125,7 +125,7 @@ class Agenda_ItemDao {
           return $rs;
           
     }  
-
+    //Função que cria uma nova agenda no banco e trata campos nulos
     function create2($conn, $valueObject) {
           $mysqli= $conn->db;
           if(!($stmt = $mysqli->prepare("INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario,

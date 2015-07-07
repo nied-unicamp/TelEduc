@@ -2,9 +2,26 @@
 $dir_css = '../../../css/';
 $dir_js = '../../../js';
 
+$ctrl_geral = '../../../app/geral/controller/';
+
+require $ctrl_geral.'PapelController.php';
+require $ctrl_geral.'PermissaoController.php';
+
 $estilos_css = null; //TODO
 $codigos_js = null; //TODO
 $SalvarEmArquivo = null; //TODO
+
+$cod_curso = 1;
+$cod_usuario = 2;
+$cod_ferramenta = 1;
+
+$controlerPermissao = new PermissaoController();
+
+$controlerPapel = new PapelController();
+
+$lista_permissao = $controlerPermissao->retornaPermissaoUsuario($cod_usuario, $cod_ferramenta);
+
+$papel_usuario = $controlerPapel->retornaPapelUsuarioCurso($cod_curso, $cod_usuario);
 
   /* $bibliotecas="../bibliotecas/";
   include("menu.inc");

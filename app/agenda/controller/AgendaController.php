@@ -1,10 +1,9 @@
 <?php
 
 require_once '../../../lib/Conexao.php';
-require_once '../../../lib/data.php';
+require_once '../../../lib/Data.php';
 require_once '../model/AgendaItem.php';
 require_once '../dao/AgendaItemDao.php';
-
 
 
 
@@ -33,6 +32,9 @@ class AgendaController{
 		
 		$conn = new Conexao();
 
+		$data_criacao = $data->Data2UnixTime('09/07/2015');
+		$data_publicacao = null;
+		$inicio_edicao = $data->Data2UnixTime('09/07/2015');
 		
 		$agenda_item = new Agenda_Item();
 		 
@@ -42,11 +44,12 @@ class AgendaController{
 
 		echo "PROX:".$id."\n";
 
-		$agenda_item->setBegin($id, $codcurso, $codusuario, $titulo);
+		$agenda_item->setAll($ codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+
 		
 		// echo ($agenda_item->toString());
 
-		$rs = $dao->create($conn, $agenda_item);
+		$rs = $dao->create2($conn, $agenda_item);
 		
 		if($conn){
 			$conn->Desconectar();
@@ -62,11 +65,18 @@ class AgendaController{
 		 
 	}
 	
+	function listaAgendasSituacao($cod_curso, $situacao){
+	
+		$dao = new Agenda_ItemDao();
+	
+		return $dao->loadAllSituacao($cod_curso, $situacao);
+	}
+	
 	function apagaAgenda(){
 		
 		$dao = new Agenda_ItemDao();
 		
-		return $dao->delete(7);	
+		return $dao->delete(8);	
 	}
 	
 	function atualizaAgenda(){
@@ -79,12 +89,23 @@ class AgendaController{
 		
 		$agenda_item = new Agenda_Item();
 		
-		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando alteração pelo código','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+
+		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando altera��o pelo c�digo','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
 		
 		$dao->save($agenda_item);
+	}
+	
+	function ListaAgenda($cod_item) {
+		$dao= new Agenda_ItemDao();
+		return $dao-> load($cod_item);
+	}
+	
+	function ativaAgenda($cod_item,$cod_usuario, $cod_curso){
 		
+		$dao = new Agenda_ItemDao();
+		return $dao->ativarAgenda($cod_item, $cod_usuario, $cod_curso);
 	}
 }
 ?>

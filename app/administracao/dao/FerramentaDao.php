@@ -77,9 +77,8 @@ class FerramentaDao {
      * @param conn         This method requires working database connection.
      */
     function loadAll() {
-
-
-          $sql = "SELECT * FROM Ferramenta ORDER BY cod_ferramenta ASC ";
+    	
+          $sql = "SELECT * FROM Ferramenta";
 
           $conexao = new Conexao();
           
@@ -90,8 +89,9 @@ class FerramentaDao {
           $listaFerramentas = $conexao->RetornaArrayLinhas($res);
           
           $conexao->Desconectar();
-
+          
           return $listaFerramentas;
+          
     }
 
 

@@ -23,9 +23,9 @@ class Conexao {
         $this->db = mysqli_connect($this->host, $this->user, $this->pass);
  
         if (!$this->db) {
-            echo "Erro ao conectar no banco" . mysqli_error($this->db);
+            //echo "Erro ao conectar no banco" . mysqli_error($this->db);
         } else {
-            echo "Conectado no banco";
+            //echo "Conectado no banco";
             $this->status = 1;
         }
         mysqli_select_db($this->db,$this->dbname);
@@ -42,7 +42,8 @@ class Conexao {
                 echo "SQL ERROR: " . mysqli_error($this->db);
                 echo "SQL : " . $query;
                 echo "</pre>";
-                $this->Desconecta();
+
+                $this->Desconectar();
             }
         }
     }

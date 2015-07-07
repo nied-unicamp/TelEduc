@@ -20,12 +20,17 @@ var lista_frases;
 var lista_frases_geral;
 var cod_avaliacao="";
 var valor_radios = new Array();
-xajax_RetornaFraseDinamic('lista_frases');
-xajax_RetornaFraseGeralDinamic('lista_frases_geral');
+var id = cod_item;
+var id_aux=0;
+//var titulo=0;
+//var cod_item=0;
+//xajax_RetornaFraseDinamic('lista_frases');
+//xajax_RetornaFraseGeralDinamic('lista_frases_geral');
 
 if (isNav)
 {
   document.captureEvents(Event.MOUSEMOVE);
+ // document.addEventListener()
 }
 document.onmousemove = TrataMouse;
 
@@ -102,32 +107,8 @@ function AtualizaComp(js_tipo_comp)
     tipo_comp[2].innerHTML=imagem;
   }
 
-  xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
+  //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
 }
-
-function MoverItem(link,cod_destino)
-{ 
-  xajax_MoverItensDinamic(cod_curso, cod_usuario, cod_topico_ant, cod_destino, null, cod_item);
-  xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 1);
-
-  if (js_tipo_item=='item')
-  {
-    link.search='?+&cod_curso='+cod_curso+'&cod_item='+cod_item+'&cod_topico_raiz='+cod_destino+'&cod_topico_ant='+cod_topico_ant+'&acao=moveritem&cod_usuario_portfolio='+cod_usuario_portfolio+'&cod_grupo_portfolio='+cod_grupo_portfolio;
-    return true;
-  }
-  else if (js_tipo_item=='topico')
-  {
-    link.search='?+&cod_curso='+cod_curso+'&cod_topico='+cod_topico+'&cod_topico_raiz='+cod_destino+'&cod_topico_ant='+cod_topico_ant+'&acao=movertopico&cod_usuario_portfolio='+cod_usuario_portfolio+'&cod_grupo_portfolio='+cod_grupo_portfolio;
-    return true;
-  }
-  else
-  {
-
-    return false;
-
-  }
-}
-
 
 function WindowOpenVerURL(end)
 {
@@ -138,7 +119,7 @@ function EdicaoTexto(codigo, id, valor){
 
   if (valor=='ok'){
       eval('conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
-      xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
+      //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
     }
   else{
       //Cancela Edi�o
@@ -152,12 +133,19 @@ function EdicaoTexto(codigo, id, valor){
 
 var controle=0;
 
+
+/*function AlteraTexto(id){;  
+var conteudo = document.getElementById('text_'+id).innerHTML;
+writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
+     }
+*/
+
 function EdicaoTitulo(codigo, id, valor){
 	//se o título não é vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
     novoconteudo = document.getElementById(id+'_text').value;
     //Edita o título do item dado, dinâmicamente
-    xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
+    //xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
     
     //else - se o título for vazio.
   }else{
@@ -176,12 +164,12 @@ function EdicaoTitulo(codigo, id, valor){
     //Cancela Edição
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
-  }
-  editaTitulo=0;
-  cancelarElemento=null;
+  	}
+  	editaTitulo=0;
+  	cancelarElemento=null;
 }
 
-function AlteraTexto(id){
+/*function AlteraTitulo(id){
   var iframe = document.getElementById('iframe_ArqEntrada');	
   var span = document.getElementById('text_'+id);	
 
@@ -190,7 +178,7 @@ function AlteraTexto(id){
   if ((editaTexto==0)&&(checks.length==0)){
     CancelaTodos();
 
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
+    //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
     if(iframe == null)	
     	conteudo = span.innerHTML;
     else
@@ -215,7 +203,7 @@ function AlteraTexto(id){
     	alert(lista_frases.msg53);
     }	
   }
-}
+}*/
 
 function LimpaTexto(id){
 
@@ -227,7 +215,7 @@ function LimpaTexto(id){
       CancelaTodos();
       document.getElementById('text_'+id).innerHTML='';
 
-      xajax_EditarTexto(cod_curso, id, '', cod_usuario, lista_frases.msg93);
+      //xajax_EditarTexto(cod_curso, id, '', cod_usuario, lista_frases.msg93);
     }
   }
   else{
@@ -271,9 +259,9 @@ function EdicaoArq(i){
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
     document.getElementById('divArquivoEdit').className='divHidden';
-    //Cancela Edição
+    //Cancela Edicao
     if (!cancelarTodos)
-      xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
+      //xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
     input=0;
     cancelarElemento=null;
   }
@@ -286,7 +274,7 @@ function AcrescentarBarraFile(apaga){
     	
     conteudo = document.getElementById('text_'+cod_item).innerHTML;
     if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
-	// 53 - A agenda n�o pode ter texto e arquivos simultaneamente! 	
+	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
 	alert(lista_frases.msg53);
 	return false;
     }
@@ -299,52 +287,11 @@ function AcrescentarBarraFile(apaga){
     cancelarElemento=document.getElementById('cancFile');
 }
 
-  function AdicionaInputEndereco(){
-    CancelaTodos();
-    document.getElementById('novoEnd').style.visibility='visible';
-    document.getElementById('novoNomeEnd').style.visibility='visible';
-    document.getElementById('divEndereco').className='divHidden';
-    document.getElementById('divEnderecoEdit').className='';
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
-    cancelarElemento=document.getElementById('cancelaEnd');
-  }
-
-function EditaEndereco(opt){
-    if (opt){
-      if (document.getElementById('novoEnd').value==''){
-        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
-        alert(lista_frases.msg64);
-        return false;
-      }
-      xajax_InsereEnderecoDinamic(document.getElementById('novoNomeEnd').value, document.getElementById('novoEnd').value, cod_item, cod_curso, cod_usuario);
-    }else{
-      if (!cancelarTodos)
-        xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
-    }
-
-    document.getElementById('novoEnd').style.visibility='hidden';
-    document.getElementById('novoNomeEnd').style.visibility='hidden';
-    document.getElementById('novoEnd').value='';
-    document.getElementById('novoNomeEnd').value='';
-    document.getElementById('divEnderecoEdit').className='divHidden';
-    document.getElementById('divEndereco').className='';
-
-    cancelarElemento=null;
-  }
-
 function CancelaTodos(){
     //EscondeLayers();
     cancelarTodos=1;
      if(cancelarElemento) { cancelarElemento.onclick(); }
     cancelarTodos=0;
-  }
-
-function ApagarEndereco(cod_curso, cod_endereco){
-  CancelaTodos();
-  if (confirm(lista_frases.msg32)){
-    xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
-    xajax_ExcluirEndereco(cod_curso, cod_endereco, cod_item, cod_usuario);
-  }
 }
 
 function Descompactar(){
@@ -354,7 +301,7 @@ function Descompactar(){
       getNumber=checks[i].id.split("_");
       arqZip=document.getElementById('nomeArq_'+getNumber[1]).getAttribute('arqZip');
       if (confirm(lista_frases.msg12+'\n'+lista_frases.msg13+'\n'+lista_frases.msg14)){
-        xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
+        //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
         window.location='acoes_linha.php?cod_curso='+cod_curso+'&cod_item='+cod_item+'&acao=descompactar&origem='+origem+'&arq='+arqZip;
       }
     } 
@@ -475,7 +422,7 @@ function Apagar(){
       if(checks[i].checked){
         getNumber=checks[i].id.split("_");
         nomeArq = document.getElementById("nomeArq_"+getNumber[1]).getAttribute('nomeArq');
-        xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
+        //xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
 	js_conta_arq--;
       }
     }
@@ -509,7 +456,7 @@ function SelecionarEntrada(){
   }
 
   CheckTodos();
-  xajax_SelecionarEntradaDinamic(nomesArqs, cod_curso, cod_item, cod_usuario, origem);	
+  //xajax_SelecionarEntradaDinamic(nomesArqs, cod_curso, cod_item, cod_usuario, origem);	
 }
 
 function RetirarEntrada(){
@@ -529,7 +476,7 @@ function RetirarEntrada(){
   }
 
   CheckTodos();
-  xajax_RetirarEntradaDinamic(nomeArq, cod_curso, cod_item, cod_usuario, origem);
+  //xajax_RetirarEntradaDinamic(nomeArq, cod_curso, cod_item, cod_usuario, origem);
 }
 
 function CheckTodos(){
@@ -546,7 +493,7 @@ function CheckTodos(){
   VerificaChkBox(0);
 }
 
-function Mover(caminhoDestino){
+/*function Mover(caminhoDestino){
 
   checks = document.getElementsByName('chkArq');
   for (i=0; i<checks.length; i++){
@@ -560,7 +507,7 @@ function Mover(caminhoDestino){
     }
   }
 
-}
+}*/
 
 function ApagarItem(){
   CancelaTodos();
@@ -586,48 +533,6 @@ function LimpaBarraArq(){
 
   document.getElementById('checkMenu').checked=false;
   CheckTodos();
-}
-
-function AssociarAvaliacao(){
-  CancelaTodos();
-  radios=document.getElementsByName('cod_avaliacao');
-  for (i=0; i<radios.length; i++){
-    valor_radios[i]=radios[i].checked;
-  }
-  document.getElementById('tableAvaliacao').style.visibility='visible';
-  document.getElementById('divAvaliacao').className='divHidden';
-  document.getElementById('divAvaliacaoEdit').className='';
-
-  xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, cod_usuario_portfolio, cod_grupo_portfolio, cod_topico_ant);
-
-  cancelarElemento=document.getElementById('cancAval');
-
-}
-
-function EditaAval(opt){
-  document.getElementById('tableAvaliacao').style.visibility='hidden';
-  document.getElementById('divAvaliacao').className='';
-  document.getElementById('divAvaliacaoEdit').className='divHidden';
-  if (opt){
-    xajax_AssociaAvaliacaoDinamic(cod_curso, cod_usuario, cod_item, cod_avaliacao, lista_frases_geral.msg_ger35, lista_frases.msg149);
-  }else{
-    radios = document.getElementsByName('cod_avaliacao');
-    for (i=0; i<radios.length; i++){
-      radios[i].checked=valor_radios[i].checked;
-    }
-    if(!cancelarTodos)
-      xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
-  }
-
-  cancelarElemento=null;
-}
-
-function DesmarcaRadios(){
-  radios = document.getElementsByName('cod_avaliacao');
-  for (i=0; i<radios.length; i++){
-    radios[i].checked=false;
-  }
-  cod_avaliacao='';
 }
 
 function NovaAgenda()
@@ -658,3 +563,270 @@ function EscondeLayer(cod_layer)
 {
   hideLayer(cod_layer);
 }
+
+function TemCertezaAtivar()
+{
+/* 57 - Tem certeza que deseja ativar esta agenda? */
+/* 58 - (Uma vez ativada, nao havera como desativa-la) */
+  return(confirm("Tem certeza que deseja ativar esta agenda?"+ "\n" + "Uma vez ativada, nao havera como desativa-la"));
+}
+
+function Ativar()
+{
+	 if(TemCertezaAtivar())
+{
+    window.location='../../app/agenda/controller/acoes.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+$cod_item+'&acao=ativaragenda';
+}
+  return false;
+}
+
+/*function WindowOpenVer(id)
+{
+   window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
+}*/
+
+function EditaTituloEnter(campo, evento, id)    {
+	var tecla;
+CheckTAB=true;
+if(navigator.userAgent.indexOf('MSIE')== -1)
+ {
+ tecla = evento.which;
+ }
+     else
+        {
+ tecla = evento.keyCode;
+   }
+if ( tecla == 13 )
+ {
+ EdicaoTitulo(id, 'tit_'+id, 'ok');
+}
+return true;
+}
+
+
+
+//function edicao_titulo(id){\n
+$(document).ready(function(){
+$('#renomear_'+id).click(function(){
+if (editaTitulo==0){
+CancelaTodos();
+
+//var id_aux = id;
+//var id = ".cod_item.";
+//var id = ".cod_item.";
+//var cod_curso = ".cod_curso.";
+
+
+
+texto = document.getElementById('tit_'+id).innerHTML;
+document.getElementById('tr_'+id).className='';
+document.getElementById('tit_'+id).className='';
+
+createInput = document.createElement('input');
+document.getElementById('tit_'+id).innerHTML='';
+
+
+createInput.setAttribute('type', 'text');
+createInput.setAttribute('style', 'border: 2px solid #9bc');
+createInput.setAttribute('id', 'tit_'+id+'_text');
+if (createInput.addEventListener){ //not IE
+createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
+} else if (createInput.attachEvent){ //IE
+createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
+}
+
+document.getElementById('tit_'+id).appendChild(createInput);
+
+/*$.post(\"".$model_geral."decodifica_string.php\",{texto:texto, action: 'decodificaString'},
+function(data){
+	var code = $.parseJSON(data);
+	$('#tit_".$id."_text').val(code);
+});
+*/
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+createSpan = document.createElement('span');
+createSpan.className='link';
+createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
+createSpan.setAttribute('id', 'OkEdita');
+//createSpan.innerHTML='"._("OK_-1")."';
+createSpan.innerHTML='OK';
+document.getElementById('tit_'+id).appendChild(createSpan);
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+createSpan = document.createElement('span');
+createSpan.className='link';
+createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
+createSpan.setAttribute('id', 'CancelaEdita');
+createSpan.innerHTML='Cancelar';
+document.getElementById('tit_'+id).appendChild(createSpan);
+
+//cria o elemento 'espaco' e adiciona na pagina\n
+espaco = document.createElement('span');
+espaco.innerHTML='&nbsp;&nbsp;';
+document.getElementById('tit_'+id).appendChild(espaco);
+
+startList();
+cancelarElemento=document.getElementById('CancelaEdita');
+document.getElementById('tit_'+id+'_text').select();
+editaTitulo++;
+}
+
+});
+
+function EdicaoTitulo(codigo, id, valor){
+//se o t�tulo n�o � vazio\n
+if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+titulo = document.getElementById(id+'_text').value;
+//Edita o t�tulo do item dado, din�micamente\n
+
+$.post('../../../app/agenda/dao/DaoAlteraTitulo.php',{titulo: titulo,cod_item: cod_item, cod_curso:cod_curso},
+function(data){
+	$('#tr_'+id).toggleClass('novoitem');
+			$('#tit_'+id).html(titulo);
+/* 103 - Agenda renomeada com sucesso.*/
+				//mostraFeedback('Palavra renomeada com sucesso', 'true');
+	});
+
+}else{
+
+if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
+	alert ('O titulo nao pode ficar vazio');
+	//alert('"._("TITLE_CANNOT_BE_EMPTY_-1")."');
+	document.getElementById(id).innerHTML=conteudo;
+if(navigator.appName.match('Opera')){
+	document.getElementById('renomear_'+codigo).onclick = AlteraTitulo(codigo);
+}else{
+	document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };
+}
+
+}
+	editaTitulo=0;
+	cancelarElemento=null;
+}
+
+
+});
+
+
+function MostraLayer(cod_layer, ajuste)
+{
+  EscondeLayers();
+  moveLayerTo(cod_layer,Xpos-ajuste,Ypos+AjustePosMenuIE());
+  showLayer(cod_layer);
+}
+function EscondeLayer(cod_layer)
+{
+  hideLayer(cod_layer);
+}
+
+function EscondeLayers()
+{
+  hideLayer(lay_nova_agenda);
+}
+
+function NovaAgenda()
+{
+	MostraLayer(lay_nova_agenda, 0);
+	document.form_nova_agenda.novo_titulo.value = '';
+	document.getElementById('nome').focus();
+}
+
+function VerificaCheck(){
+  var i;
+  var j=0;
+  var cod_itens=document.getElementsByName('chkItem');
+  var Cabecalho = document.getElementById('checkMenu');
+  array_itens = new Array();
+  for (i=0; i<cod_itens.length; i++){
+    if (cod_itens[i].checked){
+      var item = cod_itens[i].id.split('_');
+      array_itens[j]=item[1];
+      j++;
+    }
+  }
+  if ((j)==(cod_itens.length)) Cabecalho.checked=true;
+  else Cabecalho.checked=false;
+  if((j)>0){
+    document.getElementById('mExcluir_Selec').className='menuUp02';
+    document.getElementById('mExcluir_Selec').onclick=function(){ ExcluirSelecionados(); };
+  }else{
+    document.getElementById('mExcluir_Selec').className='menuUp';
+    document.getElementById('mExcluir_Selec').onclick=function(){  };
+  }
+}
+
+function CheckTodos(){
+  var e;
+  var i;
+  var CabMarcado = document.getElementById('checkMenu').checked;
+  var cod_itens=document.getElementsByName('chkItem');
+  if (cod_itens.length == 0){
+    return;
+  }
+  for(i = 0; i < cod_itens.length; i++){
+    e = cod_itens[i];
+    e.checked = CabMarcado;
+  }
+  VerificaCheck();
+}
+
+function ExcluirSelecionados(){
+  if (TemCertezaApagar()){
+    document.getElementById('cod_itens_form').value=array_itens;
+    document.form_dados.action='acoes_linha.php';
+    document.form_dados.method='POST';
+    document.getElementById('acao_form').value='apagarSelecionados';
+    document.form_dados.submit();
+  }
+}
+
+function TemCertezaApagar()
+{
+/* 29 - Voce tem certeza de que deseja apagar esta agenda? */
+/* 30 - (nao havera como recupera-la) */
+        return(confirm("Voce tem certeza de que deseja apagar esta agenda?"+'\n'+"(nao havera como recupera-la)"));
+}
+
+function VerificaNovoTitulo(textbox, aspas) {
+  texto=textbox.value;
+  if (texto==''){
+    // se nome for vazio, nao pode
+/* 15 - O titulo nao pode ser vazio. */
+    alert('O titulo nao pode ser vazio.');
+    textbox.focus();
+    return false;
+  }
+  // se nome tiver aspas, <, >, nao pode - aspas pode ser 1,0
+  else if ((texto.indexOf('\\\\')>=0 || texto.indexOf('\\\"')>=0 || texto.indexOf('')>=0 || texto.indexOf('>')>=0 || texto.indexOf('<')>=0)&&(!aspas)) {
+/* 16 - O titulo nao pode conter \\. */
+     alert('O titulo nao pode conter \\.');
+    textbox.value='';
+    textbox.focus();
+    return false;
+  }
+  return true;
+}
+
+/*function TemCertezaAtivar()
+{
+ 57 - Tem certeza que deseja publicar esta agenda? 
+ 58 - (Uma vez publicada ela substituira a Agenda Atual) 
+  return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
+}*/
+
+
+function Voltar()
+{
+  window.location='agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."';;
+}
+
+
