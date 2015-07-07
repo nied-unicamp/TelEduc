@@ -58,7 +58,8 @@ class Agenda_ItemDao {
           if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
-               return false;
+               return false;    
+
     }
 
 
@@ -103,7 +104,7 @@ class Agenda_ItemDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create($valueObject) {
+    function create($conn, $valueObject) {
 
           $sql = "INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario, ";
           $sql = $sql."titulo, texto, situacao, ";
@@ -118,17 +119,43 @@ class Agenda_ItemDao {
           $sql = $sql."'".$valueObject->getStatus()."', ";
           $sql = $sql."".$valueObject->getInicio_edicao().") ";
           
-          $conexao = new Conexao();
-          $conexao->Conectar();
-          $rs = $conexao->executeUpdate($sql);
           
-          if ($rs){
-          	echo 'inseriu';
+          $rs = $conn->executeUpdate($sql);
+          
+          return $rs;
+          
+    }  
+
+    function create2($conn, $valueObject) {
+          $mysqli= $conn->db;
+          if(!($stmt = $mysqli->prepare("INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario,
+            titulo, texto, situacao,data_criacao, data_publicacao, status,inicio_edicao)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)"))){
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;  
           }
-          else{
-          	echo 'nao inseriu';
+          $Curso_cod_cursoIn= $valueObject->getCurso_cod_curso();
+          $Usuario_cod_usuarioIn = $valueObject->getUsuario_cod_usuario();
+          $tituloIn= $valueObject->getTitulo();
+          $textoIn=$valueObject->getTexto();
+          $situacaoIn=$valueObject->getSituacao();
+          $data_criacaoIn=$valueObject->getData_criacao();
+          $data_publicacaoIn=$valueObject->getData_publicacao();
+          $statusIn=$valueObject->getStatus();
+          $inicio_edicaoIn= $valueObject->getInicio_edicao();
+          
+          if(!($stmt->bind_param('iisssiisi', $Curso_cod_cursoIn, $Usuario_cod_usuarioIn, $tituloIn, $textoIn,
+            $situacaoIn, $data_criacaoIn, $data_publicacaoIn, $statusIn,$inicio_edicaoIn))){
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+
           }
-          $conexao->Desconectar();
+
+          if(!( $rs = $stmt->execute())){
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+          }
+         
+          
+          return $rs;
+          
     }
 
 
@@ -406,6 +433,18 @@ class Agenda_ItemDao {
 
           return $searchResults;
     }
+
+    /*Retorna prox código da agendaitem que pode ser usado*/
+    public function proxId($conn){
+      if($rs= $conn->RetornaMaiorCodigo('Agenda_item', 'cod_item')){
+        return intval($rs[0])+1;
+      }
+      else{
+        return "Nada encontrado";
+      }
+
+    }
+
 }
 
 ?>
