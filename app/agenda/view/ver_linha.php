@@ -42,16 +42,6 @@
 
 
 $dir_static = '../../../static_includes/';
-$origem=null;
-$cabecalho=null;
-$frase=null;
-$caminho=null;
-$editar=null;
-$renomear=null;
-$limpar=null;
-$imagem=null;
-
-
 
 $ctrl_agenda = '../controller/';
 
@@ -60,10 +50,19 @@ include $ctrl_agenda.'AgendaController.php';
 //Adciona o topo tela que contém referencias aos css
 include $dir_static.'topo_tela.php';
 
-$cod_ferramenta=31;
+$cod_ferramenta=1;
+$cod_usuario = $_GET['cod_usuario'];
 $cod_curso= $_GET['cod_curso'];
 $cod_item= $_GET['cod_item'];
 $id = $cod_item;
+$origem = $_GET['origem'];
+//$diretorio_jscss = '../../../js/';
+
+
+
+
+
+
 
 echo("    <script type=\"text/javascript\">\n\n");
 echo("      var cod_curso='".$cod_curso."';\n");
@@ -77,8 +76,8 @@ echo("      var cod_item='".$cod_item."';\n");
 
 echo("    </script>\n\n");
 echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
-//echo ("    <script type=\"text/javascript\" src=\"" . $diretorio_jscss . "ckeditor/ckeditor.js\"></script>");
-///echo ("    <script type=\"text/javascript\" src=\"" . $diretorio_jscss . "ckeditor/ckeditor_biblioteca.js\"></script>");
+echo("   <script type=\"text/javascript\" src=\"../../../js/ckeditor/ckeditor.js\"></script>");
+echo("   <script type=\"text/javascript\" src=\"../../../js/ckeditor/ckeditor_biblioteca.js\"></script>");
 echo("    <script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
 echo("    <script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
 echo("    <script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
@@ -88,12 +87,10 @@ echo("    <script type=\"text/javascript\" src=\"jscriptlib.js\"> </script>\n");
 
 include $dir_static.'menu_principal.php';
 
-
-
-
 $usr_formador = true;
 
 $controlerAgenda = new AgendaController();
+$controlerPermissao = new PermissaoController();
    
 //Imprime o conteúdo da ferrameta
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
@@ -102,7 +99,7 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   {
     /* 1 - Agenda */
     /*2 - Agendas Anteriores*/ 
-    $cabecalho = "          <h4>\"Agenda\" - \"Agendas Anteriores\"</h4>";
+    $cabecalho = "          <h4>Agenda - Agendas Anteriores</h4>";
   } else {
     /* 1 - Agenda */
     /* 111 - Editar Agenda*/
@@ -126,15 +123,46 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   echo("            <tr>\n");
   echo("              <td valign=\"top\">\n");
   echo("                <ul class=\"btAuxTabs\">\n");
-
-
-
-
-  /*34 - Apagar */
-  echo("                  <li><span onClick=\"ApagarItem();\">Agendas Futuras</span></li>\n");
-  echo("                  <li><span onClick=\"ApagarItem();\">Historico</span></li>\n");
-  echo("                  <li><span onClick=\"ApagarItem();\">Publicar</span></li>\n");
-  echo("                  <li><span onClick=\"ApagarItem();\">Apagar</span></li>\n");
+  if($origem == "ver_anteriores"){
+  	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Anteriores'))
+  		/*33 - Voltar para Agenda Anteriores*/
+  		$frase = 'Voltar para Agendas Anteriores';
+  }
+  else if($origem == "ver_editar"){
+  	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Futuras'))
+  		/*3 - Agendas Futuras*/
+  		$frase = 'Agendas Futuras';
+  }
+  else{
+  		$frase = 'Ver Agenda Atual';
+  }
+  
+  
+  if($origem == "ver_editar"){
+  	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Futuras'))
+  		$caminho="ver_editar.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario;
+  }
+  else if($origem == "ver_anteriores"){
+  	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Anteriores'))
+  		$caminho="ver_anteriores.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario;
+  }
+  else{
+  	if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agenda Atual'))
+  		$caminho="agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario;
+  }
+  
+  echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
+  /*34 - Hist�rico */
+  echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
+  if($origem == "ver_editar"){
+  	/*34 - Publicar */
+  	echo("                  <li><span onClick=\"Ativar();\">Publicar</span></li>\n");
+  }
+  if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Excluir Agenda'))
+  {
+  	/*34 - Apagar */
+  	echo("                  <li><span onClick=\"ApagarItem();\">Apagar</span></li>\n");
+  }
   echo("                </ul>\n");
   echo("              </td>\n");
   echo("            </tr>\n");
@@ -152,6 +180,7 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   
   //var_dump($linha_item);
   //if(($usr_formador) && ($linha_item['situacao'] != "H"))
+  if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Editar'))
   {
     /*70 (gn) - Opcoes */
     echo("                  <td align=center width=\"15%\">Opcoes</td>\n");
@@ -167,15 +196,16 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
        $renomear="<span id=\"renomear_".$cod_item."\">Editar Titulo</span>";
      //  $renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\">Editar Titulo</span>";
       /* 91 - Editar texto */
-        $editar="<span onclick=\"AlteraTexto(\"\");\">Editar Texto</span>";
+        $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">Editar Texto</span>";   
+        
       /* 92 - Limpar texto */
-        $limpar="<span onclick=\"LimpaTexto(\"\");\">Limpar Texto</span>";
+        $limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">Limpar Texto</span>";
 
 
   echo("                  <tr id='tr_".$linha_item['cod_item']."'>\n");
   echo("                    <td class=\"itens\">".$titulo."</td>\n");
-
-
+  if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Editar'))
+  {
       echo("                    <td align=\"left\" valign=\"top\" class=\"botao2\">\n");
       echo("                      <ul>\n");
       echo("                        <li>".$renomear."</li>\n");
@@ -184,8 +214,7 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   
       echo("                      </ul>\n");
       echo("                    </td>\n");
-
-
+   }
   echo("                  </tr>\n");
 
 
@@ -206,7 +235,8 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   echo("                    </td>\n");
   echo("                  </tr>\n");
 
-  //if ($usr_formador){
+  if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Editar'))
+  {
     echo("                  <tr class=\"head\">\n");
     /* 57(biblioteca) - Arquivos */
     echo("                    <td colspan=\"4\">Arquivos</td>\n");
@@ -257,13 +287,13 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
     echo("                      </form>\n");
     echo("                    </td>\n");
     echo("                  </tr>\n");
-  //}
+  }
 
   /*Fim tabela interna*/
   echo("                </table>\n");
 
-//  if($usr_formador)
-//  {
+  if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Editar'))
+  {
     echo("              </td>\n");
     echo("            </tr>\n");
     echo("            <tr>\n");
@@ -275,12 +305,12 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
     echo("            <tr>\n");
     /* 44 - Obs.: A agenda devera conter somente texto ou somente arquivos. */
     echo("              <td align=\"left\">Obs.: A agenda devera conter somente texto ou somente arquivos.\n");
-    
+  }
     /*Fim tabela externa*/
     echo("              </td>\n");
     echo("            </tr>\n");
     echo("          </table>\n");
-   // include("../tela2.php");
+   include $dir_static.'tela2.php';
     echo("  </body>\n");
     echo("</html>\n");
    // Desconectar($sock);

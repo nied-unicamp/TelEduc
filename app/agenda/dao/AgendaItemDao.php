@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../lib/Conexao.php';
+require_once '../../../lib/ConversorTexto.php';
 
  /**
   * Agenda_Item Data Access Object (DAO).
@@ -437,6 +438,26 @@ class Agenda_ItemDao {
           }
 
           return $searchResults;
+    }
+    
+    function ativarAgenda($cod_item,$cod_usuario, $cod_curso)
+    {
+    	$conexao = new Conexao();
+    	$conexao->Conectar();
+    	$linha = $this->loadAllSituacao($cod_curso, 'A');
+    	if (isset($linha['cod_item']) && $linha['cod_item']!="")
+    	{
+    		$consulta="update Agenda_item set situacao='N' where cod_item=".ConversorTexto::VerificaNumeroQuery($linha['cod_item']);
+    		$res=$conexao->Enviar($consulta);
+    		//$consulta="insert into Agenda_item_historicos values (".ConversorTexto::VerificaNumeroQuery($linha['cod_item']).",".ConversorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'H')";
+    		//$res=$conexao->Enviar($consulta);
+    	}
+    	$consulta="update Agenda_item set situacao='A' where cod_item=".ConversorTexto::VerificaNumeroQuery($cod_item);
+    	$res=$conexao->Enviar($consulta);
+    	//$consulta="insert into Agenda_itens_historicos values (".ConversorTexto::VerificaNumeroQuery($cod_item).",".ConersorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'A')";
+    	//$res=$conexao->Enviar($consulta);
+    
+    	//AtualizaFerramentasNova($sock, 1, 'T');
     }
 }
 
