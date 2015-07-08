@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../lib/Conexao.php';
+require_once '../../../lib/ConversorTexto.php';
 
  /**
   * Agenda_Item Data Access Object (DAO).
@@ -53,14 +54,20 @@ class Agenda_ItemDao {
      */
     function load($id) {
 
-          $sql = "SELECT * FROM Agenda_Item WHERE (cod_item = ".$id.") "; 
+          $sql = "SELECT * FROM Agenda_item WHERE (cod_item = ".$id.") "; 
 
-          if ($this->singleQuery($conn, $sql, $valueObject))
-               return true;
-          else
-               return false;    
-
-    }
+          $conexao = new Conexao();
+          
+          $conexao->Conectar();
+          
+          $res = $conexao->Enviar($sql);
+          
+          $listaAgenda = $conexao->RetornaLinha($res);
+          
+          $conexao->Desconectar();
+          
+          return $listaAgenda;
+          }
 
 
     /**
@@ -87,6 +94,28 @@ class Agenda_ItemDao {
           $conexao->Desconectar();
 
           return $listaAgendas;
+    }
+    
+    function loadAllSituacao($cod_curso, $situacao) {
+    
+    	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=".$cod_curso;
+    	 
+    	$conexao = new Conexao();
+    
+    	$conexao->Conectar();
+    
+    	$res = $conexao->Enviar($sql);
+    	 
+    	if ($situacao == 'A'){
+    		$listaAgendas = $conexao->RetornaLinha($res);
+    	}
+    	else if (($situacao == 'N') || ($situacao == 'F')){
+    		$listaAgendas = $conexao->RetornaArrayLinhas($res);
+    	}
+    
+    	$conexao->Desconectar();
+    
+    	return $listaAgendas;
     }
 
 
@@ -210,7 +239,7 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete($id) {
+function delete($id) {
 
           $sql = "DELETE FROM Agenda_item WHERE (cod_item = ".$id.") ";
           
@@ -218,15 +247,18 @@ class Agenda_ItemDao {
           $conexao->Conectar();
           $rs = $conexao->executeUpdate($sql);
           
-          if ($rs){
-          	echo 'deletou';
-          }
-          else{
-          	echo 'nao deletou';
-          }
+          //$consulta="delete from Historico_Agenda_Item where cod_item=".$id;
+          
+          //$rs = $conexao->executeUpdate($consulta);
+          
+          /*Exclui diretório temporário e diretório de arquivos criados,caso existam*/
+          /* if(file_exists($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item))
+          	RemoveDiretorio($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item);
+          if(file_exists($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item))
+          	RemoveDiretorio($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item); */
+
           $conexao->Desconectar();
     }
-
 
     /**
      * deleteAll-method. This method will remove all information from the table that matches
@@ -443,6 +475,26 @@ class Agenda_ItemDao {
         return "Nada encontrado";
       }
 
+    }
+    
+    function ativarAgenda($cod_item,$cod_usuario, $cod_curso)
+    {
+    	$conexao = new Conexao();
+    	$conexao->Conectar();
+    	$linha = $this->loadAllSituacao($cod_curso, 'A');
+    	if (isset($linha['cod_item'])  && $linha['cod_item']!="")
+    	{
+    		$consulta="update Agenda_item set situacao='N' where cod_item=".ConversorTexto::VerificaNumeroQuery($linha['cod_item']);
+    		$res=$conexao->Enviar($consulta);
+    		//$consulta="insert into Historico_Agenda_Item values (".ConversorTexto::VerificaNumeroQuery($linha['cod_item']).",".ConversorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'H')";
+    		//$res=$conexao->Enviar($consulta);
+    	}
+    	$consulta="update Agenda_item set situacao='A' where cod_item=".ConversorTexto::VerificaNumeroQuery($cod_item);
+    	$res=$conexao->Enviar($consulta);
+    	//$consulta="insert into Agenda_itens_historicos values (".ConversorTexto::VerificaNumeroQuery($cod_item).",".ConersorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'A')";
+    	//$res=$conexao->Enviar($consulta);
+    
+    	//AtualizaFerramentasNova($sock, 1, 'T');
     }
 
 }

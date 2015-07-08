@@ -122,7 +122,7 @@ function EdicaoTexto(codigo, id, valor){
       //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
     }
   else{
-      //Cancela Ediï¿½o
+      //Cancela Edicao
       if (!cancelarTodos)
         xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
   }
@@ -141,13 +141,13 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
 */
 
 function EdicaoTitulo(codigo, id, valor){
-	//se o tÃ­tulo nÃ£o Ã© vazio
+	//se o título não é vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
     novoconteudo = document.getElementById(id+'_text').value;
-    //Edita o tÃ­tulo do item dado, dinÃ¢micamente
+    //Edita o título do item dado, dinâmicamente
     //xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
     
-    //else - se o tÃ­tulo for vazio.
+    //else - se o título for vazio.
   }else{
     /* 15 - O titulo nao pode ser vazio. */
     if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
@@ -161,7 +161,7 @@ function EdicaoTitulo(codigo, id, valor){
       document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };
     }
 
-    //Cancela EdiÃ§Ã£o
+    //Cancela Edição
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
   	}
@@ -199,7 +199,7 @@ function EdicaoTitulo(codigo, id, valor){
   else{
     if(checks.length > 0)
     {	
-	// 53 - A agenda nï¿½o pode ter texto e arquivos simultaneamente! 	
+	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
     	alert(lista_frases.msg53);
     }	
   }
@@ -210,7 +210,7 @@ function LimpaTexto(id){
   checks = document.getElementsByName('chkArq');
 
   if ((editaTexto==0)&&(checks.length==0)){
-    // 95 - VocÃª tem certeza que deseja apagar o texto desta agenda?
+    // 95 - Você tem certeza que deseja apagar o texto desta agenda?
     if (confirm(lista_frases.msg95)){
       CancelaTodos();
       document.getElementById('text_'+id).innerHTML='';
@@ -232,7 +232,7 @@ function ArquivoValido(path)
 	var file = getfilename(path);
 	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
 
-	// Usando expressÃ£o regular para identificar caracteres invÃ¡lidos
+	// Usando expressão regular para identificar caracteres inválidos
 	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
 		return false;
 	return true;
@@ -542,11 +542,11 @@ function NovaAgenda()
 	document.getElementById('nome').focus();
 }
 
-function Iniciar()
+/*function Iniciar()
 {
   lay_nova_agenda = getLayer('layer_nova_agenda');
   startList();
-}
+}*/
 
 function EscondeLayers()
 {
@@ -575,7 +575,7 @@ function Ativar()
 {
 	 if(TemCertezaAtivar())
 {
-    window.location='../../app/agenda/controller/acoes.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+$cod_item+'&acao=ativaragenda';
+    window.location='../../../app/agenda/controller/TrataRequest.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+cod_item+'&acao=ativaragenda';
 }
   return false;
 }
@@ -683,10 +683,10 @@ editaTitulo++;
 });
 
 function EdicaoTitulo(codigo, id, valor){
-//se o tï¿½tulo nï¿½o ï¿½ vazio\n
+//se o titulo nao e vazio\n
 if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
 titulo = document.getElementById(id+'_text').value;
-//Edita o tï¿½tulo do item dado, dinï¿½micamente\n
+//Edita o titulo do item dado, dinamicamente\n
 
 $.post('../../../app/agenda/dao/DaoAlteraTitulo.php',{titulo: titulo,cod_item: cod_item, cod_curso:cod_curso},
 function(data){
@@ -782,7 +782,7 @@ function CheckTodos(){
 function ExcluirSelecionados(){
   if (TemCertezaApagar()){
     document.getElementById('cod_itens_form').value=array_itens;
-    document.form_dados.action='acoes_linha.php';
+    document.form_dados.action='../../../app/agenda/controller/TrataRequest.php';
     document.form_dados.method='POST';
     document.getElementById('acao_form').value='apagarSelecionados';
     document.form_dados.submit();
@@ -829,4 +829,8 @@ function Voltar()
   window.location='agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."';;
 }
 
-
+/*function OpenWindowPerfil(funcao)
+{
+   window.open(\"../perfil/exibir_perfis.php?"+sessionID+"&cod_curso="+cod_curso+"&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");
+  return(false);
+}*/

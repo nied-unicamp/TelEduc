@@ -17,10 +17,7 @@ class AgendaController{
 		
 		echo ' status='.$conexao->status;
 	}
-
-
-
-
+	
 	/*Cria uma nova agenda a qual é armazenada no banco só com o título 
 	retorna um tipo AgendaItem;
 
@@ -44,7 +41,7 @@ class AgendaController{
 
 		echo "PROX:".$id."\n";
 
-		$agenda_item->setAll($ codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAll($codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 
 		
 		// echo ($agenda_item->toString());
@@ -72,11 +69,11 @@ class AgendaController{
 		return $dao->loadAllSituacao($cod_curso, $situacao);
 	}
 	
-	function apagaAgenda(){
+	function apagaAgenda($id){
 		
 		$dao = new Agenda_ItemDao();
 		
-		return $dao->delete(8);	
+		return $dao->delete($id);
 	}
 	
 	function atualizaAgenda(){

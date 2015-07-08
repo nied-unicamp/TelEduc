@@ -11,8 +11,18 @@ $estilos_css = null; //TODO
 $codigos_js = null; //TODO
 $SalvarEmArquivo = null; //TODO
 
-$cod_curso = 1;
-$cod_usuario = 2;
+if (isset($_GET['cod_curso']) && $_GET['cod_curso']!=null){
+	$cod_curso = $_GET['cod_curso'];
+}
+else{
+	$cod_curso = 1;
+}
+if (isset($_GET['cod_usuario']) && $_GET['cod_usuario']!=null){
+	$cod_usuario = $_GET['cod_usuario'];
+}
+else{
+	$cod_usuario = 2;
+}
 $cod_ferramenta = 1;
 
 $controlerPermissao = new PermissaoController();

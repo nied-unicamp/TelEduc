@@ -84,9 +84,9 @@ class Conexao {
     	}
     	return($ar);
     }
-    
-    public function RetornaLinha($result) {
-    	return(mysqli_fetch_row($result));
+	    
+	public function RetornaLinha($result) {
+    	return(mysqli_fetch_array($result));
     }
 
     /*Função que retorna o maior codigo de uma coluna de uma tabela

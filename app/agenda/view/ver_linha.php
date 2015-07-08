@@ -66,6 +66,7 @@ echo("      var cancelarElemento=null;");
 echo("		var cancelarTodos=0;");
 echo("		var cancelaEdita=0;");
 echo("      var cod_item='".$cod_item."';\n");
+echo("		var cod_usuario = ".$cod_usuario.";\n");
 
 echo("    </script>\n\n");
 echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
