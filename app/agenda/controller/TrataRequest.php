@@ -31,6 +31,8 @@ if ($acao=="criarAgenda") {
 }
 else if ($acao=="ativaragenda")
 {
+	$agendaControler = new AgendaController();
+	
 	$atualizacao = "true";
 	$agendaControler->ativaAgenda($cod_item, $cod_usuario, $cod_curso);
 	
@@ -38,6 +40,8 @@ else if ($acao=="ativaragenda")
 }
 else if ($acao=="apagarSelecionados")
 {
+	$agendaControler = new AgendaController();
+	
 	$origem = $_POST['origem'];
 	$cod_itens = $_POST['cod_itens'];
 	

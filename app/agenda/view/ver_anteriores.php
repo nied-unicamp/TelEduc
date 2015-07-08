@@ -26,11 +26,11 @@ $feedbackObject->addAction("apagarItem", "Item apagado com sucesso", 0);
 
 echo("	<script type=\"text/javascript\">\n\n");
 
-/* echo("	function Iniciar()\n");
-echo("	{\n"); */
+echo("	function Iniciar()\n");
+echo("	{\n"); 
 $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
-/* echo("		startList();\n");
-echo("	}\n\n"); */
+echo("		startList();\n");
+echo("	}\n\n"); 
 
 echo("	</script>\n");
 
