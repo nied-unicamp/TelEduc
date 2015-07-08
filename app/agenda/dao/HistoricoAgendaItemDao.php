@@ -31,11 +31,11 @@ class Historico_Agenda_ItemDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    function getObject(&$conn, $cod_historico) {
+    function getObject($conn, $cod_historico) {
 
           $valueObject = $this->createValueObject();
           $valueObject->setCod_historico($cod_historico);
-          $this->load(&$conn, &$valueObject);
+          $this->load($conn, $valueObject);
           return $valueObject;
     }
 
@@ -52,7 +52,7 @@ class Historico_Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    function load(&$conn, &$valueObject) {
+    function load($conn, $valueObject) {
 
           if (!$valueObject->getCod_historico()) {
                //print "Can not select without Primary-Key!";
@@ -61,7 +61,7 @@ class Historico_Agenda_ItemDao {
 
           $sql = "SELECT * FROM Historico_Agenda_Item WHERE (cod_historico = ".$valueObject->getCod_historico().") "; 
 
-          if ($this->singleQuery(&$conn, $sql, &$valueObject))
+          if ($this->singleQuery($conn, $sql, $valueObject))
                return true;
           else
                return false;
@@ -77,12 +77,12 @@ class Historico_Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function loadAll(&$conn) {
+    function loadAll($conn) {
 
 
           $sql = "SELECT * FROM Historico_Agenda_Item ORDER BY cod_historico ASC ";
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -102,15 +102,14 @@ class Historico_Agenda_ItemDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create(&$conn, &$valueObject) {
+    function create($conn, $valueObject) {
 
-          $sql = "INSERT INTO Historico_Agenda_Item ( cod_historico, Usuario_cod_usuario, Acao_cod_acao, ";
-          $sql = $sql."Agenda_item_cod_item, data) VALUES (".$valueObject->getCod_historico().", ";
-          $sql = $sql."".$valueObject->getUsuario_cod_usuario().", ";
+          $sql = "INSERT INTO Historico_Agenda_Item (Usuario_cod_usuario, Acao_cod_acao, ";
+          $sql = $sql."Agenda_item_cod_item, data) VALUES (".$valueObject->getUsuario_cod_usuario().", ";
           $sql = $sql."".$valueObject->getAcao_cod_acao().", ";
           $sql = $sql."".$valueObject->getAgenda().", ";
           $sql = $sql."'".$valueObject->getData()."') ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
 
           return true;
@@ -128,14 +127,14 @@ class Historico_Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    function save(&$conn, &$valueObject) {
+    function save($conn, $valueObject) {
 
           $sql = "UPDATE Historico_Agenda_Item SET Usuario_cod_usuario = ".$valueObject->getUsuario_cod_usuario().", ";
           $sql = $sql."Acao_cod_acao = ".$valueObject->getAcao_cod_acao().", ";
           $sql = $sql."Agenda_item_cod_item = ".$valueObject->getAgenda().", ";
           $sql = $sql."data = '".$valueObject->getData()."'";
           $sql = $sql." WHERE (cod_historico = ".$valueObject->getCod_historico().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -158,7 +157,7 @@ class Historico_Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete(&$conn, &$valueObject) {
+    function delete($conn, $valueObject) {
 
 
           if (!$valueObject->getCod_historico()) {
@@ -167,7 +166,7 @@ class Historico_Agenda_ItemDao {
           }
 
           $sql = "DELETE FROM Historico_Agenda_Item WHERE (cod_historico = ".$valueObject->getCod_historico().") ";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           if ($result != 1) {
                //print "PrimaryKey Error when updating DB!";
@@ -188,10 +187,10 @@ class Historico_Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function deleteAll(&$conn) {
+    function deleteAll($conn) {
 
           $sql = "DELETE FROM Historico_Agenda_Item";
-          $result = $this->databaseUpdate(&$conn, $sql);
+          $result = $this->databaseUpdate($conn, $sql);
 
           return true;
     }
@@ -205,7 +204,7 @@ class Historico_Agenda_ItemDao {
      *
      * @param conn         This method requires working database connection.
      */
-    function countAll(&$conn) {
+    function countAll($conn) {
 
           $sql = "SELECT count(*) FROM Historico_Agenda_Item";
           $allRows = 0;
@@ -232,7 +231,7 @@ class Historico_Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    function searchMatching(&$conn, &$valueObject) {
+    function searchMatching($conn, $valueObject) {
 
           $first = true;
           $sql = "SELECT * FROM Historico_Agenda_Item WHERE 1=1 ";
@@ -270,7 +269,7 @@ class Historico_Agenda_ItemDao {
           if ($first)
                return array();
 
-          $searchResults = $this->listQuery(&$conn, $sql);
+          $searchResults = $this->listQuery($conn, $sql);
 
           return $searchResults;
     }
@@ -294,7 +293,7 @@ class Historico_Agenda_ItemDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function databaseUpdate(&$conn, &$sql) {
+    function databaseUpdate($conn, $sql) {
 
           $result = $conn->execute($sql);
 
@@ -312,7 +311,7 @@ class Historico_Agenda_ItemDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    function singleQuery(&$conn, &$sql, &$valueObject) {
+    function singleQuery($conn, $sql, $valueObject) {
 
           $result = $conn->execute($sql);
 
@@ -339,7 +338,7 @@ class Historico_Agenda_ItemDao {
      * @param conn         This method requires working database connection.
      * @param stmt         This parameter contains the SQL statement to be excuted.
      */
-    function listQuery(&$conn, &$sql) {
+    function listQuery($conn, $sql) {
 
           $searchResults = array();
           $result = $conn->execute($sql);
@@ -356,6 +355,29 @@ class Historico_Agenda_ItemDao {
           }
 
           return $searchResults;
+    }
+    
+    function retornaHistoricoDoItem($cod_item){
+    	$sql = "select HA.cod_historico, AI.titulo, AH.nome, HA.data, U.nome_usuario 
+				from  Agenda_item AI, Acao_Historico AH, Historico_Agenda_Item HA, Usuario U
+				where  HA.Agenda_item_cod_item = AI.cod_item
+				and HA.Acao_cod_acao = AH.cod_acao
+				and HA.Usuario_cod_usuario = U.cod_usuario
+				and AI.cod_item =".$cod_item." order by HA.data desc,AH.nome desc";
+    	
+    	$conexao = new Conexao();
+    	
+    	$conexao->Conectar();
+    	
+    	$res = $conexao->Enviar($sql);
+    	
+    	$listaHistorico = $conexao->RetornaArrayLinhas($res);
+    	
+    	$conexao->Desconectar();
+    	
+    	return $listaHistorico;
+    	
+    	
     }
 }
 

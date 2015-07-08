@@ -68,7 +68,6 @@ class Agenda_ItemDao {
           
           return $listaAgenda;
           }
-          
 
 
     /**
@@ -98,15 +97,15 @@ class Agenda_ItemDao {
     }
     
     function loadAllSituacao($cod_curso, $situacao) {
-    	 
+    
     	$sql = "SELECT * FROM Agenda_item where situacao='".$situacao."' and Curso_cod_curso=".$cod_curso;
-    	
+    	 
     	$conexao = new Conexao();
     
     	$conexao->Conectar();
     
     	$res = $conexao->Enviar($sql);
-    	
+    	 
     	if ($situacao == 'A'){
     		$listaAgendas = $conexao->RetornaLinha($res);
     	}
@@ -134,7 +133,7 @@ class Agenda_ItemDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    function create($valueObject) {
+    function create($conn, $valueObject) {
 
           $sql = "INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario, ";
           $sql = $sql."titulo, texto, situacao, ";
@@ -149,21 +148,45 @@ class Agenda_ItemDao {
           $sql = $sql."'".$valueObject->getStatus()."', ";
           $sql = $sql."".$valueObject->getInicio_edicao().") ";
           
-          $conexao = new Conexao();
-          $conexao->Conectar();
-          $rs = $conexao->executeUpdate($sql);
           
-          if ($rs){
-          	echo 'inseriu';
+          $rs = $conn->executeUpdate($sql);
+          
+          return $rs;
+          
+    }  
+    //Função que cria uma nova agenda no banco e trata campos nulos
+    function create2($conn, $valueObject) {
+          $mysqli= $conn->db;
+          if(!($stmt = $mysqli->prepare("INSERT INTO Agenda_item (Curso_cod_curso, Usuario_cod_usuario,
+            titulo, texto, situacao,data_criacao, data_publicacao, status,inicio_edicao)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)"))){
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;  
           }
-          else{
-          	echo 'nao inseriu';
+          $Curso_cod_cursoIn= $valueObject->getCurso_cod_curso();
+          $Usuario_cod_usuarioIn = $valueObject->getUsuario_cod_usuario();
+          $tituloIn= $valueObject->getTitulo();
+          $textoIn=$valueObject->getTexto();
+          $situacaoIn=$valueObject->getSituacao();
+          $data_criacaoIn=$valueObject->getData_criacao();
+          $data_publicacaoIn=$valueObject->getData_publicacao();
+          $statusIn=$valueObject->getStatus();
+          $inicio_edicaoIn= $valueObject->getInicio_edicao();
+          
+          if(!($stmt->bind_param('iisssiisi', $Curso_cod_cursoIn, $Usuario_cod_usuarioIn, $tituloIn, $textoIn,
+            $situacaoIn, $data_criacaoIn, $data_publicacaoIn, $statusIn,$inicio_edicaoIn))){
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+
           }
-          $conexao->Desconectar();
+
+          if(!( $rs = $stmt->execute())){
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+          }
+         
+          
+          return $rs;
+          
     }
 
-    
-   
 
     /**
      * save-method. This method will save the current state of valueObject to database.
@@ -216,7 +239,7 @@ class Agenda_ItemDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    function delete($id) {
+function delete($id) {
 
           $sql = "DELETE FROM Agenda_item WHERE (cod_item = ".$id.") ";
           
@@ -224,15 +247,18 @@ class Agenda_ItemDao {
           $conexao->Conectar();
           $rs = $conexao->executeUpdate($sql);
           
-          if ($rs){
-          	echo 'deletou';
-          }
-          else{
-          	echo 'nao deletou';
-          }
+          //$consulta="delete from Historico_Agenda_Item where cod_item=".$id;
+          
+          //$rs = $conexao->executeUpdate($consulta);
+          
+          /*Exclui diret�rio tempor�rio e diret�rio de arquivos criados,caso existam*/
+          /* if(file_exists($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item))
+          	RemoveDiretorio($diretorio_temp."/tmp/".$cod_curso."/agenda/".$cod_item);
+          if(file_exists($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item))
+          	RemoveDiretorio($diretorio_arquivos."/".$cod_curso."/agenda/".$cod_item); */
+
           $conexao->Desconectar();
     }
-
 
     /**
      * deleteAll-method. This method will remove all information from the table that matches
@@ -459,8 +485,37 @@ class Agenda_ItemDao {
     
     	//AtualizaFerramentasNova($sock, 1, 'T');
     }
+    /*Retorna prox código da agendaitem que pode ser usado*/
+    public function proxId($conn){
+      if($rs= $conn->RetornaMaiorCodigo('Agenda_item', 'cod_item')){
+        return intval($rs[0])+1;
+      }
+      else{
+        return "Nada encontrado";
+      }
+
+    }
+    
+    function ativarAgenda($cod_item,$cod_usuario, $cod_curso)
+    {
+    	$conexao = new Conexao();
+    	$conexao->Conectar();
+    	$linha = $this->loadAllSituacao($cod_curso, 'A');
+    	if (isset($linha['cod_item'])  && $linha['cod_item']!="")
+    	{
+    		$consulta="update Agenda_item set situacao='N' where cod_item=".ConversorTexto::VerificaNumeroQuery($linha['cod_item']);
+    		$res=$conexao->Enviar($consulta);
+    		//$consulta="insert into Historico_Agenda_Item values (".ConversorTexto::VerificaNumeroQuery($linha['cod_item']).",".ConversorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'H')";
+    		//$res=$conexao->Enviar($consulta);
+    	}
+    	$consulta="update Agenda_item set situacao='A' where cod_item=".ConversorTexto::VerificaNumeroQuery($cod_item);
+    	$res=$conexao->Enviar($consulta);
+    	//$consulta="insert into Agenda_itens_historicos values (".ConversorTexto::VerificaNumeroQuery($cod_item).",".ConersorTexto::VerificaNumeroQuery($cod_usuario).",".time().",'A')";
+    	//$res=$conexao->Enviar($consulta);
+    
+    	//AtualizaFerramentasNova($sock, 1, 'T');
+    }
+
 }
-
-
 
 ?>

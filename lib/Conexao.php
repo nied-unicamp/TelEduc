@@ -36,13 +36,13 @@ class Conexao {
         if ($this->status == 1) {
             //echo "lista...";
             if ($this->saida = mysqli_query($this->db,$query)) {
-                // echo 'Rs loaded';
                 return $this->saida;
             } else {
                 echo "<pre class=\"error\">";
                 echo "SQL ERROR: " . mysqli_error($this->db);
                 echo "SQL : " . $query;
                 echo "</pre>";
+
                 $this->Desconectar();
             }
         }
@@ -63,7 +63,10 @@ class Conexao {
     }
  
     function Desconectar() {
-        return mysqli_close($this->db);
+        if($this->status){
+            $this->status=0;
+            return mysqli_close($this->db);
+        }
     }
     
     public function RetornaNumLinhas($result){
@@ -81,9 +84,17 @@ class Conexao {
     	}
     	return($ar);
     }
-    
-    public function RetornaLinha($result) {
+	    
+	public function RetornaLinha($result) {
     	return(mysqli_fetch_array($result));
+    }
+
+    /*Função que retorna o maior codigo de uma coluna de uma tabela
+     */
+    public function RetornaMaiorCodigo($tabela, $coluna){
+        $query= "SELECT MAX(".$coluna.") FROM ".$tabela;
+        $rs= $this->RetornaLinha($this->Enviar($query));
+        return $rs;
     }
  
 }

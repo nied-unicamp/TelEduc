@@ -59,11 +59,6 @@ $origem = $_GET['origem'];
 //$diretorio_jscss = '../../../js/';
 
 
-
-
-
-
-
 echo("    <script type=\"text/javascript\">\n\n");
 echo("      var cod_curso='".$cod_curso."';\n");
 echo("      var id='".$cod_item."';\n");
@@ -73,6 +68,7 @@ echo("      var cancelarElemento=null;");
 echo("		var cancelarTodos=0;");
 echo("		var cancelaEdita=0;");
 echo("      var cod_item='".$cod_item."';\n");
+echo("		var cod_usuario = ".$cod_usuario.";\n");
 
 echo("    </script>\n\n");
 echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
@@ -153,6 +149,7 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   
   echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
   /*34 - Hist�rico */
+  
   echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
   if($origem == "ver_editar"){
   	/*34 - Publicar */

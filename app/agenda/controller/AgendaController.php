@@ -9,7 +9,7 @@ require_once '../dao/AgendaItemDao.php';
 
 class AgendaController{
 	
-	function testaConexao(){
+	function Conecta(){
 		
 		$conexao = new Conexao();
 		
@@ -18,21 +18,40 @@ class AgendaController{
 		echo ' status='.$conexao->status;
 	}
 	
-	function criaAgenda(){
+	/*Cria uma nova agenda a qual é armazenada no banco só com o título 
+	retorna um tipo AgendaItem;
+
+	*
+
+	*/
+	function criaAgenda($titulo, $codcurso, $codusuario){
 		
-		$data = new Data();
 		
+		$conn = new Conexao();
+
 		$data_criacao = $data->Data2UnixTime('09/07/2015');
 		$data_publicacao = null;
 		$inicio_edicao = $data->Data2UnixTime('09/07/2015');
 		
 		$agenda_item = new Agenda_Item();
-		
-		$agenda_item->setAll(1, 1, 'Agenda do curso', 'Agenda referente ao mes de junho do curso','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
-		
+		 
 		$dao = new Agenda_ItemDao();
 		
-		return $dao->create($agenda_item);
+		$id= $dao->proxId($conn);
+
+		echo "PROX:".$id."\n";
+
+		$agenda_item->setAll($codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+
+		
+		// echo ($agenda_item->toString());
+
+		$rs = $dao->create2($conn, $agenda_item);
+		
+		if($conn){
+			$conn->Desconectar();
+		}
+		return $rs;
 	}
 
 	function listaAgendas(){
@@ -50,11 +69,11 @@ class AgendaController{
 		return $dao->loadAllSituacao($cod_curso, $situacao);
 	}
 	
-	function apagaAgenda(){
+	function apagaAgenda($id){
 		
 		$dao = new Agenda_ItemDao();
 		
-		return $dao->delete(8);	
+		return $dao->delete($id);
 	}
 	
 	function atualizaAgenda(){
@@ -67,6 +86,7 @@ class AgendaController{
 		
 		$agenda_item = new Agenda_Item();
 		
+
 		$agenda_item->setAllId(26, 1, 1, 'Teste2Alterado', 'Testando altera��o pelo c�digo','F', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
 		
 		$dao = new Agenda_ItemDao();
@@ -85,3 +105,4 @@ class AgendaController{
 		return $dao->ativarAgenda($cod_item, $cod_usuario, $cod_curso);
 	}
 }
+?>

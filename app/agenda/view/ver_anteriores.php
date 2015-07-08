@@ -19,24 +19,24 @@ $controlerPermissao = new PermissaoController();
 
 $feedbackObject =  new FeedbackObject();
 //adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
-
 $feedbackObject->addAction("apagarSelecionados", "Item(s) apagado(s) com sucesso", 0);
 $feedbackObject->addAction("apagarItem", "Item apagado com sucesso", 0);
 
 //$data_acesso=PenultimoAcesso($sock,$cod_usuario,"");
 
-echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
-echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
-
 echo("	<script type=\"text/javascript\">\n\n");
 
 echo("	function Iniciar()\n");
-echo("	{\n");
+echo("	{\n"); 
 $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("		startList();\n");
-echo("	}\n\n");
+echo("	}\n\n"); 
 
 echo("	</script>\n");
+
+echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
 
 include $dir_static.'menu_principal.php';
 
@@ -142,7 +142,7 @@ echo("      <input type=\"hidden\" name=\"cod_curso\" id=\"cod_curso\"      valu
 echo("      <input type=\"hidden\" name=\"cod_item\"  id=\"cod_item\"       value=\"\" />\n");
 echo("      <input type=\"hidden\" name=\"acao\"      id=\"acao_form\"      value=\"\" />\n");
 echo("      <input type=\"hidden\" name=\"cod_itens\" id=\"cod_itens_form\" value=\"\" />\n");
-echo("      <input type=\"hidden\" name=\"origem\"    value=\"ver_anteriores\"");
+echo("      <input type=\"hidden\" name=\"origem\"    value=\"ver_anteriores\" />\n");
 echo("    </form>\n");
 
 echo("  </body>\n");

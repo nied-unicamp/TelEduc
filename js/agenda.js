@@ -133,7 +133,7 @@ function EdicaoTexto(codigo, id, valor){
       //xajax_EditarTexto(cod_curso, codigo, conteudo, cod_usuario, lista_frases.msg22);
     }
   else{
-      //Cancela Edi�o
+      //Cancela Edicao
       if (!cancelarTodos)
         xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
   }
@@ -151,14 +151,15 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
      }
 */
 
+
 /*function EdicaoTitulo(codigo, id, valor){
-	//se o título não é vazio
+	//se o t�tulo n�o � vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
     novoconteudo = document.getElementById(id+'_text').value;
-    //Edita o título do item dado, dinâmicamente
+    //Edita o t�tulo do item dado, din�micamente
     //xajax_EditarTitulo(cod_curso, codigo, novoconteudo, cod_usuario, lista_frases.msg103);
     
-    //else - se o título for vazio.
+    //else - se o t�tulo for vazio.
   }else{
      15 - O titulo nao pode ser vazio. 
     if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
@@ -172,7 +173,7 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
       document.getElementById('renomear_'+codigo).onclick = function(){ AlteraTitulo(codigo); };
     }
 
-    //Cancela Edição
+    //Cancela Edi��o
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
   	}
@@ -210,7 +211,7 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
   else{
     if(checks.length > 0)
     {	
-	// 53 - A agenda n�o pode ter texto e arquivos simultaneamente! 	
+	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
     	alert(lista_frases.msg53);
     }	
   }
@@ -221,7 +222,7 @@ function LimpaTexto(id){
   checks = document.getElementsByName('chkArq');
 
   if ((editaTexto==0)&&(checks.length==0)){
-    // 95 - Você tem certeza que deseja apagar o texto desta agenda?
+    // 95 - Voc� tem certeza que deseja apagar o texto desta agenda?
     if (confirm(lista_frases.msg95)){
       CancelaTodos();
       document.getElementById('text_'+id).innerHTML='';
@@ -243,7 +244,7 @@ function ArquivoValido(path)
 	var file = getfilename(path);
 	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
 
-	// Usando expressão regular para identificar caracteres inválidos
+	// Usando express�o regular para identificar caracteres inv�lidos
 	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
 		return false;
 	return true;
@@ -553,11 +554,11 @@ function NovaAgenda()
 	document.getElementById('nome').focus();
 }
 
-function Iniciar()
+/*function Iniciar()
 {
   lay_nova_agenda = getLayer('layer_nova_agenda');
   startList();
-}
+}*/
 
 function EscondeLayers()
 {
@@ -579,14 +580,14 @@ function TemCertezaAtivar()
 {
 /* 57 - Tem certeza que deseja ativar esta agenda? */
 /* 58 - (Uma vez ativada, nao havera como desativa-la) */
-  return(confirm("Tem certeza que deseja ativar esta agenda?"+ "" + "Uma vez ativada, nao havera como desativa-la"));
+  return(confirm("Tem certeza que deseja ativar esta agenda?"+ "\n" + "Uma vez ativada, nao havera como desativa-la"));
 }
 
 function Ativar()
 {
 	 if(TemCertezaAtivar())
 {
-    window.location='../../app/agenda/controller/acoes.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+$cod_item+'&acao=ativaragenda';
+    window.location='../../../app/agenda/controller/TrataRequest.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+cod_item+'&acao=ativaragenda';
 }
   return false;
 }
@@ -695,7 +696,11 @@ editaTitulo++;
 
 });
 
-
+function EdicaoTitulo(codigo, id, valor){
+//se o titulo nao e vazio\n
+if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+titulo = document.getElementById(id+'_text').value;
+//Edita o titulo do item dado, dinamicamente\n
 		function EdicaoTitulo(codigo, id, valor){
 			//se o t�tulo n�o � vazio");
 			if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
@@ -862,7 +867,7 @@ function CheckTodos(){
 function ExcluirSelecionados(){
   if (TemCertezaApagar()){
     document.getElementById('cod_itens_form').value=array_itens;
-    document.form_dados.action='acoes_linha.php';
+    document.form_dados.action='../../../app/agenda/controller/TrataRequest.php';
     document.form_dados.method='POST';
     document.getElementById('acao_form').value='apagarSelecionados';
     document.form_dados.submit();
@@ -896,12 +901,12 @@ function VerificaNovoTitulo(textbox, aspas) {
   return true;
 }
 
-/*function TemCertezaAtivar()
+function TemCertezaAtivar()
 {
  57 - Tem certeza que deseja publicar esta agenda? 
  58 - (Uma vez publicada ela substituira a Agenda Atual) 
-  return(confirm('Tem certeza que deseja publicar esta agenda?'+''+'(Uma vez publicada ela substituira a Agenda Atual)'));
-}*/
+  return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
+}
 
 
 function Voltar()
@@ -909,4 +914,8 @@ function Voltar()
   window.location='agenda.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."';;
 }
 
-
+/*function OpenWindowPerfil(funcao)
+{
+   window.open(\"../perfil/exibir_perfis.php?"+sessionID+"&cod_curso="+cod_curso+"&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");
+  return(false);
+}*/
