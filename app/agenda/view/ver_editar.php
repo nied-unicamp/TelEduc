@@ -8,26 +8,25 @@ include $ctrl_agenda.'AgendaController.php';
 include $dir_lib.'FeedbackObject.inc.php';
 
 $cod_ferramenta=1;
+$cod_curso = $_GET['cod_curso'];
+$cod_usuario = $_GET['cod_usuario'];
 
 include $dir_static.'topo_tela.php';
-
-$cod_curso = $_GET['cod_curso'];
 
 $controlerAgenda = new AgendaController();
 
 // instanciar o objeto, passa a lista de frases por parametro
 $feedbackObject =  new FeedbackObject();
-// adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+// adicionar as acoes possiveis, 1o parametro ï¿½ a aï¿½ï¿½o, o segundo ï¿½ o nï¿½mero da frase para ser impressa se for "true", o terceiro caso "false"
 $feedbackObject->addAction("apagarItem", "Item apagado com sucess", 0);
 $feedbackObject->addAction("apagarSelecionados", "Item(s) apagado(s) com sucesso", 0);
 $feedbackObject->addAction("ativaragenda", "Agenda ativada com sucesso", 0);
 $feedbackObject->addAction("importarItem", "Agenda importada com sucesso", 0);
 
-echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
-echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
-echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
-
 echo("    <script type=\"text/javascript\">\n\n");
+
+echo("      var cod_curso='".$cod_curso."';\n");
+echo("      var cod_usuario='".$cod_usuario."';\n");
 
 echo("      function Iniciar()\n");
 echo("      {\n");
@@ -60,10 +59,14 @@ echo("      }\n");
 
 echo("    </script>\n\n");
 
+echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
+
 include $dir_static.'menu_principal.php';
 
 echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
-/* Impede o acesso a algumas secoes aos usuários que não são formadores. */
+/* Impede o acesso a algumas secoes aos usuï¿½rios que nï¿½o sï¿½o formadores. */
 if (!$controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Visualizar Agendas Futuras')){
 	/* 1 - Agenda */
 	echo("          <h4>Agenda");
@@ -138,7 +141,7 @@ if ((count($lista_agendas)>0)&&($lista_agendas != null))
 	{
 		$dataC = new Data();
 		$data = $dataC->UnixTime2Data($linha_item['data_criacao']);
-		$situacao="<a href=\"../controller/acoes.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>Publicar";
+		$situacao="<a href=\"../controller/TrataRequest.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$linha_item['cod_item']."&amp;acao=ativaragenda\" onclick=return(TemCertezaAtivar());>Publicar";
 		/* if ($data_acesso<$linha_item['data'])
 		{
 			$marcaib="<b>";
@@ -249,9 +252,10 @@ echo("    </div>\n\n");
 echo("    <form name=\"form_dados\" action=\"\" id=\"form_dados\">\n");
 echo("      <input type=\"hidden\" name=\"cod_curso\" id=\"cod_curso\"      value=\"".$cod_curso."\" />\n");
 echo("      <input type=\"hidden\" name=\"cod_item\"  id=\"cod_item\"       value=\"\" />\n");
+echo("      <input type=\"hidden\" name=\"cod_usuario\"  id=\"cod_usuario\"       value=\"".$cod_usuario."\" />\n");
 echo("      <input type=\"hidden\" name=\"acao\"      id=\"acao_form\"      value=\"\" />\n");
 echo("      <input type=\"hidden\" name=\"cod_itens\" id=\"cod_itens_form\" value=\"\" />\n");
-echo("      <input type=\"hidden\" name=\"origem\"    value=\"ver_editar\"");
+echo("      <input type=\"hidden\" name=\"origem\"    value=\"ver_editar\"/>\n");
 echo("    </form>\n");
 
 echo("  </body>\n");

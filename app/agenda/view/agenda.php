@@ -1,6 +1,7 @@
 <?php
 
 $dir_static = '../../../static_includes/';
+$dir_lib = '../../../lib/';
 $ctrl_agenda = '../controller/';
 $dir_lib = '../../../lib/';
 
@@ -8,6 +9,36 @@ include $dir_static.'topo_tela.php';
 //Adciona o topo tela que contém referencias aos css
 // include $ctrl_agenda.'AgendaController.php';
 include $dir_lib.'FeedbackObject.inc.php';
+include $ctrl_agenda.'AgendaController.php';
+
+//Adciona o topo tela que contém referencias aos css
+include $dir_static.'topo_tela.php';
+
+// instanciar o objeto, passa a lista de frases por parametro
+$feedbackObject =  new FeedbackObject();
+//adicionar as acoes possiveis, 1o parametro é a ação, o segundo é o número da frase para ser impressa se for "true", o terceiro caso "false"
+$feedbackObject->addAction("criarAgenda", 0, 97);
+$feedbackObject->addAction("ativaragenda", "Agenda publicada com sucesso", 97);
+
+echo("	<script type=\"text/javascript\">");
+echo("		if (isNav)\n");
+echo("		{\n");
+echo("			document.captureEvents(Event.MOUSEMOVE);\n");
+echo("      }\n");
+echo("      document.onmousemove = TrataMouse;\n\n");
+
+echo("      function Iniciar()\n");
+echo("      {\n");
+echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+echo("        startList();\n");
+echo("      }\n\n");
+echo("	</script>");
+
+echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
+
 include $dir_static.'menu_principal.php';
 
 // Cria um objeto de feedback para verificar se a ação foi realizada com sucesso
@@ -58,7 +89,7 @@ echo("                  </tr>\n");
 echo("    <div id=\"layer_nova_agenda\" class=\"popup\">\n");
 echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../imgs/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
 echo("      <div class=\"int_popup\">\n");
-echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"../controller/TrataRequest.php?cod_curso=1&acao=criarAgenda&coduser=1\"> \n");
+echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"../controller/TrataRequest.php?cod_curso=1&acao=criarAgenda\"> \n");
 //echo("        ".RetornaSessionIDInput());
 echo("          <div class=\"ulPopup\">\n");
 /* 18 - Titulo: */

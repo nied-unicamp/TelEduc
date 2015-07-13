@@ -56,6 +56,8 @@ $cod_curso= $_GET['cod_curso'];
 $cod_item= $_GET['cod_item'];
 $id = $cod_item;
 $origem = $_GET['origem'];
+//$diretorio_jscss = '../../../js/';
+
 
 echo("    <script type=\"text/javascript\">\n\n");
 echo("      var cod_curso='".$cod_curso."';\n");
@@ -66,11 +68,12 @@ echo("      var cancelarElemento=null;");
 echo("		var cancelarTodos=0;");
 echo("		var cancelaEdita=0;");
 echo("      var cod_item='".$cod_item."';\n");
+echo("		var cod_usuario = ".$cod_usuario.";\n");
 
 echo("    </script>\n\n");
 echo("	<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>");
-//echo ("    <script type=\"text/javascript\" src=\"" . $diretorio_jscss . "ckeditor/ckeditor.js\"></script>");
-///echo ("    <script type=\"text/javascript\" src=\"" . $diretorio_jscss . "ckeditor/ckeditor_biblioteca.js\"></script>");
+echo("   <script type=\"text/javascript\" src=\"../../../js/ckeditor/ckeditor.js\"></script>");
+echo("   <script type=\"text/javascript\" src=\"../../../js/ckeditor/ckeditor_biblioteca.js\"></script>");
 echo("    <script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
 echo("    <script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
 echo("    <script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
@@ -145,7 +148,8 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
   }
   
   echo("                  <li><a href=\"".$caminho."\">".$frase."</a></li>\n");
-  /*34 - Histórico */
+  /*34 - Histï¿½rico */
+  
   echo("                  <li><span onclick=\"window.open('historico_agenda.php?cod_curso=".$cod_curso."&amp;cod_usuario=".$cod_usuario."&amp;cod_item=".$cod_item."','Historico','width=600,height=400,top=150,left=250,status=yes,toolbar=no,menubar=no,resizable=yes,scrollbars=yes');\">Historico</span></li>\n");
   if($origem == "ver_editar"){
   	/*34 - Publicar */
@@ -189,9 +193,10 @@ echo("        <td width=\"100%\" valign=\"top\" id=\"conteudo\">\n");
        $renomear="<span id=\"renomear_".$cod_item."\">Editar Titulo</span>";
      //  $renomear="<span onclick=\"AlteraTitulo('".$linha_item['cod_item']."');\">Editar Titulo</span>";
       /* 91 - Editar texto */
-        $editar="<span onclick=\"AlteraTexto(\"\");\">Editar Texto</span>";
+        $editar="<span onclick=\"AlteraTexto(".$linha_item['cod_item'].");\">Editar Texto</span>";   
+        
       /* 92 - Limpar texto */
-        $limpar="<span onclick=\"LimpaTexto(\"\");\">Limpar Texto</span>";
+        $limpar="<span onclick=\"LimpaTexto(".$linha_item['cod_item'].");\">Limpar Texto</span>";
 
 
   echo("                  <tr id='tr_".$linha_item['cod_item']."'>\n");
