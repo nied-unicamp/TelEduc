@@ -21,40 +21,47 @@ class AgendaController{
 
 
 
-	/*Cria uma nova agenda a qual é armazenada no banco só com o título 
-	retorna um tipo AgendaItem;
-
-	*
-
+	/*Cria uma nova agenda a qual é armazenada no banco com o título, data de criação, 
+	retorna o código do novo item;
 	*/
 	function criaAgenda($titulo, $codcurso, $codusuario){
 		
 		
 		$conn = new Conexao();
+		$conn->Conectar();
 
-		$data_criacao = $data->Data2UnixTime('09/07/2015');
+		$data= new Data();
+
+		$data_criacao = time();
 		$data_publicacao = null;
-		$inicio_edicao = $data->Data2UnixTime('09/07/2015');
-		
+		$inicio_edicao = null;
+		$texto=null;
+		$situacao=null;
+		$status=null;
 		$agenda_item = new Agenda_Item();
 		 
 		$dao = new Agenda_ItemDao();
 		
-		$id= $dao->proxId($conn);
+		$cod_item= $dao->proxId($conn);
 
-		echo "PROX:".$id."\n";
+		// echo "Data:".$data->UnixTime2Data($data_criacao)."\n";
 
-		$agenda_item->setAll($ codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
+		$agenda_item->setAll($codcurso, $codusuario, $titulo, $texto, $situacao, $data_criacao, $data_publicacao, $status, $inicio_edicao);
 
 		
 		// echo ($agenda_item->toString());
 
-		$rs = $dao->create2($conn, $agenda_item);
-		
+		$ok = $dao->create2($conn, $agenda_item);
+
 		if($conn){
 			$conn->Desconectar();
 		}
-		return $rs;
+		if($ok){
+			return $cod_item;
+		}
+		else{
+			return NULL;
+		}
 	}
 
 	function listaAgendas(){
