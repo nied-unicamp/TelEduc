@@ -23,9 +23,15 @@ class Conexao {
         $this->db = mysqli_connect($this->host, $this->user, $this->pass);
  
         if (!$this->db) {
+<<<<<<< HEAD
             // echo "Erro ao conectar no banco" . mysqli_error($this->db);
         } else {
             // echo "Conectado no banco";
+=======
+            //echo "Erro ao conectar no banco" . mysqli_error($this->db);
+        } else {
+            //echo "Conectado no banco";
+>>>>>>> d752d1da024725babe05d35e5dac7aac879d39db
             $this->status = 1;
         }
         mysqli_select_db($this->db,$this->dbname);

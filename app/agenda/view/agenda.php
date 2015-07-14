@@ -64,7 +64,11 @@ echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
 
 
+<<<<<<< HEAD
 if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Criar Agenda'){
+=======
+if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Criar Agenda')){
+>>>>>>> d752d1da024725babe05d35e5dac7aac879d39db
 	/* 6 - Nova Agenda*/
 	echo("                  <li><span OnClick='NovaAgenda();'>Nova Agenda</span></li>");
 }
@@ -173,15 +177,24 @@ echo("          </table>\n");
 include $dir_static.'tela2.php';
 
 /* Cria a funcao JavaScript que testa o nome da nova agenda e o layer  */
+<<<<<<< HEAD
 /* nova_agenda, se estiver visualizando as agendas disponieis.        [Tue Jul 14 15:23:52.139029 2015] [:error] [pid 5088] [client 127.0.0.1:44841] PHP Notice:  Undefined index: atualizacao in /home/teleduc/public_html/TelEduc/app/agenda/view/agenda.php on line 31
  */
+=======
+/* nova_agenda, se estiver visualizando as agendas disponieis.         */
+>>>>>>> d752d1da024725babe05d35e5dac7aac879d39db
 
 /* Novo Item */
 echo("    <div id=\"layer_nova_agenda\" class=\"popup\">\n");
 echo("     <div class=\"posX\"><span onclick=\"EscondeLayer(lay_nova_agenda);\"><img src=\"../../../img/btClose.gif\" alt=\"Fechar\" border=\"0\" /></span></div>\n");
 echo("      <div class=\"int_popup\">\n");
+<<<<<<< HEAD
 echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"../controller/TrataRequest.php\" onSubmit=\"return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));\">\n");
 
+=======
+echo("        <form name=\"form_nova_agenda\" method=\"post\" action=\"acoes_linha.php\" onSubmit=\"return(VerificaNovoTitulo(document.form_nova_agenda.novo_titulo, 1));\">\n");
+//echo("        ".RetornaSessionIDInput());
+>>>>>>> d752d1da024725babe05d35e5dac7aac879d39db
 echo("          <div class=\"ulPopup\">\n");
 /* 18 - Titulo: */
 echo("            Titulo: <br />\n");
@@ -189,7 +202,11 @@ echo("            <input class=\"input\" type=\"text\" name=\"novo_titulo\" id=\
 echo("            <input type=\"hidden\" name=\"cod_curso\"   value=\"".$cod_curso."\" />\n");
 echo("            <input type=\"hidden\" name=\"acao\"        value=\"criarAgenda\" />\n");
 echo("            <input type=\"hidden\" name=\"cod_usuario\" value=\"".$cod_usuario."\" />\n");
+<<<<<<< HEAD
 echo("            <input type=\"hidden\" name=\"origem\"      value=\"agenda\" />\n");
+=======
+echo("            <input type=\"hidden\" name=\"origem\"      value=\"ver_editar\" />\n");
+>>>>>>> d752d1da024725babe05d35e5dac7aac879d39db
 /* 18 - Ok (gen) */
 
 echo("            <input type=\"submit\" id=\"ok_novoitem\" class=\"input\" value=\"Ok\"/>\n");

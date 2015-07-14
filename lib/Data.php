@@ -37,7 +37,7 @@ class Data{
 		global $data_invertida_g;
 	
 		$temp=adodb_getdate($timestamp);
-		$temp=$this->CorrigeZeros($temp);
+		$temp=Data::CorrigeZeros($temp);
 		if ($data_invertida_g)
 			$data=$temp['mon']."/".$temp['mday']."/".$temp['year'];
 		else
