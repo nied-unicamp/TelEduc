@@ -17,21 +17,12 @@ class AgendaController{
 		
 		echo ' status='.$conexao->status;
 	}
-<<<<<<< HEAD
 
 
 
 
 	/*Cria uma nova agenda a qual é armazenada no banco com o título, data de criação, 
 	retorna o código do novo item;
-=======
-	
-	/*Cria uma nova agenda a qual é armazenada no banco só com o título 
-	retorna um tipo AgendaItem;
-
-	*
-
->>>>>>> 811f63dd8971a219026d3a3d1470a7e0853f49a6
 	*/
 	function criaAgenda($titulo, $codcurso, $codusuario){
 		
@@ -55,11 +46,7 @@ class AgendaController{
 
 		// echo "Data:".$data->UnixTime2Data($data_criacao)."\n";
 
-<<<<<<< HEAD
 		$agenda_item->setAll($codcurso, $codusuario, $titulo, $texto, $situacao, $data_criacao, $data_publicacao, $status, $inicio_edicao);
-=======
-		$agenda_item->setAll($codcurso, $codusuario, $titulo,'','N', $data_criacao, $data_publicacao, 'L', $inicio_edicao);
->>>>>>> 811f63dd8971a219026d3a3d1470a7e0853f49a6
 
 		
 		// echo ($agenda_item->toString());

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../../lib/teleduc.inc';
+require_once 'teleduc.inc';
 
 class Conexao {
  
