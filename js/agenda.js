@@ -919,3 +919,93 @@ function Voltar()
    window.open(\"../perfil/exibir_perfis.php?"+sessionID+"&cod_curso="+cod_curso+"&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");
   return(false);
 }*/
+
+if (tipo_curso == 'E') {
+	function CopiaPeriodo()
+      {
+        document.frmImpMaterial.data_inicio.value = document.frmAlteraPeriodo.data_inicio.value;
+        document.frmImpMaterial.data_fim.value = document.frmAlteraPeriodo.data_fim.value;
+      }
+
+    // Se os cursos listados sao do tipo E(ncerrado) entao
+    // cria funcao de validacao para periodo dos cursos.
+
+    // Valida as datas (inicial e final) do periodo
+
+      function Valida()
+      {
+        if (ComparaData(document.getElementById('data_inicio'), document.getElementById('data_fim')) > 0)
+        {
+          //31(biblioteca) - Período Inválido! 
+          alert('Período Inválido!');
+          document.frmAlteraPeriodo.data_inicio.value = document.frmAlteraPeriodo.data_fim.value;
+          return false;
+        }
+        else if (AnoMesDia(document.getElementById('data_fim').value) > AnoMesDia(hoje))
+        {
+          // 31(biblioteca) - Período Inválido!
+          alert('Período Inválido!');
+          document.getElementById('data_fim').value = hoje;
+          return false;
+        }
+        var select = document.getElementById('cod_curso_todos');
+        while(select.length>0){
+          select.removeChild(select.firstChild);
+        }
+        var select = document.getElementById('cod_curso_compart');
+        while(select.length>0){
+          select.removeChild(select.firstChild);
+        }
+        //xajax_AlterarPeriodoDinamic(xajax.getFormValues('frmAlteraPeriodo'));
+      }
+}
+      function desmarcaSelect(selectObj)
+      {
+        eval('document.getElementById(selectObj).selectedIndex = -1;');
+      }
+
+      function EnviaReq(){
+      if (tipo_curso == 'E')
+          CopiaPeriodo();
+
+        return(selecionouCurso());
+      }
+
+      function extracheck(obj)
+      {
+        return !obj.disabled;
+      }
+
+    function ListarCursos(tipo_curso)
+    {
+      document.frmImpMaterial.tipo_curso.value = tipo_curso;
+      document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php?cod_curso='+cod_curso+'&cod_ferramenta='+cod_ferramenta+'&cod_topico_raiz='+cod_topico_raiz;
+      document.frmImpMaterial.submit();
+    }
+
+    function mudarCategoria()
+    {
+
+      x = document.getElementById('select_categorias');
+      cod_categoria = x.options[x.selectedIndex].value;
+      document.frmImpPergunta.cod_categoria;
+      document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php';
+      document.frmImpMaterial.cod_curso.value = cod_curso;
+      document.frmImpMaterial.tipo_curso.value = tipo_curso;
+      document.frmImpMaterial.submit();
+    }
+
+  function mudafonte(tipo) {
+	  if ( tipo == 0 ) {
+	        document.getElementById('tabelaInterna').style.fontSize='1.0em';
+	        tipo=''; 
+	  } 
+	  if ( tipo == 1 ) {
+	    document.getElementById('tabelaInterna').style.fontSize='1.2em';
+	    tipo=''; 
+	  }
+	  if ( tipo == 2 ) { 
+	    document.getElementById('tabelaInterna').style.fontSize='1.4em';
+	    tipo=''; 
+	  }
+  }
