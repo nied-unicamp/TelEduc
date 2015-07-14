@@ -1,6 +1,6 @@
 <?php 
 $dir_css = '../../../css/';
-$dir_js = '../../../js';
+$dir_js = '../../../js/';
 
 $ctrl_geral = '../../../app/geral/controller/';
 

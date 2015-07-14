@@ -17,9 +17,6 @@ $feedbackObject =  new FeedbackObject();
 $feedbackObject->addAction("criarAgenda", 0, 97);
 $feedbackObject->addAction("ativaragenda", "Agenda publicada com sucesso", 97);
 
-echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
-echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
-echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
 
 echo("	<script type=\"text/javascript\">");
 echo("		if (isNav)\n");
@@ -35,6 +32,10 @@ $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("        startList();\n");
 echo("      }\n\n");
 echo("	</script>");
+
+echo("	<script type=\"text/javascript\" src=\"../../../js/dhtmllib.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/jscript.js\"></script>\n");
+echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\n");
 
 
 include $dir_static.'menu_principal.php';
@@ -164,7 +165,6 @@ else
 
 /*Fim tabela interna*/
 echo("                </table>\n");
-include $dir_static.'topo_tela.php';
 
 /*Fim tabela externa*/
 echo("              </td>\n");

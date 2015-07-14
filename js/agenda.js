@@ -585,11 +585,11 @@ function TemCertezaAtivar()
 
 function Ativar()
 {
-	 if(TemCertezaAtivar())
-{
-    window.location='../../../app/agenda/controller/TrataRequest.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+cod_item+'&acao=ativaragenda';
-}
-  return false;
+	if(TemCertezaAtivar())
+	{
+		window.location='../../../app/agenda/controller/TrataRequest.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+cod_item+'&acao=ativaragenda';
+	}
+	return false;
 }
 
 /*function WindowOpenVer(id)
@@ -597,182 +597,162 @@ function Ativar()
    window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
 }*/
 
-
-
-
-
-
-function EditaTituloEnter(campo, evento, id)    {
+function EditaTituloEnter(campo, evento, id)    
+{
 	var tecla;
-CheckTAB=true;
-if(navigator.userAgent.indexOf('MSIE')== -1)
- {
- tecla = evento.which;
- }
-     else
-        {
- tecla = evento.keyCode;
-   }
-if ( tecla == 13 )
- {
- EdicaoTitulo(id, 'tit_'+id, 'ok');
-}
-return true;
+	CheckTAB=true;
+	if(navigator.userAgent.indexOf('MSIE')== -1)
+	{
+		tecla = evento.which;
+	}
+    else
+    {
+    	tecla = evento.keyCode;
+    }
+	if ( tecla == 13 )
+	{
+		EdicaoTitulo(id, 'tit_'+id, 'ok');
+	}
+	return true;
 }
 
 //function edicao_titulo(id){
 $(document).ready(function(){
-$('#renomear_'+id).click(function(){
-if (editaTitulo==0){
-CancelaTodos();
-
-/*var id_aux = id;
-var id = ".cod_item.";
-var id = ".cod_item.";
-var cod_curso = ".cod_curso.";*/
-
-
-conteudo = document.getElementById('tit_'+id).innerHTML;
-document.getElementById('tr_'+id).className='';
-document.getElementById('tit_'+id).className='';
-createInput = document.createElement('input');
-document.getElementById('tit_'+id).innerHTML='';
-
-
-createInput.setAttribute('type', 'text');
-createInput.setAttribute('style', 'border: 2px solid #9bc');
-createInput.setAttribute('id', 'tit_'+id+'_text');
-if (createInput.addEventListener){ //not IE
-createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
-} else if (createInput.attachEvent){ //IE
-createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
-}
-
-document.getElementById('tit_'+id).appendChild(createInput);
-
-$.post('../../../lib/DecodificaString.php',{texto:texto},   
-function(data){
-	var code = $.parseJSON(data);
-	$('#tit_'+id+'_text').val(code);  
-	
-	
-});
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-createSpan = document.createElement('span');
-createSpan.className='link';
-createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
-createSpan.setAttribute('id', 'OkEdita');
-//createSpan.innerHTML='"._("OK_-1")."';
-createSpan.innerHTML='OK';
-document.getElementById('tit_'+id).appendChild(createSpan);
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-createSpan = document.createElement('span');
-createSpan.className='link';
-createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
-createSpan.setAttribute('id', 'CancelaEdita');
-createSpan.innerHTML='Cancelar';
-document.getElementById('tit_'+id).appendChild(createSpan);
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-startList();
-cancelarElemento=document.getElementById('CancelaEdita');
-document.getElementById('tit_'+id+'_text').select();
-editaTitulo++;
-}
-
+	$('#renomear_'+id).click(function(){
+		if (editaTitulo==0){
+			CancelaTodos();
+			
+			/*var id_aux = id;
+			var id = ".cod_item.";
+			var id = ".cod_item.";
+			var cod_curso = ".cod_curso.";*/
+			
+			
+			conteudo = document.getElementById('tit_'+id).innerHTML;
+			document.getElementById('tr_'+id).className='';
+			document.getElementById('tit_'+id).className='';
+			createInput = document.createElement('input');
+			document.getElementById('tit_'+id).innerHTML='';
+			
+			
+			createInput.setAttribute('type', 'text');
+			createInput.setAttribute('style', 'border: 2px solid #9bc');
+			createInput.setAttribute('id', 'tit_'+id+'_text');
+			if (createInput.addEventListener){ //not IE
+			createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
+			} else if (createInput.attachEvent){ //IE
+			createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
+			}
+			
+			document.getElementById('tit_'+id).appendChild(createInput);
+			
+			$.post('../../../lib/DecodificaString.php',{texto:texto},   
+			function(data){
+				var code = $.parseJSON(data);
+				$('#tit_'+id+'_text').val(code);  
+				
+				
+			});
+			
+			//cria o elemento 'espaco' e adiciona na pagina
+			espaco = document.createElement('span');
+			espaco.innerHTML='&nbsp;&nbsp;';
+			document.getElementById('tit_'+id).appendChild(espaco);
+			
+			createSpan = document.createElement('span');
+			createSpan.className='link';
+			createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
+			createSpan.setAttribute('id', 'OkEdita');
+			//createSpan.innerHTML='"._("OK_-1")."';
+			createSpan.innerHTML='OK';
+			document.getElementById('tit_'+id).appendChild(createSpan);
+			
+			//cria o elemento 'espaco' e adiciona na pagina
+			espaco = document.createElement('span');
+			espaco.innerHTML='&nbsp;&nbsp;';
+			document.getElementById('tit_'+id).appendChild(espaco);
+			
+			createSpan = document.createElement('span');
+			createSpan.className='link';
+			createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
+			createSpan.setAttribute('id', 'CancelaEdita');
+			createSpan.innerHTML='Cancelar';
+			document.getElementById('tit_'+id).appendChild(createSpan);
+			
+			//cria o elemento 'espaco' e adiciona na pagina
+			espaco = document.createElement('span');
+			espaco.innerHTML='&nbsp;&nbsp;';
+			document.getElementById('tit_'+id).appendChild(espaco);
+			
+			startList();
+			cancelarElemento=document.getElementById('CancelaEdita');
+			document.getElementById('tit_'+id+'_text').select();
+			editaTitulo++;
+		}
+	});
 });
 
 function EdicaoTitulo(codigo, id, valor){
-//se o titulo nao e vazio\n
-if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-titulo = document.getElementById(id+'_text').value;
-//Edita o titulo do item dado, dinamicamente\n
-		function EdicaoTitulo(codigo, id, valor){
-			//se o t�tulo n�o � vazio");
-			if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-				titulo = document.getElementById(id+'_text').value;
-				//Edita o t�tulo do item dado, din�micamente");
+//se o t�tulo n�o � vazio");
+	if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+		titulo = document.getElementById(id+'_text').value;
+		//Edita o t�tulo do item dado, din�micamente");
             $.post('../../../app/agenda/dao/DaoAlteraTitulo.php',{titulo: titulo,cod_item: cod_item,cod_curso:cod_curso},
 				function(data){
 					$('#tr_'+id).toggleClass('novoitem');
 					$('#tit_'+id).html(titulo);
-/* 103 - Agenda renomeada com sucesso.*/
-					//mostraFeedback('Palavra renomeada com sucesso', 'true');
+					/* 103 - Agenda renomeada com sucesso.*/
+					mostraFeedback('Palavra renomeada com sucesso', 'true');
 			});
-			//else - se o t�tulo for vazio.");
-			}else{
-				/* 15 - O titulo nao pode ser vazio. */
-				if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
-/* 92 - O t�tulo n�o pode ser vazio.*/
-					alert('O titulo nao pode ficar vazio');
-
-					
-					
-					document.getElementById(id).innerHTML=conteudo;
-}
+			//else - se o titulo for vazio.");
+	}else{
+		/* 15 - O titulo nao pode ser vazio. */
+		if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
+		/* 92 - O t�tulo n�o pode ser vazio.*/
+			alert('O titulo nao pode ficar vazio');
+		document.getElementById(id).innerHTML=conteudo;
+	}
 	editaTitulo=0;
 	cancelarElemento=null;
 }
 
 
-});
+function AlteraTexto(id){
+	var conteudo = document.getElementById('text_'+id).innerHTML;
+    writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
+}
 
-      function AlteraTexto(id){
-          var conteudo = document.getElementById('text_'+id).innerHTML;
-          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
-      }
-
-      function EdicaoTexto(codigo, id, valor){
-
-        eval('var conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
-
-
-if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-				texto = document.getElementById(id+'_text').value;
-$.post('../../../app/agenda/dao/DaoAlteraTexto.php',{ texto: conteudo,cod_item: cod_item, cod_curso:cod_curso},
+function EdicaoTexto(codigo, id, valor){
+	eval('var conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
+	
+	if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+		texto = document.getElementById(id+'_text').value;
+		$.post('../../../app/agenda/dao/DaoAlteraTexto.php',{ texto: conteudo,cod_item: cod_item, cod_curso:cod_curso},
 				function(data){
 					$('#tr_'+id).toggleClass('novoitem');
 					$('#text_'+id).html(conteudo);
 
-			});
-        }
-
-
-        document.getElementById(id).innerHTML=conteudo;
-
-		editaTexto=0;
-		cancelarElemento=null;
-
-
-			cancelarElemento=document.getElementById('CancelaEdita');
-
-        }
+		});
+	}
+	document.getElementById(id).innerHTML=conteudo;
+	
+	editaTexto=0;
+	cancelarElemento=null;
+	
+	cancelarElemento=document.getElementById('CancelaEdita');
+}
       
-      function LimpaTexto(id){
+function LimpaTexto(id){
     		
-    	  checks = document.getElementsByName('chkArq');
+	checks = document.getElementsByName('chkArq');
     	
-    	  if ((editaTexto==0)&&(checks.length==0)){
-    	    // 95 - Voc� tem certeza que deseja apagar o texto desta agenda?
-    	    if (confirm('Voce tem certeza que deseja apagar o texto?')){
-    	      CancelaTodos();
-    	      document.getElementById('text_'+id).innerHTML='';
-    	
-    	      $.post('../../../app/agenda/dao/DaoAlteraTexto.php',{cod_curso: cod_curso, cod_item: cod_item, texto: ' '}, 
+	if ((editaTexto==0)&&(checks.length==0)){
+		// 95 - Voc� tem certeza que deseja apagar o texto desta agenda?
+    	if (confirm('Voce tem certeza que deseja apagar o texto?')){
+    		CancelaTodos();
+    	    document.getElementById('text_'+id).innerHTML='';
+    	    
+    	    $.post('../../../app/agenda/dao/DaoAlteraTexto.php',{cod_curso: cod_curso, cod_item: cod_item, texto: ' '}, 
     	    		    function(data){
     	    		    	var code = $.parseJSON(data);
     	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
@@ -903,9 +883,9 @@ function VerificaNovoTitulo(textbox, aspas) {
 
 function TemCertezaAtivar()
 {
- 57 - Tem certeza que deseja publicar esta agenda? 
- 58 - (Uma vez publicada ela substituira a Agenda Atual) 
-  return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
+ //57 - Tem certeza que deseja publicar esta agenda? 
+ //58 - (Uma vez publicada ela substituira a Agenda Atual) 
+ return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
 }
 
 
@@ -922,10 +902,10 @@ function Voltar()
 
 if (tipo_curso == 'E') {
 	function CopiaPeriodo()
-      {
+    {
         document.frmImpMaterial.data_inicio.value = document.frmAlteraPeriodo.data_inicio.value;
         document.frmImpMaterial.data_fim.value = document.frmAlteraPeriodo.data_fim.value;
-      }
+    }
 
     // Se os cursos listados sao do tipo E(ncerrado) entao
     // cria funcao de validacao para periodo dos cursos.
@@ -959,53 +939,52 @@ if (tipo_curso == 'E') {
         //xajax_AlterarPeriodoDinamic(xajax.getFormValues('frmAlteraPeriodo'));
       }
 }
-      function desmarcaSelect(selectObj)
-      {
-        eval('document.getElementById(selectObj).selectedIndex = -1;');
-      }
+  function desmarcaSelect(selectObj)
+  {
+    eval('document.getElementById(selectObj).selectedIndex = -1;');
+  }
 
-      function EnviaReq(){
-      if (tipo_curso == 'E')
-          CopiaPeriodo();
+  function EnviaReq(){
+  if (tipo_curso == 'E')
+      CopiaPeriodo();
 
-        return(selecionouCurso());
-      }
+    return(selecionouCurso());
+  }
 
-      function extracheck(obj)
-      {
-        return !obj.disabled;
-      }
+  function extracheck(obj)
+  {
+    return !obj.disabled;
+  }
 
-    function ListarCursos(tipo_curso)
-    {
-      document.frmImpMaterial.tipo_curso.value = tipo_curso;
-      document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php?cod_curso='+cod_curso+'&cod_ferramenta='+cod_ferramenta+'&cod_topico_raiz='+cod_topico_raiz;
-      document.frmImpMaterial.submit();
-    }
+function ListarCursos(tipo_curso)
+{
+  document.frmImpMaterial.tipo_curso.value = tipo_curso;
+  document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php?cod_curso='+cod_curso+'&cod_ferramenta='+cod_ferramenta+'&cod_topico_raiz='+cod_topico_raiz;
+  document.frmImpMaterial.submit();
+}
 
-    function mudarCategoria()
-    {
+function mudarCategoria()
+{
+  x = document.getElementById('select_categorias');
+  cod_categoria = x.options[x.selectedIndex].value;
+  document.frmImpPergunta.cod_categoria;
+  document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php';
+  document.frmImpMaterial.cod_curso.value = cod_curso;
+  document.frmImpMaterial.tipo_curso.value = tipo_curso;
+  document.frmImpMaterial.submit();
+}
 
-      x = document.getElementById('select_categorias');
-      cod_categoria = x.options[x.selectedIndex].value;
-      document.frmImpPergunta.cod_categoria;
-      document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php';
-      document.frmImpMaterial.cod_curso.value = cod_curso;
-      document.frmImpMaterial.tipo_curso.value = tipo_curso;
-      document.frmImpMaterial.submit();
-    }
-
-  function mudafonte(tipo) {
+function mudafonte(tipo) {
 	  if ( tipo == 0 ) {
 	        document.getElementById('tabelaInterna').style.fontSize='1.0em';
 	        tipo=''; 
 	  } 
 	  if ( tipo == 1 ) {
-	    document.getElementById('tabelaInterna').style.fontSize='1.2em';
-	    tipo=''; 
+		  document.getElementById('tabelaInterna').style.fontSize='1.2em';
+		  tipo=''; 
 	  }
 	  if ( tipo == 2 ) { 
-	    document.getElementById('tabelaInterna').style.fontSize='1.4em';
-	    tipo=''; 
+		  document.getElementById('tabelaInterna').style.fontSize='1.4em';
+		  tipo=''; 
 	  }
-  }
+}
