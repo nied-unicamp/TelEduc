@@ -153,7 +153,7 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
 
 
 /*function EdicaoTitulo(codigo, id, valor){
-	//se o t�tulo n�o � vazio
+  //se o t�tulo n�o � vazio
   if ((valor=='ok')&&(document.getElementById(id+'_text').value != "")){
     novoconteudo = document.getElementById(id+'_text').value;
     //Edita o t�tulo do item dado, din�micamente
@@ -162,9 +162,9 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     //else - se o t�tulo for vazio.
   }else{
      15 - O titulo nao pode ser vazio. 
-    if ((valor=='ok')&&(document.getElementById(id+'_text').value == ""))	
+    if ((valor=='ok')&&(document.getElementById(id+'_text').value == "")) 
       alert(lista_frases.msg15);
-	
+  
     document.getElementById(id).innerHTML=conteudo;
     
     if(navigator.appName.match("Opera")){
@@ -176,14 +176,14 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     //Cancela Edi��o
     if (!cancelarTodos)
       xajax_AcabaEdicaoDinamic(cod_curso, cod_item, cod_usuario, 0);
-  	}
-  	editaTitulo=0;
-  	cancelarElemento=null;
+    }
+    editaTitulo=0;
+    cancelarElemento=null;
 }
 */
 /*function AlteraTitulo(id){
-  var iframe = document.getElementById('iframe_ArqEntrada');	
-  var span = document.getElementById('text_'+id);	
+  var iframe = document.getElementById('iframe_ArqEntrada');  
+  var span = document.getElementById('text_'+id); 
 
   checks = document.getElementsByName('chkArq');
 
@@ -191,29 +191,29 @@ writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     CancelaTodos();
 
     //xajax_AbreEdicao(cod_curso, cod_item, cod_usuario, origem);
-    if(iframe == null)	
-    	conteudo = span.innerHTML;
+    if(iframe == null)  
+      conteudo = span.innerHTML;
     else
-    { 	
-	span.removeChild(iframe);
-	conteudo="";		
-    }				
+    {   
+  span.removeChild(iframe);
+  conteudo="";    
+    }       
     writeRichTextOnJSButtons('text_'+id+'_text', conteudo, 520, 200, true, false, id);
     startList();
     //document.getElementById('text_'+id+'_text').focus();
     CKEDITOR.on("instanceReady", function(event)
-    		{
-    			eval('CKEDITOR.instances.text_'+id+'_text'+'.focus();');
-    		});
+        {
+          eval('CKEDITOR.instances.text_'+id+'_text'+'.focus();');
+        });
     cancelarElemento=document.getElementById('CancelaEdita');
     editaTexto++;
   }
   else{
     if(checks.length > 0)
-    {	
-	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
-    	alert(lista_frases.msg53);
-    }	
+    { 
+  // 53 - A agenda nao pode ter texto e arquivos simultaneamente!   
+      alert(lista_frases.msg53);
+    } 
   }
 }*/
 
@@ -232,22 +232,22 @@ function LimpaTexto(id){
   }
   else{
     if(checks.length > 0)
-    {	
-	// 53 - A agenda nao pode ter texto e arquivos simultaneamente!
-    	alert(lista_frases.msg53);
-    }	
+    { 
+  // 53 - A agenda nao pode ter texto e arquivos simultaneamente!
+      alert(lista_frases.msg53);
+    } 
   }
 }
 
 function ArquivoValido(path)
 {
-	var file = getfilename(path);
-	var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
+  var file = getfilename(path);
+  var vet  = file.match(/^[A-Za-z0-9-\.\_\ ]+/);
 
-	// Usando express�o regular para identificar caracteres inv�lidos
-	if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
-		return false;
-	return true;
+  // Usando express�o regular para identificar caracteres inv�lidos
+  if ((file.length == 0) || (vet == null) || (file.length != vet[0].length))
+    return false;
+  return true;
 }
 
 function getfilename(path)
@@ -266,7 +266,7 @@ function EdicaoArq(i){
     document.formFiles.submit();
   }
   else {
-	alert(lista_frases.msg109);
+  alert(lista_frases.msg109);
     document.getElementById('input_files').style.visibility='hidden';
     document.getElementById('input_files').value='';
     document.getElementById('divArquivo').className='';
@@ -283,14 +283,14 @@ function AcrescentarBarraFile(apaga){
     
     if (input==1) return;
     CancelaTodos();
-    	
+      
     conteudo = document.getElementById('text_'+cod_item).innerHTML;
     if((conteudo != '')&&(document.getElementById('iframe_ArqEntrada') == null)) {
-	// 53 - A agenda nao pode ter texto e arquivos simultaneamente! 	
-	alert(lista_frases.msg53);
-	return false;
+  // 53 - A agenda nao pode ter texto e arquivos simultaneamente!   
+  alert(lista_frases.msg53);
+  return false;
     }
-						
+            
     document.getElementById('input_files').style.visibility='visible';
     document.getElementById('divArquivoEdit').className='';
     document.getElementById('divArquivo').className='divHidden';
@@ -359,7 +359,7 @@ function VerificaChkBox(alpha){
     document.getElementById('mArq_apagar').className="menuUp02";
     document.getElementById('mArq_descomp').className="menuUp";
     document.getElementById('mArq_entrada').className="menuUp";
-    	
+      
     document.getElementById('mArq_apagar').onclick= function(){ Apagar(); };
     document.getElementById('mArq_descomp').onclick= function(){  };
     document.getElementById('mArq_entrada').onclick= function(){  };
@@ -435,7 +435,7 @@ function Apagar(){
         getNumber=checks[i].id.split("_");
         nomeArq = document.getElementById("nomeArq_"+getNumber[1]).getAttribute('nomeArq');
         //xajax_ExcluirArquivo(getNumber[1], nomeArq, cod_curso, cod_item, cod_usuario, origem);
-	js_conta_arq--;
+  js_conta_arq--;
       }
     }
     mostraFeedback(lista_frases.msg104, 'true');
@@ -456,8 +456,8 @@ function SelecionarEntrada(){
   for (i=0; i<checks.length; i++)
   {
     nomesArqs[i] = new Array();
-	
-    getNumber=checks[i].id.split("_");	
+  
+    getNumber=checks[i].id.split("_");  
     nomeArq = document.getElementById("nomeArq_"+getNumber[1]).getAttribute('nomeArq');
     nomesArqs[i][0]=nomeArq;
     
@@ -468,7 +468,7 @@ function SelecionarEntrada(){
   }
 
   CheckTodos();
-  //xajax_SelecionarEntradaDinamic(nomesArqs, cod_curso, cod_item, cod_usuario, origem);	
+  //xajax_SelecionarEntradaDinamic(nomesArqs, cod_curso, cod_item, cod_usuario, origem);  
 }
 
 function RetirarEntrada(){
@@ -549,9 +549,9 @@ function LimpaBarraArq(){
 
 function NovaAgenda()
 {
-	MostraLayer(lay_nova_agenda, 0);
-	document.form_nova_agenda.novo_titulo.value = '';
-	document.getElementById('nome').focus();
+  MostraLayer(lay_nova_agenda, 0);
+  document.form_nova_agenda.novo_titulo.value = '';
+  document.getElementById('nome').focus();
 }
 
 /*function Iniciar()
@@ -585,10 +585,10 @@ function TemCertezaAtivar()
 
 function Ativar()
 {
-	 if(TemCertezaAtivar())
-{
+  if(TemCertezaAtivar())
+  {
     window.location='../../../app/agenda/controller/TrataRequest.php?cod_curso='+cod_curso+'&cod_usuario='+cod_usuario+'&cod_ferramenta=1&cod_item='+cod_item+'&acao=ativaragenda';
-}
+  }
   return false;
 }
 
@@ -597,207 +597,187 @@ function Ativar()
    window.open('".$dir_item_temp['link']."'+id+'?".time()."','Agenda','top=50,left=100,width=600,height=400,menubar=yes,status=yes,toolbar=yes,scrollbars=yes,resizable=yes');
 }*/
 
-
-
-
-
-
-function EditaTituloEnter(campo, evento, id)    {
-	var tecla;
-CheckTAB=true;
-if(navigator.userAgent.indexOf('MSIE')== -1)
- {
- tecla = evento.which;
- }
-     else
-        {
- tecla = evento.keyCode;
-   }
-if ( tecla == 13 )
- {
- EdicaoTitulo(id, 'tit_'+id, 'ok');
-}
-return true;
+function EditaTituloEnter(campo, evento, id)    
+{
+  var tecla;
+  CheckTAB=true;
+  if(navigator.userAgent.indexOf('MSIE')== -1)
+  {
+    tecla = evento.which;
+  }
+    else
+    {
+      tecla = evento.keyCode;
+    }
+  if ( tecla == 13 )
+  {
+    EdicaoTitulo(id, 'tit_'+id, 'ok');
+  }
+  return true;
 }
 
 //function edicao_titulo(id){
 $(document).ready(function(){
-$('#renomear_'+id).click(function(){
-if (editaTitulo==0){
-CancelaTodos();
-
-/*var id_aux = id;
-var id = ".cod_item.";
-var id = ".cod_item.";
-var cod_curso = ".cod_curso.";*/
-
-
-conteudo = document.getElementById('tit_'+id).innerHTML;
-document.getElementById('tr_'+id).className='';
-document.getElementById('tit_'+id).className='';
-createInput = document.createElement('input');
-document.getElementById('tit_'+id).innerHTML='';
-
-
-createInput.setAttribute('type', 'text');
-createInput.setAttribute('style', 'border: 2px solid #9bc');
-createInput.setAttribute('id', 'tit_'+id+'_text');
-if (createInput.addEventListener){ //not IE
-createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
-} else if (createInput.attachEvent){ //IE
-createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
-}
-
-document.getElementById('tit_'+id).appendChild(createInput);
-
-$.post('../../../lib/DecodificaString.php',{texto:texto},   
-function(data){
-	var code = $.parseJSON(data);
-	$('#tit_'+id+'_text').val(code);  
-	
-	
-});
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-createSpan = document.createElement('span');
-createSpan.className='link';
-createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
-createSpan.setAttribute('id', 'OkEdita');
-//createSpan.innerHTML='"._("OK_-1")."';
-createSpan.innerHTML='OK';
-document.getElementById('tit_'+id).appendChild(createSpan);
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-createSpan = document.createElement('span');
-createSpan.className='link';
-createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
-createSpan.setAttribute('id', 'CancelaEdita');
-createSpan.innerHTML='Cancelar';
-document.getElementById('tit_'+id).appendChild(createSpan);
-
-//cria o elemento 'espaco' e adiciona na pagina
-espaco = document.createElement('span');
-espaco.innerHTML='&nbsp;&nbsp;';
-document.getElementById('tit_'+id).appendChild(espaco);
-
-startList();
-cancelarElemento=document.getElementById('CancelaEdita');
-document.getElementById('tit_'+id+'_text').select();
-editaTitulo++;
-}
-
+  $('#renomear_'+id).click(function(){
+    if (editaTitulo==0){
+      CancelaTodos();
+      
+      /*var id_aux = id;
+      var id = ".cod_item.";
+      var id = ".cod_item.";
+      var cod_curso = ".cod_curso.";*/
+      
+      
+      conteudo = document.getElementById('tit_'+id).innerHTML;
+      document.getElementById('tr_'+id).className='';
+      document.getElementById('tit_'+id).className='';
+      createInput = document.createElement('input');
+      document.getElementById('tit_'+id).innerHTML='';
+      
+      
+      createInput.setAttribute('type', 'text');
+      createInput.setAttribute('style', 'border: 2px solid #9bc');
+      createInput.setAttribute('id', 'tit_'+id+'_text');
+      if (createInput.addEventListener){ //not IE
+      createInput.addEventListener('keypress', function (event) {EditaTituloEnter(this, event, id_aux);}, false);
+      } else if (createInput.attachEvent){ //IE
+      createInput.attachEvent('onkeypress', function (event) {EditaTituloEnter(this, event, id_aux);});
+      }
+      
+      document.getElementById('tit_'+id).appendChild(createInput);
+      
+      $.post('../../../lib/DecodificaString.php',{texto:texto},   
+      function(data){
+        var code = $.parseJSON(data);
+        $('#tit_'+id+'_text').val(code);  
+        
+        
+      });
+      
+      //cria o elemento 'espaco' e adiciona na pagina
+      espaco = document.createElement('span');
+      espaco.innerHTML='&nbsp;&nbsp;';
+      document.getElementById('tit_'+id).appendChild(espaco);
+      
+      createSpan = document.createElement('span');
+      createSpan.className='link';
+      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'ok'); };
+      createSpan.setAttribute('id', 'OkEdita');
+      //createSpan.innerHTML='"._("OK_-1")."';
+      createSpan.innerHTML='OK';
+      document.getElementById('tit_'+id).appendChild(createSpan);
+      
+      //cria o elemento 'espaco' e adiciona na pagina
+      espaco = document.createElement('span');
+      espaco.innerHTML='&nbsp;&nbsp;';
+      document.getElementById('tit_'+id).appendChild(espaco);
+      
+      createSpan = document.createElement('span');
+      createSpan.className='link';
+      createSpan.onclick= function(){ EdicaoTitulo(id, 'tit_'+id, 'canc'); };
+      createSpan.setAttribute('id', 'CancelaEdita');
+      createSpan.innerHTML='Cancelar';
+      document.getElementById('tit_'+id).appendChild(createSpan);
+      
+      //cria o elemento 'espaco' e adiciona na pagina
+      espaco = document.createElement('span');
+      espaco.innerHTML='&nbsp;&nbsp;';
+      document.getElementById('tit_'+id).appendChild(espaco);
+      
+      startList();
+      cancelarElemento=document.getElementById('CancelaEdita');
+      document.getElementById('tit_'+id+'_text').select();
+      editaTitulo++;
+    }
+  });
 });
 
 function EdicaoTitulo(codigo, id, valor){
-//se o titulo nao e vazio\n
-if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-titulo = document.getElementById(id+'_text').value;
-//Edita o titulo do item dado, dinamicamente\n
-		function EdicaoTitulo(codigo, id, valor){
-			//se o t�tulo n�o � vazio");
-			if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-				titulo = document.getElementById(id+'_text').value;
-				//Edita o t�tulo do item dado, din�micamente");
+//se o t�tulo n�o � vazio");
+  if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+    titulo = document.getElementById(id+'_text').value;
+    //Edita o t�tulo do item dado, din�micamente");
             $.post('../../../app/agenda/dao/DaoAlteraTitulo.php',{titulo: titulo,cod_item: cod_item,cod_curso:cod_curso},
-				function(data){
-					$('#tr_'+id).toggleClass('novoitem');
-					$('#tit_'+id).html(titulo);
-/* 103 - Agenda renomeada com sucesso.*/
-					//mostraFeedback('Palavra renomeada com sucesso', 'true');
-			});
-			//else - se o t�tulo for vazio.");
-			}else{
-				/* 15 - O titulo nao pode ser vazio. */
-				if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
-/* 92 - O t�tulo n�o pode ser vazio.*/
-					alert('O titulo nao pode ficar vazio');
-
-					
-					
-					document.getElementById(id).innerHTML=conteudo;
-}
-	editaTitulo=0;
-	cancelarElemento=null;
+        function(data){
+          $('#tr_'+id).toggleClass('novoitem');
+          $('#tit_'+id).html(titulo);
+          /* 103 - Agenda renomeada com sucesso.*/
+          mostraFeedback('Palavra renomeada com sucesso', 'true');
+      });
+      //else - se o titulo for vazio.");
+  }else{
+    /* 15 - O titulo nao pode ser vazio. */
+    if ((valor=='ok')&&(document.getElementById(id+'_text').value == ''))
+    /* 92 - O t�tulo n�o pode ser vazio.*/
+      alert('O titulo nao pode ficar vazio');
+    document.getElementById(id).innerHTML=conteudo;
+  }
+  editaTitulo=0;
+  cancelarElemento=null;
 }
 
 
-});
+function AlteraTexto(id){
+  var conteudo = document.getElementById('text_'+id).innerHTML;
+    writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
+}
 
-      function AlteraTexto(id){
-          var conteudo = document.getElementById('text_'+id).innerHTML;
-          writeRichTextOnJS('text_'+id+'_text', conteudo, 520, 200, true, false, id);
-      }
+function EdicaoTexto(codigo, id, valor){
+  eval('var conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
+  
+  if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
+    texto = document.getElementById(id+'_text').value;
+    $.post('../../../app/agenda/dao/DaoAlteraTexto.php',{ texto: conteudo,cod_item: cod_item, cod_curso:cod_curso},
+        function(data){
+          $('#tr_'+id).toggleClass('novoitem');
+          $('#text_'+id).html(conteudo);
 
-      function EdicaoTexto(codigo, id, valor){
-
-        eval('var conteudo = CKEDITOR.instances.'+id+'_text'+'.getData();');
-
-
-if ((valor=='ok')&&(document.getElementById(id+'_text').value != '')){
-				texto = document.getElementById(id+'_text').value;
-$.post('../../../app/agenda/dao/DaoAlteraTexto.php',{ texto: conteudo,cod_item: cod_item, cod_curso:cod_curso},
-				function(data){
-					$('#tr_'+id).toggleClass('novoitem');
-					$('#text_'+id).html(conteudo);
-
-			});
-        }
-
-
-        document.getElementById(id).innerHTML=conteudo;
-
-		editaTexto=0;
-		cancelarElemento=null;
-
-
-			cancelarElemento=document.getElementById('CancelaEdita');
-
-        }
+    });
+  }
+  document.getElementById(id).innerHTML=conteudo;
+  
+  editaTexto=0;
+  cancelarElemento=null;
+  
+  cancelarElemento=document.getElementById('CancelaEdita');
+}
       
-      function LimpaTexto(id){
-    		
-    	  checks = document.getElementsByName('chkArq');
-    	
-    	  if ((editaTexto==0)&&(checks.length==0)){
-    	    // 95 - Voc� tem certeza que deseja apagar o texto desta agenda?
-    	    if (confirm('Voce tem certeza que deseja apagar o texto?')){
-    	      CancelaTodos();
-    	      document.getElementById('text_'+id).innerHTML='';
-    	
-    	      $.post('../../../app/agenda/dao/DaoAlteraTexto.php',{cod_curso: cod_curso, cod_item: cod_item, texto: ' '}, 
-    	    		    function(data){
-    	    		    	var code = $.parseJSON(data);
-    	    		    	$('#tr_'+cod_item).toggleClass('novoitem');
-    	    		    	$('#text_'+cod_item).html(code);
-    	    		    	mostraFeedback('Apagado com sucesso', 'true');
-    	      });
-    	    }
-    	  }
-    	  else{
-    	    if(checks.length > 0)
-    	    {	
-    		// 53 - A agenda nao pode ter texto e arquivos simultaneamente!
-    	    	alert('A agenda não pode ter texto nem titulo simultaneamente.');
-    	    }	
-    	  }
-    	}
+function LimpaTexto(id){
+        
+  checks = document.getElementsByName('chkArq');
+      
+  if ((editaTexto==0)&&(checks.length==0)){
+    // 95 - Voc� tem certeza que deseja apagar o texto desta agenda?
+      if (confirm('Voce tem certeza que deseja apagar o texto?')){
+        CancelaTodos();
+          document.getElementById('text_'+id).innerHTML='';
+          
+          $.post('../../../app/agenda/dao/DaoAlteraTexto.php',{cod_curso: cod_curso, cod_item: cod_item, texto: ' '}, 
+                  function(data){
+                    var code = $.parseJSON(data);
+                    $('#tr_'+cod_item).toggleClass('novoitem');
+                    $('#text_'+cod_item).html(code);
+                    mostraFeedback('Apagado com sucesso', 'true');
+            });
+          }
+        }
+        else{
+          if(checks.length > 0)
+          { 
+        // 53 - A agenda nao pode ter texto e arquivos simultaneamente!
+            alert('A agenda não pode ter texto nem titulo simultaneamente.');
+          } 
+        }
+      }
       
      
-		function ApagarItem(){
-		CancelaTodos();
+    function ApagarItem(){
+    CancelaTodos();
 
-		if (confirm('Voce tem certeza de que deseja apagar esta agenda?, Nao havera como recupera-la!')){
-		window.location='../../../app/agenda/dao/DaoExcluirAgenda.php?cod_curso='+cod_curso+'&cod_item='+cod_item; 
-	
-		
+    if (confirm('Voce tem certeza de que deseja apagar esta agenda?, Nao havera como recupera-la!')){
+    window.location='../../../app/agenda/dao/DaoExcluirAgenda.php?cod_curso='+cod_curso+'&cod_item='+cod_item; 
+  
+    
 }
 }
 
@@ -820,9 +800,9 @@ function EscondeLayers()
 
 function NovaAgenda()
 {
-	MostraLayer(lay_nova_agenda, 0);
-	document.form_nova_agenda.novo_titulo.value = '';
-	document.getElementById('nome').focus();
+  MostraLayer(lay_nova_agenda, 0);
+  document.form_nova_agenda.novo_titulo.value = '';
+  document.getElementById('nome').focus();
 }
 
 function VerificaCheck(){
@@ -903,9 +883,9 @@ function VerificaNovoTitulo(textbox, aspas) {
 
 function TemCertezaAtivar()
 {
- 57 - Tem certeza que deseja publicar esta agenda? 
- 58 - (Uma vez publicada ela substituira a Agenda Atual) 
-  return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
+ //57 - Tem certeza que deseja publicar esta agenda? 
+ //58 - (Uma vez publicada ela substituira a Agenda Atual) 
+ return(confirm('Tem certeza que deseja publicar esta agenda?'+'\n'+'(Uma vez publicada ela substituira a Agenda Atual)'));
 }
 
 
@@ -919,3 +899,92 @@ function Voltar()
    window.open(\"../perfil/exibir_perfis.php?"+sessionID+"&cod_curso="+cod_curso+"&cod_aluno[]=\"+funcao,\"PerfilDisplay\",\"width=600,height=400,top=120,left=120,scrollbars=yes,status=yes,toolbar=no,menubar=no,resizable=yes\");
   return(false);
 }*/
+
+if (tipo_curso == 'E') {
+  function CopiaPeriodo()
+    {
+        document.frmImpMaterial.data_inicio.value = document.frmAlteraPeriodo.data_inicio.value;
+        document.frmImpMaterial.data_fim.value = document.frmAlteraPeriodo.data_fim.value;
+    }
+
+    // Se os cursos listados sao do tipo E(ncerrado) entao
+    // cria funcao de validacao para periodo dos cursos.
+
+    // Valida as datas (inicial e final) do periodo
+
+      function Valida()
+      {
+        if (ComparaData(document.getElementById('data_inicio'), document.getElementById('data_fim')) > 0)
+        {
+          //31(biblioteca) - Per�odo Inv�lido! 
+          alert('Per�odo Inv�lido!');
+          document.frmAlteraPeriodo.data_inicio.value = document.frmAlteraPeriodo.data_fim.value;
+          return false;
+        }
+        else if (AnoMesDia(document.getElementById('data_fim').value) > AnoMesDia(hoje))
+        {
+          // 31(biblioteca) - Per�odo Inv�lido!
+          alert('Per�odo Inv�lido!');
+          document.getElementById('data_fim').value = hoje;
+          return false;
+        }
+        var select = document.getElementById('cod_curso_todos');
+        while(select.length>0){
+          select.removeChild(select.firstChild);
+        }
+        var select = document.getElementById('cod_curso_compart');
+        while(select.length>0){
+          select.removeChild(select.firstChild);
+        }
+        //xajax_AlterarPeriodoDinamic(xajax.getFormValues('frmAlteraPeriodo'));
+      }
+}
+  function desmarcaSelect(selectObj)
+  {
+    eval('document.getElementById(selectObj).selectedIndex = -1;');
+  }
+
+  function EnviaReq(){
+  if (tipo_curso == 'E')
+      CopiaPeriodo();
+
+    return(selecionouCurso());
+  }
+
+  function extracheck(obj)
+  {
+    return !obj.disabled;
+  }
+
+function ListarCursos(tipo_curso)
+{
+  document.frmImpMaterial.tipo_curso.value = tipo_curso;
+  document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php?cod_curso='+cod_curso+'&cod_ferramenta='+cod_ferramenta+'&cod_topico_raiz='+cod_topico_raiz;
+  document.frmImpMaterial.submit();
+}
+
+function mudarCategoria()
+{
+  x = document.getElementById('select_categorias');
+  cod_categoria = x.options[x.selectedIndex].value;
+  document.frmImpPergunta.cod_categoria;
+  document.frmImpMaterial.action = '../../../app/agenda/view/importar_curso.php';
+  document.frmImpMaterial.cod_curso.value = cod_curso;
+  document.frmImpMaterial.tipo_curso.value = tipo_curso;
+  document.frmImpMaterial.submit();
+}
+
+function mudafonte(tipo) {
+    if ( tipo == 0 ) {
+          document.getElementById('tabelaInterna').style.fontSize='1.0em';
+          tipo=''; 
+    } 
+    if ( tipo == 1 ) {
+      document.getElementById('tabelaInterna').style.fontSize='1.2em';
+      tipo=''; 
+    }
+    if ( tipo == 2 ) { 
+      document.getElementById('tabelaInterna').style.fontSize='1.4em';
+      tipo=''; 
+    }
+}

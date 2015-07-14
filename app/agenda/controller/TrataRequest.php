@@ -1,27 +1,16 @@
 <?php
-<<<<<<< HEAD
-$view_agenda="../view/";
-include 'AgendaController.php';
-
-//Pega ação passada pela agenda view
-$acao = (isset($_GET['acao'])) ? $_GET['acao'] : $_POST['acao'];
-$codcurso= $_GET['cod_curso'];
-$coduser = (isset($_GET['coduser'])) ? $_GET['coduser'] : $_POST['coduser'];	
-$origem =  $_POST['origem'];
-=======
-
+$view_agenda= '../view/';
 $ctrl_agenda = '../controller/';
 
 include 'AgendaController.php';
 
+
 //Pega acao passada pela agenda view
 $acao = (isset($_GET['acao'])) ? $_GET['acao'] : $_POST['acao'];
-$codcurso= $_GET['cod_curso'];
-$coduser = (isset($_GET['coduser'])) ? $_GET['coduser'] : $_POST['coduser'];
 $cod_item = (isset($_GET['cod_item'])) ? $_GET['cod_item'] : $_POST['cod_item'];
 $cod_curso = (isset($_GET['cod_curso'])) ? $_GET['cod_curso'] : $_POST['cod_curso'];
 $cod_usuario = (isset($_GET['cod_usuario'])) ? $_GET['cod_usuario'] : $_POST['cod_usuario'];
->>>>>>> 811f63dd8971a219026d3a3d1470a7e0853f49a6
+$origem =  $_POST['origem'];
 $titulo= $_POST['novo_titulo'];
 
 /* acao = Criar Nova Agenda - origem = ver_editar.php */
@@ -31,7 +20,7 @@ if ($acao=="criarAgenda") {
 	$controlerAgenda = new AgendaController();
 	// $controlerAgenda->Conecta();
 	
-	$cod_item= $controlerAgenda->criaAgenda($titulo,$codcurso, $coduser);
+	$cod_item= $controlerAgenda->criaAgenda($titulo,$cod_curso, $cod_usuario);
 	
 	if($cod_item){
 		echo ("\n inseriu \n");
@@ -43,7 +32,7 @@ if ($acao=="criarAgenda") {
 		$atualizacao = "false";
 
 	}
-		header("Location:".$view_agenda."ver_linha.php?cod_curso=".$codcurso."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
+		header("Location:".$view_agenda."ver_linha.php?cod_curso=".$cod_curso."&cod_usuario=".$cod_usuario."&cod_item=".$cod_item."&origem=".$origem."&acao=".$acao."&atualizacao=".$atualizacao);
 
 }
 else if ($acao=="ativaragenda")
