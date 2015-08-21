@@ -26,7 +26,7 @@ echo("      document.onmousemove = TrataMouse;\n\n");
 echo("      function Iniciar()\n");
 echo("      {\n");
 echo("        lay_nova_agenda = getLayer('layer_nova_agenda');\n");
-// $feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
+$feedbackObject->returnFeedback($_GET['acao'], $_GET['atualizacao']);
 echo("        startList();\n");
 echo("      }\n\n");
 echo("	</script>");
@@ -36,7 +36,8 @@ echo("	<script type=\"text/javascript\" src=\"../../../js/agenda.js\"></script>\
 
 include $dir_static.'menu_principal.php';
 $usr_formador = true;
-$cod_curso = $_GET['cod_curso'];
+$cod_curso =3; //substituir por $_GET['cod_curso'];
+$cod_usuario= 1;
 $controlerAgenda = new AgendaController();
 $controlerPermissao = new PermissaoController();
 
@@ -53,6 +54,8 @@ echo("          <table cellpadding=\"0\" cellspacing=\"0\"  id=\"tabelaExterna\"
 echo("            <tr>\n");
 echo("              <td valign=\"top\">\n");
 echo("                <ul class=\"btAuxTabs\">\n");
+
+// Menu e botoes da agenda
 if ($controlerPermissao->hasPermission($cod_usuario, $cod_ferramenta, 'Criar Agenda')){
 	/* 6 - Nova Agenda*/
 	echo("                  <li><span OnClick='NovaAgenda();'>Nova Agenda</span></li>");
