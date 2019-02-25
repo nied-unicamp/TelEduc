@@ -35,16 +35,3 @@ O TelEduc é um ambiente de <em>e-learning</em> para a criação, participação
 
     http://www.nied.unicamp.br
     nied@unicamp.br
-
-    Você também pode falar com equipe de desenvolvimento através do seguinte endereço:
-    equipe.teleduc@gmail.com
-
-------------------------------------------------------------------------------
-
-    Para realizar a instalação do TelEduc, utilize o guia de instalação fornecido
-    nos links abaixo:
-    
-    http://fenix.nied.unicamp.br/redmine/projects/teleduc/wiki/Bem-Vindo_%C3%A0_Wiki_do_TelEduc
-   
-
-------------------------------------------------------------------------------
